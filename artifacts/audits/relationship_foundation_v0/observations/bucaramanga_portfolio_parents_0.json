@@ -1,0 +1,735 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:44:38.120648+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_portafolio,id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,id_del_portafolio,entidad",
+    "$where": "id_del_portafolio in ('CO1.BDOS.1190911','CO1.BDOS.1194573','CO1.BDOS.1195947','CO1.BDOS.1198090','CO1.BDOS.1198648','CO1.BDOS.1199210','CO1.BDOS.1200603','CO1.BDOS.1204920','CO1.BDOS.1206121','CO1.BDOS.1206132','CO1.BDOS.1207685','CO1.BDOS.1207917','CO1.BDOS.1209213','CO1.BDOS.1209566','CO1.BDOS.1209707','CO1.BDOS.1210062','CO1.BDOS.1212781','CO1.BDOS.1213326','CO1.BDOS.1214265','CO1.BDOS.1214511','CO1.BDOS.1214867','CO1.BDOS.1216838','CO1.BDOS.1217319','CO1.BDOS.1218096','CO1.BDOS.1218414','CO1.BDOS.1220104','CO1.BDOS.1220456','CO1.BDOS.1223223','CO1.BDOS.1223394','CO1.BDOS.1223499','CO1.BDOS.1225074','CO1.BDOS.1225126','CO1.BDOS.1225501','CO1.BDOS.1225737','CO1.BDOS.1225763','CO1.BDOS.1227017','CO1.BDOS.1227410','CO1.BDOS.1228336','CO1.BDOS.1228591','CO1.BDOS.1228640','CO1.BDOS.1229008','CO1.BDOS.1229125','CO1.BDOS.1234718','CO1.BDOS.1235239','CO1.BDOS.1235529','CO1.BDOS.1236321','CO1.BDOS.1236411','CO1.BDOS.1237755','CO1.BDOS.1237928','CO1.BDOS.1238084','CO1.BDOS.1238092','CO1.BDOS.1239416','CO1.BDOS.1239660','CO1.BDOS.1239708','CO1.BDOS.1242966','CO1.BDOS.1243047','CO1.BDOS.1243159','CO1.BDOS.1243184','CO1.BDOS.1243258','CO1.BDOS.1243707','CO1.BDOS.1245479','CO1.BDOS.1246036','CO1.BDOS.1246328','CO1.BDOS.1246512','CO1.BDOS.1247593','CO1.BDOS.1247670','CO1.BDOS.1247772','CO1.BDOS.1248402','CO1.BDOS.1249092','CO1.BDOS.1249636','CO1.BDOS.1249816','CO1.BDOS.1250051','CO1.BDOS.1250610','CO1.BDOS.1250780','CO1.BDOS.1251074','CO1.BDOS.1254852','CO1.BDOS.1255009','CO1.BDOS.1255339','CO1.BDOS.1255462','CO1.BDOS.1255468','CO1.BDOS.1255519','CO1.BDOS.1255820','CO1.BDOS.1255914','CO1.BDOS.1257151','CO1.BDOS.1257359','CO1.BDOS.1258859','CO1.BDOS.1259538','CO1.BDOS.1259558','CO1.BDOS.1259601','CO1.BDOS.1259699','CO1.BDOS.1259749','CO1.BDOS.1259754','CO1.BDOS.1259813','CO1.BDOS.1260416','CO1.BDOS.1260690','CO1.BDOS.1260934','CO1.BDOS.1260935','CO1.BDOS.1260938','CO1.BDOS.1260942','CO1.BDOS.1260956')"
+  },
+  "payload": [
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1190911",
+      "id_del_proceso": "CO1.REQ.1229643",
+      "referencia_del_proceso": "SDS-CDUM-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1194573",
+      "id_del_proceso": "CO1.REQ.1232657",
+      "referencia_del_proceso": "SSyA-CONVENIO-INTER-ADMINISTRATIVO-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1233888",
+      "referencia_del_proceso": "SI-LP-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1263979",
+      "referencia_del_proceso": "SI-LP-001-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1263979",
+      "referencia_del_proceso": "SI-LP-001-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1263979",
+      "referencia_del_proceso": "SI-LP-001-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1263979",
+      "referencia_del_proceso": "SI-LP-001-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1263979",
+      "referencia_del_proceso": "SI-LP-001-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1263979",
+      "referencia_del_proceso": "SI-LP-001-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1263979",
+      "referencia_del_proceso": "SI-LP-001-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1263979",
+      "referencia_del_proceso": "SI-LP-001-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1195947",
+      "id_del_proceso": "CO1.REQ.1263979",
+      "referencia_del_proceso": "SI-LP-001-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1198090",
+      "id_del_proceso": "CO1.REQ.1235789",
+      "referencia_del_proceso": "SA-CMC-004-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1198648",
+      "id_del_proceso": "CO1.REQ.1236919",
+      "referencia_del_proceso": "SINT-UM-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1199210",
+      "id_del_proceso": "CO1.REQ.1239014",
+      "referencia_del_proceso": "SDS-CA-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1200603",
+      "id_del_proceso": "CO1.REQ.1238602",
+      "referencia_del_proceso": "SINT-CDUM-002-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1204920",
+      "id_del_proceso": "CO1.REQ.1243007",
+      "referencia_del_proceso": "SA-CPS-613-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1206121",
+      "id_del_proceso": "CO1.REQ.1244229",
+      "referencia_del_proceso": "SI-SASI-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1206121",
+      "id_del_proceso": "CO1.REQ.1274059",
+      "referencia_del_proceso": "SI-SASI-001-2020 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1206132",
+      "id_del_proceso": "CO1.REQ.1244449",
+      "referencia_del_proceso": "SSyA-CPS-614-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1207685",
+      "id_del_proceso": "CO1.REQ.1246229",
+      "referencia_del_proceso": "SSYA-CDUM-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1207917",
+      "id_del_proceso": "CO1.REQ.1246139",
+      "referencia_del_proceso": "SI-LP-002-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1207917",
+      "id_del_proceso": "CO1.REQ.1279012",
+      "referencia_del_proceso": "SI-LP-002-2020 (Fase de Selección (Presentación de ofertas))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1209213",
+      "id_del_proceso": "CO1.REQ.1247213",
+      "referencia_del_proceso": "SINT-RE-01-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1209566",
+      "id_del_proceso": "CO1.REQ.1248308",
+      "referencia_del_proceso": "SI-SAMC-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1209566",
+      "id_del_proceso": "CO1.REQ.1311029",
+      "referencia_del_proceso": "SI-SAMC-001-2020 (Manifestación de interés (Menor Cuantía))"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1209566",
+      "id_del_proceso": "CO1.REQ.1339067",
+      "referencia_del_proceso": "SI-SAMC-001-2020 (Manifestación de interés (Menor Cuantía)) (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1209707",
+      "id_del_proceso": "CO1.REQ.1247681",
+      "referencia_del_proceso": "SSYA-CPS-615-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1210062",
+      "id_del_proceso": "CO1.REQ.1247978",
+      "referencia_del_proceso": "SA-CD-02-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1212781",
+      "id_del_proceso": "CO1.REQ.1251086",
+      "referencia_del_proceso": "SSYA-CPS-616-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1213326",
+      "id_del_proceso": "CO1.REQ.1251415",
+      "referencia_del_proceso": "SSYA-CPS-617-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1214265",
+      "id_del_proceso": "CO1.REQ.1252449",
+      "referencia_del_proceso": "SINT-CDCPSUM-003-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1214511",
+      "id_del_proceso": "CO1.REQ.1252613",
+      "referencia_del_proceso": "SA-CPS-618-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1214867",
+      "id_del_proceso": "CO1.REQ.1252940",
+      "referencia_del_proceso": "SJ-CPS-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1216838",
+      "id_del_proceso": "CO1.REQ.1254828",
+      "referencia_del_proceso": "SA-CPS-621-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1217319",
+      "id_del_proceso": "CO1.REQ.1255419",
+      "referencia_del_proceso": "SA-CPS-622-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1218096",
+      "id_del_proceso": "CO1.REQ.1256315",
+      "referencia_del_proceso": "SSYA-CPS-624-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1218414",
+      "id_del_proceso": "CO1.REQ.1256072",
+      "referencia_del_proceso": "SSyA-CPS-623-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1220104",
+      "id_del_proceso": "CO1.REQ.1257988",
+      "referencia_del_proceso": "SI-CM-002-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1220104",
+      "id_del_proceso": "CO1.REQ.1288912",
+      "referencia_del_proceso": "SI-CM-002-2020 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1220104",
+      "id_del_proceso": "CO1.REQ.1288912",
+      "referencia_del_proceso": "SI-CM-002-2020 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1220104",
+      "id_del_proceso": "CO1.REQ.1288912",
+      "referencia_del_proceso": "SI-CM-002-2020 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1220104",
+      "id_del_proceso": "CO1.REQ.1288912",
+      "referencia_del_proceso": "SI-CM-002-2020 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1220104",
+      "id_del_proceso": "CO1.REQ.1288912",
+      "referencia_del_proceso": "SI-CM-002-2020 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1220456",
+      "id_del_proceso": "CO1.REQ.1258610",
+      "referencia_del_proceso": "SA-CPS-625-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1223223",
+      "id_del_proceso": "CO1.REQ.1261335",
+      "referencia_del_proceso": "SSYA-CPS-626-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1223394",
+      "id_del_proceso": "CO1.REQ.1261479",
+      "referencia_del_proceso": "SSYA-CPS-627-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1223499",
+      "id_del_proceso": "CO1.REQ.1261915",
+      "referencia_del_proceso": "SSYA-CPS-628-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1225074",
+      "id_del_proceso": "CO1.REQ.1263255",
+      "referencia_del_proceso": "SSyA-CPS-630-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1225126",
+      "id_del_proceso": "CO1.REQ.1263229",
+      "referencia_del_proceso": "SSyA-CPS-629-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1225501",
+      "id_del_proceso": "CO1.REQ.1263299",
+      "referencia_del_proceso": "SSYA-CPS-631-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1225737",
+      "id_del_proceso": "CO1.REQ.1263836",
+      "referencia_del_proceso": "SSyA-CPS-632-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1225763",
+      "id_del_proceso": "CO1.REQ.1264005",
+      "referencia_del_proceso": "SA-CPS-633-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1227017",
+      "id_del_proceso": "CO1.REQ.1265623",
+      "referencia_del_proceso": "SSyA-CPS-635-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1227410",
+      "id_del_proceso": "CO1.REQ.1266007",
+      "referencia_del_proceso": "SEB-CPS-634-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1228336",
+      "id_del_proceso": "CO1.REQ.1266575",
+      "referencia_del_proceso": "SINT-CPS-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1228591",
+      "id_del_proceso": "CO1.REQ.1266892",
+      "referencia_del_proceso": "SA-CPS-639-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1228640",
+      "id_del_proceso": "CO1.REQ.1266947",
+      "referencia_del_proceso": "SA-CPS-636-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1229008",
+      "id_del_proceso": "CO1.REQ.1267312",
+      "referencia_del_proceso": "SSYA-CPS-640-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1229125",
+      "id_del_proceso": "CO1.REQ.1267074",
+      "referencia_del_proceso": "SA-CPS-637-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1234718",
+      "id_del_proceso": "CO1.REQ.1273511",
+      "referencia_del_proceso": "SSyA-CPS-641-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1235239",
+      "id_del_proceso": "CO1.REQ.1273722",
+      "referencia_del_proceso": "SSYA-CPS-642-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1235529",
+      "id_del_proceso": "CO1.REQ.1273741",
+      "referencia_del_proceso": "SINT-CDUM-004-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1236321",
+      "id_del_proceso": "CO1.REQ.1274917",
+      "referencia_del_proceso": "SEB-CONVENIO INTERADMINISITRATIVO-98-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1236411",
+      "id_del_proceso": "CO1.REQ.1274913",
+      "referencia_del_proceso": "SI-CM-003-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1236411",
+      "id_del_proceso": "CO1.REQ.1297795",
+      "referencia_del_proceso": "SI-CM-003-2020 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1237755",
+      "id_del_proceso": "CO1.REQ.1276392",
+      "referencia_del_proceso": "SSYA-CPS-645-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1237928",
+      "id_del_proceso": "CO1.REQ.1276343",
+      "referencia_del_proceso": "SSYA-CPS-643-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1238084",
+      "id_del_proceso": "CO1.REQ.1276450",
+      "referencia_del_proceso": "SSyA-CPS-644-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1238092",
+      "id_del_proceso": "CO1.REQ.1276167",
+      "referencia_del_proceso": "SSyA-CPS-646-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1239416",
+      "id_del_proceso": "CO1.REQ.1277938",
+      "referencia_del_proceso": "SA-SH-CD-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1239660",
+      "id_del_proceso": "CO1.REQ.1277970",
+      "referencia_del_proceso": "SSyA-CPS-647-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1239708",
+      "id_del_proceso": "CO1.REQ.1278411",
+      "referencia_del_proceso": "SSyA-CPS-649-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1242966",
+      "id_del_proceso": "CO1.REQ.1281763",
+      "referencia_del_proceso": "SSyA-CPS-654-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1243047",
+      "id_del_proceso": "CO1.REQ.1281726",
+      "referencia_del_proceso": "SSyA-CPS-653-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1243159",
+      "id_del_proceso": "CO1.REQ.1281571",
+      "referencia_del_proceso": "SA-CPS-651-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1243184",
+      "id_del_proceso": "CO1.REQ.1281599",
+      "referencia_del_proceso": "SA-CPS-652-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1243258",
+      "id_del_proceso": "CO1.REQ.1281666",
+      "referencia_del_proceso": "SA-CPS-650-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1243707",
+      "id_del_proceso": "CO1.REQ.1282018",
+      "referencia_del_proceso": "SSyA-CPS-655-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1245479",
+      "id_del_proceso": "CO1.REQ.1284073",
+      "referencia_del_proceso": "SSyA-CPS-656-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1246036",
+      "id_del_proceso": "CO1.REQ.1284482",
+      "referencia_del_proceso": "SA-CPS-657-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1246328",
+      "id_del_proceso": "CO1.REQ.1285205",
+      "referencia_del_proceso": "SA-CPS-658-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1246512",
+      "id_del_proceso": "CO1.REQ.1285115",
+      "referencia_del_proceso": "SA-CPS-659-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1247593",
+      "id_del_proceso": "CO1.REQ.1286330",
+      "referencia_del_proceso": "SSyA-CPS-661-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1247670",
+      "id_del_proceso": "CO1.REQ.1286056",
+      "referencia_del_proceso": "SA-CPS-662-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1247772",
+      "id_del_proceso": "CO1.REQ.1287010",
+      "referencia_del_proceso": "SA-SH-CD-002-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1248402",
+      "id_del_proceso": "CO1.REQ.1290060",
+      "referencia_del_proceso": "SA-SUBIP-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1248402",
+      "id_del_proceso": "CO1.REQ.1329760",
+      "referencia_del_proceso": "SA-SUBIP-001-2020 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1249092",
+      "id_del_proceso": "CO1.REQ.1287680",
+      "referencia_del_proceso": "SSyA-CPS-663-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1249636",
+      "id_del_proceso": "CO1.REQ.1288309",
+      "referencia_del_proceso": "SSyA-CPS-664-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1249816",
+      "id_del_proceso": "CO1.REQ.1288402",
+      "referencia_del_proceso": "SSYA-CPS-666-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1250051",
+      "id_del_proceso": "CO1.REQ.1288237",
+      "referencia_del_proceso": "SSyA-CPS-665-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1250610",
+      "id_del_proceso": "CO1.REQ.1289450",
+      "referencia_del_proceso": "SINTCPS0022020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1250780",
+      "id_del_proceso": "CO1.REQ.1289577",
+      "referencia_del_proceso": "SINTCPS0032020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1251074",
+      "id_del_proceso": "CO1.REQ.1289588",
+      "referencia_del_proceso": "SP-CPS-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1254852",
+      "id_del_proceso": "CO1.REQ.1293163",
+      "referencia_del_proceso": "SSyA-contrato-inter-001-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1255009",
+      "id_del_proceso": "CO1.REQ.1293710",
+      "referencia_del_proceso": "SSyA-CPS-670-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1255339",
+      "id_del_proceso": "CO1.REQ.1294134",
+      "referencia_del_proceso": "SSYA-CPS-676-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1255462",
+      "id_del_proceso": "CO1.REQ.1294438",
+      "referencia_del_proceso": "SEB-CPS-672-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1255468",
+      "id_del_proceso": "CO1.REQ.1294239",
+      "referencia_del_proceso": "SEB-CPS-671-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1255519",
+      "id_del_proceso": "CO1.REQ.1294405",
+      "referencia_del_proceso": "SEB-CPS-675-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1255820",
+      "id_del_proceso": "CO1.REQ.1294705",
+      "referencia_del_proceso": "SEB-CPS-673-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1255914",
+      "id_del_proceso": "CO1.REQ.1294524",
+      "referencia_del_proceso": "SEB-CPS-674-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1257151",
+      "id_del_proceso": "CO1.REQ.1295781",
+      "referencia_del_proceso": "SSyA-CPS-677-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1257359",
+      "id_del_proceso": "CO1.REQ.1295886",
+      "referencia_del_proceso": "SSyA-CPS-678-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1258859",
+      "id_del_proceso": "CO1.REQ.1298029",
+      "referencia_del_proceso": "SSyA-CPS-680-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1259538",
+      "id_del_proceso": "CO1.REQ.1298608",
+      "referencia_del_proceso": "SEB-CPS-679-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1259558",
+      "id_del_proceso": "CO1.REQ.1298709",
+      "referencia_del_proceso": "SINT-CPS-007-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1259601",
+      "id_del_proceso": "CO1.REQ.1298144",
+      "referencia_del_proceso": "SSYA-CPS-681-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1259699",
+      "id_del_proceso": "CO1.REQ.1298652",
+      "referencia_del_proceso": "SINT-CPS-004-3030"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1259749",
+      "id_del_proceso": "CO1.REQ.1298655",
+      "referencia_del_proceso": "SINT-CPS-005-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1259754",
+      "id_del_proceso": "CO1.REQ.1298465",
+      "referencia_del_proceso": "SINT-CPS-006-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1259813",
+      "id_del_proceso": "CO1.REQ.1298467",
+      "referencia_del_proceso": "SINT-CPS-008-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1260416",
+      "id_del_proceso": "CO1.REQ.1299386",
+      "referencia_del_proceso": "SSyA-CPS-685-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1260690",
+      "id_del_proceso": "CO1.REQ.1300106",
+      "referencia_del_proceso": "SA-SH-CD-003-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1260934",
+      "id_del_proceso": "CO1.REQ.1300320",
+      "referencia_del_proceso": "SA-SH-CD-004-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1260935",
+      "id_del_proceso": "CO1.REQ.1300322",
+      "referencia_del_proceso": "SSYA-CPS-690-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1260938",
+      "id_del_proceso": "CO1.REQ.1299883",
+      "referencia_del_proceso": "SA-SH-CD-005-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1260942",
+      "id_del_proceso": "CO1.REQ.1300135",
+      "referencia_del_proceso": "SA-SH-CPS-005-2020"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_portafolio": "CO1.BDOS.1260956",
+      "id_del_proceso": "CO1.REQ.1300152",
+      "referencia_del_proceso": "SA-SH-CD-008-2020"
+    }
+  ],
+  "sha256": "dfa443af71b8955a5feb8d8dfac3c361e864426edb56c5962022409a8c7f553e",
+  "status": "MATERIALIZED"
+}

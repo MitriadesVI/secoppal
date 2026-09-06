@@ -1,0 +1,14 @@
+{
+  "inputs": {
+    "artifacts/audits/competition_sources_v1/bidder_identity.json": "3fc330bd1685359d2848ed95fd59ba8b821868a20627ed32b0e399c87eab4994",
+    "artifacts/audits/competition_sources_v1/ceth_schema.json": "60a582cc8c41004c760463ee7639206abe3dff09493887f46a3db00901c90321",
+    "artifacts/audits/competition_sources_v1/graph_edge_support.json": "7611583567ee8e14f62604e0948d565e9cfc0fa8191b3d90f95e5db549957cbb",
+    "artifacts/audits/competition_sources_v1/group_bid_join.json": "ca396e706f193a632ef6f703d323f89a0f95ee87d7d891fb9e1bd54475bf618a",
+    "artifacts/audits/competition_sources_v1/hgi6_schema.json": "49837b2256d86eabb8c82ee4d51bbe2e21e1dda1bf11b46d9d320b73d9223189",
+    "artifacts/audits/competition_sources_v1/process_join.json": "01e7670dc0c793edbba469554f9341655b37999e1520c7bbcbd84a3a8d808903",
+    "artifacts/audits/competition_sources_v1/provider_registry_comparison.json": "7dbf0d0c3771574211228effdfced0b0a6f2fd061af7c93dc8d3fad9d73bd879",
+    "docs/audits/COMPETITION_INTELLIGENCE_SOURCE_AUDIT_V1.md": "76733afa810a2c76ec5b9c0cbd1e3ff79f2995f059a0837d23c6be1b0998fecb"
+  },
+  "role": "READ_ONLY_HYPOTHESIS_NOT_FOUNDATION_AUTHORITY",
+  "source_commit": "b936d0f91974e40114c777cf041ea55fe3849955"
+}

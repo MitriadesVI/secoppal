@@ -1,0 +1,1007 @@
+{
+  "endpoint": "https://www.datos.gov.co/api/views/jbjy-vk9h.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:37:32.214200+00:00",
+  "params": {},
+  "payload": {
+    "attribution": "Agencia Nacional de Contratación Pública - Colombia Compra Eficiente, Bogotá D.C.",
+    "columns": [
+      {
+        "dataTypeName": "text",
+        "description": "Nombre de la entidad del estado que publica el contrato",
+        "fieldName": "nombre_entidad",
+        "format": {},
+        "id": 636635936,
+        "name": "Nombre Entidad",
+        "position": 1,
+        "renderTypeName": "text",
+        "tableColumnId": 88481440
+      },
+      {
+        "dataTypeName": "number",
+        "description": "NIT de la entidad del estado que publica el contrato",
+        "fieldName": "nit_entidad",
+        "format": {},
+        "id": 636635937,
+        "name": "Nit Entidad",
+        "position": 2,
+        "renderTypeName": "number",
+        "tableColumnId": 88481405
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Departamento en el cual se registró la entidad del estado que publica el contrato",
+        "fieldName": "departamento",
+        "format": {},
+        "id": 636635938,
+        "name": "Departamento",
+        "position": 3,
+        "renderTypeName": "text",
+        "tableColumnId": 88481427
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Ciudad en el cual se registró la entidad del estado que publica el contrato",
+        "fieldName": "ciudad",
+        "format": {},
+        "id": 636635939,
+        "name": "Ciudad",
+        "position": 4,
+        "renderTypeName": "text",
+        "tableColumnId": 88481433
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Ubicación completa de la entidad del estado que publica el contrato",
+        "fieldName": "localizaci_n",
+        "format": {},
+        "id": 636635940,
+        "name": "Localización",
+        "position": 5,
+        "renderTypeName": "text",
+        "tableColumnId": 88481403
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Orden entidad del estado que publica el contrato",
+        "fieldName": "orden",
+        "format": {},
+        "id": 636635941,
+        "name": "Orden",
+        "position": 6,
+        "renderTypeName": "text",
+        "tableColumnId": 88481399
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Sector entidad del estado que publica el contrato",
+        "fieldName": "sector",
+        "format": {},
+        "id": 636635942,
+        "name": "Sector",
+        "position": 7,
+        "renderTypeName": "text",
+        "tableColumnId": 88481408
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Rama del estado de la entidad que publica el contrato",
+        "fieldName": "rama",
+        "format": {},
+        "id": 636635943,
+        "name": "Rama",
+        "position": 8,
+        "renderTypeName": "text",
+        "tableColumnId": 88481428
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Define si la entidad es descentralizada o centralizada",
+        "fieldName": "entidad_centralizada",
+        "format": {},
+        "id": 636635944,
+        "name": "Entidad Centralizada",
+        "position": 9,
+        "renderTypeName": "text",
+        "tableColumnId": 88481409
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Identificador del proceso de compra publicado",
+        "fieldName": "proceso_de_compra",
+        "format": {},
+        "id": 636635945,
+        "name": "Proceso de Compra",
+        "position": 10,
+        "renderTypeName": "text",
+        "tableColumnId": 88481447
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Identificador del contrato firmado, generado por la plataforma",
+        "fieldName": "id_contrato",
+        "format": {},
+        "id": 636635946,
+        "name": "ID Contrato",
+        "position": 11,
+        "renderTypeName": "text",
+        "tableColumnId": 88481400
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Identificador del contrato firmado, generado por la entidad del estado",
+        "fieldName": "referencia_del_contrato",
+        "format": {},
+        "id": 636635947,
+        "name": "Referencia del Contrato",
+        "position": 12,
+        "renderTypeName": "text",
+        "tableColumnId": 88481438
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Estado del contrato, frente a su ejecución, firma o liquidación",
+        "fieldName": "estado_contrato",
+        "format": {},
+        "id": 636635948,
+        "name": "Estado Contrato",
+        "position": 13,
+        "renderTypeName": "text",
+        "tableColumnId": 88481415
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Codigo UNSPSC de la categoría principal para el contrato",
+        "fieldName": "codigo_de_categoria_principal",
+        "format": {},
+        "id": 636635949,
+        "name": "Codigo de Categoria Principal",
+        "position": 14,
+        "renderTypeName": "text",
+        "tableColumnId": 88481426
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Descripción del objeto del proceso de compra",
+        "fieldName": "descripcion_del_proceso",
+        "format": {},
+        "id": 636635950,
+        "name": "Descripcion del Proceso",
+        "position": 15,
+        "renderTypeName": "text",
+        "tableColumnId": 88481404
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Tipo de contrato de acuerdo a su marco jurídico",
+        "fieldName": "tipo_de_contrato",
+        "format": {},
+        "id": 636635951,
+        "name": "Tipo de Contrato",
+        "position": 16,
+        "renderTypeName": "text",
+        "tableColumnId": 88481446
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Modalidad de contratación de acuerdo al modelo de selección",
+        "fieldName": "modalidad_de_contratacion",
+        "format": {},
+        "id": 636635952,
+        "name": "Modalidad de Contratacion",
+        "position": 17,
+        "renderTypeName": "text",
+        "tableColumnId": 88481410
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Justificación de la modalidad, el escenario bajo el cual se toma la decisión de definir una u otra modalidad de contratación",
+        "fieldName": "justificacion_modalidad_de",
+        "format": {},
+        "id": 636635953,
+        "name": "Justificacion Modalidad de Contratacion",
+        "position": 18,
+        "renderTypeName": "text",
+        "tableColumnId": 88481435
+      },
+      {
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de firma del contrato electronico",
+        "fieldName": "fecha_de_firma",
+        "format": {
+          "view": "date"
+        },
+        "id": 636635954,
+        "name": "Fecha de Firma",
+        "position": 19,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88481443
+      },
+      {
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de inicio de las responsabilidades contractuales",
+        "fieldName": "fecha_de_inicio_del_contrato",
+        "format": {
+          "align": "left",
+          "view": "date"
+        },
+        "id": 636635955,
+        "name": "Fecha de Inicio del Contrato",
+        "position": 20,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88481422
+      },
+      {
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de fin de las responsabilidades contractuales",
+        "fieldName": "fecha_de_fin_del_contrato",
+        "format": {
+          "view": "date"
+        },
+        "id": 636635956,
+        "name": "Fecha de Fin del Contrato",
+        "position": 21,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88481420
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Condiciones bajo las cuales se entrega el producto o servicio",
+        "fieldName": "condiciones_de_entrega",
+        "format": {},
+        "id": 636635957,
+        "name": "Condiciones de Entrega",
+        "position": 22,
+        "renderTypeName": "text",
+        "tableColumnId": 88481411
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Tipo de documento del proveedor adjudicado",
+        "fieldName": "tipodocproveedor",
+        "format": {},
+        "id": 636635958,
+        "name": "TipoDocProveedor",
+        "position": 23,
+        "renderTypeName": "text",
+        "tableColumnId": 88481407
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Número de documento del proveedor adjudicado",
+        "fieldName": "documento_proveedor",
+        "format": {},
+        "id": 636635959,
+        "name": "Documento Proveedor",
+        "position": 24,
+        "renderTypeName": "text",
+        "tableColumnId": 88481425
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Nombre del proveedor adjudicado",
+        "fieldName": "proveedor_adjudicado",
+        "format": {},
+        "id": 636635960,
+        "name": "Proveedor Adjudicado",
+        "position": 25,
+        "renderTypeName": "text",
+        "tableColumnId": 88481401
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Determina el proveedor es un grupo de entidades, existe un conjunto de datos de CCE que contiene la conformación de los grupos",
+        "fieldName": "es_grupo",
+        "format": {},
+        "id": 636635961,
+        "name": "Es Grupo",
+        "position": 26,
+        "renderTypeName": "text",
+        "tableColumnId": 88481445
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Determina si la empresa es una Pyme",
+        "fieldName": "es_pyme",
+        "format": {},
+        "id": 636635962,
+        "name": "Es Pyme",
+        "position": 27,
+        "renderTypeName": "text",
+        "tableColumnId": 88481398
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Determina si el contrato tiene habilitada la opción de pago de adelantos",
+        "fieldName": "habilita_pago_adelantado",
+        "format": {},
+        "id": 636635963,
+        "name": "Habilita Pago Adelantado",
+        "position": 28,
+        "renderTypeName": "text",
+        "tableColumnId": 88481424
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Determina si el contrato ha sido liquidado",
+        "fieldName": "liquidaci_n",
+        "format": {},
+        "id": 636635964,
+        "name": "Liquidación",
+        "position": 29,
+        "renderTypeName": "text",
+        "tableColumnId": 88481430
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Determina si el contrato tiene compromisos de cumplimiento a obligaciones ambientales",
+        "fieldName": "obligaci_n_ambiental",
+        "format": {},
+        "id": 636635965,
+        "name": "Obligación Ambiental",
+        "position": 30,
+        "renderTypeName": "text",
+        "tableColumnId": 88481414
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Determina si el contrato tiene compromisos de cumplimiento a obligaciones posteriores a la entrega del producto o prestación del servicio",
+        "fieldName": "obligaciones_postconsumo",
+        "format": {},
+        "id": 636635966,
+        "name": "Obligaciones Postconsumo",
+        "position": 31,
+        "renderTypeName": "text",
+        "tableColumnId": 88481412
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Determina si el contrato ha sido reversado",
+        "fieldName": "reversion",
+        "format": {},
+        "id": 636635967,
+        "name": "Reversion",
+        "position": 32,
+        "renderTypeName": "text",
+        "tableColumnId": 88481432
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Origen de los Recursos, a nivel presupuestal",
+        "fieldName": "origen_de_los_recursos",
+        "format": {},
+        "id": 636635968,
+        "name": "Origen de los Recursos",
+        "position": 33,
+        "renderTypeName": "text",
+        "tableColumnId": 88481437
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Destino del gasto, a nivel presupuestal",
+        "fieldName": "destino_gasto",
+        "format": {},
+        "id": 636635969,
+        "name": "Destino Gasto",
+        "position": 34,
+        "renderTypeName": "text",
+        "tableColumnId": 88481448
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor total del contrato",
+        "fieldName": "valor_del_contrato",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635970,
+        "name": "Valor del Contrato",
+        "position": 35,
+        "renderTypeName": "number",
+        "tableColumnId": 88481431
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor del pago por adelantado",
+        "fieldName": "valor_de_pago_adelantado",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635971,
+        "name": "Valor de pago adelantado",
+        "position": 36,
+        "renderTypeName": "number",
+        "tableColumnId": 88481418
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor Facturado a la fecha",
+        "fieldName": "valor_facturado",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635972,
+        "name": "Valor Facturado",
+        "position": 37,
+        "renderTypeName": "number",
+        "tableColumnId": 88481444
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor Pendiente de Pago a la fecha",
+        "fieldName": "valor_pendiente_de_pago",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635973,
+        "name": "Valor Pendiente de Pago",
+        "position": 38,
+        "renderTypeName": "number",
+        "tableColumnId": 88481417
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor Pagado a la fecha",
+        "fieldName": "valor_pagado",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635974,
+        "name": "Valor Pagado",
+        "position": 39,
+        "renderTypeName": "number",
+        "tableColumnId": 88481413
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor Amortizado a la fecha",
+        "fieldName": "valor_amortizado",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635975,
+        "name": "Valor Amortizado",
+        "position": 40,
+        "renderTypeName": "number",
+        "tableColumnId": 88481439
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor Pendiente de Amortizacion a la fecha",
+        "fieldName": "valor_pendiente_de",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635976,
+        "name": "Valor Pendiente de Amortizacion",
+        "position": 41,
+        "renderTypeName": "number",
+        "tableColumnId": 88481421
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor Pendiente de Ejecucion a la fecha",
+        "fieldName": "valor_pendiente_de_ejecucion",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635977,
+        "name": "Valor Pendiente de Ejecucion",
+        "position": 42,
+        "renderTypeName": "number",
+        "tableColumnId": 88481436
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Saldo del CDP asignado al proceso y al contrato",
+        "fieldName": "saldo_cdp",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635978,
+        "name": "Saldo CDP",
+        "position": 43,
+        "renderTypeName": "number",
+        "tableColumnId": 88481402
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Saldo actual para la vigencia del CDP asignado al proceso y al contrato",
+        "fieldName": "saldo_vigencia",
+        "format": {},
+        "id": 636635979,
+        "name": "Saldo Vigencia",
+        "position": 44,
+        "renderTypeName": "number",
+        "tableColumnId": 88481406
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Determina si el proceso está asociado a algún evento de acuerdo de paz",
+        "fieldName": "espostconflicto",
+        "format": {},
+        "id": 636635980,
+        "name": "EsPostConflicto",
+        "position": 45,
+        "renderTypeName": "text",
+        "tableColumnId": 88481416
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Días adicionados al contrato electrónico",
+        "fieldName": "dias_adicionados",
+        "format": {},
+        "id": 636635981,
+        "name": "Dias adicionados",
+        "position": 46,
+        "renderTypeName": "number",
+        "tableColumnId": 113459434
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Pilares del acuerdo de paz, si el contrato es post conflicto",
+        "fieldName": "puntos_del_acuerdo",
+        "format": {},
+        "id": 636635982,
+        "name": "Puntos del Acuerdo",
+        "position": 47,
+        "renderTypeName": "text",
+        "tableColumnId": 113459436
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Pilares del acuerdo de paz",
+        "fieldName": "pilares_del_acuerdo",
+        "format": {},
+        "id": 636635983,
+        "name": "Pilares del Acuerdo",
+        "position": 48,
+        "renderTypeName": "text",
+        "tableColumnId": 113459435
+      },
+      {
+        "dataTypeName": "url",
+        "description": "URL del proceso de compra en la plataforma SECOP II",
+        "fieldName": "urlproceso",
+        "format": {},
+        "id": 636635984,
+        "name": "URLProceso",
+        "position": 49,
+        "renderTypeName": "url",
+        "subColumnTypes": [
+          "url",
+          "description"
+        ],
+        "tableColumnId": 88481419,
+        "width": 1232
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Nombre del representante legal de la entidad",
+        "fieldName": "nombre_representante_legal",
+        "format": {},
+        "id": 636635985,
+        "name": "Nombre Representante Legal",
+        "position": 50,
+        "renderTypeName": "text",
+        "tableColumnId": 124799666
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Nacionalidad del representante legal de la entidad",
+        "fieldName": "nacionalidad_representante_legal",
+        "format": {},
+        "id": 636635986,
+        "name": "Nacionalidad Representante Legal",
+        "position": 51,
+        "renderTypeName": "text",
+        "tableColumnId": 124799659
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Dirección de domicilio del representante legal de la entidad",
+        "fieldName": "domicilio_representante_legal",
+        "format": {},
+        "id": 636635987,
+        "name": "Domicilio Representante Legal",
+        "position": 52,
+        "renderTypeName": "text",
+        "tableColumnId": 124799669
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Tipo de identificación del representante legal de la entidad",
+        "fieldName": "tipo_de_identificaci_n_representante_legal",
+        "format": {},
+        "id": 636635988,
+        "name": "Tipo de Identificación Representante Legal",
+        "position": 53,
+        "renderTypeName": "text",
+        "tableColumnId": 124799660
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Numero de identificación del representante legal de la entidad",
+        "fieldName": "identificaci_n_representante_legal",
+        "format": {},
+        "id": 636635989,
+        "name": "Identificación Representante Legal",
+        "position": 54,
+        "renderTypeName": "text",
+        "tableColumnId": 124799662
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Género sexual del representante legal de la entidad",
+        "fieldName": "g_nero_representante_legal",
+        "format": {},
+        "id": 636635990,
+        "name": "Género Representante Legal",
+        "position": 55,
+        "renderTypeName": "text",
+        "tableColumnId": 124799663
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor de origen de los recursos que corresponde al Presupuesto General de la Nacion – PGN",
+        "fieldName": "presupuesto_general_de_la_nacion_pgn",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635991,
+        "name": "Presupuesto General de la Nacion – PGN",
+        "position": 56,
+        "renderTypeName": "number",
+        "tableColumnId": 124805786
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor de origen de los recursos que corresponde al Sistema General de Participaciones",
+        "fieldName": "sistema_general_de_participaciones",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635992,
+        "name": "Sistema General de Participaciones",
+        "position": 57,
+        "renderTypeName": "number",
+        "tableColumnId": 124805788
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor de origen de los recursos que corresponde al Sistema General de Regalías",
+        "fieldName": "sistema_general_de_regal_as",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635993,
+        "name": "Sistema General de Regalías",
+        "position": 58,
+        "renderTypeName": "number",
+        "tableColumnId": 124805789
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Indica el valor de recursos de la entidad en el contrato electronico",
+        "fieldName": "recursos_propios_alcald_as_gobernaciones_y_resguardos_ind_genas_",
+        "format": {},
+        "id": 636635994,
+        "name": "Recursos Propios (Alcaldías y Gobernaciones)",
+        "position": 59,
+        "renderTypeName": "number",
+        "tableColumnId": 124805787
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor de origen de los recursos que corresponde a Recursos de Credito",
+        "fieldName": "recursos_de_credito",
+        "format": {
+          "align": "left",
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635995,
+        "name": "Recursos de Credito",
+        "position": 60,
+        "renderTypeName": "number",
+        "tableColumnId": 124805785
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Valor de origen de los recursos que corresponde a Recursos Propios",
+        "fieldName": "recursos_propios",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 636635996,
+        "name": "Otros Recursos (Especie, Privados, Cooperación, Propios Entidades Autónomas)",
+        "position": 61,
+        "renderTypeName": "number",
+        "tableColumnId": 124805790
+      },
+      {
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de última actualización del contrato electronico",
+        "fieldName": "ultima_actualizacion",
+        "format": {},
+        "id": 636635997,
+        "name": "Ultima Actualizacion",
+        "position": 62,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 128774078
+      },
+      {
+        "dataTypeName": "number",
+        "description": "Codigo de la entidad en la plataforma SECOPII",
+        "fieldName": "codigo_entidad",
+        "format": {},
+        "id": 636635998,
+        "name": "Codigo Entidad",
+        "position": 63,
+        "renderTypeName": "number",
+        "tableColumnId": 151288318
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Codigo del proveedor edn la plataforma SECOPII",
+        "fieldName": "codigo_proveedor",
+        "format": {},
+        "id": 636635999,
+        "name": "Codigo Proveedor",
+        "position": 64,
+        "renderTypeName": "text",
+        "tableColumnId": 139897323
+      },
+      {
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de inicio de liquidación del contrato electrónico",
+        "fieldName": "fecha_inicio_liquidacion",
+        "format": {},
+        "id": 636636000,
+        "name": "Fecha Inicio Liquidacion",
+        "position": 65,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 151288316
+      },
+      {
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de fin de liquidación del contrato electrónico",
+        "fieldName": "fecha_fin_liquidacion",
+        "format": {},
+        "id": 636636001,
+        "name": "Fecha Fin Liquidacion",
+        "position": 66,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 151288317
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Objeto del contrato electrónico",
+        "fieldName": "objeto_del_contrato",
+        "format": {},
+        "id": 636636002,
+        "name": "Objeto del Contrato",
+        "position": 67,
+        "renderTypeName": "text",
+        "tableColumnId": 142448513
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Describe la duración del contrato en el tiempo",
+        "fieldName": "duraci_n_del_contrato",
+        "format": {},
+        "id": 636636003,
+        "name": "Duración del contrato",
+        "position": 68,
+        "renderTypeName": "text",
+        "tableColumnId": 153683533
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Indica el nombre del banco en donde se consignaran los pagos del contrato",
+        "fieldName": "nombre_del_banco",
+        "format": {},
+        "id": 636636004,
+        "name": "Nombre del banco",
+        "position": 69,
+        "renderTypeName": "text",
+        "tableColumnId": 153706850
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Tipo de cuenta en la que se se consignaran los pago del contrato",
+        "fieldName": "tipo_de_cuenta",
+        "format": {},
+        "id": 636636005,
+        "name": "Tipo de cuenta",
+        "position": 70,
+        "renderTypeName": "text",
+        "tableColumnId": 153683532
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Numero de cuenta en donde se haran los pagos del contrato",
+        "fieldName": "n_mero_de_cuenta",
+        "format": {},
+        "id": 636636006,
+        "name": "Número de cuenta",
+        "position": 71,
+        "renderTypeName": "text",
+        "tableColumnId": 153683531
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Indica si el contrato puede ser o no prorrogado",
+        "fieldName": "el_contrato_puede_ser_prorrogado",
+        "format": {},
+        "id": 636636007,
+        "name": "El contrato puede ser prorrogado",
+        "position": 72,
+        "renderTypeName": "text",
+        "tableColumnId": 153706851
+      },
+      {
+        "dataTypeName": "calendar_date",
+        "description": "Infica la fecha de notificación de la prorrogación del contrato",
+        "fieldName": "fecha_de_notificaci_n_de_prorrogaci_n",
+        "format": {},
+        "id": 636636008,
+        "name": "Fecha de notificación de prorrogación",
+        "position": 73,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 153706849
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Describe el nombre del ordenador del gasto de la entidad compradora",
+        "fieldName": "nombre_ordenador_del_gasto",
+        "format": {},
+        "id": 636636009,
+        "name": "Nombre ordenador del gasto",
+        "position": 74,
+        "renderTypeName": "text",
+        "tableColumnId": 154621182
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Indica el tipo de documento del ordenador del gasto de la entidad compradora",
+        "fieldName": "tipo_de_documento_ordenador_del_gasto",
+        "format": {},
+        "id": 636636010,
+        "name": "Tipo de documento Ordenador del gasto",
+        "position": 75,
+        "renderTypeName": "text",
+        "tableColumnId": 154621178
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Indica el número de documento del ordenador del gasto",
+        "fieldName": "n_mero_de_documento_ordenador_del_gasto",
+        "format": {},
+        "id": 636636011,
+        "name": "Número de documento Ordenador del gasto",
+        "position": 76,
+        "renderTypeName": "text",
+        "tableColumnId": 154621184
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Describe el nombre del supervisor de la entidad compradora",
+        "fieldName": "nombre_supervisor",
+        "format": {},
+        "id": 636636012,
+        "name": "Nombre supervisor",
+        "position": 77,
+        "renderTypeName": "text",
+        "tableColumnId": 154621177
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Indica el tipo de documento del supervisor de la entidad compradora",
+        "fieldName": "tipo_de_documento_supervisor",
+        "format": {},
+        "id": 636636013,
+        "name": "Tipo de documento supervisor",
+        "position": 78,
+        "renderTypeName": "text",
+        "tableColumnId": 154621180
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Indica el número de documento del supervisor",
+        "fieldName": "n_mero_de_documento_supervisor",
+        "format": {},
+        "id": 636636014,
+        "name": "Número de documento supervisor",
+        "position": 79,
+        "renderTypeName": "text",
+        "tableColumnId": 154621183
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Describe el nombre del Ordenador de Pago de la entidad compradora",
+        "fieldName": "nombre_ordenador_de_pago",
+        "format": {},
+        "id": 636636015,
+        "name": "Nombre Ordenador de Pago",
+        "position": 80,
+        "renderTypeName": "text",
+        "tableColumnId": 154621181
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Indica el tipo de documento del Ordenador de Pago de la entidad compradora",
+        "fieldName": "tipo_de_documento_ordenador_de_pago",
+        "format": {},
+        "id": 636636016,
+        "name": "Tipo de documento Ordenador de Pago",
+        "position": 81,
+        "renderTypeName": "text",
+        "tableColumnId": 154621185
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Indica el número de documento del Ordenador de Pago",
+        "fieldName": "n_mero_de_documento_ordenador_de_pago",
+        "format": {},
+        "id": 636636017,
+        "name": "Número de documento Ordenador de Pago",
+        "position": 82,
+        "renderTypeName": "text",
+        "tableColumnId": 154621179
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Indica si se utilizaron documentos tipo en el contrato",
+        "fieldName": "documentos_tipo",
+        "format": {},
+        "id": 636636018,
+        "name": "Documentos Tipo",
+        "position": 83,
+        "renderTypeName": "text",
+        "tableColumnId": 163284386
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Descripción de los documentos tipo utilizados",
+        "fieldName": "descripcion_documentos_tipo",
+        "format": {},
+        "id": 636636019,
+        "name": "Descripcion Documentos Tipo",
+        "position": 84,
+        "renderTypeName": "text",
+        "tableColumnId": 163284387
+      },
+      {
+        "dataTypeName": "text",
+        "description": "Dirección en donde se ejecuto el contrato durante su vigencia",
+        "fieldName": "direcci_n_de_ejecuci_n_del_contrato",
+        "format": {},
+        "id": 636636020,
+        "name": "Dirección de ejecución del contrato",
+        "position": 85,
+        "renderTypeName": "text",
+        "tableColumnId": 169036370
+      }
+    ],
+    "description": "Información de los contratos registrados en SECOP II desde su lanzamiento",
+    "id": "jbjy-vk9h",
+    "name": "SECOP II - Contratos Electrónicos",
+    "rowsUpdatedAt": 1788599380
+  },
+  "sha256": "87b80916bd90074894337ee73fc4f5c6a62591c6e26e4c290cbecb3e7e073e1a",
+  "status": "MATERIALIZED"
+}

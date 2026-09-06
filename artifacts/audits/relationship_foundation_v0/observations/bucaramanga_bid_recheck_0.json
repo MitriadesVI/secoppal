@@ -1,0 +1,20 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:42:17.826945+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,entidad",
+    "$where": "id_del_proceso in ('CO1.REQ.9127909','CO1.REQ.9971227')"
+  },
+  "payload": [
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.9971227",
+      "referencia_del_proceso": "SA-SA-COT-001-2026 COTIZACION ASEO Y CAFETERIA"
+    }
+  ],
+  "sha256": "0a29568a1cb7e9324ce3ca44203a07faa6ec42ba2d1ebabc4a2b2da32ee15a94",
+  "status": "MATERIALIZED"
+}

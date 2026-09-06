@@ -1,0 +1,72 @@
+{
+  "BID_ON": {
+    "assertion_status": "SUPPORTED",
+    "coverage_status": "PARTIAL",
+    "from_type": "SECOP_SUPPLIER",
+    "runtime_status": "SHADOW",
+    "to_type": "PROCESS"
+  },
+  "HAS_CONTRACTOR": {
+    "assertion_status": "SUPPORTED",
+    "coverage_status": "PARTIAL",
+    "from_type": "CONTRACT",
+    "runtime_status": "SHADOW",
+    "to_type": "SECOP_SUPPLIER"
+  },
+  "HAS_RECORDED_CONTRACT": {
+    "assertion_status": "SUPPORTED",
+    "coverage_status": "PARTIAL",
+    "from_type": "PROCESS",
+    "runtime_status": "SHADOW",
+    "to_type": "CONTRACT"
+  },
+  "IN_TERRITORY": {
+    "assertion_status": "SUPPORTED",
+    "coverage_status": "PARTIAL",
+    "from_type": "INSTITUTION",
+    "runtime_status": "SHADOW",
+    "to_type": "TERRITORY"
+  },
+  "MEMBER_OF_SUPPLIER_GROUP": {
+    "assertion_status": "SUPPORTED",
+    "coverage_status": "PARTIAL",
+    "from_type": "SECOP_SUPPLIER",
+    "runtime_status": "SHADOW",
+    "to_type": "SUPPLIER_GROUP"
+  },
+  "PLANNED_AS": {
+    "assertion_status": "UNSUPPORTED",
+    "coverage_status": "UNKNOWN",
+    "from_type": "PAA_ITEM",
+    "runtime_status": "DEFERRED",
+    "to_type": "PROCESS"
+  },
+  "PUBLISHED": {
+    "assertion_status": "SUPPORTED",
+    "coverage_status": "PARTIAL",
+    "from_type": "INSTITUTION",
+    "runtime_status": "SHADOW",
+    "to_type": "PROCESS"
+  },
+  "PUBLISHED_CONTRACT": {
+    "assertion_status": "SUPPORTED",
+    "coverage_status": "PARTIAL",
+    "from_type": "INSTITUTION",
+    "runtime_status": "SHADOW",
+    "to_type": "CONTRACT"
+  },
+  "REPRESENTS_ACTOR": {
+    "assertion_status": "UNSUPPORTED",
+    "coverage_status": "UNKNOWN",
+    "from_type": "SECOP_SUPPLIER",
+    "runtime_status": "DEFERRED",
+    "to_type": "ACTOR"
+  },
+  "SELECTED_IN_BUYER_GROUP": {
+    "assertion_status": "SUPPORTED",
+    "coverage_status": "COMPLETE",
+    "from_type": "INSTITUTION",
+    "runtime_status": "SHADOW",
+    "to_type": "BUYER_GROUP"
+  }
+}

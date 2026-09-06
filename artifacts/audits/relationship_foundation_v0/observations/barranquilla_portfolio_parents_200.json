@@ -1,0 +1,285 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:44:37.399936+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_portafolio,id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,id_del_portafolio,entidad",
+    "$where": "id_del_portafolio in ('CO1.BDOS.1239795','CO1.BDOS.1239796','CO1.BDOS.1239898','CO1.BDOS.1239911','CO1.BDOS.1239919','CO1.BDOS.1240116','CO1.BDOS.1240123','CO1.BDOS.1240125','CO1.BDOS.1240214','CO1.BDOS.1240226','CO1.BDOS.1240233','CO1.BDOS.1240238','CO1.BDOS.1240328','CO1.BDOS.1240331','CO1.BDOS.1240401','CO1.BDOS.1240404','CO1.BDOS.1242964','CO1.BDOS.1243049','CO1.BDOS.1243060','CO1.BDOS.1243073','CO1.BDOS.1243089','CO1.BDOS.1243095','CO1.BDOS.1243142','CO1.BDOS.1243186','CO1.BDOS.1243215','CO1.BDOS.1243246','CO1.BDOS.1243247','CO1.BDOS.1243248','CO1.BDOS.1243293','CO1.BDOS.1243314','CO1.BDOS.1243326','CO1.BDOS.1243327','CO1.BDOS.1243348','CO1.BDOS.1243392','CO1.BDOS.1243432','CO1.BDOS.1243518','CO1.BDOS.1243701','CO1.BDOS.1243709','CO1.BDOS.1243807','CO1.BDOS.696694','CO1.BDOS.744808','CO1.BDOS.766723','CO1.BDOS.885031','CO1.BDOS.905502','CO1.BDOS.932807')"
+  },
+  "payload": [
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1239795",
+      "id_del_proceso": "CO1.REQ.1278822",
+      "referencia_del_proceso": "CD-01-2020-192"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1239796",
+      "id_del_proceso": "CO1.REQ.1279102",
+      "referencia_del_proceso": "CD-57-2020-0168"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1239898",
+      "id_del_proceso": "CO1.REQ.1278831",
+      "referencia_del_proceso": "CD-60-2020-246"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1239911",
+      "id_del_proceso": "CO1.REQ.1278292",
+      "referencia_del_proceso": "CD-45-2020-201"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1239919",
+      "id_del_proceso": "CO1.REQ.1278375",
+      "referencia_del_proceso": "CD-57-2020-0166"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240116",
+      "id_del_proceso": "CO1.REQ.1278480",
+      "referencia_del_proceso": "CD-01-2020-191"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240123",
+      "id_del_proceso": "CO1.REQ.1278826",
+      "referencia_del_proceso": "CD-60-2020-243"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240125",
+      "id_del_proceso": "CO1.REQ.1279109",
+      "referencia_del_proceso": "CD-57-2020-252"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240214",
+      "id_del_proceso": "CO1.REQ.1278616",
+      "referencia_del_proceso": "CD-60-2020-244"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240226",
+      "id_del_proceso": "CO1.REQ.1278623",
+      "referencia_del_proceso": "CD-60-2020-247"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240233",
+      "id_del_proceso": "CO1.REQ.1278740",
+      "referencia_del_proceso": "CD-01-2020-195"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240238",
+      "id_del_proceso": "CO1.REQ.1279302",
+      "referencia_del_proceso": "CD-08-2020-186"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240328",
+      "id_del_proceso": "CO1.REQ.1278625",
+      "referencia_del_proceso": "CD-01-2020-194"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240331",
+      "id_del_proceso": "CO1.REQ.1279217",
+      "referencia_del_proceso": "CD-08-2020-187"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240401",
+      "id_del_proceso": "CO1.REQ.1278615",
+      "referencia_del_proceso": "CD-01-2020-193"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1240404",
+      "id_del_proceso": "CO1.REQ.1278619",
+      "referencia_del_proceso": "CD-60-2020-245"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1242964",
+      "id_del_proceso": "CO1.REQ.1281756",
+      "referencia_del_proceso": "CD-60-2020-251"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243049",
+      "id_del_proceso": "CO1.REQ.1281825",
+      "referencia_del_proceso": "CD-60-2020-248"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243060",
+      "id_del_proceso": "CO1.REQ.1281828",
+      "referencia_del_proceso": "CD-48-2020-206"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243073",
+      "id_del_proceso": "CO1.REQ.1281568",
+      "referencia_del_proceso": "CD-57-2020-0171"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243089",
+      "id_del_proceso": "CO1.REQ.1281768",
+      "referencia_del_proceso": "CD-57-2020-0173"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243095",
+      "id_del_proceso": "CO1.REQ.1281687",
+      "referencia_del_proceso": "CD-57-2020-0174"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243142",
+      "id_del_proceso": "CO1.REQ.1281658",
+      "referencia_del_proceso": "CD-48-2020-207"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243186",
+      "id_del_proceso": "CO1.REQ.1281790",
+      "referencia_del_proceso": "CD-01-2020-196"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243215",
+      "id_del_proceso": "CO1.REQ.1281514",
+      "referencia_del_proceso": "CD-48-2020-202"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243246",
+      "id_del_proceso": "CO1.REQ.1281642",
+      "referencia_del_proceso": "CD-48-2020-204"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243247",
+      "id_del_proceso": "CO1.REQ.1281648",
+      "referencia_del_proceso": "CD-57-2020-0169"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243248",
+      "id_del_proceso": "CO1.REQ.1281826",
+      "referencia_del_proceso": "CD-48-2020-205"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243293",
+      "id_del_proceso": "CO1.REQ.1281692",
+      "referencia_del_proceso": "CD-57-2020-0176"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243314",
+      "id_del_proceso": "CO1.REQ.1281723",
+      "referencia_del_proceso": "CD-48-2020-203"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243326",
+      "id_del_proceso": "CO1.REQ.1281741",
+      "referencia_del_proceso": "CD-60-2020-249"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243327",
+      "id_del_proceso": "CO1.REQ.1281559",
+      "referencia_del_proceso": "CD-57-2020-0170"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243348",
+      "id_del_proceso": "CO1.REQ.1281460",
+      "referencia_del_proceso": "CD-60-2020-250"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243392",
+      "id_del_proceso": "CO1.REQ.1282040",
+      "referencia_del_proceso": "CD-01-2020-197"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243432",
+      "id_del_proceso": "CO1.REQ.1282310",
+      "referencia_del_proceso": "CD-57-2020-0179"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243518",
+      "id_del_proceso": "CO1.REQ.1282027",
+      "referencia_del_proceso": "CD-57-2020-0178"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243701",
+      "id_del_proceso": "CO1.REQ.1281900",
+      "referencia_del_proceso": "CD-57-2020-0175"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243709",
+      "id_del_proceso": "CO1.REQ.1281911",
+      "referencia_del_proceso": "CD-57-2020-0177"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.1243807",
+      "id_del_proceso": "CO1.REQ.1282237",
+      "referencia_del_proceso": "CD-01-2020-198"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.696694",
+      "id_del_proceso": "CO1.REQ.718104",
+      "referencia_del_proceso": "RE-001-2019"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.744808",
+      "id_del_proceso": "CO1.REQ.766171",
+      "referencia_del_proceso": "RE-002-2019"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.766723",
+      "id_del_proceso": "CO1.REQ.789104",
+      "referencia_del_proceso": "RE 003-2019"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.885031",
+      "id_del_proceso": "CO1.REQ.914739",
+      "referencia_del_proceso": "IMC-045-2019"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.905502",
+      "id_del_proceso": "CO1.REQ.936647",
+      "referencia_del_proceso": "IMC-051-2019"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_portafolio": "CO1.BDOS.932807",
+      "id_del_proceso": "CO1.REQ.966508",
+      "referencia_del_proceso": "IMC-053-2019"
+    }
+  ],
+  "sha256": "2409bbad0738e28fe6d6ac30aabfb505956801a64acc1304ca58f4dc853061a6",
+  "status": "MATERIALIZED"
+}

@@ -1,0 +1,597 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:44:40.195722+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_portafolio,id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,id_del_portafolio,entidad",
+    "$where": "id_del_portafolio in ('CO1.BDOS.1939026','CO1.BDOS.1939029','CO1.BDOS.1939040','CO1.BDOS.1939050','CO1.BDOS.1939059','CO1.BDOS.1939072','CO1.BDOS.1939076','CO1.BDOS.1939119','CO1.BDOS.1939140','CO1.BDOS.1939241','CO1.BDOS.1939252','CO1.BDOS.1939261','CO1.BDOS.1939280','CO1.BDOS.1939317','CO1.BDOS.1939336','CO1.BDOS.1939360','CO1.BDOS.1939364','CO1.BDOS.1939378','CO1.BDOS.1939382','CO1.BDOS.1939396','CO1.BDOS.1939416','CO1.BDOS.1939420','CO1.BDOS.1939502','CO1.BDOS.1939633','CO1.BDOS.1940239','CO1.BDOS.1942479','CO1.BDOS.1942556','CO1.BDOS.1942591','CO1.BDOS.1942836','CO1.BDOS.1942849','CO1.BDOS.1943012','CO1.BDOS.1953976','CO1.BDOS.1953982','CO1.BDOS.1953989','CO1.BDOS.1955717','CO1.BDOS.1955735','CO1.BDOS.1957137','CO1.BDOS.1957873','CO1.BDOS.1962482','CO1.BDOS.1962865','CO1.BDOS.1963133','CO1.BDOS.1963147','CO1.BDOS.1964247','CO1.BDOS.1966636','CO1.BDOS.1967921','CO1.BDOS.1968513','CO1.BDOS.1969457','CO1.BDOS.1969620','CO1.BDOS.1969745','CO1.BDOS.1969854','CO1.BDOS.1969874','CO1.BDOS.1969936','CO1.BDOS.1971346','CO1.BDOS.1971562','CO1.BDOS.1972019','CO1.BDOS.1972743','CO1.BDOS.1974109','CO1.BDOS.1974650','CO1.BDOS.1974658','CO1.BDOS.1974712','CO1.BDOS.1974995','CO1.BDOS.1975630','CO1.BDOS.1975639','CO1.BDOS.1975663','CO1.BDOS.1976002','CO1.BDOS.1988799','CO1.BDOS.1989244','CO1.BDOS.1989586','CO1.BDOS.1990807','CO1.BDOS.1993101','CO1.BDOS.1993915','CO1.BDOS.1994055','CO1.BDOS.1996077','CO1.BDOS.1996087','CO1.BDOS.2011479','CO1.BDOS.2011804','CO1.BDOS.2013857','CO1.BDOS.2014053','CO1.BDOS.2015705','CO1.BDOS.2021377','CO1.BDOS.2022341','CO1.BDOS.2028774','CO1.BDOS.2029015','CO1.BDOS.2033761','CO1.BDOS.2037476','CO1.BDOS.2038010','CO1.BDOS.2040394','CO1.BDOS.2044071','CO1.BDOS.2044102','CO1.BDOS.2052671','CO1.BDOS.2053081','CO1.BDOS.2053180','CO1.BDOS.2053919','CO1.BDOS.2059468','CO1.BDOS.2061258','CO1.BDOS.2063060','CO1.BDOS.2065157','CO1.BDOS.2066312','CO1.BDOS.2077824','CO1.BDOS.2078500')"
+  },
+  "payload": [
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939026",
+      "id_del_proceso": "CO1.REQ.1992431",
+      "referencia_del_proceso": "150-10-07-131-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939029",
+      "id_del_proceso": "CO1.REQ.1992242",
+      "referencia_del_proceso": "150-10-07-132-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939050",
+      "id_del_proceso": "CO1.REQ.1992459",
+      "referencia_del_proceso": "150-10-07-140-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939059",
+      "id_del_proceso": "CO1.REQ.1992554",
+      "referencia_del_proceso": "150-10-07-141-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939072",
+      "id_del_proceso": "CO1.REQ.1992572",
+      "referencia_del_proceso": "150-10-07-146-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939076",
+      "id_del_proceso": "CO1.REQ.1992296",
+      "referencia_del_proceso": "150-10-07-147-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939119",
+      "id_del_proceso": "CO1.REQ.1992616",
+      "referencia_del_proceso": "150-10-07-127-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939140",
+      "id_del_proceso": "CO1.REQ.1992445",
+      "referencia_del_proceso": "150-10-07-135-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939241",
+      "id_del_proceso": "CO1.REQ.1992531",
+      "referencia_del_proceso": "150-10-07-134-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939252",
+      "id_del_proceso": "CO1.REQ.1992347",
+      "referencia_del_proceso": "150-10-07-139-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939261",
+      "id_del_proceso": "CO1.REQ.1992354",
+      "referencia_del_proceso": "150-10-07-142-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939280",
+      "id_del_proceso": "CO1.REQ.1992497",
+      "referencia_del_proceso": "150-10-07-152-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939317",
+      "id_del_proceso": "CO1.REQ.1992420",
+      "referencia_del_proceso": "150-10-07-128-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939336",
+      "id_del_proceso": "CO1.REQ.1992267",
+      "referencia_del_proceso": "150-10-07-137-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939360",
+      "id_del_proceso": "CO1.REQ.1992560",
+      "referencia_del_proceso": "150-10-07-143-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939364",
+      "id_del_proceso": "CO1.REQ.1992359",
+      "referencia_del_proceso": "150-10-07-144-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939378",
+      "id_del_proceso": "CO1.REQ.1992483",
+      "referencia_del_proceso": "150-10-07-148-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939382",
+      "id_del_proceso": "CO1.REQ.1992689",
+      "referencia_del_proceso": "150-10-07-149-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939396",
+      "id_del_proceso": "CO1.REQ.1992697",
+      "referencia_del_proceso": "150-10-07-150-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939416",
+      "id_del_proceso": "CO1.REQ.1992716",
+      "referencia_del_proceso": "150-10-07-153-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939420",
+      "id_del_proceso": "CO1.REQ.1992919",
+      "referencia_del_proceso": "150-10-07-154-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939502",
+      "id_del_proceso": "CO1.REQ.1992374",
+      "referencia_del_proceso": "150-10-07-151-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1939633",
+      "id_del_proceso": "CO1.REQ.1993023",
+      "referencia_del_proceso": "180-10-07-109-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1940239",
+      "id_del_proceso": "CO1.REQ.1993547",
+      "referencia_del_proceso": "104.10.07.153-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1942479",
+      "id_del_proceso": "CO1.REQ.1996223",
+      "referencia_del_proceso": "LP-BS-001-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1942479",
+      "id_del_proceso": "CO1.REQ.2030359",
+      "referencia_del_proceso": "LP-BS-001-2021 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1942556",
+      "id_del_proceso": "CO1.REQ.1996153",
+      "referencia_del_proceso": "130-10-07-194-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1942591",
+      "id_del_proceso": "CO1.REQ.1995892",
+      "referencia_del_proceso": "110-10-07-0071-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1955717",
+      "id_del_proceso": "CO1.REQ.2010022",
+      "referencia_del_proceso": "150-11-003-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1955735",
+      "id_del_proceso": "CO1.REQ.2009746",
+      "referencia_del_proceso": "170-10-07-122-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1957137",
+      "id_del_proceso": "CO1.REQ.2010898",
+      "referencia_del_proceso": "170-10-11-001-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1957873",
+      "id_del_proceso": "CO1.REQ.2011968",
+      "referencia_del_proceso": "160-10-07-0117-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1963147",
+      "id_del_proceso": "CO1.REQ.2017357",
+      "referencia_del_proceso": "104.10.07.154-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1964247",
+      "id_del_proceso": "CO1.REQ.2018249",
+      "referencia_del_proceso": "130-10-09-001-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1966636",
+      "id_del_proceso": "CO1.REQ.2021636",
+      "referencia_del_proceso": "CM-BS-001-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1966636",
+      "id_del_proceso": "CO1.REQ.2037257",
+      "referencia_del_proceso": "CM-BS-001-2021 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1966636",
+      "id_del_proceso": "CO1.REQ.2037257",
+      "referencia_del_proceso": "CM-BS-001-2021 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1967921",
+      "id_del_proceso": "CO1.REQ.2022826",
+      "referencia_del_proceso": "160-10-07-0118-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1968513",
+      "id_del_proceso": "CO1.REQ.2022798",
+      "referencia_del_proceso": "160-10-07-0119-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1969457",
+      "id_del_proceso": "CO1.REQ.2043583",
+      "referencia_del_proceso": "140-10.07-091-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1969620",
+      "id_del_proceso": "CO1.REQ.2024512",
+      "referencia_del_proceso": "160-10-02-0003-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1969745",
+      "id_del_proceso": "CO1.REQ.2024455",
+      "referencia_del_proceso": "130-10-07-205-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1969854",
+      "id_del_proceso": "CO1.REQ.2024367",
+      "referencia_del_proceso": "130-10-07-204-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1969874",
+      "id_del_proceso": "CO1.REQ.2024274",
+      "referencia_del_proceso": "130-10-07-206-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1969936",
+      "id_del_proceso": "CO1.REQ.2024542",
+      "referencia_del_proceso": "130-10-09-002-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1971346",
+      "id_del_proceso": "CO1.REQ.2026571",
+      "referencia_del_proceso": "160-10-07-0120-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1971562",
+      "id_del_proceso": "CO1.REQ.2026183",
+      "referencia_del_proceso": "130-10-04-01-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1972019",
+      "id_del_proceso": "CO1.REQ.2026821",
+      "referencia_del_proceso": "130-10-04-02-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1972743",
+      "id_del_proceso": "CO1.REQ.2027184",
+      "referencia_del_proceso": "130-10-07-207-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1974109",
+      "id_del_proceso": "CO1.REQ.2029009",
+      "referencia_del_proceso": "150-10-07-159-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1974712",
+      "id_del_proceso": "CO1.REQ.2029717",
+      "referencia_del_proceso": "110-10-07-074-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1974995",
+      "id_del_proceso": "CO1.REQ.2030167",
+      "referencia_del_proceso": "160-10-07-0121-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1975630",
+      "id_del_proceso": "CO1.REQ.2030641",
+      "referencia_del_proceso": "160-10-02-0004-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1975639",
+      "id_del_proceso": "CO1.REQ.2030648",
+      "referencia_del_proceso": "160-10-02-0005-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1975663",
+      "id_del_proceso": "CO1.REQ.2030870",
+      "referencia_del_proceso": "160-10-07-0123-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1976002",
+      "id_del_proceso": "CO1.REQ.2030924",
+      "referencia_del_proceso": "160-10-07-0122-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1988799",
+      "id_del_proceso": "CO1.REQ.2044815",
+      "referencia_del_proceso": "160-10-02-0006-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1989244",
+      "id_del_proceso": "CO1.REQ.2045030",
+      "referencia_del_proceso": "160-10-02-0007-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1989586",
+      "id_del_proceso": "CO1.REQ.2045000",
+      "referencia_del_proceso": "130-10-09-003-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1990807",
+      "id_del_proceso": "CO1.REQ.2045943",
+      "referencia_del_proceso": "130-11.02-005-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1993101",
+      "id_del_proceso": "CO1.REQ.2048702",
+      "referencia_del_proceso": "150-10-07-160-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1993915",
+      "id_del_proceso": "CO1.REQ.2049517",
+      "referencia_del_proceso": "160-10-02-0008-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1994055",
+      "id_del_proceso": "CO1.REQ.2049299",
+      "referencia_del_proceso": "150-11-004-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1996077",
+      "id_del_proceso": "CO1.REQ.2051383",
+      "referencia_del_proceso": "180.10.11.002.2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.1996087",
+      "id_del_proceso": "CO1.REQ.2051488",
+      "referencia_del_proceso": "110-10-07-075-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2011479",
+      "id_del_proceso": "CO1.REQ.2067908",
+      "referencia_del_proceso": "160-10-07-0124-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2011804",
+      "id_del_proceso": "CO1.REQ.2067704",
+      "referencia_del_proceso": "LP-SI-001-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2011804",
+      "id_del_proceso": "CO1.REQ.2103417",
+      "referencia_del_proceso": "LP-SI-001-2021 (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2013857",
+      "id_del_proceso": "CO1.REQ.2069541",
+      "referencia_del_proceso": "170-10-07-123-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2014053",
+      "id_del_proceso": "CO1.REQ.2070335",
+      "referencia_del_proceso": "110-10-01-003-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2015705",
+      "id_del_proceso": "CO1.REQ.2072106",
+      "referencia_del_proceso": "SAMC-DAP-001-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2015705",
+      "id_del_proceso": "CO1.REQ.2092029",
+      "referencia_del_proceso": "SAMC-DAP-001-2021 (Manifestación de interés (Menor Cuantía))"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2015705",
+      "id_del_proceso": "CO1.REQ.2098221",
+      "referencia_del_proceso": "SAMC-DAP-001-2021 (Manifestación de interés (Menor Cuantía)) (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2021377",
+      "id_del_proceso": "CO1.REQ.2077901",
+      "referencia_del_proceso": "150-10-07-161-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2022341",
+      "id_del_proceso": "CO1.REQ.2078687",
+      "referencia_del_proceso": "150-10-07-162-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2028774",
+      "id_del_proceso": "CO1.REQ.2085544",
+      "referencia_del_proceso": "170-10-07-124-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2029015",
+      "id_del_proceso": "CO1.REQ.2085423",
+      "referencia_del_proceso": "130-11.02-006-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2033761",
+      "id_del_proceso": "CO1.REQ.2090368",
+      "referencia_del_proceso": "130-11.02-007-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2037476",
+      "id_del_proceso": "CO1.REQ.2094760",
+      "referencia_del_proceso": "SAMC-ST-005-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2037476",
+      "id_del_proceso": "CO1.REQ.2117133",
+      "referencia_del_proceso": "SAMC-ST-005-2021 (Manifestación de interés (Menor Cuantía))"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2037476",
+      "id_del_proceso": "CO1.REQ.2121555",
+      "referencia_del_proceso": "SAMC-ST-005-2021 (Manifestación de interés (Menor Cuantía)) (Presentación de oferta)"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2038010",
+      "id_del_proceso": "CO1.REQ.2095017",
+      "referencia_del_proceso": "120.10.07.072-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2040394",
+      "id_del_proceso": "CO1.REQ.2097584",
+      "referencia_del_proceso": "160-10-07-0125-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2044071",
+      "id_del_proceso": "CO1.REQ.2100787",
+      "referencia_del_proceso": "110-10-01-004-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2044102",
+      "id_del_proceso": "CO1.REQ.2101169",
+      "referencia_del_proceso": "120.10.07.073-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2052671",
+      "id_del_proceso": "CO1.REQ.2110667",
+      "referencia_del_proceso": "170-10-07-125-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2053081",
+      "id_del_proceso": "CO1.REQ.2110570",
+      "referencia_del_proceso": "180-10-07-110-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2053180",
+      "id_del_proceso": "CO1.REQ.2110669",
+      "referencia_del_proceso": "180-10-07-111-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2053919",
+      "id_del_proceso": "CO1.REQ.2111628",
+      "referencia_del_proceso": "140-10-07-092--2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2059468",
+      "id_del_proceso": "CO1.REQ.2117238",
+      "referencia_del_proceso": "140-10-07-093-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2061258",
+      "id_del_proceso": "CO1.REQ.2123436",
+      "referencia_del_proceso": "170-10-07.125-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2063060",
+      "id_del_proceso": "CO1.REQ.2121215",
+      "referencia_del_proceso": "MC-ST-003-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2063060",
+      "id_del_proceso": "CO1.REQ.2121215",
+      "referencia_del_proceso": "MC-ST-003-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2065157",
+      "id_del_proceso": "CO1.REQ.2123428",
+      "referencia_del_proceso": "130-10-09-004-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2066312",
+      "id_del_proceso": "CO1.REQ.2124488",
+      "referencia_del_proceso": "130-10-07-208-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2077824",
+      "id_del_proceso": "CO1.REQ.2135958",
+      "referencia_del_proceso": "150-11-005-2021"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_portafolio": "CO1.BDOS.2078500",
+      "id_del_proceso": "CO1.REQ.2137052",
+      "referencia_del_proceso": "170-10-11-002-2021"
+    }
+  ],
+  "sha256": "3a627905a894318874006aaa6f779670eeb1e900d5632bf1e0ad25df2d9533d7",
+  "status": "MATERIALIZED"
+}

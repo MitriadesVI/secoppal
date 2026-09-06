@@ -1,0 +1,92 @@
+{
+  "codegraph": {
+    "base_sha": "c79f8460c84ab26631c2534af106405cb16803f2",
+    "command": "codegraph status",
+    "indexed_worktree": "/Users/rodrigoortiz/Documents/secoppal",
+    "scope": "MCP loaded; CLI query/callers/impact on base authority modules; AST and git diff inspect new-file isolation. No runtime consumers introduced.",
+    "status_output": "\u001b[1m\nCodeGraph Status\n\u001b[0m\n\u001b[36mProject:\u001b[0m /Users/rodrigoortiz/Documents/secoppal\n\n\u001b[1mIndex Statistics:\u001b[0m\n  Files:     750\n  Nodes:     18,017\n  Edges:     40,260\n  DB Size:   62.84 MB\n  Backend:   \u001b[32mnode:sqlite — built-in (full WAL)\u001b[0m\n  Journal:   \u001b[32mwal\u001b[0m\n\n\u001b[1mNodes by Kind:\u001b[0m\n  function        7,454\n  import          4,316\n  variable        2,918\n  method          1,881\n  file            730\n  class           709\n  route           9\n\n\u001b[1mFiles by Language:\u001b[0m\n  python          730\n  yaml            20\n\n\u001b[32m✓\u001b[0m Index is up to date\n\n"
+  },
+  "diff_check": {
+    "command": "git diff --cached --check",
+    "exit_code": 0,
+    "literal_output": "",
+    "log": "artifacts/audits/relationship_foundation_v0/diff_check.log",
+    "scope": "All staged new files and modifications, after storing literal Semgrep output in JSON and trimming display-log whitespace."
+  },
+  "full_suite": "NOT_RUN: shadow-only new module, no productive code changed",
+  "graph_database": "NONE",
+  "model_override": "Task requested GPT-5.6 Codex Extra High; session model was not changed by this task.",
+  "pytest": {
+    "command": ".venv/bin/python -m pytest tests/test_procurement_relationships.py tests/test_module_size_limits.py -q",
+    "exit_code": 0,
+    "literal_output": ".................................                                        [100%]\n33 passed in 1.05s\n",
+    "log": "artifacts/audits/relationship_foundation_v0/pytest.log"
+  },
+  "replay": {
+    "command": ".venv/bin/python scripts/audits/audit_relationship_foundation_v0.py --check",
+    "exit_code": 0,
+    "literal_output": "{\"byte_exact\": true, \"graph_database\": \"NONE\", \"runtime_effect\": \"ZERO\", \"verdict\": \"PASS\"}\n",
+    "log": "artifacts/audits/relationship_foundation_v0/replay.log"
+  },
+  "ruff": {
+    "command": ".venv/bin/ruff check app/ tests/ scripts/",
+    "exit_code": 0,
+    "literal_output": "All checks passed!\n",
+    "log": "artifacts/audits/relationship_foundation_v0/ruff.log"
+  },
+  "runtime_effect": "ZERO",
+  "semgrep": {
+    "command": ".venv/bin/semgrep --config .semgrep/secoppal-laws.yml app/ --metrics=off",
+    "exit_code": 0,
+    "literal_output": "                    \n                    \n┌──────────────────┐\n│ 10 Code Findings │\n└──────────────────┘\n                         \n    app/core/formatter.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          171┆ try:\n          172┆     from app.core.relevance import RelevanceScorer\n          173┆     field = \"objeto_del_contrato\" if dataset_id == \"jbjy-vk9h\" else\n               \"nombre_del_procedimiento\"                                         \n          174┆     scored = RelevanceScorer().score_rows(topic_flat, out, field=field)\n          175┆     out = [r for r, _ in scored]\n          176┆ except Exception:\n          177┆     pass  # best-effort, igual que en normal_flow\n            ⋮┆----------------------------------------\n          699┆ try:\n          700┆     median_str = f\" (la mediana es {format_cop(vs['median'])})\"\n          701┆ except Exception:\n          702┆     pass\n                               \n    app/core/response_policy.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          508┆ try:\n          509┆     result = narrator.narrate(\n          510┆         rows=rows, query=query, channel=channel,\n          511┆         strict=True, universe_insights=insights, suggestions=None,\n          512┆     )\n          513┆     if result and not _contains_numeric_claim(result):\n          514┆         return result\n          515┆ except Exception:\n          516┆     pass\n            ⋮┆----------------------------------------\n          577┆ try:\n          578┆     median_str = f\" (la mediana es {format_cop(vs['median'])})\"\n          579┆ except Exception:\n          580┆     pass\n                                          \n    app/core/workflow/actions/execution.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          339┆ try:\n          340┆     soql = soql_builder.build(state[\"dataset_id\"], relaxed)\n          341┆     count_soql = soql_builder.build_count(state[\"dataset_id\"], relaxed)\n          342┆     total, results, _timings, _approx = _query_first_then_count(\n          343┆         secop_client, state[\"dataset_id\"], count_soql, soql\n          344┆     )\n          345┆     if results:\n          346┆         return _with_timing(\n          347┆             state,\n          348┆             \"degrade_ms\",\n             [hid 9 additional lines, adjust with --max-lines-per-finding] \n                                               \n    app/core/workflow/handlers/direct_lookup.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          366┆ try:\n          367┆     cards = deps.formatter.to_rows(\n          368┆         [dict(r)], ds,\n          369┆         {\"intent_type\": \"direct_lookup\", \"route_reason\": \"entity_ref_disambiguation\"},\n          370┆         reference_instant=reference_instant_utc,\n          371┆     )\n          372┆     if cards:\n          373┆         estado = _estado_visible(cards[0]) or estado\n          374┆         nota_estado = _estado_raw_nota(cards[0])\n          375┆ except Exception:\n             [hid 3 additional lines, adjust with --max-lines-per-finding] \n                                             \n    app/core/workflow/handlers/normal_flow.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          170┆ try:\n          171┆     from app.core.contextual_suggestions import compute_contextual_filters\n          172┆     computed = compute_contextual_filters(\n          173┆         raw_results,\n          174┆         result[\"dataset_id\"],\n          175┆         result.get(\"resolved_params\", {}),\n          176┆     )\n          177┆     result[\"contextual_filters\"] = computed\n          178┆ except Exception:\n          179┆     pass  # best-effort, never block the main flow\n                                            \n    app/core/workflow/handlers/pagination.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          177┆ try:\n          178┆     display_count = max(1, int(deps.formatter.max_results or 25))\n          179┆     if requested_group:\n          180┆         group = requested_group\n          181┆         buffer = deps.conv_store.get_pagination_buffer(ctx.chat_id, group, None)\n          182┆         if buffer is not None:\n          183┆             fetch_params = dict(buffer.query_params)\n          184┆             current_fp = buffer.query_fingerprint\n          185┆         elif isinstance(scope, list) and len(scope) >= 2:\n          186┆             from app.core.workflow.dual_dataset import params_for_dataset\n             [hid 164 additional lines, adjust with --max-lines-per-finding] \n                                       \n    app/core/workflow/handlers/radar.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          109┆ try:\n          110┆     total = run_radar(deps, store, radar).total\n          111┆ except Exception:\n          112┆     pass\n                                            \n    app/core/workflow/handlers/refinement.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n           93┆ try:\n           94┆     from app.core.contextual_suggestions import compute_contextual_filters\n           95┆     result[\"contextual_filters\"] = compute_contextual_filters(\n           96┆         results, ds_id, params,\n           97┆     )\n           98┆ except Exception:\n           99┆     pass\n\n               \n               \n┌─────────────┐\n│ Scan Status │\n└─────────────┘\n  Scanning 258 files tracked by git with 3 Code rules:\n  Scanning 241 files with 3 python rules.\n                \n                \n┌──────────────┐\n│ Scan Summary │\n└──────────────┘\n✅ Scan completed successfully.\n • Findings: 10 (10 blocking)\n • Rules run: 3\n • Targets scanned: 241\n • Parsed lines: ~100.0%\n • Scan skipped: \n   ◦ Files larger than  files 1.0 MB: 1\n • Scan was limited to files tracked by git\n • For a detailed list of skipped files and lines, run semgrep with the --verbose flag\nRan 3 rules on 241 files: 10 findings.\n",
+    "log": "artifacts/audits/relationship_foundation_v0/semgrep.log",
+    "log_note": "Whitespace-trimmed display log; exact literal output, including whitespace, is preserved in this JSON literal_output field."
+  },
+  "semgrep_baseline": {
+    "condition": "NO NEW FINDINGS IN OWNED FILES",
+    "findings": 10,
+    "note": "Executable exits 0 even with blocking findings; global baseline is red.",
+    "owned_file_findings": 0,
+    "unchanged_baseline_files": [
+      {
+        "baseline_sha256": "6f6391988d698c3765d133bd6d089fca4347d255df75180fbfcbd18abf441db5",
+        "file": "app/core/formatter.py"
+      },
+      {
+        "baseline_sha256": "940ab9fb9c08a1fd31339570aa23028f6610088ec46aad2d689af78cc4438ba4",
+        "file": "app/core/response_policy.py"
+      },
+      {
+        "baseline_sha256": "48b2eef6e7baf4d6e57ab225095897feb6fd85c9316b35980c5069557aeff36f",
+        "file": "app/core/workflow/actions/execution.py"
+      },
+      {
+        "baseline_sha256": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
+        "file": "app/core/workflow/handlers/direct_lookup.py"
+      },
+      {
+        "baseline_sha256": "4147a2f3f057a70162e4e1582be3452b51e2047740ccd235da9ff99f0b7e8d83",
+        "file": "app/core/workflow/handlers/normal_flow.py"
+      },
+      {
+        "baseline_sha256": "9d93cc16d8354bbf302ef0ea87acaf78e017309326f4ea717ee47db62ae86b7d",
+        "file": "app/core/workflow/handlers/pagination.py"
+      },
+      {
+        "baseline_sha256": "cfe466c7dba28b577fdf8d8eca0a178004f61b9fe0b5831b5f8e34487d6bcb56",
+        "file": "app/core/workflow/handlers/radar.py"
+      },
+      {
+        "baseline_sha256": "fe1a08d26550d5a39fb4fdddbcb40fd623b89e7ab09c634d0bba7a95db00e076",
+        "file": "app/core/workflow/handlers/refinement.py"
+      }
+    ]
+  },
+  "tool_versions": {
+    "codegraph": "0.9.6",
+    "hypothesis": "6.165.10",
+    "ruff": "ruff 0.16.4",
+    "semgrep": "1.176.0"
+  },
+  "verification_scope": "corrí Ruff, Semgrep, 33 focales con Hypothesis y module-size, replay y diff-check; no la suite"
+}

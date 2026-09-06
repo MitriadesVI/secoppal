@@ -1,0 +1,668 @@
+{
+  "atlantico": {
+    "absence_means_zero": false,
+    "bid_processes": 437,
+    "distinct_pairs": 1373,
+    "duplicate_pair_examples": [
+      {
+        "process": "CO1.REQ.8063676",
+        "rows": 2,
+        "supplier": "728770652"
+      },
+      {
+        "process": "CO1.REQ.8063844",
+        "rows": 2,
+        "supplier": "728770652"
+      }
+    ],
+    "duplicate_pair_excess": 2,
+    "duplicate_pair_rate_pct": 0.145455,
+    "invalid_rows": 0,
+    "lot_level": "UNSUPPORTED",
+    "matched_inside_population": 434,
+    "matched_processes": 434,
+    "multi_bidder_canaries": [
+      {
+        "process": "CO1.REQ.10136730",
+        "suppliers": [
+          "702062050",
+          "710345323",
+          "715545075"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10193702",
+        "suppliers": [
+          "735693343",
+          "735718058"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10197740",
+        "suppliers": [
+          "700117021",
+          "700773070",
+          "706948411",
+          "735754129",
+          "735758112"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10202597",
+        "suppliers": [
+          "701830119",
+          "710470576"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10214107",
+        "suppliers": [
+          "702963976",
+          "714469467",
+          "719027062",
+          "726071103"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10216334",
+        "suppliers": [
+          "704329895",
+          "735719478"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10218238",
+        "suppliers": [
+          "704258821",
+          "705228062",
+          "710317769",
+          "714321130",
+          "718898687",
+          "734813462",
+          "735670101",
+          "735671075",
+          "735677486",
+          "735684128",
+          "735692147",
+          "735692238"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10219436",
+        "suppliers": [
+          "702146366",
+          "703949594",
+          "704791060",
+          "705376044",
+          "707280202",
+          "709753396"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10228498",
+        "suppliers": [
+          "700507015",
+          "717584015",
+          "732634456"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10231176",
+        "suppliers": [
+          "701282139",
+          "702994765",
+          "704882273",
+          "710962234",
+          "713454577",
+          "725815336"
+        ]
+      }
+    ],
+    "orphans": [
+      "CO1.REQ.10211607",
+      "CO1.REQ.9035488",
+      "CO1.REQ.9074905"
+    ],
+    "outside_population_exact_matches": [],
+    "physical_rows": 1375,
+    "population_capped": false,
+    "process_coverage_pct": 14.040764,
+    "process_join_rate_pct": 99.313501,
+    "process_population": 3091,
+    "scope": "exact buyer source names; 2025-01-01 inclusive to 2026-09-07 exclusive",
+    "single_bidder_canaries": [
+      "CO1.REQ.10013652",
+      "CO1.REQ.10013698",
+      "CO1.REQ.10033609",
+      "CO1.REQ.10042307",
+      "CO1.REQ.10071123",
+      "CO1.REQ.10072616",
+      "CO1.REQ.10077080",
+      "CO1.REQ.10079883",
+      "CO1.REQ.10084273",
+      "CO1.REQ.10087308"
+    ],
+    "valid_rows": 1375
+  },
+  "baranoa": {
+    "absence_means_zero": false,
+    "bid_processes": 27,
+    "distinct_pairs": 102,
+    "duplicate_pair_examples": [],
+    "duplicate_pair_excess": 0,
+    "duplicate_pair_rate_pct": 0.0,
+    "invalid_rows": 0,
+    "lot_level": "UNSUPPORTED",
+    "matched_inside_population": 27,
+    "matched_processes": 27,
+    "multi_bidder_canaries": [
+      {
+        "process": "CO1.REQ.10202427",
+        "suppliers": [
+          "706399375",
+          "717204325",
+          "725478838",
+          "732393202",
+          "735671125"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10203785",
+        "suppliers": [
+          "716106083",
+          "731034708"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10204422",
+        "suppliers": [
+          "717204325",
+          "725321467",
+          "732393202",
+          "735671125"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10229051",
+        "suppliers": [
+          "704662493",
+          "712690072"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10275770",
+        "suppliers": [
+          "700891021",
+          "707148177",
+          "713384741",
+          "716106083"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10276439",
+        "suppliers": [
+          "707148177",
+          "708093877",
+          "713384741",
+          "716106083",
+          "720014273",
+          "735786147"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10277667",
+        "suppliers": [
+          "703984435",
+          "704322064",
+          "706543907",
+          "712909191",
+          "718082522",
+          "723283115"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10301398",
+        "suppliers": [
+          "700794076",
+          "700856057",
+          "702451410",
+          "704542513",
+          "706879665",
+          "710596271",
+          "711188326",
+          "711904060",
+          "712213958",
+          "716151337",
+          "720587104",
+          "723423661",
+          "728303025"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10301933",
+        "suppliers": [
+          "700129067",
+          "704641182",
+          "704828045",
+          "712116219",
+          "712213958",
+          "726170699",
+          "728134800",
+          "735852394",
+          "736047069"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10302201",
+        "suppliers": [
+          "700122047",
+          "712213958",
+          "718628647",
+          "720587104",
+          "720596667"
+        ]
+      }
+    ],
+    "orphans": [],
+    "outside_population_exact_matches": [],
+    "physical_rows": 102,
+    "population_capped": false,
+    "process_coverage_pct": 6.733167,
+    "process_join_rate_pct": 100.0,
+    "process_population": 401,
+    "scope": "exact buyer source names; 2025-01-01 inclusive to 2026-09-07 exclusive",
+    "single_bidder_canaries": [
+      "CO1.REQ.10203709",
+      "CO1.REQ.10301988",
+      "CO1.REQ.10327403",
+      "CO1.REQ.10350223",
+      "CO1.REQ.10412139",
+      "CO1.REQ.10418127",
+      "CO1.REQ.10441198",
+      "CO1.REQ.10486423",
+      "CO1.REQ.10491804",
+      "CO1.REQ.10697284"
+    ],
+    "valid_rows": 102
+  },
+  "barranquilla": {
+    "absence_means_zero": false,
+    "bid_processes": 265,
+    "distinct_pairs": 938,
+    "duplicate_pair_examples": [
+      {
+        "process": "CO1.REQ.8092837",
+        "rows": 2,
+        "supplier": "703766451"
+      }
+    ],
+    "duplicate_pair_excess": 1,
+    "duplicate_pair_rate_pct": 0.106496,
+    "invalid_rows": 0,
+    "lot_level": "UNSUPPORTED",
+    "matched_inside_population": 255,
+    "matched_processes": 255,
+    "multi_bidder_canaries": [
+      {
+        "process": "CO1.REQ.10118405",
+        "suppliers": [
+          "700147119",
+          "702020157",
+          "702730920",
+          "713720910",
+          "726566193"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10185424",
+        "suppliers": [
+          "707679544",
+          "712020130",
+          "735610768",
+          "735614059"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10185860",
+        "suppliers": [
+          "701801227",
+          "701910093",
+          "704366038",
+          "735610784",
+          "735610834"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10190711",
+        "suppliers": [
+          "700043037",
+          "700117021",
+          "700273022"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10196744",
+        "suppliers": [
+          "700036056",
+          "726884059"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10200929",
+        "suppliers": [
+          "701116139",
+          "701258030",
+          "702080037",
+          "715209631",
+          "717124077",
+          "717398341"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10206971",
+        "suppliers": [
+          "700043037",
+          "700951122"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10208048",
+        "suppliers": [
+          "703766451",
+          "712690072"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10216505",
+        "suppliers": [
+          "700036056",
+          "726884059"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10232559",
+        "suppliers": [
+          "700147119",
+          "702730920",
+          "703778191",
+          "707454088",
+          "711979088",
+          "713720910"
+        ]
+      }
+    ],
+    "orphans": [
+      "CO1.REQ.10188074",
+      "CO1.REQ.10227037",
+      "CO1.REQ.10301023",
+      "CO1.REQ.8087121",
+      "CO1.REQ.8167613",
+      "CO1.REQ.8321696",
+      "CO1.REQ.8348244",
+      "CO1.REQ.8403366",
+      "CO1.REQ.8428554",
+      "CO1.REQ.8516895"
+    ],
+    "outside_population_exact_matches": [],
+    "physical_rows": 939,
+    "population_capped": false,
+    "process_coverage_pct": 6.599379,
+    "process_join_rate_pct": 96.226415,
+    "process_population": 3864,
+    "scope": "exact buyer source names; 2025-01-01 inclusive to 2026-09-07 exclusive",
+    "single_bidder_canaries": [
+      "CO1.REQ.10108287",
+      "CO1.REQ.10186926",
+      "CO1.REQ.10203519",
+      "CO1.REQ.10208520",
+      "CO1.REQ.10227462",
+      "CO1.REQ.10238850",
+      "CO1.REQ.10252659",
+      "CO1.REQ.10258130",
+      "CO1.REQ.10262035",
+      "CO1.REQ.10274853"
+    ],
+    "valid_rows": 939
+  },
+  "bucaramanga": {
+    "absence_means_zero": false,
+    "bid_processes": 398,
+    "distinct_pairs": 1234,
+    "duplicate_pair_examples": [
+      {
+        "process": "CO1.REQ.9017141",
+        "rows": 2,
+        "supplier": "701910325"
+      },
+      {
+        "process": "CO1.REQ.9017141",
+        "rows": 2,
+        "supplier": "702049289"
+      }
+    ],
+    "duplicate_pair_excess": 2,
+    "duplicate_pair_rate_pct": 0.161812,
+    "invalid_rows": 0,
+    "lot_level": "UNSUPPORTED",
+    "matched_inside_population": 397,
+    "matched_processes": 397,
+    "multi_bidder_canaries": [
+      {
+        "process": "CO1.REQ.10130033",
+        "suppliers": [
+          "702095241",
+          "705137347",
+          "705456622",
+          "713893436"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10146623",
+        "suppliers": [
+          "704628973",
+          "707178794",
+          "717430052",
+          "735459679",
+          "735632325"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10151998",
+        "suppliers": [
+          "706543824",
+          "725620496",
+          "728412362"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10177971",
+        "suppliers": [
+          "700887060",
+          "705103638",
+          "722283462"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10178658",
+        "suppliers": [
+          "701755340",
+          "714390002",
+          "734106594"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10199424",
+        "suppliers": [
+          "700644016",
+          "705103638",
+          "721873214"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10225434",
+        "suppliers": [
+          "700334048",
+          "700364052",
+          "701350050",
+          "735712390"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10228820",
+        "suppliers": [
+          "701076069",
+          "707483921"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10236885",
+        "suppliers": [
+          "730766060",
+          "735794182"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10250460",
+        "suppliers": [
+          "700940042",
+          "706194131",
+          "707030045"
+        ]
+      }
+    ],
+    "orphans": [
+      "CO1.REQ.9127909"
+    ],
+    "outside_population_exact_matches": [],
+    "physical_rows": 1236,
+    "population_capped": false,
+    "process_coverage_pct": 4.014968,
+    "process_join_rate_pct": 99.748744,
+    "process_population": 9888,
+    "scope": "exact buyer source names; 2025-01-01 inclusive to 2026-09-07 exclusive",
+    "single_bidder_canaries": [
+      "CO1.REQ.10182510",
+      "CO1.REQ.10202429",
+      "CO1.REQ.10204108",
+      "CO1.REQ.10220819",
+      "CO1.REQ.10253714",
+      "CO1.REQ.10253970",
+      "CO1.REQ.10259115",
+      "CO1.REQ.10272368",
+      "CO1.REQ.10300915",
+      "CO1.REQ.10339868"
+    ],
+    "valid_rows": 1236
+  },
+  "yumbo": {
+    "absence_means_zero": false,
+    "bid_processes": 225,
+    "distinct_pairs": 334,
+    "duplicate_pair_examples": [],
+    "duplicate_pair_excess": 0,
+    "duplicate_pair_rate_pct": 0.0,
+    "invalid_rows": 0,
+    "lot_level": "UNSUPPORTED",
+    "matched_inside_population": 225,
+    "matched_processes": 225,
+    "multi_bidder_canaries": [
+      {
+        "process": "CO1.REQ.10107224",
+        "suppliers": [
+          "700815509",
+          "725601652"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10203127",
+        "suppliers": [
+          "700940042",
+          "701678138",
+          "727725236"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10280483",
+        "suppliers": [
+          "706941663",
+          "726026651"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10285110",
+        "suppliers": [
+          "701101156",
+          "723202859",
+          "725620496"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10330172",
+        "suppliers": [
+          "704242320",
+          "730648219"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10331755",
+        "suppliers": [
+          "707966065",
+          "718860919",
+          "730433224"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10338011",
+        "suppliers": [
+          "700906183",
+          "707530325"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10344965",
+        "suppliers": [
+          "702055054",
+          "708876826",
+          "724832522",
+          "725456586",
+          "727755407"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10381011",
+        "suppliers": [
+          "706838059",
+          "727112435"
+        ]
+      },
+      {
+        "process": "CO1.REQ.10423903",
+        "suppliers": [
+          "707966065",
+          "736325424"
+        ]
+      }
+    ],
+    "orphans": [],
+    "outside_population_exact_matches": [],
+    "physical_rows": 334,
+    "population_capped": false,
+    "process_coverage_pct": 3.083036,
+    "process_join_rate_pct": 100.0,
+    "process_population": 7298,
+    "scope": "exact buyer source names; 2025-01-01 inclusive to 2026-09-07 exclusive",
+    "single_bidder_canaries": [
+      "CO1.REQ.10032078",
+      "CO1.REQ.10038323",
+      "CO1.REQ.10039381",
+      "CO1.REQ.10041292",
+      "CO1.REQ.10201512",
+      "CO1.REQ.10201564",
+      "CO1.REQ.10203680",
+      "CO1.REQ.10229218",
+      "CO1.REQ.10249628",
+      "CO1.REQ.10258356"
+    ],
+    "valid_rows": 334
+  }
+}

@@ -1,0 +1,6195 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/hgi6-6wh3.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:41:54.740580+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_procedimiento,codigo_proveedor",
+    "$select": "id_procedimiento,codigo_proveedor,entidad_compradora",
+    "$where": "entidad_compradora in ('MUNICIPIO DE BUCARAMANGA') AND fecha_publicaci_n >= '2025-01-01T00:00:00' AND fecha_publicaci_n < '2026-09-07T00:00:00'"
+  },
+  "payload": [
+    {
+      "codigo_proveedor": "702095241",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10130033"
+    },
+    {
+      "codigo_proveedor": "705137347",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10130033"
+    },
+    {
+      "codigo_proveedor": "705456622",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10130033"
+    },
+    {
+      "codigo_proveedor": "713893436",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10130033"
+    },
+    {
+      "codigo_proveedor": "704628973",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10146623"
+    },
+    {
+      "codigo_proveedor": "707178794",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10146623"
+    },
+    {
+      "codigo_proveedor": "717430052",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10146623"
+    },
+    {
+      "codigo_proveedor": "735459679",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10146623"
+    },
+    {
+      "codigo_proveedor": "735632325",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10146623"
+    },
+    {
+      "codigo_proveedor": "706543824",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10151998"
+    },
+    {
+      "codigo_proveedor": "725620496",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10151998"
+    },
+    {
+      "codigo_proveedor": "728412362",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10151998"
+    },
+    {
+      "codigo_proveedor": "700887060",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10177971"
+    },
+    {
+      "codigo_proveedor": "705103638",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10177971"
+    },
+    {
+      "codigo_proveedor": "722283462",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10177971"
+    },
+    {
+      "codigo_proveedor": "701755340",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10178658"
+    },
+    {
+      "codigo_proveedor": "714390002",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10178658"
+    },
+    {
+      "codigo_proveedor": "734106594",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10178658"
+    },
+    {
+      "codigo_proveedor": "705377513",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10182510"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10199424"
+    },
+    {
+      "codigo_proveedor": "705103638",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10199424"
+    },
+    {
+      "codigo_proveedor": "721873214",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10199424"
+    },
+    {
+      "codigo_proveedor": "705377513",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10202429"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10204108"
+    },
+    {
+      "codigo_proveedor": "735916603",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10220819"
+    },
+    {
+      "codigo_proveedor": "700334048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10225434"
+    },
+    {
+      "codigo_proveedor": "700364052",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10225434"
+    },
+    {
+      "codigo_proveedor": "701350050",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10225434"
+    },
+    {
+      "codigo_proveedor": "735712390",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10225434"
+    },
+    {
+      "codigo_proveedor": "701076069",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10228820"
+    },
+    {
+      "codigo_proveedor": "707483921",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10228820"
+    },
+    {
+      "codigo_proveedor": "730766060",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10236885"
+    },
+    {
+      "codigo_proveedor": "735794182",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10236885"
+    },
+    {
+      "codigo_proveedor": "700940042",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10250460"
+    },
+    {
+      "codigo_proveedor": "706194131",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10250460"
+    },
+    {
+      "codigo_proveedor": "707030045",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10250460"
+    },
+    {
+      "codigo_proveedor": "702491341",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10253714"
+    },
+    {
+      "codigo_proveedor": "734324056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10253970"
+    },
+    {
+      "codigo_proveedor": "705377513",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10259115"
+    },
+    {
+      "codigo_proveedor": "700887060",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10264429"
+    },
+    {
+      "codigo_proveedor": "704237544",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10264429"
+    },
+    {
+      "codigo_proveedor": "705103638",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10264429"
+    },
+    {
+      "codigo_proveedor": "720905397",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10264429"
+    },
+    {
+      "codigo_proveedor": "735817223",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10264429"
+    },
+    {
+      "codigo_proveedor": "701817041",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10266289"
+    },
+    {
+      "codigo_proveedor": "707243820",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10266289"
+    },
+    {
+      "codigo_proveedor": "707518551",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10266289"
+    },
+    {
+      "codigo_proveedor": "716178215",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10266289"
+    },
+    {
+      "codigo_proveedor": "726476138",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10266289"
+    },
+    {
+      "codigo_proveedor": "731667457",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10266289"
+    },
+    {
+      "codigo_proveedor": "734370083",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10266289"
+    },
+    {
+      "codigo_proveedor": "735920449",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10266289"
+    },
+    {
+      "codigo_proveedor": "704338102",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10272368"
+    },
+    {
+      "codigo_proveedor": "720456243",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10292189"
+    },
+    {
+      "codigo_proveedor": "721334175",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10292189"
+    },
+    {
+      "codigo_proveedor": "735993248",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10296305"
+    },
+    {
+      "codigo_proveedor": "736047382",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10296305"
+    },
+    {
+      "codigo_proveedor": "736049206",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10296305"
+    },
+    {
+      "codigo_proveedor": "703926071",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10300915"
+    },
+    {
+      "codigo_proveedor": "700742141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10301578"
+    },
+    {
+      "codigo_proveedor": "706863156",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10301578"
+    },
+    {
+      "codigo_proveedor": "706071644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10309729"
+    },
+    {
+      "codigo_proveedor": "734324056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10309729"
+    },
+    {
+      "codigo_proveedor": "707867313",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10326134"
+    },
+    {
+      "codigo_proveedor": "715567228",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10326134"
+    },
+    {
+      "codigo_proveedor": "701755340",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10327720"
+    },
+    {
+      "codigo_proveedor": "736123662",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10327720"
+    },
+    {
+      "codigo_proveedor": "736126517",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10327720"
+    },
+    {
+      "codigo_proveedor": "700579048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10339868"
+    },
+    {
+      "codigo_proveedor": "707030771",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340089"
+    },
+    {
+      "codigo_proveedor": "717716401",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340089"
+    },
+    {
+      "codigo_proveedor": "727545014",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340089"
+    },
+    {
+      "codigo_proveedor": "703984872",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340262"
+    },
+    {
+      "codigo_proveedor": "700579048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340528"
+    },
+    {
+      "codigo_proveedor": "711368126",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340528"
+    },
+    {
+      "codigo_proveedor": "713865129",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340528"
+    },
+    {
+      "codigo_proveedor": "700579048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340803"
+    },
+    {
+      "codigo_proveedor": "701125015",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340803"
+    },
+    {
+      "codigo_proveedor": "711368126",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340803"
+    },
+    {
+      "codigo_proveedor": "713865129",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340803"
+    },
+    {
+      "codigo_proveedor": "719113391",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10340803"
+    },
+    {
+      "codigo_proveedor": "736838350",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10344196"
+    },
+    {
+      "codigo_proveedor": "719783177",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10348423"
+    },
+    {
+      "codigo_proveedor": "704165208",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "715021432",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "736237165",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "736283276",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "736290248",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "736290313",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "736294083",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "736300179",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "736301136",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "736302134",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10355031"
+    },
+    {
+      "codigo_proveedor": "709649198",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10356631"
+    },
+    {
+      "codigo_proveedor": "700142029",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10379257"
+    },
+    {
+      "codigo_proveedor": "704037142",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10398534"
+    },
+    {
+      "codigo_proveedor": "706518149",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10398534"
+    },
+    {
+      "codigo_proveedor": "706737053",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10398534"
+    },
+    {
+      "codigo_proveedor": "706071644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10398884"
+    },
+    {
+      "codigo_proveedor": "721355105",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10406619"
+    },
+    {
+      "codigo_proveedor": "726645229",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10406619"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10407740"
+    },
+    {
+      "codigo_proveedor": "707774261",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10407740"
+    },
+    {
+      "codigo_proveedor": "723283115",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10407740"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10407901"
+    },
+    {
+      "codigo_proveedor": "712745918",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10407901"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10409241"
+    },
+    {
+      "codigo_proveedor": "702217191",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10414019"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10414949"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10414949"
+    },
+    {
+      "codigo_proveedor": "705298024",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10414949"
+    },
+    {
+      "codigo_proveedor": "729909929",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10414949"
+    },
+    {
+      "codigo_proveedor": "732721592",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10414949"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10418160"
+    },
+    {
+      "codigo_proveedor": "726927098",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10418160"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10419083"
+    },
+    {
+      "codigo_proveedor": "721873214",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10419083"
+    },
+    {
+      "codigo_proveedor": "702743055",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10428533"
+    },
+    {
+      "codigo_proveedor": "706543907",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10428533"
+    },
+    {
+      "codigo_proveedor": "713608388",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10428533"
+    },
+    {
+      "codigo_proveedor": "724019179",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10428533"
+    },
+    {
+      "codigo_proveedor": "725958128",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10428533"
+    },
+    {
+      "codigo_proveedor": "736283565",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10428533"
+    },
+    {
+      "codigo_proveedor": "704754431",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10429439"
+    },
+    {
+      "codigo_proveedor": "707770467",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10429439"
+    },
+    {
+      "codigo_proveedor": "711947317",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10429439"
+    },
+    {
+      "codigo_proveedor": "702200031",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10431456"
+    },
+    {
+      "codigo_proveedor": "717716401",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10431456"
+    },
+    {
+      "codigo_proveedor": "726204225",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10431456"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10433067"
+    },
+    {
+      "codigo_proveedor": "721873214",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10433067"
+    },
+    {
+      "codigo_proveedor": "736484197",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10433067"
+    },
+    {
+      "codigo_proveedor": "709716104",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10433946"
+    },
+    {
+      "codigo_proveedor": "721355105",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10435687"
+    },
+    {
+      "codigo_proveedor": "736554049",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10436032"
+    },
+    {
+      "codigo_proveedor": "736555988",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10436032"
+    },
+    {
+      "codigo_proveedor": "700887060",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10438546"
+    },
+    {
+      "codigo_proveedor": "701755340",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10438546"
+    },
+    {
+      "codigo_proveedor": "735696460",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10438546"
+    },
+    {
+      "codigo_proveedor": "718660426",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10440071"
+    },
+    {
+      "codigo_proveedor": "719448474",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10440071"
+    },
+    {
+      "codigo_proveedor": "736463191",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10441948"
+    },
+    {
+      "codigo_proveedor": "706779709",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10450272"
+    },
+    {
+      "codigo_proveedor": "711020271",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10450272"
+    },
+    {
+      "codigo_proveedor": "717430052",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10450272"
+    },
+    {
+      "codigo_proveedor": "719018665",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10450272"
+    },
+    {
+      "codigo_proveedor": "701914269",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10451768"
+    },
+    {
+      "codigo_proveedor": "705964914",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10454511"
+    },
+    {
+      "codigo_proveedor": "736581117",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10458544"
+    },
+    {
+      "codigo_proveedor": "736622499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10458544"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10462288"
+    },
+    {
+      "codigo_proveedor": "736587072",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10462288"
+    },
+    {
+      "codigo_proveedor": "706071644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10467479"
+    },
+    {
+      "codigo_proveedor": "734324056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10467479"
+    },
+    {
+      "codigo_proveedor": "701280034",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10468602"
+    },
+    {
+      "codigo_proveedor": "711368126",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10468602"
+    },
+    {
+      "codigo_proveedor": "711427575",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10468602"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10478532"
+    },
+    {
+      "codigo_proveedor": "712745918",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10478532"
+    },
+    {
+      "codigo_proveedor": "729437467",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10478532"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10479183"
+    },
+    {
+      "codigo_proveedor": "700748049",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10479183"
+    },
+    {
+      "codigo_proveedor": "705377513",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10484869"
+    },
+    {
+      "codigo_proveedor": "700303035",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10490236"
+    },
+    {
+      "codigo_proveedor": "718477243",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10490236"
+    },
+    {
+      "codigo_proveedor": "729587188",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10490236"
+    },
+    {
+      "codigo_proveedor": "702395237",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10493520"
+    },
+    {
+      "codigo_proveedor": "718173735",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10493520"
+    },
+    {
+      "codigo_proveedor": "716023338",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10496324"
+    },
+    {
+      "codigo_proveedor": "700537012",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "703392324",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "703891630",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "705626364",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "708065792",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "719913659",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "724613807",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "728257510",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "729090878",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "730744240",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736710534",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736717117",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736732041",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736735168",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736737701",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736739855",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736739939",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736741026",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736742263",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736746165",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "736748039",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10498695"
+    },
+    {
+      "codigo_proveedor": "708006564",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10499401"
+    },
+    {
+      "codigo_proveedor": "736717067",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10499401"
+    },
+    {
+      "codigo_proveedor": "736601931",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10501637"
+    },
+    {
+      "codigo_proveedor": "730319043",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10503396"
+    },
+    {
+      "codigo_proveedor": "700787419",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10512256"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10512256"
+    },
+    {
+      "codigo_proveedor": "701222176",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10515224"
+    },
+    {
+      "codigo_proveedor": "711338087",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10515224"
+    },
+    {
+      "codigo_proveedor": "716466065",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10515224"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10528427"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10528427"
+    },
+    {
+      "codigo_proveedor": "711368126",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10528427"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10539990"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10541252"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10541252"
+    },
+    {
+      "codigo_proveedor": "702397100",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10541252"
+    },
+    {
+      "codigo_proveedor": "709578520",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10541252"
+    },
+    {
+      "codigo_proveedor": "737039057",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10541252"
+    },
+    {
+      "codigo_proveedor": "700036056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10545026"
+    },
+    {
+      "codigo_proveedor": "700562044",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10545026"
+    },
+    {
+      "codigo_proveedor": "704709419",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10545026"
+    },
+    {
+      "codigo_proveedor": "700306053",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10547935"
+    },
+    {
+      "codigo_proveedor": "700326028",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10547935"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10554390"
+    },
+    {
+      "codigo_proveedor": "704007624",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10574620"
+    },
+    {
+      "codigo_proveedor": "726226442",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10574620"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10581799"
+    },
+    {
+      "codigo_proveedor": "706737053",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10581799"
+    },
+    {
+      "codigo_proveedor": "726927098",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10581799"
+    },
+    {
+      "codigo_proveedor": "732208574",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10581799"
+    },
+    {
+      "codigo_proveedor": "702541400",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10590841"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10590841"
+    },
+    {
+      "codigo_proveedor": "705279743",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10590841"
+    },
+    {
+      "codigo_proveedor": "703372722",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10594609"
+    },
+    {
+      "codigo_proveedor": "704110006",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10594609"
+    },
+    {
+      "codigo_proveedor": "704873223",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10594609"
+    },
+    {
+      "codigo_proveedor": "705514487",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10594609"
+    },
+    {
+      "codigo_proveedor": "711427575",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10594609"
+    },
+    {
+      "codigo_proveedor": "704338102",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10595869"
+    },
+    {
+      "codigo_proveedor": "709649198",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10599334"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10605662"
+    },
+    {
+      "codigo_proveedor": "713323079",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10605662"
+    },
+    {
+      "codigo_proveedor": "708740477",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10609936"
+    },
+    {
+      "codigo_proveedor": "702627043",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10620728"
+    },
+    {
+      "codigo_proveedor": "711020271",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10620728"
+    },
+    {
+      "codigo_proveedor": "700787419",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10627937"
+    },
+    {
+      "codigo_proveedor": "702062258",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10627937"
+    },
+    {
+      "codigo_proveedor": "731141800",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10627937"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10634334"
+    },
+    {
+      "codigo_proveedor": "737097436",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10634334"
+    },
+    {
+      "codigo_proveedor": "737095364",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10649048"
+    },
+    {
+      "codigo_proveedor": "701012155",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10660183"
+    },
+    {
+      "codigo_proveedor": "702441783",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10660183"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10671840"
+    },
+    {
+      "codigo_proveedor": "710317769",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10675853"
+    },
+    {
+      "codigo_proveedor": "713006013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10675853"
+    },
+    {
+      "codigo_proveedor": "723697017",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10675853"
+    },
+    {
+      "codigo_proveedor": "737091181",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10675884"
+    },
+    {
+      "codigo_proveedor": "700043037",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10681564"
+    },
+    {
+      "codigo_proveedor": "700742141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10681564"
+    },
+    {
+      "codigo_proveedor": "706863156",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10681564"
+    },
+    {
+      "codigo_proveedor": "701755340",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10697443"
+    },
+    {
+      "codigo_proveedor": "704258763",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10697443"
+    },
+    {
+      "codigo_proveedor": "736881046",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10697443"
+    },
+    {
+      "codigo_proveedor": "737268532",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10697443"
+    },
+    {
+      "codigo_proveedor": "737338079",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10697443"
+    },
+    {
+      "codigo_proveedor": "700869068",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10697611"
+    },
+    {
+      "codigo_proveedor": "702309311",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10697611"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10697611"
+    },
+    {
+      "codigo_proveedor": "735917932",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10710522"
+    },
+    {
+      "codigo_proveedor": "737454827",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10710522"
+    },
+    {
+      "codigo_proveedor": "737457424",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10710522"
+    },
+    {
+      "codigo_proveedor": "737474783",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10710522"
+    },
+    {
+      "codigo_proveedor": "705377513",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10739624"
+    },
+    {
+      "codigo_proveedor": "719289159",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10739624"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10742240"
+    },
+    {
+      "codigo_proveedor": "700982119",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10742240"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10742240"
+    },
+    {
+      "codigo_proveedor": "713520104",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10742240"
+    },
+    {
+      "codigo_proveedor": "736489105",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10742240"
+    },
+    {
+      "codigo_proveedor": "734326432",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10743163"
+    },
+    {
+      "codigo_proveedor": "737336172",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10752774"
+    },
+    {
+      "codigo_proveedor": "723254579",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10753093"
+    },
+    {
+      "codigo_proveedor": "737380691",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10753093"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10753598"
+    },
+    {
+      "codigo_proveedor": "700561038",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10753765"
+    },
+    {
+      "codigo_proveedor": "704225051",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10753765"
+    },
+    {
+      "codigo_proveedor": "737328757",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10753765"
+    },
+    {
+      "codigo_proveedor": "705176840",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10780501"
+    },
+    {
+      "codigo_proveedor": "737347112",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10780501"
+    },
+    {
+      "codigo_proveedor": "737416461",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10780501"
+    },
+    {
+      "codigo_proveedor": "737457432",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10780501"
+    },
+    {
+      "codigo_proveedor": "737457515",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10780501"
+    },
+    {
+      "codigo_proveedor": "737457622",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10780501"
+    },
+    {
+      "codigo_proveedor": "737463455",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10780501"
+    },
+    {
+      "codigo_proveedor": "737464263",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10780501"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10783754"
+    },
+    {
+      "codigo_proveedor": "707774261",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10783754"
+    },
+    {
+      "codigo_proveedor": "720904028",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10783754"
+    },
+    {
+      "codigo_proveedor": "722383403",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10806589"
+    },
+    {
+      "codigo_proveedor": "700358013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10828895"
+    },
+    {
+      "codigo_proveedor": "700359060",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10828895"
+    },
+    {
+      "codigo_proveedor": "700468085",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10828895"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10841625"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10841625"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10841625"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10847026"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10847026"
+    },
+    {
+      "codigo_proveedor": "737555029",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10848148"
+    },
+    {
+      "codigo_proveedor": "721256360",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10852751"
+    },
+    {
+      "codigo_proveedor": "737493114",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10852751"
+    },
+    {
+      "codigo_proveedor": "737522136",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10852751"
+    },
+    {
+      "codigo_proveedor": "737562272",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10852751"
+    },
+    {
+      "codigo_proveedor": "737581355",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10852751"
+    },
+    {
+      "codigo_proveedor": "708033139",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10869606"
+    },
+    {
+      "codigo_proveedor": "715115119",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10869606"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10869606"
+    },
+    {
+      "codigo_proveedor": "702196106",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10886054"
+    },
+    {
+      "codigo_proveedor": "701193096",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10896846"
+    },
+    {
+      "codigo_proveedor": "700733132",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "700748114",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "700866239",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "700971070",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "701722043",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "702680703",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "702689621",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "702719055",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "702809740",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "702874330",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "703326926",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "704378199",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "705327542",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "707371415",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "708065792",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "712668011",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "718361926",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "723691259",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "724613807",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "724990411",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "726375033",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "728516618",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "729391987",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "734349806",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737643338",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737645143",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737648048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737648295",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737648501",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737648584",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737648899",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737649418",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737651059",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737651653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737653220",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737653329",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737653345",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737655746",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737656256",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737656520",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737661769",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737662064",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737662338",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "737663138",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10907199"
+    },
+    {
+      "codigo_proveedor": "729587188",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10918225"
+    },
+    {
+      "codigo_proveedor": "737658153",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10919144"
+    },
+    {
+      "codigo_proveedor": "737670141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10919144"
+    },
+    {
+      "codigo_proveedor": "701699522",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10924908"
+    },
+    {
+      "codigo_proveedor": "710117128",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10924908"
+    },
+    {
+      "codigo_proveedor": "734137185",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10924908"
+    },
+    {
+      "codigo_proveedor": "737652271",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10924908"
+    },
+    {
+      "codigo_proveedor": "737728212",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10924908"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10927383"
+    },
+    {
+      "codigo_proveedor": "733003081",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10927383"
+    },
+    {
+      "codigo_proveedor": "737097436",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10927383"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10941520"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10941520"
+    },
+    {
+      "codigo_proveedor": "711368126",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10941520"
+    },
+    {
+      "codigo_proveedor": "705771848",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10941968"
+    },
+    {
+      "codigo_proveedor": "700334048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10949962"
+    },
+    {
+      "codigo_proveedor": "700364052",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10949962"
+    },
+    {
+      "codigo_proveedor": "700371016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10949962"
+    },
+    {
+      "codigo_proveedor": "711356659",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10949962"
+    },
+    {
+      "codigo_proveedor": "717199087",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10949962"
+    },
+    {
+      "codigo_proveedor": "737672386",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10949962"
+    },
+    {
+      "codigo_proveedor": "724613807",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10952244"
+    },
+    {
+      "codigo_proveedor": "737667014",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10952244"
+    },
+    {
+      "codigo_proveedor": "737717660",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10952244"
+    },
+    {
+      "codigo_proveedor": "737721381",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10952244"
+    },
+    {
+      "codigo_proveedor": "737723353",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10952244"
+    },
+    {
+      "codigo_proveedor": "737733899",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10952244"
+    },
+    {
+      "codigo_proveedor": "737735043",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10952244"
+    },
+    {
+      "codigo_proveedor": "737736553",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.10952244"
+    },
+    {
+      "codigo_proveedor": "713323079",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7471354"
+    },
+    {
+      "codigo_proveedor": "701003048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7546055"
+    },
+    {
+      "codigo_proveedor": "701118309",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7546055"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7546055"
+    },
+    {
+      "codigo_proveedor": "700895246",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7547208"
+    },
+    {
+      "codigo_proveedor": "701003048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7547208"
+    },
+    {
+      "codigo_proveedor": "701118309",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7547208"
+    },
+    {
+      "codigo_proveedor": "702239690",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7547208"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7547208"
+    },
+    {
+      "codigo_proveedor": "700590094",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7569404"
+    },
+    {
+      "codigo_proveedor": "702095241",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7569404"
+    },
+    {
+      "codigo_proveedor": "703992289",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7569404"
+    },
+    {
+      "codigo_proveedor": "705137347",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7569404"
+    },
+    {
+      "codigo_proveedor": "721529741",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7569404"
+    },
+    {
+      "codigo_proveedor": "705958460",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7580153"
+    },
+    {
+      "codigo_proveedor": "705963379",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7580153"
+    },
+    {
+      "codigo_proveedor": "706071644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7580153"
+    },
+    {
+      "codigo_proveedor": "700191034",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7602992"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7602992"
+    },
+    {
+      "codigo_proveedor": "717660534",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7602992"
+    },
+    {
+      "codigo_proveedor": "702223074",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "705958460",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "705963379",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "705964914",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "705966414",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "705972990",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "705981298",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "706022001",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "706071644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "709168074",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7634434"
+    },
+    {
+      "codigo_proveedor": "711356659",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7639786"
+    },
+    {
+      "codigo_proveedor": "719442048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7639786"
+    },
+    {
+      "codigo_proveedor": "700043037",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7706160"
+    },
+    {
+      "codigo_proveedor": "700742141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7706160"
+    },
+    {
+      "codigo_proveedor": "706863156",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7706160"
+    },
+    {
+      "codigo_proveedor": "721260651",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7706160"
+    },
+    {
+      "codigo_proveedor": "701118309",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7727923"
+    },
+    {
+      "codigo_proveedor": "702208422",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7727923"
+    },
+    {
+      "codigo_proveedor": "705110716",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7727923"
+    },
+    {
+      "codigo_proveedor": "714984481",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7727923"
+    },
+    {
+      "codigo_proveedor": "730406048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7728929"
+    },
+    {
+      "codigo_proveedor": "721873214",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7743892"
+    },
+    {
+      "codigo_proveedor": "722025129",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7743892"
+    },
+    {
+      "codigo_proveedor": "700742141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7744479"
+    },
+    {
+      "codigo_proveedor": "706863156",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7744479"
+    },
+    {
+      "codigo_proveedor": "721260651",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7744479"
+    },
+    {
+      "codigo_proveedor": "700887060",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7777845"
+    },
+    {
+      "codigo_proveedor": "701755340",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7777845"
+    },
+    {
+      "codigo_proveedor": "714390002",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7777845"
+    },
+    {
+      "codigo_proveedor": "713323079",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7818402"
+    },
+    {
+      "codigo_proveedor": "700887060",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7824762"
+    },
+    {
+      "codigo_proveedor": "721873214",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7824762"
+    },
+    {
+      "codigo_proveedor": "707030045",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7838245"
+    },
+    {
+      "codigo_proveedor": "706601416",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7859968"
+    },
+    {
+      "codigo_proveedor": "700974041",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7865150"
+    },
+    {
+      "codigo_proveedor": "707942405",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7865150"
+    },
+    {
+      "codigo_proveedor": "700774136",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7871376"
+    },
+    {
+      "codigo_proveedor": "730713724",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7871376"
+    },
+    {
+      "codigo_proveedor": "711147728",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7879394"
+    },
+    {
+      "codigo_proveedor": "730788122",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7879394"
+    },
+    {
+      "codigo_proveedor": "711661561",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7879854"
+    },
+    {
+      "codigo_proveedor": "714054137",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7879854"
+    },
+    {
+      "codigo_proveedor": "702412420",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7881050"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7881050"
+    },
+    {
+      "codigo_proveedor": "702412420",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7886779"
+    },
+    {
+      "codigo_proveedor": "705643906",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7886779"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7886779"
+    },
+    {
+      "codigo_proveedor": "700036056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7900964"
+    },
+    {
+      "codigo_proveedor": "703776583",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7900964"
+    },
+    {
+      "codigo_proveedor": "705274983",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7900964"
+    },
+    {
+      "codigo_proveedor": "730748696",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7900964"
+    },
+    {
+      "codigo_proveedor": "730766060",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7900964"
+    },
+    {
+      "codigo_proveedor": "700748114",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "700817117",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "700991219",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "701007049",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "702183187",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "702258146",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "702667510",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "702675455",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "703306787",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "707405072",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "707576849",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "709743017",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "712948827",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "715216172",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "719954380",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "722949013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "723691259",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "729090878",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730649415",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730667599",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730669223",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730670106",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730705183",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730707197",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730710027",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730712304",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730717329",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730718640",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730718657",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730719309",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730720265",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730720588",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730720620",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730721032",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730721107",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730721446",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730721511",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730722618",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730722667",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730722931",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730723376",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730727161",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730727278",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730727526",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730729019",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730743069",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730743093",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730744158",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730744240",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730745015",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "730747011",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902073"
+    },
+    {
+      "codigo_proveedor": "702713884",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902230"
+    },
+    {
+      "codigo_proveedor": "700895246",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7902252"
+    },
+    {
+      "codigo_proveedor": "704338102",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7917591"
+    },
+    {
+      "codigo_proveedor": "721873214",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7925753"
+    },
+    {
+      "codigo_proveedor": "722025129",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7925753"
+    },
+    {
+      "codigo_proveedor": "703320366",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7929472"
+    },
+    {
+      "codigo_proveedor": "703905604",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7929472"
+    },
+    {
+      "codigo_proveedor": "707483921",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7929472"
+    },
+    {
+      "codigo_proveedor": "700895246",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7938491"
+    },
+    {
+      "codigo_proveedor": "701350050",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7975807"
+    },
+    {
+      "codigo_proveedor": "724661319",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7975807"
+    },
+    {
+      "codigo_proveedor": "730821683",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7975807"
+    },
+    {
+      "codigo_proveedor": "730825254",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7975807"
+    },
+    {
+      "codigo_proveedor": "730828092",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7975807"
+    },
+    {
+      "codigo_proveedor": "704627108",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7997926"
+    },
+    {
+      "codigo_proveedor": "730503158",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7999112"
+    },
+    {
+      "codigo_proveedor": "730967098",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7999112"
+    },
+    {
+      "codigo_proveedor": "730984879",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7999112"
+    },
+    {
+      "codigo_proveedor": "730986171",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7999112"
+    },
+    {
+      "codigo_proveedor": "730990181",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7999112"
+    },
+    {
+      "codigo_proveedor": "700742141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7999135"
+    },
+    {
+      "codigo_proveedor": "703333153",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7999135"
+    },
+    {
+      "codigo_proveedor": "706863156",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.7999135"
+    },
+    {
+      "codigo_proveedor": "708437033",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8014674"
+    },
+    {
+      "codigo_proveedor": "721873214",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8014674"
+    },
+    {
+      "codigo_proveedor": "722025129",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8014674"
+    },
+    {
+      "codigo_proveedor": "700326028",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8024688"
+    },
+    {
+      "codigo_proveedor": "701350050",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8024688"
+    },
+    {
+      "codigo_proveedor": "702630294",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8024688"
+    },
+    {
+      "codigo_proveedor": "719442048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8024688"
+    },
+    {
+      "codigo_proveedor": "730970134",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8024688"
+    },
+    {
+      "codigo_proveedor": "728786690",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8030036"
+    },
+    {
+      "codigo_proveedor": "731084356",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8030036"
+    },
+    {
+      "codigo_proveedor": "704141233",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8041928"
+    },
+    {
+      "codigo_proveedor": "704633056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8041928"
+    },
+    {
+      "codigo_proveedor": "709068142",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8041928"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8045701"
+    },
+    {
+      "codigo_proveedor": "713323079",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8045701"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8061882"
+    },
+    {
+      "codigo_proveedor": "706518149",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8061882"
+    },
+    {
+      "codigo_proveedor": "718833148",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8061882"
+    },
+    {
+      "codigo_proveedor": "726927098",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8061882"
+    },
+    {
+      "codigo_proveedor": "731227609",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8061882"
+    },
+    {
+      "codigo_proveedor": "704338102",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8065023"
+    },
+    {
+      "codigo_proveedor": "731014262",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8071755"
+    },
+    {
+      "codigo_proveedor": "731040101",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8071845"
+    },
+    {
+      "codigo_proveedor": "731048047",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8071845"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8083628"
+    },
+    {
+      "codigo_proveedor": "701589400",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8083628"
+    },
+    {
+      "codigo_proveedor": "706737053",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8083628"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8086229"
+    },
+    {
+      "codigo_proveedor": "720905397",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8086229"
+    },
+    {
+      "codigo_proveedor": "701118309",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8088611"
+    },
+    {
+      "codigo_proveedor": "705560845",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8088611"
+    },
+    {
+      "codigo_proveedor": "711147728",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8089857"
+    },
+    {
+      "codigo_proveedor": "731330809",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8089857"
+    },
+    {
+      "codigo_proveedor": "719018665",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8094000"
+    },
+    {
+      "codigo_proveedor": "731341384",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8094000"
+    },
+    {
+      "codigo_proveedor": "704627108",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8096832"
+    },
+    {
+      "codigo_proveedor": "702050501",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "702507039",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "702627043",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "702949777",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "703237636",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "704871474",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "706549516",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "707978706",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "712350180",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "725716153",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "726306046",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "726767486",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "728428426",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8097542"
+    },
+    {
+      "codigo_proveedor": "702217191",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8100775"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8104716"
+    },
+    {
+      "codigo_proveedor": "704141233",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8104716"
+    },
+    {
+      "codigo_proveedor": "706543907",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8104716"
+    },
+    {
+      "codigo_proveedor": "715189528",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8104716"
+    },
+    {
+      "codigo_proveedor": "719448474",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8104716"
+    },
+    {
+      "codigo_proveedor": "727636078",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8104716"
+    },
+    {
+      "codigo_proveedor": "702491341",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8106733"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8108059"
+    },
+    {
+      "codigo_proveedor": "731383378",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8108059"
+    },
+    {
+      "codigo_proveedor": "728913047",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8109184"
+    },
+    {
+      "codigo_proveedor": "701921223",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8113905"
+    },
+    {
+      "codigo_proveedor": "703992289",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8113905"
+    },
+    {
+      "codigo_proveedor": "704370758",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8113905"
+    },
+    {
+      "codigo_proveedor": "704906908",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8113905"
+    },
+    {
+      "codigo_proveedor": "705643906",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8113905"
+    },
+    {
+      "codigo_proveedor": "700142029",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8122936"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8149160"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8149160"
+    },
+    {
+      "codigo_proveedor": "715529814",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8149160"
+    },
+    {
+      "codigo_proveedor": "721873214",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8170819"
+    },
+    {
+      "codigo_proveedor": "703871822",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8177539"
+    },
+    {
+      "codigo_proveedor": "722742541",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8177539"
+    },
+    {
+      "codigo_proveedor": "723697017",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8177539"
+    },
+    {
+      "codigo_proveedor": "731318663",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8177539"
+    },
+    {
+      "codigo_proveedor": "700749021",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8187915"
+    },
+    {
+      "codigo_proveedor": "700890213",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8187915"
+    },
+    {
+      "codigo_proveedor": "700974041",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8187915"
+    },
+    {
+      "codigo_proveedor": "702117151",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8187915"
+    },
+    {
+      "codigo_proveedor": "726517790",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8187915"
+    },
+    {
+      "codigo_proveedor": "705095800",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8199008"
+    },
+    {
+      "codigo_proveedor": "709109573",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8199008"
+    },
+    {
+      "codigo_proveedor": "709716963",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8199008"
+    },
+    {
+      "codigo_proveedor": "707006102",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8200431"
+    },
+    {
+      "codigo_proveedor": "719840001",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8200431"
+    },
+    {
+      "codigo_proveedor": "727948614",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8200431"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8216608"
+    },
+    {
+      "codigo_proveedor": "700798044",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8226616"
+    },
+    {
+      "codigo_proveedor": "700815228",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8226616"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8226616"
+    },
+    {
+      "codigo_proveedor": "709716104",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8228617"
+    },
+    {
+      "codigo_proveedor": "702239690",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8244782"
+    },
+    {
+      "codigo_proveedor": "700579048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8246286"
+    },
+    {
+      "codigo_proveedor": "708837257",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8246286"
+    },
+    {
+      "codigo_proveedor": "709416044",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8246286"
+    },
+    {
+      "codigo_proveedor": "701755340",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8249495"
+    },
+    {
+      "codigo_proveedor": "714390002",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8249495"
+    },
+    {
+      "codigo_proveedor": "701259111",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8250340"
+    },
+    {
+      "codigo_proveedor": "704141233",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8250340"
+    },
+    {
+      "codigo_proveedor": "705014165",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8250340"
+    },
+    {
+      "codigo_proveedor": "715872974",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8250340"
+    },
+    {
+      "codigo_proveedor": "718442601",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8250340"
+    },
+    {
+      "codigo_proveedor": "718660426",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8250340"
+    },
+    {
+      "codigo_proveedor": "701379026",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8252142"
+    },
+    {
+      "codigo_proveedor": "706071644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8252507"
+    },
+    {
+      "codigo_proveedor": "701547176",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8256109"
+    },
+    {
+      "codigo_proveedor": "731762118",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8256109"
+    },
+    {
+      "codigo_proveedor": "701413254",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8268938"
+    },
+    {
+      "codigo_proveedor": "701667230",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8268938"
+    },
+    {
+      "codigo_proveedor": "706543824",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8268938"
+    },
+    {
+      "codigo_proveedor": "713554012",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8268938"
+    },
+    {
+      "codigo_proveedor": "723697017",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8271019"
+    },
+    {
+      "codigo_proveedor": "728428426",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8271019"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8274195"
+    },
+    {
+      "codigo_proveedor": "701671299",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8274195"
+    },
+    {
+      "codigo_proveedor": "705279743",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8274195"
+    },
+    {
+      "codigo_proveedor": "708082672",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8274195"
+    },
+    {
+      "codigo_proveedor": "710890773",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8274195"
+    },
+    {
+      "codigo_proveedor": "731641411",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8274195"
+    },
+    {
+      "codigo_proveedor": "705643906",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8281621"
+    },
+    {
+      "codigo_proveedor": "715115119",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8281621"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8281621"
+    },
+    {
+      "codigo_proveedor": "702196106",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8284000"
+    },
+    {
+      "codigo_proveedor": "713481141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8286469"
+    },
+    {
+      "codigo_proveedor": "714933389",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8286469"
+    },
+    {
+      "codigo_proveedor": "717969497",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8286469"
+    },
+    {
+      "codigo_proveedor": "731928305",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8286469"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8286596"
+    },
+    {
+      "codigo_proveedor": "704007624",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8286596"
+    },
+    {
+      "codigo_proveedor": "705274983",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8286596"
+    },
+    {
+      "codigo_proveedor": "713537355",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8286596"
+    },
+    {
+      "codigo_proveedor": "709716104",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8300180"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8310504"
+    },
+    {
+      "codigo_proveedor": "713901551",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8310504"
+    },
+    {
+      "codigo_proveedor": "731664058",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8310504"
+    },
+    {
+      "codigo_proveedor": "710749839",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8313681"
+    },
+    {
+      "codigo_proveedor": "731798484",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8313681"
+    },
+    {
+      "codigo_proveedor": "704237544",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8314702"
+    },
+    {
+      "codigo_proveedor": "705274983",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8314702"
+    },
+    {
+      "codigo_proveedor": "706705860",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8314702"
+    },
+    {
+      "codigo_proveedor": "720905397",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8314702"
+    },
+    {
+      "codigo_proveedor": "721873214",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8314702"
+    },
+    {
+      "codigo_proveedor": "703984872",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8317856"
+    },
+    {
+      "codigo_proveedor": "701921223",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8325194"
+    },
+    {
+      "codigo_proveedor": "715115119",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8325194"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8325194"
+    },
+    {
+      "codigo_proveedor": "706071644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8330586"
+    },
+    {
+      "codigo_proveedor": "700943210",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8331049"
+    },
+    {
+      "codigo_proveedor": "716023338",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8331049"
+    },
+    {
+      "codigo_proveedor": "702062258",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8335851"
+    },
+    {
+      "codigo_proveedor": "726645229",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8335851"
+    },
+    {
+      "codigo_proveedor": "706601416",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8340924"
+    },
+    {
+      "codigo_proveedor": "732050596",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8344388"
+    },
+    {
+      "codigo_proveedor": "719979056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8347056"
+    },
+    {
+      "codigo_proveedor": "700306053",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8350481"
+    },
+    {
+      "codigo_proveedor": "731409215",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8350481"
+    },
+    {
+      "codigo_proveedor": "731875332",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8350481"
+    },
+    {
+      "codigo_proveedor": "700579048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8357175"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8357175"
+    },
+    {
+      "codigo_proveedor": "702091133",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8357175"
+    },
+    {
+      "codigo_proveedor": "702397100",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8357175"
+    },
+    {
+      "codigo_proveedor": "706601416",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8357175"
+    },
+    {
+      "codigo_proveedor": "714933389",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8357175"
+    },
+    {
+      "codigo_proveedor": "700708050",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8358844"
+    },
+    {
+      "codigo_proveedor": "702596412",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8358844"
+    },
+    {
+      "codigo_proveedor": "706601416",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8358844"
+    },
+    {
+      "codigo_proveedor": "700626013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "700991219",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "701054074",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "701276222",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "702013228",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "702313495",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "702722596",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "702908054",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "703891630",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "704531417",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "715851390",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "717364129",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "730007184",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731247144",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731765772",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731859666",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731861860",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731862561",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731862603",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731864070",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731864302",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731867172",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731875084",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731875779",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731876330",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731881579",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731883138",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731883211",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731891289",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731891487",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731892642",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731893046",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731893293",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731893798",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731895868",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731897617",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731897666",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "731898144",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8359923"
+    },
+    {
+      "codigo_proveedor": "706705605",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8366130"
+    },
+    {
+      "codigo_proveedor": "704441005",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8369067"
+    },
+    {
+      "codigo_proveedor": "704684133",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8369067"
+    },
+    {
+      "codigo_proveedor": "717375737",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8372871"
+    },
+    {
+      "codigo_proveedor": "701589400",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8379122"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8388673"
+    },
+    {
+      "codigo_proveedor": "703502385",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8388673"
+    },
+    {
+      "codigo_proveedor": "709578520",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8388673"
+    },
+    {
+      "codigo_proveedor": "724011770",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8388673"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8391929"
+    },
+    {
+      "codigo_proveedor": "717476022",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8391929"
+    },
+    {
+      "codigo_proveedor": "719007080",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8393535"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395228"
+    },
+    {
+      "codigo_proveedor": "700748049",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395228"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395228"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395228"
+    },
+    {
+      "codigo_proveedor": "702397100",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395228"
+    },
+    {
+      "codigo_proveedor": "704141233",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395228"
+    },
+    {
+      "codigo_proveedor": "704633056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395228"
+    },
+    {
+      "codigo_proveedor": "709068142",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395228"
+    },
+    {
+      "codigo_proveedor": "718660426",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395228"
+    },
+    {
+      "codigo_proveedor": "701118309",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8395282"
+    },
+    {
+      "codigo_proveedor": "700799158",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "700902174",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "701276222",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "701722043",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "702013228",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "702258146",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "702313495",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "702340019",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "702380155",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "702689621",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "703326926",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "703875328",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "703941229",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "704372564",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "704378199",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "705147411",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "705466621",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "707301388",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "708065792",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "710100462",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "710252453",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "716044805",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "717364129",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "719913659",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "722446119",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "724613807",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "729111336",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "729185348",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "730007184",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "730550605",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731231494",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731721205",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731896122",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731954855",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731955738",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731957064",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731958963",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731959813",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731966271",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731966461",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731969150",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731969531",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731969713",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731969770",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731969903",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731970083",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731972386",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731972451",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731973079",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731975637",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731976957",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731977153",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731981395",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731989067",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731989141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731989273",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731992517",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "731993143",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8396203"
+    },
+    {
+      "codigo_proveedor": "701921223",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8398004"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8398004"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8405119"
+    },
+    {
+      "codigo_proveedor": "702091133",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8405119"
+    },
+    {
+      "codigo_proveedor": "706601416",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8405119"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8405119"
+    },
+    {
+      "codigo_proveedor": "720672013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8405119"
+    },
+    {
+      "codigo_proveedor": "702239914",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8407477"
+    },
+    {
+      "codigo_proveedor": "704141233",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8414693"
+    },
+    {
+      "codigo_proveedor": "705274983",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8414693"
+    },
+    {
+      "codigo_proveedor": "710890773",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8414693"
+    },
+    {
+      "codigo_proveedor": "713900363",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8414693"
+    },
+    {
+      "codigo_proveedor": "701755340",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8418448"
+    },
+    {
+      "codigo_proveedor": "718477243",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8427525"
+    },
+    {
+      "codigo_proveedor": "729587188",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8427525"
+    },
+    {
+      "codigo_proveedor": "704165208",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8428214"
+    },
+    {
+      "codigo_proveedor": "704224070",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8428214"
+    },
+    {
+      "codigo_proveedor": "731953956",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8428214"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8433985"
+    },
+    {
+      "codigo_proveedor": "720672013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8433985"
+    },
+    {
+      "codigo_proveedor": "726927098",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8433985"
+    },
+    {
+      "codigo_proveedor": "731664058",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8433985"
+    },
+    {
+      "codigo_proveedor": "710025164",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8438366"
+    },
+    {
+      "codigo_proveedor": "704633056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8443478"
+    },
+    {
+      "codigo_proveedor": "707867313",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8443478"
+    },
+    {
+      "codigo_proveedor": "718070030",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8443478"
+    },
+    {
+      "codigo_proveedor": "729909929",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8443478"
+    },
+    {
+      "codigo_proveedor": "732353081",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8443478"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8446005"
+    },
+    {
+      "codigo_proveedor": "703237636",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8446005"
+    },
+    {
+      "codigo_proveedor": "703840405",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8446005"
+    },
+    {
+      "codigo_proveedor": "714933389",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8446005"
+    },
+    {
+      "codigo_proveedor": "721320786",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8446005"
+    },
+    {
+      "codigo_proveedor": "732477328",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8446005"
+    },
+    {
+      "codigo_proveedor": "709716104",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8450247"
+    },
+    {
+      "codigo_proveedor": "729479485",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8450247"
+    },
+    {
+      "codigo_proveedor": "703354621",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8453873"
+    },
+    {
+      "codigo_proveedor": "703992289",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8453873"
+    },
+    {
+      "codigo_proveedor": "706641354",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8453873"
+    },
+    {
+      "codigo_proveedor": "729587188",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8457759"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8461774"
+    },
+    {
+      "codigo_proveedor": "703992289",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8461774"
+    },
+    {
+      "codigo_proveedor": "704153063",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8461774"
+    },
+    {
+      "codigo_proveedor": "713101830",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8461774"
+    },
+    {
+      "codigo_proveedor": "700967243",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "702050501",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "703717090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "704212224",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "704434919",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "710180159",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "712370162",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "713184661",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "718762347",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "724793856",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "732241146",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "732242193",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "732297437",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "732297528",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "732299748",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "732306261",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "732306618",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8475906"
+    },
+    {
+      "codigo_proveedor": "702395237",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8478626"
+    },
+    {
+      "codigo_proveedor": "718173735",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8478626"
+    },
+    {
+      "codigo_proveedor": "702095241",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8486886"
+    },
+    {
+      "codigo_proveedor": "703992289",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8486886"
+    },
+    {
+      "codigo_proveedor": "705137347",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8486886"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8502082"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8502082"
+    },
+    {
+      "codigo_proveedor": "709068142",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8502082"
+    },
+    {
+      "codigo_proveedor": "729587188",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8505405"
+    },
+    {
+      "codigo_proveedor": "732273321",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8506253"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8508675"
+    },
+    {
+      "codigo_proveedor": "719698516",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8508675"
+    },
+    {
+      "codigo_proveedor": "702091133",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8509228"
+    },
+    {
+      "codigo_proveedor": "704714146",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8509228"
+    },
+    {
+      "codigo_proveedor": "727714198",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8509228"
+    },
+    {
+      "codigo_proveedor": "731137154",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8509228"
+    },
+    {
+      "codigo_proveedor": "701755340",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8525234"
+    },
+    {
+      "codigo_proveedor": "720203447",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8525234"
+    },
+    {
+      "codigo_proveedor": "702397100",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8529693"
+    },
+    {
+      "codigo_proveedor": "733414114",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8529693"
+    },
+    {
+      "codigo_proveedor": "700294028",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8530352"
+    },
+    {
+      "codigo_proveedor": "703642371",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8530352"
+    },
+    {
+      "codigo_proveedor": "707204384",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8530352"
+    },
+    {
+      "codigo_proveedor": "709587083",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8530352"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8534078"
+    },
+    {
+      "codigo_proveedor": "708012638",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8534078"
+    },
+    {
+      "codigo_proveedor": "709677058",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8534078"
+    },
+    {
+      "codigo_proveedor": "720672013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8534078"
+    },
+    {
+      "codigo_proveedor": "726927098",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8534078"
+    },
+    {
+      "codigo_proveedor": "731664058",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8534078"
+    },
+    {
+      "codigo_proveedor": "704448091",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8536966"
+    },
+    {
+      "codigo_proveedor": "705657047",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8537708"
+    },
+    {
+      "codigo_proveedor": "701193096",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8554589"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8557589"
+    },
+    {
+      "codigo_proveedor": "711368126",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8557589"
+    },
+    {
+      "codigo_proveedor": "704329291",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8566959"
+    },
+    {
+      "codigo_proveedor": "704237544",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8584509"
+    },
+    {
+      "codigo_proveedor": "711563072",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8584509"
+    },
+    {
+      "codigo_proveedor": "701025017",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8606491"
+    },
+    {
+      "codigo_proveedor": "701118309",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8606571"
+    },
+    {
+      "codigo_proveedor": "708033139",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8606571"
+    },
+    {
+      "codigo_proveedor": "702239690",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8607111"
+    },
+    {
+      "codigo_proveedor": "702050501",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8609419"
+    },
+    {
+      "codigo_proveedor": "732586599",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8609419"
+    },
+    {
+      "codigo_proveedor": "702179359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8633125"
+    },
+    {
+      "codigo_proveedor": "732800222",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8633125"
+    },
+    {
+      "codigo_proveedor": "702683202",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8644647"
+    },
+    {
+      "codigo_proveedor": "732615349",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8644647"
+    },
+    {
+      "codigo_proveedor": "702062258",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8651907"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8651962"
+    },
+    {
+      "codigo_proveedor": "715529814",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8651962"
+    },
+    {
+      "codigo_proveedor": "700141062",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8652198"
+    },
+    {
+      "codigo_proveedor": "707837217",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8652198"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8653267"
+    },
+    {
+      "codigo_proveedor": "704237544",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8653267"
+    },
+    {
+      "codigo_proveedor": "704628379",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8653267"
+    },
+    {
+      "codigo_proveedor": "726927098",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8653267"
+    },
+    {
+      "codigo_proveedor": "701914269",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8658661"
+    },
+    {
+      "codigo_proveedor": "700844012",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8665324"
+    },
+    {
+      "codigo_proveedor": "702062258",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8680673"
+    },
+    {
+      "codigo_proveedor": "711526012",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8680673"
+    },
+    {
+      "codigo_proveedor": "732685383",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8685434"
+    },
+    {
+      "codigo_proveedor": "710746181",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8714025"
+    },
+    {
+      "codigo_proveedor": "715773644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8714025"
+    },
+    {
+      "codigo_proveedor": "723745790",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8714025"
+    },
+    {
+      "codigo_proveedor": "700006083",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8714872"
+    },
+    {
+      "codigo_proveedor": "705530053",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8714872"
+    },
+    {
+      "codigo_proveedor": "700982119",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725126"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725126"
+    },
+    {
+      "codigo_proveedor": "713520104",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725126"
+    },
+    {
+      "codigo_proveedor": "702559030",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725586"
+    },
+    {
+      "codigo_proveedor": "702867284",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725586"
+    },
+    {
+      "codigo_proveedor": "703372474",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725586"
+    },
+    {
+      "codigo_proveedor": "705704229",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725586"
+    },
+    {
+      "codigo_proveedor": "707444824",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725586"
+    },
+    {
+      "codigo_proveedor": "707462255",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725586"
+    },
+    {
+      "codigo_proveedor": "707833331",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725586"
+    },
+    {
+      "codigo_proveedor": "732661020",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725586"
+    },
+    {
+      "codigo_proveedor": "700787419",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725830"
+    },
+    {
+      "codigo_proveedor": "702062258",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725830"
+    },
+    {
+      "codigo_proveedor": "702239690",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725830"
+    },
+    {
+      "codigo_proveedor": "712883008",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8725830"
+    },
+    {
+      "codigo_proveedor": "704007624",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8727388"
+    },
+    {
+      "codigo_proveedor": "710494170",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8727388"
+    },
+    {
+      "codigo_proveedor": "713537355",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8727388"
+    },
+    {
+      "codigo_proveedor": "720732072",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8742633"
+    },
+    {
+      "codigo_proveedor": "731619250",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8742633"
+    },
+    {
+      "codigo_proveedor": "732303334",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8742633"
+    },
+    {
+      "codigo_proveedor": "705298024",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8759407"
+    },
+    {
+      "codigo_proveedor": "706705605",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8759407"
+    },
+    {
+      "codigo_proveedor": "717430052",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8759407"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8759999"
+    },
+    {
+      "codigo_proveedor": "729909929",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8759999"
+    },
+    {
+      "codigo_proveedor": "700982119",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8762741"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8762741"
+    },
+    {
+      "codigo_proveedor": "709596548",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8762741"
+    },
+    {
+      "codigo_proveedor": "713520104",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8762741"
+    },
+    {
+      "codigo_proveedor": "704930601",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8762911"
+    },
+    {
+      "codigo_proveedor": "710385048",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8762911"
+    },
+    {
+      "codigo_proveedor": "715872974",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8762911"
+    },
+    {
+      "codigo_proveedor": "733411797",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8762911"
+    },
+    {
+      "codigo_proveedor": "701755340",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8767892"
+    },
+    {
+      "codigo_proveedor": "714390002",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8767892"
+    },
+    {
+      "codigo_proveedor": "732945100",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8767892"
+    },
+    {
+      "codigo_proveedor": "700890106",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8769463"
+    },
+    {
+      "codigo_proveedor": "704594415",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8769463"
+    },
+    {
+      "codigo_proveedor": "733109128",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8769463"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8771776"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8771776"
+    },
+    {
+      "codigo_proveedor": "731667457",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8782213"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8788269"
+    },
+    {
+      "codigo_proveedor": "720672013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8788269"
+    },
+    {
+      "codigo_proveedor": "733003081",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8788269"
+    },
+    {
+      "codigo_proveedor": "706543907",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8792885"
+    },
+    {
+      "codigo_proveedor": "700906183",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8819452"
+    },
+    {
+      "codigo_proveedor": "701222176",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8819452"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8821110"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8821110"
+    },
+    {
+      "codigo_proveedor": "700925019",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8832809"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8832809"
+    },
+    {
+      "codigo_proveedor": "702062258",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8832955"
+    },
+    {
+      "codigo_proveedor": "711526012",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8832955"
+    },
+    {
+      "codigo_proveedor": "702062258",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8835281"
+    },
+    {
+      "codigo_proveedor": "702309311",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8835281"
+    },
+    {
+      "codigo_proveedor": "706920352",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8836903"
+    },
+    {
+      "codigo_proveedor": "733241772",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8836903"
+    },
+    {
+      "codigo_proveedor": "705298024",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8837452"
+    },
+    {
+      "codigo_proveedor": "702179359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8851849"
+    },
+    {
+      "codigo_proveedor": "732800222",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8851849"
+    },
+    {
+      "codigo_proveedor": "704624451",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8852071"
+    },
+    {
+      "codigo_proveedor": "710823436",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8854655"
+    },
+    {
+      "codigo_proveedor": "714933389",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8854655"
+    },
+    {
+      "codigo_proveedor": "720204858",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8854655"
+    },
+    {
+      "codigo_proveedor": "728891227",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8854655"
+    },
+    {
+      "codigo_proveedor": "706879665",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8862871"
+    },
+    {
+      "codigo_proveedor": "707379830",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8862871"
+    },
+    {
+      "codigo_proveedor": "702239690",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8874522"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8874522"
+    },
+    {
+      "codigo_proveedor": "701368136",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8884181"
+    },
+    {
+      "codigo_proveedor": "708048061",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8884181"
+    },
+    {
+      "codigo_proveedor": "708656277",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8884181"
+    },
+    {
+      "codigo_proveedor": "711142638",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8884181"
+    },
+    {
+      "codigo_proveedor": "715131298",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8884181"
+    },
+    {
+      "codigo_proveedor": "730319043",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8887145"
+    },
+    {
+      "codigo_proveedor": "700561038",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8892177"
+    },
+    {
+      "codigo_proveedor": "733231278",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8892177"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8917549"
+    },
+    {
+      "codigo_proveedor": "705274983",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8917549"
+    },
+    {
+      "codigo_proveedor": "733004493",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8922512"
+    },
+    {
+      "codigo_proveedor": "733230304",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8922512"
+    },
+    {
+      "codigo_proveedor": "700801111",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8926328"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8934069"
+    },
+    {
+      "codigo_proveedor": "705103638",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8934181"
+    },
+    {
+      "codigo_proveedor": "700471113",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8944634"
+    },
+    {
+      "codigo_proveedor": "702713884",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8949053"
+    },
+    {
+      "codigo_proveedor": "707867313",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8956795"
+    },
+    {
+      "codigo_proveedor": "718070030",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8956795"
+    },
+    {
+      "codigo_proveedor": "700082050",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8959304"
+    },
+    {
+      "codigo_proveedor": "700561038",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8959304"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8959304"
+    },
+    {
+      "codigo_proveedor": "710818808",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8959304"
+    },
+    {
+      "codigo_proveedor": "713537355",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8959304"
+    },
+    {
+      "codigo_proveedor": "733184071",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8959304"
+    },
+    {
+      "codigo_proveedor": "717375737",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8959719"
+    },
+    {
+      "codigo_proveedor": "704471259",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8963188"
+    },
+    {
+      "codigo_proveedor": "709261804",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8963188"
+    },
+    {
+      "codigo_proveedor": "721437499",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8963188"
+    },
+    {
+      "codigo_proveedor": "703409623",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8964686"
+    },
+    {
+      "codigo_proveedor": "714933389",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8964686"
+    },
+    {
+      "codigo_proveedor": "704011097",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8967133"
+    },
+    {
+      "codigo_proveedor": "704141233",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8967133"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8968606"
+    },
+    {
+      "codigo_proveedor": "720905397",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8968606"
+    },
+    {
+      "codigo_proveedor": "703926071",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8971293"
+    },
+    {
+      "codigo_proveedor": "730319043",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8972311"
+    },
+    {
+      "codigo_proveedor": "702961053",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.8993414"
+    },
+    {
+      "codigo_proveedor": "701910325",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017141"
+    },
+    {
+      "codigo_proveedor": "701910325",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017141"
+    },
+    {
+      "codigo_proveedor": "702049289",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017141"
+    },
+    {
+      "codigo_proveedor": "702049289",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017141"
+    },
+    {
+      "codigo_proveedor": "700711047",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "704005065",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "704363050",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "704434919",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "704486554",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "704695907",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "705052231",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "705797504",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "706390960",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "707824124",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "712710094",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "713666170",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "724655295",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "732628185",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "732695366",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "732893276",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "732895552",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "732974670",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733485841",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733491708",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733518153",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733536080",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733540371",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733542013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733543441",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733547236",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733554117",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733556278",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733556518",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733557029",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733559660",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733562110",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733567572",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733569313",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733569628",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733571491",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733572218",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733573232",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733574768",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733574875",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733575567",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733576581",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733576672",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733576722",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733577068",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733577241",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733577449",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733577605",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733577704",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733580245",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733580328",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733580377",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733580716",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733581102",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "733581763",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9017710"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9035533"
+    },
+    {
+      "codigo_proveedor": "703396606",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9043075"
+    },
+    {
+      "codigo_proveedor": "711668848",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9043075"
+    },
+    {
+      "codigo_proveedor": "712828425",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9043075"
+    },
+    {
+      "codigo_proveedor": "717716096",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9043075"
+    },
+    {
+      "codigo_proveedor": "732787718",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9043075"
+    },
+    {
+      "codigo_proveedor": "700043037",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9043260"
+    },
+    {
+      "codigo_proveedor": "704714146",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9064368"
+    },
+    {
+      "codigo_proveedor": "715131298",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9064368"
+    },
+    {
+      "codigo_proveedor": "715872974",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9064368"
+    },
+    {
+      "codigo_proveedor": "701824104",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9067038"
+    },
+    {
+      "codigo_proveedor": "714933389",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9067038"
+    },
+    {
+      "codigo_proveedor": "704637297",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9067308"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9074494"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9076419"
+    },
+    {
+      "codigo_proveedor": "704141233",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9076419"
+    },
+    {
+      "codigo_proveedor": "718782329",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9076419"
+    },
+    {
+      "codigo_proveedor": "719786014",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9076419"
+    },
+    {
+      "codigo_proveedor": "700898208",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9086440"
+    },
+    {
+      "codigo_proveedor": "701802225",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9086440"
+    },
+    {
+      "codigo_proveedor": "723121414",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9091859"
+    },
+    {
+      "codigo_proveedor": "722083144",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9092800"
+    },
+    {
+      "codigo_proveedor": "734051030",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9092800"
+    },
+    {
+      "codigo_proveedor": "701317117",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9093893"
+    },
+    {
+      "codigo_proveedor": "723283560",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9093893"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9096471"
+    },
+    {
+      "codigo_proveedor": "701382020",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9102647"
+    },
+    {
+      "codigo_proveedor": "733777668",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9102647"
+    },
+    {
+      "codigo_proveedor": "702217191",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9109188"
+    },
+    {
+      "codigo_proveedor": "702713884",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9112946"
+    },
+    {
+      "codigo_proveedor": "720541457",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9113709"
+    },
+    {
+      "codigo_proveedor": "729587188",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9117472"
+    },
+    {
+      "codigo_proveedor": "711139469",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9118237"
+    },
+    {
+      "codigo_proveedor": "729576595",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9118237"
+    },
+    {
+      "codigo_proveedor": "721355105",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9118662"
+    },
+    {
+      "codigo_proveedor": "703182832",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9123705"
+    },
+    {
+      "codigo_proveedor": "709068142",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9125993"
+    },
+    {
+      "codigo_proveedor": "711904060",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9125993"
+    },
+    {
+      "codigo_proveedor": "715134292",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9125993"
+    },
+    {
+      "codigo_proveedor": "715872974",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9125993"
+    },
+    {
+      "codigo_proveedor": "723386124",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9125993"
+    },
+    {
+      "codigo_proveedor": "723959565",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9125993"
+    },
+    {
+      "codigo_proveedor": "733411797",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9125993"
+    },
+    {
+      "codigo_proveedor": "733546691",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9125993"
+    },
+    {
+      "codigo_proveedor": "706770682",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9127909"
+    },
+    {
+      "codigo_proveedor": "702145301",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9137296"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9165283"
+    },
+    {
+      "codigo_proveedor": "703871467",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9178593"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9178772"
+    },
+    {
+      "codigo_proveedor": "702223074",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9183996"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9183996"
+    },
+    {
+      "codigo_proveedor": "705958460",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9183996"
+    },
+    {
+      "codigo_proveedor": "705963379",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9183996"
+    },
+    {
+      "codigo_proveedor": "705966414",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9183996"
+    },
+    {
+      "codigo_proveedor": "705972990",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9183996"
+    },
+    {
+      "codigo_proveedor": "706022001",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9183996"
+    },
+    {
+      "codigo_proveedor": "706071644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9183996"
+    },
+    {
+      "codigo_proveedor": "700752090",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9200125"
+    },
+    {
+      "codigo_proveedor": "702479643",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9200125"
+    },
+    {
+      "codigo_proveedor": "707582359",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9200125"
+    },
+    {
+      "codigo_proveedor": "712742428",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9200125"
+    },
+    {
+      "codigo_proveedor": "733928691",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9200125"
+    },
+    {
+      "codigo_proveedor": "733966196",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9200125"
+    },
+    {
+      "codigo_proveedor": "701244097",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9206132"
+    },
+    {
+      "codigo_proveedor": "704534775",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9206649"
+    },
+    {
+      "codigo_proveedor": "704007624",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9207924"
+    },
+    {
+      "codigo_proveedor": "710512518",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9207924"
+    },
+    {
+      "codigo_proveedor": "720672013",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9229846"
+    },
+    {
+      "codigo_proveedor": "727868093",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9229846"
+    },
+    {
+      "codigo_proveedor": "701910325",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9240704"
+    },
+    {
+      "codigo_proveedor": "704751692",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9240704"
+    },
+    {
+      "codigo_proveedor": "701231151",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9240851"
+    },
+    {
+      "codigo_proveedor": "701910325",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9240851"
+    },
+    {
+      "codigo_proveedor": "702036039",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9240851"
+    },
+    {
+      "codigo_proveedor": "709364079",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9240851"
+    },
+    {
+      "codigo_proveedor": "702223074",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "705958460",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "705963379",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "705964914",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "705966414",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "705972990",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "705981298",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "706022001",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "706071644",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "709168074",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9246282"
+    },
+    {
+      "codigo_proveedor": "721353316",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9252969"
+    },
+    {
+      "codigo_proveedor": "704338102",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9254949"
+    },
+    {
+      "codigo_proveedor": "725316806",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9254949"
+    },
+    {
+      "codigo_proveedor": "702050055",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9265053"
+    },
+    {
+      "codigo_proveedor": "717204325",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9265053"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9266901"
+    },
+    {
+      "codigo_proveedor": "702217191",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9303188"
+    },
+    {
+      "codigo_proveedor": "702547811",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9303503"
+    },
+    {
+      "codigo_proveedor": "713323079",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9311303"
+    },
+    {
+      "codigo_proveedor": "721355105",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9319128"
+    },
+    {
+      "codigo_proveedor": "734144678",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9321815"
+    },
+    {
+      "codigo_proveedor": "705298024",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9332732"
+    },
+    {
+      "codigo_proveedor": "711338087",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9333196"
+    },
+    {
+      "codigo_proveedor": "700644016",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9336339"
+    },
+    {
+      "codigo_proveedor": "705103638",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9336339"
+    },
+    {
+      "codigo_proveedor": "715189528",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9341820"
+    },
+    {
+      "codigo_proveedor": "721810026",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9341820"
+    },
+    {
+      "codigo_proveedor": "709578520",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9347791"
+    },
+    {
+      "codigo_proveedor": "700742141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9348951"
+    },
+    {
+      "codigo_proveedor": "706863156",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9348951"
+    },
+    {
+      "codigo_proveedor": "701006108",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9348992"
+    },
+    {
+      "codigo_proveedor": "701076069",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9348992"
+    },
+    {
+      "codigo_proveedor": "707483921",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9348992"
+    },
+    {
+      "codigo_proveedor": "728913047",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9353776"
+    },
+    {
+      "codigo_proveedor": "734324056",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9353776"
+    },
+    {
+      "codigo_proveedor": "734326432",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9357265"
+    },
+    {
+      "codigo_proveedor": "734321938",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9357300"
+    },
+    {
+      "codigo_proveedor": "734360175",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9357300"
+    },
+    {
+      "codigo_proveedor": "712984475",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9369413"
+    },
+    {
+      "codigo_proveedor": "734359235",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9372393"
+    },
+    {
+      "codigo_proveedor": "734376023",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9372393"
+    },
+    {
+      "codigo_proveedor": "734402472",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9372393"
+    },
+    {
+      "codigo_proveedor": "702712100",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9376300"
+    },
+    {
+      "codigo_proveedor": "709596548",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9381405"
+    },
+    {
+      "codigo_proveedor": "713520104",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9381405"
+    },
+    {
+      "codigo_proveedor": "705964914",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9385439"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9385474"
+    },
+    {
+      "codigo_proveedor": "704338102",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9419856"
+    },
+    {
+      "codigo_proveedor": "700043037",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9971227"
+    },
+    {
+      "codigo_proveedor": "700742141",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9971227"
+    },
+    {
+      "codigo_proveedor": "703333153",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9971227"
+    },
+    {
+      "codigo_proveedor": "706863156",
+      "entidad_compradora": "MUNICIPIO DE BUCARAMANGA",
+      "id_procedimiento": "CO1.REQ.9971227"
+    }
+  ],
+  "sha256": "f302194b7db470788af0ce369000f1ef6c226855dcda0be37a374c7ec1b86c55",
+  "status": "MATERIALIZED"
+}

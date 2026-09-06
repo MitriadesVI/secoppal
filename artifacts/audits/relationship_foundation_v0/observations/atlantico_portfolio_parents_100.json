@@ -1,0 +1,621 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:44:41.795713+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_portafolio,id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,id_del_portafolio,entidad",
+    "$where": "id_del_portafolio in ('CO1.BDOS.1242956','CO1.BDOS.1243137','CO1.BDOS.1243264','CO1.BDOS.1243802','CO1.BDOS.1245476','CO1.BDOS.1245640','CO1.BDOS.1245965','CO1.BDOS.1246765','CO1.BDOS.1246880','CO1.BDOS.1247096','CO1.BDOS.1247299','CO1.BDOS.1247311','CO1.BDOS.1247313','CO1.BDOS.1247325','CO1.BDOS.1247336','CO1.BDOS.1247376','CO1.BDOS.1247411','CO1.BDOS.1247433','CO1.BDOS.1247459','CO1.BDOS.1248103','CO1.BDOS.1248228','CO1.BDOS.1248502','CO1.BDOS.1249619','CO1.BDOS.1249850','CO1.BDOS.1249853','CO1.BDOS.1249965','CO1.BDOS.1250219','CO1.BDOS.1250803','CO1.BDOS.1251341','CO1.BDOS.1251825','CO1.BDOS.1254952','CO1.BDOS.1257035','CO1.BDOS.1258008','CO1.BDOS.1258274','CO1.BDOS.1258286','CO1.BDOS.1258642','CO1.BDOS.1258728','CO1.BDOS.1258805','CO1.BDOS.1259122','CO1.BDOS.1261316','CO1.BDOS.1261853','CO1.BDOS.1262036','CO1.BDOS.1262139','CO1.BDOS.1262225','CO1.BDOS.1262253','CO1.BDOS.1262467','CO1.BDOS.1262545','CO1.BDOS.1262914','CO1.BDOS.1266579','CO1.BDOS.1266790','CO1.BDOS.1266862','CO1.BDOS.1266997','CO1.BDOS.1267318','CO1.BDOS.1267325','CO1.BDOS.1267523','CO1.BDOS.1267549','CO1.BDOS.1267561','CO1.BDOS.1267814','CO1.BDOS.1268433','CO1.BDOS.1268528','CO1.BDOS.1268832','CO1.BDOS.1268916','CO1.BDOS.1268966','CO1.BDOS.1269186','CO1.BDOS.1269272','CO1.BDOS.1269377','CO1.BDOS.1270899','CO1.BDOS.1271155','CO1.BDOS.1271161','CO1.BDOS.1272533','CO1.BDOS.1276354','CO1.BDOS.1276360','CO1.BDOS.1276383','CO1.BDOS.1276490','CO1.BDOS.1276559','CO1.BDOS.1276671','CO1.BDOS.1277225','CO1.BDOS.1277771','CO1.BDOS.1277890','CO1.BDOS.1278164','CO1.BDOS.1278410','CO1.BDOS.1278523','CO1.BDOS.1278524','CO1.BDOS.1278817','CO1.BDOS.1279236','CO1.BDOS.1279677','CO1.BDOS.1279705','CO1.BDOS.1279930','CO1.BDOS.1279938','CO1.BDOS.1281184','CO1.BDOS.1282480','CO1.BDOS.1282500','CO1.BDOS.1282671','CO1.BDOS.1282789','CO1.BDOS.1283570','CO1.BDOS.1283606','CO1.BDOS.1284458','CO1.BDOS.1286380','CO1.BDOS.1286533','CO1.BDOS.1287103')"
+  },
+  "payload": [
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1242956",
+      "id_del_proceso": "CO1.REQ.1281852",
+      "referencia_del_proceso": "MC-001-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1242956",
+      "id_del_proceso": "CO1.REQ.1281852",
+      "referencia_del_proceso": "MC-001-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1243137",
+      "id_del_proceso": "CO1.REQ.1281550",
+      "referencia_del_proceso": "CD-091-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1243264",
+      "id_del_proceso": "CO1.REQ.1281838",
+      "referencia_del_proceso": "CD-092-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1243802",
+      "id_del_proceso": "CO1.REQ.1282141",
+      "referencia_del_proceso": "CD-093-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1245476",
+      "id_del_proceso": "CO1.REQ.1283986",
+      "referencia_del_proceso": "CD-094-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1245640",
+      "id_del_proceso": "CO1.REQ.1284405",
+      "referencia_del_proceso": "CD-095-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1245965",
+      "id_del_proceso": "CO1.REQ.1284543",
+      "referencia_del_proceso": "CD-096-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1246765",
+      "id_del_proceso": "CO1.REQ.1285578",
+      "referencia_del_proceso": "CD-101-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1246880",
+      "id_del_proceso": "CO1.REQ.1285835",
+      "referencia_del_proceso": "MC-002-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247096",
+      "id_del_proceso": "CO1.REQ.1285779",
+      "referencia_del_proceso": "CD-098-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247299",
+      "id_del_proceso": "CO1.REQ.1285951",
+      "referencia_del_proceso": "CD-108-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247311",
+      "id_del_proceso": "CO1.REQ.1285922",
+      "referencia_del_proceso": "CD-103-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247313",
+      "id_del_proceso": "CO1.REQ.1285924",
+      "referencia_del_proceso": "CD-097-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247325",
+      "id_del_proceso": "CO1.REQ.1286028",
+      "referencia_del_proceso": "CD-106-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247336",
+      "id_del_proceso": "CO1.REQ.1285936",
+      "referencia_del_proceso": "CD-107-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247376",
+      "id_del_proceso": "CO1.REQ.1285984",
+      "referencia_del_proceso": "CD-111-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247411",
+      "id_del_proceso": "CO1.REQ.1286010",
+      "referencia_del_proceso": "CD-102-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247433",
+      "id_del_proceso": "CO1.REQ.1285946",
+      "referencia_del_proceso": "CD-105-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1247459",
+      "id_del_proceso": "CO1.REQ.1286310",
+      "referencia_del_proceso": "CD-099-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1248103",
+      "id_del_proceso": "CO1.REQ.1286366",
+      "referencia_del_proceso": "CD-104-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1248228",
+      "id_del_proceso": "CO1.REQ.1286824",
+      "referencia_del_proceso": "CD-109-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1248502",
+      "id_del_proceso": "CO1.REQ.1286639",
+      "referencia_del_proceso": "CD-110-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1249619",
+      "id_del_proceso": "CO1.REQ.1287778",
+      "referencia_del_proceso": "CD-112-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1249850",
+      "id_del_proceso": "CO1.REQ.1288367",
+      "referencia_del_proceso": "CD-100-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1249853",
+      "id_del_proceso": "CO1.REQ.1288578",
+      "referencia_del_proceso": "CD-115-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1249965",
+      "id_del_proceso": "CO1.REQ.1288580",
+      "referencia_del_proceso": "CD-116-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1250219",
+      "id_del_proceso": "CO1.REQ.1289007",
+      "referencia_del_proceso": "CD-113-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1250803",
+      "id_del_proceso": "CO1.REQ.1289610",
+      "referencia_del_proceso": "CD-114-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1251341",
+      "id_del_proceso": "CO1.REQ.1290057",
+      "referencia_del_proceso": "CD-118-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1251825",
+      "id_del_proceso": "CO1.REQ.1290464",
+      "referencia_del_proceso": "CD-117-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1254952",
+      "id_del_proceso": "CO1.REQ.1293849",
+      "referencia_del_proceso": "CD-119-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1257035",
+      "id_del_proceso": "CO1.REQ.1295733",
+      "referencia_del_proceso": "CD-121-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1258008",
+      "id_del_proceso": "CO1.REQ.1297010",
+      "referencia_del_proceso": "CD-120-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1258274",
+      "id_del_proceso": "CO1.REQ.1297708",
+      "referencia_del_proceso": "CD-122-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1258286",
+      "id_del_proceso": "CO1.REQ.1297631",
+      "referencia_del_proceso": "CD-127-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1258642",
+      "id_del_proceso": "CO1.REQ.1297170",
+      "referencia_del_proceso": "CD-125-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1258728",
+      "id_del_proceso": "CO1.REQ.1297292",
+      "referencia_del_proceso": "CD-123-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1258805",
+      "id_del_proceso": "CO1.REQ.1297364",
+      "referencia_del_proceso": "CD-126-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1259122",
+      "id_del_proceso": "CO1.REQ.1297789",
+      "referencia_del_proceso": "CD-124-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1261316",
+      "id_del_proceso": "CO1.REQ.1301341",
+      "referencia_del_proceso": "CD-128-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1261853",
+      "id_del_proceso": "CO1.REQ.1301055",
+      "referencia_del_proceso": "CD-133-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1262036",
+      "id_del_proceso": "CO1.REQ.1301373",
+      "referencia_del_proceso": "CD-129-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1262139",
+      "id_del_proceso": "CO1.REQ.1301436",
+      "referencia_del_proceso": "CD-132-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1262225",
+      "id_del_proceso": "CO1.REQ.1301332",
+      "referencia_del_proceso": "CD-131-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1262253",
+      "id_del_proceso": "CO1.REQ.1301044",
+      "referencia_del_proceso": "CD-130-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1262467",
+      "id_del_proceso": "CO1.REQ.1301664",
+      "referencia_del_proceso": "CD-137-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1262545",
+      "id_del_proceso": "CO1.REQ.1301566",
+      "referencia_del_proceso": "CD-135-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1262914",
+      "id_del_proceso": "CO1.REQ.1302501",
+      "referencia_del_proceso": "CD-138-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1266579",
+      "id_del_proceso": "CO1.REQ.1306389",
+      "referencia_del_proceso": "CD-145-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1266790",
+      "id_del_proceso": "CO1.REQ.1306179",
+      "referencia_del_proceso": "CD-136-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1266862",
+      "id_del_proceso": "CO1.REQ.1306278",
+      "referencia_del_proceso": "CD-140-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1266997",
+      "id_del_proceso": "CO1.REQ.1306089",
+      "referencia_del_proceso": "CD-146-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1267318",
+      "id_del_proceso": "CO1.REQ.1306617",
+      "referencia_del_proceso": "CD-139-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1267325",
+      "id_del_proceso": "CO1.REQ.1306725",
+      "referencia_del_proceso": "CD-142-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1267523",
+      "id_del_proceso": "CO1.REQ.1306894",
+      "referencia_del_proceso": "CD-143-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1267549",
+      "id_del_proceso": "CO1.REQ.1306875",
+      "referencia_del_proceso": "CD-147-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1267561",
+      "id_del_proceso": "CO1.REQ.1307115",
+      "referencia_del_proceso": "CD-148-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1267814",
+      "id_del_proceso": "CO1.REQ.1307058",
+      "referencia_del_proceso": "CD-149-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1268433",
+      "id_del_proceso": "CO1.REQ.1308120",
+      "referencia_del_proceso": "CD-141-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1268528",
+      "id_del_proceso": "CO1.REQ.1307924",
+      "referencia_del_proceso": "CD-144-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1268832",
+      "id_del_proceso": "CO1.REQ.1308412",
+      "referencia_del_proceso": "CD-151-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1268916",
+      "id_del_proceso": "CO1.REQ.1308602",
+      "referencia_del_proceso": "CD-134-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1268966",
+      "id_del_proceso": "CO1.REQ.1308477",
+      "referencia_del_proceso": "CD-152-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1269186",
+      "id_del_proceso": "CO1.REQ.1308922",
+      "referencia_del_proceso": "CD-154-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1269272",
+      "id_del_proceso": "CO1.REQ.1308392",
+      "referencia_del_proceso": "CD-153-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1269377",
+      "id_del_proceso": "CO1.REQ.1308900",
+      "referencia_del_proceso": "CD-150-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1270899",
+      "id_del_proceso": "CO1.REQ.1310641",
+      "referencia_del_proceso": "CD-156-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1271155",
+      "id_del_proceso": "CO1.REQ.1310654",
+      "referencia_del_proceso": "CD-155-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1271161",
+      "id_del_proceso": "CO1.REQ.1310663",
+      "referencia_del_proceso": "CD-158-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1272533",
+      "id_del_proceso": "CO1.REQ.1316252",
+      "referencia_del_proceso": "CD-157-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1276354",
+      "id_del_proceso": "CO1.REQ.1316060",
+      "referencia_del_proceso": "CD-160-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1276360",
+      "id_del_proceso": "CO1.REQ.1316198",
+      "referencia_del_proceso": "CD-163-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1276383",
+      "id_del_proceso": "CO1.REQ.1316493",
+      "referencia_del_proceso": "CD-161-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1276490",
+      "id_del_proceso": "CO1.REQ.1316515",
+      "referencia_del_proceso": "CD-164-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1276559",
+      "id_del_proceso": "CO1.REQ.1316250",
+      "referencia_del_proceso": "CD-159-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1276671",
+      "id_del_proceso": "CO1.REQ.1316281",
+      "referencia_del_proceso": "CD-162-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1277225",
+      "id_del_proceso": "CO1.REQ.1316665",
+      "referencia_del_proceso": "CD-165-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1277771",
+      "id_del_proceso": "CO1.REQ.1317979",
+      "referencia_del_proceso": "CD-167-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1277890",
+      "id_del_proceso": "CO1.REQ.1317799",
+      "referencia_del_proceso": "CD-168-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1278164",
+      "id_del_proceso": "CO1.REQ.1318075",
+      "referencia_del_proceso": "CD-166-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1278410",
+      "id_del_proceso": "CO1.REQ.1318404",
+      "referencia_del_proceso": "CD-169-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1278523",
+      "id_del_proceso": "CO1.REQ.1318532",
+      "referencia_del_proceso": "CD-172-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1278524",
+      "id_del_proceso": "CO1.REQ.1318236",
+      "referencia_del_proceso": "CD-171-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1278817",
+      "id_del_proceso": "CO1.REQ.1319021",
+      "referencia_del_proceso": "CD-170-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1279236",
+      "id_del_proceso": "CO1.REQ.1319434",
+      "referencia_del_proceso": "CD-176-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1279677",
+      "id_del_proceso": "CO1.REQ.1319278",
+      "referencia_del_proceso": "CD-177-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1279705",
+      "id_del_proceso": "CO1.REQ.1319191",
+      "referencia_del_proceso": "CD-173-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1279930",
+      "id_del_proceso": "CO1.REQ.1319658",
+      "referencia_del_proceso": "CD-175-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1279938",
+      "id_del_proceso": "CO1.REQ.1320204",
+      "referencia_del_proceso": "CD-178-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1281184",
+      "id_del_proceso": "CO1.REQ.1321208",
+      "referencia_del_proceso": "CD-174-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1282480",
+      "id_del_proceso": "CO1.REQ.1322814",
+      "referencia_del_proceso": "CD-183-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1282500",
+      "id_del_proceso": "CO1.REQ.1322917",
+      "referencia_del_proceso": "CD-179-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1282671",
+      "id_del_proceso": "CO1.REQ.1322377",
+      "referencia_del_proceso": "CD-180-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1282789",
+      "id_del_proceso": "CO1.REQ.1322733",
+      "referencia_del_proceso": "CD-181-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1283570",
+      "id_del_proceso": "CO1.REQ.1323605",
+      "referencia_del_proceso": "CD-186-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1283606",
+      "id_del_proceso": "CO1.REQ.1323256",
+      "referencia_del_proceso": "CD-185-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1284458",
+      "id_del_proceso": "CO1.REQ.1324442",
+      "referencia_del_proceso": "CD-187-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1286380",
+      "id_del_proceso": "CO1.REQ.1326166",
+      "referencia_del_proceso": "CD-184-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1286533",
+      "id_del_proceso": "CO1.REQ.1326532",
+      "referencia_del_proceso": "CD-182-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1287103",
+      "id_del_proceso": "CO1.REQ.1326756",
+      "referencia_del_proceso": "CD-188-2020"
+    }
+  ],
+  "sha256": "a2cb9a862c3d4df33168dfd564d1921539d1dba08a7eee7ca2cd9e4d483930f2",
+  "status": "MATERIALIZED"
+}

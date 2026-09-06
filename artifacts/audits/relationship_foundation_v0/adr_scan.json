@@ -1,0 +1,161 @@
+{
+  "worktrees": [
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal",
+      "maximum": 80
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-assisted-offline",
+      "maximum": 55
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-assisted-retrieval",
+      "maximum": 55
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3-frontier",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-design",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-chatgpt",
+      "maximum": 66
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-codex-competition",
+      "maximum": 80
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-codex-entity",
+      "maximum": 81
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-codex-features",
+      "maximum": 80
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-codex-hardening",
+      "maximum": 80
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-conversation-audit",
+      "maximum": 61
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review",
+      "maximum": 66
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-m1b-guard",
+      "maximum": 80
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-m2c",
+      "maximum": 91
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-procurement-foundation",
+      "maximum": 80
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch",
+      "maximum": 70
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-review-r7",
+      "maximum": 66
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1",
+      "maximum": 69
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-tooling",
+      "maximum": 66
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-truth-layer",
+      "maximum": 55
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048",
+      "maximum": 48
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary",
+      "maximum": 49
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-warehouse",
+      "maximum": 48
+    }
+  ],
+  "global_max": 91,
+  "reserved_other_lanes": [
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90
+  ]
+}

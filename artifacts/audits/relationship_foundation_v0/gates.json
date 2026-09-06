@@ -1,0 +1,42 @@
+{
+  "evidence": {
+    "BID_MULTI_CANARIES_10": true,
+    "BID_POPULATIONS_NOT_CAPPED": true,
+    "BID_SINGLE_CANARIES": true,
+    "BOGOTA_MULTIPLE_BUYERS": true,
+    "CONTRACTOR_CANARIES_10": true,
+    "CONTRACT_CODES_REJECT_ZERO": true,
+    "GROUPS_NOT_CAPPED": true,
+    "GROUP_LOGICAL_MAPPING_COMPLETE": true,
+    "GROUP_NAMESPACE_WITNESSES_10": true,
+    "MEMBERSHIP_GROUP_CANARIES_10": true,
+    "NO_GRAPH_DATABASE": true,
+    "PROCESS_CONTRACT_CANARIES_10": true,
+    "TERRITORIES_1103": true
+  },
+  "identity_and_product": {
+    "ACTOR_PROFILE_EFFECT": 0,
+    "BUYER_GROUP_INFERRED_MEMBERSHIP": 0,
+    "CONTRACT_UNSTABLE_IDS_AS_NODES": 0,
+    "ENTITY_ANALYSIS_EFFECT": 0,
+    "NAME_AS_PRIMARY_NODE_ID": 0,
+    "NIT_AS_BUYER_UNIT_ID": 0,
+    "NIT_AS_SECOP_SUPPLIER_ID": 0,
+    "PROCESS_UNSTABLE_IDS_AS_NODES": 0,
+    "QUERY_EFFECT": 0,
+    "RADAR_EFFECT": 0,
+    "RUNTIME_IMPORTS": 0,
+    "SOQL_EFFECT": 0,
+    "SUPPLIER_CODE_AS_ACTOR_ID": 0,
+    "TERRITORY_AS_BUYER": 0
+  },
+  "isolation": {
+    "base_sha": "c79f8460c84ab26631c2534af106405cb16803f2",
+    "changed_existing_app_files": [],
+    "database_files": [],
+    "forbidden_storage_dependencies": [],
+    "runtime_references": []
+  },
+  "pass": true,
+  "verdict": "PASS"
+}

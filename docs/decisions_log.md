@@ -4337,3 +4337,16 @@ El barrido previo cubrió 29 worktrees y encontró ADR-079 como máximo global.
 Detalle:
 `docs/decisions/2026-09-04_ADR-080_territorial-knowledge-shadow-registry.md`.
 Informe: `docs/architecture/TERRITORIAL_KNOWLEDGE_V0.md`.
+
+
+## ADR-092: Procurement Relationship Foundation V0
+
+2026-09-06 — Accepted, SHADOW_FOUNDATION; sin runtime.
+
+Se separan cuenta SECOP y Actor, assertion y coverage, relaciones primarias y
+derivadas. Contrato de nueve nodos y ocho edges shadow, sin graph DB.
+Join proceso/contrato por portafolio exacto y proceso único; identidad de proveedor
+y PAA permanecen diferidas. No modifica ADR-074, ADR-075 ni ADR-080.
+
+[Decisión completa](decisions/2026-09-06_ADR-092_procurement-relationship-foundation-v0.md).
+[Validación](../artifacts/audits/relationship_foundation_v0/validation.json).

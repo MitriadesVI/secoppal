@@ -1,0 +1,2248 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:39:13.578709+00:00",
+  "params": {
+    "$limit": 250,
+    "$order": "id_contrato",
+    "$select": "id_contrato,referencia_del_contrato,proceso_de_compra,nombre_entidad,codigo_proveedor,estado_contrato,fecha_de_firma",
+    "$where": "nombre_entidad in ('DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA')"
+  },
+  "payload": [
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1037511",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.744808",
+      "referencia_del_contrato": "CO1.PCCNTR.1037511"
+    },
+    {
+      "codigo_proveedor": "707213575",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1074816",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.885031",
+      "referencia_del_contrato": "012019004170"
+    },
+    {
+      "codigo_proveedor": "702601303",
+      "estado_contrato": "enviado Proveedor",
+      "id_contrato": "CO1.PCCNTR.1084512",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.766723",
+      "referencia_del_contrato": "012019002144"
+    },
+    {
+      "codigo_proveedor": "703810978",
+      "estado_contrato": "enviado Proveedor",
+      "id_contrato": "CO1.PCCNTR.1084708",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.696694",
+      "referencia_del_contrato": "01201900338"
+    },
+    {
+      "codigo_proveedor": "700108061",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1086132",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.905502",
+      "referencia_del_contrato": "CO1.PCCNTR.1086132"
+    },
+    {
+      "codigo_proveedor": "702907726",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1130523",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.932807",
+      "referencia_del_contrato": "CO1.PCCNTR.1130523"
+    },
+    {
+      "codigo_proveedor": "708839337",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1356949",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1077636",
+      "referencia_del_contrato": "012020000636"
+    },
+    {
+      "codigo_proveedor": "704392448",
+      "estado_contrato": "enviado Proveedor",
+      "id_contrato": "CO1.PCCNTR.1490501",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1194894",
+      "referencia_del_contrato": "CO1.PCCNTR.1490501"
+    },
+    {
+      "codigo_proveedor": "704668854",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1490910",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1195315",
+      "referencia_del_contrato": "UMA-005-2020"
+    },
+    {
+      "codigo_proveedor": "701240053",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1491007",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1194494",
+      "referencia_del_contrato": "CO1.PCCNTR.1491007"
+    },
+    {
+      "codigo_proveedor": "709405278",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1493008",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1196744",
+      "referencia_del_contrato": "CO1.PCCNTR.1493008"
+    },
+    {
+      "codigo_proveedor": "709490056",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1493123",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1196758",
+      "referencia_del_contrato": "CO1.PCCNTR.1493123"
+    },
+    {
+      "codigo_proveedor": "707179099",
+      "estado_contrato": "enviado Proveedor",
+      "id_contrato": "CO1.PCCNTR.1493128",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1197303",
+      "referencia_del_contrato": "CO1.PCCNTR.1493128"
+    },
+    {
+      "codigo_proveedor": "707774097",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1493129",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1197305",
+      "referencia_del_contrato": "UMA-010-2020"
+    },
+    {
+      "codigo_proveedor": "705275550",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1493227",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1197107",
+      "referencia_del_contrato": "UMA-008-2020"
+    },
+    {
+      "codigo_proveedor": "701347205",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1494134",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1197640",
+      "referencia_del_contrato": "CO1.PCCNTR.1494134"
+    },
+    {
+      "codigo_proveedor": "709403463",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1494429",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1197303",
+      "referencia_del_contrato": "CO1.PCCNTR.1494429"
+    },
+    {
+      "codigo_proveedor": "707008801",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1494752",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1194894",
+      "referencia_del_contrato": "CO1.PCCNTR.1494752"
+    },
+    {
+      "codigo_proveedor": "708735386",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1499912",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1202720",
+      "referencia_del_contrato": "CO1.PCCNTR.1499912"
+    },
+    {
+      "codigo_proveedor": "709505564",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1502407",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1204012",
+      "referencia_del_contrato": "CO1.PCCNTR.1502407"
+    },
+    {
+      "codigo_proveedor": "709578546",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1503058",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1205275",
+      "referencia_del_contrato": "CO1.PCCNTR.1503058"
+    },
+    {
+      "codigo_proveedor": "709443568",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1506974",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1207798",
+      "referencia_del_contrato": "CO1.PCCNTR.1506974"
+    },
+    {
+      "codigo_proveedor": "709445316",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1506990",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1208126",
+      "referencia_del_contrato": "CO1.PCCNTR.1506990"
+    },
+    {
+      "codigo_proveedor": "709433239",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1507078",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1207653",
+      "referencia_del_contrato": "CO1.PCCNTR.1507078"
+    },
+    {
+      "codigo_proveedor": "709449284",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1507200",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1207984",
+      "referencia_del_contrato": "CO1.PCCNTR.1507200"
+    },
+    {
+      "codigo_proveedor": "709437511",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1507284",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1207793",
+      "referencia_del_contrato": "CO1.PCCNTR.1507284"
+    },
+    {
+      "codigo_proveedor": "709435556",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1507291",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1207998",
+      "referencia_del_contrato": "CO1.PCCNTR.1507291"
+    },
+    {
+      "codigo_proveedor": "709455125",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1507327",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1207554",
+      "referencia_del_contrato": "CO1.PCCNTR.1507327"
+    },
+    {
+      "codigo_proveedor": "709435465",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1507372",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1207663",
+      "referencia_del_contrato": "CO1.PCCNTR.1507372"
+    },
+    {
+      "codigo_proveedor": "709435127",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1507923",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1208129",
+      "referencia_del_contrato": "CO1.PCCNTR.1507923"
+    },
+    {
+      "codigo_proveedor": "709543631",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1510124",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1209810",
+      "referencia_del_contrato": "CO1.PCCNTR.1510124"
+    },
+    {
+      "codigo_proveedor": "709448302",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1510749",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1210210",
+      "referencia_del_contrato": "CO1.PCCNTR.1510749"
+    },
+    {
+      "codigo_proveedor": "709584130",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1513216",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1212613",
+      "referencia_del_contrato": "UMA-013-2020"
+    },
+    {
+      "codigo_proveedor": "702516162",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1515595",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1214727",
+      "referencia_del_contrato": "CO1.PCCNTR.1515595"
+    },
+    {
+      "codigo_proveedor": "709634372",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1517914",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1216406",
+      "referencia_del_contrato": "CO1.PCCNTR.1517914"
+    },
+    {
+      "codigo_proveedor": "709593362",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1517915",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1216409",
+      "referencia_del_contrato": "CO1.PCCNTR.1517915"
+    },
+    {
+      "codigo_proveedor": "709587752",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1518076",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1216382",
+      "referencia_del_contrato": "CO1.PCCNTR.1518076"
+    },
+    {
+      "codigo_proveedor": "709516157",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1518276",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1216574",
+      "referencia_del_contrato": "CO1.PCCNTR.1518276"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1518904",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1216382",
+      "referencia_del_contrato": "CO1.PCCNTR.1518904"
+    },
+    {
+      "codigo_proveedor": "709519011",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1518985",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1217402",
+      "referencia_del_contrato": "CO1.PCCNTR.1518985"
+    },
+    {
+      "codigo_proveedor": "709516041",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519008",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1216278",
+      "referencia_del_contrato": "CO1.PCCNTR.1519008"
+    },
+    {
+      "codigo_proveedor": "709514236",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519101",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1216827",
+      "referencia_del_contrato": "CO1.PCCNTR.1519101"
+    },
+    {
+      "codigo_proveedor": "709519474",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519155",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1216873",
+      "referencia_del_contrato": "CO1.PCCNTR.1519155"
+    },
+    {
+      "codigo_proveedor": "709527295",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519231",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1216857",
+      "referencia_del_contrato": "CO1.PCCNTR.1519231"
+    },
+    {
+      "codigo_proveedor": "709518815",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519251",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1217623",
+      "referencia_del_contrato": "CO1.PCCNTR.1519251"
+    },
+    {
+      "codigo_proveedor": "709521330",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519327",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1217419",
+      "referencia_del_contrato": "CO1.PCCNTR.1519327"
+    },
+    {
+      "codigo_proveedor": "709518575",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519330",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1217424",
+      "referencia_del_contrato": "CO1.PCCNTR.1519330"
+    },
+    {
+      "codigo_proveedor": "709517213",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519506",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1217033",
+      "referencia_del_contrato": "CO1.PCCNTR.1519506"
+    },
+    {
+      "codigo_proveedor": "709518468",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519806",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1217427",
+      "referencia_del_contrato": "CO1.PCCNTR.1519806"
+    },
+    {
+      "codigo_proveedor": "709513543",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520457",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218423",
+      "referencia_del_contrato": "CO1.PCCNTR.1520457"
+    },
+    {
+      "codigo_proveedor": "701224164",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520498",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218653",
+      "referencia_del_contrato": "CO1.PCCNTR.1520498"
+    },
+    {
+      "codigo_proveedor": "709512479",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520509",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218328",
+      "referencia_del_contrato": "CO1.PCCNTR.1520509"
+    },
+    {
+      "codigo_proveedor": "709516017",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520692",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1217947",
+      "referencia_del_contrato": "CO1.PCCNTR.1520692"
+    },
+    {
+      "codigo_proveedor": "709496541",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520809",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218021",
+      "referencia_del_contrato": "CO1.PCCNTR.1520809"
+    },
+    {
+      "codigo_proveedor": "709514095",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520815",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218341",
+      "referencia_del_contrato": "CO1.PCCNTR.1520815"
+    },
+    {
+      "codigo_proveedor": "709514228",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520868",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218413",
+      "referencia_del_contrato": "CO1.PCCNTR.1520868"
+    },
+    {
+      "codigo_proveedor": "709516173",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520891",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218420",
+      "referencia_del_contrato": "CO1.PCCNTR.1520891"
+    },
+    {
+      "codigo_proveedor": "709514277",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520966",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218167",
+      "referencia_del_contrato": "CO1.PCCNTR.1520966"
+    },
+    {
+      "codigo_proveedor": "709516108",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1521303",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218070",
+      "referencia_del_contrato": "CO1.PCCNTR.1521303"
+    },
+    {
+      "codigo_proveedor": "709512628",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1521310",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218073",
+      "referencia_del_contrato": "CO1.PCCNTR.1521310"
+    },
+    {
+      "codigo_proveedor": "709515076",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1521353",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218436",
+      "referencia_del_contrato": "CO1.PCCNTR.1521353"
+    },
+    {
+      "codigo_proveedor": "708049747",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1521382",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218906",
+      "referencia_del_contrato": "CO1.PCCNTR.1521382"
+    },
+    {
+      "codigo_proveedor": "709506646",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1521614",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218198",
+      "referencia_del_contrato": "CO1.PCCNTR.1521614"
+    },
+    {
+      "codigo_proveedor": "709507685",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1521630",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218537",
+      "referencia_del_contrato": "CO1.PCCNTR.1521630"
+    },
+    {
+      "codigo_proveedor": "709507610",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1522013",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218456",
+      "referencia_del_contrato": "CO1.PCCNTR.1522013"
+    },
+    {
+      "codigo_proveedor": "709507776",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1522037",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219016",
+      "referencia_del_contrato": "CO1.PCCNTR.1522037"
+    },
+    {
+      "codigo_proveedor": "709506778",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1522109",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218454",
+      "referencia_del_contrato": "CO1.PCCNTR.1522109"
+    },
+    {
+      "codigo_proveedor": "707646030",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1522132",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218720",
+      "referencia_del_contrato": "CO1.PCCNTR.1522132"
+    },
+    {
+      "codigo_proveedor": "709508899",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1522147",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219003",
+      "referencia_del_contrato": "CO1.PCCNTR.1522147"
+    },
+    {
+      "codigo_proveedor": "707679791",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1522154",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218478",
+      "referencia_del_contrato": "CO1.PCCNTR.1522154"
+    },
+    {
+      "codigo_proveedor": "709507743",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1522157",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218651",
+      "referencia_del_contrato": "CO1.PCCNTR.1522157"
+    },
+    {
+      "codigo_proveedor": "709507792",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1522179",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1218667",
+      "referencia_del_contrato": "CO1.PCCNTR.1522179"
+    },
+    {
+      "codigo_proveedor": "709584700",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1522919",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219124",
+      "referencia_del_contrato": "CO1.PCCNTR.1522919"
+    },
+    {
+      "codigo_proveedor": "709531701",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1523738",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219654",
+      "referencia_del_contrato": "CO1.PCCNTR.1523738"
+    },
+    {
+      "codigo_proveedor": "709508253",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1523783",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219873",
+      "referencia_del_contrato": "CO1.PCCNTR.1523783"
+    },
+    {
+      "codigo_proveedor": "709527402",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1523800",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220417",
+      "referencia_del_contrato": "CO1.PCCNTR.1523800"
+    },
+    {
+      "codigo_proveedor": "709534283",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1523874",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219600",
+      "referencia_del_contrato": "CO1.PCCNTR.1523874"
+    },
+    {
+      "codigo_proveedor": "709507859",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1523947",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219749",
+      "referencia_del_contrato": "CO1.PCCNTR.1523947"
+    },
+    {
+      "codigo_proveedor": "709561161",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524084",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219689",
+      "referencia_del_contrato": "CO1.PCCNTR.1524084"
+    },
+    {
+      "codigo_proveedor": "709524797",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524097",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220131",
+      "referencia_del_contrato": "CO1.PCCNTR.1524097"
+    },
+    {
+      "codigo_proveedor": "709539217",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524156",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219563",
+      "referencia_del_contrato": "CO1.PCCNTR.1524156"
+    },
+    {
+      "codigo_proveedor": "709507800",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524157",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219560",
+      "referencia_del_contrato": "CO1.PCCNTR.1524157"
+    },
+    {
+      "codigo_proveedor": "706919297",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524169",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219680",
+      "referencia_del_contrato": "CO1.PCCNTR.1524169"
+    },
+    {
+      "codigo_proveedor": "709537021",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524174",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220011",
+      "referencia_del_contrato": "CO1.PCCNTR.1524174"
+    },
+    {
+      "codigo_proveedor": "709527394",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524195",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220043",
+      "referencia_del_contrato": "CO1.PCCNTR.1524195"
+    },
+    {
+      "codigo_proveedor": "709524805",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524824",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220141",
+      "referencia_del_contrato": "CO1.PCCNTR.1524824"
+    },
+    {
+      "codigo_proveedor": "709524789",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524838",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220260",
+      "referencia_del_contrato": "CO1.PCCNTR.1524838"
+    },
+    {
+      "codigo_proveedor": "709542161",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524845",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220163",
+      "referencia_del_contrato": "CO1.PCCNTR.1524845"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1524871",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220069",
+      "referencia_del_contrato": "CO1.PCCNTR.1524871"
+    },
+    {
+      "codigo_proveedor": "709542898",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1524909",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220201",
+      "referencia_del_contrato": "CO1.PCCNTR.1524909"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1524953",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220178",
+      "referencia_del_contrato": "CO1.PCCNTR.1524953"
+    },
+    {
+      "codigo_proveedor": "709531412",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1525208",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220232",
+      "referencia_del_contrato": "CO1.PCCNTR.1525208"
+    },
+    {
+      "codigo_proveedor": "709530224",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1525220",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220256",
+      "referencia_del_contrato": "CO1.PCCNTR.1525220"
+    },
+    {
+      "codigo_proveedor": "709519987",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1525231",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220436",
+      "referencia_del_contrato": "CO1.PCCNTR.1525231"
+    },
+    {
+      "codigo_proveedor": "709566293",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1525260",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220071",
+      "referencia_del_contrato": "CO1.PCCNTR.1525260"
+    },
+    {
+      "codigo_proveedor": "709520241",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1525321",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220058",
+      "referencia_del_contrato": "CO1.PCCNTR.1525321"
+    },
+    {
+      "codigo_proveedor": "709578389",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1525912",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219793",
+      "referencia_del_contrato": "CO1.PCCNTR.1525912"
+    },
+    {
+      "codigo_proveedor": "709606842",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1525918",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220069",
+      "referencia_del_contrato": "CO1.PCCNTR.1525918"
+    },
+    {
+      "codigo_proveedor": "709517890",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1525924",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220709",
+      "referencia_del_contrato": "CO1.PCCNTR.1525924"
+    },
+    {
+      "codigo_proveedor": "709607865",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1526008",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220178",
+      "referencia_del_contrato": "CO1.PCCNTR.1526008"
+    },
+    {
+      "codigo_proveedor": "709434195",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1526011",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220703",
+      "referencia_del_contrato": "CO1.PCCNTR.1526011"
+    },
+    {
+      "codigo_proveedor": "709530216",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1526201",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220292",
+      "referencia_del_contrato": "CO1.PCCNTR.1526201"
+    },
+    {
+      "codigo_proveedor": "709575583",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1526324",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220604",
+      "referencia_del_contrato": "CO1.PCCNTR.1526324"
+    },
+    {
+      "codigo_proveedor": "709527204",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1526415",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220704",
+      "referencia_del_contrato": "CO1.PCCNTR.1526415"
+    },
+    {
+      "codigo_proveedor": "709606875",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1526418",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1220609",
+      "referencia_del_contrato": "CO1.PCCNTR.1526418"
+    },
+    {
+      "codigo_proveedor": "709519813",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1528897",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223094",
+      "referencia_del_contrato": "CO1.PCCNTR.1528897"
+    },
+    {
+      "codigo_proveedor": "709519862",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529052",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223387",
+      "referencia_del_contrato": "CO1.PCCNTR.1529052"
+    },
+    {
+      "codigo_proveedor": "709519938",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529170",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223480",
+      "referencia_del_contrato": "CO1.PCCNTR.1529170"
+    },
+    {
+      "codigo_proveedor": "709507768",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529177",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223519",
+      "referencia_del_contrato": "CO1.PCCNTR.1529177"
+    },
+    {
+      "codigo_proveedor": "709525166",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529239",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223359",
+      "referencia_del_contrato": "CO1.PCCNTR.1529239"
+    },
+    {
+      "codigo_proveedor": "709521793",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529243",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223143",
+      "referencia_del_contrato": "CO1.PCCNTR.1529243"
+    },
+    {
+      "codigo_proveedor": "709519698",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529246",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1221305",
+      "referencia_del_contrato": "CO1.PCCNTR.1529246"
+    },
+    {
+      "codigo_proveedor": "709521918",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529251",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223239",
+      "referencia_del_contrato": "CO1.PCCNTR.1529251"
+    },
+    {
+      "codigo_proveedor": "709519888",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529264",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223510",
+      "referencia_del_contrato": "CO1.PCCNTR.1529264"
+    },
+    {
+      "codigo_proveedor": "709506513",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529267",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223277",
+      "referencia_del_contrato": "CO1.PCCNTR.1529267"
+    },
+    {
+      "codigo_proveedor": "709517239",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529276",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223707",
+      "referencia_del_contrato": "CO1.PCCNTR.1529276"
+    },
+    {
+      "codigo_proveedor": "709522163",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529286",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223716",
+      "referencia_del_contrato": "CO1.PCCNTR.1529286"
+    },
+    {
+      "codigo_proveedor": "709507917",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529290",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223497",
+      "referencia_del_contrato": "CO1.PCCNTR.1529290"
+    },
+    {
+      "codigo_proveedor": "709634521",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529913",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223368",
+      "referencia_del_contrato": "CO1.PCCNTR.1529913"
+    },
+    {
+      "codigo_proveedor": "709507834",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529926",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223702",
+      "referencia_del_contrato": "CO1.PCCNTR.1529926"
+    },
+    {
+      "codigo_proveedor": "709519185",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529935",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223523",
+      "referencia_del_contrato": "CO1.PCCNTR.1529935"
+    },
+    {
+      "codigo_proveedor": "709518583",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529941",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223723",
+      "referencia_del_contrato": "CO1.PCCNTR.1529941"
+    },
+    {
+      "codigo_proveedor": "709525075",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1530011",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223634",
+      "referencia_del_contrato": "CO1.PCCNTR.1530011"
+    },
+    {
+      "codigo_proveedor": "709519979",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1530201",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223649",
+      "referencia_del_contrato": "CO1.PCCNTR.1530201"
+    },
+    {
+      "codigo_proveedor": "709634828",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1530231",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1223952",
+      "referencia_del_contrato": "CO1.PCCNTR.1530231"
+    },
+    {
+      "codigo_proveedor": "709635163",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1530236",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1224134",
+      "referencia_del_contrato": "CO1.PCCNTR.1530236"
+    },
+    {
+      "codigo_proveedor": "709634380",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1530370",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1224125",
+      "referencia_del_contrato": "CO1.PCCNTR.1530370"
+    },
+    {
+      "codigo_proveedor": "709635296",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1534593",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1226496",
+      "referencia_del_contrato": "CO1.PCCNTR.1534593"
+    },
+    {
+      "codigo_proveedor": "709489066",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1535345",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1227030",
+      "referencia_del_contrato": "CO1.PCCNTR.1535345"
+    },
+    {
+      "codigo_proveedor": "709543276",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1537922",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1228908",
+      "referencia_del_contrato": "CO1.PCCNTR.1537922"
+    },
+    {
+      "codigo_proveedor": "701615106",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1538148",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1229023",
+      "referencia_del_contrato": "CO1.PCCNTR.1538148"
+    },
+    {
+      "codigo_proveedor": "709540249",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1538258",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1229160",
+      "referencia_del_contrato": "CO1.PCCNTR.1538258"
+    },
+    {
+      "codigo_proveedor": "709472229",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1542395",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1233617",
+      "referencia_del_contrato": "CO1.PCCNTR.1542395"
+    },
+    {
+      "codigo_proveedor": "709464168",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1542468",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1233705",
+      "referencia_del_contrato": "CO1.PCCNTR.1542468"
+    },
+    {
+      "codigo_proveedor": "709539308",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1542495",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1233832",
+      "referencia_del_contrato": "CO1.PCCNTR.1542495"
+    },
+    {
+      "codigo_proveedor": "709633671",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-05-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1542677",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1233449",
+      "referencia_del_contrato": "CO1.PCCNTR.1542677"
+    },
+    {
+      "codigo_proveedor": "709477301",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1542749",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1233295",
+      "referencia_del_contrato": "CO1.PCCNTR.1542749"
+    },
+    {
+      "codigo_proveedor": "701615106",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-05-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1543302",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1233520",
+      "referencia_del_contrato": "CO1.PCCNTR.1543302"
+    },
+    {
+      "codigo_proveedor": "709559157",
+      "estado_contrato": "enviado Proveedor",
+      "id_contrato": "CO1.PCCNTR.1543308",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1233727",
+      "referencia_del_contrato": "CO1.PCCNTR.1543308"
+    },
+    {
+      "codigo_proveedor": "709578058",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1543365",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1234105",
+      "referencia_del_contrato": "CO1.PCCNTR.1543365"
+    },
+    {
+      "codigo_proveedor": "709480180",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1543542",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1233852",
+      "referencia_del_contrato": "CO1.PCCNTR.1543542"
+    },
+    {
+      "codigo_proveedor": "708924253",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1544305",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1228943",
+      "referencia_del_contrato": "CO1.PCCNTR.1544305"
+    },
+    {
+      "codigo_proveedor": "709540348",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1544972",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235199",
+      "referencia_del_contrato": "CO1.PCCNTR.1544972"
+    },
+    {
+      "codigo_proveedor": "709464366",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1544995",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235532",
+      "referencia_del_contrato": "CO1.PCCNTR.1544995"
+    },
+    {
+      "codigo_proveedor": "709494595",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1545063",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1234900",
+      "referencia_del_contrato": "CO1.PCCNTR.1545063"
+    },
+    {
+      "codigo_proveedor": "709498570",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1545073",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1234796",
+      "referencia_del_contrato": "CO1.PCCNTR.1545073"
+    },
+    {
+      "codigo_proveedor": "709470314",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1545077",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235603",
+      "referencia_del_contrato": "CO1.PCCNTR.1545077"
+    },
+    {
+      "codigo_proveedor": "709464309",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1545090",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235522",
+      "referencia_del_contrato": "CO1.PCCNTR.1545090"
+    },
+    {
+      "codigo_proveedor": "709441026",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1545227",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235140",
+      "referencia_del_contrato": "CO1.PCCNTR.1545227"
+    },
+    {
+      "codigo_proveedor": "709529762",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1545257",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235182",
+      "referencia_del_contrato": "CO1.PCCNTR.1545257"
+    },
+    {
+      "codigo_proveedor": "709540488",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1545283",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235330",
+      "referencia_del_contrato": "CO1.PCCNTR.1545283"
+    },
+    {
+      "codigo_proveedor": "709540355",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546110",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235244",
+      "referencia_del_contrato": "CO1.PCCNTR.1546110"
+    },
+    {
+      "codigo_proveedor": "709543045",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546115",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235409",
+      "referencia_del_contrato": "CO1.PCCNTR.1546115"
+    },
+    {
+      "codigo_proveedor": "709541130",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546351",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235801",
+      "referencia_del_contrato": "CO1.PCCNTR.1546351"
+    },
+    {
+      "codigo_proveedor": "709469183",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546612",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235432",
+      "referencia_del_contrato": "CO1.PCCNTR.1546612"
+    },
+    {
+      "codigo_proveedor": "709540108",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546617",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235371",
+      "referencia_del_contrato": "CO1.PCCNTR.1546617"
+    },
+    {
+      "codigo_proveedor": "709529754",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546643",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236004",
+      "referencia_del_contrato": "CO1.PCCNTR.1546643"
+    },
+    {
+      "codigo_proveedor": "709540322",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546708",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235435",
+      "referencia_del_contrato": "CO1.PCCNTR.1546708"
+    },
+    {
+      "codigo_proveedor": "709540413",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546716",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235662",
+      "referencia_del_contrato": "CO1.PCCNTR.1546716"
+    },
+    {
+      "codigo_proveedor": "709540397",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546718",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235384",
+      "referencia_del_contrato": "CO1.PCCNTR.1546718"
+    },
+    {
+      "codigo_proveedor": "709472252",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546801",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235544",
+      "referencia_del_contrato": "CO1.PCCNTR.1546801"
+    },
+    {
+      "codigo_proveedor": "709461636",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546825",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235368",
+      "referencia_del_contrato": "CO1.PCCNTR.1546825"
+    },
+    {
+      "codigo_proveedor": "709543037",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547206",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235806",
+      "referencia_del_contrato": "CO1.PCCNTR.1547206"
+    },
+    {
+      "codigo_proveedor": "709534259",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547223",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235819",
+      "referencia_del_contrato": "CO1.PCCNTR.1547223"
+    },
+    {
+      "codigo_proveedor": "709540314",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547303",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235668",
+      "referencia_del_contrato": "CO1.PCCNTR.1547303"
+    },
+    {
+      "codigo_proveedor": "709540520",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547309",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235674",
+      "referencia_del_contrato": "CO1.PCCNTR.1547309"
+    },
+    {
+      "codigo_proveedor": "709534200",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547320",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235812",
+      "referencia_del_contrato": "CO1.PCCNTR.1547320"
+    },
+    {
+      "codigo_proveedor": "709534143",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547410",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1235907",
+      "referencia_del_contrato": "CO1.PCCNTR.1547410"
+    },
+    {
+      "codigo_proveedor": "709472187",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547628",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236318",
+      "referencia_del_contrato": "CO1.PCCNTR.1547628"
+    },
+    {
+      "codigo_proveedor": "709518609",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547648",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236615",
+      "referencia_del_contrato": "CO1.PCCNTR.1547648"
+    },
+    {
+      "codigo_proveedor": "709472161",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547666",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236457",
+      "referencia_del_contrato": "CO1.PCCNTR.1547666"
+    },
+    {
+      "codigo_proveedor": "709464234",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547705",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236604",
+      "referencia_del_contrato": "CO1.PCCNTR.1547705"
+    },
+    {
+      "codigo_proveedor": "705684025",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547709",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1219706",
+      "referencia_del_contrato": "CO1.PCCNTR.1547709"
+    },
+    {
+      "codigo_proveedor": "701895278",
+      "estado_contrato": "enviado Proveedor",
+      "id_contrato": "CO1.PCCNTR.1547712",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236205",
+      "referencia_del_contrato": "CO1.PCCNTR.1547712"
+    },
+    {
+      "codigo_proveedor": "709530331",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547782",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236577",
+      "referencia_del_contrato": "CO1.PCCNTR.1547782"
+    },
+    {
+      "codigo_proveedor": "709584361",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547787",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236690",
+      "referencia_del_contrato": "CO1.PCCNTR.1547787"
+    },
+    {
+      "codigo_proveedor": "709566889",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547811",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236608",
+      "referencia_del_contrato": "CO1.PCCNTR.1547811"
+    },
+    {
+      "codigo_proveedor": "709614093",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1547814",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1214401",
+      "referencia_del_contrato": "CO1.PCCNTR.1547814"
+    },
+    {
+      "codigo_proveedor": "709568612",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547829",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236522",
+      "referencia_del_contrato": "CO1.PCCNTR.1547829"
+    },
+    {
+      "codigo_proveedor": "709471197",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547837",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236347",
+      "referencia_del_contrato": "CO1.PCCNTR.1547837"
+    },
+    {
+      "codigo_proveedor": "709461644",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547855",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236373",
+      "referencia_del_contrato": "CO1.PCCNTR.1547855"
+    },
+    {
+      "codigo_proveedor": "709553010",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547929",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236429",
+      "referencia_del_contrato": "CO1.PCCNTR.1547929"
+    },
+    {
+      "codigo_proveedor": "709531248",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547936",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236345",
+      "referencia_del_contrato": "CO1.PCCNTR.1547936"
+    },
+    {
+      "codigo_proveedor": "709463285",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547940",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236532",
+      "referencia_del_contrato": "CO1.PCCNTR.1547940"
+    },
+    {
+      "codigo_proveedor": "709461511",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547953",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236440",
+      "referencia_del_contrato": "CO1.PCCNTR.1547953"
+    },
+    {
+      "codigo_proveedor": "709531271",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547954",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236651",
+      "referencia_del_contrato": "CO1.PCCNTR.1547954"
+    },
+    {
+      "codigo_proveedor": "709471155",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1547957",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236654",
+      "referencia_del_contrato": "CO1.PCCNTR.1547957"
+    },
+    {
+      "codigo_proveedor": "709474027",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548012",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236507",
+      "referencia_del_contrato": "CO1.PCCNTR.1548012"
+    },
+    {
+      "codigo_proveedor": "709461552",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548018",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236323",
+      "referencia_del_contrato": "CO1.PCCNTR.1548018"
+    },
+    {
+      "codigo_proveedor": "709462253",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548093",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236496",
+      "referencia_del_contrato": "CO1.PCCNTR.1548093"
+    },
+    {
+      "codigo_proveedor": "709531362",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548310",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236263",
+      "referencia_del_contrato": "CO1.PCCNTR.1548310"
+    },
+    {
+      "codigo_proveedor": "708387139",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548443",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236300",
+      "referencia_del_contrato": "CO1.PCCNTR.1548443"
+    },
+    {
+      "codigo_proveedor": "709531222",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548462",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1237024",
+      "referencia_del_contrato": "CO1.PCCNTR.1548462"
+    },
+    {
+      "codigo_proveedor": "709726988",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548502",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236270",
+      "referencia_del_contrato": "CO1.PCCNTR.1548502"
+    },
+    {
+      "codigo_proveedor": "709469191",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548511",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236911",
+      "referencia_del_contrato": "CO1.PCCNTR.1548511"
+    },
+    {
+      "codigo_proveedor": "709531123",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548532",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236729",
+      "referencia_del_contrato": "CO1.PCCNTR.1548532"
+    },
+    {
+      "codigo_proveedor": "709529465",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548538",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236931",
+      "referencia_del_contrato": "CO1.PCCNTR.1548538"
+    },
+    {
+      "codigo_proveedor": "709529374",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548735",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236934",
+      "referencia_del_contrato": "CO1.PCCNTR.1548735"
+    },
+    {
+      "codigo_proveedor": "709531594",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548748",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236836",
+      "referencia_del_contrato": "CO1.PCCNTR.1548748"
+    },
+    {
+      "codigo_proveedor": "709531552",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1549010",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1237201",
+      "referencia_del_contrato": "CO1.PCCNTR.1549010"
+    },
+    {
+      "codigo_proveedor": "709585673",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1549208",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1236809",
+      "referencia_del_contrato": "CO1.PCCNTR.1549208"
+    },
+    {
+      "codigo_proveedor": "709526198",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1549528",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1238070",
+      "referencia_del_contrato": "CO1.PCCNTR.1549528"
+    },
+    {
+      "codigo_proveedor": "702408279",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-05-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1549776",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1237737",
+      "referencia_del_contrato": "CO1.PCCNTR.1549776"
+    },
+    {
+      "codigo_proveedor": "709619399",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1551310",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1238286",
+      "referencia_del_contrato": "CO1.PCCNTR.1551310"
+    },
+    {
+      "codigo_proveedor": "709495246",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1551809",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1238904",
+      "referencia_del_contrato": "CO1.PCCNTR.1551809"
+    },
+    {
+      "codigo_proveedor": "709461602",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1552270",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239474",
+      "referencia_del_contrato": "CO1.PCCNTR.1552270"
+    },
+    {
+      "codigo_proveedor": "709628259",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1552296",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240123",
+      "referencia_del_contrato": "CO1.PCCNTR.1552296"
+    },
+    {
+      "codigo_proveedor": "709449599",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1552399",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240116",
+      "referencia_del_contrato": "CO1.PCCNTR.1552399"
+    },
+    {
+      "codigo_proveedor": "709750905",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1552476",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239696",
+      "referencia_del_contrato": "CO1.PCCNTR.1552476"
+    },
+    {
+      "codigo_proveedor": "709540801",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1552494",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239714",
+      "referencia_del_contrato": "CO1.PCCNTR.1552494"
+    },
+    {
+      "codigo_proveedor": "709627574",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1552947",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239773",
+      "referencia_del_contrato": "CO1.PCCNTR.1552947"
+    },
+    {
+      "codigo_proveedor": "709760383",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553010",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239911",
+      "referencia_del_contrato": "CO1.PCCNTR.1553010"
+    },
+    {
+      "codigo_proveedor": "709472211",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553028",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239919",
+      "referencia_del_contrato": "CO1.PCCNTR.1553028"
+    },
+    {
+      "codigo_proveedor": "709467062",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553044",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239770",
+      "referencia_del_contrato": "CO1.PCCNTR.1553044"
+    },
+    {
+      "codigo_proveedor": "709471130",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553067",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239795",
+      "referencia_del_contrato": "CO1.PCCNTR.1553067"
+    },
+    {
+      "codigo_proveedor": "709566996",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553068",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239796",
+      "referencia_del_contrato": "CO1.PCCNTR.1553068"
+    },
+    {
+      "codigo_proveedor": "709449904",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553306",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240401",
+      "referencia_del_contrato": "CO1.PCCNTR.1553306"
+    },
+    {
+      "codigo_proveedor": "709754485",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553317",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240233",
+      "referencia_del_contrato": "CO1.PCCNTR.1553317"
+    },
+    {
+      "codigo_proveedor": "709519300",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553410",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239788",
+      "referencia_del_contrato": "CO1.PCCNTR.1553410"
+    },
+    {
+      "codigo_proveedor": "709632103",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553416",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240404",
+      "referencia_del_contrato": "CO1.PCCNTR.1553416"
+    },
+    {
+      "codigo_proveedor": "709628101",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553801",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240214",
+      "referencia_del_contrato": "CO1.PCCNTR.1553801"
+    },
+    {
+      "codigo_proveedor": "709653265",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553811",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1239898",
+      "referencia_del_contrato": "CO1.PCCNTR.1553811"
+    },
+    {
+      "codigo_proveedor": "709632475",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553815",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240226",
+      "referencia_del_contrato": "CO1.PCCNTR.1553815"
+    },
+    {
+      "codigo_proveedor": "709526297",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553823",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240328",
+      "referencia_del_contrato": "CO1.PCCNTR.1553823"
+    },
+    {
+      "codigo_proveedor": "709463327",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553903",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240125",
+      "referencia_del_contrato": "CO1.PCCNTR.1553903"
+    },
+    {
+      "codigo_proveedor": "705807162",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553929",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240331",
+      "referencia_del_contrato": "CO1.PCCNTR.1553929"
+    },
+    {
+      "codigo_proveedor": "705833754",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1553934",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1240238",
+      "referencia_del_contrato": "CO1.PCCNTR.1553934"
+    },
+    {
+      "codigo_proveedor": "709471080",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556328",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243314",
+      "referencia_del_contrato": "CO1.PCCNTR.1556328"
+    },
+    {
+      "codigo_proveedor": "709464101",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556331",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243246",
+      "referencia_del_contrato": "CO1.PCCNTR.1556331"
+    },
+    {
+      "codigo_proveedor": "709584403",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556338",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243060",
+      "referencia_del_contrato": "CO1.PCCNTR.1556338"
+    },
+    {
+      "codigo_proveedor": "709654321",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556360",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243348",
+      "referencia_del_contrato": "CO1.PCCNTR.1556360"
+    },
+    {
+      "codigo_proveedor": "709466031",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556384",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243701",
+      "referencia_del_contrato": "CO1.PCCNTR.1556384"
+    },
+    {
+      "codigo_proveedor": "709493886",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556389",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243518",
+      "referencia_del_contrato": "CO1.PCCNTR.1556389"
+    },
+    {
+      "codigo_proveedor": "709520340",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556416",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243248",
+      "referencia_del_contrato": "CO1.PCCNTR.1556416"
+    },
+    {
+      "codigo_proveedor": "709464051",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556437",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243073",
+      "referencia_del_contrato": "CO1.PCCNTR.1556437"
+    },
+    {
+      "codigo_proveedor": "709469209",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556452",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243089",
+      "referencia_del_contrato": "CO1.PCCNTR.1556452"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1556473",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243186",
+      "referencia_del_contrato": "CO1.PCCNTR.1556473"
+    },
+    {
+      "codigo_proveedor": "709517171",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556490",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243392",
+      "referencia_del_contrato": "CO1.PCCNTR.1556490"
+    },
+    {
+      "codigo_proveedor": "703384065",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556499",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243807",
+      "referencia_del_contrato": "CO1.PCCNTR.1556499"
+    },
+    {
+      "codigo_proveedor": "709608467",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556536",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243049",
+      "referencia_del_contrato": "CO1.PCCNTR.1556536"
+    },
+    {
+      "codigo_proveedor": "709624233",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556540",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243247",
+      "referencia_del_contrato": "CO1.PCCNTR.1556540"
+    },
+    {
+      "codigo_proveedor": "709643118",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556543",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243326",
+      "referencia_del_contrato": "CO1.PCCNTR.1556543"
+    },
+    {
+      "codigo_proveedor": "709565857",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556545",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243327",
+      "referencia_del_contrato": "CO1.PCCNTR.1556545"
+    },
+    {
+      "codigo_proveedor": "709628036",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556554",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1242964",
+      "referencia_del_contrato": "CO1.PCCNTR.1556554"
+    },
+    {
+      "codigo_proveedor": "709462337",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556567",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243095",
+      "referencia_del_contrato": "CO1.PCCNTR.1556567"
+    },
+    {
+      "codigo_proveedor": "709466056",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556593",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243432",
+      "referencia_del_contrato": "CO1.PCCNTR.1556593"
+    },
+    {
+      "codigo_proveedor": "709477376",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556634",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243215",
+      "referencia_del_contrato": "CO1.PCCNTR.1556634"
+    },
+    {
+      "codigo_proveedor": "709561138",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556685",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243293",
+      "referencia_del_contrato": "CO1.PCCNTR.1556685"
+    },
+    {
+      "codigo_proveedor": "709561237",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556695",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243709",
+      "referencia_del_contrato": "CO1.PCCNTR.1556695"
+    },
+    {
+      "codigo_proveedor": "701423691",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556838",
+      "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "proceso_de_compra": "CO1.BDOS.1243142",
+      "referencia_del_contrato": "CO1.PCCNTR.1556838"
+    }
+  ],
+  "sha256": "7e78b4e8ab17c606a70c850dbcab9f9e67846aa941bba3c3c9a21c7fb0e0398d",
+  "status": "MATERIALIZED"
+}

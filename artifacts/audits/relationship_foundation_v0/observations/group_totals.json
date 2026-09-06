@@ -1,0 +1,18 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/ceth-n4bn.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:42:30.469597+00:00",
+  "params": {
+    "$limit": 1,
+    "$select": "count(*) as rows,count(codigo_participante) as participants,count(codigo_grupo) as groups"
+  },
+  "payload": [
+    {
+      "groups": "701182",
+      "participants": "692077",
+      "rows": "701182"
+    }
+  ],
+  "sha256": "c4dbfb33885b03e5b5cc3e8941916ec8751f1e08533fe3cb51e45c76336c2dbf",
+  "status": "MATERIALIZED"
+}

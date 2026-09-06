@@ -1,0 +1,101 @@
+{
+  "ADR": "ADR-092",
+  "DEFERRED": {
+    "PAA_TO_PROCESS": "DEFERRED_TO_PAA_AUDIT",
+    "SECOP_SUPPLIER_TO_ACTOR": "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED"
+  },
+  "DERIVED_ONLY": [
+    "BUYER_CONTRACTED_WITH",
+    "COMPETES_WITH",
+    "FREQUENT_PARTNER",
+    "PARTNERED_WITH",
+    "RELATED_TO",
+    "SAME_MARKET",
+    "WON_AGAINST"
+  ],
+  "GRAPH_DATABASE": "NONE",
+  "IDENTITY_GATES": {
+    "ACTOR_PROFILE_EFFECT": 0,
+    "BUYER_GROUP_INFERRED_MEMBERSHIP": 0,
+    "CONTRACT_UNSTABLE_IDS_AS_NODES": 0,
+    "ENTITY_ANALYSIS_EFFECT": 0,
+    "NAME_AS_PRIMARY_NODE_ID": 0,
+    "NIT_AS_BUYER_UNIT_ID": 0,
+    "NIT_AS_SECOP_SUPPLIER_ID": 0,
+    "PROCESS_UNSTABLE_IDS_AS_NODES": 0,
+    "QUERY_EFFECT": 0,
+    "RADAR_EFFECT": 0,
+    "RUNTIME_IMPORTS": 0,
+    "SOQL_EFFECT": 0,
+    "SUPPLIER_CODE_AS_ACTOR_ID": 0,
+    "TERRITORY_AS_BUYER": 0
+  },
+  "MERGE": "NO",
+  "NEXT": "ENTITY_ANALYSIS_V1_INTEGRATION_REQUIRES_SEPARATE_AUTHORIZATION",
+  "NODES": {
+    "ACTOR": "CONTRACT_DEFINED",
+    "BUYER_GROUP": "CONTRACT_DEFINED",
+    "CONTRACT": "CONTRACT_DEFINED",
+    "INSTITUTION": "CONTRACT_DEFINED",
+    "PAA_ITEM": "DEFERRED_TO_PAA_AUDIT",
+    "PROCESS": "CONTRACT_DEFINED",
+    "SECOP_SUPPLIER": "CONTRACT_DEFINED",
+    "SUPPLIER_GROUP": "CONTRACT_DEFINED",
+    "TERRITORY": "CONTRACT_DEFINED"
+  },
+  "PRIMARY_EDGES": {
+    "BID_ON": {
+      "ASSERTION": "SUPPORTED",
+      "COVERAGE": "PARTIAL",
+      "RUNTIME": "SHADOW"
+    },
+    "HAS_CONTRACTOR": {
+      "ASSERTION": "SUPPORTED",
+      "COVERAGE": "PARTIAL",
+      "RUNTIME": "SHADOW"
+    },
+    "HAS_RECORDED_CONTRACT": {
+      "ASSERTION": "SUPPORTED",
+      "COVERAGE": "PARTIAL",
+      "RUNTIME": "SHADOW"
+    },
+    "IN_TERRITORY": {
+      "ASSERTION": "SUPPORTED",
+      "COVERAGE": "PARTIAL",
+      "RUNTIME": "SHADOW"
+    },
+    "MEMBER_OF_SUPPLIER_GROUP": {
+      "ASSERTION": "SUPPORTED",
+      "COVERAGE": "PARTIAL",
+      "RUNTIME": "SHADOW"
+    },
+    "PUBLISHED": {
+      "ASSERTION": "SUPPORTED",
+      "COVERAGE": "PARTIAL",
+      "RUNTIME": "SHADOW"
+    },
+    "PUBLISHED_CONTRACT": {
+      "ASSERTION": "SUPPORTED",
+      "COVERAGE": "PARTIAL",
+      "RUNTIME": "SHADOW"
+    },
+    "SELECTED_IN_BUYER_GROUP": {
+      "ASSERTION": "SUPPORTED",
+      "COVERAGE": "COMPLETE",
+      "RUNTIME": "SHADOW"
+    }
+  },
+  "PROCUREMENT_RELATIONSHIP_FOUNDATION_V0": "PASS",
+  "PUSH": "NO",
+  "RUNTIME_EFFECT": "ZERO",
+  "limitations": [
+    "71 own materialized receipts, bounded cohorts, no national accuracy estimate",
+    "23 orphan and 19 ambiguous sampled contract references excluded",
+    "All edges shadow; existing productive source use does not authorize this registry runtime",
+    "Atlantico canonical has no logical institution ID in frozen Territorial Knowledge"
+  ],
+  "out_of_lane_findings": [
+    "10 Semgrep baseline findings, unchanged files",
+    "Actor/provider registry identity authority remains unaccredited"
+  ]
+}

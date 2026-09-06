@@ -1,0 +1,1685 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/hgi6-6wh3.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:42:18.350534+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_procedimiento,codigo_proveedor",
+    "$select": "id_procedimiento,codigo_proveedor,entidad_compradora",
+    "$where": "entidad_compradora in ('MUNICIPIO DE YUMBO VALLE') AND fecha_publicaci_n >= '2025-01-01T00:00:00' AND fecha_publicaci_n < '2026-09-07T00:00:00'"
+  },
+  "payload": [
+    {
+      "codigo_proveedor": "713780211",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10032078"
+    },
+    {
+      "codigo_proveedor": "713780211",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10038323"
+    },
+    {
+      "codigo_proveedor": "704416148",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10039381"
+    },
+    {
+      "codigo_proveedor": "704416148",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10041292"
+    },
+    {
+      "codigo_proveedor": "700815509",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10107224"
+    },
+    {
+      "codigo_proveedor": "725601652",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10107224"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10201512"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10201564"
+    },
+    {
+      "codigo_proveedor": "700940042",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10203127"
+    },
+    {
+      "codigo_proveedor": "701678138",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10203127"
+    },
+    {
+      "codigo_proveedor": "727725236",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10203127"
+    },
+    {
+      "codigo_proveedor": "702288663",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10203680"
+    },
+    {
+      "codigo_proveedor": "701947012",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10229218"
+    },
+    {
+      "codigo_proveedor": "717230262",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10249628"
+    },
+    {
+      "codigo_proveedor": "701486045",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10258356"
+    },
+    {
+      "codigo_proveedor": "720833110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10266505"
+    },
+    {
+      "codigo_proveedor": "728513037",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10271208"
+    },
+    {
+      "codigo_proveedor": "706941663",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10280483"
+    },
+    {
+      "codigo_proveedor": "726026651",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10280483"
+    },
+    {
+      "codigo_proveedor": "701101156",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10285110"
+    },
+    {
+      "codigo_proveedor": "723202859",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10285110"
+    },
+    {
+      "codigo_proveedor": "725620496",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10285110"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10285407"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10292316"
+    },
+    {
+      "codigo_proveedor": "722204237",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10296636"
+    },
+    {
+      "codigo_proveedor": "704242320",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10330172"
+    },
+    {
+      "codigo_proveedor": "730648219",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10330172"
+    },
+    {
+      "codigo_proveedor": "707966065",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10331755"
+    },
+    {
+      "codigo_proveedor": "718860919",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10331755"
+    },
+    {
+      "codigo_proveedor": "730433224",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10331755"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10335000"
+    },
+    {
+      "codigo_proveedor": "701808032",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10336650"
+    },
+    {
+      "codigo_proveedor": "736188483",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10337415"
+    },
+    {
+      "codigo_proveedor": "700906183",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10338011"
+    },
+    {
+      "codigo_proveedor": "707530325",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10338011"
+    },
+    {
+      "codigo_proveedor": "702055054",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10344965"
+    },
+    {
+      "codigo_proveedor": "708876826",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10344965"
+    },
+    {
+      "codigo_proveedor": "724832522",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10344965"
+    },
+    {
+      "codigo_proveedor": "725456586",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10344965"
+    },
+    {
+      "codigo_proveedor": "727755407",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10344965"
+    },
+    {
+      "codigo_proveedor": "706838059",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10381011"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10381011"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10405446"
+    },
+    {
+      "codigo_proveedor": "707966065",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10423903"
+    },
+    {
+      "codigo_proveedor": "736325424",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10423903"
+    },
+    {
+      "codigo_proveedor": "719346090",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10440798"
+    },
+    {
+      "codigo_proveedor": "736401035",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10448889"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10449345"
+    },
+    {
+      "codigo_proveedor": "716496542",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10453433"
+    },
+    {
+      "codigo_proveedor": "720833110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10458784"
+    },
+    {
+      "codigo_proveedor": "709142731",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10462475"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10467659"
+    },
+    {
+      "codigo_proveedor": "736625625",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10469333"
+    },
+    {
+      "codigo_proveedor": "736635426",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10469333"
+    },
+    {
+      "codigo_proveedor": "736637968",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10469333"
+    },
+    {
+      "codigo_proveedor": "716302021",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10471270"
+    },
+    {
+      "codigo_proveedor": "706855038",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10499335"
+    },
+    {
+      "codigo_proveedor": "702153230",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10503081"
+    },
+    {
+      "codigo_proveedor": "702457409",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10503081"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10516800"
+    },
+    {
+      "codigo_proveedor": "720833110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10527427"
+    },
+    {
+      "codigo_proveedor": "736840224",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10528700"
+    },
+    {
+      "codigo_proveedor": "736891094",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10528700"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10532332"
+    },
+    {
+      "codigo_proveedor": "732969043",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10532332"
+    },
+    {
+      "codigo_proveedor": "728513037",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10532402"
+    },
+    {
+      "codigo_proveedor": "701716110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10539819"
+    },
+    {
+      "codigo_proveedor": "736876707",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10539819"
+    },
+    {
+      "codigo_proveedor": "705564219",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10546190"
+    },
+    {
+      "codigo_proveedor": "710015637",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10546190"
+    },
+    {
+      "codigo_proveedor": "706941663",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10548034"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10548034"
+    },
+    {
+      "codigo_proveedor": "725818140",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10554224"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10554224"
+    },
+    {
+      "codigo_proveedor": "737065029",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10588885"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10596640"
+    },
+    {
+      "codigo_proveedor": "701808032",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10707653"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10722152"
+    },
+    {
+      "codigo_proveedor": "731971545",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10735541"
+    },
+    {
+      "codigo_proveedor": "709345276",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10743537"
+    },
+    {
+      "codigo_proveedor": "702038142",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "702748104",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "702782368",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "707966065",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "708624499",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "711140558",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "712830520",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "713956746",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "725746903",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "732999131",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10814702"
+    },
+    {
+      "codigo_proveedor": "701286015",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10834746"
+    },
+    {
+      "codigo_proveedor": "702288663",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10834746"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10842211"
+    },
+    {
+      "codigo_proveedor": "713780211",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10891030"
+    },
+    {
+      "codigo_proveedor": "707307997",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10909423"
+    },
+    {
+      "codigo_proveedor": "707966065",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10941235"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10941235"
+    },
+    {
+      "codigo_proveedor": "724019179",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10941235"
+    },
+    {
+      "codigo_proveedor": "732345103",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10963766"
+    },
+    {
+      "codigo_proveedor": "701486045",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.10964603"
+    },
+    {
+      "codigo_proveedor": "729720854",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7418568"
+    },
+    {
+      "codigo_proveedor": "701808032",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7428144"
+    },
+    {
+      "codigo_proveedor": "701332173",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7437906"
+    },
+    {
+      "codigo_proveedor": "701486045",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7461154"
+    },
+    {
+      "codigo_proveedor": "716496542",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7511503"
+    },
+    {
+      "codigo_proveedor": "701258030",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7679749"
+    },
+    {
+      "codigo_proveedor": "701332173",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7679749"
+    },
+    {
+      "codigo_proveedor": "701808032",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7721027"
+    },
+    {
+      "codigo_proveedor": "708884200",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7775964"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7820506"
+    },
+    {
+      "codigo_proveedor": "701947012",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7830395"
+    },
+    {
+      "codigo_proveedor": "720833110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7830808"
+    },
+    {
+      "codigo_proveedor": "720833110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7881139"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7887057"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7908282"
+    },
+    {
+      "codigo_proveedor": "722204237",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7917131"
+    },
+    {
+      "codigo_proveedor": "717230262",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7938183"
+    },
+    {
+      "codigo_proveedor": "702263369",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7958619"
+    },
+    {
+      "codigo_proveedor": "719346090",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.7985091"
+    },
+    {
+      "codigo_proveedor": "707966065",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8004033"
+    },
+    {
+      "codigo_proveedor": "709241442",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8004033"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8004033"
+    },
+    {
+      "codigo_proveedor": "730373347",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8004033"
+    },
+    {
+      "codigo_proveedor": "700250020",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8014410"
+    },
+    {
+      "codigo_proveedor": "701070393",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8020474"
+    },
+    {
+      "codigo_proveedor": "709142731",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8020474"
+    },
+    {
+      "codigo_proveedor": "720833110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8050846"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8055836"
+    },
+    {
+      "codigo_proveedor": "731137899",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8062163"
+    },
+    {
+      "codigo_proveedor": "731144069",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8062163"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8159039"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8163045"
+    },
+    {
+      "codigo_proveedor": "731516118",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8186375"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8197993"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8215925"
+    },
+    {
+      "codigo_proveedor": "725714331",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8215925"
+    },
+    {
+      "codigo_proveedor": "709799985",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8218383"
+    },
+    {
+      "codigo_proveedor": "717036024",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8236435"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8254630"
+    },
+    {
+      "codigo_proveedor": "700406028",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8260317"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8260317"
+    },
+    {
+      "codigo_proveedor": "700728025",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8264190"
+    },
+    {
+      "codigo_proveedor": "712050509",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8264190"
+    },
+    {
+      "codigo_proveedor": "719810509",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8264190"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8265226"
+    },
+    {
+      "codigo_proveedor": "702149121",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8305292"
+    },
+    {
+      "codigo_proveedor": "704428150",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8305292"
+    },
+    {
+      "codigo_proveedor": "706543907",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8305292"
+    },
+    {
+      "codigo_proveedor": "724832522",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8305292"
+    },
+    {
+      "codigo_proveedor": "728513037",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8319539"
+    },
+    {
+      "codigo_proveedor": "701743163",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8340536"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8340536"
+    },
+    {
+      "codigo_proveedor": "725714331",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8348262"
+    },
+    {
+      "codigo_proveedor": "731956066",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8365777"
+    },
+    {
+      "codigo_proveedor": "713780211",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8368142"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8371291"
+    },
+    {
+      "codigo_proveedor": "728010802",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8376042"
+    },
+    {
+      "codigo_proveedor": "731706966",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8376042"
+    },
+    {
+      "codigo_proveedor": "731940789",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8376042"
+    },
+    {
+      "codigo_proveedor": "706855038",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8395663"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8426066"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8427079"
+    },
+    {
+      "codigo_proveedor": "702196106",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8450229"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8490494"
+    },
+    {
+      "codigo_proveedor": "732354493",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8508213"
+    },
+    {
+      "codigo_proveedor": "732365663",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8508213"
+    },
+    {
+      "codigo_proveedor": "732432158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8508213"
+    },
+    {
+      "codigo_proveedor": "732433396",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8508213"
+    },
+    {
+      "codigo_proveedor": "732436738",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8508213"
+    },
+    {
+      "codigo_proveedor": "732437710",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8508213"
+    },
+    {
+      "codigo_proveedor": "732442793",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8508213"
+    },
+    {
+      "codigo_proveedor": "710247370",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8515761"
+    },
+    {
+      "codigo_proveedor": "732307392",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8515761"
+    },
+    {
+      "codigo_proveedor": "732354261",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8515761"
+    },
+    {
+      "codigo_proveedor": "710247370",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8515977"
+    },
+    {
+      "codigo_proveedor": "728012824",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8515977"
+    },
+    {
+      "codigo_proveedor": "732308416",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8515977"
+    },
+    {
+      "codigo_proveedor": "732358544",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8515977"
+    },
+    {
+      "codigo_proveedor": "704722669",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8516620"
+    },
+    {
+      "codigo_proveedor": "710247370",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8516620"
+    },
+    {
+      "codigo_proveedor": "716044805",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8516620"
+    },
+    {
+      "codigo_proveedor": "732309414",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8516620"
+    },
+    {
+      "codigo_proveedor": "702907726",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8524657"
+    },
+    {
+      "codigo_proveedor": "709799985",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8524657"
+    },
+    {
+      "codigo_proveedor": "728092149",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8524657"
+    },
+    {
+      "codigo_proveedor": "732497128",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8566360"
+    },
+    {
+      "codigo_proveedor": "713780211",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8571263"
+    },
+    {
+      "codigo_proveedor": "707137337",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8579342"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8604449"
+    },
+    {
+      "codigo_proveedor": "701118309",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8612532"
+    },
+    {
+      "codigo_proveedor": "702153214",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8612532"
+    },
+    {
+      "codigo_proveedor": "706941663",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8612532"
+    },
+    {
+      "codigo_proveedor": "701332173",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8616436"
+    },
+    {
+      "codigo_proveedor": "704416148",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8619860"
+    },
+    {
+      "codigo_proveedor": "704416148",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8620501"
+    },
+    {
+      "codigo_proveedor": "722348059",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8647223"
+    },
+    {
+      "codigo_proveedor": "701743163",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8655849"
+    },
+    {
+      "codigo_proveedor": "707137337",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8664763"
+    },
+    {
+      "codigo_proveedor": "701808032",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8684758"
+    },
+    {
+      "codigo_proveedor": "732580386",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8699191"
+    },
+    {
+      "codigo_proveedor": "705662914",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8742734"
+    },
+    {
+      "codigo_proveedor": "706532538",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8742734"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8742734"
+    },
+    {
+      "codigo_proveedor": "702392077",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8776252"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8777638"
+    },
+    {
+      "codigo_proveedor": "728513037",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8791117"
+    },
+    {
+      "codigo_proveedor": "701039190",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8799604"
+    },
+    {
+      "codigo_proveedor": "702122268",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8799604"
+    },
+    {
+      "codigo_proveedor": "718280118",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8799604"
+    },
+    {
+      "codigo_proveedor": "722766425",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8799604"
+    },
+    {
+      "codigo_proveedor": "732873245",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8799604"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8805291"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8816041"
+    },
+    {
+      "codigo_proveedor": "702196106",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8849768"
+    },
+    {
+      "codigo_proveedor": "701486045",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8867380"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8919625"
+    },
+    {
+      "codigo_proveedor": "725601652",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8919625"
+    },
+    {
+      "codigo_proveedor": "730433224",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8919625"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8926456"
+    },
+    {
+      "codigo_proveedor": "701808032",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8926611"
+    },
+    {
+      "codigo_proveedor": "702288663",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8927271"
+    },
+    {
+      "codigo_proveedor": "717696207",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8927271"
+    },
+    {
+      "codigo_proveedor": "716302021",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8937509"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8938895"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8949275"
+    },
+    {
+      "codigo_proveedor": "718934771",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8967574"
+    },
+    {
+      "codigo_proveedor": "701332173",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8968796"
+    },
+    {
+      "codigo_proveedor": "709345276",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8982075"
+    },
+    {
+      "codigo_proveedor": "707512521",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8990896"
+    },
+    {
+      "codigo_proveedor": "733395735",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.8990896"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9000787"
+    },
+    {
+      "codigo_proveedor": "733475230",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9004161"
+    },
+    {
+      "codigo_proveedor": "707966065",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9007351"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9007351"
+    },
+    {
+      "codigo_proveedor": "725601652",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9007351"
+    },
+    {
+      "codigo_proveedor": "725818140",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9007351"
+    },
+    {
+      "codigo_proveedor": "700250020",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9015822"
+    },
+    {
+      "codigo_proveedor": "733541056",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024325"
+    },
+    {
+      "codigo_proveedor": "704323880",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024340"
+    },
+    {
+      "codigo_proveedor": "704323880",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024360"
+    },
+    {
+      "codigo_proveedor": "731125639",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024554"
+    },
+    {
+      "codigo_proveedor": "733577480",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024554"
+    },
+    {
+      "codigo_proveedor": "721335610",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024555"
+    },
+    {
+      "codigo_proveedor": "722428455",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024821"
+    },
+    {
+      "codigo_proveedor": "733677207",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024821"
+    },
+    {
+      "codigo_proveedor": "733721211",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024821"
+    },
+    {
+      "codigo_proveedor": "733582647",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9024929"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9033879"
+    },
+    {
+      "codigo_proveedor": "733483085",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9046081"
+    },
+    {
+      "codigo_proveedor": "703921049",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9051604"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9053112"
+    },
+    {
+      "codigo_proveedor": "704834720",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9059962"
+    },
+    {
+      "codigo_proveedor": "707016143",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9059962"
+    },
+    {
+      "codigo_proveedor": "707530325",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9059962"
+    },
+    {
+      "codigo_proveedor": "733652176",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9059962"
+    },
+    {
+      "codigo_proveedor": "713956746",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9061604"
+    },
+    {
+      "codigo_proveedor": "701743163",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9109289"
+    },
+    {
+      "codigo_proveedor": "701743163",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9113042"
+    },
+    {
+      "codigo_proveedor": "713956746",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9116647"
+    },
+    {
+      "codigo_proveedor": "700815509",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9125357"
+    },
+    {
+      "codigo_proveedor": "733805766",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9130037"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9135045"
+    },
+    {
+      "codigo_proveedor": "704722669",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9150391"
+    },
+    {
+      "codigo_proveedor": "705141190",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9150391"
+    },
+    {
+      "codigo_proveedor": "733710495",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9150391"
+    },
+    {
+      "codigo_proveedor": "704358290",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9158653"
+    },
+    {
+      "codigo_proveedor": "704358290",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9158809"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9170150"
+    },
+    {
+      "codigo_proveedor": "705564219",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9194717"
+    },
+    {
+      "codigo_proveedor": "710015637",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9194717"
+    },
+    {
+      "codigo_proveedor": "705180149",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9194955"
+    },
+    {
+      "codigo_proveedor": "712432244",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9194955"
+    },
+    {
+      "codigo_proveedor": "728513037",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9194955"
+    },
+    {
+      "codigo_proveedor": "732405691",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9194955"
+    },
+    {
+      "codigo_proveedor": "713780211",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9200564"
+    },
+    {
+      "codigo_proveedor": "713780211",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9200689"
+    },
+    {
+      "codigo_proveedor": "703477331",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9209115"
+    },
+    {
+      "codigo_proveedor": "709567994",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9209241"
+    },
+    {
+      "codigo_proveedor": "713956746",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9209607"
+    },
+    {
+      "codigo_proveedor": "732938279",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9216878"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9233135"
+    },
+    {
+      "codigo_proveedor": "731860425",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9247321"
+    },
+    {
+      "codigo_proveedor": "710375254",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9249895"
+    },
+    {
+      "codigo_proveedor": "731058152",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9259305"
+    },
+    {
+      "codigo_proveedor": "731791273",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9259305"
+    },
+    {
+      "codigo_proveedor": "719810509",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9289577"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9289577"
+    },
+    {
+      "codigo_proveedor": "731743100",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9289577"
+    },
+    {
+      "codigo_proveedor": "710632035",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9300957"
+    },
+    {
+      "codigo_proveedor": "714215068",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9300957"
+    },
+    {
+      "codigo_proveedor": "729730325",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9303334"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9303856"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9304147"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9328493"
+    },
+    {
+      "codigo_proveedor": "717326433",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9329744"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9334270"
+    },
+    {
+      "codigo_proveedor": "710375254",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9334270"
+    },
+    {
+      "codigo_proveedor": "703150458",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9334422"
+    },
+    {
+      "codigo_proveedor": "706799509",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9334422"
+    },
+    {
+      "codigo_proveedor": "714524469",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9334422"
+    },
+    {
+      "codigo_proveedor": "710015637",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9344499"
+    },
+    {
+      "codigo_proveedor": "705180149",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9348044"
+    },
+    {
+      "codigo_proveedor": "732405691",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9348044"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9355381"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9355866"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9366848"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9367757"
+    },
+    {
+      "codigo_proveedor": "701860108",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9368800"
+    },
+    {
+      "codigo_proveedor": "718934771",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9368800"
+    },
+    {
+      "codigo_proveedor": "707454088",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9368890"
+    },
+    {
+      "codigo_proveedor": "733775779",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9368890"
+    },
+    {
+      "codigo_proveedor": "732345103",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9382495"
+    },
+    {
+      "codigo_proveedor": "714372471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9383789"
+    },
+    {
+      "codigo_proveedor": "728513037",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9387611"
+    },
+    {
+      "codigo_proveedor": "704943471",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9391660"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9395916"
+    },
+    {
+      "codigo_proveedor": "704318138",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9396054"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9396054"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9398003"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9398252"
+    },
+    {
+      "codigo_proveedor": "702149121",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9398913"
+    },
+    {
+      "codigo_proveedor": "710375254",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9398913"
+    },
+    {
+      "codigo_proveedor": "725894158",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9405788"
+    },
+    {
+      "codigo_proveedor": "701808032",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9409114"
+    },
+    {
+      "codigo_proveedor": "713956746",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9426374"
+    },
+    {
+      "codigo_proveedor": "713956746",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9426897"
+    },
+    {
+      "codigo_proveedor": "701808032",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9427224"
+    },
+    {
+      "codigo_proveedor": "708888821",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9458493"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9458493"
+    },
+    {
+      "codigo_proveedor": "727112435",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9458641"
+    },
+    {
+      "codigo_proveedor": "734846959",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9580636"
+    },
+    {
+      "codigo_proveedor": "716496542",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9844891"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9968067"
+    },
+    {
+      "codigo_proveedor": "701332173",
+      "entidad_compradora": "MUNICIPIO DE YUMBO VALLE",
+      "id_procedimiento": "CO1.REQ.9978658"
+    }
+  ],
+  "sha256": "83c7280cad42bd21e8eb0e835b6fa28e45e6b918bff8220154d6ae2f75bbddee",
+  "status": "MATERIALIZED"
+}

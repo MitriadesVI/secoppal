@@ -1,0 +1,14 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:41:54.217579+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,entidad",
+    "$where": "id_del_proceso in ('CO1.REQ.10188074','CO1.REQ.10227037','CO1.REQ.10301023','CO1.REQ.8087121','CO1.REQ.8167613','CO1.REQ.8321696','CO1.REQ.8348244','CO1.REQ.8403366','CO1.REQ.8428554','CO1.REQ.8516895')"
+  },
+  "payload": [],
+  "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "status": "MATERIALIZED"
+}

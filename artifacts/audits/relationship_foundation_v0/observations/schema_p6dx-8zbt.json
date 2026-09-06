@@ -1,0 +1,5215 @@
+{
+  "endpoint": "https://www.datos.gov.co/api/views/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:37:31.591751+00:00",
+  "params": {},
+  "payload": {
+    "attribution": "Agencia Nacional de Contratación Pública - Colombia Compra Eficiente, Bogotá D.C.",
+    "columns": [
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "XM COMPAÑIA DE EXPERTOS EN MERCADOS SA ESP",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "_",
+          "top": [
+            {
+              "count": "105656",
+              "item": "UNIVERSIDAD NACIONAL DE COLOMBIA"
+            },
+            {
+              "count": "105219",
+              "item": "(Secretaría Distrital de Integración Social)"
+            },
+            {
+              "count": "71609",
+              "item": "SUBRED INTEGRADA DE SERVICIOS DE SALUD NORTE E.S.E. (OFICIAL)"
+            },
+            {
+              "count": "60906",
+              "item": "INSTITUCIÓN UNIVERSITARIA ITM"
+            },
+            {
+              "count": "50354",
+              "item": "LA CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA - AGROSAVIA"
+            },
+            {
+              "count": "49952",
+              "item": "AGENCIA NACIONAL DE TIERRAS - ANT"
+            },
+            {
+              "count": "46801",
+              "item": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+            },
+            {
+              "count": "43792",
+              "item": "INVIAS"
+            },
+            {
+              "count": "42523",
+              "item": "UNIVERSIDAD DE ANTIOQUIA"
+            },
+            {
+              "count": "40621",
+              "item": "MUNICIPIO DE PEREIRA- OFICIAL"
+            },
+            {
+              "count": "39997",
+              "item": "SUBRED INTEGRADA DE SERVICIOS DE SALUD SUR E.S.E.**"
+            },
+            {
+              "count": "37533",
+              "item": "EMPRESA COLOMBIANA DE PETROLEOS"
+            },
+            {
+              "count": "34449",
+              "item": "ESE HOSPITAL MANUEL URIBE ANGEL"
+            },
+            {
+              "count": "31721",
+              "item": "SECRETARIA DE EDUCACION DEL DISTRITO"
+            },
+            {
+              "count": "31106",
+              "item": "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA"
+            },
+            {
+              "count": "30414",
+              "item": "MUNICIPIO DE ARMENIA QUINDIO"
+            },
+            {
+              "count": "30325",
+              "item": "INSTITUTO COLOMBIANO AGROPECUARIO - ICA"
+            },
+            {
+              "count": "30048",
+              "item": "BANCO DE LA REPUBLICA"
+            },
+            {
+              "count": "29720",
+              "item": "DEPARTAMENTO DE SANTANDER"
+            },
+            {
+              "count": "29366",
+              "item": "UNIDAD ADMINISTRATIVA ESPECIAL DE GESTION DE RESTITUCION DE TIERRAS DESPOJADAS**"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Nombre de la Entidad que publica el proceso de compra pública",
+        "fieldName": "entidad",
+        "format": {},
+        "id": 589183990,
+        "name": "Entidad",
+        "position": 1,
+        "renderTypeName": "text",
+        "tableColumnId": 88482275
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "9876543210",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "000000001",
+          "top": [
+            {
+              "count": "261577",
+              "item": "899999034"
+            },
+            {
+              "count": "189145",
+              "item": "899999061"
+            },
+            {
+              "count": "172492",
+              "item": "890399011"
+            },
+            {
+              "count": "169410",
+              "item": "8999990619"
+            },
+            {
+              "count": "122909",
+              "item": "899999239"
+            },
+            {
+              "count": "105656",
+              "item": "899999063"
+            },
+            {
+              "count": "78189",
+              "item": "899999027"
+            },
+            {
+              "count": "71609",
+              "item": "900971006"
+            },
+            {
+              "count": "60906",
+              "item": "800214750"
+            },
+            {
+              "count": "50354",
+              "item": "800194600"
+            },
+            {
+              "count": "49952",
+              "item": "900948953"
+            },
+            {
+              "count": "46875",
+              "item": "890480184"
+            },
+            {
+              "count": "45175",
+              "item": "899999114"
+            },
+            {
+              "count": "43792",
+              "item": "800215807"
+            },
+            {
+              "count": "42523",
+              "item": "890980040"
+            },
+            {
+              "count": "40621",
+              "item": "891480030"
+            },
+            {
+              "count": "39997",
+              "item": "900958564"
+            },
+            {
+              "count": "37533",
+              "item": "899999068"
+            },
+            {
+              "count": "37049",
+              "item": "890399029"
+            },
+            {
+              "count": "34672",
+              "item": "8903990295"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "NIT de la Entidad que publicó el proceso",
+        "fieldName": "nit_entidad",
+        "format": {},
+        "id": 589183991,
+        "name": "Nit Entidad",
+        "position": 2,
+        "renderTypeName": "text",
+        "tableColumnId": 88482294
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Vichada",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Amazonas",
+          "top": [
+            {
+              "count": "2524012",
+              "item": "Distrito Capital de Bogotá"
+            },
+            {
+              "count": "930442",
+              "item": "Antioquia"
+            },
+            {
+              "count": "643522",
+              "item": "Valle del Cauca"
+            },
+            {
+              "count": "572854",
+              "item": "No Definido"
+            },
+            {
+              "count": "423756",
+              "item": "Cundinamarca"
+            },
+            {
+              "count": "357780",
+              "item": "Santander"
+            },
+            {
+              "count": "239937",
+              "item": "Boyacá"
+            },
+            {
+              "count": "234477",
+              "item": "Magdalena"
+            },
+            {
+              "count": "231628",
+              "item": "Bolívar"
+            },
+            {
+              "count": "226198",
+              "item": "Nariño"
+            },
+            {
+              "count": "206046",
+              "item": "Atlántico"
+            },
+            {
+              "count": "202009",
+              "item": "Tolima"
+            },
+            {
+              "count": "196871",
+              "item": "Norte de Santander"
+            },
+            {
+              "count": "175252",
+              "item": "Caldas"
+            },
+            {
+              "count": "172959",
+              "item": "Meta"
+            },
+            {
+              "count": "169547",
+              "item": "Huila"
+            },
+            {
+              "count": "167500",
+              "item": "Risaralda"
+            },
+            {
+              "count": "149100",
+              "item": "Quindío"
+            },
+            {
+              "count": "131192",
+              "item": "Cauca"
+            },
+            {
+              "count": "109664",
+              "item": "Cesar"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Departamento en el cual está registrada la entidad\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "departamento_entidad",
+        "format": {},
+        "id": 589183992,
+        "name": "Departamento Entidad",
+        "position": 3,
+        "renderTypeName": "text",
+        "tableColumnId": 88482259
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Zona Bananera",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Abejorral",
+          "top": [
+            {
+              "count": "2104282",
+              "item": "No Definido"
+            },
+            {
+              "count": "1539299",
+              "item": "Bogotá"
+            },
+            {
+              "count": "413902",
+              "item": "Medellín"
+            },
+            {
+              "count": "407005",
+              "item": "Cali"
+            },
+            {
+              "count": "164397",
+              "item": "Bucaramanga"
+            },
+            {
+              "count": "143817",
+              "item": "Cartagena"
+            },
+            {
+              "count": "127075",
+              "item": "Pereira"
+            },
+            {
+              "count": "119787",
+              "item": "Villavicencio"
+            },
+            {
+              "count": "112826",
+              "item": "Cúcuta"
+            },
+            {
+              "count": "109729",
+              "item": "Armenia"
+            },
+            {
+              "count": "105027",
+              "item": "Santa Marta"
+            },
+            {
+              "count": "93711",
+              "item": "Barranquilla"
+            },
+            {
+              "count": "91089",
+              "item": "Tunja"
+            },
+            {
+              "count": "87913",
+              "item": "Popayán"
+            },
+            {
+              "count": "84795",
+              "item": "Pasto"
+            },
+            {
+              "count": "84738",
+              "item": "Ibagué"
+            },
+            {
+              "count": "81554",
+              "item": "Yopal"
+            },
+            {
+              "count": "78094",
+              "item": "Manizales"
+            },
+            {
+              "count": "74143",
+              "item": "Neiva"
+            },
+            {
+              "count": "65016",
+              "item": "Mosquera"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Ciudad en la cual está registrada la entidad\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "ciudad_entidad",
+        "format": {},
+        "id": 589183993,
+        "name": "Ciudad Entidad",
+        "position": 4,
+        "renderTypeName": "text",
+        "tableColumnId": 88482300
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Territorial",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Corporación Autónoma",
+          "top": [
+            {
+              "count": "5746217",
+              "item": "Territorial"
+            },
+            {
+              "count": "2873784",
+              "item": "Nacional"
+            },
+            {
+              "count": "127533",
+              "item": "Corporación Autónoma"
+            },
+            {
+              "count": "106",
+              "item": "No Definido"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Orden de la Entidad (Nacional, Regional)\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "ordenentidad",
+        "format": {},
+        "id": 589183994,
+        "name": "OrdenEntidad",
+        "position": 5,
+        "renderTypeName": "text",
+        "tableColumnId": 88482305
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Descentralizada",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Centralizada",
+          "top": [
+            {
+              "count": "7208171",
+              "item": "Centralizada"
+            },
+            {
+              "count": "1539469",
+              "item": "Descentralizada"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Identifica si la entidad es o no centralizada\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "codigo_pci",
+        "format": {},
+        "id": 589183995,
+        "name": "Entidad Centralizada",
+        "position": 6,
+        "renderTypeName": "text",
+        "tableColumnId": 88482285
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "CO1.REQ.9999999",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "CO1.REQ.10000000",
+          "top": [
+            {
+              "count": "8840",
+              "item": "CO1.REQ.8303507"
+            },
+            {
+              "count": "7420",
+              "item": "CO1.REQ.2906406"
+            },
+            {
+              "count": "4805",
+              "item": "CO1.REQ.6931720"
+            },
+            {
+              "count": "4190",
+              "item": "CO1.REQ.1241749"
+            },
+            {
+              "count": "3828",
+              "item": "CO1.REQ.6710358"
+            },
+            {
+              "count": "3819",
+              "item": "CO1.REQ.16902"
+            },
+            {
+              "count": "3786",
+              "item": "CO1.REQ.778356"
+            },
+            {
+              "count": "3690",
+              "item": "CO1.REQ.5154156"
+            },
+            {
+              "count": "2645",
+              "item": "CO1.REQ.7175364"
+            },
+            {
+              "count": "2093",
+              "item": "CO1.REQ.6866412"
+            },
+            {
+              "count": "1869",
+              "item": "CO1.REQ.6437580"
+            },
+            {
+              "count": "1600",
+              "item": "CO1.REQ.8356585"
+            },
+            {
+              "count": "1521",
+              "item": "CO1.REQ.8934814"
+            },
+            {
+              "count": "1442",
+              "item": "CO1.REQ.3662339"
+            },
+            {
+              "count": "1430",
+              "item": "CO1.REQ.8264007"
+            },
+            {
+              "count": "1344",
+              "item": "CO1.REQ.10350965"
+            },
+            {
+              "count": "1225",
+              "item": "CO1.REQ.976985"
+            },
+            {
+              "count": "1197",
+              "item": "CO1.REQ.2996306"
+            },
+            {
+              "count": "1156",
+              "item": "CO1.REQ.6802882"
+            },
+            {
+              "count": "1152",
+              "item": "CO1.REQ.8850337"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Identificador Único del Proceso, valor generado por la plataforma\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "id_del_proceso",
+        "format": {},
+        "id": 589183996,
+        "name": "ID del Proceso",
+        "position": 7,
+        "renderTypeName": "text",
+        "tableColumnId": 88482260
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "  VIIS-2522353",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "´++´´+´+´+",
+          "top": [
+            {
+              "count": "8840",
+              "item": "INS-CD-002-2025"
+            },
+            {
+              "count": "7420",
+              "item": "CEG-003-2022"
+            },
+            {
+              "count": "4805",
+              "item": "INS-CD-003-2024"
+            },
+            {
+              "count": "4190",
+              "item": "SDIS - DCT092-005-2020"
+            },
+            {
+              "count": "3828",
+              "item": "CONVENIOS DE ASOCIACION DSNFT-0001-FEEC-2024"
+            },
+            {
+              "count": "3819",
+              "item": "LP-AMP-056-2015 (Presentación de oferta)"
+            },
+            {
+              "count": "3786",
+              "item": "SDIS-DCT-092-005-2019"
+            },
+            {
+              "count": "3690",
+              "item": "LP-023-2023-HOMIL (Presentación de oferta)"
+            },
+            {
+              "count": "2645",
+              "item": "INS-CD-004-2024"
+            },
+            {
+              "count": "2093",
+              "item": "PN DISAN SA 012 2024 (Presentación de oferta)"
+            },
+            {
+              "count": "1869",
+              "item": "SASP0724 (Presentación de oferta)"
+            },
+            {
+              "count": "1600",
+              "item": "CONVOCATORIA DSNFT-0001-FCE-2025"
+            },
+            {
+              "count": "1521",
+              "item": "ATENEA-IA-JE-003-2025"
+            },
+            {
+              "count": "1442",
+              "item": "PN DISAN SA 014 2022 (Presentación de oferta)"
+            },
+            {
+              "count": "1430",
+              "item": "PN HOCEN SA 006 2025 (Presentación de oferta)"
+            },
+            {
+              "count": "1344",
+              "item": "SI-006-2026-HOMIL (Presentación de oferta)"
+            },
+            {
+              "count": "1225",
+              "item": "LP-DT-CAU-003-2019_3 (Fase de Selección (Presentación de ofertas))"
+            },
+            {
+              "count": "1224",
+              "item": "001-2025"
+            },
+            {
+              "count": "1220",
+              "item": "001-2024"
+            },
+            {
+              "count": "1197",
+              "item": "ISI-001-2022 (Presentación de oferta)"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Identificador del Proceso, valor generado por la Entidad\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "referencia_del_proceso",
+        "format": {},
+        "id": 589183997,
+        "name": "Referencia del Proceso",
+        "position": 8,
+        "renderTypeName": "text",
+        "tableColumnId": 88482293
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "736739061",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "700000011",
+          "top": [
+            {
+              "count": "105656",
+              "item": "700698038"
+            },
+            {
+              "count": "105219",
+              "item": "702271321"
+            },
+            {
+              "count": "71609",
+              "item": "702729500"
+            },
+            {
+              "count": "60906",
+              "item": "703000075"
+            },
+            {
+              "count": "50354",
+              "item": "718046428"
+            },
+            {
+              "count": "49952",
+              "item": "702066010"
+            },
+            {
+              "count": "46801",
+              "item": "703301051"
+            },
+            {
+              "count": "43792",
+              "item": "700676059"
+            },
+            {
+              "count": "42523",
+              "item": "700660012"
+            },
+            {
+              "count": "40621",
+              "item": "702259557"
+            },
+            {
+              "count": "39997",
+              "item": "702730482"
+            },
+            {
+              "count": "37533",
+              "item": "709072474"
+            },
+            {
+              "count": "34449",
+              "item": "703949024"
+            },
+            {
+              "count": "31721",
+              "item": "701321135"
+            },
+            {
+              "count": "31106",
+              "item": "702318460"
+            },
+            {
+              "count": "30414",
+              "item": "701365033"
+            },
+            {
+              "count": "30325",
+              "item": "702523150"
+            },
+            {
+              "count": "30048",
+              "item": "706099488"
+            },
+            {
+              "count": "29720",
+              "item": "701515082"
+            },
+            {
+              "count": "29366",
+              "item": "700447030"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Codigo de Unidad - Sub Unidad Contratación\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "ppi",
+        "format": {},
+        "id": 589183998,
+        "name": "PCI",
+        "position": 9,
+        "renderTypeName": "text",
+        "tableColumnId": 88482266
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "CO1.BDOS.9999999",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "CO1.BDOS.10000000",
+          "top": [
+            {
+              "count": "8840",
+              "item": "CO1.BDOS.8157216"
+            },
+            {
+              "count": "7420",
+              "item": "CO1.BDOS.2829403"
+            },
+            {
+              "count": "4805",
+              "item": "CO1.BDOS.6802519"
+            },
+            {
+              "count": "4190",
+              "item": "CO1.BDOS.1203362"
+            },
+            {
+              "count": "3828",
+              "item": "CO1.BDOS.6583715"
+            },
+            {
+              "count": "3820",
+              "item": "CO1.BDOS.12701"
+            },
+            {
+              "count": "3786",
+              "item": "CO1.BDOS.756351"
+            },
+            {
+              "count": "3691",
+              "item": "CO1.BDOS.4877716"
+            },
+            {
+              "count": "2645",
+              "item": "CO1.BDOS.7040507"
+            },
+            {
+              "count": "2094",
+              "item": "CO1.BDOS.6572560"
+            },
+            {
+              "count": "1872",
+              "item": "CO1.BDOS.6252883"
+            },
+            {
+              "count": "1600",
+              "item": "CO1.BDOS.8209827"
+            },
+            {
+              "count": "1521",
+              "item": "CO1.BDOS.8771598"
+            },
+            {
+              "count": "1443",
+              "item": "CO1.BDOS.3456228"
+            },
+            {
+              "count": "1431",
+              "item": "CO1.BDOS.7835389"
+            },
+            {
+              "count": "1345",
+              "item": "CO1.BDOS.10125006"
+            },
+            {
+              "count": "1226",
+              "item": "CO1.BDOS.927424"
+            },
+            {
+              "count": "1198",
+              "item": "CO1.BDOS.2899315"
+            },
+            {
+              "count": "1156",
+              "item": "CO1.BDOS.6676112"
+            },
+            {
+              "count": "1154",
+              "item": "CO1.BDOS.8588326"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Identificador del Portafolio al cual corresponde el proceso de compra\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "id_del_portafolio",
+        "format": {},
+        "id": 589183999,
+        "name": "ID del Portafolio",
+        "position": 10,
+        "renderTypeName": "text",
+        "tableColumnId": 88482291
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "  PRESTACION DE SERVICIOS DE APOYO A LA GESTION COMO PROFESIONAL DE LAS CIENCIAS DE LA SALUD; O PROFESIONAL DE LAS CIENCIAS SOCIALES Y HUMANAS EN EL ENTORNO EDUCATIVO EN EL MUNICIPIO DE NARIÑO; DENTRO",
+          "non_null": "8747635",
+          "null": "5",
+          "smallest": "`+",
+          "top": [
+            {
+              "count": "197770",
+              "item": "PRESTACION DE SERVICIOS"
+            },
+            {
+              "count": "179152",
+              "item": "PRESTACION DE SERVICIOS PROFESIONALES"
+            },
+            {
+              "count": "89683",
+              "item": "PRESTACIÓN DE SERVICIOS PROFESIONALES"
+            },
+            {
+              "count": "77214",
+              "item": "PRESTACION DE SERVICIOS DE APOYO A LA GESTION"
+            },
+            {
+              "count": "64560",
+              "item": "PRESTACIÓN DE SERVICIOS"
+            },
+            {
+              "count": "51583",
+              "item": "CONTRATO DE PRESTACION DE SERVICIOS PROFESIONALES"
+            },
+            {
+              "count": "51169",
+              "item": "CONTRATO DE PRESTACION DE SERVICIOS"
+            },
+            {
+              "count": "43144",
+              "item": "PRESTAR SERVICIOS PROFESIONALES Y APOYO A LA GESTION"
+            },
+            {
+              "count": "40202",
+              "item": "PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN"
+            },
+            {
+              "count": "27911",
+              "item": "CONTRATO DE PRESTACIÓN DE SERVICIOS"
+            },
+            {
+              "count": "21004",
+              "item": "CONTRATO DE PRESTACIÓN DE SERVICIOS PROFESIONALES"
+            },
+            {
+              "count": "17113",
+              "item": "ORDEN DE PRESTACION DE SERVICIOS"
+            },
+            {
+              "count": "15476",
+              "item": "CONTRATO DE APORTE"
+            },
+            {
+              "count": "14312",
+              "item": "SERVICIOS PROFESIONALES"
+            },
+            {
+              "count": "12967",
+              "item": "CONTRATO DE PRESTACION DE SERVICIOS DE APOYO A LA GESTION"
+            },
+            {
+              "count": "12784",
+              "item": "Prestación de Servicios Profesionales"
+            },
+            {
+              "count": "12388",
+              "item": "AUXILIAR DE ENFERMERIA"
+            },
+            {
+              "count": "11497",
+              "item": "Prestación de servicios profesionales"
+            },
+            {
+              "count": "11145",
+              "item": "CONTRATO PRESTACION DE SERVICIOS"
+            },
+            {
+              "count": "10938",
+              "item": "PRESTACION DE SERVICIOS PROFESIONALES Y APOYO A LA GESTION"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Nombre dado al proceso de compra por la Entidad\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "nombre_del_procedimiento",
+        "format": {},
+        "id": 589184000,
+        "name": "Nombre del Procedimiento",
+        "position": 11,
+        "renderTypeName": "text",
+        "tableColumnId": 88482252
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "-     EL CONTRATISTA SE OBLIGA CON LA EMPRESA A PRESTAR LOS SERVICIOS PROFESIONALES COMO COMUNICADOR SOCIAL DE EMPRESAS PÚBLICAS MUNICIPALES DE CONCORDIA. E.S.P.",
+          "non_null": "8747639",
+          "null": "1",
+          "smallest": "__",
+          "top": [
+            {
+              "count": "204408",
+              "item": "No definido"
+            },
+            {
+              "count": "9867",
+              "item": "AUXILIAR DE ENFERMERIA"
+            },
+            {
+              "count": "8840",
+              "item": "ADQUISICIÓN DE REACTIVOS, ELEMENTOS E INSUMOS DE LABORATORIO INDISPENSABLES PARA REALIZAR LAS ACTIVIDADES CIENTÍFICAS Y TECNOLÓGICAS QUE GARANTIZAN EL CUMPLIMIENTO MISIONAL EN EL MARCO DE LOS DIFERENTES PROYECTOS EN SALUD PÚBLICA DEL INSTITUTO NACIONAL DE SALUD."
+            },
+            {
+              "count": "7978",
+              "item": "PRESTAR EL SERVICIO DE ATENCIÓN ALIMENTARIA EN LOS COMEDORES EN CUMPLIMIENTO DEL PROYECTO 1098 BOGOTÁ TE NUTRE, A FIN DE BENEFICIAR CON UNA ALIMENTACIÓN EQUILIBRADA, SUFICIENTE, ADECUADA E INOCUA, A MUJERES GESTANTES, NIÑOS, NIÑAS Y HOGARES IDENTIFICADOS POR LA SECRETARÍA DISTRITAL DE INTEGRACIÓN SOCIAL EN INSEGURIDAD ALIMENTARIA MODERADA Y SEVERA, CON ÉNFASIS EN EL FORTALECIMIENTO DEL TEJIDO SOCIAL Y COMUNITARIO."
+            },
+            {
+              "count": "7421",
+              "item": "EJECUCIÓN DE PLANES DE NEGOCIOS DEL FONDO EMPRENDER, CON ASIGNACIÓN DE RECURSOS POR PARTE DEL CONSEJO DIRECTIVO NACIONAL DEL SENA, Y QUE PROVENGAN O SEAN DESARROLLADAS POR EMPRENDEDORES QUE CUMPLAN CON LAS CONDICIONES ESTABLECIDAS EN LA CONVOCATORIA NACIONAL No. 84 PARA EL SECTOR RURAL"
+            },
+            {
+              "count": "7206",
+              "item": "Material Médico Quirúrgico"
+            },
+            {
+              "count": "6859",
+              "item": "MEDICAMENTOS"
+            },
+            {
+              "count": "6237",
+              "item": "(P11) SUMINISTRO DE MATERIAL MEDICO QUIRURGICO PARA LA ATENCION DE PACIENTES DE ALTA, MEDIANA Y BAJA COMPLEJIDAD EN TODAS LAS SEDES DE LA ESE. compra de bienes y/o Servicios SIN CONTRATO"
+            },
+            {
+              "count": "4883",
+              "item": "Adquisición de reactivos, elementos e insumos de laboratorio indispensables para realizar las actividades científicas y tecnológicas que garantizan el cumplimiento misional en el marco de los diferentes proyectos en salud pública del Instituto Nacional de salud."
+            },
+            {
+              "count": "4853",
+              "item": "MEDICO GENERAL"
+            },
+            {
+              "count": "4709",
+              "item": "MATERIAL MEDICO QUIRURGICO"
+            },
+            {
+              "count": "4366",
+              "item": "(P11) SUMINISTRO DE MATERIAL MEDICO QUIRURGICO PARA LA ATENCION DE PACIENTES DE ALTA, MEDIANA Y BAJA COMPLEJIDAD EN TODAS LAS SEDES DE LA ESE. compra de bienes y/o Servicios  SIN CONTRATO"
+            },
+            {
+              "count": "4060",
+              "item": "COMPRA MATERIAL AERONAUTICO"
+            },
+            {
+              "count": "4035",
+              "item": "SUMINISTRO DE INSUMOS Y REACTIVOS PARA LOS LABORATORIOS CLÍNICOS DE LOS ESTABLECIMIENTOS DE SANIDAD DE LA DIRECCIÓN DE SANIDAD DE LA POLICÍA NACIONAL"
+            },
+            {
+              "count": "4008",
+              "item": "COMPRA DE MEDICAMENTOS"
+            },
+            {
+              "count": "3828",
+              "item": "Aunar esfuerzos entre las partes para ejecutar el proyecto aprobado en el marco \nde la Convocatoria No. DSNFT-0001-FEEC-2024 del Programa de Formación \nEspecializada para la Economía Campesina, propiciando la adquisición y \nactualización de conocimientos, habilidades, técnicas, prácticas y la mejora de \nlas competencias de las campesinas y campesinos, la generación de \ncapacidades, incentivo de la asociatividad, la participación y la integración \ncomercial entre los actores de la economía campes"
+            },
+            {
+              "count": "3820",
+              "item": "El objeto del Acuerdo Marco de Precios es establecer: (i) las condiciones en las cuales los Proveedores venden Material de Intendencia al amparo del Acuerdo Marco de Precios; (ii) las condiciones en las cuales las Entidades Compradoras se vinculan al Acuerdo Marco de Precios; y (iii) las condiciones para el pago del Material de Intendencia por parte de las Entidades Compradoras."
+            },
+            {
+              "count": "3691",
+              "item": "SUMINISTRO DE INSUMOS Y/O DISPOSITIVOS MÉDICO-QUIRÚRGICOS REQUERIDOS PARA LA REALIZACIÓN DEL PROGRAMA QUIRÚRGICO EN SALAS DE CIRUGÍA DE LOS SERVICIOS QUE COMPONEN LA UNIDAD MÉDICA Y CLÍNICO QUIRÚRGICA DE LA SUBDIRECCIÓN MÉDICA DEL HOSPITAL MILITAR CENTRAL."
+            },
+            {
+              "count": "3140",
+              "item": "COMPRA DE MATERIAL MEDICO QUIRURGICO"
+            },
+            {
+              "count": "3122",
+              "item": "Productos Farmaceuticos"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Primera definición de las características principales del proceso\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t",
+        "fieldName": "descripci_n_del_procedimiento",
+        "format": {},
+        "id": 589184001,
+        "name": "Descripción del Procedimiento",
+        "position": 12,
+        "renderTypeName": "text",
+        "tableColumnId": 88482286
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Selección de ofertas (borrador)",
+          "non_null": "8659773",
+          "null": "87867",
+          "smallest": "Clarification submission",
+          "top": [
+            {
+              "count": "7568848",
+              "item": "Presentación de oferta"
+            },
+            {
+              "count": "829546",
+              "item": "Fase de ofertas"
+            },
+            {
+              "count": "152006",
+              "item": "Presentación de observaciones"
+            },
+            {
+              "count": "62855",
+              "item": "Manifestación de interés (Menor Cuantía)"
+            },
+            {
+              "count": "20202",
+              "item": "Fase de Selección (Presentación de ofertas)"
+            },
+            {
+              "count": "9543",
+              "item": "Clarification submission"
+            },
+            {
+              "count": "7760",
+              "item": "Estimate Phase"
+            },
+            {
+              "count": "3737",
+              "item": "Pré-Calificación de competidores"
+            },
+            {
+              "count": "3254",
+              "item": "Proceso de ofertas"
+            },
+            {
+              "count": "1847",
+              "item": "Selección de ofertas (borrador)"
+            },
+            {
+              "count": "99",
+              "item": "Presentación de Observaciones"
+            },
+            {
+              "count": "52",
+              "item": "Fase de Concurso"
+            },
+            {
+              "count": "13",
+              "item": "Presentación de observaciones (precalificación)"
+            },
+            {
+              "count": "11",
+              "item": "Presentación de oferta (precalificación)"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Fase en la que actualmente se encuentra el proceso",
+        "fieldName": "fase",
+        "format": {},
+        "id": 589184002,
+        "name": "Fase",
+        "position": 13,
+        "renderTypeName": "text",
+        "tableColumnId": 88482298
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "2026-06-28T00:00:00.000",
+          "non_null": "8617471",
+          "null": "129704",
+          "smallest": "2015-04-16T00:00:00.000",
+          "top": [
+            {
+              "count": "36459",
+              "item": "2026-01-30T00:00:00.000"
+            },
+            {
+              "count": "35353",
+              "item": "2026-01-29T00:00:00.000"
+            },
+            {
+              "count": "33421",
+              "item": "2026-01-23T00:00:00.000"
+            },
+            {
+              "count": "32305",
+              "item": "2026-01-28T00:00:00.000"
+            },
+            {
+              "count": "30284",
+              "item": "2026-01-27T00:00:00.000"
+            },
+            {
+              "count": "29385",
+              "item": "2026-01-20T00:00:00.000"
+            },
+            {
+              "count": "27514",
+              "item": "2026-01-16T00:00:00.000"
+            },
+            {
+              "count": "26504",
+              "item": "2022-01-28T00:00:00.000"
+            },
+            {
+              "count": "26208",
+              "item": "2026-01-19T00:00:00.000"
+            },
+            {
+              "count": "26020",
+              "item": "2026-01-26T00:00:00.000"
+            },
+            {
+              "count": "25866",
+              "item": "2022-01-26T00:00:00.000"
+            },
+            {
+              "count": "25687",
+              "item": "2026-01-14T00:00:00.000"
+            },
+            {
+              "count": "25121",
+              "item": "2026-01-15T00:00:00.000"
+            },
+            {
+              "count": "22685",
+              "item": "2022-01-27T00:00:00.000"
+            },
+            {
+              "count": "20989",
+              "item": "2026-01-13T00:00:00.000"
+            },
+            {
+              "count": "20742",
+              "item": "2026-01-22T00:00:00.000"
+            },
+            {
+              "count": "18939",
+              "item": "2026-01-24T00:00:00.000"
+            },
+            {
+              "count": "18024",
+              "item": "2026-01-09T00:00:00.000"
+            },
+            {
+              "count": "16504",
+              "item": "2022-01-24T00:00:00.000"
+            },
+            {
+              "count": "16489",
+              "item": "2026-01-17T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de la publicación inicial del proceso de compra",
+        "fieldName": "fecha_de_publicacion_del",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184003,
+        "name": "Fecha de Publicacion del Proceso",
+        "position": 14,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482255
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "2026-06-29T00:00:00.000",
+          "non_null": "8617986",
+          "null": "129654",
+          "smallest": "2015-04-16T00:00:00.000",
+          "top": [
+            {
+              "count": "36459",
+              "item": "2026-01-30T00:00:00.000"
+            },
+            {
+              "count": "35353",
+              "item": "2026-01-29T00:00:00.000"
+            },
+            {
+              "count": "33421",
+              "item": "2026-01-23T00:00:00.000"
+            },
+            {
+              "count": "32305",
+              "item": "2026-01-28T00:00:00.000"
+            },
+            {
+              "count": "30284",
+              "item": "2026-01-27T00:00:00.000"
+            },
+            {
+              "count": "29385",
+              "item": "2026-01-20T00:00:00.000"
+            },
+            {
+              "count": "27514",
+              "item": "2026-01-16T00:00:00.000"
+            },
+            {
+              "count": "26504",
+              "item": "2022-01-28T00:00:00.000"
+            },
+            {
+              "count": "26208",
+              "item": "2026-01-19T00:00:00.000"
+            },
+            {
+              "count": "26020",
+              "item": "2026-01-26T00:00:00.000"
+            },
+            {
+              "count": "25866",
+              "item": "2022-01-26T00:00:00.000"
+            },
+            {
+              "count": "25687",
+              "item": "2026-01-14T00:00:00.000"
+            },
+            {
+              "count": "25121",
+              "item": "2026-01-15T00:00:00.000"
+            },
+            {
+              "count": "22685",
+              "item": "2022-01-27T00:00:00.000"
+            },
+            {
+              "count": "20989",
+              "item": "2026-01-13T00:00:00.000"
+            },
+            {
+              "count": "20742",
+              "item": "2026-01-22T00:00:00.000"
+            },
+            {
+              "count": "18939",
+              "item": "2026-01-24T00:00:00.000"
+            },
+            {
+              "count": "18024",
+              "item": "2026-01-09T00:00:00.000"
+            },
+            {
+              "count": "16504",
+              "item": "2022-01-24T00:00:00.000"
+            },
+            {
+              "count": "16489",
+              "item": "2026-01-17T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de la última publicación hecha para el proceso de compra",
+        "fieldName": "fecha_de_ultima_publicaci",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184004,
+        "name": "Fecha de Ultima Publicación",
+        "position": 15,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482307
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "2024-07-02T00:00:00.000",
+          "non_null": "13",
+          "null": "8747627",
+          "smallest": "2020-07-30T00:00:00.000",
+          "top": [
+            {
+              "count": "1",
+              "item": "2020-07-30T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2021-06-11T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2022-03-18T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2022-10-27T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2022-11-15T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2022-11-22T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2023-07-26T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2023-09-25T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2023-10-10T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2023-11-14T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2023-11-23T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2024-06-11T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2024-07-02T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de publicación, dentro del proceso, de la fase de Planeación en Precalificación",
+        "fieldName": "fecha_de_publicacion_fase",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184005,
+        "name": "Fecha de Publicacion (Fase Planeacion Precalificacion)",
+        "position": 16,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482295
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "2024-07-16T00:00:00.000",
+          "non_null": "11",
+          "null": "8747164",
+          "smallest": "2020-08-11T00:00:00.000",
+          "top": [
+            {
+              "count": "1",
+              "item": "2020-08-11T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2022-04-27T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2022-11-08T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2022-11-22T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2022-11-30T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2023-08-09T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2023-10-12T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2023-10-18T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2023-11-20T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2024-06-19T00:00:00.000"
+            },
+            {
+              "count": "1",
+              "item": "2024-07-16T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de publicación, dentro del proceso, de la fase de Selección en Precalificación",
+        "fieldName": "fecha_de_publicacion_fase_1",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184006,
+        "name": "Fecha de Publicacion (Fase Seleccion Precalificacion)",
+        "position": 17,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482265
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "2026-06-26T00:00:00.000",
+          "non_null": "66182",
+          "null": "8680993",
+          "smallest": "2016-02-10T00:00:00.000",
+          "top": [
+            {
+              "count": "94",
+              "item": "2026-05-21T00:00:00.000"
+            },
+            {
+              "count": "93",
+              "item": "2026-06-01T00:00:00.000"
+            },
+            {
+              "count": "93",
+              "item": "2025-10-27T00:00:00.000"
+            },
+            {
+              "count": "90",
+              "item": "2025-11-12T00:00:00.000"
+            },
+            {
+              "count": "89",
+              "item": "2024-11-05T00:00:00.000"
+            },
+            {
+              "count": "88",
+              "item": "2026-04-06T00:00:00.000"
+            },
+            {
+              "count": "88",
+              "item": "2025-06-16T00:00:00.000"
+            },
+            {
+              "count": "87",
+              "item": "2025-10-14T00:00:00.000"
+            },
+            {
+              "count": "87",
+              "item": "2026-03-25T00:00:00.000"
+            },
+            {
+              "count": "87",
+              "item": "2026-03-17T00:00:00.000"
+            },
+            {
+              "count": "85",
+              "item": "2023-09-26T00:00:00.000"
+            },
+            {
+              "count": "85",
+              "item": "2026-04-08T00:00:00.000"
+            },
+            {
+              "count": "84",
+              "item": "2025-11-18T00:00:00.000"
+            },
+            {
+              "count": "84",
+              "item": "2026-05-13T00:00:00.000"
+            },
+            {
+              "count": "83",
+              "item": "2025-05-09T00:00:00.000"
+            },
+            {
+              "count": "83",
+              "item": "2024-11-22T00:00:00.000"
+            },
+            {
+              "count": "81",
+              "item": "2025-05-12T00:00:00.000"
+            },
+            {
+              "count": "81",
+              "item": "2025-11-19T00:00:00.000"
+            },
+            {
+              "count": "81",
+              "item": "2024-11-13T00:00:00.000"
+            },
+            {
+              "count": "81",
+              "item": "2026-06-12T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de publicación, dentro del proceso, de la fase de Manifestación de Interés",
+        "fieldName": "fecha_de_publicacion",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184007,
+        "name": "Fecha de Publicacion (Manifestacion de Interes)",
+        "position": 18,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482287
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "2026-06-27T00:00:00.000",
+          "non_null": "162183",
+          "null": "8585457",
+          "smallest": "2015-04-28T00:00:00.000",
+          "top": [
+            {
+              "count": "231",
+              "item": "2026-03-27T00:00:00.000"
+            },
+            {
+              "count": "221",
+              "item": "2023-03-31T00:00:00.000"
+            },
+            {
+              "count": "219",
+              "item": "2026-02-13T00:00:00.000"
+            },
+            {
+              "count": "217",
+              "item": "2025-04-30T00:00:00.000"
+            },
+            {
+              "count": "216",
+              "item": "2025-11-12T00:00:00.000"
+            },
+            {
+              "count": "212",
+              "item": "2026-04-30T00:00:00.000"
+            },
+            {
+              "count": "204",
+              "item": "2024-10-25T00:00:00.000"
+            },
+            {
+              "count": "199",
+              "item": "2025-05-30T00:00:00.000"
+            },
+            {
+              "count": "197",
+              "item": "2024-04-30T00:00:00.000"
+            },
+            {
+              "count": "195",
+              "item": "2025-11-19T00:00:00.000"
+            },
+            {
+              "count": "195",
+              "item": "2026-03-20T00:00:00.000"
+            },
+            {
+              "count": "194",
+              "item": "2025-10-31T00:00:00.000"
+            },
+            {
+              "count": "194",
+              "item": "2025-11-18T00:00:00.000"
+            },
+            {
+              "count": "193",
+              "item": "2022-08-31T00:00:00.000"
+            },
+            {
+              "count": "193",
+              "item": "2024-10-24T00:00:00.000"
+            },
+            {
+              "count": "191",
+              "item": "2026-05-28T00:00:00.000"
+            },
+            {
+              "count": "190",
+              "item": "2026-05-14T00:00:00.000"
+            },
+            {
+              "count": "189",
+              "item": "2025-09-30T00:00:00.000"
+            },
+            {
+              "count": "188",
+              "item": "2025-10-24T00:00:00.000"
+            },
+            {
+              "count": "187",
+              "item": "2023-07-31T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de publicación, dentro del proceso, de la fase Borrador",
+        "fieldName": "fecha_de_publicacion_fase_2",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184008,
+        "name": "Fecha de Publicacion (Fase Borrador)",
+        "position": 19,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482273
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "2026-06-29T00:00:00.000",
+          "non_null": "8389596",
+          "null": "358044",
+          "smallest": "2015-04-16T00:00:00.000",
+          "top": [
+            {
+              "count": "36734",
+              "item": "2026-01-29T00:00:00.000"
+            },
+            {
+              "count": "34120",
+              "item": "2026-01-30T00:00:00.000"
+            },
+            {
+              "count": "33332",
+              "item": "2026-01-28T00:00:00.000"
+            },
+            {
+              "count": "31699",
+              "item": "2026-01-23T00:00:00.000"
+            },
+            {
+              "count": "29947",
+              "item": "2026-01-27T00:00:00.000"
+            },
+            {
+              "count": "29563",
+              "item": "2026-01-20T00:00:00.000"
+            },
+            {
+              "count": "27894",
+              "item": "2026-01-16T00:00:00.000"
+            },
+            {
+              "count": "27667",
+              "item": "2022-01-26T00:00:00.000"
+            },
+            {
+              "count": "26952",
+              "item": "2022-01-27T00:00:00.000"
+            },
+            {
+              "count": "26919",
+              "item": "2026-01-26T00:00:00.000"
+            },
+            {
+              "count": "26811",
+              "item": "2026-01-19T00:00:00.000"
+            },
+            {
+              "count": "25753",
+              "item": "2026-01-14T00:00:00.000"
+            },
+            {
+              "count": "24618",
+              "item": "2026-01-15T00:00:00.000"
+            },
+            {
+              "count": "21874",
+              "item": "2026-01-22T00:00:00.000"
+            },
+            {
+              "count": "21384",
+              "item": "2026-01-13T00:00:00.000"
+            },
+            {
+              "count": "18531",
+              "item": "2026-01-24T00:00:00.000"
+            },
+            {
+              "count": "17787",
+              "item": "2022-01-28T00:00:00.000"
+            },
+            {
+              "count": "17766",
+              "item": "2026-01-09T00:00:00.000"
+            },
+            {
+              "count": "17681",
+              "item": "2022-01-24T00:00:00.000"
+            },
+            {
+              "count": "16785",
+              "item": "2022-01-25T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha de publicación, dentro del proceso, de la fase Selección",
+        "fieldName": "fecha_de_publicacion_fase_3",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184009,
+        "name": "Fecha de Publicacion (Fase Seleccion)",
+        "position": 20,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482257
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "111111111111111111",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "-34693400216",
+          "top": [
+            {
+              "count": "337022",
+              "item": "0"
+            },
+            {
+              "count": "86188",
+              "item": "12000000"
+            },
+            {
+              "count": "81686",
+              "item": "6000000"
+            },
+            {
+              "count": "71549",
+              "item": "10000000"
+            },
+            {
+              "count": "67660",
+              "item": "9000000"
+            },
+            {
+              "count": "62345",
+              "item": "15000000"
+            },
+            {
+              "count": "55685",
+              "item": "20000000"
+            },
+            {
+              "count": "54507",
+              "item": "8000000"
+            },
+            {
+              "count": "53497",
+              "item": "18000000"
+            },
+            {
+              "count": "50915",
+              "item": "3000000"
+            },
+            {
+              "count": "50558",
+              "item": "5000000"
+            },
+            {
+              "count": "47002",
+              "item": "4000000"
+            },
+            {
+              "count": "43956",
+              "item": "24000000"
+            },
+            {
+              "count": "43723",
+              "item": "7500000"
+            },
+            {
+              "count": "41156",
+              "item": "30000000"
+            },
+            {
+              "count": "39360",
+              "item": "14000000"
+            },
+            {
+              "count": "37661",
+              "item": "16000000"
+            },
+            {
+              "count": "35129",
+              "item": "2000000"
+            },
+            {
+              "count": "31092",
+              "item": "21000000"
+            },
+            {
+              "count": "30575",
+              "item": "4500000"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Precio Base, proyectado, del proceso de Compra",
+        "fieldName": "precio_base",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 589184010,
+        "name": "Precio Base",
+        "position": 21,
+        "renderTypeName": "number",
+        "tableColumnId": 88482281
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Subasta de prueba",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Concurso de méritos abierto",
+          "top": [
+            {
+              "count": "3936788",
+              "item": "Contratación directa"
+            },
+            {
+              "count": "3410452",
+              "item": "Contratación régimen especial"
+            },
+            {
+              "count": "412912",
+              "item": "Mínima cuantía"
+            },
+            {
+              "count": "220347",
+              "item": "Selección Abreviada de Menor Cuantía"
+            },
+            {
+              "count": "203004",
+              "item": "Selección abreviada subasta inversa"
+            },
+            {
+              "count": "165615",
+              "item": "Solicitud de información a los Proveedores"
+            },
+            {
+              "count": "132265",
+              "item": "Contratación régimen especial (con ofertas)"
+            },
+            {
+              "count": "111051",
+              "item": "Contratación Directa (con ofertas)"
+            },
+            {
+              "count": "61013",
+              "item": "Licitación pública"
+            },
+            {
+              "count": "41559",
+              "item": "Concurso de méritos abierto"
+            },
+            {
+              "count": "30315",
+              "item": "Licitación pública Obra Publica"
+            },
+            {
+              "count": "11228",
+              "item": "Licitación Pública Acuerdo Marco de Precios"
+            },
+            {
+              "count": "4752",
+              "item": "Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes"
+            },
+            {
+              "count": "4672",
+              "item": "Subasta de prueba"
+            },
+            {
+              "count": "832",
+              "item": "Enajenación de bienes con subasta"
+            },
+            {
+              "count": "785",
+              "item": "Enajenación de bienes con sobre cerrado"
+            },
+            {
+              "count": "50",
+              "item": "Concurso de méritos con precalificación"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Modalidad de selección bajo la cual se desarrolla el proceso de Compra",
+        "fieldName": "modalidad_de_contratacion",
+        "format": {},
+        "id": 589184011,
+        "name": "Modalidad de Contratacion",
+        "position": 22,
+        "renderTypeName": "text",
+        "tableColumnId": 88482279
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Urgencia manifiesta",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Adquisición de inmuebles",
+          "top": [
+            {
+              "count": "3743812",
+              "item": "Servicios profesionales y apoyo a la gestión"
+            },
+            {
+              "count": "2321196",
+              "item": "Regla aplicable"
+            },
+            {
+              "count": "1221050",
+              "item": "Decreto 092 de 2017"
+            },
+            {
+              "count": "412893",
+              "item": "Presupuesto inferior al 10% de la menor cuantía"
+            },
+            {
+              "count": "203004",
+              "item": "Suministro de bienes y servicios de características técnicas uniformes y común utilización"
+            },
+            {
+              "count": "199973",
+              "item": "Presupuesto menor al 10% de la Menor Cuantía"
+            },
+            {
+              "count": "108803",
+              "item": "No Defenido"
+            },
+            {
+              "count": "101577",
+              "item": "Ley 1150 de 2007"
+            },
+            {
+              "count": "99647",
+              "item": "No"
+            },
+            {
+              "count": "79279",
+              "item": "Contratos o convenios Interadministrativos (valor cero)"
+            },
+            {
+              "count": "53197",
+              "item": "Contratos o convenios Interadministrativos (con valor)"
+            },
+            {
+              "count": "45007",
+              "item": "Arrendamiento de inmuebles"
+            },
+            {
+              "count": "42050",
+              "item": "No existe pluralidad de oferentes en el mercado"
+            },
+            {
+              "count": "24115",
+              "item": "Contratos para el desarrollo de actividades científicas y tecnológicas"
+            },
+            {
+              "count": "21622",
+              "item": "Ejecución de trabajos artísticos"
+            },
+            {
+              "count": "13296",
+              "item": "Prestamo de uso"
+            },
+            {
+              "count": "11893",
+              "item": "Prestación de servicios de salud"
+            },
+            {
+              "count": "11228",
+              "item": "Artículo 49, Decreto 1510 de 2013"
+            },
+            {
+              "count": "9441",
+              "item": "Urgencia manifiesta"
+            },
+            {
+              "count": "6606",
+              "item": "Defensa y seguridad nacional"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "En caso de requerirse, Justificación para la modalidad de selección elegida para el proceso de compra",
+        "fieldName": "justificaci_n_modalidad_de",
+        "format": {},
+        "id": 589184012,
+        "name": "Justificación Modalidad de Contratación",
+        "position": 23,
+        "renderTypeName": "text",
+        "tableColumnId": 88482302
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "915430000",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "585220",
+              "item": "3"
+            },
+            {
+              "count": "581522",
+              "item": "0"
+            },
+            {
+              "count": "547101",
+              "item": "4"
+            },
+            {
+              "count": "501228",
+              "item": "6"
+            },
+            {
+              "count": "432373",
+              "item": "2"
+            },
+            {
+              "count": "407284",
+              "item": "1"
+            },
+            {
+              "count": "377662",
+              "item": "5"
+            },
+            {
+              "count": "332543",
+              "item": "30"
+            },
+            {
+              "count": "313340",
+              "item": "8"
+            },
+            {
+              "count": "225549",
+              "item": "10"
+            },
+            {
+              "count": "212756",
+              "item": "7"
+            },
+            {
+              "count": "164415",
+              "item": "90"
+            },
+            {
+              "count": "163926",
+              "item": "11"
+            },
+            {
+              "count": "155881",
+              "item": "60"
+            },
+            {
+              "count": "136391",
+              "item": "9"
+            },
+            {
+              "count": "136103",
+              "item": "12"
+            },
+            {
+              "count": "128130",
+              "item": "120"
+            },
+            {
+              "count": "119940",
+              "item": "15"
+            },
+            {
+              "count": "95486",
+              "item": "180"
+            },
+            {
+              "count": "83995",
+              "item": "45"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Valor de la Duración estimada del proceso de compra pública",
+        "fieldName": "duracion",
+        "format": {},
+        "id": 589184013,
+        "name": "Duracion",
+        "position": 24,
+        "renderTypeName": "number",
+        "tableColumnId": 88482277
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Semana(s)",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Año(s)",
+          "top": [
+            {
+              "count": "5153772",
+              "item": "día(s)"
+            },
+            {
+              "count": "3510362",
+              "item": "Mes(es)"
+            },
+            {
+              "count": "61941",
+              "item": "Año(s)"
+            },
+            {
+              "count": "8646",
+              "item": "Semana(s)"
+            },
+            {
+              "count": "7950",
+              "item": "Hora(s)"
+            },
+            {
+              "count": "4969",
+              "item": "No Especificado"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Unidad que aplica a la Duración estimada del proceso de compra pública",
+        "fieldName": "unidad_de_duracion",
+        "format": {},
+        "id": 589184014,
+        "name": "Unidad de Duracion",
+        "position": 25,
+        "renderTypeName": "text",
+        "tableColumnId": 88482292
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "2029-12-05T00:00:00.000",
+          "non_null": "1388768",
+          "null": "7358872",
+          "smallest": "0202-05-31T00:00:00.000",
+          "top": [
+            {
+              "count": "11255",
+              "item": "2025-05-22T00:00:00.000"
+            },
+            {
+              "count": "7835",
+              "item": "2022-02-22T00:00:00.000"
+            },
+            {
+              "count": "5890",
+              "item": "2024-10-02T00:00:00.000"
+            },
+            {
+              "count": "4689",
+              "item": "2023-11-03T00:00:00.000"
+            },
+            {
+              "count": "4560",
+              "item": "2020-06-03T00:00:00.000"
+            },
+            {
+              "count": "4520",
+              "item": "2024-09-02T00:00:00.000"
+            },
+            {
+              "count": "4052",
+              "item": "2019-03-06T00:00:00.000"
+            },
+            {
+              "count": "3819",
+              "item": "2015-10-14T00:00:00.000"
+            },
+            {
+              "count": "3800",
+              "item": "2024-11-21T00:00:00.000"
+            },
+            {
+              "count": "2986",
+              "item": "2025-07-14T00:00:00.000"
+            },
+            {
+              "count": "2675",
+              "item": "2024-10-01T00:00:00.000"
+            },
+            {
+              "count": "2540",
+              "item": "2024-07-10T00:00:00.000"
+            },
+            {
+              "count": "2493",
+              "item": "2022-12-07T00:00:00.000"
+            },
+            {
+              "count": "2441",
+              "item": "2025-10-09T00:00:00.000"
+            },
+            {
+              "count": "2438",
+              "item": "2025-06-05T00:00:00.000"
+            },
+            {
+              "count": "2338",
+              "item": "2022-04-22T00:00:00.000"
+            },
+            {
+              "count": "2301",
+              "item": "2023-07-07T00:00:00.000"
+            },
+            {
+              "count": "2277",
+              "item": "2025-11-07T00:00:00.000"
+            },
+            {
+              "count": "2248",
+              "item": "2022-05-20T00:00:00.000"
+            },
+            {
+              "count": "2173",
+              "item": "2019-10-11T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha asignada para la recepción de respuestas por parte de los proveedores, dentro del proceso de compra",
+        "fieldName": "fecha_de_recepcion_de",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184015,
+        "name": "Fecha de Recepcion de Respuestas",
+        "position": 26,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482284
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "2030-12-05T00:00:00.000",
+          "non_null": "1113126",
+          "null": "7634514",
+          "smallest": "2015-06-09T00:00:00.000",
+          "top": [
+            {
+              "count": "7710",
+              "item": "2022-02-22T00:00:00.000"
+            },
+            {
+              "count": "4498",
+              "item": "2023-11-03T00:00:00.000"
+            },
+            {
+              "count": "4489",
+              "item": "2020-06-03T00:00:00.000"
+            },
+            {
+              "count": "4273",
+              "item": "2024-09-02T00:00:00.000"
+            },
+            {
+              "count": "4004",
+              "item": "2019-03-06T00:00:00.000"
+            },
+            {
+              "count": "3819",
+              "item": "2015-10-14T00:00:00.000"
+            },
+            {
+              "count": "2729",
+              "item": "2024-10-30T00:00:00.000"
+            },
+            {
+              "count": "2457",
+              "item": "2024-07-10T00:00:00.000"
+            },
+            {
+              "count": "2318",
+              "item": "2022-12-07T00:00:00.000"
+            },
+            {
+              "count": "2259",
+              "item": "2025-06-12T00:00:00.000"
+            },
+            {
+              "count": "2244",
+              "item": "2023-07-17T00:00:00.000"
+            },
+            {
+              "count": "2241",
+              "item": "2025-10-09T00:00:00.000"
+            },
+            {
+              "count": "2217",
+              "item": "2025-07-14T00:00:00.000"
+            },
+            {
+              "count": "2144",
+              "item": "2025-06-05T00:00:00.000"
+            },
+            {
+              "count": "2097",
+              "item": "2026-05-07T00:00:00.000"
+            },
+            {
+              "count": "2090",
+              "item": "2022-07-05T00:00:00.000"
+            },
+            {
+              "count": "1876",
+              "item": "2024-10-04T00:00:00.000"
+            },
+            {
+              "count": "1801",
+              "item": "2026-04-14T00:00:00.000"
+            },
+            {
+              "count": "1800",
+              "item": "2022-11-29T00:00:00.000"
+            },
+            {
+              "count": "1754",
+              "item": "2025-09-29T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha Estimada para la Apertura de las respuestas ",
+        "fieldName": "fecha_de_apertura_de_respuesta",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184016,
+        "name": "Fecha de Apertura de Respuesta",
+        "position": 27,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482263
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "2026-09-01T00:00:00.000",
+          "non_null": "1304926",
+          "null": "7442714",
+          "smallest": "2015-06-10T00:00:00.000",
+          "top": [
+            {
+              "count": "9781",
+              "item": "2025-05-22T00:00:00.000"
+            },
+            {
+              "count": "7778",
+              "item": "2022-02-22T00:00:00.000"
+            },
+            {
+              "count": "5737",
+              "item": "2024-10-02T00:00:00.000"
+            },
+            {
+              "count": "4599",
+              "item": "2023-11-03T00:00:00.000"
+            },
+            {
+              "count": "4479",
+              "item": "2020-06-03T00:00:00.000"
+            },
+            {
+              "count": "4412",
+              "item": "2024-09-02T00:00:00.000"
+            },
+            {
+              "count": "4074",
+              "item": "2019-03-07T00:00:00.000"
+            },
+            {
+              "count": "3819",
+              "item": "2015-10-14T00:00:00.000"
+            },
+            {
+              "count": "3381",
+              "item": "2024-11-19T00:00:00.000"
+            },
+            {
+              "count": "2812",
+              "item": "2024-10-30T00:00:00.000"
+            },
+            {
+              "count": "2742",
+              "item": "2024-07-23T00:00:00.000"
+            },
+            {
+              "count": "2691",
+              "item": "2023-07-17T00:00:00.000"
+            },
+            {
+              "count": "2603",
+              "item": "2025-10-10T00:00:00.000"
+            },
+            {
+              "count": "2512",
+              "item": "2026-04-22T00:00:00.000"
+            },
+            {
+              "count": "2366",
+              "item": "2025-07-14T00:00:00.000"
+            },
+            {
+              "count": "2365",
+              "item": "2022-12-07T00:00:00.000"
+            },
+            {
+              "count": "2305",
+              "item": "2025-06-05T00:00:00.000"
+            },
+            {
+              "count": "2273",
+              "item": "2025-06-12T00:00:00.000"
+            },
+            {
+              "count": "2178",
+              "item": "2022-07-05T00:00:00.000"
+            },
+            {
+              "count": "1996",
+              "item": "2024-10-04T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha Real para la Apertura de las respuestas ",
+        "fieldName": "fecha_de_apertura_efectiva",
+        "format": {
+          "view": "date"
+        },
+        "id": 589184017,
+        "name": "Fecha de Apertura Efectiva",
+        "position": 28,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 88482256
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "Zona Bananera",
+          "non_null": "8747175",
+          "null": "0",
+          "smallest": "Abejorral",
+          "top": [
+            {
+              "count": "1845961",
+              "item": "Bogotá"
+            },
+            {
+              "count": "1647123",
+              "item": "No Aplica"
+            },
+            {
+              "count": "428980",
+              "item": "Medellín"
+            },
+            {
+              "count": "393199",
+              "item": "Cali"
+            },
+            {
+              "count": "160911",
+              "item": "Bucaramanga"
+            },
+            {
+              "count": "138667",
+              "item": "Cartagena"
+            },
+            {
+              "count": "128140",
+              "item": "Pasto"
+            },
+            {
+              "count": "100679",
+              "item": "Pereira"
+            },
+            {
+              "count": "99602",
+              "item": "Santa Marta"
+            },
+            {
+              "count": "91406",
+              "item": "Ibagué"
+            },
+            {
+              "count": "89100",
+              "item": "Villavicencio"
+            },
+            {
+              "count": "86382",
+              "item": "Manizales"
+            },
+            {
+              "count": "85659",
+              "item": "Neiva"
+            },
+            {
+              "count": "79634",
+              "item": "Tunja"
+            },
+            {
+              "count": "78815",
+              "item": "Popayán"
+            },
+            {
+              "count": "78176",
+              "item": "Barranquilla"
+            },
+            {
+              "count": "76857",
+              "item": "Cúcuta"
+            },
+            {
+              "count": "65838",
+              "item": "Armenia"
+            },
+            {
+              "count": "65442",
+              "item": "Envigado"
+            },
+            {
+              "count": "51531",
+              "item": "Yopal"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Cuidad en la que aparece registrada la unidad de contratación de la Entidad",
+        "fieldName": "ciudad_de_la_unidad_de",
+        "format": {},
+        "id": 589184018,
+        "name": "Ciudad de la Unidad de Contratación",
+        "position": 29,
+        "renderTypeName": "text",
+        "tableColumnId": 88482262
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "ZULY MARIANA TELLEZ MARIN",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "---",
+          "top": [
+            {
+              "count": "263659",
+              "item": "CONTRATACION"
+            },
+            {
+              "count": "104871",
+              "item": "SECRETARIA GENERAL"
+            },
+            {
+              "count": "97075",
+              "item": "SUBDIRECCION DE CONTRATACION"
+            },
+            {
+              "count": "92799",
+              "item": "OFICINA DE CONTRATACION"
+            },
+            {
+              "count": "85848",
+              "item": "GESTIÓN CONTRACTUAL"
+            },
+            {
+              "count": "85477",
+              "item": "UNIDAD DE CONTRATACION"
+            },
+            {
+              "count": "76283",
+              "item": "GESTION CONTRACTUAL"
+            },
+            {
+              "count": "74848",
+              "item": "CONTRATACIÓN"
+            },
+            {
+              "count": "62588",
+              "item": "DIRECCION DE CONTRATACION"
+            },
+            {
+              "count": "61797",
+              "item": "GERENCIA"
+            },
+            {
+              "count": "59955",
+              "item": "DIRECCIÓN DE CONTRATACIÓN - COMPRAS"
+            },
+            {
+              "count": "53375",
+              "item": "CONTRATOS"
+            },
+            {
+              "count": "52939",
+              "item": "OFICINA JURIDICA"
+            },
+            {
+              "count": "48985",
+              "item": "GRUPO GESTION CONTRACTUAL"
+            },
+            {
+              "count": "47424",
+              "item": "Gestión Contractual"
+            },
+            {
+              "count": "45762",
+              "item": "OFICINA DE CONTRATACIÓN"
+            },
+            {
+              "count": "42949",
+              "item": "RECTORIA"
+            },
+            {
+              "count": "40709",
+              "item": "SECRETARIA DE SALUD"
+            },
+            {
+              "count": "39312",
+              "item": "SECRETARÍA GENERAL"
+            },
+            {
+              "count": "38079",
+              "item": "DIRECCIÓN DE CONTRATACIÓN"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Nombre de la unidad de contratación de la Entidad",
+        "fieldName": "nombre_de_la_unidad_de",
+        "format": {},
+        "id": 589184019,
+        "name": "Nombre de la Unidad de Contratación",
+        "position": 30,
+        "renderTypeName": "text",
+        "tableColumnId": 88482254
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "15843",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "8383583",
+              "item": "0"
+            },
+            {
+              "count": "70864",
+              "item": "1"
+            },
+            {
+              "count": "13285",
+              "item": "10"
+            },
+            {
+              "count": "11817",
+              "item": "2"
+            },
+            {
+              "count": "9378",
+              "item": "42"
+            },
+            {
+              "count": "8632",
+              "item": "3"
+            },
+            {
+              "count": "7048",
+              "item": "4"
+            },
+            {
+              "count": "6170",
+              "item": "5"
+            },
+            {
+              "count": "5541",
+              "item": "31"
+            },
+            {
+              "count": "5374",
+              "item": "6"
+            },
+            {
+              "count": "4555",
+              "item": "7"
+            },
+            {
+              "count": "4158",
+              "item": "8"
+            },
+            {
+              "count": "4113",
+              "item": "9"
+            },
+            {
+              "count": "3608",
+              "item": "23"
+            },
+            {
+              "count": "3126",
+              "item": "11"
+            },
+            {
+              "count": "2793",
+              "item": "17"
+            },
+            {
+              "count": "2654",
+              "item": "13"
+            },
+            {
+              "count": "2613",
+              "item": "14"
+            },
+            {
+              "count": "2395",
+              "item": "12"
+            },
+            {
+              "count": "1981",
+              "item": "15"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Número de Proveedores invitados a participar del proceso, en total",
+        "fieldName": "proveedores_invitados",
+        "format": {},
+        "id": 589184020,
+        "name": "Proveedores Invitados",
+        "position": 31,
+        "renderTypeName": "number",
+        "tableColumnId": 88482274
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "1620",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "8534482",
+              "item": "0"
+            },
+            {
+              "count": "89213",
+              "item": "1"
+            },
+            {
+              "count": "13863",
+              "item": "2"
+            },
+            {
+              "count": "13420",
+              "item": "10"
+            },
+            {
+              "count": "10044",
+              "item": "3"
+            },
+            {
+              "count": "8993",
+              "item": "42"
+            },
+            {
+              "count": "7914",
+              "item": "4"
+            },
+            {
+              "count": "6925",
+              "item": "5"
+            },
+            {
+              "count": "5788",
+              "item": "6"
+            },
+            {
+              "count": "5140",
+              "item": "31"
+            },
+            {
+              "count": "4787",
+              "item": "7"
+            },
+            {
+              "count": "4318",
+              "item": "8"
+            },
+            {
+              "count": "4103",
+              "item": "9"
+            },
+            {
+              "count": "3288",
+              "item": "23"
+            },
+            {
+              "count": "3112",
+              "item": "11"
+            },
+            {
+              "count": "2663",
+              "item": "14"
+            },
+            {
+              "count": "2449",
+              "item": "13"
+            },
+            {
+              "count": "2341",
+              "item": "12"
+            },
+            {
+              "count": "2301",
+              "item": "17"
+            },
+            {
+              "count": "1833",
+              "item": "15"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Proveedores con Invitación a participar hecha de forma directa",
+        "fieldName": "proveedores_con_invitacion",
+        "format": {},
+        "id": 589184021,
+        "name": "Proveedores con Invitacion Directa",
+        "position": 32,
+        "renderTypeName": "number",
+        "tableColumnId": 88482288
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "2201",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "7377685",
+              "item": "0"
+            },
+            {
+              "count": "102357",
+              "item": "1"
+            },
+            {
+              "count": "56656",
+              "item": "3"
+            },
+            {
+              "count": "55189",
+              "item": "4"
+            },
+            {
+              "count": "53416",
+              "item": "2"
+            },
+            {
+              "count": "52704",
+              "item": "5"
+            },
+            {
+              "count": "48153",
+              "item": "6"
+            },
+            {
+              "count": "45207",
+              "item": "7"
+            },
+            {
+              "count": "41868",
+              "item": "8"
+            },
+            {
+              "count": "39104",
+              "item": "9"
+            },
+            {
+              "count": "37637",
+              "item": "10"
+            },
+            {
+              "count": "34342",
+              "item": "11"
+            },
+            {
+              "count": "34011",
+              "item": "12"
+            },
+            {
+              "count": "28792",
+              "item": "14"
+            },
+            {
+              "count": "28358",
+              "item": "13"
+            },
+            {
+              "count": "26332",
+              "item": "21"
+            },
+            {
+              "count": "25002",
+              "item": "15"
+            },
+            {
+              "count": "24258",
+              "item": "16"
+            },
+            {
+              "count": "22505",
+              "item": "17"
+            },
+            {
+              "count": "22248",
+              "item": "19"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Número de Visualizaciones hechas a través de la herramienta, del Proceso de Compra",
+        "fieldName": "visualizaciones_del",
+        "format": {},
+        "id": 589184022,
+        "name": "Visualizaciones del Procedimiento",
+        "position": 33,
+        "renderTypeName": "number",
+        "tableColumnId": 88482308
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "0",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "8747640",
+              "item": "0"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Proveedores que Manifestaron Interés en el proceso a través de la plataforma",
+        "fieldName": "proveedores_que_manifestaron",
+        "format": {},
+        "id": 589184023,
+        "name": "Proveedores que Manifestaron Interes",
+        "position": 34,
+        "renderTypeName": "number",
+        "tableColumnId": 88482280
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "1620",
+          "non_null": "8747175",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "7746202",
+              "item": "0"
+            },
+            {
+              "count": "332405",
+              "item": "1"
+            },
+            {
+              "count": "134403",
+              "item": "2"
+            },
+            {
+              "count": "87131",
+              "item": "3"
+            },
+            {
+              "count": "58197",
+              "item": "4"
+            },
+            {
+              "count": "44435",
+              "item": "5"
+            },
+            {
+              "count": "33592",
+              "item": "6"
+            },
+            {
+              "count": "31072",
+              "item": "7"
+            },
+            {
+              "count": "20007",
+              "item": "8"
+            },
+            {
+              "count": "18750",
+              "item": "9"
+            },
+            {
+              "count": "15695",
+              "item": "10"
+            },
+            {
+              "count": "14494",
+              "item": "42"
+            },
+            {
+              "count": "14231",
+              "item": "11"
+            },
+            {
+              "count": "12992",
+              "item": "12"
+            },
+            {
+              "count": "9629",
+              "item": "14"
+            },
+            {
+              "count": "9562",
+              "item": "13"
+            },
+            {
+              "count": "9216",
+              "item": "15"
+            },
+            {
+              "count": "7459",
+              "item": "107"
+            },
+            {
+              "count": "7134",
+              "item": "30"
+            },
+            {
+              "count": "6695",
+              "item": "16"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Respuestas hechas al procedimiento, tanto de proveedores como de la misma entidad",
+        "fieldName": "respuestas_al_procedimiento",
+        "format": {},
+        "id": 589184024,
+        "name": "Respuestas al Procedimiento",
+        "position": 35,
+        "renderTypeName": "number",
+        "tableColumnId": 88482269
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "42",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "8694992",
+              "item": "0"
+            },
+            {
+              "count": "21518",
+              "item": "1"
+            },
+            {
+              "count": "8930",
+              "item": "4"
+            },
+            {
+              "count": "8840",
+              "item": "42"
+            },
+            {
+              "count": "4805",
+              "item": "32"
+            },
+            {
+              "count": "2645",
+              "item": "23"
+            },
+            {
+              "count": "2537",
+              "item": "2"
+            },
+            {
+              "count": "1208",
+              "item": "3"
+            },
+            {
+              "count": "600",
+              "item": "37"
+            },
+            {
+              "count": "596",
+              "item": "6"
+            },
+            {
+              "count": "466",
+              "item": "9"
+            },
+            {
+              "count": "170",
+              "item": "5"
+            },
+            {
+              "count": "126",
+              "item": "8"
+            },
+            {
+              "count": "120",
+              "item": "7"
+            },
+            {
+              "count": "23",
+              "item": "10"
+            },
+            {
+              "count": "16",
+              "item": "19"
+            },
+            {
+              "count": "16",
+              "item": "24"
+            },
+            {
+              "count": "6",
+              "item": "12"
+            },
+            {
+              "count": "5",
+              "item": "13"
+            },
+            {
+              "count": "5",
+              "item": "14"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Número de Respuestas hechas por entes externos",
+        "fieldName": "respuestas_externas",
+        "format": {},
+        "id": 589184025,
+        "name": "Respuestas Externas",
+        "position": 36,
+        "renderTypeName": "number",
+        "tableColumnId": 88482272
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "168",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "8707504",
+              "item": "0"
+            },
+            {
+              "count": "4790",
+              "item": "1"
+            },
+            {
+              "count": "4358",
+              "item": "2"
+            },
+            {
+              "count": "3628",
+              "item": "4"
+            },
+            {
+              "count": "3129",
+              "item": "3"
+            },
+            {
+              "count": "2132",
+              "item": "29"
+            },
+            {
+              "count": "1693",
+              "item": "5"
+            },
+            {
+              "count": "1549",
+              "item": "8"
+            },
+            {
+              "count": "1363",
+              "item": "6"
+            },
+            {
+              "count": "1335",
+              "item": "11"
+            },
+            {
+              "count": "1162",
+              "item": "18"
+            },
+            {
+              "count": "1132",
+              "item": "64"
+            },
+            {
+              "count": "1032",
+              "item": "15"
+            },
+            {
+              "count": "990",
+              "item": "7"
+            },
+            {
+              "count": "927",
+              "item": "9"
+            },
+            {
+              "count": "829",
+              "item": "12"
+            },
+            {
+              "count": "707",
+              "item": "14"
+            },
+            {
+              "count": "630",
+              "item": "10"
+            },
+            {
+              "count": "630",
+              "item": "126"
+            },
+            {
+              "count": "599",
+              "item": "13"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Número de Respuestas hechas de forma directa en las ofertas",
+        "fieldName": "conteo_de_respuestas_a_ofertas",
+        "format": {},
+        "id": 589184026,
+        "name": "Conteo de Respuestas a Ofertas",
+        "position": 37,
+        "renderTypeName": "number",
+        "tableColumnId": 88482296
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "1618",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "7768021",
+              "item": "0"
+            },
+            {
+              "count": "324217",
+              "item": "1"
+            },
+            {
+              "count": "139183",
+              "item": "2"
+            },
+            {
+              "count": "88065",
+              "item": "3"
+            },
+            {
+              "count": "62177",
+              "item": "4"
+            },
+            {
+              "count": "45701",
+              "item": "5"
+            },
+            {
+              "count": "34319",
+              "item": "6"
+            },
+            {
+              "count": "31932",
+              "item": "7"
+            },
+            {
+              "count": "21434",
+              "item": "8"
+            },
+            {
+              "count": "19365",
+              "item": "9"
+            },
+            {
+              "count": "16317",
+              "item": "10"
+            },
+            {
+              "count": "14517",
+              "item": "11"
+            },
+            {
+              "count": "14133",
+              "item": "12"
+            },
+            {
+              "count": "10291",
+              "item": "14"
+            },
+            {
+              "count": "10256",
+              "item": "13"
+            },
+            {
+              "count": "10007",
+              "item": "15"
+            },
+            {
+              "count": "9175",
+              "item": "17"
+            },
+            {
+              "count": "7861",
+              "item": "16"
+            },
+            {
+              "count": "7562",
+              "item": "22"
+            },
+            {
+              "count": "7432",
+              "item": "103"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Proveedores Únicos que han redactado respuestas en el proceso",
+        "fieldName": "proveedores_unicos_con",
+        "format": {},
+        "id": 589184027,
+        "name": "Proveedores Unicos con Respuestas",
+        "position": 38,
+        "renderTypeName": "number",
+        "tableColumnId": 88482253
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "562",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "8403602",
+              "item": "0"
+            },
+            {
+              "count": "51254",
+              "item": "2"
+            },
+            {
+              "count": "31988",
+              "item": "3"
+            },
+            {
+              "count": "23316",
+              "item": "4"
+            },
+            {
+              "count": "19826",
+              "item": "1"
+            },
+            {
+              "count": "16680",
+              "item": "5"
+            },
+            {
+              "count": "13759",
+              "item": "6"
+            },
+            {
+              "count": "10604",
+              "item": "7"
+            },
+            {
+              "count": "9178",
+              "item": "8"
+            },
+            {
+              "count": "7949",
+              "item": "12"
+            },
+            {
+              "count": "7896",
+              "item": "10"
+            },
+            {
+              "count": "6708",
+              "item": "11"
+            },
+            {
+              "count": "6706",
+              "item": "9"
+            },
+            {
+              "count": "6697",
+              "item": "13"
+            },
+            {
+              "count": "6487",
+              "item": "31"
+            },
+            {
+              "count": "5859",
+              "item": "14"
+            },
+            {
+              "count": "5730",
+              "item": "15"
+            },
+            {
+              "count": "5608",
+              "item": "20"
+            },
+            {
+              "count": "4968",
+              "item": "119"
+            },
+            {
+              "count": "4388",
+              "item": "23"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Número de lotes de articulos solicitados dentro del proceso",
+        "fieldName": "numero_de_lotes",
+        "format": {},
+        "id": 589184028,
+        "name": "Numero de Lotes",
+        "position": 39,
+        "renderTypeName": "number",
+        "tableColumnId": 88482303
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Suspendido",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Abierto",
+          "top": [
+            {
+              "count": "5355976",
+              "item": "Seleccionado"
+            },
+            {
+              "count": "2607307",
+              "item": "Publicado"
+            },
+            {
+              "count": "547092",
+              "item": "Evaluación"
+            },
+            {
+              "count": "152161",
+              "item": "Cancelado"
+            },
+            {
+              "count": "42541",
+              "item": "Borrador"
+            },
+            {
+              "count": "31713",
+              "item": "Abierto"
+            },
+            {
+              "count": "7204",
+              "item": "Aprobado"
+            },
+            {
+              "count": "3482",
+              "item": "En aprobación"
+            },
+            {
+              "count": "164",
+              "item": "Suspendido"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Estado actual de desarrollo del procedimiento de compra pública",
+        "fieldName": "estado_del_procedimiento",
+        "format": {},
+        "id": 589184029,
+        "name": "Estado del Procedimiento",
+        "position": 40,
+        "renderTypeName": "text",
+        "tableColumnId": 88482267
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "100",
+          "non_null": "8747175",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "5252260",
+              "item": "70"
+            },
+            {
+              "count": "2617851",
+              "item": "50"
+            },
+            {
+              "count": "674620",
+              "item": "60"
+            },
+            {
+              "count": "114531",
+              "item": "100"
+            },
+            {
+              "count": "87912",
+              "item": "0"
+            },
+            {
+              "count": "1",
+              "item": "80"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Identificador del Estado del procedimiento",
+        "fieldName": "id_estado_del_procedimiento",
+        "format": {},
+        "id": 589184030,
+        "name": "ID Estado del Procedimiento",
+        "position": 41,
+        "renderTypeName": "number",
+        "tableColumnId": 88482276
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "Si",
+          "non_null": "8747175",
+          "null": "0",
+          "smallest": "No",
+          "top": [
+            {
+              "count": "7893754",
+              "item": "No"
+            },
+            {
+              "count": "853421",
+              "item": "Si"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Determina si el proceso fue adjudicado",
+        "fieldName": "adjudicado",
+        "format": {},
+        "id": 589184031,
+        "name": "Adjudicado",
+        "position": 42,
+        "renderTypeName": "text",
+        "tableColumnId": 88482283
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "No Adjudicado",
+          "non_null": "8747175",
+          "null": "0",
+          "smallest": "CO1.AWD.1000001",
+          "top": [
+            {
+              "count": "7893754",
+              "item": "No Adjudicado"
+            },
+            {
+              "count": "8820",
+              "item": "CO1.AWD.2259398"
+            },
+            {
+              "count": "7420",
+              "item": "CO1.AWD.1257717"
+            },
+            {
+              "count": "4805",
+              "item": "CO1.AWD.2053039"
+            },
+            {
+              "count": "4095",
+              "item": "CO1.AWD.770241"
+            },
+            {
+              "count": "3828",
+              "item": "CO1.AWD.2030355"
+            },
+            {
+              "count": "3819",
+              "item": "CO1.AWD.7501"
+            },
+            {
+              "count": "3690",
+              "item": "CO1.AWD.1770005"
+            },
+            {
+              "count": "2645",
+              "item": "CO1.AWD.2099950"
+            },
+            {
+              "count": "2448",
+              "item": "CO1.AWD.468045"
+            },
+            {
+              "count": "1869",
+              "item": "CO1.AWD.1995712"
+            },
+            {
+              "count": "1600",
+              "item": "CO1.AWD.2322330"
+            },
+            {
+              "count": "1521",
+              "item": "CO1.AWD.2469432"
+            },
+            {
+              "count": "1442",
+              "item": "CO1.AWD.1499976"
+            },
+            {
+              "count": "1344",
+              "item": "CO1.AWD.2577411"
+            },
+            {
+              "count": "1225",
+              "item": "CO1.AWD.616637"
+            },
+            {
+              "count": "1156",
+              "item": "CO1.AWD.2055607"
+            },
+            {
+              "count": "1152",
+              "item": "CO1.AWD.2371409"
+            },
+            {
+              "count": "1131",
+              "item": "CO1.AWD.2087012"
+            },
+            {
+              "count": "1106",
+              "item": "CO1.AWD.2556640"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Identificador de la adjudicación",
+        "fieldName": "id_adjudicacion",
+        "format": {},
+        "id": 589184032,
+        "name": "ID Adjudicacion",
+        "position": 43,
+        "renderTypeName": "text",
+        "tableColumnId": 88482299
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "No Definido",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "700000029",
+          "top": [
+            {
+              "count": "7807145",
+              "item": "No Definido"
+            },
+            {
+              "count": "4146",
+              "item": "700326028"
+            },
+            {
+              "count": "4104",
+              "item": "700306053"
+            },
+            {
+              "count": "3110",
+              "item": "700811045"
+            },
+            {
+              "count": "2746",
+              "item": "700097041"
+            },
+            {
+              "count": "2609",
+              "item": "700150014"
+            },
+            {
+              "count": "2361",
+              "item": "702408279"
+            },
+            {
+              "count": "2336",
+              "item": "701131237"
+            },
+            {
+              "count": "2038",
+              "item": "700886112"
+            },
+            {
+              "count": "2019",
+              "item": "701895278"
+            },
+            {
+              "count": "2001",
+              "item": "700284011"
+            },
+            {
+              "count": "1869",
+              "item": "703146035"
+            },
+            {
+              "count": "1856",
+              "item": "700954209"
+            },
+            {
+              "count": "1789",
+              "item": "700826167"
+            },
+            {
+              "count": "1771",
+              "item": "702491085"
+            },
+            {
+              "count": "1750",
+              "item": "702266370"
+            },
+            {
+              "count": "1708",
+              "item": "703835827"
+            },
+            {
+              "count": "1641",
+              "item": "702826777"
+            },
+            {
+              "count": "1619",
+              "item": "703171140"
+            },
+            {
+              "count": "1610",
+              "item": "701878092"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Código, en la plataforma, del proveedor adjudicado",
+        "fieldName": "codigoproveedor",
+        "format": {},
+        "id": 589184033,
+        "name": "CodigoProveedor",
+        "position": 44,
+        "renderTypeName": "text",
+        "tableColumnId": 88482258
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": " Wisconsin",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Aisén del General Carlos Ibañez del Campo",
+          "top": [
+            {
+              "count": "8115512",
+              "item": "No Definido"
+            },
+            {
+              "count": "237609",
+              "item": "Distrito Capital de Bogotá"
+            },
+            {
+              "count": "66409",
+              "item": "Antioquia"
+            },
+            {
+              "count": "37378",
+              "item": "Valle del Cauca"
+            },
+            {
+              "count": "36775",
+              "item": "Cundinamarca"
+            },
+            {
+              "count": "29504",
+              "item": "Santander"
+            },
+            {
+              "count": "27977",
+              "item": "Boyacá"
+            },
+            {
+              "count": "19161",
+              "item": "Atlántico"
+            },
+            {
+              "count": "16070",
+              "item": "Huila"
+            },
+            {
+              "count": "14219",
+              "item": "Caldas"
+            },
+            {
+              "count": "13435",
+              "item": "Tolima"
+            },
+            {
+              "count": "12247",
+              "item": "Norte de Santander"
+            },
+            {
+              "count": "11739",
+              "item": "Nariño"
+            },
+            {
+              "count": "11591",
+              "item": "Meta"
+            },
+            {
+              "count": "10311",
+              "item": "Bolívar"
+            },
+            {
+              "count": "9550",
+              "item": "Risaralda"
+            },
+            {
+              "count": "8854",
+              "item": "Cesar"
+            },
+            {
+              "count": "8517",
+              "item": "Cauca"
+            },
+            {
+              "count": "8494",
+              "item": "Córdoba"
+            },
+            {
+              "count": "7584",
+              "item": "Magdalena"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Departamento en el que está registrado el proveedor adjudicado",
+        "fieldName": "departamento_proveedor",
+        "format": {},
+        "id": 589184034,
+        "name": "Departamento Proveedor",
+        "position": 45,
+        "renderTypeName": "text",
+        "tableColumnId": 88482289
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Zona Bananera",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Abejorral",
+          "top": [
+            {
+              "count": "8242427",
+              "item": "No Definido"
+            },
+            {
+              "count": "128261",
+              "item": "Bogotá"
+            },
+            {
+              "count": "30949",
+              "item": "Medellín"
+            },
+            {
+              "count": "23060",
+              "item": "Cali"
+            },
+            {
+              "count": "16843",
+              "item": "Bucaramanga"
+            },
+            {
+              "count": "15146",
+              "item": "Barranquilla"
+            },
+            {
+              "count": "9713",
+              "item": "Neiva"
+            },
+            {
+              "count": "9456",
+              "item": "Tunja"
+            },
+            {
+              "count": "9343",
+              "item": "Villavicencio"
+            },
+            {
+              "count": "8141",
+              "item": "Cúcuta"
+            },
+            {
+              "count": "7624",
+              "item": "Manizales"
+            },
+            {
+              "count": "7193",
+              "item": "Cartagena"
+            },
+            {
+              "count": "7183",
+              "item": "Ibagué"
+            },
+            {
+              "count": "6711",
+              "item": "Pereira"
+            },
+            {
+              "count": "6571",
+              "item": "Pasto"
+            },
+            {
+              "count": "5878",
+              "item": "Valledupar"
+            },
+            {
+              "count": "4948",
+              "item": "Popayán"
+            },
+            {
+              "count": "4793",
+              "item": "Cota"
+            },
+            {
+              "count": "4485",
+              "item": "Sogamoso"
+            },
+            {
+              "count": "4303",
+              "item": "Montería"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Ciudad en la que está registrado el proveedor adjudicado",
+        "fieldName": "ciudad_proveedor",
+        "format": {},
+        "id": 589184035,
+        "name": "Ciudad Proveedor",
+        "position": 46,
+        "renderTypeName": "text",
+        "tableColumnId": 88482268
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "2026-06-29T00:00:00.000",
+          "non_null": "821944",
+          "null": "7925696",
+          "smallest": "2015-06-11T00:00:00.000",
+          "top": [
+            {
+              "count": "9458",
+              "item": "2025-05-22T00:00:00.000"
+            },
+            {
+              "count": "7612",
+              "item": "2022-02-24T00:00:00.000"
+            },
+            {
+              "count": "5318",
+              "item": "2023-12-06T00:00:00.000"
+            },
+            {
+              "count": "5248",
+              "item": "2024-10-08T00:00:00.000"
+            },
+            {
+              "count": "4432",
+              "item": "2024-10-18T00:00:00.000"
+            },
+            {
+              "count": "4371",
+              "item": "2020-07-08T00:00:00.000"
+            },
+            {
+              "count": "3820",
+              "item": "2015-12-22T00:00:00.000"
+            },
+            {
+              "count": "3244",
+              "item": "2024-11-26T00:00:00.000"
+            },
+            {
+              "count": "2618",
+              "item": "2019-03-28T00:00:00.000"
+            },
+            {
+              "count": "2245",
+              "item": "2022-12-28T00:00:00.000"
+            },
+            {
+              "count": "2212",
+              "item": "2025-12-23T00:00:00.000"
+            },
+            {
+              "count": "2210",
+              "item": "2024-08-08T00:00:00.000"
+            },
+            {
+              "count": "2178",
+              "item": "2024-11-25T00:00:00.000"
+            },
+            {
+              "count": "2129",
+              "item": "2025-09-29T00:00:00.000"
+            },
+            {
+              "count": "2080",
+              "item": "2022-07-01T00:00:00.000"
+            },
+            {
+              "count": "2048",
+              "item": "2026-06-05T00:00:00.000"
+            },
+            {
+              "count": "1912",
+              "item": "2026-05-11T00:00:00.000"
+            },
+            {
+              "count": "1751",
+              "item": "2022-12-23T00:00:00.000"
+            },
+            {
+              "count": "1648",
+              "item": "2022-07-08T00:00:00.000"
+            },
+            {
+              "count": "1592",
+              "item": "2024-09-04T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha en la que se hizo la adjudicación del proceso para el proveedor seleccionado",
+        "fieldName": "fecha_adjudicacion",
+        "format": {
+          "align": "right",
+          "view": "date"
+        },
+        "id": 589184036,
+        "name": "Fecha Adjudicacion",
+        "position": 47,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 89013223
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "3355609172320196100",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "7898308",
+              "item": "0"
+            },
+            {
+              "count": "5474",
+              "item": "20000000"
+            },
+            {
+              "count": "4988",
+              "item": "30000000"
+            },
+            {
+              "count": "4943",
+              "item": "10000000"
+            },
+            {
+              "count": "4054",
+              "item": "15000000"
+            },
+            {
+              "count": "3405",
+              "item": "50000000"
+            },
+            {
+              "count": "3318",
+              "item": "40000000"
+            },
+            {
+              "count": "3163",
+              "item": "25000000"
+            },
+            {
+              "count": "2837",
+              "item": "5000000"
+            },
+            {
+              "count": "2658",
+              "item": "100000000"
+            },
+            {
+              "count": "2521",
+              "item": "6000000"
+            },
+            {
+              "count": "2512",
+              "item": "60000000"
+            },
+            {
+              "count": "2340",
+              "item": "12000000"
+            },
+            {
+              "count": "2267",
+              "item": "80000000"
+            },
+            {
+              "count": "2175",
+              "item": "8000000"
+            },
+            {
+              "count": "1867",
+              "item": "35000000"
+            },
+            {
+              "count": "1858",
+              "item": "4000000"
+            },
+            {
+              "count": "1798",
+              "item": "200000000"
+            },
+            {
+              "count": "1795",
+              "item": "70000000"
+            },
+            {
+              "count": "1792",
+              "item": "7000000"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Valor total Adjudicado",
+        "fieldName": "valor_total_adjudicacion",
+        "format": {
+          "currencyStyle": "COP",
+          "precisionStyle": "currency"
+        },
+        "id": 589184037,
+        "name": "Valor Total Adjudicacion",
+        "position": 48,
+        "renderTypeName": "number",
+        "tableColumnId": 89013222
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "ZULY YOMARA PEDRAZA SABOGAL",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "- -",
+          "top": [
+            {
+              "count": "7894217",
+              "item": "No Adjudicado"
+            },
+            {
+              "count": "9157",
+              "item": "Adriana Marisol Muñoz Rebolledo"
+            },
+            {
+              "count": "8973",
+              "item": "Ivan Dario Pachon Barreto"
+            },
+            {
+              "count": "8209",
+              "item": "JOHANNA ELVIRA SANTOS RINCON"
+            },
+            {
+              "count": "8088",
+              "item": "CRISTIAN DAVID MEDINA RAMIREZ"
+            },
+            {
+              "count": "7571",
+              "item": "MONICA GONZALEZ SALAZAR"
+            },
+            {
+              "count": "6266",
+              "item": "LORENA ACOSTA GALEANO"
+            },
+            {
+              "count": "5938",
+              "item": "BLANCA ROCIO AGUDELO CRUZ"
+            },
+            {
+              "count": "5563",
+              "item": "OSCAR DANILO GOMEZ"
+            },
+            {
+              "count": "5432",
+              "item": "ENRIQUE RAMÍREZ MOGOLLÓN"
+            },
+            {
+              "count": "4713",
+              "item": "YIRA MARCELA DEL PILAR ANA MARIA MARTINEZ CONTRERAS"
+            },
+            {
+              "count": "4269",
+              "item": "Boris Alexander Flomin de Leon"
+            },
+            {
+              "count": "3982",
+              "item": "Sandra Zamora"
+            },
+            {
+              "count": "3838",
+              "item": "WALTER BAUTISTA"
+            },
+            {
+              "count": "3735",
+              "item": "Angela Rocio Rodriguez Rodriguez"
+            },
+            {
+              "count": "2973",
+              "item": "RICARDO PARADA QUIROGA"
+            },
+            {
+              "count": "2966",
+              "item": "Martha Lorena Galvis perez"
+            },
+            {
+              "count": "2762",
+              "item": "DIANA LUCELLY ROSALES VALENCIA"
+            },
+            {
+              "count": "2707",
+              "item": "FERMIN ROMERO ESQUIVEL"
+            },
+            {
+              "count": "2461",
+              "item": "ANDRES ALONSO GARCIA VALBUENA"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Nombre del Usuario que ejecutó la accion de adjudicación",
+        "fieldName": "nombre_del_adjudicador",
+        "format": {},
+        "id": 589184038,
+        "name": "Nombre del Adjudicador",
+        "position": 49,
+        "renderTypeName": "text",
+        "tableColumnId": 88482271
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "ZZZ ZUMA ZE",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "0000000",
+          "top": [
+            {
+              "count": "7807145",
+              "item": "No Definido"
+            },
+            {
+              "count": "4146",
+              "item": "Aseguradora Solidaria de Colombia Entidad Cooperativa."
+            },
+            {
+              "count": "4112",
+              "item": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS"
+            },
+            {
+              "count": "3110",
+              "item": "QUIMITRONICA SAS"
+            },
+            {
+              "count": "2746",
+              "item": "Scientific Products SAS"
+            },
+            {
+              "count": "2609",
+              "item": "Intercomercial Medica"
+            },
+            {
+              "count": "2361",
+              "item": "ANNAR DIAGNOSTICA IMPORT S.A.S."
+            },
+            {
+              "count": "2336",
+              "item": "LM INSTRUMENTS S.A."
+            },
+            {
+              "count": "2038",
+              "item": "LIFESUMIMED SAS"
+            },
+            {
+              "count": "2019",
+              "item": "Avántika Colombia S.A.S"
+            },
+            {
+              "count": "2001",
+              "item": "ORGANIZACION TERPEL S.A."
+            },
+            {
+              "count": "1869",
+              "item": "ALFA TRADING SAS"
+            },
+            {
+              "count": "1856",
+              "item": "DISTRIBUIDORA COLOMBIANA DE MEDICAMENTOS  Y TECNOLOGIAS EN SALUD SAS - DISCOLMETS S.A.S"
+            },
+            {
+              "count": "1789",
+              "item": "BIOCOL LTDA"
+            },
+            {
+              "count": "1771",
+              "item": "VEYALTHI GROUP S.A.S"
+            },
+            {
+              "count": "1750",
+              "item": "Rafael Antonio Salamanca"
+            },
+            {
+              "count": "1708",
+              "item": "Deicy Bravo Jojoa"
+            },
+            {
+              "count": "1641",
+              "item": "NVP LAB"
+            },
+            {
+              "count": "1619",
+              "item": "GENPRODUCTS COMPANY SAS"
+            },
+            {
+              "count": "1610",
+              "item": "CEMINSUMOS SAS"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Nombre del Proveedor Adjudicado ",
+        "fieldName": "nombre_del_proveedor",
+        "format": {},
+        "id": 589184039,
+        "name": "Nombre del Proveedor Adjudicado",
+        "position": 50,
+        "renderTypeName": "text",
+        "tableColumnId": 88482290
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": " 900617650",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "00000",
+          "top": [
+            {
+              "count": "8333841",
+              "item": "No Definido"
+            },
+            {
+              "count": "4148",
+              "item": "860524654"
+            },
+            {
+              "count": "4114",
+              "item": "860002400"
+            },
+            {
+              "count": "3110",
+              "item": "830051965"
+            },
+            {
+              "count": "2746",
+              "item": "805014913"
+            },
+            {
+              "count": "2361",
+              "item": "830025281"
+            },
+            {
+              "count": "2336",
+              "item": "800077635"
+            },
+            {
+              "count": "2038",
+              "item": "900240177"
+            },
+            {
+              "count": "2019",
+              "item": "890101977"
+            },
+            {
+              "count": "1869",
+              "item": "830041488"
+            },
+            {
+              "count": "1856",
+              "item": "828002423"
+            },
+            {
+              "count": "1789",
+              "item": "860501595"
+            },
+            {
+              "count": "1771",
+              "item": "830119211"
+            },
+            {
+              "count": "1641",
+              "item": "900730558"
+            },
+            {
+              "count": "1610",
+              "item": "900923368"
+            },
+            {
+              "count": "1600",
+              "item": "800200257"
+            },
+            {
+              "count": "1499",
+              "item": "900185158"
+            },
+            {
+              "count": "1372",
+              "item": "830508200"
+            },
+            {
+              "count": "1368",
+              "item": "804009440"
+            },
+            {
+              "count": "1346",
+              "item": "800154801"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "NIT del Proveedor Adjudicado",
+        "fieldName": "nit_del_proveedor_adjudicado",
+        "format": {},
+        "id": 589184040,
+        "name": "NIT del Proveedor Adjudicado",
+        "position": 51,
+        "renderTypeName": "text",
+        "tableColumnId": 88482278
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "V1.95141904",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "UNSPECIFIED",
+          "top": [
+            {
+              "count": "2279800",
+              "item": "V1.80111600"
+            },
+            {
+              "count": "481289",
+              "item": "V1.80111701"
+            },
+            {
+              "count": "313344",
+              "item": "V1.80111620"
+            },
+            {
+              "count": "294201",
+              "item": "V1.80111500"
+            },
+            {
+              "count": "274737",
+              "item": "V1.85101600"
+            },
+            {
+              "count": "166760",
+              "item": "V1.80111601"
+            },
+            {
+              "count": "147677",
+              "item": "V1.80161500"
+            },
+            {
+              "count": "143054",
+              "item": "V1.85101601"
+            },
+            {
+              "count": "138500",
+              "item": "V1.80111501"
+            },
+            {
+              "count": "70221",
+              "item": "UNSPECIFIED"
+            },
+            {
+              "count": "61265",
+              "item": "V1.80111700"
+            },
+            {
+              "count": "56720",
+              "item": "V1.80101600"
+            },
+            {
+              "count": "56323",
+              "item": "V1.80101500"
+            },
+            {
+              "count": "55505",
+              "item": "V1.81101500"
+            },
+            {
+              "count": "46969",
+              "item": "V1.93141500"
+            },
+            {
+              "count": "41418",
+              "item": "V1.85101604"
+            },
+            {
+              "count": "40371",
+              "item": "V1.85121600"
+            },
+            {
+              "count": "39333",
+              "item": "V1.80131500"
+            },
+            {
+              "count": "39315",
+              "item": "V1.80111607"
+            },
+            {
+              "count": "36039",
+              "item": "V1.80101604"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Codigo UNSPSC de la categoría principal del producto o servicio adquirido en proceso de compra",
+        "fieldName": "codigo_principal_de_categoria",
+        "format": {},
+        "id": 589184041,
+        "name": "Codigo Principal de Categoria",
+        "position": 52,
+        "renderTypeName": "text",
+        "tableColumnId": 88482261
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Cerrado",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Abierto",
+          "top": [
+            {
+              "count": "7639067",
+              "item": "Abierto"
+            },
+            {
+              "count": "1108573",
+              "item": "Cerrado"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Estado actual de Apertura de información del proceso",
+        "fieldName": "estado_de_apertura_del_proceso",
+        "format": {},
+        "id": 589184042,
+        "name": "Estado de Apertura del Proceso",
+        "position": 53,
+        "renderTypeName": "text",
+        "tableColumnId": 88482297
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Venta muebles",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Acuerdo de cooperación",
+          "top": [
+            {
+              "count": "5639205",
+              "item": "Prestación de servicios"
+            },
+            {
+              "count": "1221051",
+              "item": "Decreto 092 de 2017"
+            },
+            {
+              "count": "715014",
+              "item": "Suministros"
+            },
+            {
+              "count": "363588",
+              "item": "Otro"
+            },
+            {
+              "count": "325458",
+              "item": "Compraventa"
+            },
+            {
+              "count": "138850",
+              "item": "Obra"
+            },
+            {
+              "count": "94975",
+              "item": "No"
+            },
+            {
+              "count": "75605",
+              "item": "No Especificado"
+            },
+            {
+              "count": "45073",
+              "item": "Arrendamiento de inmuebles"
+            },
+            {
+              "count": "31721",
+              "item": "Seguros"
+            },
+            {
+              "count": "27963",
+              "item": "Interventoría"
+            },
+            {
+              "count": "23586",
+              "item": "Consultoría"
+            },
+            {
+              "count": "13341",
+              "item": "Comodato"
+            },
+            {
+              "count": "11238",
+              "item": "Acuerdo Marco de Precios"
+            },
+            {
+              "count": "8628",
+              "item": "Arrendamiento de muebles"
+            },
+            {
+              "count": "5581",
+              "item": "Servicios financieros"
+            },
+            {
+              "count": "1537",
+              "item": "Operaciones de Crédito Público"
+            },
+            {
+              "count": "1435",
+              "item": "Concesión"
+            },
+            {
+              "count": "1289",
+              "item": "Venta muebles"
+            },
+            {
+              "count": "1138",
+              "item": "Asociación Público Privada"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Tipo de Contrato definido para el proceso de compra",
+        "fieldName": "tipo_de_contrato",
+        "format": {},
+        "id": 589184043,
+        "name": "Tipo de Contrato",
+        "position": 54,
+        "renderTypeName": "text",
+        "tableColumnId": 88482270
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "No Definido",
+          "non_null": "8747175",
+          "null": "0",
+          "smallest": "No Definido",
+          "top": [
+            {
+              "count": "8747175",
+              "item": "No Definido"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Subtipo de Contrato definido para el proceso de compra",
+        "fieldName": "subtipo_de_contrato",
+        "format": {},
+        "id": 589184044,
+        "name": "Subtipo de Contrato",
+        "position": 55,
+        "renderTypeName": "text",
+        "tableColumnId": 88482264
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747175",
+          "count": "8747175",
+          "largest": "V195141904",
+          "non_null": "8747175",
+          "null": "0",
+          "smallest": "No definido",
+          "top": [
+            {
+              "count": "8145219",
+              "item": "No definido"
+            },
+            {
+              "count": "9844",
+              "item": "V180111600"
+            },
+            {
+              "count": "7420",
+              "item": "V170141701, V170141702, V170141703, V170141704, V170141705, V170141706, V170141707, V170141708, V170141709, V170141710, V193141907, V193141909"
+            },
+            {
+              "count": "5595",
+              "item": "V180111620"
+            },
+            {
+              "count": "4455",
+              "item": "V181101500"
+            },
+            {
+              "count": "4281",
+              "item": "V180111500, V180111600"
+            },
+            {
+              "count": "3935",
+              "item": "V193131609"
+            },
+            {
+              "count": "3796",
+              "item": "V180101600"
+            },
+            {
+              "count": "3718",
+              "item": "V180111600, V180111700"
+            },
+            {
+              "count": "3690",
+              "item": "V141111900, V141116000, V142132200, V142142700, V142142800, V142143100, V142143300, V142143500, V142171700, V142181600, V142182000, V142203400, V142221500, V142222306, V142231600, V142241500, V142271700, V142271900, V142272000, V142272200, V142272500, V142281800, V142291600, V142291700, V142291800, V142293400, V142293900, V142294200, V142294500, V142294700, V142294900, V142295100, V142295300, V142295450, V142295500, V142295800, V142295900, V142296000, V142296100, V142311500, V142311900, V1423119"
+            },
+            {
+              "count": "3372",
+              "item": "V180111500, V180111700"
+            },
+            {
+              "count": "3107",
+              "item": "V115101500"
+            },
+            {
+              "count": "3054",
+              "item": "V180111500"
+            },
+            {
+              "count": "2968",
+              "item": "V184131600"
+            },
+            {
+              "count": "2666",
+              "item": "V184131500"
+            },
+            {
+              "count": "2552",
+              "item": "V181102200"
+            },
+            {
+              "count": "2434",
+              "item": "V115101504"
+            },
+            {
+              "count": "2343",
+              "item": "V180161500"
+            },
+            {
+              "count": "2044",
+              "item": "V180111701"
+            },
+            {
+              "count": "1659",
+              "item": "V141115800, V141116000, V141116100"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Identificador de las categorías UNSPSC adicionales, incluidas en el producto o servicio adquirido en proceso de compra",
+        "fieldName": "categorias_adicionales",
+        "format": {},
+        "id": 589184045,
+        "name": "Categorias Adicionales",
+        "position": 56,
+        "renderTypeName": "text",
+        "tableColumnId": 88482304
+      },
+      {
+        "dataTypeName": "url",
+        "description": "URL, en la plataforma, en la que se puede consultar el proceso de compra",
+        "fieldName": "urlproceso",
+        "format": {},
+        "id": 589184046,
+        "name": "URLProceso",
+        "position": 57,
+        "renderTypeName": "url",
+        "subColumnTypes": [
+          "url",
+          "description"
+        ],
+        "tableColumnId": 88482301
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "736739061",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "700000011",
+          "top": [
+            {
+              "count": "105656",
+              "item": "700698038"
+            },
+            {
+              "count": "105219",
+              "item": "702271321"
+            },
+            {
+              "count": "71609",
+              "item": "702729500"
+            },
+            {
+              "count": "60906",
+              "item": "703000075"
+            },
+            {
+              "count": "50354",
+              "item": "718046428"
+            },
+            {
+              "count": "49952",
+              "item": "702066010"
+            },
+            {
+              "count": "46801",
+              "item": "703301051"
+            },
+            {
+              "count": "43792",
+              "item": "700676059"
+            },
+            {
+              "count": "42523",
+              "item": "700660012"
+            },
+            {
+              "count": "40621",
+              "item": "702259557"
+            },
+            {
+              "count": "39997",
+              "item": "702730482"
+            },
+            {
+              "count": "37533",
+              "item": "709072474"
+            },
+            {
+              "count": "34449",
+              "item": "703949024"
+            },
+            {
+              "count": "31721",
+              "item": "701321135"
+            },
+            {
+              "count": "31106",
+              "item": "702318460"
+            },
+            {
+              "count": "30414",
+              "item": "701365033"
+            },
+            {
+              "count": "30325",
+              "item": "702523150"
+            },
+            {
+              "count": "30048",
+              "item": "706099488"
+            },
+            {
+              "count": "29720",
+              "item": "701515082"
+            },
+            {
+              "count": "29366",
+              "item": "700447030"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Código de la entidad en la plataforma SECOPII",
+        "fieldName": "codigo_entidad",
+        "format": {},
+        "id": 589184050,
+        "name": "Codigo Entidad",
+        "position": 58,
+        "renderTypeName": "number",
+        "tableColumnId": 151285047
+      },
+      {
+        "cachedContents": {
+          "cardinality": "8747640",
+          "count": "8747640",
+          "largest": "Selección de ofertas (borrador)",
+          "non_null": "8747640",
+          "null": "0",
+          "smallest": "Adjudicado",
+          "top": [
+            {
+              "count": "6850031",
+              "item": "Presentación de oferta"
+            },
+            {
+              "count": "792747",
+              "item": "Fase de ofertas"
+            },
+            {
+              "count": "775085",
+              "item": "Adjudicado"
+            },
+            {
+              "count": "152006",
+              "item": "Presentación de observaciones"
+            },
+            {
+              "count": "87867",
+              "item": "No Definido"
+            },
+            {
+              "count": "62855",
+              "item": "Manifestación de interés (Menor Cuantía)"
+            },
+            {
+              "count": "9543",
+              "item": "Clarification submission"
+            },
+            {
+              "count": "7760",
+              "item": "Estimate Phase"
+            },
+            {
+              "count": "3737",
+              "item": "Pré-Calificación de competidores"
+            },
+            {
+              "count": "2866",
+              "item": "Fase de Selección (Presentación de ofertas)"
+            },
+            {
+              "count": "1847",
+              "item": "Selección de ofertas (borrador)"
+            },
+            {
+              "count": "1121",
+              "item": "Proceso de ofertas"
+            },
+            {
+              "count": "99",
+              "item": "Presentación de Observaciones"
+            },
+            {
+              "count": "52",
+              "item": "Fase de Concurso"
+            },
+            {
+              "count": "13",
+              "item": "Presentación de observaciones (precalificación)"
+            },
+            {
+              "count": "11",
+              "item": "Presentación de oferta (precalificación)"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Resumen del estado del proceso de compra pública",
+        "fieldName": "estado_resumen",
+        "format": {},
+        "id": 589184049,
+        "name": "Estado Resumen",
+        "position": 59,
+        "renderTypeName": "text",
+        "tableColumnId": 151285046
+      }
+    ],
+    "description": "Registro de los procesos de compra, sean o no adjudicados, hechos en la plataforma SECOP II desde su lanzamiento",
+    "id": "p6dx-8zbt",
+    "name": "SECOP II - Procesos de Contratación",
+    "rowsUpdatedAt": 1788627289
+  },
+  "sha256": "ba6e67e883cdd10bebdab9a91aba0b825a5605ca46724ad4e0a29b064f6baf16",
+  "status": "MATERIALIZED"
+}

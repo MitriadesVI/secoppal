@@ -1,0 +1,2954 @@
+{
+  "endpoint": "https://www.datos.gov.co/api/views/ceth-n4bn.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:37:33.548415+00:00",
+  "params": {},
+  "payload": {
+    "attribution": "Agencia Nacional de Contratación Pública - Colombia Compra Eficiente, Bogotá D.C.",
+    "columns": [
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "736949074",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "700131030",
+          "top": [
+            {
+              "count": "44",
+              "item": "703831925"
+            },
+            {
+              "count": "39",
+              "item": "706033255"
+            },
+            {
+              "count": "36",
+              "item": "719662629"
+            },
+            {
+              "count": "14",
+              "item": "730790425"
+            },
+            {
+              "count": "11",
+              "item": "709726509"
+            },
+            {
+              "count": "11",
+              "item": "721870541"
+            },
+            {
+              "count": "11",
+              "item": "714787694"
+            },
+            {
+              "count": "10",
+              "item": "723261319"
+            },
+            {
+              "count": "10",
+              "item": "712621309"
+            },
+            {
+              "count": "10",
+              "item": "712635283"
+            },
+            {
+              "count": "10",
+              "item": "708912928"
+            },
+            {
+              "count": "10",
+              "item": "730754488"
+            },
+            {
+              "count": "10",
+              "item": "712631134"
+            },
+            {
+              "count": "10",
+              "item": "735648040"
+            },
+            {
+              "count": "9",
+              "item": "712699123"
+            },
+            {
+              "count": "9",
+              "item": "712699107"
+            },
+            {
+              "count": "9",
+              "item": "712674357"
+            },
+            {
+              "count": "9",
+              "item": "712699115"
+            },
+            {
+              "count": "9",
+              "item": "725094650"
+            },
+            {
+              "count": "9",
+              "item": "717296065"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el codigo del grupo en la plataforma SECOP II",
+        "fieldName": "codigo_grupo",
+        "format": {},
+        "id": 598822770,
+        "name": "Codigo grupo",
+        "position": 1,
+        "renderTypeName": "text",
+        "tableColumnId": 139566135
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "ZZZZ VIDA Y NUTRICION 2020 UNION TEMPORAL",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "-",
+          "top": [
+            {
+              "count": "332",
+              "item": "DISPONIBLE"
+            },
+            {
+              "count": "246",
+              "item": "CONSORCIO"
+            },
+            {
+              "count": "194",
+              "item": "CONSORCIO SAN JUAN"
+            },
+            {
+              "count": "179",
+              "item": "CONSORCIO SAN MIGUEL"
+            },
+            {
+              "count": "168",
+              "item": "CONSORCIO SAN FRANCISCO"
+            },
+            {
+              "count": "161",
+              "item": "CONSORCIO SAN JOSE"
+            },
+            {
+              "count": "152",
+              "item": "CONSORCIO MALLA VIAL"
+            },
+            {
+              "count": "133",
+              "item": "CONSORCIO DELTA"
+            },
+            {
+              "count": "129",
+              "item": "CONSORCIO SAN MARTIN"
+            },
+            {
+              "count": "124",
+              "item": "CONSORCIO SAN RAFAEL"
+            },
+            {
+              "count": "121",
+              "item": "CONSORCIO INTERVIAL"
+            },
+            {
+              "count": "120",
+              "item": "CONSORCIO PRUEBA"
+            },
+            {
+              "count": "118",
+              "item": "CONSORCIO INTERVIAS"
+            },
+            {
+              "count": "110",
+              "item": "SIN USO"
+            },
+            {
+              "count": "109",
+              "item": "CONSORCIO VIAS URBANAS"
+            },
+            {
+              "count": "107",
+              "item": "CONSORCIO SANTA LUCIA"
+            },
+            {
+              "count": "107",
+              "item": "CONSORCIO VIAS CUNDINAMARCA"
+            },
+            {
+              "count": "107",
+              "item": "CONSORCIO SANTANDER"
+            },
+            {
+              "count": "106",
+              "item": "CONSORCIO SAN PEDRO"
+            },
+            {
+              "count": "105",
+              "item": "CONSORCIO OBRAS CIVILES"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Nombre del Grupo, Union Temporal, Consorcio y otro",
+        "fieldName": "nombre_grupo",
+        "format": {},
+        "id": 598822758,
+        "name": "Nombre Grupo",
+        "position": 2,
+        "renderTypeName": "text",
+        "tableColumnId": 85040358
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "ZDGFFHKLHJ  FGHFGH",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "-",
+          "top": [
+            {
+              "count": "588921",
+              "item": "No Definido"
+            },
+            {
+              "count": "1502",
+              "item": "000000000"
+            },
+            {
+              "count": "1339",
+              "item": "0"
+            },
+            {
+              "count": "665",
+              "item": "80833443"
+            },
+            {
+              "count": "641",
+              "item": "0000000000"
+            },
+            {
+              "count": "478",
+              "item": "N/A"
+            },
+            {
+              "count": "446",
+              "item": "00000000"
+            },
+            {
+              "count": "433",
+              "item": "000000"
+            },
+            {
+              "count": "419",
+              "item": "1"
+            },
+            {
+              "count": "381",
+              "item": "0000"
+            },
+            {
+              "count": "379",
+              "item": "0000000"
+            },
+            {
+              "count": "364",
+              "item": "NO APLICA"
+            },
+            {
+              "count": "364",
+              "item": "00000"
+            },
+            {
+              "count": "359",
+              "item": "NA"
+            },
+            {
+              "count": "344",
+              "item": "17195041"
+            },
+            {
+              "count": "320",
+              "item": "900000000"
+            },
+            {
+              "count": "272",
+              "item": "1075226795"
+            },
+            {
+              "count": "270",
+              "item": "10283252"
+            },
+            {
+              "count": "266",
+              "item": "1054561848"
+            },
+            {
+              "count": "233",
+              "item": "123456789"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "NIT del grupo Conformado participante del grupo, tal como lo registró en la plataforma",
+        "fieldName": "nit_grupo",
+        "format": {},
+        "id": 598822759,
+        "name": "NIT Grupo",
+        "position": 3,
+        "renderTypeName": "text",
+        "tableColumnId": 85040355
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "Si",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "No",
+          "top": [
+            {
+              "count": "675432",
+              "item": "No"
+            },
+            {
+              "count": "4",
+              "item": "Si"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica si el grupo esta registrado como entidad en la plataforma SECOPII",
+        "fieldName": "es_entidad",
+        "format": {},
+        "id": 598822792,
+        "name": "Es Entidad",
+        "position": 4,
+        "renderTypeName": "text",
+        "tableColumnId": 154643817
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "Si",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "No",
+          "top": [
+            {
+              "count": "675432",
+              "item": "No"
+            },
+            {
+              "count": "4",
+              "item": "Si"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica si el grupo esta registrado como proveedor en la plataforma SECOPII",
+        "fieldName": "es_proveedor",
+        "format": {},
+        "id": 598822791,
+        "name": "Es proveedor",
+        "position": 5,
+        "renderTypeName": "text",
+        "tableColumnId": 154643816
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "Si",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "No",
+          "top": [
+            {
+              "count": "657213",
+              "item": "Si"
+            },
+            {
+              "count": "18223",
+              "item": "No"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica si el grupo esta activo en la plataforma SECOPII",
+        "fieldName": "esta_activo",
+        "format": {},
+        "id": 598822790,
+        "name": "Esta activo",
+        "position": 6,
+        "renderTypeName": "text",
+        "tableColumnId": 154643815
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "2026-06-28T00:00:00.000",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "2015-06-10T00:00:00.000",
+          "top": [
+            {
+              "count": "1141",
+              "item": "2025-11-18T00:00:00.000"
+            },
+            {
+              "count": "1022",
+              "item": "2025-11-25T00:00:00.000"
+            },
+            {
+              "count": "1003",
+              "item": "2025-11-26T00:00:00.000"
+            },
+            {
+              "count": "979",
+              "item": "2025-11-27T00:00:00.000"
+            },
+            {
+              "count": "975",
+              "item": "2025-11-20T00:00:00.000"
+            },
+            {
+              "count": "942",
+              "item": "2025-11-19T00:00:00.000"
+            },
+            {
+              "count": "935",
+              "item": "2025-10-15T00:00:00.000"
+            },
+            {
+              "count": "875",
+              "item": "2025-08-21T00:00:00.000"
+            },
+            {
+              "count": "850",
+              "item": "2025-08-11T00:00:00.000"
+            },
+            {
+              "count": "849",
+              "item": "2025-10-16T00:00:00.000"
+            },
+            {
+              "count": "838",
+              "item": "2025-07-23T00:00:00.000"
+            },
+            {
+              "count": "827",
+              "item": "2024-12-04T00:00:00.000"
+            },
+            {
+              "count": "825",
+              "item": "2025-07-09T00:00:00.000"
+            },
+            {
+              "count": "799",
+              "item": "2025-11-24T00:00:00.000"
+            },
+            {
+              "count": "797",
+              "item": "2026-06-01T00:00:00.000"
+            },
+            {
+              "count": "791",
+              "item": "2025-10-28T00:00:00.000"
+            },
+            {
+              "count": "786",
+              "item": "2025-07-10T00:00:00.000"
+            },
+            {
+              "count": "783",
+              "item": "2025-11-21T00:00:00.000"
+            },
+            {
+              "count": "781",
+              "item": "2025-06-12T00:00:00.000"
+            },
+            {
+              "count": "780",
+              "item": "2025-08-14T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha en que fue creado el grupo",
+        "fieldName": "fecha_creaci_n_grupo",
+        "format": {},
+        "id": 598822762,
+        "name": "Fecha Creación Grupo",
+        "position": 7,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 85040354
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "V1.95120000",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "No Definido",
+          "top": [
+            {
+              "count": "674731",
+              "item": "No Definido"
+            },
+            {
+              "count": "103",
+              "item": "V1.81100000"
+            },
+            {
+              "count": "53",
+              "item": "V1.72140000"
+            },
+            {
+              "count": "52",
+              "item": "V1.78110000"
+            },
+            {
+              "count": "51",
+              "item": "V1.72100000"
+            },
+            {
+              "count": "42",
+              "item": "V1.80100000"
+            },
+            {
+              "count": "36",
+              "item": "V1.72120000"
+            },
+            {
+              "count": "32",
+              "item": "V1.78180000"
+            },
+            {
+              "count": "31",
+              "item": "V1.93140000"
+            },
+            {
+              "count": "27",
+              "item": "V1.92120000"
+            },
+            {
+              "count": "19",
+              "item": "V1.46170000"
+            },
+            {
+              "count": "16",
+              "item": "V1.95110000"
+            },
+            {
+              "count": "14",
+              "item": "V1.90100000"
+            },
+            {
+              "count": "14",
+              "item": "V1.95120000"
+            },
+            {
+              "count": "14",
+              "item": "V1.81110000"
+            },
+            {
+              "count": "13",
+              "item": "V1.25100000"
+            },
+            {
+              "count": "13",
+              "item": "V1.71120000"
+            },
+            {
+              "count": "11",
+              "item": "V1.84130000"
+            },
+            {
+              "count": "10",
+              "item": "V1.81140000"
+            },
+            {
+              "count": "8",
+              "item": "V1.41110000"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el codigo de la categoría principal del grupo en la plataforma SECOPII",
+        "fieldName": "codigo_categor_a_principal_grupo",
+        "format": {},
+        "id": 598822787,
+        "name": "Codigo categoría principal grupo",
+        "position": 8,
+        "renderTypeName": "text",
+        "tableColumnId": 154643812
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "Vías",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "Artículos de tocador y cuidado personal",
+          "top": [
+            {
+              "count": "674731",
+              "item": "No Definido"
+            },
+            {
+              "count": "103",
+              "item": "Servicios profesionales de ingeniería y arquitectura"
+            },
+            {
+              "count": "53",
+              "item": "Servicios de construcción pesada"
+            },
+            {
+              "count": "52",
+              "item": "Transporte de pasajeros"
+            },
+            {
+              "count": "51",
+              "item": "Servicios de mantenimiento y reparaciones de construcciones e instalaciones"
+            },
+            {
+              "count": "42",
+              "item": "Servicios de asesoría de gestión"
+            },
+            {
+              "count": "36",
+              "item": "Servicios de construcción de edificaciones no residenciales"
+            },
+            {
+              "count": "32",
+              "item": "Servicios de mantenimiento o reparaciones de transportes"
+            },
+            {
+              "count": "31",
+              "item": "Servicios comunitarios y sociales"
+            },
+            {
+              "count": "29",
+              "item": "Seguridad y protección personal"
+            },
+            {
+              "count": "19",
+              "item": "Seguridad, vigilancia y detección"
+            },
+            {
+              "count": "16",
+              "item": "Vías"
+            },
+            {
+              "count": "14",
+              "item": "Estructuras y edificios permanentes"
+            },
+            {
+              "count": "14",
+              "item": "Restaurantes y catering (servicios de comidas y bebidas)"
+            },
+            {
+              "count": "14",
+              "item": "Servicios informáticos"
+            },
+            {
+              "count": "13",
+              "item": "Servicios de construcción y perforación de pozos"
+            },
+            {
+              "count": "13",
+              "item": "Vehículos de motor"
+            },
+            {
+              "count": "11",
+              "item": "Servicios de seguros y pensiones"
+            },
+            {
+              "count": "10",
+              "item": "Tecnologías de fabricación"
+            },
+            {
+              "count": "8",
+              "item": "Instrumentos de medida, observación y ensayo"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Es la descripción código categoría principal del grupo en la plataforma SECOPII",
+        "fieldName": "descripci_n_c_digo_categor_a_principal_grupo",
+        "format": {},
+        "id": 598822786,
+        "name": "Descripción código categoría principal grupo",
+        "position": 9,
+        "renderTypeName": "text",
+        "tableColumnId": 154643811
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "Z",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": ".",
+          "top": [
+            {
+              "count": "448928",
+              "item": "No Provisto"
+            },
+            {
+              "count": "1505",
+              "item": "3835207"
+            },
+            {
+              "count": "987",
+              "item": "6203317"
+            },
+            {
+              "count": "957",
+              "item": "3105121738"
+            },
+            {
+              "count": "863",
+              "item": "6013562691"
+            },
+            {
+              "count": "816",
+              "item": "3164728878"
+            },
+            {
+              "count": "722",
+              "item": "3124798272"
+            },
+            {
+              "count": "715",
+              "item": "3176574703"
+            },
+            {
+              "count": "666",
+              "item": "6017914082"
+            },
+            {
+              "count": "595",
+              "item": "3143623443"
+            },
+            {
+              "count": "569",
+              "item": "3122594693"
+            },
+            {
+              "count": "565",
+              "item": "6013215958"
+            },
+            {
+              "count": "510",
+              "item": "6012410530"
+            },
+            {
+              "count": "477",
+              "item": "3002089435"
+            },
+            {
+              "count": "466",
+              "item": "8100743"
+            },
+            {
+              "count": "459",
+              "item": "4111513"
+            },
+            {
+              "count": "438",
+              "item": "3123034542"
+            },
+            {
+              "count": "426",
+              "item": "3209391842"
+            },
+            {
+              "count": "413",
+              "item": "312 2594693"
+            },
+            {
+              "count": "408",
+              "item": "310 666 34 09"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Numero de telefono del grupo",
+        "fieldName": "numero_tel_fono_grupo",
+        "format": {},
+        "id": 598822789,
+        "name": "Numero teléfono grupo",
+        "position": 10,
+        "renderTypeName": "text",
+        "tableColumnId": 154643814
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "Z",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "<",
+          "top": [
+            {
+              "count": "640987",
+              "item": "No Provisto"
+            },
+            {
+              "count": "1807",
+              "item": "N/A"
+            },
+            {
+              "count": "1500",
+              "item": "3835207"
+            },
+            {
+              "count": "684",
+              "item": "NA"
+            },
+            {
+              "count": "516",
+              "item": "6017914082"
+            },
+            {
+              "count": "427",
+              "item": "6013215958"
+            },
+            {
+              "count": "383",
+              "item": "347 66 96"
+            },
+            {
+              "count": "355",
+              "item": "6817023"
+            },
+            {
+              "count": "326",
+              "item": "(608) 7651948"
+            },
+            {
+              "count": "270",
+              "item": "7428446"
+            },
+            {
+              "count": "260",
+              "item": "312-5063666"
+            },
+            {
+              "count": "246",
+              "item": "6013562691"
+            },
+            {
+              "count": "237",
+              "item": "3134546039"
+            },
+            {
+              "count": "237",
+              "item": "3112571866"
+            },
+            {
+              "count": "232",
+              "item": "NO APLICA"
+            },
+            {
+              "count": "229",
+              "item": "4763542"
+            },
+            {
+              "count": "220",
+              "item": "7550501"
+            },
+            {
+              "count": "216",
+              "item": "7150016"
+            },
+            {
+              "count": "215",
+              "item": "3353039"
+            },
+            {
+              "count": "215",
+              "item": "N.A."
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el numero de FAX registrado por el grupo",
+        "fieldName": "numero_fax",
+        "format": {},
+        "id": 598822788,
+        "name": "Numero fax grupo",
+        "position": 11,
+        "renderTypeName": "text",
+        "tableColumnId": 154643813
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "ZXREYESGW@GMAIL.COM",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "020ARAUCA@GMAIL.COM",
+          "top": [
+            {
+              "count": "185986",
+              "item": "No Provisto"
+            },
+            {
+              "count": "1665",
+              "item": "COMERCIAL@JPSINGENIERIA.COM"
+            },
+            {
+              "count": "1630",
+              "item": "JUANPABLO.MUNOZ@INGEPLAN.CO"
+            },
+            {
+              "count": "1612",
+              "item": "LICITACIONES@INCOPLANSA.COM"
+            },
+            {
+              "count": "1575",
+              "item": "FIRMSAS10@GMAIL.COM"
+            },
+            {
+              "count": "1405",
+              "item": "LICITACIONESPCINTERVENTORES@GMAIL.COM"
+            },
+            {
+              "count": "1401",
+              "item": "INFO@INPROYECTOS.COM"
+            },
+            {
+              "count": "1312",
+              "item": "SAFRIDINGENIERIA@GMAIL.COM"
+            },
+            {
+              "count": "1275",
+              "item": "LICITACIONESINGECO2019@GMAIL.COM"
+            },
+            {
+              "count": "1220",
+              "item": "DYBINGENIEROSCIVILES@GMAIL.COM"
+            },
+            {
+              "count": "1148",
+              "item": "LICITACIONESHCIP@GMAIL.COM"
+            },
+            {
+              "count": "1037",
+              "item": "LICITACIONES2018@JETINGENIERIA.COM"
+            },
+            {
+              "count": "1020",
+              "item": "GCOMERCIALMSING@GMAIL.COM"
+            },
+            {
+              "count": "990",
+              "item": "KALPAINGENIERIASAS@GMAIL.COM"
+            },
+            {
+              "count": "946",
+              "item": "LICITACIONES@PI-SAS.COM.CO"
+            },
+            {
+              "count": "938",
+              "item": "CADIZIPSAS@GMAIL.COM"
+            },
+            {
+              "count": "910",
+              "item": "LICITACIONESIVG@GMAIL.COM"
+            },
+            {
+              "count": "896",
+              "item": "LICITACIONES.INCORDISPC@GMAIL.COM"
+            },
+            {
+              "count": "883",
+              "item": "SOLINGTEC.LICITACIONES@GMAIL.COM"
+            },
+            {
+              "count": "860",
+              "item": "PROCIVINGSAS@GMAIL.COM"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el correo electrónico del grupo registrado en la plataforma SECOPII",
+        "fieldName": "correo_electronico_grupo",
+        "format": {},
+        "id": 598822779,
+        "name": "Correo electronico grupo",
+        "position": 12,
+        "renderTypeName": "text",
+        "tableColumnId": 154643804
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "ZZZ",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": ".",
+          "top": [
+            {
+              "count": "185853",
+              "item": "No Provisto"
+            },
+            {
+              "count": "922",
+              "item": "CARRERA 15 A # 112 - 77"
+            },
+            {
+              "count": "788",
+              "item": "CARRERA 80 BIS # 7A 15 TORRE 5 OFICINA 801"
+            },
+            {
+              "count": "768",
+              "item": "CALLE 125 N°20  70 OF 602"
+            },
+            {
+              "count": "762",
+              "item": "CRA 18B # 116-16 OF. 206"
+            },
+            {
+              "count": "760",
+              "item": "CALLE 125 N° 20  70 OF 602"
+            },
+            {
+              "count": "755",
+              "item": "CARRERA 18B # 116-16 OF. 206"
+            },
+            {
+              "count": "721",
+              "item": "CARRERA 70D # 48  40 OFICINA 201"
+            },
+            {
+              "count": "662",
+              "item": "CR 69 NO. 47 50 TO 6 OF 902"
+            },
+            {
+              "count": "656",
+              "item": "CALLE 7A NO. 17-05"
+            },
+            {
+              "count": "649",
+              "item": "CALLE 71 NO. 11 - 71"
+            },
+            {
+              "count": "611",
+              "item": "CALLE 114 A NO. 53 - 26"
+            },
+            {
+              "count": "593",
+              "item": "CARRERA 61 # 100 - 68"
+            },
+            {
+              "count": "532",
+              "item": "CALLE 60 #45-53"
+            },
+            {
+              "count": "528",
+              "item": "CALLE 73 NO 14-06 APTO 102"
+            },
+            {
+              "count": "502",
+              "item": "AV CARRERA 86 NO. 51-66"
+            },
+            {
+              "count": "484",
+              "item": "CALLE 68 N 7 56 TORRE 4 APTO 04"
+            },
+            {
+              "count": "476",
+              "item": "CARRERA 62 # 103-44 OF. 304"
+            },
+            {
+              "count": "454",
+              "item": "CALLE 51 NO. 71A  18, OFICINA 201."
+            },
+            {
+              "count": "435",
+              "item": "CALLE 77B NO. 57-103 OF. 907 EDIFICIO GREEN TOWERS"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Dirección fisica registrada por el grupo",
+        "fieldName": "direcci_n_grupo",
+        "format": {},
+        "id": 598822778,
+        "name": "Dirección grupo",
+        "position": 13,
+        "renderTypeName": "text",
+        "tableColumnId": 154643803
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "ZW",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "AE",
+          "top": [
+            {
+              "count": "675335",
+              "item": "CO"
+            },
+            {
+              "count": "15",
+              "item": "US"
+            },
+            {
+              "count": "10",
+              "item": "PE"
+            },
+            {
+              "count": "9",
+              "item": "PT"
+            },
+            {
+              "count": "6",
+              "item": "MX"
+            },
+            {
+              "count": "4",
+              "item": "CA"
+            },
+            {
+              "count": "4",
+              "item": "BR"
+            },
+            {
+              "count": "4",
+              "item": "ES"
+            },
+            {
+              "count": "4",
+              "item": "CL"
+            },
+            {
+              "count": "4",
+              "item": "KM"
+            },
+            {
+              "count": "4",
+              "item": "PA"
+            },
+            {
+              "count": "4",
+              "item": "CY"
+            },
+            {
+              "count": "4",
+              "item": "ZW"
+            },
+            {
+              "count": "3",
+              "item": "BO"
+            },
+            {
+              "count": "2",
+              "item": "CV"
+            },
+            {
+              "count": "2",
+              "item": "AM"
+            },
+            {
+              "count": "2",
+              "item": "AQ"
+            },
+            {
+              "count": "2",
+              "item": "AW"
+            },
+            {
+              "count": "2",
+              "item": "BY"
+            },
+            {
+              "count": "2",
+              "item": "CH"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el pais al que pertenece el grupo",
+        "fieldName": "pais_grupo",
+        "format": {},
+        "id": 598822777,
+        "name": "Pais grupo",
+        "position": 14,
+        "renderTypeName": "text",
+        "tableColumnId": 154643802
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "VICHADA",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "AMAZONAS",
+          "top": [
+            {
+              "count": "674083",
+              "item": "No Provisto"
+            },
+            {
+              "count": "368",
+              "item": "DISTRITO CAPITAL DE BOGOTa"
+            },
+            {
+              "count": "107",
+              "item": "CUNDINAMARCA"
+            },
+            {
+              "count": "91",
+              "item": "SANTANDER"
+            },
+            {
+              "count": "79",
+              "item": "BOYACa"
+            },
+            {
+              "count": "77",
+              "item": "VALLE DEL CAUCA"
+            },
+            {
+              "count": "59",
+              "item": "ANTIOQUIA"
+            },
+            {
+              "count": "49",
+              "item": "TOLIMA"
+            },
+            {
+              "count": "47",
+              "item": "ATLaNTICO"
+            },
+            {
+              "count": "46",
+              "item": "CALDAS"
+            },
+            {
+              "count": "46",
+              "item": "HUILA"
+            },
+            {
+              "count": "45",
+              "item": "BOLiVAR"
+            },
+            {
+              "count": "44",
+              "item": "CoRDOBA"
+            },
+            {
+              "count": "41",
+              "item": "CESAR"
+            },
+            {
+              "count": "33",
+              "item": "NORTE DE SANTANDER"
+            },
+            {
+              "count": "31",
+              "item": "ARAUCA"
+            },
+            {
+              "count": "30",
+              "item": "CASANARE"
+            },
+            {
+              "count": "29",
+              "item": "META"
+            },
+            {
+              "count": "22",
+              "item": "NARIÑO"
+            },
+            {
+              "count": "16",
+              "item": "RISARALDA"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el departamento al que pertenece el grupo",
+        "fieldName": "departamento_grupo",
+        "format": {},
+        "id": 598822776,
+        "name": "Departamento grupo",
+        "position": 15,
+        "renderTypeName": "text",
+        "tableColumnId": 154643801
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675419",
+          "count": "675419",
+          "largest": "ZIPAQUIRa",
+          "non_null": "675419",
+          "null": "0",
+          "smallest": "ABEJORRAL",
+          "top": [
+            {
+              "count": "223511",
+              "item": "BOGOTa"
+            },
+            {
+              "count": "187310",
+              "item": "No Provisto"
+            },
+            {
+              "count": "25522",
+              "item": "BARRANQUILLA"
+            },
+            {
+              "count": "18500",
+              "item": "MEDELLiN"
+            },
+            {
+              "count": "17569",
+              "item": "BUCARAMANGA"
+            },
+            {
+              "count": "15445",
+              "item": "NEIVA"
+            },
+            {
+              "count": "12915",
+              "item": "CALI"
+            },
+            {
+              "count": "12518",
+              "item": "VILLAVICENCIO"
+            },
+            {
+              "count": "11595",
+              "item": "VALLEDUPAR"
+            },
+            {
+              "count": "11128",
+              "item": "MONTERiA"
+            },
+            {
+              "count": "9980",
+              "item": "IBAGUe"
+            },
+            {
+              "count": "9471",
+              "item": "TUNJA"
+            },
+            {
+              "count": "9326",
+              "item": "CARTAGENA"
+            },
+            {
+              "count": "8239",
+              "item": "MANIZALES"
+            },
+            {
+              "count": "6728",
+              "item": "CuCUTA"
+            },
+            {
+              "count": "6074",
+              "item": "POPAYaN"
+            },
+            {
+              "count": "5450",
+              "item": "PEREIRA"
+            },
+            {
+              "count": "5154",
+              "item": "PASTO"
+            },
+            {
+              "count": "4545",
+              "item": "ARMENIA"
+            },
+            {
+              "count": "4025",
+              "item": "SINCELEJO"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el municipio al que pertenece el grupo",
+        "fieldName": "minucipio",
+        "format": {},
+        "id": 598822775,
+        "name": "Minucipio grupo",
+        "position": 16,
+        "renderTypeName": "text",
+        "tableColumnId": 154643800
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "YYNSAS2019@GMAIL.COM",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "-",
+          "top": [
+            {
+              "count": "660609",
+              "item": "No Provisto"
+            },
+            {
+              "count": "969",
+              "item": "WWW.GRUPOPOSSO.COM.CO"
+            },
+            {
+              "count": "299",
+              "item": "LICIBATEMAN@HOTMAIL.COM"
+            },
+            {
+              "count": "277",
+              "item": "WWW.PREVISORA.GOV.CO"
+            },
+            {
+              "count": "219",
+              "item": "WWW.GRUPOTITANIUM.CO"
+            },
+            {
+              "count": "208",
+              "item": "WWW.ESFUERZOVERTICAL.COM"
+            },
+            {
+              "count": "199",
+              "item": "WWW.CHUBB.COM"
+            },
+            {
+              "count": "191",
+              "item": "HTTPS://GTEK.COM.CO/"
+            },
+            {
+              "count": "181",
+              "item": "WWW.JAHVMCGREGOR.COM.CO"
+            },
+            {
+              "count": "138",
+              "item": "WWW.TRANSSABANA.COM"
+            },
+            {
+              "count": "122",
+              "item": "INGENIEROSAMUELRAMIREZ@GMAIL.COM"
+            },
+            {
+              "count": "121",
+              "item": "WWW.GNG.COM.CO"
+            },
+            {
+              "count": "120",
+              "item": "WWW.CONSULTECNICOS.COM"
+            },
+            {
+              "count": "120",
+              "item": "WWW.INTEGRAL.COM.CO"
+            },
+            {
+              "count": "115",
+              "item": "WWW.GRUPOALIANZA.COM.CO"
+            },
+            {
+              "count": "109",
+              "item": "N/A"
+            },
+            {
+              "count": "104",
+              "item": "WWW.SEDIC.COM.CO"
+            },
+            {
+              "count": "101",
+              "item": "WWW.JARGU.COM"
+            },
+            {
+              "count": "101",
+              "item": "WWW.SONDA.COM"
+            },
+            {
+              "count": "98",
+              "item": "WWW.SERLECOMSAS.COM"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Enlace del sitio web del grupo",
+        "fieldName": "sitio_web_grupo",
+        "format": {},
+        "id": 598822781,
+        "name": "Sitio web grupo",
+        "position": 17,
+        "renderTypeName": "text",
+        "tableColumnId": 154643806
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "VEEDURIA CIUDADANA",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "AGRUPACIoN DE EMPRESAS",
+          "top": [
+            {
+              "count": "517344",
+              "item": "CONSORCIO"
+            },
+            {
+              "count": "152720",
+              "item": "UNIoN TEMPORAL"
+            },
+            {
+              "count": "1414",
+              "item": "SOCIEDAD POR ACCIONES SIMPLIFICADA"
+            },
+            {
+              "count": "677",
+              "item": "PROMESA DE SOCIEDAD FUTURA"
+            },
+            {
+              "count": "569",
+              "item": "ENTIDAD ESTATAL DE ACUERDO CON LA DEFINICIoN DEL DECRETO 1082 DE 2015"
+            },
+            {
+              "count": "486",
+              "item": "ESTRUCTURA PLURAL"
+            },
+            {
+              "count": "459",
+              "item": "PERSONA JURiDICA EXTRANJERA SIN DOMICILIO EN COLOMBIA"
+            },
+            {
+              "count": "434",
+              "item": "PERSONA NATURAL COLOMBIANA"
+            },
+            {
+              "count": "282",
+              "item": "OTRO"
+            },
+            {
+              "count": "172",
+              "item": "FUNDACIONES"
+            },
+            {
+              "count": "169",
+              "item": "OTRAS ENTIDADES PuBLICAS"
+            },
+            {
+              "count": "144",
+              "item": "ENTIDADES SIN aNIMO DE LUCRO"
+            },
+            {
+              "count": "117",
+              "item": "SOCIEDAD DE RESPONSABILIDAD LIMITADA COLOMBIANA"
+            },
+            {
+              "count": "68",
+              "item": "SUCURSAL DE SOCIEDAD EXTRANJERA"
+            },
+            {
+              "count": "65",
+              "item": "SOCIEDAD ANoNIMA ABIERTA COLOMBIANA"
+            },
+            {
+              "count": "57",
+              "item": "CORPORATION"
+            },
+            {
+              "count": "55",
+              "item": "ASOCIACIONES"
+            },
+            {
+              "count": "28",
+              "item": "CORPORACIONES"
+            },
+            {
+              "count": "24",
+              "item": "SOCIEDAD EN COMANDITA POR ACCIONES COLOMBIANA"
+            },
+            {
+              "count": "19",
+              "item": "LIMITED PARTNERSHIP"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Tipo de Empresa que ha declarado el grupo de proveedores al momento de registrar la organización",
+        "fieldName": "tipo_empresa_grupo",
+        "format": {},
+        "id": 598822760,
+        "name": "Tipo Empresa Grupo",
+        "position": 18,
+        "renderTypeName": "text",
+        "tableColumnId": 85040357
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "z z",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "-",
+          "top": [
+            {
+              "count": "2089",
+              "item": "CESAR AUGUSTO PALACIOS WILCHES"
+            },
+            {
+              "count": "1813",
+              "item": "CESAR AUGUSTO CAMARGO CAMARGO"
+            },
+            {
+              "count": "1699",
+              "item": "Fabio Ernesto Villamil Paez"
+            },
+            {
+              "count": "1664",
+              "item": "erick erick"
+            },
+            {
+              "count": "1613",
+              "item": "PEDRO GUTIERREZ BUSTILLO"
+            },
+            {
+              "count": "1582",
+              "item": "FIRM SAS"
+            },
+            {
+              "count": "1521",
+              "item": "CARLOS MARIO ROLON  AMAYA"
+            },
+            {
+              "count": "1458",
+              "item": "Gerssy Peñaloza Quiñones"
+            },
+            {
+              "count": "1342",
+              "item": "Hugo Alfredo Posso Moncada"
+            },
+            {
+              "count": "1326",
+              "item": "JORGE ELIECER TRUJILLO OROZCO"
+            },
+            {
+              "count": "1323",
+              "item": "WILSON GIOVANNI URREA URREA"
+            },
+            {
+              "count": "1309",
+              "item": "Diego Alejandro Leiva"
+            },
+            {
+              "count": "1277",
+              "item": "MIGUEL ALEXANDER CERON MOLINA"
+            },
+            {
+              "count": "1253",
+              "item": "OMAR ALEXANDER GARCIA CUBILLOS"
+            },
+            {
+              "count": "1249",
+              "item": "PEDRO JOSÉ CORREDOR BECERRA"
+            },
+            {
+              "count": "1140",
+              "item": "HECTOR ENRIQUE MALDONADO BARRIOS"
+            },
+            {
+              "count": "1097",
+              "item": "ISAIAS VARGAS GONZALEZ"
+            },
+            {
+              "count": "1064",
+              "item": "EDWIN JAVIER LINARES GARCIA"
+            },
+            {
+              "count": "1063",
+              "item": "BERNARDO ANCIZAR OSSA LÓPEZ"
+            },
+            {
+              "count": "1053",
+              "item": "JOSE FRANCISCO MORON OROZCO"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Nombre representante legal del grupo",
+        "fieldName": "nombre_representante_legal_grupo",
+        "format": {},
+        "id": 598822783,
+        "name": "Nombre representante legal grupo",
+        "position": 19,
+        "renderTypeName": "text",
+        "tableColumnId": 154643808
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "Tarjeta de Identidad",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "Cédula de Ciudadanía",
+          "top": [
+            {
+              "count": "418048",
+              "item": "No Definido"
+            },
+            {
+              "count": "182546",
+              "item": "NIT"
+            },
+            {
+              "count": "55588",
+              "item": "Otro"
+            },
+            {
+              "count": "18861",
+              "item": "Cédula de Ciudadanía"
+            },
+            {
+              "count": "204",
+              "item": "Cédula de Extranjería"
+            },
+            {
+              "count": "61",
+              "item": "Permiso por Protección Temporal"
+            },
+            {
+              "count": "53",
+              "item": "Tarjeta de Identidad"
+            },
+            {
+              "count": "51",
+              "item": "Pasaporte"
+            },
+            {
+              "count": "15",
+              "item": "Permiso especial de permanencia"
+            },
+            {
+              "count": "9",
+              "item": "Registro Civil"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el tipo de documento del representante legal del grupo",
+        "fieldName": "tipo_doc_representante_legal_grupo",
+        "format": {},
+        "id": 598822782,
+        "name": "Tipo doc representante legal grupo",
+        "position": 20,
+        "renderTypeName": "text",
+        "tableColumnId": 154643807
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "ZDGFFHKLHJ  FGHFGH",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "-",
+          "top": [
+            {
+              "count": "588921",
+              "item": "No Definido"
+            },
+            {
+              "count": "1502",
+              "item": "000000000"
+            },
+            {
+              "count": "1339",
+              "item": "0"
+            },
+            {
+              "count": "665",
+              "item": "80833443"
+            },
+            {
+              "count": "641",
+              "item": "0000000000"
+            },
+            {
+              "count": "478",
+              "item": "N/A"
+            },
+            {
+              "count": "446",
+              "item": "00000000"
+            },
+            {
+              "count": "433",
+              "item": "000000"
+            },
+            {
+              "count": "419",
+              "item": "1"
+            },
+            {
+              "count": "381",
+              "item": "0000"
+            },
+            {
+              "count": "379",
+              "item": "0000000"
+            },
+            {
+              "count": "364",
+              "item": "NO APLICA"
+            },
+            {
+              "count": "364",
+              "item": "00000"
+            },
+            {
+              "count": "359",
+              "item": "NA"
+            },
+            {
+              "count": "344",
+              "item": "17195041"
+            },
+            {
+              "count": "320",
+              "item": "900000000"
+            },
+            {
+              "count": "272",
+              "item": "1075226795"
+            },
+            {
+              "count": "270",
+              "item": "10283252"
+            },
+            {
+              "count": "266",
+              "item": "1054561848"
+            },
+            {
+              "count": "233",
+              "item": "123456789"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el numero de documento del representante legal del grupo",
+        "fieldName": "numero_doc_representante_legal_grupo",
+        "format": {},
+        "id": 598822780,
+        "name": "Numero doc representante legal grupo",
+        "position": 21,
+        "renderTypeName": "text",
+        "tableColumnId": 154643805
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "No Definido",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "11453",
+              "item": "No Definido"
+            },
+            {
+              "count": "2889",
+              "item": "3107069229"
+            },
+            {
+              "count": "2240",
+              "item": "3123609405"
+            },
+            {
+              "count": "2093",
+              "item": "3504835889"
+            },
+            {
+              "count": "2008",
+              "item": "3013498178"
+            },
+            {
+              "count": "1817",
+              "item": "3168332119"
+            },
+            {
+              "count": "1762",
+              "item": "3102954074"
+            },
+            {
+              "count": "1712",
+              "item": "3144119353"
+            },
+            {
+              "count": "1603",
+              "item": "3105511867"
+            },
+            {
+              "count": "1586",
+              "item": "3128502254"
+            },
+            {
+              "count": "1582",
+              "item": "3112756600"
+            },
+            {
+              "count": "1540",
+              "item": "3118768740"
+            },
+            {
+              "count": "1521",
+              "item": "3134706867"
+            },
+            {
+              "count": "1518",
+              "item": "3174005699"
+            },
+            {
+              "count": "1463",
+              "item": "3112004625"
+            },
+            {
+              "count": "1428",
+              "item": "3135884706"
+            },
+            {
+              "count": "1403",
+              "item": "3173675154"
+            },
+            {
+              "count": "1344",
+              "item": "3112887795"
+            },
+            {
+              "count": "1339",
+              "item": "3505823618"
+            },
+            {
+              "count": "1326",
+              "item": "3042618765"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Número del telefono del representante legal del grupo",
+        "fieldName": "telefono_representante_legal_grupo",
+        "format": {},
+        "id": 598822774,
+        "name": "Telefono representante legal grupo",
+        "position": 22,
+        "renderTypeName": "text",
+        "tableColumnId": 154643799
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "zymaxgroup@gmail.com",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "-",
+          "top": [
+            {
+              "count": "2089",
+              "item": "comercial@jpsingenieria.com"
+            },
+            {
+              "count": "1960",
+              "item": "licitaciones@incoplansa.com"
+            },
+            {
+              "count": "1811",
+              "item": "gcomercialmsing@gmail.com"
+            },
+            {
+              "count": "1582",
+              "item": "firmsas10@gmail.com"
+            },
+            {
+              "count": "1521",
+              "item": "eduardo.rodriguez@ingeco.com.co"
+            },
+            {
+              "count": "1458",
+              "item": "jmartin@grupo-seg.com"
+            },
+            {
+              "count": "1342",
+              "item": "director.licitaciones@grupoposso.com.co"
+            },
+            {
+              "count": "1326",
+              "item": "licitaciones2018@jetingenieria.com"
+            },
+            {
+              "count": "1323",
+              "item": "licitaciones@pi-sas.com.co"
+            },
+            {
+              "count": "1309",
+              "item": "cylasociados@yahoo.com"
+            },
+            {
+              "count": "1281",
+              "item": "safridingenieria@gmail.com"
+            },
+            {
+              "count": "1253",
+              "item": "licitaciones.fronteras.ing@gmail.com"
+            },
+            {
+              "count": "1249",
+              "item": "corredorbecerra@yahoo.com.mx"
+            },
+            {
+              "count": "1244",
+              "item": "comercial2@dpcingenieros.co"
+            },
+            {
+              "count": "1182",
+              "item": "gerencia@aiegroup.co"
+            },
+            {
+              "count": "1135",
+              "item": "kalpaingenieriasas@gmail.com"
+            },
+            {
+              "count": "1097",
+              "item": "licitacionesivg@gmail.com"
+            },
+            {
+              "count": "1064",
+              "item": "PROCIVINGSAS@GMAIL.COM"
+            },
+            {
+              "count": "1053",
+              "item": "ingenobras.sas.lic@GMAIL.COM"
+            },
+            {
+              "count": "1033",
+              "item": "licitaciones@gng.com.co"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica el correo electronico del representante legal del grupo",
+        "fieldName": "correo_representante_legal_grupo",
+        "format": {},
+        "id": 598822773,
+        "name": "Correo representante legal grupo",
+        "position": 23,
+        "renderTypeName": "text",
+        "tableColumnId": 154643798
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "SI",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "NO",
+          "top": [
+            {
+              "count": "588973",
+              "item": "NO"
+            },
+            {
+              "count": "86463",
+              "item": "SI"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Indica si el grupo es una pyme",
+        "fieldName": "es_mipyme",
+        "format": {},
+        "id": 598822772,
+        "name": "Es Mipyme",
+        "position": 24,
+        "renderTypeName": "text",
+        "tableColumnId": 154643797
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "ZW-ME",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "AQ",
+          "top": [
+            {
+              "count": "223420",
+              "item": "CO-DC-11001"
+            },
+            {
+              "count": "185861",
+              "item": "No definido"
+            },
+            {
+              "count": "25521",
+              "item": "CO-ATL-08001"
+            },
+            {
+              "count": "18498",
+              "item": "CO-ANT-05001"
+            },
+            {
+              "count": "17567",
+              "item": "CO-SAN-68001"
+            },
+            {
+              "count": "15445",
+              "item": "CO-HUI-41001"
+            },
+            {
+              "count": "12909",
+              "item": "CO-VAC-76001"
+            },
+            {
+              "count": "12511",
+              "item": "CO-MET-50001"
+            },
+            {
+              "count": "11597",
+              "item": "CO-CES-20001"
+            },
+            {
+              "count": "11130",
+              "item": "CO-COR-23001"
+            },
+            {
+              "count": "9980",
+              "item": "CO-TOL-73001"
+            },
+            {
+              "count": "9469",
+              "item": "CO-BOY-15001"
+            },
+            {
+              "count": "9324",
+              "item": "CO-BOL-13001"
+            },
+            {
+              "count": "8239",
+              "item": "CO-CAL-17001"
+            },
+            {
+              "count": "6728",
+              "item": "CO-NSA-54001"
+            },
+            {
+              "count": "6072",
+              "item": "CO-CAU-19001"
+            },
+            {
+              "count": "5450",
+              "item": "CO-RIS-66001"
+            },
+            {
+              "count": "5156",
+              "item": "CO-NAR-52001"
+            },
+            {
+              "count": "4543",
+              "item": "CO-QUI-63001"
+            },
+            {
+              "count": "4025",
+              "item": "CO-SUC-70001"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Codido de ubicación del grupo en la plataforma SECOPII",
+        "fieldName": "ubicaci_n_grupo",
+        "format": {},
+        "id": 598822761,
+        "name": "Ubicación Grupo",
+        "position": 25,
+        "renderTypeName": "text",
+        "tableColumnId": 85040356
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "736933086",
+          "non_null": "666433",
+          "null": "9003",
+          "smallest": "700000011",
+          "top": [
+            {
+              "count": "1277",
+              "item": "700799083"
+            },
+            {
+              "count": "1255",
+              "item": "702023045"
+            },
+            {
+              "count": "1241",
+              "item": "707178539"
+            },
+            {
+              "count": "1009",
+              "item": "700672041"
+            },
+            {
+              "count": "961",
+              "item": "700772015"
+            },
+            {
+              "count": "961",
+              "item": "702161290"
+            },
+            {
+              "count": "937",
+              "item": "705785145"
+            },
+            {
+              "count": "851",
+              "item": "701287021"
+            },
+            {
+              "count": "836",
+              "item": "705626364"
+            },
+            {
+              "count": "828",
+              "item": "701519290"
+            },
+            {
+              "count": "822",
+              "item": "701515363"
+            },
+            {
+              "count": "801",
+              "item": "701662900"
+            },
+            {
+              "count": "756",
+              "item": "703717595"
+            },
+            {
+              "count": "753",
+              "item": "708019682"
+            },
+            {
+              "count": "747",
+              "item": "700059116"
+            },
+            {
+              "count": "742",
+              "item": "701547176"
+            },
+            {
+              "count": "720",
+              "item": "710158130"
+            },
+            {
+              "count": "715",
+              "item": "702196163"
+            },
+            {
+              "count": "714",
+              "item": "700306053"
+            },
+            {
+              "count": "694",
+              "item": "702689621"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Codigo de la empresa participante en la plataforma SECOPII",
+        "fieldName": "codigo_participante",
+        "format": {},
+        "id": 598822785,
+        "name": "Codigo participante",
+        "position": 26,
+        "renderTypeName": "text",
+        "tableColumnId": 154643810
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "ZYMAX GROUP S.A.S.",
+          "non_null": "666433",
+          "null": "9003",
+          "smallest": "100 INFINITY INGENIERIA S.A.S.",
+          "top": [
+            {
+              "count": "1277",
+              "item": "INGENIERIA DE PROYECTOS S.A.S."
+            },
+            {
+              "count": "1255",
+              "item": "JPS INGENIERIA S.A.S."
+            },
+            {
+              "count": "1241",
+              "item": "INGEPLAN.CO S.A.S BIC"
+            },
+            {
+              "count": "1009",
+              "item": "INGENIERiA, CONSULTORiA Y PLANEACIoN S.A. INCOPLAN S.A."
+            },
+            {
+              "count": "961",
+              "item": "INGECO SAS"
+            },
+            {
+              "count": "961",
+              "item": "JAIRO ARTURO CARDENAS AVELLANEDA"
+            },
+            {
+              "count": "937",
+              "item": "FIRM SAS"
+            },
+            {
+              "count": "851",
+              "item": "INGENIERIA MASTER S.A.S."
+            },
+            {
+              "count": "836",
+              "item": "JET INGENIERIA SOCIEDAD POR ACCIONES SIMPLIFICADA"
+            },
+            {
+              "count": "828",
+              "item": "MSING SAS"
+            },
+            {
+              "count": "822",
+              "item": "SIGT INGENIEROS Y CONSULTORES SAS"
+            },
+            {
+              "count": "801",
+              "item": "D&B INGENIEROS CIVILES S.A.S."
+            },
+            {
+              "count": "756",
+              "item": "FRONTERAS CONSTRUCTORA S.A.S."
+            },
+            {
+              "count": "753",
+              "item": "INP SERVICIOS"
+            },
+            {
+              "count": "747",
+              "item": "GRUPO POSSO S.A.S."
+            },
+            {
+              "count": "744",
+              "item": "BARLOVENTO CONSTRUCCIONES SAS"
+            },
+            {
+              "count": "742",
+              "item": "ARM CONSULTING SAS"
+            },
+            {
+              "count": "715",
+              "item": "ISAIAS VARGAS GONZALEZ"
+            },
+            {
+              "count": "715",
+              "item": "LA PREVISORA S.A. COMPAÑiA DE SEGUROS"
+            },
+            {
+              "count": "694",
+              "item": "PROYECTOS E INTERVENTORIAS S.A.S."
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Nombre del Proveedor que hace parte del Grupo Conformado",
+        "fieldName": "nombre_participante",
+        "format": {},
+        "id": 598822763,
+        "name": "Nombre Participante",
+        "position": 27,
+        "renderTypeName": "text",
+        "tableColumnId": 85040353
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "YACKELINE PATIÑO VELASCO",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": ".",
+          "top": [
+            {
+              "count": "9113",
+              "item": "No Definido"
+            },
+            {
+              "count": "1280",
+              "item": "830035398"
+            },
+            {
+              "count": "1277",
+              "item": "890116722"
+            },
+            {
+              "count": "1241",
+              "item": "800169622"
+            },
+            {
+              "count": "1009",
+              "item": "800097991"
+            },
+            {
+              "count": "961",
+              "item": "890115120"
+            },
+            {
+              "count": "961",
+              "item": "19349126"
+            },
+            {
+              "count": "937",
+              "item": "8301252194"
+            },
+            {
+              "count": "895",
+              "item": "802024876"
+            },
+            {
+              "count": "851",
+              "item": "900915689"
+            },
+            {
+              "count": "828",
+              "item": "900574741"
+            },
+            {
+              "count": "822",
+              "item": "900614304"
+            },
+            {
+              "count": "801",
+              "item": "8300277124"
+            },
+            {
+              "count": "756",
+              "item": "900516663"
+            },
+            {
+              "count": "753",
+              "item": "901300211"
+            },
+            {
+              "count": "751",
+              "item": "822007239"
+            },
+            {
+              "count": "747",
+              "item": "800007208"
+            },
+            {
+              "count": "720",
+              "item": "9012914324"
+            },
+            {
+              "count": "715",
+              "item": "7710012"
+            },
+            {
+              "count": "715",
+              "item": "860002400"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "NIT del proveedor participante del grupo, tal como lo registró en la plataforma",
+        "fieldName": "nit_participante",
+        "format": {},
+        "id": 598822764,
+        "name": "NIT Participante",
+        "position": 28,
+        "renderTypeName": "text",
+        "tableColumnId": 85040347
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "VEEDURIA CIUDADANA",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "ADMINISTRAÇÃO CENTRAL",
+          "top": [
+            {
+              "count": "358177",
+              "item": "SOCIEDAD POR ACCIONES SIMPLIFICADA"
+            },
+            {
+              "count": "110092",
+              "item": "PERSONA NATURAL COLOMBIANA"
+            },
+            {
+              "count": "47774",
+              "item": "OTRO"
+            },
+            {
+              "count": "47766",
+              "item": "SOCIEDAD DE RESPONSABILIDAD LIMITADA COLOMBIANA"
+            },
+            {
+              "count": "29309",
+              "item": "SOCIEDAD ANoNIMA ABIERTA COLOMBIANA"
+            },
+            {
+              "count": "24584",
+              "item": "SOCIEDAD ANoNIMA CERRADA COLOMBIANA"
+            },
+            {
+              "count": "9003",
+              "item": "No Definido"
+            },
+            {
+              "count": "7774",
+              "item": "ENTIDADES SIN aNIMO DE LUCRO"
+            },
+            {
+              "count": "7487",
+              "item": "SUCURSAL DE SOCIEDAD EXTRANJERA"
+            },
+            {
+              "count": "6794",
+              "item": "FUNDACIONES"
+            },
+            {
+              "count": "5353",
+              "item": "SOCIEDAD EN COMANDITA SIMPLE COLOMBIANA"
+            },
+            {
+              "count": "3254",
+              "item": "COOPERATIVAS"
+            },
+            {
+              "count": "3104",
+              "item": "SOCIEDAD EN COMANDITA POR ACCIONES COLOMBIANA"
+            },
+            {
+              "count": "2997",
+              "item": "ASOCIACIONES"
+            },
+            {
+              "count": "2565",
+              "item": "CORPORACIONES"
+            },
+            {
+              "count": "2564",
+              "item": "CONSORCIO"
+            },
+            {
+              "count": "2508",
+              "item": "EMPRESA UNIPERSONAL COLOMBIANA"
+            },
+            {
+              "count": "918",
+              "item": "UNIoN TEMPORAL"
+            },
+            {
+              "count": "795",
+              "item": "PERSONA JURiDICA EXTRANJERA SIN DOMICILIO EN COLOMBIA"
+            },
+            {
+              "count": "631",
+              "item": "PATRIMONIOS AUToNOMOS"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Tipo de Empresa de la organización partícipe del grupo",
+        "fieldName": "tipo_empresa_participante",
+        "format": {},
+        "id": 598822765,
+        "name": "Tipo Empresa Participante",
+        "position": 29,
+        "renderTypeName": "text",
+        "tableColumnId": 85040352
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "ZA-GP",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "AE-DU",
+          "top": [
+            {
+              "count": "243141",
+              "item": "No definido"
+            },
+            {
+              "count": "109641",
+              "item": "CO-DC-11001"
+            },
+            {
+              "count": "74690",
+              "item": "CO-DC"
+            },
+            {
+              "count": "24082",
+              "item": "CO-ATL-08001"
+            },
+            {
+              "count": "14671",
+              "item": "CO-ANT-05001"
+            },
+            {
+              "count": "12182",
+              "item": "CO-SAN-68001"
+            },
+            {
+              "count": "11961",
+              "item": "CO-MET-50001"
+            },
+            {
+              "count": "11860",
+              "item": "CO-HUI-41001"
+            },
+            {
+              "count": "11607",
+              "item": "CO-COR-23001"
+            },
+            {
+              "count": "11158",
+              "item": "CO-VAC-76001"
+            },
+            {
+              "count": "9495",
+              "item": "CO-CES-20001"
+            },
+            {
+              "count": "8959",
+              "item": "CO-TOL-73001"
+            },
+            {
+              "count": "7713",
+              "item": "CO-BOL-13001"
+            },
+            {
+              "count": "7611",
+              "item": "CO-BOY-15001"
+            },
+            {
+              "count": "6493",
+              "item": "CO-CAL-17001"
+            },
+            {
+              "count": "5177",
+              "item": "CO-CUN"
+            },
+            {
+              "count": "4154",
+              "item": "CO-NSA-54001"
+            },
+            {
+              "count": "4059",
+              "item": "CO-CAU-19001"
+            },
+            {
+              "count": "3803",
+              "item": "CO-RIS-66001"
+            },
+            {
+              "count": "3707",
+              "item": "CO-SAN-68276"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Codigo de ubicación de la empresa participante en la plataforma SECOPII",
+        "fieldName": "ubicaci_n_participante",
+        "format": {},
+        "id": 598822766,
+        "name": "Ubicación Participante",
+        "position": 30,
+        "renderTypeName": "text",
+        "tableColumnId": 85040351
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "2026-06-26T00:00:00.000",
+          "non_null": "666433",
+          "null": "9003",
+          "smallest": "2015-02-14T00:00:00.000",
+          "top": [
+            {
+              "count": "2632",
+              "item": "2018-02-13T00:00:00.000"
+            },
+            {
+              "count": "2295",
+              "item": "2018-03-08T00:00:00.000"
+            },
+            {
+              "count": "2262",
+              "item": "2018-04-20T00:00:00.000"
+            },
+            {
+              "count": "2207",
+              "item": "2016-04-14T00:00:00.000"
+            },
+            {
+              "count": "2041",
+              "item": "2017-06-01T00:00:00.000"
+            },
+            {
+              "count": "1954",
+              "item": "2016-07-27T00:00:00.000"
+            },
+            {
+              "count": "1869",
+              "item": "2018-02-20T00:00:00.000"
+            },
+            {
+              "count": "1859",
+              "item": "2018-02-07T00:00:00.000"
+            },
+            {
+              "count": "1854",
+              "item": "2018-02-28T00:00:00.000"
+            },
+            {
+              "count": "1818",
+              "item": "2016-12-07T00:00:00.000"
+            },
+            {
+              "count": "1731",
+              "item": "2017-11-15T00:00:00.000"
+            },
+            {
+              "count": "1652",
+              "item": "2016-04-12T00:00:00.000"
+            },
+            {
+              "count": "1628",
+              "item": "2017-06-07T00:00:00.000"
+            },
+            {
+              "count": "1610",
+              "item": "2018-02-16T00:00:00.000"
+            },
+            {
+              "count": "1519",
+              "item": "2018-03-16T00:00:00.000"
+            },
+            {
+              "count": "1503",
+              "item": "2017-11-20T00:00:00.000"
+            },
+            {
+              "count": "1485",
+              "item": "2018-02-22T00:00:00.000"
+            },
+            {
+              "count": "1484",
+              "item": "2017-10-03T00:00:00.000"
+            },
+            {
+              "count": "1439",
+              "item": "2018-01-24T00:00:00.000"
+            },
+            {
+              "count": "1438",
+              "item": "2017-06-16T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "Fecha en que la organización que hace parte del grupo fue creada",
+        "fieldName": "fecha_creaci_n_participante",
+        "format": {},
+        "id": 598822767,
+        "name": "Fecha Creación Participante",
+        "position": 31,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 85040350
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "100",
+          "non_null": "666434",
+          "null": "9002",
+          "smallest": "0",
+          "top": [
+            {
+              "count": "186504",
+              "item": "50"
+            },
+            {
+              "count": "80336",
+              "item": "10"
+            },
+            {
+              "count": "52143",
+              "item": "90"
+            },
+            {
+              "count": "46420",
+              "item": "40"
+            },
+            {
+              "count": "37968",
+              "item": "30"
+            },
+            {
+              "count": "33006",
+              "item": "60"
+            },
+            {
+              "count": "27458",
+              "item": "20"
+            },
+            {
+              "count": "22555",
+              "item": "25"
+            },
+            {
+              "count": "22419",
+              "item": "5"
+            },
+            {
+              "count": "22191",
+              "item": "70"
+            },
+            {
+              "count": "15570",
+              "item": "80"
+            },
+            {
+              "count": "14386",
+              "item": "45"
+            },
+            {
+              "count": "12610",
+              "item": "95"
+            },
+            {
+              "count": "10393",
+              "item": "33"
+            },
+            {
+              "count": "8282",
+              "item": "1"
+            },
+            {
+              "count": "6984",
+              "item": "35"
+            },
+            {
+              "count": "6683",
+              "item": "75"
+            },
+            {
+              "count": "5457",
+              "item": "15"
+            },
+            {
+              "count": "5439",
+              "item": "34"
+            },
+            {
+              "count": "4753",
+              "item": "99"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Porcentaje de participación de la organización en el grupo",
+        "fieldName": "participacion",
+        "format": {},
+        "id": 598822768,
+        "name": "Participacion",
+        "position": 32,
+        "renderTypeName": "number",
+        "tableColumnId": 85040349
+      },
+      {
+        "cachedContents": {
+          "cardinality": "675436",
+          "count": "675436",
+          "largest": "Verdadero",
+          "non_null": "675436",
+          "null": "0",
+          "smallest": "Falso",
+          "top": [
+            {
+              "count": "370674",
+              "item": "Falso"
+            },
+            {
+              "count": "295760",
+              "item": "Verdadero"
+            },
+            {
+              "count": "9002",
+              "item": "No definido"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "description": "Define si la empresa del registro es la líder del grupo que compone",
+        "fieldName": "es_lider_del_grupo",
+        "format": {},
+        "id": 598822784,
+        "name": "Es Lider del Grupo",
+        "position": 33,
+        "renderTypeName": "text",
+        "tableColumnId": 154643809
+      }
+    ],
+    "description": "Registra la información de las uniones temporales o grupos creados por proveedores para postularse en conjunto a procesos de compra pública",
+    "id": "ceth-n4bn",
+    "name": "Grupos de Proveedores - SECOP II",
+    "rowsUpdatedAt": 1788606350
+  },
+  "sha256": "ef564a3f8a747847600eb459c3a90b772238970863143e5b91d195760dc6394c",
+  "status": "MATERIALIZED"
+}

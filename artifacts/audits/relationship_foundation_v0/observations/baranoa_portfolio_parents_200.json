@@ -1,0 +1,39 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:44:35.722501+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_portafolio,id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,id_del_portafolio,entidad",
+    "$where": "id_del_portafolio in ('CO1.BDOS.9720797','CO1.BDOS.9722968','CO1.BDOS.9725910','CO1.BDOS.9726351')"
+  },
+  "payload": [
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_portafolio": "CO1.BDOS.9720797",
+      "id_del_proceso": "CO1.REQ.9888866",
+      "referencia_del_proceso": "PCD-104-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_portafolio": "CO1.BDOS.9722968",
+      "id_del_proceso": "CO1.REQ.9890896",
+      "referencia_del_proceso": "PCD-124-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_portafolio": "CO1.BDOS.9725910",
+      "id_del_proceso": "CO1.REQ.9893918",
+      "referencia_del_proceso": "PCD-127-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_portafolio": "CO1.BDOS.9726351",
+      "id_del_proceso": "CO1.REQ.9894514",
+      "referencia_del_proceso": "PCD-136-2026"
+    }
+  ],
+  "sha256": "6da5fb5da0ab2bbe17304acb441450d447935f3343c50739200515005ac99452",
+  "status": "MATERIALIZED"
+}

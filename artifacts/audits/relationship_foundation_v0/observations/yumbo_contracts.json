@@ -1,0 +1,2226 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:40:03.783309+00:00",
+  "params": {
+    "$limit": 250,
+    "$order": "id_contrato",
+    "$select": "id_contrato,referencia_del_contrato,proceso_de_compra,nombre_entidad,codigo_proveedor,estado_contrato,fecha_de_firma",
+    "$where": "nombre_entidad in ('MUNICIPIO DE YUMBO VALLE')"
+  },
+  "payload": [
+    {
+      "codigo_proveedor": "707346110",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2019-07-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1029118",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.874324",
+      "referencia_del_contrato": "150-11-005-2019"
+    },
+    {
+      "codigo_proveedor": "703166454",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2019-10-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1086140",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.916433",
+      "referencia_del_contrato": "CO1.PCCNTR.1086140"
+    },
+    {
+      "codigo_proveedor": "702445966",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2019-12-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1210624",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.989010",
+      "referencia_del_contrato": "104.10.07.302-2019"
+    },
+    {
+      "codigo_proveedor": "703906115",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-02-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1384212",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1117415",
+      "referencia_del_contrato": "150-11-001-2020"
+    },
+    {
+      "codigo_proveedor": "703923912",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-02-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1392354",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1122666",
+      "referencia_del_contrato": "150-11-002-2020"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1710364",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.916433",
+      "referencia_del_contrato": "CO1.PCCNTR.1710364"
+    },
+    {
+      "codigo_proveedor": "710427303",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1712204",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1351885",
+      "referencia_del_contrato": "150-11-003-2020"
+    },
+    {
+      "codigo_proveedor": "703166454",
+      "estado_contrato": "enviado Proveedor",
+      "id_contrato": "CO1.PCCNTR.1980777",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1551671",
+      "referencia_del_contrato": "CO1.PCCNTR.1980777"
+    },
+    {
+      "codigo_proveedor": "702445966",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-12-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2048001",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1591018",
+      "referencia_del_contrato": "CO1.PCCNTR.2048001"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.205308",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.217922",
+      "referencia_del_contrato": "CO1.PCCNTR.205308"
+    },
+    {
+      "codigo_proveedor": "702081381",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2017-10-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.208605",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.217922",
+      "referencia_del_contrato": "110-11-03-987"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.211634",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.217922",
+      "referencia_del_contrato": "CO1.PCCNTR.211634"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.211731",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.217922",
+      "referencia_del_contrato": "CO1.PCCNTR.211731"
+    },
+    {
+      "codigo_proveedor": "703923912",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-02-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2299046",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1791874",
+      "referencia_del_contrato": "CO1.PCCNTR.2299046"
+    },
+    {
+      "codigo_proveedor": "703906115",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-02-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2299293",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1786601",
+      "referencia_del_contrato": "CO1.PCCNTR.2299293"
+    },
+    {
+      "codigo_proveedor": "713253326",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-16T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2436535",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1917513",
+      "referencia_del_contrato": "150-10-07-155-2021"
+    },
+    {
+      "codigo_proveedor": "713151876",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-16T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2438005",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1917631",
+      "referencia_del_contrato": "150-10-07-156-2021"
+    },
+    {
+      "codigo_proveedor": "713367217",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2446162",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1923636",
+      "referencia_del_contrato": "150-10-07-101-2021"
+    },
+    {
+      "codigo_proveedor": "706258779",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2446171",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924133",
+      "referencia_del_contrato": "150-10-07-102-2021"
+    },
+    {
+      "codigo_proveedor": "713346948",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2446595",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924470",
+      "referencia_del_contrato": "150-10-07-111-2021"
+    },
+    {
+      "codigo_proveedor": "713349801",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2447228",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1925504",
+      "referencia_del_contrato": "150-10-07-116-2021"
+    },
+    {
+      "codigo_proveedor": "713355295",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2447339",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1925418",
+      "referencia_del_contrato": "150-10-07-119-2021"
+    },
+    {
+      "codigo_proveedor": "713365302",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2447426",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1925413",
+      "referencia_del_contrato": "150-10-07-118-2021"
+    },
+    {
+      "codigo_proveedor": "713362499",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2447600",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924370",
+      "referencia_del_contrato": "150-10-07-106-2021"
+    },
+    {
+      "codigo_proveedor": "713358026",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2447717",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1925342",
+      "referencia_del_contrato": "150-10-07-122-2021"
+    },
+    {
+      "codigo_proveedor": "713363687",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2447729",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924351",
+      "referencia_del_contrato": "150-10-07-105-2021"
+    },
+    {
+      "codigo_proveedor": "705735116",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448012",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1925537",
+      "referencia_del_contrato": "150-10-07-124-2021"
+    },
+    {
+      "codigo_proveedor": "713258754",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448119",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1927026",
+      "referencia_del_contrato": "170-10-07-101-2021"
+    },
+    {
+      "codigo_proveedor": "713362606",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448184",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1928304",
+      "referencia_del_contrato": "160-10-07-0111-2021"
+    },
+    {
+      "codigo_proveedor": "713352177",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448491",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924452",
+      "referencia_del_contrato": "150-10-07-109-2021"
+    },
+    {
+      "codigo_proveedor": "713158426",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448502",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1927570",
+      "referencia_del_contrato": "104.10.07.147-2021"
+    },
+    {
+      "codigo_proveedor": "713370013",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448522",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924094",
+      "referencia_del_contrato": "150-10-07-103-2021"
+    },
+    {
+      "codigo_proveedor": "713363521",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448529",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924809",
+      "referencia_del_contrato": "150-10-07-108-2021"
+    },
+    {
+      "codigo_proveedor": "713355147",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448545",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1925012",
+      "referencia_del_contrato": "150-10-07-110-2021"
+    },
+    {
+      "codigo_proveedor": "713258754",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2448546",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1927026",
+      "referencia_del_contrato": "170-10-07-101-2021"
+    },
+    {
+      "codigo_proveedor": "713313005",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448718",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1927568",
+      "referencia_del_contrato": "180-10-07-095-2021"
+    },
+    {
+      "codigo_proveedor": "713367795",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448731",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924634",
+      "referencia_del_contrato": "150-10-07-107-2021"
+    },
+    {
+      "codigo_proveedor": "713159333",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448756",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1928119",
+      "referencia_del_contrato": "CO1.PCCNTR.2448756"
+    },
+    {
+      "codigo_proveedor": "713367019",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448770",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924838",
+      "referencia_del_contrato": "150-10-07-112-2021"
+    },
+    {
+      "codigo_proveedor": "713369536",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2448926",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924840",
+      "referencia_del_contrato": "150-10-07-113-2021"
+    },
+    {
+      "codigo_proveedor": "713364594",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2450004",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924858",
+      "referencia_del_contrato": "150-10-07-115-2021"
+    },
+    {
+      "codigo_proveedor": "713362564",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2450007",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1926817",
+      "referencia_del_contrato": "150-10-07-125-2021"
+    },
+    {
+      "codigo_proveedor": "713376382",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2450067",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1929645",
+      "referencia_del_contrato": "150-10-07-157-2021"
+    },
+    {
+      "codigo_proveedor": "713314581",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2450086",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1929363",
+      "referencia_del_contrato": "180-10-07-100-2021"
+    },
+    {
+      "codigo_proveedor": "713366508",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2450405",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924688",
+      "referencia_del_contrato": "150-10-07-114-2021"
+    },
+    {
+      "codigo_proveedor": "713364313",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2450505",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1925410",
+      "referencia_del_contrato": "150-10-07-117-2021"
+    },
+    {
+      "codigo_proveedor": "713383156",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2450506",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1925420",
+      "referencia_del_contrato": "150-10-07-120-2021"
+    },
+    {
+      "codigo_proveedor": "713352581",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2450507",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924989",
+      "referencia_del_contrato": "150-10-07-121-2021"
+    },
+    {
+      "codigo_proveedor": "713363323",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2450508",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1924994",
+      "referencia_del_contrato": "150-10-07-123-2021"
+    },
+    {
+      "codigo_proveedor": "713314581",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2450526",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1929313",
+      "referencia_del_contrato": "180-10-07-100-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2450649",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1929363",
+      "referencia_del_contrato": "CO1.PCCNTR.2450649"
+    },
+    {
+      "codigo_proveedor": "713366383",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2451522",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1929845",
+      "referencia_del_contrato": "160-10-07-0112-2021"
+    },
+    {
+      "codigo_proveedor": "713250264",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2451836",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1929846",
+      "referencia_del_contrato": "170-10-07-102-2021"
+    },
+    {
+      "codigo_proveedor": "713315083",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2451875",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1930393",
+      "referencia_del_contrato": "180-10-07-106-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2452103",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1929846",
+      "referencia_del_contrato": "CO1.PCCNTR.2452103"
+    },
+    {
+      "codigo_proveedor": "713377752",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2452164",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1930630",
+      "referencia_del_contrato": "160-10-07-0113-2021"
+    },
+    {
+      "codigo_proveedor": "713253086",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2452642",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1931229",
+      "referencia_del_contrato": "170-10-07-104-2021"
+    },
+    {
+      "codigo_proveedor": "713252559",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2452736",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1931223",
+      "referencia_del_contrato": "170-10-07-103-2021"
+    },
+    {
+      "codigo_proveedor": "713379774",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2452808",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1930899",
+      "referencia_del_contrato": "160-10-07-0114-2021"
+    },
+    {
+      "codigo_proveedor": "713201788",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2452905",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1931513",
+      "referencia_del_contrato": "170-10-07-105-2021"
+    },
+    {
+      "codigo_proveedor": "713251353",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2453025",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1931713",
+      "referencia_del_contrato": "170-10-07-108-2021"
+    },
+    {
+      "codigo_proveedor": "713251270",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2453101",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1931519",
+      "referencia_del_contrato": "170-10-07-106-2021"
+    },
+    {
+      "codigo_proveedor": "713255792",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2453402",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1931245",
+      "referencia_del_contrato": "170-10-07-107-2021"
+    },
+    {
+      "codigo_proveedor": "713393148",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2453870",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932189",
+      "referencia_del_contrato": "160-10-07-0115-2021"
+    },
+    {
+      "codigo_proveedor": "713348381",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2453935",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932040",
+      "referencia_del_contrato": "180-10-07-097-2021"
+    },
+    {
+      "codigo_proveedor": "713321024",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2453987",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932499",
+      "referencia_del_contrato": "150-10-07-158-2021"
+    },
+    {
+      "codigo_proveedor": "713347490",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2454587",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932199",
+      "referencia_del_contrato": "180-10-07-103-2021"
+    },
+    {
+      "codigo_proveedor": "713347326",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2454594",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932054",
+      "referencia_del_contrato": "180-10-07-098-2021"
+    },
+    {
+      "codigo_proveedor": "713390011",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2454870",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932929",
+      "referencia_del_contrato": "160-10-07-0116-2021"
+    },
+    {
+      "codigo_proveedor": "713347847",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2454980",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1933019",
+      "referencia_del_contrato": "180-10-07-101-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2455600",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1930565",
+      "referencia_del_contrato": "CO1.PCCNTR.2455600"
+    },
+    {
+      "codigo_proveedor": "713346708",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2455809",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1933385",
+      "referencia_del_contrato": "180-10-07-102-2021"
+    },
+    {
+      "codigo_proveedor": "713318277",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2455885",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1933466",
+      "referencia_del_contrato": "180-10-07-105-2021"
+    },
+    {
+      "codigo_proveedor": "713354074",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2456049",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932548",
+      "referencia_del_contrato": "130-10-07-184-2021"
+    },
+    {
+      "codigo_proveedor": "713182061",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2456326",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932926",
+      "referencia_del_contrato": "130-10-07-185-2021"
+    },
+    {
+      "codigo_proveedor": "713315281",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2457748",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1935016",
+      "referencia_del_contrato": "180-10-07-104-2021"
+    },
+    {
+      "codigo_proveedor": "713369106",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2457756",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1933516",
+      "referencia_del_contrato": "130-10-07-186-2021"
+    },
+    {
+      "codigo_proveedor": "714303799",
+      "estado_contrato": "cedido",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2457812",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1933844",
+      "referencia_del_contrato": "104.10.07.148-2021"
+    },
+    {
+      "codigo_proveedor": "713347219",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2457815",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1935009",
+      "referencia_del_contrato": "180-10-07-096-2021"
+    },
+    {
+      "codigo_proveedor": "713409449",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2457827",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1931304",
+      "referencia_del_contrato": "104.10.07.149-2021"
+    },
+    {
+      "codigo_proveedor": "713412088",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2457828",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1930565",
+      "referencia_del_contrato": "102-10-07-042-2021"
+    },
+    {
+      "codigo_proveedor": "713409654",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2457854",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932263",
+      "referencia_del_contrato": "104.10.07.150-2021"
+    },
+    {
+      "codigo_proveedor": "713276103",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2457857",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1935037",
+      "referencia_del_contrato": "104.10.07.151-2021"
+    },
+    {
+      "codigo_proveedor": "706666112",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2458405",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1933901",
+      "referencia_del_contrato": "130-10-07-187-2021"
+    },
+    {
+      "codigo_proveedor": "713177749",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2458417",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1933912",
+      "referencia_del_contrato": "130-10-07-188-2021"
+    },
+    {
+      "codigo_proveedor": "713256592",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2458592",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1931902",
+      "referencia_del_contrato": "170-10-07-1092021"
+    },
+    {
+      "codigo_proveedor": "702522749",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2458875",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1933530",
+      "referencia_del_contrato": "130-10-07-189-2021"
+    },
+    {
+      "codigo_proveedor": "713301919",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2458885",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1933393",
+      "referencia_del_contrato": "104.10.07.152-2021"
+    },
+    {
+      "codigo_proveedor": "713257038",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2458996",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932417",
+      "referencia_del_contrato": "170-10-07-110-2021"
+    },
+    {
+      "codigo_proveedor": "713250298",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459336",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932322",
+      "referencia_del_contrato": "170-10-07-114-2021"
+    },
+    {
+      "codigo_proveedor": "713269074",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459341",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932029",
+      "referencia_del_contrato": "10-10-07-115-2021"
+    },
+    {
+      "codigo_proveedor": "713281343",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459350",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932032",
+      "referencia_del_contrato": "170-10-07-116-2021"
+    },
+    {
+      "codigo_proveedor": "713251452",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459357",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932037",
+      "referencia_del_contrato": "170-10-07-117-2021"
+    },
+    {
+      "codigo_proveedor": "713269058",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459367",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932131",
+      "referencia_del_contrato": "170-10-07-118-2021"
+    },
+    {
+      "codigo_proveedor": "713383289",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459384",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932137",
+      "referencia_del_contrato": "170-10-07-120-2021"
+    },
+    {
+      "codigo_proveedor": "713269413",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459714",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932017",
+      "referencia_del_contrato": "170-10-07-111-2021"
+    },
+    {
+      "codigo_proveedor": "713252997",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459732",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932426",
+      "referencia_del_contrato": "170-10-07-112-2021"
+    },
+    {
+      "codigo_proveedor": "713268175",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459913",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932224",
+      "referencia_del_contrato": "170-10-07-113-2021"
+    },
+    {
+      "codigo_proveedor": "713370021",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2459949",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932046",
+      "referencia_del_contrato": "170-10-07-119-2021"
+    },
+    {
+      "codigo_proveedor": "713367548",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2463191",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939040",
+      "referencia_del_contrato": "130-10-07-193-2021"
+    },
+    {
+      "codigo_proveedor": "710240573",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-04-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2463328",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1935656",
+      "referencia_del_contrato": "180-10-07-108-2021"
+    },
+    {
+      "codigo_proveedor": "713151785",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2463363",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1936367",
+      "referencia_del_contrato": "130-10-07-191-2021"
+    },
+    {
+      "codigo_proveedor": "713201804",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2463450",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1936223",
+      "referencia_del_contrato": "130-10-07-190-2021"
+    },
+    {
+      "codigo_proveedor": "713186005",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2463463",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1936174",
+      "referencia_del_contrato": "130-10-07-192-2021"
+    },
+    {
+      "codigo_proveedor": "713436921",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2463499",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939317",
+      "referencia_del_contrato": "150-10-07-128-2021"
+    },
+    {
+      "codigo_proveedor": "710240573",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2463521",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1935656",
+      "referencia_del_contrato": "CO1.PCCNTR.2463521"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2464274",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939019",
+      "referencia_del_contrato": "150-10-07-129-2021"
+    },
+    {
+      "codigo_proveedor": "713367613",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464453",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939029",
+      "referencia_del_contrato": "150-10-07-132-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2464462",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1938941",
+      "referencia_del_contrato": "150-10-07-133-2021"
+    },
+    {
+      "codigo_proveedor": "713362200",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464466",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939241",
+      "referencia_del_contrato": "150-10-07-134-2021"
+    },
+    {
+      "codigo_proveedor": "713352094",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464632",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939026",
+      "referencia_del_contrato": "150-10-07-131-2021"
+    },
+    {
+      "codigo_proveedor": "713393825",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464683",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939633",
+      "referencia_del_contrato": "180-10-07-109-2021"
+    },
+    {
+      "codigo_proveedor": "713363786",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464697",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939059",
+      "referencia_del_contrato": "150-10-07-141-2021"
+    },
+    {
+      "codigo_proveedor": "713359453",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464710",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939009",
+      "referencia_del_contrato": "150-10-07-126-2021"
+    },
+    {
+      "codigo_proveedor": "713363281",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464714",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939119",
+      "referencia_del_contrato": "150-10-07-127-2021"
+    },
+    {
+      "codigo_proveedor": "713405421",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464724",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1938929",
+      "referencia_del_contrato": "150-10-07-130-2021"
+    },
+    {
+      "codigo_proveedor": "713364446",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464740",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939140",
+      "referencia_del_contrato": "150-10-07-135-2021"
+    },
+    {
+      "codigo_proveedor": "713369593",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464748",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1938969",
+      "referencia_del_contrato": "150-10-07-138-2021"
+    },
+    {
+      "codigo_proveedor": "713389484",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464762",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939252",
+      "referencia_del_contrato": "150-10-07-139-2021"
+    },
+    {
+      "codigo_proveedor": "713352243",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464792",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939072",
+      "referencia_del_contrato": "150-10-07-146-2021"
+    },
+    {
+      "codigo_proveedor": "713355238",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464838",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1934799",
+      "referencia_del_contrato": "180-10-07-107-2021"
+    },
+    {
+      "codigo_proveedor": "713363612",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464839",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1938959",
+      "referencia_del_contrato": "150-10-07-136-2021"
+    },
+    {
+      "codigo_proveedor": "713366581",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464842",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939336",
+      "referencia_del_contrato": "150-10-07-137-2021"
+    },
+    {
+      "codigo_proveedor": "713362465",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464862",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939050",
+      "referencia_del_contrato": "150-10-07-140-2021"
+    },
+    {
+      "codigo_proveedor": "713362523",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464957",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939360",
+      "referencia_del_contrato": "150-10-07-143-2021"
+    },
+    {
+      "codigo_proveedor": "713364321",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464974",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939076",
+      "referencia_del_contrato": "150-10-07-147-2021"
+    },
+    {
+      "codigo_proveedor": "713352920",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2464992",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939416",
+      "referencia_del_contrato": "150-10-07-153-2021"
+    },
+    {
+      "codigo_proveedor": "713362374",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2465310",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939261",
+      "referencia_del_contrato": "150-10-07-142-2021"
+    },
+    {
+      "codigo_proveedor": "713366235",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2465317",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939364",
+      "referencia_del_contrato": "150-10-07-144-2021"
+    },
+    {
+      "codigo_proveedor": "713365286",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2465318",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1938990",
+      "referencia_del_contrato": "150-10-07-145-2021"
+    },
+    {
+      "codigo_proveedor": "713364685",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2465346",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939420",
+      "referencia_del_contrato": "150-10-07-154-2021"
+    },
+    {
+      "codigo_proveedor": "713368512",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2465504",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939378",
+      "referencia_del_contrato": "150-10-07-148-2021"
+    },
+    {
+      "codigo_proveedor": "713368546",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2465519",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939502",
+      "referencia_del_contrato": "150-10-07-151-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2465523",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939280",
+      "referencia_del_contrato": "150-10-07-152-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2465601",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939382",
+      "referencia_del_contrato": "150-10-07-149-2021"
+    },
+    {
+      "codigo_proveedor": "713360626",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2465605",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1939396",
+      "referencia_del_contrato": "150-10-07-150-2021"
+    },
+    {
+      "codigo_proveedor": "701221095",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2467091",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1940239",
+      "referencia_del_contrato": "104.10.07.153-2021"
+    },
+    {
+      "codigo_proveedor": "705645232",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2469620",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1942556",
+      "referencia_del_contrato": "130-10-07-194-2021"
+    },
+    {
+      "codigo_proveedor": "713268951",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2470352",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1942836",
+      "referencia_del_contrato": "130-10-07-195-2021"
+    },
+    {
+      "codigo_proveedor": "713407781",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2470651",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1942591",
+      "referencia_del_contrato": "110-10-07-0071-2021"
+    },
+    {
+      "codigo_proveedor": "713469351",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2470665",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1943012",
+      "referencia_del_contrato": "130-10-07-196-2021"
+    },
+    {
+      "codigo_proveedor": "713381770",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2470792",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1942849",
+      "referencia_del_contrato": "130-10-07-197-2021"
+    },
+    {
+      "codigo_proveedor": "710651928",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2487644",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1955735",
+      "referencia_del_contrato": "170-10-07-122-2021"
+    },
+    {
+      "codigo_proveedor": "710427303",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2021-05-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2488561",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1955717",
+      "referencia_del_contrato": "CO1.PCCNTR.2488561"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2489707",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1957137",
+      "referencia_del_contrato": "CO1.PCCNTR.2489707"
+    },
+    {
+      "codigo_proveedor": "713221554",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2490550",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1953982",
+      "referencia_del_contrato": "130-10-07-199-2021"
+    },
+    {
+      "codigo_proveedor": "713552313",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2490827",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1953976",
+      "referencia_del_contrato": "130-10-07-198-2021"
+    },
+    {
+      "codigo_proveedor": "713532315",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2490845",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1953989",
+      "referencia_del_contrato": "130-10-07-200-2021"
+    },
+    {
+      "codigo_proveedor": "702238981",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2021-05-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2490885",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1957137",
+      "referencia_del_contrato": "170-10-11-001-2021"
+    },
+    {
+      "codigo_proveedor": "713439768",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2491312",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1957873",
+      "referencia_del_contrato": "160-10-07-0117-2021"
+    },
+    {
+      "codigo_proveedor": "713574614",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2497623",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1962482",
+      "referencia_del_contrato": "130-10-07-201-2021"
+    },
+    {
+      "codigo_proveedor": "713578482",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2497760",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1962865",
+      "referencia_del_contrato": "130-10-07-202-2021"
+    },
+    {
+      "codigo_proveedor": "713398709",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2498110",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1963133",
+      "referencia_del_contrato": "130-10-07-203-2021"
+    },
+    {
+      "codigo_proveedor": "703704197",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-10T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2498561",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1964247",
+      "referencia_del_contrato": "130-10-09-001-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2499019",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1964247",
+      "referencia_del_contrato": "CO1.PCCNTR.2499019"
+    },
+    {
+      "codigo_proveedor": "704899640",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-05-10T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2501729",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1963147",
+      "referencia_del_contrato": "104.10.07.154-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2501840",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932488",
+      "referencia_del_contrato": "CO1.PCCNTR.2501840"
+    },
+    {
+      "codigo_proveedor": "704795558",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2501842",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932488",
+      "referencia_del_contrato": "130-11.02-001-2021"
+    },
+    {
+      "codigo_proveedor": "713562403",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-10T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2503350",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1967921",
+      "referencia_del_contrato": "160-10-07-0118-2021"
+    },
+    {
+      "codigo_proveedor": "713605152",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-10T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2503908",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1968513",
+      "referencia_del_contrato": "160-10-07-0119-2021"
+    },
+    {
+      "codigo_proveedor": "704795558",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2504392",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1932488",
+      "referencia_del_contrato": "130-11.02-001-2021"
+    },
+    {
+      "codigo_proveedor": "713064301",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2505291",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1969874",
+      "referencia_del_contrato": "130-10-07-206-2021"
+    },
+    {
+      "codigo_proveedor": "713575751",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2505791",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1969745",
+      "referencia_del_contrato": "130-10-07-205-2021"
+    },
+    {
+      "codigo_proveedor": "713175594",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2506108",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1969854",
+      "referencia_del_contrato": "130-10-07-204-2021"
+    },
+    {
+      "codigo_proveedor": "713349074",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2507627",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1971346",
+      "referencia_del_contrato": "160-10-07-0120-2021"
+    },
+    {
+      "codigo_proveedor": "713645067",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2507737",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1969936",
+      "referencia_del_contrato": "130-10-09-002-2021"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2509246",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1969620",
+      "referencia_del_contrato": "CO1.PCCNTR.2509246"
+    },
+    {
+      "codigo_proveedor": "713639888",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2510812",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1974109",
+      "referencia_del_contrato": "150-10-07-159-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2511372",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1974650",
+      "referencia_del_contrato": "CO1.PCCNTR.2511372"
+    },
+    {
+      "codigo_proveedor": "713454858",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2511761",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1972743",
+      "referencia_del_contrato": "130-10-07-207-2021"
+    },
+    {
+      "codigo_proveedor": "713576635",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2512552",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1974995",
+      "referencia_del_contrato": "160-10-07-0121-2021"
+    },
+    {
+      "codigo_proveedor": "713646396",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2512965",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1976002",
+      "referencia_del_contrato": "160-10-07-0122-2021"
+    },
+    {
+      "codigo_proveedor": "713558591",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2513267",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1975663",
+      "referencia_del_contrato": "160-10-07-0123-2021"
+    },
+    {
+      "codigo_proveedor": "713550895",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2513842",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1974658",
+      "referencia_del_contrato": "110-10-07-073-2021"
+    },
+    {
+      "codigo_proveedor": "713411593",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2514015",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1974650",
+      "referencia_del_contrato": "110-10-07-072-2021"
+    },
+    {
+      "codigo_proveedor": "713406254",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2514132",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1974712",
+      "referencia_del_contrato": "110-10-07-074-2021"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2514987",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1975630",
+      "referencia_del_contrato": "160-10-02-0004-2021"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2515901",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1975639",
+      "referencia_del_contrato": "160-10-02-0005-2021"
+    },
+    {
+      "codigo_proveedor": "702413295",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2524370",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1972019",
+      "referencia_del_contrato": "130-11-03-03 -2021"
+    },
+    {
+      "codigo_proveedor": "713364909",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2524384",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1971562",
+      "referencia_del_contrato": "130-11-03-02 -2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2526285",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1971562",
+      "referencia_del_contrato": "CO1.PCCNTR.2526285"
+    },
+    {
+      "codigo_proveedor": "713397149",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2535408",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1993101",
+      "referencia_del_contrato": "CO1.PCCNTR.2535408"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2536450",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1989244",
+      "referencia_del_contrato": "160-10-02-0007-2021"
+    },
+    {
+      "codigo_proveedor": "706011103",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2536856",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1990807",
+      "referencia_del_contrato": "130-11.02-005-2021"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2536926",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1988799",
+      "referencia_del_contrato": "160-10-02-0006-2021"
+    },
+    {
+      "codigo_proveedor": "702133125",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2536949",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1994055",
+      "referencia_del_contrato": "CO1.PCCNTR.2536949"
+    },
+    {
+      "codigo_proveedor": "713397149",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-05-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2537050",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1989586",
+      "referencia_del_contrato": "130-10-09-003-2021"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2538472",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1993915",
+      "referencia_del_contrato": "160-10-02-0008-2021"
+    },
+    {
+      "codigo_proveedor": "713471167",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-05-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2539501",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1996087",
+      "referencia_del_contrato": "110-10-07-075"
+    },
+    {
+      "codigo_proveedor": "713780211",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-05-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2541301",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1996077",
+      "referencia_del_contrato": "180.10.11.002.2021"
+    },
+    {
+      "codigo_proveedor": "713578458",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-05-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2544761",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1969457",
+      "referencia_del_contrato": "CO1.PCCNTR.2544761"
+    },
+    {
+      "codigo_proveedor": "701486045",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-06-09T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2556860",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1966636",
+      "referencia_del_contrato": "CO1.PCCNTR.2556860"
+    },
+    {
+      "codigo_proveedor": "713823631",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-06-02T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2560154",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2011479",
+      "referencia_del_contrato": "160-10-07-0124-2021"
+    },
+    {
+      "codigo_proveedor": "710579087",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2563036",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2013857",
+      "referencia_del_contrato": "170-10-07-123-2021"
+    },
+    {
+      "codigo_proveedor": "713877322",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2563649",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2014053",
+      "referencia_del_contrato": "CO1.PCCNTR.2563649"
+    },
+    {
+      "codigo_proveedor": "701486045",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2575248",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1966636",
+      "referencia_del_contrato": "CO1.PCCNTR.2575248"
+    },
+    {
+      "codigo_proveedor": "713893543",
+      "estado_contrato": "En aprobación",
+      "id_contrato": "CO1.PCCNTR.2577200",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2021377",
+      "referencia_del_contrato": "150-10-07-161-2021"
+    },
+    {
+      "codigo_proveedor": "702133125",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-06-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2577300",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2022341",
+      "referencia_del_contrato": "CO1.PCCNTR.2577300"
+    },
+    {
+      "codigo_proveedor": "704868611",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-06-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2589321",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2029015",
+      "referencia_del_contrato": "130-11.02-006-2021"
+    },
+    {
+      "codigo_proveedor": "700250020",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-06-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2591367",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.1942479",
+      "referencia_del_contrato": "CO1.PCCNTR.2591367"
+    },
+    {
+      "codigo_proveedor": "702217324",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-06-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2596122",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2038010",
+      "referencia_del_contrato": "CO1.PCCNTR.2596122"
+    },
+    {
+      "codigo_proveedor": "702758350",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-06-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2596519",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2028774",
+      "referencia_del_contrato": "170-10-07-124-2021"
+    },
+    {
+      "codigo_proveedor": "702758350",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2596540",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2028774",
+      "referencia_del_contrato": "170-10-07-124-2021"
+    },
+    {
+      "codigo_proveedor": "714046604",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-06-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2599156",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2040394",
+      "referencia_del_contrato": "160-10-07-0125-2021"
+    },
+    {
+      "codigo_proveedor": "705428555",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-06-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2602870",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2044071",
+      "referencia_del_contrato": "110-10-01-004-2021"
+    },
+    {
+      "codigo_proveedor": "713369080",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-06-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2603215",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2044102",
+      "referencia_del_contrato": "120.10.07.073-2021"
+    },
+    {
+      "codigo_proveedor": "701870321",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-07-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2603540",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2033761",
+      "referencia_del_contrato": "130-11.02-007-2021"
+    },
+    {
+      "codigo_proveedor": "714026390",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2615279",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2052671",
+      "referencia_del_contrato": "170-10-07-125-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2615291",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2052671",
+      "referencia_del_contrato": "CO1.PCCNTR.2615291"
+    },
+    {
+      "codigo_proveedor": "714079258",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-06-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2616214",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2053081",
+      "referencia_del_contrato": "180-10-07-110-2021"
+    },
+    {
+      "codigo_proveedor": "714026390",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2616250",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2052671",
+      "referencia_del_contrato": "170-10-07-125-2021"
+    },
+    {
+      "codigo_proveedor": "714054889",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-07-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2616403",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2053180",
+      "referencia_del_contrato": "180-10-07-111-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2616627",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2052671",
+      "referencia_del_contrato": "CO1.PCCNTR.2616627"
+    },
+    {
+      "codigo_proveedor": "713626000",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-06-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2616690",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2053919",
+      "referencia_del_contrato": "CO1.PCCNTR.2616690"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-07-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2629131",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2059468",
+      "referencia_del_contrato": "CO1.PCCNTR.2629131"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2631095",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2065157",
+      "referencia_del_contrato": "130-10-09-004-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2631100",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2061258",
+      "referencia_del_contrato": "CO1.PCCNTR.2631100"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2631391",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2065157",
+      "referencia_del_contrato": "CO1.PCCNTR.2631391"
+    },
+    {
+      "codigo_proveedor": "714026390",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-09-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2631832",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2061258",
+      "referencia_del_contrato": "170-10-07-125-2021"
+    },
+    {
+      "codigo_proveedor": "700472079",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-07-02T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2632015",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2015705",
+      "referencia_del_contrato": "104.10.08.001-2021"
+    },
+    {
+      "codigo_proveedor": "713397149",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-07-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2632136",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2065157",
+      "referencia_del_contrato": "130-10-09-004-2021"
+    },
+    {
+      "codigo_proveedor": "713397149",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-07-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2633416",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2066312",
+      "referencia_del_contrato": "130-10-07-208-2021"
+    },
+    {
+      "codigo_proveedor": "702907726",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2642802",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2063060",
+      "referencia_del_contrato": "CO1.PCCNTR.2642802"
+    },
+    {
+      "codigo_proveedor": "702907726",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-07-09T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2643486",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2063060",
+      "referencia_del_contrato": "CO1.PCCNTR.2643486"
+    },
+    {
+      "codigo_proveedor": "701947012",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-07-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2646987",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2077824",
+      "referencia_del_contrato": "CO1.PCCNTR.2646987"
+    },
+    {
+      "codigo_proveedor": "703916437",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-07-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2647144",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2078575",
+      "referencia_del_contrato": "103-10.07.014-2021"
+    },
+    {
+      "codigo_proveedor": "702445966",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2021-07-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2647707",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2078659",
+      "referencia_del_contrato": "CO1.PCCNTR.2647707"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-07-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2651984",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2079291",
+      "referencia_del_contrato": "160-10-02-0009-2021"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-07-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2652229",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2079658",
+      "referencia_del_contrato": "160-10-02-0010-2021"
+    },
+    {
+      "codigo_proveedor": "714207420",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-07-09T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2655924",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2084932",
+      "referencia_del_contrato": "130-10-07-209-2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2657322",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2078500",
+      "referencia_del_contrato": "CO1.PCCNTR.2657322"
+    },
+    {
+      "codigo_proveedor": "704060664",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-07-09T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2657336",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2078500",
+      "referencia_del_contrato": "170-10-11-002-2021"
+    },
+    {
+      "codigo_proveedor": "713318517",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-07-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2663894",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2037476",
+      "referencia_del_contrato": "CO1.PCCNTR.2663894"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2667753",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2086386",
+      "referencia_del_contrato": "CO1.PCCNTR.2667753"
+    },
+    {
+      "codigo_proveedor": "714283199",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-07-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2670955",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2094653",
+      "referencia_del_contrato": "130-10-07-211-2021"
+    },
+    {
+      "codigo_proveedor": "702258419",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2674847",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2099839",
+      "referencia_del_contrato": "170-10-07-126.2021"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2674944",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2099839",
+      "referencia_del_contrato": "CO1.PCCNTR.2674944"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2675317",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2099839",
+      "referencia_del_contrato": "CO1.PCCNTR.2675317"
+    },
+    {
+      "codigo_proveedor": "702258419",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-07-16T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2675453",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2100821",
+      "referencia_del_contrato": "170-10-07--126-2021"
+    },
+    {
+      "codigo_proveedor": "713397149",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2021-07-16T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2679672",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2103723",
+      "referencia_del_contrato": "CO1.PCCNTR.2679672"
+    },
+    {
+      "codigo_proveedor": "714229705",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-07-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2680420",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2105101",
+      "referencia_del_contrato": "CO1.PCCNTR.2680420"
+    },
+    {
+      "codigo_proveedor": "704259241",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-07-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2685867",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2104707",
+      "referencia_del_contrato": "160-10-02-0011-2021"
+    },
+    {
+      "codigo_proveedor": "714355054",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2021-07-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2691154",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2113504",
+      "referencia_del_contrato": "160-10-07-0126-2021"
+    },
+    {
+      "codigo_proveedor": "703704197",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-07-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2692269",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2092194",
+      "referencia_del_contrato": "170-10-08-004-2021"
+    },
+    {
+      "codigo_proveedor": "710240110",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2021-07-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2693917",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2011804",
+      "referencia_del_contrato": "180-10-07-113-2021"
+    },
+    {
+      "codigo_proveedor": "703627471",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2695513",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2097701",
+      "referencia_del_contrato": "CO1.PCCNTR.2695513"
+    },
+    {
+      "codigo_proveedor": "703627471",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-08-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2696679",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2097701",
+      "referencia_del_contrato": "CO1.PCCNTR.2696679"
+    },
+    {
+      "codigo_proveedor": "703627471",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2021-08-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2696683",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2098403",
+      "referencia_del_contrato": "CO1.PCCNTR.2696683"
+    },
+    {
+      "codigo_proveedor": "703704197",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-07-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2698123",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2118710",
+      "referencia_del_contrato": "180-10-09-001-2021"
+    },
+    {
+      "codigo_proveedor": "714241668",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-07-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2700315",
+      "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+      "proceso_de_compra": "CO1.BDOS.2120263",
+      "referencia_del_contrato": "CO1.PCCNTR.2700315"
+    }
+  ],
+  "sha256": "d2ff56a83916002e178ead211894384d5e4471e737b6bd6544058b7f22e1c519",
+  "status": "MATERIALIZED"
+}

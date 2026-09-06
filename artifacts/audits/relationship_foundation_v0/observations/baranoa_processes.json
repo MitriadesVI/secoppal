@@ -1,0 +1,2025 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:39:09.815213+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,entidad",
+    "$where": "entidad in ('ALCALDIA MUNICIPAL DE BARANOA') AND fecha_de_publicacion_del >= '2025-01-01T00:00:00' AND fecha_de_publicacion_del < '2026-09-07T00:00:00'"
+  },
+  "payload": [
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10000664",
+      "referencia_del_proceso": "PCD-228-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10002148",
+      "referencia_del_proceso": "PCD-229-2026."
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10003781",
+      "referencia_del_proceso": "PCD-230-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10012538",
+      "referencia_del_proceso": "PCD-235-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10015567",
+      "referencia_del_proceso": "PCD-231-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10015718",
+      "referencia_del_proceso": "PCD-226-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016033",
+      "referencia_del_proceso": "PCD-234-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016251",
+      "referencia_del_proceso": "PCD-238-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016604",
+      "referencia_del_proceso": "PCD-232-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016735",
+      "referencia_del_proceso": "PCD-233-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016812",
+      "referencia_del_proceso": "PCD-239-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016850",
+      "referencia_del_proceso": "PCD-241-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10017165",
+      "referencia_del_proceso": "PCD-240-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10021379",
+      "referencia_del_proceso": "PCD-252-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10022274",
+      "referencia_del_proceso": "CD-254-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10023095",
+      "referencia_del_proceso": "PCD-248-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10023133",
+      "referencia_del_proceso": "PCD-199-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10024677",
+      "referencia_del_proceso": "PCD-243-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10024770",
+      "referencia_del_proceso": "PCD-258-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10024796",
+      "referencia_del_proceso": "PCD-242-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10026548",
+      "referencia_del_proceso": "PCD-244-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10027181",
+      "referencia_del_proceso": "PCD-245-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10028616",
+      "referencia_del_proceso": "PCD-247-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10030379",
+      "referencia_del_proceso": "PCD-249-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10032649",
+      "referencia_del_proceso": "PCD-251-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10033304",
+      "referencia_del_proceso": "PCD-250-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10034247",
+      "referencia_del_proceso": "PCD-270-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10034806",
+      "referencia_del_proceso": "PCD-255-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10036311",
+      "referencia_del_proceso": "PCD-253-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10037424",
+      "referencia_del_proceso": "PCD-198-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10039075",
+      "referencia_del_proceso": "PCD-256-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10039755",
+      "referencia_del_proceso": "PCD-257-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10040486",
+      "referencia_del_proceso": "PCD-261-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10040895",
+      "referencia_del_proceso": "PCD-262-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10041854",
+      "referencia_del_proceso": "PCD-275-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10042339",
+      "referencia_del_proceso": "PCD-263-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10043484",
+      "referencia_del_proceso": "PCD-264-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10044204",
+      "referencia_del_proceso": "CD-267-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10044847",
+      "referencia_del_proceso": "PCD-265-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10045569",
+      "referencia_del_proceso": "PCD-268-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10045840",
+      "referencia_del_proceso": "PCD-272-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10045882",
+      "referencia_del_proceso": "PCD-266-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10046857",
+      "referencia_del_proceso": "CD-276-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10048352",
+      "referencia_del_proceso": "PCD-269-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10049054",
+      "referencia_del_proceso": "CD-274-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10049918",
+      "referencia_del_proceso": "PCD-271-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10050238",
+      "referencia_del_proceso": "CD-278-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10050741",
+      "referencia_del_proceso": "PCD-273-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10051219",
+      "referencia_del_proceso": "PCD-279-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10051661",
+      "referencia_del_proceso": "PCD-277-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10051889",
+      "referencia_del_proceso": "PCD-281-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10053226",
+      "referencia_del_proceso": "PCD-280-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10053524",
+      "referencia_del_proceso": "CD-259-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10054015",
+      "referencia_del_proceso": "PCD-260-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10054116",
+      "referencia_del_proceso": "CD-237-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10054452",
+      "referencia_del_proceso": "CD-246-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10054475",
+      "referencia_del_proceso": "PCD-282-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10061610",
+      "referencia_del_proceso": "PCD-236-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10063127",
+      "referencia_del_proceso": "PCD-286-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10063419",
+      "referencia_del_proceso": "PCD-283-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10063643",
+      "referencia_del_proceso": "PCD-284-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10067337",
+      "referencia_del_proceso": "PCD-287-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10068075",
+      "referencia_del_proceso": "PCI-001-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10070551",
+      "referencia_del_proceso": "PCD-285-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10071447",
+      "referencia_del_proceso": "CI-002-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10071447",
+      "referencia_del_proceso": "CI-002-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10071471",
+      "referencia_del_proceso": "CT-002-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10075440",
+      "referencia_del_proceso": "CA-001-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10076794",
+      "referencia_del_proceso": "CT-003-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10077971",
+      "referencia_del_proceso": "PCD-289-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10080216",
+      "referencia_del_proceso": "PCD-288-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10084627",
+      "referencia_del_proceso": "PCD-290-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10202427",
+      "referencia_del_proceso": "MC-01-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10203709",
+      "referencia_del_proceso": "CAC-001-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10203785",
+      "referencia_del_proceso": "MC-002-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10204422",
+      "referencia_del_proceso": "MC-003-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10229051",
+      "referencia_del_proceso": "CAC-002-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10260889",
+      "referencia_del_proceso": "CMA-001-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10275770",
+      "referencia_del_proceso": "MC-005-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10276439",
+      "referencia_del_proceso": "MC-006-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10277667",
+      "referencia_del_proceso": "MC-004-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10301398",
+      "referencia_del_proceso": "MC-007-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10301933",
+      "referencia_del_proceso": "MC-008-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10301988",
+      "referencia_del_proceso": "CAC-003-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10302201",
+      "referencia_del_proceso": "MC-009-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10311327",
+      "referencia_del_proceso": "CAC-004-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10327403",
+      "referencia_del_proceso": "CAC-005-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10350223",
+      "referencia_del_proceso": "MC-010-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10371510",
+      "referencia_del_proceso": "CAC-006-2026b"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10398794",
+      "referencia_del_proceso": "CMA-001-2026 (Presentación de oferta)"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10411470",
+      "referencia_del_proceso": "SA-001-2026 (Manifestación de interés (Menor Cuantía))"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10412139",
+      "referencia_del_proceso": "MC-013-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10418127",
+      "referencia_del_proceso": "SA-001-2026 (Manifestación de interés (Menor Cuantía)) (Presentación de oferta)"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10434311",
+      "referencia_del_proceso": "MC-015-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10441198",
+      "referencia_del_proceso": "MC.016-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10450754",
+      "referencia_del_proceso": "MC-017-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10452424",
+      "referencia_del_proceso": "MC-018-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10486423",
+      "referencia_del_proceso": "CAC-008-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10491804",
+      "referencia_del_proceso": "MC-019-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10495623",
+      "referencia_del_proceso": "LP-001-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10614520",
+      "referencia_del_proceso": "CAC-009-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10697284",
+      "referencia_del_proceso": "CAC-010-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10721019",
+      "referencia_del_proceso": "CD291-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10784449",
+      "referencia_del_proceso": "CD-292-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10796505",
+      "referencia_del_proceso": "LP-001-2026 (Presentación de oferta)"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10855160",
+      "referencia_del_proceso": "CMA-002-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10868238",
+      "referencia_del_proceso": "CD-293-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10868990",
+      "referencia_del_proceso": "CD-294-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10869098",
+      "referencia_del_proceso": "CD-295-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10869758",
+      "referencia_del_proceso": "CD-296-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10869789",
+      "referencia_del_proceso": "CD-297-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10870083",
+      "referencia_del_proceso": "CD-298-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10870294",
+      "referencia_del_proceso": "CD-299-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10870653",
+      "referencia_del_proceso": "CD-300-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10870680",
+      "referencia_del_proceso": "CD-301-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10871096",
+      "referencia_del_proceso": "CD-303-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10871341",
+      "referencia_del_proceso": "CD-302-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10871731",
+      "referencia_del_proceso": "CD-304-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10872090",
+      "referencia_del_proceso": "CD-305-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10876771",
+      "referencia_del_proceso": "CD-306-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10877518",
+      "referencia_del_proceso": "CD-307-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10877936",
+      "referencia_del_proceso": "CD-308-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10885803",
+      "referencia_del_proceso": "CD-309-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10885885",
+      "referencia_del_proceso": "CD-310-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10888858",
+      "referencia_del_proceso": "CD-311-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10889401",
+      "referencia_del_proceso": "CD-312-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10889641",
+      "referencia_del_proceso": "CD-313-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10890354",
+      "referencia_del_proceso": "CD-314-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10896585",
+      "referencia_del_proceso": "CD-315-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10896910",
+      "referencia_del_proceso": "CD-316-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10896999",
+      "referencia_del_proceso": "CD-317-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10897488",
+      "referencia_del_proceso": "CD-318-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10897763",
+      "referencia_del_proceso": "CD-320-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10897849",
+      "referencia_del_proceso": "CI-004-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10898190",
+      "referencia_del_proceso": "CD-321-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10898521",
+      "referencia_del_proceso": "CD-319-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10898958",
+      "referencia_del_proceso": "CD-322-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10925315",
+      "referencia_del_proceso": "CD-323-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10925381",
+      "referencia_del_proceso": "CD-325-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10925507",
+      "referencia_del_proceso": "CD-324-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10925753",
+      "referencia_del_proceso": "CD-326-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10926028",
+      "referencia_del_proceso": "CD-327-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10926641",
+      "referencia_del_proceso": "CD-328-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10926773",
+      "referencia_del_proceso": "CD-329-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10931880",
+      "referencia_del_proceso": "CD-330-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10933414",
+      "referencia_del_proceso": "CD-331-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10933466",
+      "referencia_del_proceso": "CD-332-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10933878",
+      "referencia_del_proceso": "CD-333-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10934417",
+      "referencia_del_proceso": "CD-334-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10935412",
+      "referencia_del_proceso": "CD-335-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10935702",
+      "referencia_del_proceso": "CD-336-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10970658",
+      "referencia_del_proceso": "CD-337-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10971206",
+      "referencia_del_proceso": "CD-338-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10971807",
+      "referencia_del_proceso": "CD-339-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10971878",
+      "referencia_del_proceso": "CD-340-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10972640",
+      "referencia_del_proceso": "CD-341-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10973534",
+      "referencia_del_proceso": "CD-342-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10973853",
+      "referencia_del_proceso": "CD-343-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10981193",
+      "referencia_del_proceso": "CA-002-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10983010",
+      "referencia_del_proceso": "CA002-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.7388759",
+      "referencia_del_proceso": "CD-001-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8099819",
+      "referencia_del_proceso": "CA-001-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8156422",
+      "referencia_del_proceso": "CA-002-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8359532",
+      "referencia_del_proceso": "CA-003-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8360138",
+      "referencia_del_proceso": "CA-004-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8360237",
+      "referencia_del_proceso": "CA-0004-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8529169",
+      "referencia_del_proceso": "CA-005-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8594783",
+      "referencia_del_proceso": "CA-006-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8710653",
+      "referencia_del_proceso": "CAC-001-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8732977",
+      "referencia_del_proceso": "CA-007-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8739411",
+      "referencia_del_proceso": "CA-008-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8775423",
+      "referencia_del_proceso": "CA-009-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8900471",
+      "referencia_del_proceso": "CA-010-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.8999734",
+      "referencia_del_proceso": "CAC-002-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9161097",
+      "referencia_del_proceso": "CA-011-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9251461",
+      "referencia_del_proceso": "CA-012-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9604463",
+      "referencia_del_proceso": "CD-001-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9605097",
+      "referencia_del_proceso": "CD-01-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9605844",
+      "referencia_del_proceso": "P-CD-001-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9763783",
+      "referencia_del_proceso": "PCD-003-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9763948",
+      "referencia_del_proceso": "PCD-004-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9764664",
+      "referencia_del_proceso": "PCD-005-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9765282",
+      "referencia_del_proceso": "PCD-006-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9765432",
+      "referencia_del_proceso": "PCD-007-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9765625",
+      "referencia_del_proceso": "PCD-008-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9765659",
+      "referencia_del_proceso": "PCD-009-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9766321",
+      "referencia_del_proceso": "PCD-001-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9767059",
+      "referencia_del_proceso": "PCD-010-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9767739",
+      "referencia_del_proceso": "PCD-011-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9768537",
+      "referencia_del_proceso": "PCD-012-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9768958",
+      "referencia_del_proceso": "PCD-013-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9770105",
+      "referencia_del_proceso": "PCD-014-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9770907",
+      "referencia_del_proceso": "PCD-015-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9770977",
+      "referencia_del_proceso": "PCD-016-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9772059",
+      "referencia_del_proceso": "PCD-017-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9772578",
+      "referencia_del_proceso": "PCD-018-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9773164",
+      "referencia_del_proceso": "PCD-019-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9773683",
+      "referencia_del_proceso": "PCD-020-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9776304",
+      "referencia_del_proceso": "PCD-044-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9786020",
+      "referencia_del_proceso": "PCD-021-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9786321",
+      "referencia_del_proceso": "PCD-022-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9786893",
+      "referencia_del_proceso": "PCD-033-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9788541",
+      "referencia_del_proceso": "PCD-035-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9798994",
+      "referencia_del_proceso": "PCD-029-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9801023",
+      "referencia_del_proceso": "PCD-030-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9801700",
+      "referencia_del_proceso": "PCD-031-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9803676",
+      "referencia_del_proceso": "PCD-049-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9808720",
+      "referencia_del_proceso": "PCD-036-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9808976",
+      "referencia_del_proceso": "PCD-037-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9816171",
+      "referencia_del_proceso": "PCD-038-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9816376",
+      "referencia_del_proceso": "PCD-039-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9816938",
+      "referencia_del_proceso": "PCD-040-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9817672",
+      "referencia_del_proceso": "PCD-023-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9817681",
+      "referencia_del_proceso": "PCD-041-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9818163",
+      "referencia_del_proceso": "PCD-042-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9819020",
+      "referencia_del_proceso": "PCD-024-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9819572",
+      "referencia_del_proceso": "PCD-048-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9819632",
+      "referencia_del_proceso": "PCD-052-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9820206",
+      "referencia_del_proceso": "PCD-051-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9822018",
+      "referencia_del_proceso": "PCD-025-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9822090",
+      "referencia_del_proceso": "PCD-053-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9822637",
+      "referencia_del_proceso": "PCD-026-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9822994",
+      "referencia_del_proceso": "PCD-027-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9823057",
+      "referencia_del_proceso": "PCD-028-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9823181",
+      "referencia_del_proceso": "PCD-062-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9823441",
+      "referencia_del_proceso": "PCD-061-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9833503",
+      "referencia_del_proceso": "PCD-067-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9833942",
+      "referencia_del_proceso": "PCD-068-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9834402",
+      "referencia_del_proceso": "PCD-069-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9834428",
+      "referencia_del_proceso": "PCD-075-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9834582",
+      "referencia_del_proceso": "PCD-076-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9834776",
+      "referencia_del_proceso": "PCD-063-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9835019",
+      "referencia_del_proceso": "PCD-080-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9835303",
+      "referencia_del_proceso": "PCD-064-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9836413",
+      "referencia_del_proceso": "PCD-055-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9836590",
+      "referencia_del_proceso": "PCD-058-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9836645",
+      "referencia_del_proceso": "PCD-057-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9837333",
+      "referencia_del_proceso": "PCD-059-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9838017",
+      "referencia_del_proceso": "PCD-060-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9838879",
+      "referencia_del_proceso": "PCD-045-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9839094",
+      "referencia_del_proceso": "PCD-084-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9840875",
+      "referencia_del_proceso": "PCD-046-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9841489",
+      "referencia_del_proceso": "PCD-065-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9841555",
+      "referencia_del_proceso": "PCD-047-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9841874",
+      "referencia_del_proceso": "PCD-073-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9842561",
+      "referencia_del_proceso": "PCD-066-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9842904",
+      "referencia_del_proceso": "PCD-074-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9843243",
+      "referencia_del_proceso": "PCD-077-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9843525",
+      "referencia_del_proceso": "PCD-079-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9843555",
+      "referencia_del_proceso": "PCD-081-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9843755",
+      "referencia_del_proceso": "PCD-056-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9843925",
+      "referencia_del_proceso": "PCD-082-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9844816",
+      "referencia_del_proceso": "PCD-071-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9847029",
+      "referencia_del_proceso": "PCD-072-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9848057",
+      "referencia_del_proceso": "PCD-078-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9871790",
+      "referencia_del_proceso": "PCD-108-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9872082",
+      "referencia_del_proceso": "PCD-109-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9873204",
+      "referencia_del_proceso": "PCD-110-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9873905",
+      "referencia_del_proceso": "PCD-070-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9874218",
+      "referencia_del_proceso": "PCD-085-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9874247",
+      "referencia_del_proceso": "PCD-111-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9874676",
+      "referencia_del_proceso": "PCD-112-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9874937",
+      "referencia_del_proceso": "PCD-086-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9875492",
+      "referencia_del_proceso": "PCD-087-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9876049",
+      "referencia_del_proceso": "PCD--113-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9876216",
+      "referencia_del_proceso": "PCD-088-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9876381",
+      "referencia_del_proceso": "PCD-089-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9876465",
+      "referencia_del_proceso": "PCD-114-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9876686",
+      "referencia_del_proceso": "PCD-115-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9876689",
+      "referencia_del_proceso": "PCD-090-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9877432",
+      "referencia_del_proceso": "PCD-091-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9878013",
+      "referencia_del_proceso": "PCD-092-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9878110",
+      "referencia_del_proceso": "PCD-116-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9878514",
+      "referencia_del_proceso": "PCD-106-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9878941",
+      "referencia_del_proceso": "PCD-117-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9882322",
+      "referencia_del_proceso": "PCD-107-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9883831",
+      "referencia_del_proceso": "PCD-101-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9884758",
+      "referencia_del_proceso": "PCD-119-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9885996",
+      "referencia_del_proceso": "PCD-126--2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9886703",
+      "referencia_del_proceso": "PCD-102-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9888866",
+      "referencia_del_proceso": "PCD-104-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9889095",
+      "referencia_del_proceso": "PCD-122-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9890054",
+      "referencia_del_proceso": "PCD-123-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9890896",
+      "referencia_del_proceso": "PCD-124-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9893918",
+      "referencia_del_proceso": "PCD-127-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9894514",
+      "referencia_del_proceso": "PCD-136-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9895503",
+      "referencia_del_proceso": "PCD-130-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9896543",
+      "referencia_del_proceso": "PCD-137-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9897499",
+      "referencia_del_proceso": "PCD-132-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9897539",
+      "referencia_del_proceso": "PCD-131-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9897579",
+      "referencia_del_proceso": "CD-120-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898062",
+      "referencia_del_proceso": "PDC-099-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898204",
+      "referencia_del_proceso": "PCD-098-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898207",
+      "referencia_del_proceso": "PCD-100-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898536",
+      "referencia_del_proceso": "PCD-133-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898609",
+      "referencia_del_proceso": "PCD-103-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898705",
+      "referencia_del_proceso": "PCD-118-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898743",
+      "referencia_del_proceso": "PCD-125-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898773",
+      "referencia_del_proceso": "PCD-135-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898860",
+      "referencia_del_proceso": "PCD-138-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9898954",
+      "referencia_del_proceso": "PCD-105-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9906697",
+      "referencia_del_proceso": "PCD-139-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9906883",
+      "referencia_del_proceso": "PCD-128-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9907341",
+      "referencia_del_proceso": "PCD-145-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9907421",
+      "referencia_del_proceso": "PCD-147-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9907747",
+      "referencia_del_proceso": "CD-146-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9908129",
+      "referencia_del_proceso": "PCD-148-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9908869",
+      "referencia_del_proceso": "PCD-134-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9909285",
+      "referencia_del_proceso": "PCD-140-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9909308",
+      "referencia_del_proceso": "PCD-129-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9909396",
+      "referencia_del_proceso": "PCD-141-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9909552",
+      "referencia_del_proceso": "PCD-149-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9909952",
+      "referencia_del_proceso": "PCD-142-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9911727",
+      "referencia_del_proceso": "PCD-161-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9912070",
+      "referencia_del_proceso": "PCD-150-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9913259",
+      "referencia_del_proceso": "PCD-151-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9913569",
+      "referencia_del_proceso": "PCD-143-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9913657",
+      "referencia_del_proceso": "PCD-152-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9914171",
+      "referencia_del_proceso": "PCD-155-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9914249",
+      "referencia_del_proceso": "PCD-153-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9914261",
+      "referencia_del_proceso": "PCD-144-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9914585",
+      "referencia_del_proceso": "PCD-154-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9914619",
+      "referencia_del_proceso": "PCD-158-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9915093",
+      "referencia_del_proceso": "PCD-160-2026-"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9915152",
+      "referencia_del_proceso": "PCD-159-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9915649",
+      "referencia_del_proceso": "PCD-162-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9915791",
+      "referencia_del_proceso": "PCD-043-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9915855",
+      "referencia_del_proceso": "PCD-163-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9915892",
+      "referencia_del_proceso": "PCD-164-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9916059",
+      "referencia_del_proceso": "PCD-165-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9916384",
+      "referencia_del_proceso": "PCD-166-2025"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9920267",
+      "referencia_del_proceso": "PCD-175-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9920668",
+      "referencia_del_proceso": "PCD-167-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9920821",
+      "referencia_del_proceso": "PCD-176-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9921058",
+      "referencia_del_proceso": "PCD-180-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9921106",
+      "referencia_del_proceso": "PCD-174-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9921193",
+      "referencia_del_proceso": "PCD-168-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9921201",
+      "referencia_del_proceso": "PCD-179-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9921638",
+      "referencia_del_proceso": "PCD-169-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9921972",
+      "referencia_del_proceso": "PCD-121-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9923189",
+      "referencia_del_proceso": "CD-170-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9923447",
+      "referencia_del_proceso": "PCD-186-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9923567",
+      "referencia_del_proceso": "PCT-001-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9924425",
+      "referencia_del_proceso": "PCD-185-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9924698",
+      "referencia_del_proceso": "PCD-173-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9924936",
+      "referencia_del_proceso": "PCD-190-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9925393",
+      "referencia_del_proceso": "PCD-189-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9925408",
+      "referencia_del_proceso": "PCD-177-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9925868",
+      "referencia_del_proceso": "PCD-171-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9926195",
+      "referencia_del_proceso": "PCD-184-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9926210",
+      "referencia_del_proceso": "PCD-181-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9926349",
+      "referencia_del_proceso": "PCD-191-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9926365",
+      "referencia_del_proceso": "PCD-192-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9926521",
+      "referencia_del_proceso": "PCD-188-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9933067",
+      "referencia_del_proceso": "PCD-197-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9933655",
+      "referencia_del_proceso": "PCD-156-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9933709",
+      "referencia_del_proceso": "PCD-187-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9934761",
+      "referencia_del_proceso": "PCD-172-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9934868",
+      "referencia_del_proceso": "CD-201-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9935129",
+      "referencia_del_proceso": "PCD-203-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9936608",
+      "referencia_del_proceso": "CD-206-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9938745",
+      "referencia_del_proceso": "CD-208-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9939459",
+      "referencia_del_proceso": "PCD-202-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9940145",
+      "referencia_del_proceso": "PCD-182-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9941024",
+      "referencia_del_proceso": "PCD-217-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9942707",
+      "referencia_del_proceso": "PCD-183-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9942879",
+      "referencia_del_proceso": "PCD-210-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9944453",
+      "referencia_del_proceso": "PCD-157-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9944513",
+      "referencia_del_proceso": "PCD-213-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9945494",
+      "referencia_del_proceso": "PCD-209-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9947394",
+      "referencia_del_proceso": "PCD-214-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9947835",
+      "referencia_del_proceso": "PCD-215-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9948397",
+      "referencia_del_proceso": "CD-193-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9948716",
+      "referencia_del_proceso": "PCD-211-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9949439",
+      "referencia_del_proceso": "PCD-178-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9949547",
+      "referencia_del_proceso": "PCD-212-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9950225",
+      "referencia_del_proceso": "PCD-219-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9951093",
+      "referencia_del_proceso": "PCD-194-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9951248",
+      "referencia_del_proceso": "CD-216-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9952237",
+      "referencia_del_proceso": "PCD-218-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9953824",
+      "referencia_del_proceso": "PCD-034-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9959472",
+      "referencia_del_proceso": "PCD-207-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9960837",
+      "referencia_del_proceso": "PCD-216-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9963408",
+      "referencia_del_proceso": "CD-205-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9968763",
+      "referencia_del_proceso": "PCD-200-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9971867",
+      "referencia_del_proceso": "PCD-119-2026."
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9972801",
+      "referencia_del_proceso": "PCD-184-2026."
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9974489",
+      "referencia_del_proceso": "PCD-179-2026."
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9975452",
+      "referencia_del_proceso": "PCD-180-2026."
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9976770",
+      "referencia_del_proceso": "PCD-157-2026."
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9977711",
+      "referencia_del_proceso": "PCD-201-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9979151",
+      "referencia_del_proceso": "PCD-204-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9979495",
+      "referencia_del_proceso": "PCD-220-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9980624",
+      "referencia_del_proceso": "PCD-196-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9981071",
+      "referencia_del_proceso": "PCD-222-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9982570",
+      "referencia_del_proceso": "PCD-195-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9983302",
+      "referencia_del_proceso": "PCD-221-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9983610",
+      "referencia_del_proceso": "PCD-224-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9986924",
+      "referencia_del_proceso": "PCD-223-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9998302",
+      "referencia_del_proceso": "PCD-227-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9998458",
+      "referencia_del_proceso": "PCD-225-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.9999941",
+      "referencia_del_proceso": "PCD-229-2026"
+    }
+  ],
+  "sha256": "08f118deaaf0355202562f6c456fbebbf04f10364d2db7aba8a393fd2646ae1f",
+  "status": "MATERIALIZED"
+}

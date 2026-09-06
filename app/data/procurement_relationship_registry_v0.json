@@ -1,0 +1,505 @@
+{
+  "data_version": "PROCUREMENT_RELATIONSHIP_FOUNDATION_V0",
+  "deferred_relations": {
+    "PLANNED_AS": {
+      "assertion_status": "UNSUPPORTED",
+      "attributes": {},
+      "cardinality": {
+        "in": "0..n",
+        "out": "0..n"
+      },
+      "coverage_status": "UNKNOWN",
+      "from_type": "PAA_ITEM",
+      "identity_authority": [
+        "DEFERRED_TO_PAA_AUDIT"
+      ],
+      "known_caveats": [
+        "Source observation with dated evidence; never infer absent edges."
+      ],
+      "runtime_status": "DEFERRED",
+      "source": [
+        "future_paa"
+      ],
+      "to_type": "PROCESS"
+    },
+    "REPRESENTS_ACTOR": {
+      "assertion_status": "UNSUPPORTED",
+      "attributes": {},
+      "cardinality": {
+        "in": "0..n",
+        "out": "0..n"
+      },
+      "coverage_status": "UNKNOWN",
+      "from_type": "SECOP_SUPPLIER",
+      "identity_authority": [
+        "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED"
+      ],
+      "known_caveats": [
+        "Source observation with dated evidence; never infer absent edges."
+      ],
+      "runtime_status": "DEFERRED",
+      "source": [
+        "future_identity"
+      ],
+      "to_type": "ACTOR"
+    }
+  },
+  "derived_relations": {
+    "BUYER_CONTRACTED_WITH": {
+      "caveat": "Shared observed process/group is a structural co-occurrence; competition or partnership interpretation needs scope.",
+      "primary": false,
+      "requirements": [
+        "explicit temporal window",
+        "metric definition",
+        "coverage",
+        "provenance"
+      ]
+    },
+    "COMPETES_WITH": {
+      "caveat": "Shared observed process/group is a structural co-occurrence; competition or partnership interpretation needs scope.",
+      "primary": false,
+      "requirements": [
+        "explicit temporal window",
+        "metric definition",
+        "coverage",
+        "provenance"
+      ]
+    },
+    "FREQUENT_PARTNER": {
+      "caveat": "Shared observed process/group is a structural co-occurrence; competition or partnership interpretation needs scope.",
+      "primary": false,
+      "requirements": [
+        "explicit temporal window",
+        "metric definition",
+        "coverage",
+        "provenance"
+      ]
+    },
+    "PARTNERED_WITH": {
+      "caveat": "Shared observed process/group is a structural co-occurrence; competition or partnership interpretation needs scope.",
+      "primary": false,
+      "requirements": [
+        "explicit temporal window",
+        "metric definition",
+        "coverage",
+        "provenance"
+      ]
+    },
+    "RELATED_TO": {
+      "caveat": "Shared observed process/group is a structural co-occurrence; competition or partnership interpretation needs scope.",
+      "primary": false,
+      "requirements": [
+        "explicit temporal window",
+        "metric definition",
+        "coverage",
+        "provenance"
+      ]
+    },
+    "SAME_MARKET": {
+      "caveat": "Shared observed process/group is a structural co-occurrence; competition or partnership interpretation needs scope.",
+      "primary": false,
+      "requirements": [
+        "explicit temporal window",
+        "metric definition",
+        "coverage",
+        "provenance"
+      ]
+    },
+    "WON_AGAINST": {
+      "caveat": "Shared observed process/group is a structural co-occurrence; competition or partnership interpretation needs scope.",
+      "primary": false,
+      "requirements": [
+        "explicit temporal window",
+        "metric definition",
+        "coverage",
+        "provenance"
+      ]
+    }
+  },
+  "edge_types": {
+    "BID_ON": {
+      "assertion_kind": "EXACT_SOURCE_JOIN",
+      "assertion_status": "SUPPORTED",
+      "attributes": {},
+      "cardinality": {
+        "in": "0..n",
+        "out": "0..n"
+      },
+      "coverage_status": "PARTIAL",
+      "evidence_ref": "artifacts/audits/relationship_foundation_v0/edge_evidence.json",
+      "from_type": "SECOP_SUPPLIER",
+      "identity_authority": [
+        "hgi6.id_procedimiento = p6dx.id_del_proceso",
+        "hgi6.codigo_proveedor"
+      ],
+      "known_caveats": [
+        "Observed process-level proponent, not necessarily a valid/evaluated offer; lot-level unsupported.",
+        "Deduplicate process/code pairs; coverage uses explicit scoped population.",
+        "No independent UI accuracy estimate is claimed."
+      ],
+      "runtime_status": "SHADOW",
+      "source": [
+        "hgi6-6wh3",
+        "p6dx-8zbt"
+      ],
+      "to_type": "PROCESS"
+    },
+    "HAS_CONTRACTOR": {
+      "assertion_kind": "SOURCE_ROW_WITH_AUTHORITY_PROJECTION",
+      "assertion_status": "SUPPORTED",
+      "attributes": {
+        "contract_status": "estado_contrato verbatim",
+        "signature_date": "fecha_de_firma optional"
+      },
+      "cardinality": {
+        "in": "0..n",
+        "out": "0..1"
+      },
+      "coverage_status": "PARTIAL",
+      "evidence_ref": "artifacts/audits/relationship_foundation_v0/edge_evidence.json",
+      "from_type": "CONTRACT",
+      "identity_authority": [
+        "result_identity(contract) -> codigo_proveedor; recorded provider of this contract"
+      ],
+      "known_caveats": [
+        "Provider recorded on a contract, including draft/cancelled records; not proof of signed obligation.",
+        "Reject null, blank, noninteger and all-zero provider codes; Actor remains separate."
+      ],
+      "runtime_status": "SHADOW",
+      "source": [
+        "jbjy-vk9h"
+      ],
+      "to_type": "SECOP_SUPPLIER"
+    },
+    "HAS_RECORDED_CONTRACT": {
+      "assertion_kind": "EXACT_SOURCE_JOIN",
+      "assertion_status": "SUPPORTED",
+      "attributes": {},
+      "cardinality": {
+        "in": "0..1",
+        "out": "0..n"
+      },
+      "coverage_status": "PARTIAL",
+      "evidence_ref": "artifacts/audits/relationship_foundation_v0/edge_evidence.json",
+      "from_type": "PROCESS",
+      "identity_authority": [
+        "jbjy.proceso_de_compra = p6dx.id_del_portafolio -> result_identity(p6dx)",
+        "exactly one stable process endpoint per portfolio"
+      ],
+      "known_caveats": [
+        "Portfolio reference is not process identity; reject portfolio mapping to multiple stable process IDs.",
+        "Recorded association, not causal proof of award, signature or execution.",
+        "Direct BDOS-to-REQ equality was falsified; no string replacement."
+      ],
+      "runtime_status": "SHADOW",
+      "source": [
+        "p6dx-8zbt",
+        "jbjy-vk9h"
+      ],
+      "to_type": "CONTRACT"
+    },
+    "IN_TERRITORY": {
+      "assertion_kind": "SOURCE_ROW_WITH_AUTHORITY_PROJECTION",
+      "assertion_status": "SUPPORTED",
+      "attributes": {},
+      "cardinality": {
+        "in": "0..n",
+        "out": "0..1"
+      },
+      "coverage_status": "PARTIAL",
+      "evidence_ref": "artifacts/audits/relationship_foundation_v0/edge_evidence.json",
+      "from_type": "INSTITUTION",
+      "identity_authority": [
+        "ADR-075",
+        "ADR-080",
+        "logical institution id -> DIVIPOLA"
+      ],
+      "known_caveats": [
+        "Affiliation, not headquarters or place of contract execution.",
+        "ADR-080 SHADOW_NO_RUNTIME prevails; PRODUCTIVE_METADATA_ONLY is not a runtime status."
+      ],
+      "runtime_status": "SHADOW",
+      "source": [
+        "territorial"
+      ],
+      "to_type": "TERRITORY"
+    },
+    "MEMBER_OF_SUPPLIER_GROUP": {
+      "assertion_kind": "SOURCE_ROW_WITH_AUTHORITY_PROJECTION",
+      "assertion_status": "SUPPORTED",
+      "attributes": {
+        "is_leader": "es_lider_del_grupo; Verdadero/Falso, otherwise null with raw preserved",
+        "participation_pct": "participacion; decimal [0,100], otherwise null with raw preserved"
+      },
+      "cardinality": {
+        "in": "0..n",
+        "out": "0..n"
+      },
+      "coverage_status": "PARTIAL",
+      "evidence_ref": "artifacts/audits/relationship_foundation_v0/edge_evidence.json",
+      "from_type": "SECOP_SUPPLIER",
+      "identity_authority": [
+        "codigo_participante -> codigo_grupo in the same row"
+      ],
+      "known_caveats": [
+        "Snapshot membership; no effective-time history inferred.",
+        "Missing participant code cannot be replaced by NIT/name.",
+        "Active and creation_date belong to group; membership percentage is not attributed contract revenue."
+      ],
+      "runtime_status": "SHADOW",
+      "source": [
+        "ceth-n4bn"
+      ],
+      "to_type": "SUPPLIER_GROUP"
+    },
+    "PUBLISHED": {
+      "assertion_kind": "SOURCE_ROW_WITH_AUTHORITY_PROJECTION",
+      "assertion_status": "SUPPORTED",
+      "attributes": {},
+      "cardinality": {
+        "in": "0..1",
+        "out": "0..n"
+      },
+      "coverage_status": "PARTIAL",
+      "evidence_ref": "artifacts/audits/relationship_foundation_v0/edge_evidence.json",
+      "from_type": "INSTITUTION",
+      "identity_authority": [
+        "exact dataset-aware buyer binding",
+        "result_identity(p6dx-8zbt)"
+      ],
+      "institution_status_required": "PRODUCT_RECOGNIZED",
+      "known_caveats": [
+        "Only unique exact accredited buyer bindings; exclude owner conflicts.",
+        "Unmapped institutions cannot receive fabricated graph IDs."
+      ],
+      "runtime_status": "SHADOW",
+      "source": [
+        "p6dx-8zbt",
+        "buyer_bindings"
+      ],
+      "to_type": "PROCESS"
+    },
+    "PUBLISHED_CONTRACT": {
+      "assertion_kind": "SOURCE_ROW_WITH_AUTHORITY_PROJECTION",
+      "assertion_status": "SUPPORTED",
+      "attributes": {},
+      "cardinality": {
+        "in": "0..1",
+        "out": "0..n"
+      },
+      "coverage_status": "PARTIAL",
+      "evidence_ref": "artifacts/audits/relationship_foundation_v0/edge_evidence.json",
+      "from_type": "INSTITUTION",
+      "identity_authority": [
+        "exact dataset-aware buyer binding",
+        "result_identity(jbjy-vk9h)"
+      ],
+      "institution_status_required": "PRODUCT_RECOGNIZED",
+      "known_caveats": [
+        "Only unique exact accredited buyer bindings; exclude owner conflicts.",
+        "Unmapped institutions cannot receive fabricated graph IDs.",
+        "nombre_entidad officially describes publisher, not signature; draft/cancelled rows exist."
+      ],
+      "runtime_status": "SHADOW",
+      "source": [
+        "jbjy-vk9h",
+        "buyer_bindings"
+      ],
+      "to_type": "CONTRACT"
+    },
+    "SELECTED_IN_BUYER_GROUP": {
+      "assertion_kind": "SOURCE_ROW_WITH_AUTHORITY_PROJECTION",
+      "assertion_status": "SUPPORTED",
+      "attributes": {},
+      "cardinality": {
+        "in": "0..n",
+        "out": "0..n"
+      },
+      "coverage_scope": "Declared versioned group; node projection requires existing logical IDs.",
+      "coverage_status": "COMPLETE",
+      "evidence_ref": "artifacts/audits/relationship_foundation_v0/edge_evidence.json",
+      "existing_product_capability": "PRODUCTIVE declared BuyerGroup selection; this graph schema remains SHADOW.",
+      "from_type": "INSTITUTION",
+      "identity_authority": [
+        "ADR-074",
+        "exact versioned declared membership -> existing logical institution id"
+      ],
+      "known_caveats": [
+        "Source observation with dated evidence; never infer absent edges."
+      ],
+      "runtime_status": "SHADOW",
+      "source": [
+        "buyer_groups"
+      ],
+      "to_type": "BUYER_GROUP"
+    }
+  },
+  "gates": {
+    "ACTOR_PROFILE_EFFECT": 0,
+    "BUYER_GROUP_INFERRED_MEMBERSHIP": 0,
+    "CONTRACT_UNSTABLE_IDS_AS_NODES": 0,
+    "ENTITY_ANALYSIS_EFFECT": 0,
+    "NAME_AS_PRIMARY_NODE_ID": 0,
+    "NIT_AS_BUYER_UNIT_ID": 0,
+    "NIT_AS_SECOP_SUPPLIER_ID": 0,
+    "PROCESS_UNSTABLE_IDS_AS_NODES": 0,
+    "QUERY_EFFECT": 0,
+    "RADAR_EFFECT": 0,
+    "RUNTIME_IMPORTS": 0,
+    "SOQL_EFFECT": 0,
+    "SUPPLIER_CODE_AS_ACTOR_ID": 0,
+    "TERRITORY_AS_BUYER": 0
+  },
+  "node_types": {
+    "ACTOR": {
+      "attributes": [
+        "document_type",
+        "base_number",
+        "identity_provenance"
+      ],
+      "authority": "app/core/actor_identity.py:IdentityKey",
+      "caveat": "UNKNOWN remains unknown document type; not legal-person certification. No supplier links.",
+      "document_types": [
+        "NIT",
+        "CC",
+        "UNKNOWN"
+      ],
+      "id_format": "actor:<document_type>:<base_number>",
+      "materializable": true
+    },
+    "BUYER_GROUP": {
+      "attributes": [
+        "version",
+        "label"
+      ],
+      "authority": "app/data/buyer_groups.json:declared id",
+      "id_format": "buyer_group:<group_id>",
+      "materializable": true
+    },
+    "CONTRACT": {
+      "attributes": [
+        "identity_field",
+        "reason_codes",
+        "estado_contrato",
+        "fecha_de_firma"
+      ],
+      "authority": "app/core/result_identity.py:result_identity",
+      "caveat": "Preserve stable_key verbatim, including reference fallback. Do not strengthen existing authority.",
+      "id_format": "contract:jbjy-vk9h:<stable_key>",
+      "materializable": true,
+      "stable_only": true
+    },
+    "INSTITUTION": {
+      "attributes": [
+        "knowledge_status",
+        "product_buyer_unit",
+        "territory_divipola",
+        "family"
+      ],
+      "authority": "app/core/territorial_knowledge.py:Institution.institution_id",
+      "caveat": "Only PRODUCT_RECOGNIZED may originate future productive transactional edges; other knowledge remains shadow.",
+      "id_format": "institution:<logical_id>",
+      "materializable": true
+    },
+    "PAA_ITEM": {
+      "attributes": [],
+      "authority": "DEFERRED_TO_PAA_AUDIT",
+      "id_format": "paa_item:<future_authority>",
+      "materializable": false
+    },
+    "PROCESS": {
+      "attributes": [
+        "identity_field",
+        "reason_codes"
+      ],
+      "authority": "app/core/result_identity.py:result_identity",
+      "caveat": "Preserve stable_key verbatim, including reference fallback. Do not strengthen existing authority.",
+      "id_format": "process:p6dx-8zbt:<stable_key>",
+      "materializable": true,
+      "stable_only": true
+    },
+    "SECOP_SUPPLIER": {
+      "attributes": [
+        "platform_code",
+        "source",
+        "observed_at"
+      ],
+      "authority": "official SECOP II platform codes; scoped exact-code witnesses",
+      "caveat": "Exact nonzero ASCII integer text; no document fallback. Equality witnesses are bounded, not universal namespace proof.",
+      "id_format": "secop_supplier:<platform_code>",
+      "materializable": true
+    },
+    "SUPPLIER_GROUP": {
+      "attributes": [
+        "active",
+        "creation_date",
+        "PLATFORM_SUPPLIER_CODE",
+        "platform_reference_evidence"
+      ],
+      "authority": "ceth-n4bn:codigo_grupo",
+      "caveat": "PLATFORM_SUPPLIER_CODE references secop_supplier:<code> only with exact ceth/hgi6 evidence; no type collapse.",
+      "id_format": "supplier_group:<group_code>",
+      "materializable": true
+    },
+    "TERRITORY": {
+      "attributes": [
+        "municipality",
+        "department",
+        "macro_region"
+      ],
+      "authority": "app/data/territorial_knowledge_v0.json:DIVIPOLA",
+      "id_format": "territory:<divipola>",
+      "materializable": true
+    }
+  },
+  "schema_version": 0,
+  "source_authorities": {
+    "buyer_bindings": {
+      "authority": "exact dataset projection",
+      "paths": [
+        "app/data/buyer_source_names.json",
+        "app/data/aliases_db.json"
+      ]
+    },
+    "buyer_groups": {
+      "authority": "ADR-074",
+      "path": "app/data/buyer_groups.json"
+    },
+    "ceth-n4bn": {
+      "metadata_receipt_sha256": "4b1999f2e58e359545814ef46c2702e0a5c106090c068522bda10228a6d83e5c",
+      "url": "https://www.datos.gov.co/api/views/ceth-n4bn.json"
+    },
+    "future_identity": {
+      "authority": "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED"
+    },
+    "future_paa": {
+      "authority": "DEFERRED_TO_PAA_AUDIT"
+    },
+    "hgi6-6wh3": {
+      "metadata_receipt_sha256": "493d901c2b4afdc2c04ae0eaf15727a8be2953a26163bd9e18b633161fb9de1a",
+      "url": "https://www.datos.gov.co/api/views/hgi6-6wh3.json"
+    },
+    "jbjy-vk9h": {
+      "metadata_receipt_sha256": "51608981e6f811851439886ff253115d19180894578cf0dec98b66de0781f5a7",
+      "url": "https://www.datos.gov.co/api/views/jbjy-vk9h.json"
+    },
+    "local_digests": {
+      "app/core/actor_identity.py": "ca0c436eecea67fbbb30d5397249b193112cc15f0bf9f50444ae3ef35ae9b725",
+      "app/core/result_identity.py": "74639814a9da404b209dea5f331d02de54b519f3527a2c2a52f3bd1515e624f6",
+      "app/core/territorial_knowledge.py": "ef9f75915f47a7765d8f5f61efe94885f2914b7cf1b99b7c74204eea10cae959",
+      "app/data/aliases_db.json": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
+      "app/data/buyer_groups.json": "627ad644e96e1967261bae926c4f6180af39c5ca0ebcc2e8114167be8cedeade",
+      "app/data/buyer_source_names.json": "98148e1c5676b90a9c1cde4f43f89c165550cef02db55dfca615c16916d275c2",
+      "app/data/territorial_knowledge_v0.json": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63"
+    },
+    "p6dx-8zbt": {
+      "metadata_receipt_sha256": "7f1b89efdb1480168349f2c5bb086bd07b1e0da388b1fbdc60889f500cfecbb1",
+      "url": "https://www.datos.gov.co/api/views/p6dx-8zbt.json"
+    },
+    "territorial": {
+      "authority": "ADR-075 / ADR-080",
+      "path": "app/data/territorial_knowledge_v0.json"
+    }
+  },
+  "state": "SHADOW_FOUNDATION"
+}

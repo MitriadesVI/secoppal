@@ -1,0 +1,525 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/hgi6-6wh3.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:41:44.636788+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_procedimiento,codigo_proveedor",
+    "$select": "id_procedimiento,codigo_proveedor,entidad_compradora",
+    "$where": "entidad_compradora in ('ALCALDIA MUNICIPAL DE BARANOA') AND fecha_publicaci_n >= '2025-01-01T00:00:00' AND fecha_publicaci_n < '2026-09-07T00:00:00'"
+  },
+  "payload": [
+    {
+      "codigo_proveedor": "706399375",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10202427"
+    },
+    {
+      "codigo_proveedor": "717204325",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10202427"
+    },
+    {
+      "codigo_proveedor": "725478838",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10202427"
+    },
+    {
+      "codigo_proveedor": "732393202",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10202427"
+    },
+    {
+      "codigo_proveedor": "735671125",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10202427"
+    },
+    {
+      "codigo_proveedor": "716814686",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10203709"
+    },
+    {
+      "codigo_proveedor": "716106083",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10203785"
+    },
+    {
+      "codigo_proveedor": "731034708",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10203785"
+    },
+    {
+      "codigo_proveedor": "717204325",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10204422"
+    },
+    {
+      "codigo_proveedor": "725321467",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10204422"
+    },
+    {
+      "codigo_proveedor": "732393202",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10204422"
+    },
+    {
+      "codigo_proveedor": "735671125",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10204422"
+    },
+    {
+      "codigo_proveedor": "704662493",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10229051"
+    },
+    {
+      "codigo_proveedor": "712690072",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10229051"
+    },
+    {
+      "codigo_proveedor": "700891021",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10275770"
+    },
+    {
+      "codigo_proveedor": "707148177",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10275770"
+    },
+    {
+      "codigo_proveedor": "713384741",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10275770"
+    },
+    {
+      "codigo_proveedor": "716106083",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10275770"
+    },
+    {
+      "codigo_proveedor": "707148177",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10276439"
+    },
+    {
+      "codigo_proveedor": "708093877",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10276439"
+    },
+    {
+      "codigo_proveedor": "713384741",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10276439"
+    },
+    {
+      "codigo_proveedor": "716106083",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10276439"
+    },
+    {
+      "codigo_proveedor": "720014273",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10276439"
+    },
+    {
+      "codigo_proveedor": "735786147",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10276439"
+    },
+    {
+      "codigo_proveedor": "703984435",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10277667"
+    },
+    {
+      "codigo_proveedor": "704322064",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10277667"
+    },
+    {
+      "codigo_proveedor": "706543907",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10277667"
+    },
+    {
+      "codigo_proveedor": "712909191",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10277667"
+    },
+    {
+      "codigo_proveedor": "718082522",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10277667"
+    },
+    {
+      "codigo_proveedor": "723283115",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10277667"
+    },
+    {
+      "codigo_proveedor": "700794076",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "700856057",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "702451410",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "704542513",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "706879665",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "710596271",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "711188326",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "711904060",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "712213958",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "716151337",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "720587104",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "723423661",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "728303025",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301398"
+    },
+    {
+      "codigo_proveedor": "700129067",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301933"
+    },
+    {
+      "codigo_proveedor": "704641182",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301933"
+    },
+    {
+      "codigo_proveedor": "704828045",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301933"
+    },
+    {
+      "codigo_proveedor": "712116219",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301933"
+    },
+    {
+      "codigo_proveedor": "712213958",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301933"
+    },
+    {
+      "codigo_proveedor": "726170699",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301933"
+    },
+    {
+      "codigo_proveedor": "728134800",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301933"
+    },
+    {
+      "codigo_proveedor": "735852394",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301933"
+    },
+    {
+      "codigo_proveedor": "736047069",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301933"
+    },
+    {
+      "codigo_proveedor": "709262547",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10301988"
+    },
+    {
+      "codigo_proveedor": "700122047",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10302201"
+    },
+    {
+      "codigo_proveedor": "712213958",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10302201"
+    },
+    {
+      "codigo_proveedor": "718628647",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10302201"
+    },
+    {
+      "codigo_proveedor": "720587104",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10302201"
+    },
+    {
+      "codigo_proveedor": "720596667",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10302201"
+    },
+    {
+      "codigo_proveedor": "704336692",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10327403"
+    },
+    {
+      "codigo_proveedor": "716106083",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10350223"
+    },
+    {
+      "codigo_proveedor": "701117616",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "702183187",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "702722596",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "729090878",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "730744240",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736485053",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736496191",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736497199",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736504127",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736520131",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736520149",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736541798",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736556218",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736603937",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736611815",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736810706",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736825381",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736827528",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736832023",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736833260",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736835885",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736838293",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736840034",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "736843095",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10398794"
+    },
+    {
+      "codigo_proveedor": "735681892",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10412139"
+    },
+    {
+      "codigo_proveedor": "704392463",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10418127"
+    },
+    {
+      "codigo_proveedor": "700306053",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10434311"
+    },
+    {
+      "codigo_proveedor": "700326028",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10434311"
+    },
+    {
+      "codigo_proveedor": "700306053",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10441198"
+    },
+    {
+      "codigo_proveedor": "702627043",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10450754"
+    },
+    {
+      "codigo_proveedor": "718990625",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10450754"
+    },
+    {
+      "codigo_proveedor": "730691631",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10450754"
+    },
+    {
+      "codigo_proveedor": "736557307",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10450754"
+    },
+    {
+      "codigo_proveedor": "726170699",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10452424"
+    },
+    {
+      "codigo_proveedor": "728207465",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10452424"
+    },
+    {
+      "codigo_proveedor": "707370235",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10486423"
+    },
+    {
+      "codigo_proveedor": "716106083",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10491804"
+    },
+    {
+      "codigo_proveedor": "707631727",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10614520"
+    },
+    {
+      "codigo_proveedor": "723588505",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10614520"
+    },
+    {
+      "codigo_proveedor": "702046079",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.10697284"
+    },
+    {
+      "codigo_proveedor": "709468011",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.8710653"
+    },
+    {
+      "codigo_proveedor": "725597231",
+      "entidad_compradora": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_procedimiento": "CO1.REQ.8999734"
+    }
+  ],
+  "sha256": "50a42da217221a43668fc84e389f8402933ab04e19f72b31782461a2c8d74b57",
+  "status": "MATERIALIZED"
+}

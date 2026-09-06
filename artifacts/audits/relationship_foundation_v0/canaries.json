@@ -1,0 +1,1850 @@
+{
+  "bid_multi": [
+    {
+      "process": "CO1.REQ.10202427",
+      "suppliers": [
+        "706399375",
+        "717204325",
+        "725478838",
+        "732393202",
+        "735671125"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10203785",
+      "suppliers": [
+        "716106083",
+        "731034708"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10204422",
+      "suppliers": [
+        "717204325",
+        "725321467",
+        "732393202",
+        "735671125"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10229051",
+      "suppliers": [
+        "704662493",
+        "712690072"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10275770",
+      "suppliers": [
+        "700891021",
+        "707148177",
+        "713384741",
+        "716106083"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10276439",
+      "suppliers": [
+        "707148177",
+        "708093877",
+        "713384741",
+        "716106083",
+        "720014273",
+        "735786147"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10277667",
+      "suppliers": [
+        "703984435",
+        "704322064",
+        "706543907",
+        "712909191",
+        "718082522",
+        "723283115"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10301398",
+      "suppliers": [
+        "700794076",
+        "700856057",
+        "702451410",
+        "704542513",
+        "706879665",
+        "710596271",
+        "711188326",
+        "711904060",
+        "712213958",
+        "716151337",
+        "720587104",
+        "723423661",
+        "728303025"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10301933",
+      "suppliers": [
+        "700129067",
+        "704641182",
+        "704828045",
+        "712116219",
+        "712213958",
+        "726170699",
+        "728134800",
+        "735852394",
+        "736047069"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10302201",
+      "suppliers": [
+        "700122047",
+        "712213958",
+        "718628647",
+        "720587104",
+        "720596667"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10118405",
+      "suppliers": [
+        "700147119",
+        "702020157",
+        "702730920",
+        "713720910",
+        "726566193"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10185424",
+      "suppliers": [
+        "707679544",
+        "712020130",
+        "735610768",
+        "735614059"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10185860",
+      "suppliers": [
+        "701801227",
+        "701910093",
+        "704366038",
+        "735610784",
+        "735610834"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10190711",
+      "suppliers": [
+        "700043037",
+        "700117021",
+        "700273022"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10196744",
+      "suppliers": [
+        "700036056",
+        "726884059"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10200929",
+      "suppliers": [
+        "701116139",
+        "701258030",
+        "702080037",
+        "715209631",
+        "717124077",
+        "717398341"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10206971",
+      "suppliers": [
+        "700043037",
+        "700951122"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10208048",
+      "suppliers": [
+        "703766451",
+        "712690072"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10216505",
+      "suppliers": [
+        "700036056",
+        "726884059"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10232559",
+      "suppliers": [
+        "700147119",
+        "702730920",
+        "703778191",
+        "707454088",
+        "711979088",
+        "713720910"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10130033",
+      "suppliers": [
+        "702095241",
+        "705137347",
+        "705456622",
+        "713893436"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10146623",
+      "suppliers": [
+        "704628973",
+        "707178794",
+        "717430052",
+        "735459679",
+        "735632325"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10151998",
+      "suppliers": [
+        "706543824",
+        "725620496",
+        "728412362"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10177971",
+      "suppliers": [
+        "700887060",
+        "705103638",
+        "722283462"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10178658",
+      "suppliers": [
+        "701755340",
+        "714390002",
+        "734106594"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10199424",
+      "suppliers": [
+        "700644016",
+        "705103638",
+        "721873214"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10225434",
+      "suppliers": [
+        "700334048",
+        "700364052",
+        "701350050",
+        "735712390"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10228820",
+      "suppliers": [
+        "701076069",
+        "707483921"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10236885",
+      "suppliers": [
+        "730766060",
+        "735794182"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10250460",
+      "suppliers": [
+        "700940042",
+        "706194131",
+        "707030045"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10107224",
+      "suppliers": [
+        "700815509",
+        "725601652"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10203127",
+      "suppliers": [
+        "700940042",
+        "701678138",
+        "727725236"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10280483",
+      "suppliers": [
+        "706941663",
+        "726026651"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10285110",
+      "suppliers": [
+        "701101156",
+        "723202859",
+        "725620496"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10330172",
+      "suppliers": [
+        "704242320",
+        "730648219"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10331755",
+      "suppliers": [
+        "707966065",
+        "718860919",
+        "730433224"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10338011",
+      "suppliers": [
+        "700906183",
+        "707530325"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10344965",
+      "suppliers": [
+        "702055054",
+        "708876826",
+        "724832522",
+        "725456586",
+        "727755407"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10381011",
+      "suppliers": [
+        "706838059",
+        "727112435"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10423903",
+      "suppliers": [
+        "707966065",
+        "736325424"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10136730",
+      "suppliers": [
+        "702062050",
+        "710345323",
+        "715545075"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10193702",
+      "suppliers": [
+        "735693343",
+        "735718058"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10197740",
+      "suppliers": [
+        "700117021",
+        "700773070",
+        "706948411",
+        "735754129",
+        "735758112"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10202597",
+      "suppliers": [
+        "701830119",
+        "710470576"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10214107",
+      "suppliers": [
+        "702963976",
+        "714469467",
+        "719027062",
+        "726071103"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10216334",
+      "suppliers": [
+        "704329895",
+        "735719478"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10218238",
+      "suppliers": [
+        "704258821",
+        "705228062",
+        "710317769",
+        "714321130",
+        "718898687",
+        "734813462",
+        "735670101",
+        "735671075",
+        "735677486",
+        "735684128",
+        "735692147",
+        "735692238"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10219436",
+      "suppliers": [
+        "702146366",
+        "703949594",
+        "704791060",
+        "705376044",
+        "707280202",
+        "709753396"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10228498",
+      "suppliers": [
+        "700507015",
+        "717584015",
+        "732634456"
+      ]
+    },
+    {
+      "process": "CO1.REQ.10231176",
+      "suppliers": [
+        "701282139",
+        "702994765",
+        "704882273",
+        "710962234",
+        "713454577",
+        "725815336"
+      ]
+    }
+  ],
+  "bid_single": [
+    "CO1.REQ.10203709",
+    "CO1.REQ.10301988",
+    "CO1.REQ.10327403",
+    "CO1.REQ.10350223",
+    "CO1.REQ.10412139",
+    "CO1.REQ.10418127",
+    "CO1.REQ.10441198",
+    "CO1.REQ.10486423",
+    "CO1.REQ.10491804",
+    "CO1.REQ.10697284",
+    "CO1.REQ.10108287",
+    "CO1.REQ.10186926",
+    "CO1.REQ.10203519",
+    "CO1.REQ.10208520",
+    "CO1.REQ.10227462",
+    "CO1.REQ.10238850",
+    "CO1.REQ.10252659",
+    "CO1.REQ.10258130",
+    "CO1.REQ.10262035",
+    "CO1.REQ.10274853",
+    "CO1.REQ.10182510",
+    "CO1.REQ.10202429",
+    "CO1.REQ.10204108",
+    "CO1.REQ.10220819",
+    "CO1.REQ.10253714",
+    "CO1.REQ.10253970",
+    "CO1.REQ.10259115",
+    "CO1.REQ.10272368",
+    "CO1.REQ.10300915",
+    "CO1.REQ.10339868",
+    "CO1.REQ.10032078",
+    "CO1.REQ.10038323",
+    "CO1.REQ.10039381",
+    "CO1.REQ.10041292",
+    "CO1.REQ.10201512",
+    "CO1.REQ.10201564",
+    "CO1.REQ.10203680",
+    "CO1.REQ.10229218",
+    "CO1.REQ.10249628",
+    "CO1.REQ.10258356",
+    "CO1.REQ.10013652",
+    "CO1.REQ.10013698",
+    "CO1.REQ.10033609",
+    "CO1.REQ.10042307",
+    "CO1.REQ.10071123",
+    "CO1.REQ.10072616",
+    "CO1.REQ.10077080",
+    "CO1.REQ.10079883",
+    "CO1.REQ.10084273",
+    "CO1.REQ.10087308"
+  ],
+  "bogota_transaction_control": {
+    "capped": false,
+    "physical_buyers": [
+      "(Secretaría Distrital de Integración Social)",
+      "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+      "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+      "ALCALDIA LOCAL DE ENGATIVÁ",
+      "ALCALDIA LOCAL DE FONTIBON",
+      "ALCALDIA LOCAL DE KENNEDY",
+      "ALCALDIA LOCAL DE MARTIRES",
+      "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+      "ALCALDIA LOCAL DE SAN CRISTOBAL",
+      "ALCALDIA LOCAL DE SUMAPAZ",
+      "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+      "ALCALDIA LOCAL DE TUNJUELITO",
+      "ALCALDIA LOCAL DE USAQUEN",
+      "ALCALDIA LOCAL DE USME",
+      "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+      "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+      "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+      "ALCALDÍA LOCAL DE SUBA",
+      "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+      "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+      "FONDO DE DESARROLLO LOCAL DE BOSA",
+      "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+      "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+      "SECRETARIA DE EDUCACION DEL DISTRITO",
+      "SECRETARIA DISTRITAL DE AMBIENTE",
+      "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+      "SECRETARIA DISTRITAL DE GOBIERNO 1",
+      "SECRETARIA DISTRITAL DE HACIENDA",
+      "SECRETARIA DISTRITAL DE LA MUJER",
+      "SECRETARIA DISTRITAL DE PLANEACION",
+      "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+      "SECRETARIA DISTRITAL DEL HABITAT-",
+      "SECRETARIA JURIDICA DISTRITAL.",
+      "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+      "SECRETARÍA DISTRITAL DE MOVILIDAD",
+      "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+      "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA"
+    ],
+    "rows": 4087,
+    "scope": "declared 38 members, August 2026; exact dataset-aware OR"
+  },
+  "buyer_group": [
+    {
+      "from": "institution:logical:db512b22f97b7f71f595",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:6c64629ade59853fc708",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:20fa9216792da558249f",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:e3cc114fcc828b9352e9",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:b1a90994edec7540dfa7",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:d7c7c56ac3f5de75191b",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:c59c03ca49befa389bee",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:09850499bad19c983d34",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:b84a43d427b5c51ce1cd",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:098470e97fc4b0bd28ba",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:3d0511f7408b1d7ce957",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:43446fccc6c31a755131",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:cdb04b9bb77b4b89322a",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:26307845542f54ea315f",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:803fe2d4cf6bf4599a20",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:1753eab5c3969fb95af7",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:d0b2901583f848e5d473",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:caf3a82b5641b556667e",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:b08b992bac946335e019",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:a2aa812372a6143cb7b5",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:39ad326898005eb493d3",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:688df81509cf9997dfcc",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:0a8fbb4451a8e42c0362",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:bdc725dd63eb0056dd92",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:bcc21290e1d51d22c451",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:90f58cf09832f68a5db1",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:a26a97502fefa0421e53",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:16b30a766103e463ce16",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:5dbf267495ee5bdd366c",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:e22c3aa4cbfdb0dc7edb",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:b9e6f32dc94f2b63aa0c",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:7f41ffd8fec53ea4ef8e",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:a53a3f7a6abfda7c919b",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:cd04e3a9a496100d3646",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:9510a4f0abb380f4b9e3",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:c52b030e0f948eda1236",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:8434a82d7f7d59dd13cd",
+      "to": "buyer_group:bogota_executive"
+    },
+    {
+      "from": "institution:logical:c90f518370269c5f12cb",
+      "to": "buyer_group:bogota_executive"
+    }
+  ],
+  "contractor_pairs": [
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1253123",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702676164"
+      },
+      {
+        "codigo_proveedor": "702676164",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-01-02T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1253123",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1020603",
+        "referencia_del_contrato": "CA-001-2020"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1308350",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702238486"
+      },
+      {
+        "codigo_proveedor": "702238486",
+        "estado_contrato": "Borrador",
+        "id_contrato": "CO1.PCCNTR.1308350",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1059833",
+        "referencia_del_contrato": "CO1.PCCNTR.1308350"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1309704",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702238486"
+      },
+      {
+        "codigo_proveedor": "702238486",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-01-24T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1309704",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1059833",
+        "referencia_del_contrato": "C.A.-002-2020"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1350390",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702674516"
+      },
+      {
+        "codigo_proveedor": "702674516",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-02-06T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1350390",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1090596",
+        "referencia_del_contrato": "CA-004-2020"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1351787",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702648171"
+      },
+      {
+        "codigo_proveedor": "702648171",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-02-06T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1351787",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1091551",
+        "referencia_del_contrato": "CA-005-2020"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1372909",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:708171236"
+      },
+      {
+        "codigo_proveedor": "708171236",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-02-13T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1372909",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1109134",
+        "referencia_del_contrato": "CA-006-2020"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1373213",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702674458"
+      },
+      {
+        "codigo_proveedor": "702674458",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-02-13T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1373213",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1109445",
+        "referencia_del_contrato": "C.A.-007-2020"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1438080",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702390287"
+      },
+      {
+        "codigo_proveedor": "702390287",
+        "estado_contrato": "Borrador",
+        "id_contrato": "CO1.PCCNTR.1438080",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1156247",
+        "referencia_del_contrato": "CO1.PCCNTR.1438080"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1440513",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702390287"
+      },
+      {
+        "codigo_proveedor": "702390287",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-03-11T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1440513",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1156247",
+        "referencia_del_contrato": "CO1.PCCNTR.1440513"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1459205",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702676164"
+      },
+      {
+        "codigo_proveedor": "702676164",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-03-20T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1459205",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1173008",
+        "referencia_del_contrato": "CA-009-2020"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1493797",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702238486"
+      },
+      {
+        "codigo_proveedor": "702238486",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-04-08T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1493797",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1197677",
+        "referencia_del_contrato": "CO1.PCCNTR.1493797"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1549915",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:703406264"
+      },
+      {
+        "codigo_proveedor": "703406264",
+        "estado_contrato": "enviado Proveedor",
+        "id_contrato": "CO1.PCCNTR.1549915",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1237501",
+        "referencia_del_contrato": "C.A.-012-2020"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1653128",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:710187931"
+      },
+      {
+        "codigo_proveedor": "710187931",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-06-25T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1653128",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1307650",
+        "referencia_del_contrato": "CO1.PCCNTR.1653128"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1678229",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702238486"
+      },
+      {
+        "codigo_proveedor": "702238486",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-07-07T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1678229",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1326015",
+        "referencia_del_contrato": "CO1.PCCNTR.1678229"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1789723",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:703713305"
+      },
+      {
+        "codigo_proveedor": "703713305",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-08-21T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1789723",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1407282",
+        "referencia_del_contrato": "CO1.PCCNTR.1789723"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1882561",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702621111"
+      },
+      {
+        "codigo_proveedor": "702621111",
+        "estado_contrato": "Borrador",
+        "id_contrato": "CO1.PCCNTR.1882561",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1477723",
+        "referencia_del_contrato": "CO1.PCCNTR.1882561"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1882633",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702621111"
+      },
+      {
+        "codigo_proveedor": "702621111",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-09-30T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1882633",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1477723",
+        "referencia_del_contrato": "CO1.PCCNTR.1882633"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1911923",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702676164"
+      },
+      {
+        "codigo_proveedor": "702676164",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-10-14T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1911923",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1491804",
+        "referencia_del_contrato": "CO1.PCCNTR.1911923"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.1925701",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702676164"
+      },
+      {
+        "codigo_proveedor": "702676164",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2020-10-20T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.1925701",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1507972",
+        "referencia_del_contrato": "CO1.PCCNTR.1925701"
+      }
+    ],
+    [
+      {
+        "from": "contract:jbjy-vk9h:CO1.PCCNTR.2016928",
+        "receipt": "baranoa_contracts",
+        "to": "secop_supplier:702390287"
+      },
+      {
+        "codigo_proveedor": "702390287",
+        "estado_contrato": "Borrador",
+        "id_contrato": "CO1.PCCNTR.2016928",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.1577011",
+        "referencia_del_contrato": "CO1.PCCNTR.2016928"
+      }
+    ]
+  ],
+  "process_contract": [
+    {
+      "contract_key": "CO1.PCCNTR.1253123",
+      "from": "process:p6dx-8zbt:CO1.REQ.1057405",
+      "join_key": "CO1.BDOS.1020603",
+      "process_key": "CO1.REQ.1057405",
+      "supplier_code": "702676164",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1253123"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1308350",
+      "from": "process:p6dx-8zbt:CO1.REQ.1096429",
+      "join_key": "CO1.BDOS.1059833",
+      "process_key": "CO1.REQ.1096429",
+      "supplier_code": "702238486",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1308350"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1309704",
+      "from": "process:p6dx-8zbt:CO1.REQ.1096429",
+      "join_key": "CO1.BDOS.1059833",
+      "process_key": "CO1.REQ.1096429",
+      "supplier_code": "702238486",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1309704"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1350390",
+      "from": "process:p6dx-8zbt:CO1.REQ.1127197",
+      "join_key": "CO1.BDOS.1090596",
+      "process_key": "CO1.REQ.1127197",
+      "supplier_code": "702674516",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1350390"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1351787",
+      "from": "process:p6dx-8zbt:CO1.REQ.1128305",
+      "join_key": "CO1.BDOS.1091551",
+      "process_key": "CO1.REQ.1128305",
+      "supplier_code": "702648171",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1351787"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1372909",
+      "from": "process:p6dx-8zbt:CO1.REQ.1145110",
+      "join_key": "CO1.BDOS.1109134",
+      "process_key": "CO1.REQ.1145110",
+      "supplier_code": "708171236",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1372909"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1373213",
+      "from": "process:p6dx-8zbt:CO1.REQ.1145445",
+      "join_key": "CO1.BDOS.1109445",
+      "process_key": "CO1.REQ.1145445",
+      "supplier_code": "702674458",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1373213"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1438080",
+      "from": "process:p6dx-8zbt:CO1.REQ.1194130",
+      "join_key": "CO1.BDOS.1156247",
+      "process_key": "CO1.REQ.1194130",
+      "supplier_code": "702390287",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1438080"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1440513",
+      "from": "process:p6dx-8zbt:CO1.REQ.1194130",
+      "join_key": "CO1.BDOS.1156247",
+      "process_key": "CO1.REQ.1194130",
+      "supplier_code": "702390287",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1440513"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1558701",
+      "from": "process:p6dx-8zbt:CO1.REQ.1194130",
+      "join_key": "CO1.BDOS.1156247",
+      "process_key": "CO1.REQ.1194130",
+      "supplier_code": null,
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1558701"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1356949",
+      "from": "process:p6dx-8zbt:CO1.REQ.1125251",
+      "join_key": "CO1.BDOS.1077636",
+      "process_key": "CO1.REQ.1125251",
+      "supplier_code": "708839337",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1356949"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1490501",
+      "from": "process:p6dx-8zbt:CO1.REQ.1232807",
+      "join_key": "CO1.BDOS.1194894",
+      "process_key": "CO1.REQ.1232807",
+      "supplier_code": "704392448",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1490501"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1494752",
+      "from": "process:p6dx-8zbt:CO1.REQ.1232807",
+      "join_key": "CO1.BDOS.1194894",
+      "process_key": "CO1.REQ.1232807",
+      "supplier_code": "707008801",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1494752"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1490910",
+      "from": "process:p6dx-8zbt:CO1.REQ.1232936",
+      "join_key": "CO1.BDOS.1195315",
+      "process_key": "CO1.REQ.1232936",
+      "supplier_code": "704668854",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1490910"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1491007",
+      "from": "process:p6dx-8zbt:CO1.REQ.1233104",
+      "join_key": "CO1.BDOS.1194494",
+      "process_key": "CO1.REQ.1233104",
+      "supplier_code": "701240053",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1491007"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1493008",
+      "from": "process:p6dx-8zbt:CO1.REQ.1234668",
+      "join_key": "CO1.BDOS.1196744",
+      "process_key": "CO1.REQ.1234668",
+      "supplier_code": "709405278",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1493008"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1493123",
+      "from": "process:p6dx-8zbt:CO1.REQ.1234678",
+      "join_key": "CO1.BDOS.1196758",
+      "process_key": "CO1.REQ.1234678",
+      "supplier_code": "709490056",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1493123"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1493129",
+      "from": "process:p6dx-8zbt:CO1.REQ.1234760",
+      "join_key": "CO1.BDOS.1197305",
+      "process_key": "CO1.REQ.1234760",
+      "supplier_code": "707774097",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1493129"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1493227",
+      "from": "process:p6dx-8zbt:CO1.REQ.1235012",
+      "join_key": "CO1.BDOS.1197107",
+      "process_key": "CO1.REQ.1235012",
+      "supplier_code": "705275550",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1493227"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1493128",
+      "from": "process:p6dx-8zbt:CO1.REQ.1235302",
+      "join_key": "CO1.BDOS.1197303",
+      "process_key": "CO1.REQ.1235302",
+      "supplier_code": "707179099",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1493128"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1492015",
+      "from": "process:p6dx-8zbt:CO1.REQ.1229643",
+      "join_key": "CO1.BDOS.1190911",
+      "process_key": "CO1.REQ.1229643",
+      "supplier_code": "701755340",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1492015"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1493958",
+      "from": "process:p6dx-8zbt:CO1.REQ.1232657",
+      "join_key": "CO1.BDOS.1194573",
+      "process_key": "CO1.REQ.1232657",
+      "supplier_code": "701515082",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1493958"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1518159",
+      "from": "process:p6dx-8zbt:CO1.REQ.1235789",
+      "join_key": "CO1.BDOS.1198090",
+      "process_key": "CO1.REQ.1235789",
+      "supplier_code": "703995712",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1518159"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1498001",
+      "from": "process:p6dx-8zbt:CO1.REQ.1236919",
+      "join_key": "CO1.BDOS.1198648",
+      "process_key": "CO1.REQ.1236919",
+      "supplier_code": "708708102",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1498001"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1497805",
+      "from": "process:p6dx-8zbt:CO1.REQ.1238602",
+      "join_key": "CO1.BDOS.1200603",
+      "process_key": "CO1.REQ.1238602",
+      "supplier_code": "708708102",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1497805"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1509712",
+      "from": "process:p6dx-8zbt:CO1.REQ.1239014",
+      "join_key": "CO1.BDOS.1199210",
+      "process_key": "CO1.REQ.1239014",
+      "supplier_code": "709168074",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1509712"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1502189",
+      "from": "process:p6dx-8zbt:CO1.REQ.1243007",
+      "join_key": "CO1.BDOS.1204920",
+      "process_key": "CO1.REQ.1243007",
+      "supplier_code": "709494041",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1502189"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1503949",
+      "from": "process:p6dx-8zbt:CO1.REQ.1244449",
+      "join_key": "CO1.BDOS.1206132",
+      "process_key": "CO1.REQ.1244449",
+      "supplier_code": "709441224",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1503949"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1514710",
+      "from": "process:p6dx-8zbt:CO1.REQ.1246229",
+      "join_key": "CO1.BDOS.1207685",
+      "process_key": "CO1.REQ.1246229",
+      "supplier_code": "709552368",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1514710"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1535904",
+      "from": "process:p6dx-8zbt:CO1.REQ.1247213",
+      "join_key": "CO1.BDOS.1209213",
+      "process_key": "CO1.REQ.1247213",
+      "supplier_code": "702491341",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1535904"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1210624",
+      "from": "process:p6dx-8zbt:CO1.REQ.1026111",
+      "join_key": "CO1.BDOS.989010",
+      "process_key": "CO1.REQ.1026111",
+      "supplier_code": "702445966",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1210624"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1384212",
+      "from": "process:p6dx-8zbt:CO1.REQ.1154001",
+      "join_key": "CO1.BDOS.1117415",
+      "process_key": "CO1.REQ.1154001",
+      "supplier_code": "703906115",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1384212"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1392354",
+      "from": "process:p6dx-8zbt:CO1.REQ.1159300",
+      "join_key": "CO1.BDOS.1122666",
+      "process_key": "CO1.REQ.1159300",
+      "supplier_code": "703923912",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1392354"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1712204",
+      "from": "process:p6dx-8zbt:CO1.REQ.1392886",
+      "join_key": "CO1.BDOS.1351885",
+      "process_key": "CO1.REQ.1392886",
+      "supplier_code": "710427303",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1712204"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1980777",
+      "from": "process:p6dx-8zbt:CO1.REQ.1599686",
+      "join_key": "CO1.BDOS.1551671",
+      "process_key": "CO1.REQ.1599686",
+      "supplier_code": "703166454",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1980777"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.2048001",
+      "from": "process:p6dx-8zbt:CO1.REQ.1640719",
+      "join_key": "CO1.BDOS.1591018",
+      "process_key": "CO1.REQ.1640719",
+      "supplier_code": "702445966",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.2048001"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.2299293",
+      "from": "process:p6dx-8zbt:CO1.REQ.1836912",
+      "join_key": "CO1.BDOS.1786601",
+      "process_key": "CO1.REQ.1836912",
+      "supplier_code": "703906115",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.2299293"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.2299046",
+      "from": "process:p6dx-8zbt:CO1.REQ.1842458",
+      "join_key": "CO1.BDOS.1791874",
+      "process_key": "CO1.REQ.1842458",
+      "supplier_code": "703923912",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.2299046"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.2438005",
+      "from": "process:p6dx-8zbt:CO1.REQ.1970486",
+      "join_key": "CO1.BDOS.1917631",
+      "process_key": "CO1.REQ.1970486",
+      "supplier_code": "713151876",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.2438005"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.2436535",
+      "from": "process:p6dx-8zbt:CO1.REQ.1970523",
+      "join_key": "CO1.BDOS.1917513",
+      "process_key": "CO1.REQ.1970523",
+      "supplier_code": "713253326",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.2436535"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1177704",
+      "from": "process:p6dx-8zbt:CO1.REQ.1002829",
+      "join_key": "CO1.BDOS.965924",
+      "process_key": "CO1.REQ.1002829",
+      "supplier_code": "702658956",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1177704"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1188519",
+      "from": "process:p6dx-8zbt:CO1.REQ.1010136",
+      "join_key": "CO1.BDOS.972923",
+      "process_key": "CO1.REQ.1010136",
+      "supplier_code": "707824140",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1188519"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1240014",
+      "from": "process:p6dx-8zbt:CO1.REQ.1022816",
+      "join_key": "CO1.BDOS.986323",
+      "process_key": "CO1.REQ.1022816",
+      "supplier_code": "707029328",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1240014"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1489892",
+      "from": "process:p6dx-8zbt:CO1.REQ.1232364",
+      "join_key": "CO1.BDOS.1194854",
+      "process_key": "CO1.REQ.1232364",
+      "supplier_code": "709405856",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1489892"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1490912",
+      "from": "process:p6dx-8zbt:CO1.REQ.1232929",
+      "join_key": "CO1.BDOS.1195124",
+      "process_key": "CO1.REQ.1232929",
+      "supplier_code": null,
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1490912"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1492006",
+      "from": "process:p6dx-8zbt:CO1.REQ.1232929",
+      "join_key": "CO1.BDOS.1195124",
+      "process_key": "CO1.REQ.1232929",
+      "supplier_code": "708093463",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1492006"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1491818",
+      "from": "process:p6dx-8zbt:CO1.REQ.1234017",
+      "join_key": "CO1.BDOS.1196107",
+      "process_key": "CO1.REQ.1234017",
+      "supplier_code": "709402192",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1491818"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1491996",
+      "from": "process:p6dx-8zbt:CO1.REQ.1234504",
+      "join_key": "CO1.BDOS.1196619",
+      "process_key": "CO1.REQ.1234504",
+      "supplier_code": "709404842",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1491996"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1494039",
+      "from": "process:p6dx-8zbt:CO1.REQ.1234510",
+      "join_key": "CO1.BDOS.1196618",
+      "process_key": "CO1.REQ.1234510",
+      "supplier_code": "709405245",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1494039"
+    },
+    {
+      "contract_key": "CO1.PCCNTR.1492515",
+      "from": "process:p6dx-8zbt:CO1.REQ.1234543",
+      "join_key": "CO1.BDOS.1196452",
+      "process_key": "CO1.REQ.1234543",
+      "supplier_code": "709432991",
+      "to": "contract:jbjy-vk9h:CO1.PCCNTR.1492515"
+    }
+  ],
+  "process_rows": [
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10000664",
+      "referencia_del_proceso": "PCD-228-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10002148",
+      "referencia_del_proceso": "PCD-229-2026."
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10003781",
+      "referencia_del_proceso": "PCD-230-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10012538",
+      "referencia_del_proceso": "PCD-235-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10015567",
+      "referencia_del_proceso": "PCD-231-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10015718",
+      "referencia_del_proceso": "PCD-226-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016033",
+      "referencia_del_proceso": "PCD-234-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016251",
+      "referencia_del_proceso": "PCD-238-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016604",
+      "referencia_del_proceso": "PCD-232-2026"
+    },
+    {
+      "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "id_del_proceso": "CO1.REQ.10016735",
+      "referencia_del_proceso": "PCD-233-2026"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10001000",
+      "referencia_del_proceso": "CD-2026-458"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10001345",
+      "referencia_del_proceso": "CD-03-2026-5276."
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10001570",
+      "referencia_del_proceso": "CD-05-2026-6865"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10001573",
+      "referencia_del_proceso": "CD-2026-462"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10001946",
+      "referencia_del_proceso": "CD-33-2026-6872"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10003875",
+      "referencia_del_proceso": "CD-33-2026-6786"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10003896",
+      "referencia_del_proceso": "CD-11-2026-6873"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10004087",
+      "referencia_del_proceso": "CD-52-2026-4492"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10005162",
+      "referencia_del_proceso": "CD-11-2026-6823"
+    },
+    {
+      "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_del_proceso": "CO1.REQ.10005218",
+      "referencia_del_proceso": "CD-2026-464"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10000018",
+      "referencia_del_proceso": "SE-CPS-148-2026."
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10000502",
+      "referencia_del_proceso": "SJ-SJ-CPS-024-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10001234",
+      "referencia_del_proceso": "SSAB-CPS-238-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10001392",
+      "referencia_del_proceso": "SI-SI-CPS-302-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10001527",
+      "referencia_del_proceso": "SI-SI-CPS-299-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10001666",
+      "referencia_del_proceso": "SE-CPS-152-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10001883",
+      "referencia_del_proceso": "SA-SA-CPS-2228-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10002218",
+      "referencia_del_proceso": "SI-SI-CPS-303-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10002382",
+      "referencia_del_proceso": "SSAB-CPS-243-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE BUCARAMANGA",
+      "id_del_proceso": "CO1.REQ.10002445",
+      "referencia_del_proceso": "SSAB-CPS-245-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10000310",
+      "referencia_del_proceso": "1200.18.11.251.2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10000420",
+      "referencia_del_proceso": "800.18.11.371-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10000685",
+      "referencia_del_proceso": "1000-18-11-390-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10000745",
+      "referencia_del_proceso": "200.18.11.055-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10000831",
+      "referencia_del_proceso": "1200.18.11.250.2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10000874",
+      "referencia_del_proceso": "600-18-11-080-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10000938",
+      "referencia_del_proceso": "900-18-11-165-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10001023",
+      "referencia_del_proceso": "1100.18.11.0176-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10001039",
+      "referencia_del_proceso": "1000-18-11-369-2026"
+    },
+    {
+      "entidad": "MUNICIPIO DE YUMBO VALLE",
+      "id_del_proceso": "CO1.REQ.10001081",
+      "referencia_del_proceso": "1200.18.11.241.2026"
+    }
+  ],
+  "published": [
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000664"
+    },
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10002148"
+    },
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10003781"
+    },
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10012538"
+    },
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10015567"
+    },
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10015718"
+    },
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10016033"
+    },
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10016251"
+    },
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10016604"
+    },
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "receipt": "baranoa_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10016735"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001000"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001345"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001570"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001573"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001946"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10003875"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10003896"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10004087"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10005162"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "receipt": "barranquilla_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10005218"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000018"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000502"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001234"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001392"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001527"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001666"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001883"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10002218"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10002382"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "receipt": "bucaramanga_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10002445"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000310"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000420"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000685"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000745"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000831"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000874"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10000938"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001023"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001039"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "receipt": "yumbo_processes",
+      "to": "process:p6dx-8zbt:CO1.REQ.10001081"
+    }
+  ],
+  "sampling": "Deterministic bounded canaries, never national prevalence estimates.",
+  "territorial": [
+    {
+      "from": "institution:logical:ff77e2a68203442557da",
+      "institution": "ALCALDIA MUNICIPAL DE BARANOA",
+      "source": "ADR-080",
+      "to": "territory:08078"
+    },
+    {
+      "from": "institution:logical:c8d8a696c59a03f93081",
+      "institution": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "source": "ADR-080",
+      "to": "territory:08001"
+    },
+    {
+      "from": "institution:logical:1febc79effc3e1c5b296",
+      "institution": "MUNICIPIO DE BUCARAMANGA",
+      "source": "ADR-080",
+      "to": "territory:68001"
+    },
+    {
+      "from": "institution:logical:2056a0bef26efba9ca77",
+      "institution": "MUNICIPIO DE YUMBO VALLE",
+      "source": "ADR-080",
+      "to": "territory:76892"
+    }
+  ]
+}

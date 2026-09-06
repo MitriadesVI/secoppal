@@ -1,0 +1,381 @@
+{
+  "node_types": {
+    "ACTOR": {
+      "attributes": [
+        "document_type",
+        "base_number",
+        "identity_provenance"
+      ],
+      "authority": "app/core/actor_identity.py:IdentityKey",
+      "caveat": "UNKNOWN remains unknown document type; not legal-person certification. No supplier links.",
+      "document_types": [
+        "NIT",
+        "CC",
+        "UNKNOWN"
+      ],
+      "id_format": "actor:<document_type>:<base_number>",
+      "materializable": true
+    },
+    "BUYER_GROUP": {
+      "attributes": [
+        "version",
+        "label"
+      ],
+      "authority": "app/data/buyer_groups.json:declared id",
+      "id_format": "buyer_group:<group_id>",
+      "materializable": true
+    },
+    "CONTRACT": {
+      "attributes": [
+        "identity_field",
+        "reason_codes",
+        "estado_contrato",
+        "fecha_de_firma"
+      ],
+      "authority": "app/core/result_identity.py:result_identity",
+      "caveat": "Preserve stable_key verbatim, including reference fallback. Do not strengthen existing authority.",
+      "id_format": "contract:jbjy-vk9h:<stable_key>",
+      "materializable": true,
+      "stable_only": true
+    },
+    "INSTITUTION": {
+      "attributes": [
+        "knowledge_status",
+        "product_buyer_unit",
+        "territory_divipola",
+        "family"
+      ],
+      "authority": "app/core/territorial_knowledge.py:Institution.institution_id",
+      "caveat": "Only PRODUCT_RECOGNIZED may originate future productive transactional edges; other knowledge remains shadow.",
+      "id_format": "institution:<logical_id>",
+      "materializable": true
+    },
+    "PAA_ITEM": {
+      "attributes": [],
+      "authority": "DEFERRED_TO_PAA_AUDIT",
+      "id_format": "paa_item:<future_authority>",
+      "materializable": false
+    },
+    "PROCESS": {
+      "attributes": [
+        "identity_field",
+        "reason_codes"
+      ],
+      "authority": "app/core/result_identity.py:result_identity",
+      "caveat": "Preserve stable_key verbatim, including reference fallback. Do not strengthen existing authority.",
+      "id_format": "process:p6dx-8zbt:<stable_key>",
+      "materializable": true,
+      "stable_only": true
+    },
+    "SECOP_SUPPLIER": {
+      "attributes": [
+        "platform_code",
+        "source",
+        "observed_at"
+      ],
+      "authority": "official SECOP II platform codes; scoped exact-code witnesses",
+      "caveat": "Exact nonzero ASCII integer text; no document fallback. Equality witnesses are bounded, not universal namespace proof.",
+      "id_format": "secop_supplier:<platform_code>",
+      "materializable": true
+    },
+    "SUPPLIER_GROUP": {
+      "attributes": [
+        "active",
+        "creation_date",
+        "PLATFORM_SUPPLIER_CODE",
+        "platform_reference_evidence"
+      ],
+      "authority": "ceth-n4bn:codigo_grupo",
+      "caveat": "PLATFORM_SUPPLIER_CODE references secop_supplier:<code> only with exact ceth/hgi6 evidence; no type collapse.",
+      "id_format": "supplier_group:<group_code>",
+      "materializable": true
+    },
+    "TERRITORY": {
+      "attributes": [
+        "municipality",
+        "department",
+        "macro_region"
+      ],
+      "authority": "app/data/territorial_knowledge_v0.json:DIVIPOLA",
+      "id_format": "territory:<divipola>",
+      "materializable": true
+    }
+  },
+  "spine": {
+    "buyer_group": {
+      "declared_count": 38,
+      "id": "buyer_group:bogota_executive",
+      "members": [
+        {
+          "canonical_name": "(Secretaría Distrital de Integración Social)",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:db512b22f97b7f71f595"
+        },
+        {
+          "canonical_name": "SECRETARIA DE EDUCACION DEL DISTRITO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:6c64629ade59853fc708"
+        },
+        {
+          "canonical_name": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:20fa9216792da558249f"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE AMBIENTE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:e3cc114fcc828b9352e9"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:b1a90994edec7540dfa7"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:d7c7c56ac3f5de75191b"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DEL HABITAT-",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:c59c03ca49befa389bee"
+        },
+        {
+          "canonical_name": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:09850499bad19c983d34"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE LA MUJER",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:b84a43d427b5c51ce1cd"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:098470e97fc4b0bd28ba"
+        },
+        {
+          "canonical_name": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:3d0511f7408b1d7ce957"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE PLANEACION",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:43446fccc6c31a755131"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE HACIENDA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:cdb04b9bb77b4b89322a"
+        },
+        {
+          "canonical_name": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:26307845542f54ea315f"
+        },
+        {
+          "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:803fe2d4cf6bf4599a20"
+        },
+        {
+          "canonical_name": "SECRETARIA JURIDICA DISTRITAL.",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:1753eab5c3969fb95af7"
+        },
+        {
+          "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:d0b2901583f848e5d473"
+        },
+        {
+          "canonical_name": ".SECRETARÍA DISTRITAL DE SALUD.",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:caf3a82b5641b556667e"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:b08b992bac946335e019"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE KENNEDY",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:a2aa812372a6143cb7b5"
+        },
+        {
+          "canonical_name": "ALCALDÍA LOCAL DE SUBA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:39ad326898005eb493d3"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE SAN CRISTOBAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:688df81509cf9997dfcc"
+        },
+        {
+          "canonical_name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:0a8fbb4451a8e42c0362"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE USME",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:bdc725dd63eb0056dd92"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE ENGATIVÁ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:bcc21290e1d51d22c451"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE USAQUEN",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:90f58cf09832f68a5db1"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:a26a97502fefa0421e53"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE FONTIBON",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:16b30a766103e463ce16"
+        },
+        {
+          "canonical_name": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:5dbf267495ee5bdd366c"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE SUMAPAZ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:e22c3aa4cbfdb0dc7edb"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE TUNJUELITO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:b9e6f32dc94f2b63aa0c"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:7f41ffd8fec53ea4ef8e"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:a53a3f7a6abfda7c919b"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:cd04e3a9a496100d3646"
+        },
+        {
+          "canonical_name": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:9510a4f0abb380f4b9e3"
+        },
+        {
+          "canonical_name": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:c52b030e0f948eda1236"
+        },
+        {
+          "canonical_name": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:8434a82d7f7d59dd13cd"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE MARTIRES",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "institution_id": "institution:logical:c90f518370269c5f12cb"
+        }
+      ],
+      "version": "2026-09-03.v1"
+    },
+    "institutions": {
+      "atlantico": null,
+      "baranoa": {
+        "display_name": "ALCALDIA MUNICIPAL DE BARANOA",
+        "family": "MUNICIPAL_EXECUTIVE",
+        "identity_authorities": [
+          "FROZEN_RECOGNIZED_OR_ADJUDICATED_UNIT"
+        ],
+        "institution_id": "logical:ff77e2a68203442557da",
+        "knowledge_status": "PRODUCT_RECOGNIZED",
+        "product_buyer_unit": "ALCALDIA MUNICIPAL DE BARANOA",
+        "profile_refs": [
+          "physical:00c5738e125cb0d27a9e"
+        ],
+        "provenance_refs": [
+          "artifacts/audits/municipal_m2a/logical_units.json#/units/993",
+          "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:00c5738e125cb0d27a9e"
+        ],
+        "territory_divipola": "08078"
+      },
+      "barranquilla": {
+        "display_name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "family": "UNKNOWN",
+        "identity_authorities": [
+          "FROZEN_RECOGNIZED_OR_ADJUDICATED_UNIT"
+        ],
+        "institution_id": "logical:c8d8a696c59a03f93081",
+        "knowledge_status": "PRODUCT_RECOGNIZED",
+        "product_buyer_unit": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "profile_refs": [
+          "physical:8913749373d46c1fc81b"
+        ],
+        "provenance_refs": [
+          "artifacts/audits/municipal_m2a/logical_units.json#/units/797",
+          "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:8913749373d46c1fc81b"
+        ],
+        "territory_divipola": "08001"
+      },
+      "bucaramanga": {
+        "display_name": "MUNICIPIO DE BUCARAMANGA",
+        "family": "MUNICIPAL_EXECUTIVE",
+        "identity_authorities": [
+          "FROZEN_RECOGNIZED_OR_ADJUDICATED_UNIT"
+        ],
+        "institution_id": "logical:1febc79effc3e1c5b296",
+        "knowledge_status": "PRODUCT_RECOGNIZED",
+        "product_buyer_unit": "MUNICIPIO DE BUCARAMANGA",
+        "profile_refs": [
+          "physical:03a5d5bc1d409141bf82"
+        ],
+        "provenance_refs": [
+          "artifacts/audits/municipal_m2a/logical_units.json#/units/93",
+          "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:03a5d5bc1d409141bf82"
+        ],
+        "territory_divipola": "68001"
+      },
+      "yumbo": {
+        "display_name": "MUNICIPIO DE YUMBO VALLE",
+        "family": "MUNICIPAL_EXECUTIVE",
+        "identity_authorities": [
+          "FROZEN_RECOGNIZED_OR_ADJUDICATED_UNIT"
+        ],
+        "institution_id": "logical:2056a0bef26efba9ca77",
+        "knowledge_status": "PRODUCT_RECOGNIZED",
+        "product_buyer_unit": "MUNICIPIO DE YUMBO VALLE",
+        "profile_refs": [
+          "physical:80000fc072bca03b4a4c"
+        ],
+        "provenance_refs": [
+          "artifacts/audits/municipal_m2a/logical_units.json#/units/96",
+          "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:80000fc072bca03b4a4c"
+        ],
+        "territory_divipola": "76892"
+      }
+    },
+    "rule": "Absent logical IDs remain absent; canonical names never become node IDs.",
+    "territories": 1103,
+    "unmapped_group_members": 0
+  }
+}

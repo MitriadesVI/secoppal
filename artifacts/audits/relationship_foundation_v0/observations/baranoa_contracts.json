@@ -1,0 +1,2209 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:39:10.507501+00:00",
+  "params": {
+    "$limit": 250,
+    "$order": "id_contrato",
+    "$select": "id_contrato,referencia_del_contrato,proceso_de_compra,nombre_entidad,codigo_proveedor,estado_contrato,fecha_de_firma",
+    "$where": "nombre_entidad in ('ALCALDIA MUNICIPAL DE BARANOA')"
+  },
+  "payload": [
+    {
+      "codigo_proveedor": "702676164",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-01-02T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1253123",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1020603",
+      "referencia_del_contrato": "CA-001-2020"
+    },
+    {
+      "codigo_proveedor": "702238486",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1308350",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1059833",
+      "referencia_del_contrato": "CO1.PCCNTR.1308350"
+    },
+    {
+      "codigo_proveedor": "702238486",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1309704",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1059833",
+      "referencia_del_contrato": "C.A.-002-2020"
+    },
+    {
+      "codigo_proveedor": "702674516",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-02-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1350390",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1090596",
+      "referencia_del_contrato": "CA-004-2020"
+    },
+    {
+      "codigo_proveedor": "702648171",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-02-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1351787",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1091551",
+      "referencia_del_contrato": "CA-005-2020"
+    },
+    {
+      "codigo_proveedor": "708171236",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-02-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1372909",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1109134",
+      "referencia_del_contrato": "CA-006-2020"
+    },
+    {
+      "codigo_proveedor": "702674458",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-02-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1373213",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1109445",
+      "referencia_del_contrato": "C.A.-007-2020"
+    },
+    {
+      "codigo_proveedor": "702390287",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1438080",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1156247",
+      "referencia_del_contrato": "CO1.PCCNTR.1438080"
+    },
+    {
+      "codigo_proveedor": "702390287",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-03-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1440513",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1156247",
+      "referencia_del_contrato": "CO1.PCCNTR.1440513"
+    },
+    {
+      "codigo_proveedor": "702676164",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-03-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1459205",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1173008",
+      "referencia_del_contrato": "CA-009-2020"
+    },
+    {
+      "codigo_proveedor": "702238486",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1493797",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1197677",
+      "referencia_del_contrato": "CO1.PCCNTR.1493797"
+    },
+    {
+      "codigo_proveedor": "703406264",
+      "estado_contrato": "enviado Proveedor",
+      "id_contrato": "CO1.PCCNTR.1549915",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1237501",
+      "referencia_del_contrato": "C.A.-012-2020"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1558701",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1156247",
+      "referencia_del_contrato": "CO1.PCCNTR.1558701"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1558702",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1237501",
+      "referencia_del_contrato": "CO1.PCCNTR.1558702"
+    },
+    {
+      "codigo_proveedor": "710187931",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1653128",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1307650",
+      "referencia_del_contrato": "CO1.PCCNTR.1653128"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1678155",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1326015",
+      "referencia_del_contrato": "CO1.PCCNTR.1678155"
+    },
+    {
+      "codigo_proveedor": "702238486",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1678229",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1326015",
+      "referencia_del_contrato": "CO1.PCCNTR.1678229"
+    },
+    {
+      "codigo_proveedor": "703713305",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1789723",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1407282",
+      "referencia_del_contrato": "CO1.PCCNTR.1789723"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1871903",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1407282",
+      "referencia_del_contrato": "CO1.PCCNTR.1871903"
+    },
+    {
+      "codigo_proveedor": "702621111",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1882561",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1477723",
+      "referencia_del_contrato": "CO1.PCCNTR.1882561"
+    },
+    {
+      "codigo_proveedor": "702621111",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-09-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1882633",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1477723",
+      "referencia_del_contrato": "CO1.PCCNTR.1882633"
+    },
+    {
+      "codigo_proveedor": "702676164",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-10-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1911923",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1491804",
+      "referencia_del_contrato": "CO1.PCCNTR.1911923"
+    },
+    {
+      "codigo_proveedor": "702676164",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-10-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1925701",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1507972",
+      "referencia_del_contrato": "CO1.PCCNTR.1925701"
+    },
+    {
+      "codigo_proveedor": "702390287",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.2016928",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1577011",
+      "referencia_del_contrato": "CO1.PCCNTR.2016928"
+    },
+    {
+      "codigo_proveedor": "702390287",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-11-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2018184",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1577011",
+      "referencia_del_contrato": "CO1.PCCNTR.2018184"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2279544",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1784554",
+      "referencia_del_contrato": "CO1.PCCNTR.2279544"
+    },
+    {
+      "codigo_proveedor": "708171236",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-02-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2279823",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1784554",
+      "referencia_del_contrato": "CO1.PCCNTR.2279823"
+    },
+    {
+      "codigo_proveedor": "702297094",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2299041",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1802528",
+      "referencia_del_contrato": "C.A.-003-2021"
+    },
+    {
+      "codigo_proveedor": "702297094",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-02-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2301706",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1802528",
+      "referencia_del_contrato": "CO1.PCCNTR.2301706"
+    },
+    {
+      "codigo_proveedor": "702390287",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-02-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2303604",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1806419",
+      "referencia_del_contrato": "C.A.-004-2021"
+    },
+    {
+      "codigo_proveedor": "708171236",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-03-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2372701",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1855141",
+      "referencia_del_contrato": "CO1.PCCNTR.2372701"
+    },
+    {
+      "codigo_proveedor": "704392463",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-03-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2386896",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.1875268",
+      "referencia_del_contrato": "CO1.PCCNTR.2386896"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.2597706",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2037821",
+      "referencia_del_contrato": "CO1.PCCNTR.2597706"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-06-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2597803",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2037821",
+      "referencia_del_contrato": "CO1.PCCNTR.2597803"
+    },
+    {
+      "codigo_proveedor": "714134368",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-07-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2628354",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2060759",
+      "referencia_del_contrato": "CO1.PCCNTR.2628354"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-08-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2761858",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2172297",
+      "referencia_del_contrato": "CO1.PCCNTR.2761858"
+    },
+    {
+      "codigo_proveedor": "711601849",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-09-16T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2856270",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2245979",
+      "referencia_del_contrato": "CO1.PCCNTR.2856270"
+    },
+    {
+      "codigo_proveedor": "705065340",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-09-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2892294",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2274861",
+      "referencia_del_contrato": "CO1.PCCNTR.2892294"
+    },
+    {
+      "codigo_proveedor": "702621111",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-10-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2901683",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2282201",
+      "referencia_del_contrato": "CO1.PCCNTR.2901683"
+    },
+    {
+      "codigo_proveedor": "715404125",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-10-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.2932753",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2304666",
+      "referencia_del_contrato": "CO1.PCCNTR.2932753"
+    },
+    {
+      "codigo_proveedor": "702676164",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2021-12-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.3111089",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2439375",
+      "referencia_del_contrato": "CO1.PCCNTR.3111089"
+    },
+    {
+      "codigo_proveedor": "708171236",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-01-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.3488892",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2762263",
+      "referencia_del_contrato": "CO1.PCCNTR.3488892"
+    },
+    {
+      "codigo_proveedor": "704392463",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-01-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.3512236",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2766010",
+      "referencia_del_contrato": "CO1.PCCNTR.3512236"
+    },
+    {
+      "codigo_proveedor": "708171236",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-02-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.3587123",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2828383",
+      "referencia_del_contrato": "CO1.PCCNTR.3587123"
+    },
+    {
+      "codigo_proveedor": "717231039",
+      "estado_contrato": "Suspendido",
+      "fecha_de_firma": "2022-03-09T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.3595485",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2840321",
+      "referencia_del_contrato": "CO1.PCCNTR.3595485"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.3603080",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2846232",
+      "referencia_del_contrato": "CO1.PCCNTR.3603080"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-03-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.3628302",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2867609",
+      "referencia_del_contrato": "CO1.PCCNTR.3628302"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.3767808",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2994065",
+      "referencia_del_contrato": "CO1.PCCNTR.3767808"
+    },
+    {
+      "codigo_proveedor": "710187931",
+      "estado_contrato": "enviado Proveedor",
+      "id_contrato": "CO1.PCCNTR.3767813",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2994065",
+      "referencia_del_contrato": "CO1.PCCNTR.3767813"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.3768519",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2994065",
+      "referencia_del_contrato": "CO1.PCCNTR.3768519"
+    },
+    {
+      "codigo_proveedor": "714134368",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-06-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.3769101",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.2997326",
+      "referencia_del_contrato": "CO1.PCCNTR.3769101"
+    },
+    {
+      "codigo_proveedor": "708171236",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2022-09-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4070480",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.3302886",
+      "referencia_del_contrato": "CO1.PCCNTR.4070480"
+    },
+    {
+      "codigo_proveedor": "711601849",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-10-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4098160",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.3361050",
+      "referencia_del_contrato": "CO1.PCCNTR.4098160"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-10-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4123776",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.3392959",
+      "referencia_del_contrato": "CO1.PCCNTR.4123776"
+    },
+    {
+      "codigo_proveedor": "718779119",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-10-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4123884",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.3395944",
+      "referencia_del_contrato": "CO1.PCCNTR.4123884"
+    },
+    {
+      "codigo_proveedor": "702390287",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-10-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4125748",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.3399015",
+      "referencia_del_contrato": "CO1.PCCNTR.4125748"
+    },
+    {
+      "codigo_proveedor": "719686388",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-10-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4163216",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.3446629",
+      "referencia_del_contrato": "CO1.PCCNTR.4163216"
+    },
+    {
+      "codigo_proveedor": "708171236",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-10-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4165918",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.3431704",
+      "referencia_del_contrato": "CO1.PCCNTR.4165918"
+    },
+    {
+      "codigo_proveedor": "715404125",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-11-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4231527",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.3501050",
+      "referencia_del_contrato": "CO1.PCCNTR.4231527"
+    },
+    {
+      "codigo_proveedor": "702676164",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2022-12-16T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4323023",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.3643072",
+      "referencia_del_contrato": "CO1.PCCNTR.4323023"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.4704892",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4016790",
+      "referencia_del_contrato": "CO1.PCCNTR.4704892"
+    },
+    {
+      "codigo_proveedor": "704392463",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2023-02-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4705147",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4016790",
+      "referencia_del_contrato": "C.A.-001-2023"
+    },
+    {
+      "codigo_proveedor": "708171236",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2023-02-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4705584",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4084520",
+      "referencia_del_contrato": "C.A.-002-2023"
+    },
+    {
+      "codigo_proveedor": "708171236",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2023-03-10T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4756120",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4101948",
+      "referencia_del_contrato": "C.A.-003-2023"
+    },
+    {
+      "codigo_proveedor": "721521789",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2023-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4888972",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4290331",
+      "referencia_del_contrato": "C.A.-004-2023"
+    },
+    {
+      "codigo_proveedor": "702297094",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2023-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.4924715",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4359580",
+      "referencia_del_contrato": "C.A.-005-2023"
+    },
+    {
+      "codigo_proveedor": "702676164",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2023-06-02T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.5036896",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4464767",
+      "referencia_del_contrato": "C.A.-006-2023"
+    },
+    {
+      "codigo_proveedor": "711601849",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2023-07-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.5234269",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4707389",
+      "referencia_del_contrato": "C.A.-007-2023"
+    },
+    {
+      "codigo_proveedor": "718779119",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2023-07-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.5243841",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4752410",
+      "referencia_del_contrato": "C.A.-010-2023"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2023-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.5263081",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4752559",
+      "referencia_del_contrato": "C.A.-011-2023"
+    },
+    {
+      "codigo_proveedor": "709262547",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2023-08-02T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.5264224",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4784983",
+      "referencia_del_contrato": "C.A.-013-2023"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2023-08-25T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.5328022",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4847364",
+      "referencia_del_contrato": "C.A.-014-2023"
+    },
+    {
+      "codigo_proveedor": "702547803",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2023-09-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.5402305",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.4959660",
+      "referencia_del_contrato": "C.A.-017-2023"
+    },
+    {
+      "codigo_proveedor": "702297094",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2023-10-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.5448596",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.5026650",
+      "referencia_del_contrato": "C.A.-018-2023"
+    },
+    {
+      "codigo_proveedor": "702676164",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.5654591",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.5293294",
+      "referencia_del_contrato": "C.A.-021-2023"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.6765658",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6699002",
+      "referencia_del_contrato": "CO1.PCCNTR.6765658"
+    },
+    {
+      "codigo_proveedor": "704392463",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.6765691",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6699002",
+      "referencia_del_contrato": "CO1.PCCNTR.6765691"
+    },
+    {
+      "codigo_proveedor": "704392463",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.6766156",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6699002",
+      "referencia_del_contrato": "CO1.PCCNTR.6766156"
+    },
+    {
+      "codigo_proveedor": "728180134",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.6766266",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6706543",
+      "referencia_del_contrato": "CO1.PCCNTR.6766266"
+    },
+    {
+      "codigo_proveedor": "704392463",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2024-09-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.6769067",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6699002",
+      "referencia_del_contrato": "CO1.PCCNTR.6769067"
+    },
+    {
+      "codigo_proveedor": "728180134",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2024-09-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.6769808",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6706543",
+      "referencia_del_contrato": "CO1.PCCNTR.6769808"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.6770120",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6706723",
+      "referencia_del_contrato": "CO1.PCCNTR.6770120"
+    },
+    {
+      "codigo_proveedor": "709117147",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2024-09-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.6770308",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6706723",
+      "referencia_del_contrato": "CO1.PCCNTR.6770308"
+    },
+    {
+      "codigo_proveedor": "728180134",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.6771257",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6706543",
+      "referencia_del_contrato": "CO1.PCCNTR.6771257"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.6773012",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6699002",
+      "referencia_del_contrato": "CO1.PCCNTR.6773012"
+    },
+    {
+      "codigo_proveedor": "709262547",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2024-09-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.6817945",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6771284",
+      "referencia_del_contrato": "CA-006-2024"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2024-10-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.6912482",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6893992",
+      "referencia_del_contrato": "CA-007-2024"
+    },
+    {
+      "codigo_proveedor": "725597231",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2024-10-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.6912779",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6893997",
+      "referencia_del_contrato": "CA-008-2024"
+    },
+    {
+      "codigo_proveedor": "722263373",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2024-10-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.6913389",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6894892",
+      "referencia_del_contrato": "CA-009-2024"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.6972447",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6966520",
+      "referencia_del_contrato": "CA-010-2024"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.6972451",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6966520",
+      "referencia_del_contrato": "CA-010-2024"
+    },
+    {
+      "codigo_proveedor": "702390287",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2024-11-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.6972459",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.6966520",
+      "referencia_del_contrato": "CA-010-2024"
+    },
+    {
+      "codigo_proveedor": "703681163",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2024-11-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.7014206",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.7020373",
+      "referencia_del_contrato": "CA-011-2024"
+    },
+    {
+      "codigo_proveedor": "702674458",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-01-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.7194805",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.7252565",
+      "referencia_del_contrato": "CD-001-2025"
+    },
+    {
+      "codigo_proveedor": "704794510",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2025-04-16T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.7769450",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.7959064",
+      "referencia_del_contrato": "CA-001-2025"
+    },
+    {
+      "codigo_proveedor": "721521789",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.7806405",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8014271",
+      "referencia_del_contrato": "CA-002-2025"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.7944297",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8212494",
+      "referencia_del_contrato": "CA-004-2025"
+    },
+    {
+      "codigo_proveedor": "716814686",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2025-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.7944419",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8212513",
+      "referencia_del_contrato": "CA-003-2025"
+    },
+    {
+      "codigo_proveedor": "707370235",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2025-06-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.7944566",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8213056",
+      "referencia_del_contrato": "CA-0004-2025"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.7944620",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8212494",
+      "referencia_del_contrato": "CO1.PCCNTR.7944620"
+    },
+    {
+      "codigo_proveedor": "703681163",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-07-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8059915",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8378421",
+      "referencia_del_contrato": "CA-005-2025"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-07-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8103194",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8442057",
+      "referencia_del_contrato": "CA-006-2025"
+    },
+    {
+      "codigo_proveedor": "732722657",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2025-08-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8195872",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8577958",
+      "referencia_del_contrato": "CA-007-2025"
+    },
+    {
+      "codigo_proveedor": "704638063",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-08-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8200299",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8584336",
+      "referencia_del_contrato": "CA-008-2025"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-08-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8225289",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8619808",
+      "referencia_del_contrato": "CA-009-2025"
+    },
+    {
+      "codigo_proveedor": "709468011",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-08-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8226610",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8556086",
+      "referencia_del_contrato": "CAC-001-2025"
+    },
+    {
+      "codigo_proveedor": "711601849",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-09-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8315715",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8742508",
+      "referencia_del_contrato": "CA-010-2025"
+    },
+    {
+      "codigo_proveedor": "725597231",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-10-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8427414",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8840045",
+      "referencia_del_contrato": "CAC-002-2025"
+    },
+    {
+      "codigo_proveedor": "711228056",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2025-10-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8509143",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.8994739",
+      "referencia_del_contrato": "CA-011-2025"
+    },
+    {
+      "codigo_proveedor": "709117147",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2025-11-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8579831",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9085655",
+      "referencia_del_contrato": "CA-012-2025"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.8820762",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9436463",
+      "referencia_del_contrato": "CO1.PCCNTR.8820762"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.8820897",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9436463",
+      "referencia_del_contrato": "CO1.PCCNTR.8820897"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8820998",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9437404",
+      "referencia_del_contrato": "CO1.PCCNTR.8820998"
+    },
+    {
+      "codigo_proveedor": "729918581",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8821261",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9437404",
+      "referencia_del_contrato": "CD-001-2026"
+    },
+    {
+      "codigo_proveedor": "729856047",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8821573",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9437855",
+      "referencia_del_contrato": "CD-002-2026"
+    },
+    {
+      "codigo_proveedor": "729918581",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8821836",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9437855",
+      "referencia_del_contrato": "CD-001-2026"
+    },
+    {
+      "codigo_proveedor": "729920082",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8822045",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9437855",
+      "referencia_del_contrato": "CD-003-2026"
+    },
+    {
+      "codigo_proveedor": "729969360",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8822621",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9437855",
+      "referencia_del_contrato": "CD-004-2026"
+    },
+    {
+      "codigo_proveedor": "729856047",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8976046",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9593563",
+      "referencia_del_contrato": "CD-002-2026"
+    },
+    {
+      "codigo_proveedor": "734365471",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8977722",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9595529",
+      "referencia_del_contrato": "CD-001-2026"
+    },
+    {
+      "codigo_proveedor": "729920082",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8979242",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9596453",
+      "referencia_del_contrato": "CD-003-2026"
+    },
+    {
+      "codigo_proveedor": "734362676",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8979395",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9597254",
+      "referencia_del_contrato": "CD-005-2026"
+    },
+    {
+      "codigo_proveedor": "729969360",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8979468",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9596454",
+      "referencia_del_contrato": "CD-004-2026"
+    },
+    {
+      "codigo_proveedor": "729910216",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8979749",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9598107",
+      "referencia_del_contrato": "CD-007-2026"
+    },
+    {
+      "codigo_proveedor": "729830778",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8979773",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9598041",
+      "referencia_del_contrato": "CD-008-2026"
+    },
+    {
+      "codigo_proveedor": "736890567",
+      "estado_contrato": "cedido",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8980052",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9597682",
+      "referencia_del_contrato": "CD-006-2026"
+    },
+    {
+      "codigo_proveedor": "734417439",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8980453",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9598073",
+      "referencia_del_contrato": "CD-009-2026"
+    },
+    {
+      "codigo_proveedor": "734365471",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8980821",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9598709",
+      "referencia_del_contrato": "CD-001-2026"
+    },
+    {
+      "codigo_proveedor": "734326150",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8982287",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9599817",
+      "referencia_del_contrato": "CD-010-2026"
+    },
+    {
+      "codigo_proveedor": "734811359",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8984248",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9600239",
+      "referencia_del_contrato": "CD-011-2026"
+    },
+    {
+      "codigo_proveedor": "734418106",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8984727",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9601313",
+      "referencia_del_contrato": "CD-012-2026"
+    },
+    {
+      "codigo_proveedor": "734406333",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8984916",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9601469",
+      "referencia_del_contrato": "CD-013-2026"
+    },
+    {
+      "codigo_proveedor": "729966242",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8986934",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9602608",
+      "referencia_del_contrato": "CD-014-2026"
+    },
+    {
+      "codigo_proveedor": "729910174",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8987475",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9603428",
+      "referencia_del_contrato": "CD-015-2026"
+    },
+    {
+      "codigo_proveedor": "729904185",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8987946",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9603822",
+      "referencia_del_contrato": "CD-016-2026"
+    },
+    {
+      "codigo_proveedor": "729851865",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8988306",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9604945",
+      "referencia_del_contrato": "CD-017-2026"
+    },
+    {
+      "codigo_proveedor": "734405236",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.8988618",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9604995",
+      "referencia_del_contrato": "CD-018-2026"
+    },
+    {
+      "codigo_proveedor": "729918581",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8988934",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9605485",
+      "referencia_del_contrato": "CD-019-2026"
+    },
+    {
+      "codigo_proveedor": "734417280",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8989097",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9606522",
+      "referencia_del_contrato": "CD-020-2026"
+    },
+    {
+      "codigo_proveedor": "721398915",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8989955",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9608755",
+      "referencia_del_contrato": "CD-044-2026"
+    },
+    {
+      "codigo_proveedor": "734417439",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.8994103",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9598073",
+      "referencia_del_contrato": "CD-009-2026"
+    },
+    {
+      "codigo_proveedor": "729963595",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9000093",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9619003",
+      "referencia_del_contrato": "CD-033-2026"
+    },
+    {
+      "codigo_proveedor": "729970020",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9002581",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9621306",
+      "referencia_del_contrato": "CD-035-2026"
+    },
+    {
+      "codigo_proveedor": "712221563",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9003333",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9618519",
+      "referencia_del_contrato": "CD-021-2026"
+    },
+    {
+      "codigo_proveedor": "709018618",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9004332",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9618911",
+      "referencia_del_contrato": "CD-022-2026"
+    },
+    {
+      "codigo_proveedor": "729934372",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9012350",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9632051",
+      "referencia_del_contrato": "CD-029-2026"
+    },
+    {
+      "codigo_proveedor": "734525561",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9013593",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9633857",
+      "referencia_del_contrato": "CD-030-2026"
+    },
+    {
+      "codigo_proveedor": "729851865",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9013956",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9604945",
+      "referencia_del_contrato": "CD-017-2026"
+    },
+    {
+      "codigo_proveedor": "734465198",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9014548",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9634830",
+      "referencia_del_contrato": "CD-031-2026"
+    },
+    {
+      "codigo_proveedor": "734365471",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9014634",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9598709",
+      "referencia_del_contrato": "CD-001-2026"
+    },
+    {
+      "codigo_proveedor": "729918839",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9016575",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9636373",
+      "referencia_del_contrato": "CD-049-2026"
+    },
+    {
+      "codigo_proveedor": "734525561",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9019489",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9633857",
+      "referencia_del_contrato": "CD-030-2026"
+    },
+    {
+      "codigo_proveedor": "729934372",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9020835",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9632051",
+      "referencia_del_contrato": "CD-029-2026"
+    },
+    {
+      "codigo_proveedor": "729935957",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9022104",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9641238",
+      "referencia_del_contrato": "CD-036-2026"
+    },
+    {
+      "codigo_proveedor": "729860676",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9022379",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9641692",
+      "referencia_del_contrato": "CD-037-2026"
+    },
+    {
+      "codigo_proveedor": "727007288",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9031985",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9651600",
+      "referencia_del_contrato": "CD-052-2026"
+    },
+    {
+      "codigo_proveedor": "727007288",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9032957",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9651600",
+      "referencia_del_contrato": "CD-052-2026"
+    },
+    {
+      "codigo_proveedor": "734405236",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9034229",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9604995",
+      "referencia_del_contrato": "CD-018-2026"
+    },
+    {
+      "codigo_proveedor": "729255109",
+      "estado_contrato": "cedido",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9034924",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9648651",
+      "referencia_del_contrato": "CD-038-2026"
+    },
+    {
+      "codigo_proveedor": "729821959",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9035171",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9650122",
+      "referencia_del_contrato": "CD-023-2026"
+    },
+    {
+      "codigo_proveedor": "729850222",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9035365",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9651067",
+      "referencia_del_contrato": "CD-024-2026"
+    },
+    {
+      "codigo_proveedor": "720455799",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9035556",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9649014",
+      "referencia_del_contrato": "CD-039-2026"
+    },
+    {
+      "codigo_proveedor": "715081089",
+      "estado_contrato": "cedido",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9035607",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9650968",
+      "referencia_del_contrato": "CD-051-2026"
+    },
+    {
+      "codigo_proveedor": "729856153",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9035638",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9654167",
+      "referencia_del_contrato": "CD-025-2026"
+    },
+    {
+      "codigo_proveedor": "729935957",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9035930",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9641238",
+      "referencia_del_contrato": "CD-036-2026"
+    },
+    {
+      "codigo_proveedor": "734378334",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9036135",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9654977",
+      "referencia_del_contrato": "CD-026-2026"
+    },
+    {
+      "codigo_proveedor": "726564479",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9038425",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9655513",
+      "referencia_del_contrato": "CD-027-2026"
+    },
+    {
+      "codigo_proveedor": "712221563",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9040102",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9618519",
+      "referencia_del_contrato": "CD-021-2026"
+    },
+    {
+      "codigo_proveedor": "734480650",
+      "estado_contrato": "Suspendido",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9041269",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9655833",
+      "referencia_del_contrato": "CD-061-2026"
+    },
+    {
+      "codigo_proveedor": "703141341",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9042520",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9664958",
+      "referencia_del_contrato": "CD-050-2026"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9042659",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9618911",
+      "referencia_del_contrato": "CO1.PCCNTR.9042659"
+    },
+    {
+      "codigo_proveedor": "709018618",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9042663",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9618911",
+      "referencia_del_contrato": "CD-022-2026"
+    },
+    {
+      "codigo_proveedor": "704841824",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9044329",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9654837",
+      "referencia_del_contrato": "CD-054-2026"
+    },
+    {
+      "codigo_proveedor": "729963595",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9044332",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9619003",
+      "referencia_del_contrato": "CD-033-2026"
+    },
+    {
+      "codigo_proveedor": "720455799",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9044353",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9649014",
+      "referencia_del_contrato": "CD-039-2026"
+    },
+    {
+      "codigo_proveedor": "729851519",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9044407",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9655564",
+      "referencia_del_contrato": "CD-062-2026"
+    },
+    {
+      "codigo_proveedor": "729856062",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9044942",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9649046",
+      "referencia_del_contrato": "CD-040-2026"
+    },
+    {
+      "codigo_proveedor": "729805093",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9045035",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9650063",
+      "referencia_del_contrato": "CD-041-2026"
+    },
+    {
+      "codigo_proveedor": "729895722",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9045117",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9650841",
+      "referencia_del_contrato": "CD-042-2026"
+    },
+    {
+      "codigo_proveedor": "729859157",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9045853",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9668957",
+      "referencia_del_contrato": "CD-057-2026"
+    },
+    {
+      "codigo_proveedor": "707094280",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9046170",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9669168",
+      "referencia_del_contrato": "CD-058-2026"
+    },
+    {
+      "codigo_proveedor": "722379294",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9047424",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9669715",
+      "referencia_del_contrato": "CD-059-2026"
+    },
+    {
+      "codigo_proveedor": "708107636",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9047679",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9670329",
+      "referencia_del_contrato": "CD-060-2026"
+    },
+    {
+      "codigo_proveedor": "726019557",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9047958",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9669004",
+      "referencia_del_contrato": "CD-055-2026"
+    },
+    {
+      "codigo_proveedor": "734908965",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9048376",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9651872",
+      "referencia_del_contrato": "CD-048-2026"
+    },
+    {
+      "codigo_proveedor": "734403165",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9048570",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9655711",
+      "referencia_del_contrato": "CD-028-2026"
+    },
+    {
+      "codigo_proveedor": "729925263",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9049716",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9671558",
+      "referencia_del_contrato": "CD-045-2026"
+    },
+    {
+      "codigo_proveedor": "720466655",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9049844",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9671583",
+      "referencia_del_contrato": "CD-084-2026"
+    },
+    {
+      "codigo_proveedor": "729905133",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9050512",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9665700",
+      "referencia_del_contrato": "CD-067-2026"
+    },
+    {
+      "codigo_proveedor": "729919852",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9050842",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9666732",
+      "referencia_del_contrato": "CD-068-2026"
+    },
+    {
+      "codigo_proveedor": "703075093",
+      "estado_contrato": "cedido",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9050984",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9667927",
+      "referencia_del_contrato": "CD-063-2026"
+    },
+    {
+      "codigo_proveedor": "723271060",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9051528",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9673508",
+      "referencia_del_contrato": "CD-046-2026"
+    },
+    {
+      "codigo_proveedor": "710038829",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9051705",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9667055",
+      "referencia_del_contrato": "CD-069-2026"
+    },
+    {
+      "codigo_proveedor": "735061681",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9051710",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9667860",
+      "referencia_del_contrato": "CD-064-2026"
+    },
+    {
+      "codigo_proveedor": "719505588",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9051934",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9667087",
+      "referencia_del_contrato": "CD-075-2026"
+    },
+    {
+      "codigo_proveedor": "722436292",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9051966",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9654573",
+      "referencia_del_contrato": "CD-053-2026"
+    },
+    {
+      "codigo_proveedor": "734434764",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9052214",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9673665",
+      "referencia_del_contrato": "CD-047-2026"
+    },
+    {
+      "codigo_proveedor": "727181299",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9052499",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9674301",
+      "referencia_del_contrato": "CD-065-2026"
+    },
+    {
+      "codigo_proveedor": "729893180",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9052920",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9667359",
+      "referencia_del_contrato": "CD-076-2026"
+    },
+    {
+      "codigo_proveedor": "734652811",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9053578",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9667470",
+      "referencia_del_contrato": "CD-080-2026"
+    },
+    {
+      "codigo_proveedor": "722252384",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9054207",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9675029",
+      "referencia_del_contrato": "CD-066-2026"
+    },
+    {
+      "codigo_proveedor": "727100471",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9054545",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9675798",
+      "referencia_del_contrato": "CD-056-2026"
+    },
+    {
+      "codigo_proveedor": "729860213",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9055039",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9675745",
+      "referencia_del_contrato": "CD-079-2026"
+    },
+    {
+      "codigo_proveedor": "708769211",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9055236",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9676961",
+      "referencia_del_contrato": "CD-071-2026"
+    },
+    {
+      "codigo_proveedor": "729860023",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9055506",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9674611",
+      "referencia_del_contrato": "CD-073-2026"
+    },
+    {
+      "codigo_proveedor": "729857706",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9055795",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9675112",
+      "referencia_del_contrato": "CD-074-2026"
+    },
+    {
+      "codigo_proveedor": "729860239",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9056725",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9675277",
+      "referencia_del_contrato": "CD-077-2026"
+    },
+    {
+      "codigo_proveedor": "729895870",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9058252",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9679535",
+      "referencia_del_contrato": "CD-072-2026"
+    },
+    {
+      "codigo_proveedor": "729822668",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9059005",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9676237",
+      "referencia_del_contrato": "CD-078-2026"
+    },
+    {
+      "codigo_proveedor": "734523517",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9060681",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9675784",
+      "referencia_del_contrato": "CD-081-2026"
+    },
+    {
+      "codigo_proveedor": "729860650",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9061136",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9676342",
+      "referencia_del_contrato": "CD-082-2026"
+    },
+    {
+      "codigo_proveedor": "729929158",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9069154",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9684110",
+      "referencia_del_contrato": "CD-083-2026"
+    },
+    {
+      "codigo_proveedor": "729857763",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9073608",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9690101",
+      "referencia_del_contrato": "CD-032-2026"
+    },
+    {
+      "codigo_proveedor": "734892508",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9074409",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9690559",
+      "referencia_del_contrato": "CD-093-2026"
+    },
+    {
+      "codigo_proveedor": "735084824",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9075507",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9693648",
+      "referencia_del_contrato": "CD-094-2026"
+    },
+    {
+      "codigo_proveedor": "711453217",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9076063",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9691684",
+      "referencia_del_contrato": "CD-096-2026"
+    },
+    {
+      "codigo_proveedor": "734478274",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9077026",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9697312",
+      "referencia_del_contrato": "CD-095-2026"
+    },
+    {
+      "codigo_proveedor": "734376536",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9086536",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9705950",
+      "referencia_del_contrato": "CD-070-2026"
+    },
+    {
+      "codigo_proveedor": "734403330",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9086932",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9706503",
+      "referencia_del_contrato": "CD-085-2026"
+    },
+    {
+      "codigo_proveedor": "734378599",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9087738",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9707137",
+      "referencia_del_contrato": "CD-086-2026"
+    },
+    {
+      "codigo_proveedor": "734419609",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9090456",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9707835",
+      "referencia_del_contrato": "CD-087-2026"
+    },
+    {
+      "codigo_proveedor": "734607229",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9091215",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9710500",
+      "referencia_del_contrato": "CD-106-2026"
+    },
+    {
+      "codigo_proveedor": "734492630",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9094526",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9704167",
+      "referencia_del_contrato": "CD-108-2026"
+    },
+    {
+      "codigo_proveedor": "729859595",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9094964",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9713998",
+      "referencia_del_contrato": "CD-107-2026"
+    },
+    {
+      "codigo_proveedor": "735103681",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9095029",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9704704",
+      "referencia_del_contrato": "CD-109-2026"
+    },
+    {
+      "codigo_proveedor": "734507940",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9095479",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9705370",
+      "referencia_del_contrato": "CD-110-2026"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9096127",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9708421",
+      "referencia_del_contrato": "CO1.PCCNTR.9096127"
+    },
+    {
+      "codigo_proveedor": "720469063",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9096197",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9708421",
+      "referencia_del_contrato": "CD-088-2026"
+    },
+    {
+      "codigo_proveedor": "729909614",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9096243",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9706535",
+      "referencia_del_contrato": "CD-111-2026"
+    },
+    {
+      "codigo_proveedor": "734481112",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9096378",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9715916",
+      "referencia_del_contrato": "CD-101-2026"
+    },
+    {
+      "codigo_proveedor": "734494420",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9096397",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9706949",
+      "referencia_del_contrato": "CD-112-2026"
+    },
+    {
+      "codigo_proveedor": "734419609",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9096855",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9707835",
+      "referencia_del_contrato": "CD-087-2026"
+    },
+    {
+      "codigo_proveedor": "734812332",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9097471",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9708824",
+      "referencia_del_contrato": "CD-089-2026"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9098039",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9709240",
+      "referencia_del_contrato": "CO1.PCCNTR.9098039"
+    },
+    {
+      "codigo_proveedor": "734744857",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9098074",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9709240",
+      "referencia_del_contrato": "CD-090-2026"
+    },
+    {
+      "codigo_proveedor": "735117574",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9098122",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9708441",
+      "referencia_del_contrato": "CD-113-2026"
+    },
+    {
+      "codigo_proveedor": "734484363",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9098534",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9716656",
+      "referencia_del_contrato": "CD-119-2026"
+    },
+    {
+      "codigo_proveedor": "734810039",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9098775",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9709534",
+      "referencia_del_contrato": "CD-091-2026"
+    },
+    {
+      "codigo_proveedor": "715075792",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9099057",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9718539",
+      "referencia_del_contrato": "CD-126-2026"
+    },
+    {
+      "codigo_proveedor": "734420391",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9099816",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9709888",
+      "referencia_del_contrato": "CD-092-2026"
+    },
+    {
+      "codigo_proveedor": "734718281",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9099904",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9718471",
+      "referencia_del_contrato": "CD-102-2026"
+    },
+    {
+      "codigo_proveedor": "734483035",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9101146",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9708852",
+      "referencia_del_contrato": "CD-114-2026"
+    },
+    {
+      "codigo_proveedor": "734526460",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9101860",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9720797",
+      "referencia_del_contrato": "CD-104-2026"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.9102862",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9720797",
+      "referencia_del_contrato": "CO1.PCCNTR.9102862"
+    },
+    {
+      "codigo_proveedor": "730041019",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9103236",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9708895",
+      "referencia_del_contrato": "CD-115-2026"
+    },
+    {
+      "codigo_proveedor": "734376445",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9104030",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9722968",
+      "referencia_del_contrato": "CD-124-2026"
+    },
+    {
+      "codigo_proveedor": "727465098",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9104198",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9710249",
+      "referencia_del_contrato": "CD-116-2026"
+    },
+    {
+      "codigo_proveedor": "725385173",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9104941",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9711139",
+      "referencia_del_contrato": "CD-117-2026"
+    },
+    {
+      "codigo_proveedor": "729859561",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9107578",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9726351",
+      "referencia_del_contrato": "CD-136-2026"
+    },
+    {
+      "codigo_proveedor": "729207415",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2026-01-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.9107604",
+      "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+      "proceso_de_compra": "CO1.BDOS.9725910",
+      "referencia_del_contrato": "CD-127-2026"
+    }
+  ],
+  "sha256": "4ee30386e422ae2fbaadd40f8f26443d1297381a3022a74996e8aee3873cbbf6",
+  "status": "MATERIALIZED"
+}

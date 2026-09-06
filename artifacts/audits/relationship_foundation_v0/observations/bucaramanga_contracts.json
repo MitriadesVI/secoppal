@@ -1,0 +1,2254 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:39:38.307482+00:00",
+  "params": {
+    "$limit": 250,
+    "$order": "id_contrato",
+    "$select": "id_contrato,referencia_del_contrato,proceso_de_compra,nombre_entidad,codigo_proveedor,estado_contrato,fecha_de_firma",
+    "$where": "nombre_entidad in ('MUNICIPIO DE BUCARAMANGA')"
+  },
+  "payload": [
+    {
+      "codigo_proveedor": "701755340",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1492015",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1190911",
+      "referencia_del_contrato": "SDS-CDUM-090-2020"
+    },
+    {
+      "codigo_proveedor": "701515082",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1493958",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1194573",
+      "referencia_del_contrato": "119"
+    },
+    {
+      "codigo_proveedor": "708708102",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1497805",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1200603",
+      "referencia_del_contrato": "091"
+    },
+    {
+      "codigo_proveedor": "708708102",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1498001",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1198648",
+      "referencia_del_contrato": "091"
+    },
+    {
+      "codigo_proveedor": "709494041",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1502189",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1204920",
+      "referencia_del_contrato": "613"
+    },
+    {
+      "codigo_proveedor": "709441224",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1503949",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1206132",
+      "referencia_del_contrato": "614"
+    },
+    {
+      "codigo_proveedor": "709435606",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1509689",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1209707",
+      "referencia_del_contrato": "615"
+    },
+    {
+      "codigo_proveedor": "709168074",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1509712",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1199210",
+      "referencia_del_contrato": "92-2020"
+    },
+    {
+      "codigo_proveedor": "709445100",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1513286",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1213326",
+      "referencia_del_contrato": "617"
+    },
+    {
+      "codigo_proveedor": "709543763",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1513588",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1212781",
+      "referencia_del_contrato": "616"
+    },
+    {
+      "codigo_proveedor": "709552368",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1514710",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1207685",
+      "referencia_del_contrato": "93"
+    },
+    {
+      "codigo_proveedor": "709495766",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1515217",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1214511",
+      "referencia_del_contrato": "618"
+    },
+    {
+      "codigo_proveedor": "709524219",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1517009",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1214867",
+      "referencia_del_contrato": "619"
+    },
+    {
+      "codigo_proveedor": "703995712",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1518159",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1198090",
+      "referencia_del_contrato": "94"
+    },
+    {
+      "codigo_proveedor": "709549133",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1518254",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1214265",
+      "referencia_del_contrato": "620"
+    },
+    {
+      "codigo_proveedor": "709546253",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1518931",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1216838",
+      "referencia_del_contrato": "621"
+    },
+    {
+      "codigo_proveedor": "704936301",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1519348",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1217319",
+      "referencia_del_contrato": "622"
+    },
+    {
+      "codigo_proveedor": "704900182",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520967",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1218414",
+      "referencia_del_contrato": "623"
+    },
+    {
+      "codigo_proveedor": "704860949",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1520980",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1218096",
+      "referencia_del_contrato": "624"
+    },
+    {
+      "codigo_proveedor": "709494710",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1526413",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1220456",
+      "referencia_del_contrato": "625"
+    },
+    {
+      "codigo_proveedor": "705115681",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529041",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1223223",
+      "referencia_del_contrato": "626"
+    },
+    {
+      "codigo_proveedor": "709448120",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1529282",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1223394",
+      "referencia_del_contrato": "627"
+    },
+    {
+      "codigo_proveedor": "706335460",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1530019",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1223499",
+      "referencia_del_contrato": "628"
+    },
+    {
+      "codigo_proveedor": "709647481",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1531728",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1225126",
+      "referencia_del_contrato": "629"
+    },
+    {
+      "codigo_proveedor": "709444012",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1531856",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1225074",
+      "referencia_del_contrato": "630"
+    },
+    {
+      "codigo_proveedor": "702005158",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1531892",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1225501",
+      "referencia_del_contrato": "631"
+    },
+    {
+      "codigo_proveedor": "704842970",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1532552",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1225737",
+      "referencia_del_contrato": "632"
+    },
+    {
+      "codigo_proveedor": "709584221",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1532575",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1225763",
+      "referencia_del_contrato": "633"
+    },
+    {
+      "codigo_proveedor": "709663058",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1535151",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1227017",
+      "referencia_del_contrato": "635"
+    },
+    {
+      "codigo_proveedor": "702491341",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1535904",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1209213",
+      "referencia_del_contrato": "95"
+    },
+    {
+      "codigo_proveedor": "701724643",
+      "estado_contrato": "cedido",
+      "fecha_de_firma": "2020-04-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1536301",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1227410",
+      "referencia_del_contrato": "634"
+    },
+    {
+      "codigo_proveedor": "703156323",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1536690",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1228640",
+      "referencia_del_contrato": "636"
+    },
+    {
+      "codigo_proveedor": "704950732",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1537075",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1228591",
+      "referencia_del_contrato": "639"
+    },
+    {
+      "codigo_proveedor": "704366129",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1537533",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1210062",
+      "referencia_del_contrato": "96"
+    },
+    {
+      "codigo_proveedor": "709673263",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1537936",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1229008",
+      "referencia_del_contrato": "640"
+    },
+    {
+      "codigo_proveedor": "703183715",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1538210",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1228336",
+      "referencia_del_contrato": "638"
+    },
+    {
+      "codigo_proveedor": "709670293",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-04-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1538219",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1229125",
+      "referencia_del_contrato": "637"
+    },
+    {
+      "codigo_proveedor": "703489484",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1545134",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1234718",
+      "referencia_del_contrato": "641"
+    },
+    {
+      "codigo_proveedor": "709632350",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1546113",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1235239",
+      "referencia_del_contrato": "642"
+    },
+    {
+      "codigo_proveedor": "706737053",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1548757",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1235529",
+      "referencia_del_contrato": "97"
+    },
+    {
+      "codigo_proveedor": "709606974",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1549561",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1237755",
+      "referencia_del_contrato": "645"
+    },
+    {
+      "codigo_proveedor": "709450928",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1549745",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1237928",
+      "referencia_del_contrato": "643"
+    },
+    {
+      "codigo_proveedor": "709627442",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1549926",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1238084",
+      "referencia_del_contrato": "644"
+    },
+    {
+      "codigo_proveedor": "703549675",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1550510",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1238092",
+      "referencia_del_contrato": "646"
+    },
+    {
+      "codigo_proveedor": "700898208",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1551426",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1236321",
+      "referencia_del_contrato": "98"
+    },
+    {
+      "codigo_proveedor": "704788819",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1552145",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1239416",
+      "referencia_del_contrato": "648-2020"
+    },
+    {
+      "codigo_proveedor": "709607691",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1552151",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1239660",
+      "referencia_del_contrato": "647"
+    },
+    {
+      "codigo_proveedor": "701705014",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1552490",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1239708",
+      "referencia_del_contrato": "649"
+    },
+    {
+      "codigo_proveedor": "705002590",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556444",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1243159",
+      "referencia_del_contrato": "651"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1556535",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1225763",
+      "referencia_del_contrato": "CO1.PCCNTR.1556535"
+    },
+    {
+      "codigo_proveedor": "709517114",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556544",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1243047",
+      "referencia_del_contrato": "653"
+    },
+    {
+      "codigo_proveedor": "709450829",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556557",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1242966",
+      "referencia_del_contrato": "654"
+    },
+    {
+      "codigo_proveedor": "709776660",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556650",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1243258",
+      "referencia_del_contrato": "650"
+    },
+    {
+      "codigo_proveedor": "709778294",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1556682",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1243184",
+      "referencia_del_contrato": "652"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1556828",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1225763",
+      "referencia_del_contrato": "CO1.PCCNTR.1556828"
+    },
+    {
+      "codigo_proveedor": "709617054",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1557403",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1243707",
+      "referencia_del_contrato": "655"
+    },
+    {
+      "codigo_proveedor": "709518286",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1558988",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1245479",
+      "referencia_del_contrato": "656"
+    },
+    {
+      "codigo_proveedor": "709531883",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1560260",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1246036",
+      "referencia_del_contrato": "657"
+    },
+    {
+      "codigo_proveedor": "709775373",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1561202",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1246328",
+      "referencia_del_contrato": "658"
+    },
+    {
+      "codigo_proveedor": "709796296",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-12T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1561302",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1246512",
+      "referencia_del_contrato": "659"
+    },
+    {
+      "codigo_proveedor": "709802938",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1561699",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1247670",
+      "referencia_del_contrato": "662"
+    },
+    {
+      "codigo_proveedor": "709440556",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1563010",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1247593",
+      "referencia_del_contrato": "661"
+    },
+    {
+      "codigo_proveedor": "704782010",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1563708",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1247772",
+      "referencia_del_contrato": "660"
+    },
+    {
+      "codigo_proveedor": "709459044",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1564366",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1249092",
+      "referencia_del_contrato": "663"
+    },
+    {
+      "codigo_proveedor": "709756019",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1564688",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1249636",
+      "referencia_del_contrato": "664"
+    },
+    {
+      "codigo_proveedor": "709526529",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1565805",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1249816",
+      "referencia_del_contrato": "666"
+    },
+    {
+      "codigo_proveedor": "705456374",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-14T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1566104",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1250051",
+      "referencia_del_contrato": "665"
+    },
+    {
+      "codigo_proveedor": "705063014",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1567874",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1251074",
+      "referencia_del_contrato": "669"
+    },
+    {
+      "codigo_proveedor": "703360610",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1568692",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1250610",
+      "referencia_del_contrato": "667"
+    },
+    {
+      "codigo_proveedor": "709449979",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1569123",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1250780",
+      "referencia_del_contrato": "668"
+    },
+    {
+      "codigo_proveedor": "709854129",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1572486",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1255009",
+      "referencia_del_contrato": "670"
+    },
+    {
+      "codigo_proveedor": "706321379",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1572959",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1255519",
+      "referencia_del_contrato": "SEB-CPS-675-2020"
+    },
+    {
+      "codigo_proveedor": "705172229",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1573405",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1255339",
+      "referencia_del_contrato": "676"
+    },
+    {
+      "codigo_proveedor": "704902063",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1573434",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1255462",
+      "referencia_del_contrato": "SEB-CPS-672-2020"
+    },
+    {
+      "codigo_proveedor": "703408690",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1573547",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1255468",
+      "referencia_del_contrato": "SEB-CPS-671-2020"
+    },
+    {
+      "codigo_proveedor": "701695231",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1573801",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1255462",
+      "referencia_del_contrato": "SEB-CPS-672-2020"
+    },
+    {
+      "codigo_proveedor": "703300749",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1573812",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1255820",
+      "referencia_del_contrato": "SEB-CPS-673-2020"
+    },
+    {
+      "codigo_proveedor": "703520387",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1573816",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1255914",
+      "referencia_del_contrato": "SEB-CPS-674-2020"
+    },
+    {
+      "codigo_proveedor": "706308541",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1575751",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1257151",
+      "referencia_del_contrato": "677"
+    },
+    {
+      "codigo_proveedor": "709723365",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1576225",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1257359",
+      "referencia_del_contrato": "678"
+    },
+    {
+      "codigo_proveedor": "704867175",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1578377",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1258859",
+      "referencia_del_contrato": "680"
+    },
+    {
+      "codigo_proveedor": "709543300",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1578849",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1259601",
+      "referencia_del_contrato": "681"
+    },
+    {
+      "codigo_proveedor": "703404798",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-20T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1579714",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1259538",
+      "referencia_del_contrato": "SEB-CPS-679-2020"
+    },
+    {
+      "codigo_proveedor": "709511257",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581401",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1260416",
+      "referencia_del_contrato": "685"
+    },
+    {
+      "codigo_proveedor": "709886006",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581547",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1259754",
+      "referencia_del_contrato": "692"
+    },
+    {
+      "codigo_proveedor": "709781041",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581551",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1259558",
+      "referencia_del_contrato": "693"
+    },
+    {
+      "codigo_proveedor": "709885933",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581556",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1259813",
+      "referencia_del_contrato": "694"
+    },
+    {
+      "codigo_proveedor": "708422019",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581687",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1260942",
+      "referencia_del_contrato": "687"
+    },
+    {
+      "codigo_proveedor": "705008167",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581710",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1259699",
+      "referencia_del_contrato": "686"
+    },
+    {
+      "codigo_proveedor": "704952613",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581768",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1261028",
+      "referencia_del_contrato": "695"
+    },
+    {
+      "codigo_proveedor": "709891261",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581770",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1260935",
+      "referencia_del_contrato": "690"
+    },
+    {
+      "codigo_proveedor": "709885859",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581811",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1259749",
+      "referencia_del_contrato": "691"
+    },
+    {
+      "codigo_proveedor": "709799183",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1581858",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1260690",
+      "referencia_del_contrato": "682"
+    },
+    {
+      "codigo_proveedor": "706500790",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1582617",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1260934",
+      "referencia_del_contrato": "683"
+    },
+    {
+      "codigo_proveedor": "709891295",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1582620",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1260938",
+      "referencia_del_contrato": "684"
+    },
+    {
+      "codigo_proveedor": "704363803",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1582639",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1260956",
+      "referencia_del_contrato": "689"
+    },
+    {
+      "codigo_proveedor": "706419132",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1582805",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1261125",
+      "referencia_del_contrato": "688"
+    },
+    {
+      "codigo_proveedor": "705183291",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1583306",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1261403",
+      "referencia_del_contrato": "101"
+    },
+    {
+      "codigo_proveedor": "709897656",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1584473",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1262669",
+      "referencia_del_contrato": "699"
+    },
+    {
+      "codigo_proveedor": "706369170",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1584541",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1262651",
+      "referencia_del_contrato": "696"
+    },
+    {
+      "codigo_proveedor": "706479136",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1584628",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1262704",
+      "referencia_del_contrato": "698"
+    },
+    {
+      "codigo_proveedor": "704990076",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-22T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1585175",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1263050",
+      "referencia_del_contrato": "697"
+    },
+    {
+      "codigo_proveedor": "709933204",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1589799",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1267219",
+      "referencia_del_contrato": "701"
+    },
+    {
+      "codigo_proveedor": "709931448",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1590415",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1267125",
+      "referencia_del_contrato": "700"
+    },
+    {
+      "codigo_proveedor": "705214161",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1590484",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1261616",
+      "referencia_del_contrato": "103"
+    },
+    {
+      "codigo_proveedor": "709836225",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1593880",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1268947",
+      "referencia_del_contrato": "704"
+    },
+    {
+      "codigo_proveedor": "705327310",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-05-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1594011",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1268490",
+      "referencia_del_contrato": "702"
+    },
+    {
+      "codigo_proveedor": "709824064",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1594309",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1268959",
+      "referencia_del_contrato": "705"
+    },
+    {
+      "codigo_proveedor": "709925366",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-05-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1594320",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1269309",
+      "referencia_del_contrato": "703"
+    },
+    {
+      "codigo_proveedor": "709868038",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1596481",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1268661",
+      "referencia_del_contrato": "706"
+    },
+    {
+      "codigo_proveedor": "705214161",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-28T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1597359",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1266008",
+      "referencia_del_contrato": "CO1.PCCNTR.1597359"
+    },
+    {
+      "codigo_proveedor": "702050501",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1598253",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1195947",
+      "referencia_del_contrato": "107"
+    },
+    {
+      "codigo_proveedor": "702397118",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1598254",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1195947",
+      "referencia_del_contrato": "108"
+    },
+    {
+      "codigo_proveedor": "706980257",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1598255",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1195947",
+      "referencia_del_contrato": "109"
+    },
+    {
+      "codigo_proveedor": "705214161",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1598943",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1254852",
+      "referencia_del_contrato": "106"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1600139",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1268661",
+      "referencia_del_contrato": "CO1.PCCNTR.1600139"
+    },
+    {
+      "codigo_proveedor": "704310721",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1600188",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1220104",
+      "referencia_del_contrato": "CO1.PCCNTR.1600188"
+    },
+    {
+      "codigo_proveedor": "709960074",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-05-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1600500",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1272463",
+      "referencia_del_contrato": "707"
+    },
+    {
+      "codigo_proveedor": "704310721",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1600904",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1220104",
+      "referencia_del_contrato": "CO1.PCCNTR.1600904"
+    },
+    {
+      "codigo_proveedor": "709647556",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1601104",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1273021",
+      "referencia_del_contrato": "708"
+    },
+    {
+      "codigo_proveedor": "709605083",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-05-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1601137",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1273053",
+      "referencia_del_contrato": "709"
+    },
+    {
+      "codigo_proveedor": "709716104",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-06-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1606069",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1276649",
+      "referencia_del_contrato": "SDS-CPS-110-2020"
+    },
+    {
+      "codigo_proveedor": "704310721",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1606621",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1220104",
+      "referencia_del_contrato": "CO1.PCCNTR.1606621"
+    },
+    {
+      "codigo_proveedor": "704310721",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1606623",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1220104",
+      "referencia_del_contrato": "111"
+    },
+    {
+      "codigo_proveedor": "704310721",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1607401",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1220104",
+      "referencia_del_contrato": "CO1.PCCNTR.1607401"
+    },
+    {
+      "codigo_proveedor": "701770067",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-02T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1608168",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1277996",
+      "referencia_del_contrato": "112"
+    },
+    {
+      "codigo_proveedor": "710016700",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1610474",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1279269",
+      "referencia_del_contrato": "715"
+    },
+    {
+      "codigo_proveedor": "706607280",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1610699",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1279833",
+      "referencia_del_contrato": "714"
+    },
+    {
+      "codigo_proveedor": "710020116",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1610752",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1279724",
+      "referencia_del_contrato": "716"
+    },
+    {
+      "codigo_proveedor": "709885503",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1610777",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1280015",
+      "referencia_del_contrato": "713"
+    },
+    {
+      "codigo_proveedor": "709873665",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1610780",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1279842",
+      "referencia_del_contrato": "711"
+    },
+    {
+      "codigo_proveedor": "709894141",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1611502",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1280014",
+      "referencia_del_contrato": "712"
+    },
+    {
+      "codigo_proveedor": "709862874",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-06-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1611512",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1279921",
+      "referencia_del_contrato": "710"
+    },
+    {
+      "codigo_proveedor": "707030763",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1612917",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1206121",
+      "referencia_del_contrato": "114 del 05 de junio de 2020"
+    },
+    {
+      "codigo_proveedor": "709571293",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1612929",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1280952",
+      "referencia_del_contrato": "717"
+    },
+    {
+      "codigo_proveedor": "700326028",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1613901",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1261603",
+      "referencia_del_contrato": "113"
+    },
+    {
+      "codigo_proveedor": "709514053",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1614219",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1281431",
+      "referencia_del_contrato": "718"
+    },
+    {
+      "codigo_proveedor": "709790489",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1616223",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1282573",
+      "referencia_del_contrato": "719"
+    },
+    {
+      "codigo_proveedor": "703668053",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1616251",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1283112",
+      "referencia_del_contrato": "720"
+    },
+    {
+      "codigo_proveedor": "710064825",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1620710",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1286853",
+      "referencia_del_contrato": "721"
+    },
+    {
+      "codigo_proveedor": "709892442",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-06-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1621688",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1287340",
+      "referencia_del_contrato": "722"
+    },
+    {
+      "codigo_proveedor": "709923312",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1625046",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1236411",
+      "referencia_del_contrato": "116"
+    },
+    {
+      "codigo_proveedor": "710095316",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-06-10T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1625908",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1290218",
+      "referencia_del_contrato": "723"
+    },
+    {
+      "codigo_proveedor": "709565717",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-11T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1627801",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1290799",
+      "referencia_del_contrato": "724"
+    },
+    {
+      "codigo_proveedor": "700967243",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1628629",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1207917",
+      "referencia_del_contrato": "115"
+    },
+    {
+      "codigo_proveedor": "709998041",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1638781",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1300273",
+      "referencia_del_contrato": "726"
+    },
+    {
+      "codigo_proveedor": "710031253",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1640030",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1300083",
+      "referencia_del_contrato": "727"
+    },
+    {
+      "codigo_proveedor": "710066812",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-06-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1640210",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1300123",
+      "referencia_del_contrato": "728"
+    },
+    {
+      "codigo_proveedor": "701278087",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-18T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1640815",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1300502",
+      "referencia_del_contrato": "117"
+    },
+    {
+      "codigo_proveedor": "710155128",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1642174",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1301675",
+      "referencia_del_contrato": "732"
+    },
+    {
+      "codigo_proveedor": "705214161",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1642624",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1295307",
+      "referencia_del_contrato": "118"
+    },
+    {
+      "codigo_proveedor": "711577601",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1642638",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1301465",
+      "referencia_del_contrato": "729"
+    },
+    {
+      "codigo_proveedor": "710150335",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-06-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1642746",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1302232",
+      "referencia_del_contrato": "733"
+    },
+    {
+      "codigo_proveedor": "709580450",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1642950",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1302116",
+      "referencia_del_contrato": "731"
+    },
+    {
+      "codigo_proveedor": "709752661",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-19T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1643006",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1301489",
+      "referencia_del_contrato": "730"
+    },
+    {
+      "codigo_proveedor": "710220542",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1648074",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1306359",
+      "referencia_del_contrato": "735"
+    },
+    {
+      "codigo_proveedor": "710220575",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1648131",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1306028",
+      "referencia_del_contrato": "734"
+    },
+    {
+      "codigo_proveedor": "710220591",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1651841",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1308820",
+      "referencia_del_contrato": "736"
+    },
+    {
+      "codigo_proveedor": "710236274",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-06-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1651849",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1308473",
+      "referencia_del_contrato": "737"
+    },
+    {
+      "codigo_proveedor": "710185158",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-06-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1652144",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1308613",
+      "referencia_del_contrato": "738"
+    },
+    {
+      "codigo_proveedor": "708503669",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-06-26T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1657078",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1311681",
+      "referencia_del_contrato": "739"
+    },
+    {
+      "codigo_proveedor": "710294042",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-01T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1666751",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1319026",
+      "referencia_del_contrato": "740"
+    },
+    {
+      "codigo_proveedor": "704338102",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-02T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1669352",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1300576",
+      "referencia_del_contrato": "121"
+    },
+    {
+      "codigo_proveedor": "705214161",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-02T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1669701",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1316034",
+      "referencia_del_contrato": "120"
+    },
+    {
+      "codigo_proveedor": "710233115",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1672106",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1322431",
+      "referencia_del_contrato": "741"
+    },
+    {
+      "codigo_proveedor": "710240540",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1672223",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1322285",
+      "referencia_del_contrato": "742"
+    },
+    {
+      "codigo_proveedor": "704923028",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1674763",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1325088",
+      "referencia_del_contrato": "743"
+    },
+    {
+      "codigo_proveedor": "0",
+      "estado_contrato": "Cancelado",
+      "id_contrato": "CO1.PCCNTR.1675058",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1325088",
+      "referencia_del_contrato": "CO1.PCCNTR.1675058"
+    },
+    {
+      "codigo_proveedor": "710003195",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-07T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1679804",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1328222",
+      "referencia_del_contrato": "744"
+    },
+    {
+      "codigo_proveedor": "710173162",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-08T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1681732",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1329460",
+      "referencia_del_contrato": "745"
+    },
+    {
+      "codigo_proveedor": "700221021",
+      "estado_contrato": "Aprobado",
+      "fecha_de_firma": "2020-07-09T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1685818",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1331195",
+      "referencia_del_contrato": "SEB-CONVENIO INTERADMINISTRATIVO-0122-2020"
+    },
+    {
+      "codigo_proveedor": "707095055",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-07-13T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1686073",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1209566",
+      "referencia_del_contrato": "CO1.PCCNTR.1686073"
+    },
+    {
+      "codigo_proveedor": "707201547",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-09T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1686140",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1332209",
+      "referencia_del_contrato": "746"
+    },
+    {
+      "codigo_proveedor": "710310129",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-10T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1688940",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1333807",
+      "referencia_del_contrato": "747"
+    },
+    {
+      "codigo_proveedor": "710449240",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1698520",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1341433",
+      "referencia_del_contrato": "748"
+    },
+    {
+      "codigo_proveedor": "710454760",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1699695",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1342334",
+      "referencia_del_contrato": "749"
+    },
+    {
+      "codigo_proveedor": "707123667",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-15T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1700122",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1342339",
+      "referencia_del_contrato": "750"
+    },
+    {
+      "codigo_proveedor": "703521526",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1705090",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1346567",
+      "referencia_del_contrato": "751"
+    },
+    {
+      "codigo_proveedor": "705037281",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-17T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1705590",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1347246",
+      "referencia_del_contrato": "753"
+    },
+    {
+      "codigo_proveedor": "704395060",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-21T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1711948",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1347209",
+      "referencia_del_contrato": "752"
+    },
+    {
+      "codigo_proveedor": "710521717",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-23T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1717343",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1355674",
+      "referencia_del_contrato": "754"
+    },
+    {
+      "codigo_proveedor": "702217324",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1717808",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1356348",
+      "referencia_del_contrato": "124"
+    },
+    {
+      "codigo_proveedor": "703818468",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1718131",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1248402",
+      "referencia_del_contrato": "125"
+    },
+    {
+      "codigo_proveedor": "704330018",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1721048",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1357836",
+      "referencia_del_contrato": "759"
+    },
+    {
+      "codigo_proveedor": "702850629",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1721125",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1357642",
+      "referencia_del_contrato": "755"
+    },
+    {
+      "codigo_proveedor": "703422972",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1721196",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1357772",
+      "referencia_del_contrato": "758"
+    },
+    {
+      "codigo_proveedor": "704702174",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1721217",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1357469",
+      "referencia_del_contrato": "756"
+    },
+    {
+      "codigo_proveedor": "701650111",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1721516",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1357678",
+      "referencia_del_contrato": "757"
+    },
+    {
+      "codigo_proveedor": "706178464",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-24T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1721524",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1357894",
+      "referencia_del_contrato": "760"
+    },
+    {
+      "codigo_proveedor": "707242087",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1725099",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1361825",
+      "referencia_del_contrato": "764"
+    },
+    {
+      "codigo_proveedor": "710459017",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1726750",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362901",
+      "referencia_del_contrato": "765"
+    },
+    {
+      "codigo_proveedor": "710577446",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1726823",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362903",
+      "referencia_del_contrato": "761"
+    },
+    {
+      "codigo_proveedor": "710572041",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1727106",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362815",
+      "referencia_del_contrato": "763"
+    },
+    {
+      "codigo_proveedor": "703872622",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-27T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1727118",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362568",
+      "referencia_del_contrato": "762"
+    },
+    {
+      "codigo_proveedor": "705022572",
+      "estado_contrato": "Borrador",
+      "id_contrato": "CO1.PCCNTR.1732386",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362663",
+      "referencia_del_contrato": "770"
+    },
+    {
+      "codigo_proveedor": "703183368",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1732397",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362840",
+      "referencia_del_contrato": "767"
+    },
+    {
+      "codigo_proveedor": "704668961",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1732570",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362851",
+      "referencia_del_contrato": "774"
+    },
+    {
+      "codigo_proveedor": "704335843",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1732594",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362854",
+      "referencia_del_contrato": "775"
+    },
+    {
+      "codigo_proveedor": "704336593",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1732928",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362780",
+      "referencia_del_contrato": "769"
+    },
+    {
+      "codigo_proveedor": "704901354",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1732936",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362737",
+      "referencia_del_contrato": "771"
+    },
+    {
+      "codigo_proveedor": "704902253",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1733084",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362756",
+      "referencia_del_contrato": "772"
+    },
+    {
+      "codigo_proveedor": "705037109",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1733407",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362849",
+      "referencia_del_contrato": "773"
+    },
+    {
+      "codigo_proveedor": "703640110",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1733415",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362684",
+      "referencia_del_contrato": "768"
+    },
+    {
+      "codigo_proveedor": "700006083",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1733437",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1337400",
+      "referencia_del_contrato": "126"
+    },
+    {
+      "codigo_proveedor": "705001717",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-29T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1733513",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362825",
+      "referencia_del_contrato": "766"
+    },
+    {
+      "codigo_proveedor": "700712011",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1734103",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1329656",
+      "referencia_del_contrato": "127"
+    },
+    {
+      "codigo_proveedor": "702853946",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1735890",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1368647",
+      "referencia_del_contrato": "SDS-CPS-781-2020"
+    },
+    {
+      "codigo_proveedor": "704709997",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1735898",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1369002",
+      "referencia_del_contrato": "CO1.PCCNTR.1735898"
+    },
+    {
+      "codigo_proveedor": "704537240",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736100",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1369152",
+      "referencia_del_contrato": "SDS-CPS-791-2020"
+    },
+    {
+      "codigo_proveedor": "703166926",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736317",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1369112",
+      "referencia_del_contrato": "SDS-CPS-785-2020"
+    },
+    {
+      "codigo_proveedor": "704551894",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736321",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1368846",
+      "referencia_del_contrato": "SDS-CPS-783-2020"
+    },
+    {
+      "codigo_proveedor": "709537070",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-07-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736501",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1362078",
+      "referencia_del_contrato": "SDS-CA-128-2020"
+    },
+    {
+      "codigo_proveedor": "710592478",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736514",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1368959",
+      "referencia_del_contrato": "776"
+    },
+    {
+      "codigo_proveedor": "710557091",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736523",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1368498",
+      "referencia_del_contrato": "777"
+    },
+    {
+      "codigo_proveedor": "710584830",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736537",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1369020",
+      "referencia_del_contrato": "778"
+    },
+    {
+      "codigo_proveedor": "701723306",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736613",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1369256",
+      "referencia_del_contrato": "SDS-CPS-788-2020"
+    },
+    {
+      "codigo_proveedor": "710531351",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736934",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1369123",
+      "referencia_del_contrato": "780"
+    },
+    {
+      "codigo_proveedor": "710571415",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-30T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1736943",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1368879",
+      "referencia_del_contrato": "779"
+    },
+    {
+      "codigo_proveedor": "703247031",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1737850",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1370438",
+      "referencia_del_contrato": "SDS-CPS-792-2020"
+    },
+    {
+      "codigo_proveedor": "704490861",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1737863",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1370461",
+      "referencia_del_contrato": "SDS-CPS-793-2020"
+    },
+    {
+      "codigo_proveedor": "704951235",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1738642",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1371115",
+      "referencia_del_contrato": "SDS-CPS-794-2020"
+    },
+    {
+      "codigo_proveedor": "704823616",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1738654",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1371086",
+      "referencia_del_contrato": "SDS-CPS-795-2020"
+    },
+    {
+      "codigo_proveedor": "700759020",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1739084",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1371221",
+      "referencia_del_contrato": "CPS-SDS-796-2020"
+    },
+    {
+      "codigo_proveedor": "704923945",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1739283",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1371566",
+      "referencia_del_contrato": "SDS-CPS-798-2020"
+    },
+    {
+      "codigo_proveedor": "700898208",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1739295",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1369013",
+      "referencia_del_contrato": "129"
+    },
+    {
+      "codigo_proveedor": "701695058",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1739815",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1371232",
+      "referencia_del_contrato": "SDS-CPS-797-2020"
+    },
+    {
+      "codigo_proveedor": "710517319",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-07-31T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1740741",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1372070",
+      "referencia_del_contrato": "799"
+    },
+    {
+      "codigo_proveedor": "710652074",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-08-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1744469",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1375645",
+      "referencia_del_contrato": "800"
+    },
+    {
+      "codigo_proveedor": "710598830",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1744562",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1375375",
+      "referencia_del_contrato": "SDS-CPS-801-2020"
+    },
+    {
+      "codigo_proveedor": "706200623",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-03T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1744742",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1375544",
+      "referencia_del_contrato": "SDS-CPS-802-2020"
+    },
+    {
+      "codigo_proveedor": "701724635",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-08-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1746998",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1377554",
+      "referencia_del_contrato": "803"
+    },
+    {
+      "codigo_proveedor": "704730886",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-08-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1747321",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1377591",
+      "referencia_del_contrato": "804"
+    },
+    {
+      "codigo_proveedor": "704849413",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1747340",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1377763",
+      "referencia_del_contrato": "808"
+    },
+    {
+      "codigo_proveedor": "704944834",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-08-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1747451",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1377773",
+      "referencia_del_contrato": "809"
+    },
+    {
+      "codigo_proveedor": "710584913",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-08-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1747644",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1378041",
+      "referencia_del_contrato": "807"
+    },
+    {
+      "codigo_proveedor": "703191163",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-08-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1747651",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1377938",
+      "referencia_del_contrato": "806"
+    },
+    {
+      "codigo_proveedor": "701866220",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-08-04T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1747861",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1378327",
+      "referencia_del_contrato": "805"
+    },
+    {
+      "codigo_proveedor": "710596511",
+      "estado_contrato": "En ejecución",
+      "fecha_de_firma": "2020-08-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1749740",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1379523",
+      "referencia_del_contrato": "811"
+    },
+    {
+      "codigo_proveedor": "704714377",
+      "estado_contrato": "Modificado",
+      "fecha_de_firma": "2020-08-05T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1750430",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1379570",
+      "referencia_del_contrato": "810"
+    },
+    {
+      "codigo_proveedor": "710394503",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1751443",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381127",
+      "referencia_del_contrato": "813"
+    },
+    {
+      "codigo_proveedor": "703503706",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1751479",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381029",
+      "referencia_del_contrato": "SDS-CPOS-812-2020"
+    },
+    {
+      "codigo_proveedor": "705319655",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1751486",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381189",
+      "referencia_del_contrato": "818"
+    },
+    {
+      "codigo_proveedor": "710689134",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1751488",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381369",
+      "referencia_del_contrato": "820"
+    },
+    {
+      "codigo_proveedor": "706437142",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-10T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1751495",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381618",
+      "referencia_del_contrato": "819"
+    },
+    {
+      "codigo_proveedor": "704972322",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1752148",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381520",
+      "referencia_del_contrato": "814"
+    },
+    {
+      "codigo_proveedor": "706034311",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1752183",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381920",
+      "referencia_del_contrato": "822"
+    },
+    {
+      "codigo_proveedor": "704335264",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1752227",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381499",
+      "referencia_del_contrato": "816"
+    },
+    {
+      "codigo_proveedor": "704570480",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1752424",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381527",
+      "referencia_del_contrato": "817"
+    },
+    {
+      "codigo_proveedor": "704802982",
+      "estado_contrato": "terminado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1752504",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381167",
+      "referencia_del_contrato": "815"
+    },
+    {
+      "codigo_proveedor": "703288308",
+      "estado_contrato": "Cerrado",
+      "fecha_de_firma": "2020-08-06T00:00:00.000",
+      "id_contrato": "CO1.PCCNTR.1752603",
+      "nombre_entidad": "MUNICIPIO DE BUCARAMANGA",
+      "proceso_de_compra": "CO1.BDOS.1381094",
+      "referencia_del_contrato": "821"
+    }
+  ],
+  "sha256": "283509185c5ce7cc0b89d6b85398e936572244b0dc8040ba4597bea637426509",
+  "status": "MATERIALIZED"
+}

@@ -1,0 +1,1856 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/ceth-n4bn.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:44:48.271399+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "codigo_grupo,codigo_participante",
+    "$select": "codigo_grupo,codigo_participante,participacion,es_lider_del_grupo,esta_activo,fecha_creaci_n_grupo,es_proveedor",
+    "$where": "codigo_grupo in ('737002964','737006015','737010546','737010553','737015420','737017103','737017350','737020040','737025247','737039057','737063966','737065029','737076604','737091181','737095364','737097436','737171090','737199059','737217224','737239475','737239525','737240572','737241232','737242735','737244376','737252312','737252981','737257360','737268532','737293290','737325217','737328757','737334219','737336172','737338079','737342071','737347112','737347575','737374439','737376020','737377093','737380246','737380386','737380436','737380527','737380691','737416461','737454827','737457424','737457432','737457515','737457622','737463455','737464263','737474783','737477620','737493114','737508275','737522136','737555029','737562272','737581355','737643338','737645143','737648048','737648295','737648501','737648584','737648899','737649418','737651059','737651125','737651653','737652271','737653220','737653329','737653345','737655746','737656256','737656520','737658153','737661769','737662064','737662338','737663138','737667014','737670141','737672386','737708057','737709857','737712356','737716399','737717660','737721381','737721522','737723353','737728212','737733899','737735043','737736553')"
+  },
+  "payload": [
+    {
+      "codigo_grupo": "737002964",
+      "codigo_participante": "702138082",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-03T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737002964",
+      "codigo_participante": "702928854",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-03T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737006015",
+      "codigo_participante": "701282147",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-03T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737006015",
+      "codigo_participante": "714453396",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-03T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737010546",
+      "codigo_participante": "710386806",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-03T00:00:00.000",
+      "participacion": "1"
+    },
+    {
+      "codigo_grupo": "737010546",
+      "codigo_participante": "713862902",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-03T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737010546",
+      "codigo_participante": "731508131",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-03T00:00:00.000",
+      "participacion": "89"
+    },
+    {
+      "codigo_grupo": "737010553",
+      "codigo_participante": "725349294",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-03T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737010553",
+      "codigo_participante": "728330846",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-03T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737015420",
+      "codigo_participante": "701493157",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-04T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737015420",
+      "codigo_participante": "715213666",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-04T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737017103",
+      "codigo_participante": "704454065",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-04T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737017103",
+      "codigo_participante": "729502187",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-04T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737017350",
+      "codigo_participante": "701716417",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-04T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737017350",
+      "codigo_participante": "726043110",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-04T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737020040",
+      "codigo_participante": "708093463",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-05T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737020040",
+      "codigo_participante": "708093620",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-05T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737020040",
+      "codigo_participante": "737003509",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-05T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737025247",
+      "codigo_participante": "702993924",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-05T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737025247",
+      "codigo_participante": "707148052",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-05T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737039057",
+      "codigo_participante": "700644016",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-06T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737039057",
+      "codigo_participante": "700748049",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-06T00:00:00.000",
+      "participacion": "40"
+    },
+    {
+      "codigo_grupo": "737063966",
+      "codigo_participante": "717389175",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-08T00:00:00.000",
+      "participacion": "40"
+    },
+    {
+      "codigo_grupo": "737063966",
+      "codigo_participante": "730280328",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-08T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737065029",
+      "codigo_participante": "700250020",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-08T00:00:00.000",
+      "participacion": "80"
+    },
+    {
+      "codigo_grupo": "737065029",
+      "codigo_participante": "733569420",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-08T00:00:00.000",
+      "participacion": "20"
+    },
+    {
+      "codigo_grupo": "737076604",
+      "codigo_participante": "700550072",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-09T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737076604",
+      "codigo_participante": "707563425",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-09T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737091181",
+      "codigo_participante": "700306053",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-10T00:00:00.000",
+      "participacion": "40.16"
+    },
+    {
+      "codigo_grupo": "737091181",
+      "codigo_participante": "700326028",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-10T00:00:00.000",
+      "participacion": "14.07"
+    },
+    {
+      "codigo_grupo": "737091181",
+      "codigo_participante": "700333040",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-10T00:00:00.000",
+      "participacion": "11.43"
+    },
+    {
+      "codigo_grupo": "737091181",
+      "codigo_participante": "700341068",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-10T00:00:00.000",
+      "participacion": "11.97"
+    },
+    {
+      "codigo_grupo": "737091181",
+      "codigo_participante": "700359052",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-10T00:00:00.000",
+      "participacion": "22.37"
+    },
+    {
+      "codigo_grupo": "737095364",
+      "codigo_participante": "704335157",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-10T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737095364",
+      "codigo_participante": "705665172",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-10T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737199059",
+      "codigo_participante": "705389872",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-20T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737199059",
+      "codigo_participante": "708067202",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-20T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737217224",
+      "codigo_participante": "707351177",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-22T00:00:00.000",
+      "participacion": "80"
+    },
+    {
+      "codigo_grupo": "737217224",
+      "codigo_participante": "722757325",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-22T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737217224",
+      "codigo_participante": "731643334",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-22T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737239475",
+      "codigo_participante": "700633019",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "70"
+    },
+    {
+      "codigo_grupo": "737239475",
+      "codigo_participante": "723896908",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737239525",
+      "codigo_participante": "724808845",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "33"
+    },
+    {
+      "codigo_grupo": "737239525",
+      "codigo_participante": "728949751",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "34"
+    },
+    {
+      "codigo_grupo": "737239525",
+      "codigo_participante": "729058008",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "33"
+    },
+    {
+      "codigo_grupo": "737240572",
+      "codigo_participante": "701151136",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737240572",
+      "codigo_participante": "702644279",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737241232",
+      "codigo_participante": "700951064",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "45"
+    },
+    {
+      "codigo_grupo": "737241232",
+      "codigo_participante": "714176344",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737241232",
+      "codigo_participante": "715273389",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "45"
+    },
+    {
+      "codigo_grupo": "737242735",
+      "codigo_participante": "700799083",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "70"
+    },
+    {
+      "codigo_grupo": "737242735",
+      "codigo_participante": "708019682",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737244376",
+      "codigo_participante": "704372564",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737244376",
+      "codigo_participante": "724613807",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-23T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737252312",
+      "codigo_participante": "714307709",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-24T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737252312",
+      "codigo_participante": "728891227",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-24T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737252981",
+      "codigo_participante": "700464068",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-24T00:00:00.000",
+      "participacion": "70"
+    },
+    {
+      "codigo_grupo": "737252981",
+      "codigo_participante": "704972058",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-24T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737257360",
+      "codigo_participante": "706699089",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-24T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737257360",
+      "codigo_participante": "710494170",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-24T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737268532",
+      "codigo_participante": "713053601",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-26T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737268532",
+      "codigo_participante": "720203447",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-26T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737325217",
+      "codigo_participante": "700786072",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-30T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737325217",
+      "codigo_participante": "719153413",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-30T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737328757",
+      "codigo_participante": "715189528",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-30T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737328757",
+      "codigo_participante": "719448474",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-30T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737334219",
+      "codigo_participante": "702376799",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-30T00:00:00.000",
+      "participacion": "40"
+    },
+    {
+      "codigo_grupo": "737334219",
+      "codigo_participante": "707752309",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-30T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737336172",
+      "codigo_participante": "733004345",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "80"
+    },
+    {
+      "codigo_grupo": "737336172",
+      "codigo_participante": "737284299",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "20"
+    },
+    {
+      "codigo_grupo": "737338079",
+      "codigo_participante": "714390002",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737338079",
+      "codigo_participante": "735696460",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737342071",
+      "codigo_participante": "712232750",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "55"
+    },
+    {
+      "codigo_grupo": "737342071",
+      "codigo_participante": "717696280",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "45"
+    },
+    {
+      "codigo_grupo": "737347112",
+      "codigo_participante": "704039122",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737347112",
+      "codigo_participante": "714354115",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737347575",
+      "codigo_participante": "713865434",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737347575",
+      "codigo_participante": "737202028",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-07-31T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737374439",
+      "codigo_participante": "701716417",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737374439",
+      "codigo_participante": "726043110",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737376020",
+      "codigo_participante": "702767633",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737376020",
+      "codigo_participante": "736668195",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737377093",
+      "codigo_participante": "705695070",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737377093",
+      "codigo_participante": "715273389",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737380246",
+      "codigo_participante": "702998600",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737380246",
+      "codigo_participante": "706989159",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737380386",
+      "codigo_participante": "705802585",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "80"
+    },
+    {
+      "codigo_grupo": "737380386",
+      "codigo_participante": "713484202",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "20"
+    },
+    {
+      "codigo_grupo": "737380436",
+      "codigo_participante": "701123085",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "20"
+    },
+    {
+      "codigo_grupo": "737380436",
+      "codigo_participante": "713299998",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "80"
+    },
+    {
+      "codigo_grupo": "737380527",
+      "codigo_participante": "701119430",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "20"
+    },
+    {
+      "codigo_grupo": "737380527",
+      "codigo_participante": "719776312",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-03T00:00:00.000",
+      "participacion": "80"
+    },
+    {
+      "codigo_grupo": "737380691",
+      "codigo_participante": "704224070",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-04T00:00:00.000",
+      "participacion": "95"
+    },
+    {
+      "codigo_grupo": "737380691",
+      "codigo_participante": "737380485",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-04T00:00:00.000",
+      "participacion": "5"
+    },
+    {
+      "codigo_grupo": "737416461",
+      "codigo_participante": "702475948",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-06T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737416461",
+      "codigo_participante": "710946443",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-06T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737454827",
+      "codigo_participante": "704767029",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "40"
+    },
+    {
+      "codigo_grupo": "737454827",
+      "codigo_participante": "705746535",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737457424",
+      "codigo_participante": "705182228",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737457424",
+      "codigo_participante": "717159271",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737457432",
+      "codigo_participante": "706765823",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737457432",
+      "codigo_participante": "709532360",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737457515",
+      "codigo_participante": "704330240",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737457515",
+      "codigo_participante": "718151988",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737457622",
+      "codigo_participante": "700789019",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737457622",
+      "codigo_participante": "717906242",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-10T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737463455",
+      "codigo_participante": "700059082",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-11T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737463455",
+      "codigo_participante": "701699043",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-11T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737464263",
+      "codigo_participante": "700991219",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-11T00:00:00.000",
+      "participacion": "1"
+    },
+    {
+      "codigo_grupo": "737464263",
+      "codigo_participante": "728578543",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-11T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737464263",
+      "codigo_participante": "734325087",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-11T00:00:00.000",
+      "participacion": "69"
+    },
+    {
+      "codigo_grupo": "737474783",
+      "codigo_participante": "704365212",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-12T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737474783",
+      "codigo_participante": "729539601",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-12T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737493114",
+      "codigo_participante": "714330131",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-13T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737493114",
+      "codigo_participante": "733757934",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-13T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737508275",
+      "codigo_participante": "722485372",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-14T00:00:00.000",
+      "participacion": "70"
+    },
+    {
+      "codigo_grupo": "737508275",
+      "codigo_participante": "737496752",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-14T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737522136",
+      "es_lider_del_grupo": "No definido",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-15T00:00:00.000"
+    },
+    {
+      "codigo_grupo": "737555029",
+      "codigo_participante": "700644016",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-19T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737555029",
+      "codigo_participante": "704534775",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-19T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737562272",
+      "codigo_participante": "710320227",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-19T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737562272",
+      "codigo_participante": "735746190",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-19T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737581355",
+      "codigo_participante": "708989918",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-21T00:00:00.000",
+      "participacion": "40"
+    },
+    {
+      "codigo_grupo": "737581355",
+      "codigo_participante": "736102708",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-21T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737643338",
+      "codigo_participante": "700890080",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737643338",
+      "codigo_participante": "702758459",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "70"
+    },
+    {
+      "codigo_grupo": "737645143",
+      "codigo_participante": "700663073",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737645143",
+      "codigo_participante": "704023068",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737648048",
+      "codigo_participante": "701407405",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "40"
+    },
+    {
+      "codigo_grupo": "737648048",
+      "codigo_participante": "702322082",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737648295",
+      "codigo_participante": "729081067",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "70"
+    },
+    {
+      "codigo_grupo": "737648295",
+      "codigo_participante": "736392945",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737648501",
+      "codigo_participante": "700951064",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737648501",
+      "codigo_participante": "703392324",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737648584",
+      "codigo_participante": "707068425",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737648584",
+      "codigo_participante": "718936446",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737648899",
+      "codigo_participante": "700772015",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737648899",
+      "codigo_participante": "700799083",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737649418",
+      "codigo_participante": "706806015",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737649418",
+      "codigo_participante": "732721782",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "45"
+    },
+    {
+      "codigo_grupo": "737649418",
+      "codigo_participante": "733760391",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "45"
+    },
+    {
+      "codigo_grupo": "737651059",
+      "codigo_participante": "701941122",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737651059",
+      "codigo_participante": "721319986",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737651125",
+      "codigo_participante": "702058082",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "1"
+    },
+    {
+      "codigo_grupo": "737651125",
+      "codigo_participante": "709580104",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "99"
+    },
+    {
+      "codigo_grupo": "737651653",
+      "codigo_participante": "715616793",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737651653",
+      "codigo_participante": "728012824",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "70"
+    },
+    {
+      "codigo_grupo": "737652271",
+      "codigo_participante": "713006013",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737652271",
+      "codigo_participante": "735706640",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "25"
+    },
+    {
+      "codigo_grupo": "737652271",
+      "codigo_participante": "737650770",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "65"
+    },
+    {
+      "codigo_grupo": "737653220",
+      "codigo_participante": "702534116",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737653220",
+      "codigo_participante": "708010061",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737653329",
+      "codigo_participante": "700791031",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737653329",
+      "codigo_participante": "704020478",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737653345",
+      "codigo_participante": "702296815",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737653345",
+      "codigo_participante": "707508297",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737653345",
+      "codigo_participante": "725847818",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "40"
+    },
+    {
+      "codigo_grupo": "737655746",
+      "codigo_participante": "702292558",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737655746",
+      "codigo_participante": "735860454",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737656256",
+      "codigo_participante": "701519431",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737656256",
+      "codigo_participante": "704931286",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-26T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737656520",
+      "codigo_participante": "712150051",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737656520",
+      "codigo_participante": "730136215",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737658153",
+      "codigo_participante": "704336338",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "5"
+    },
+    {
+      "codigo_grupo": "737658153",
+      "codigo_participante": "709813836",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "95"
+    },
+    {
+      "codigo_grupo": "737661769",
+      "es_lider_del_grupo": "No definido",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000"
+    },
+    {
+      "codigo_grupo": "737662064",
+      "codigo_participante": "701139230",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737662064",
+      "codigo_participante": "704335611",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737662338",
+      "codigo_participante": "702258146",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "20"
+    },
+    {
+      "codigo_grupo": "737662338",
+      "codigo_participante": "718581143",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "80"
+    },
+    {
+      "codigo_grupo": "737663138",
+      "codigo_participante": "700803091",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737663138",
+      "codigo_participante": "702330655",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737667014",
+      "codigo_participante": "709173231",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737667014",
+      "codigo_participante": "723131306",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-27T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737670141",
+      "codigo_participante": "709109573",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-28T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737670141",
+      "codigo_participante": "731433603",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-28T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737672386",
+      "codigo_participante": "700306053",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-28T00:00:00.000",
+      "participacion": "40"
+    },
+    {
+      "codigo_grupo": "737672386",
+      "codigo_participante": "702630294",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-28T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737708057",
+      "codigo_participante": "707683124",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-31T00:00:00.000",
+      "participacion": "99"
+    },
+    {
+      "codigo_grupo": "737708057",
+      "codigo_participante": "735557274",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-31T00:00:00.000",
+      "participacion": "1"
+    },
+    {
+      "codigo_grupo": "737709857",
+      "codigo_participante": "707679544",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-31T00:00:00.000",
+      "participacion": "99"
+    },
+    {
+      "codigo_grupo": "737709857",
+      "codigo_participante": "735557274",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-31T00:00:00.000",
+      "participacion": "1"
+    },
+    {
+      "codigo_grupo": "737712356",
+      "codigo_participante": "709327597",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-31T00:00:00.000",
+      "participacion": "70"
+    },
+    {
+      "codigo_grupo": "737712356",
+      "codigo_participante": "726360415",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-08-31T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737716399",
+      "codigo_participante": "714540143",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "30"
+    },
+    {
+      "codigo_grupo": "737716399",
+      "codigo_participante": "723418257",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "70"
+    },
+    {
+      "codigo_grupo": "737717660",
+      "codigo_participante": "701547176",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737717660",
+      "codigo_participante": "705327542",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737721381",
+      "codigo_participante": "706806015",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737721381",
+      "codigo_participante": "732721782",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "45"
+    },
+    {
+      "codigo_grupo": "737721381",
+      "codigo_participante": "733760391",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "45"
+    },
+    {
+      "codigo_grupo": "737721522",
+      "codigo_participante": "704318286",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737721522",
+      "codigo_participante": "731810719",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "50"
+    },
+    {
+      "codigo_grupo": "737723353",
+      "codigo_participante": "702296815",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "40"
+    },
+    {
+      "codigo_grupo": "737723353",
+      "codigo_participante": "725847818",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-01T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737728212",
+      "codigo_participante": "701417040",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737728212",
+      "codigo_participante": "731863247",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737733899",
+      "codigo_participante": "702292558",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737733899",
+      "codigo_participante": "702680703",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "90"
+    },
+    {
+      "codigo_grupo": "737735043",
+      "codigo_participante": "702938358",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "60"
+    },
+    {
+      "codigo_grupo": "737735043",
+      "codigo_participante": "703335109",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "20"
+    },
+    {
+      "codigo_grupo": "737735043",
+      "codigo_participante": "703650523",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "20"
+    },
+    {
+      "codigo_grupo": "737736553",
+      "codigo_participante": "702364662",
+      "es_lider_del_grupo": "Verdadero",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "10"
+    },
+    {
+      "codigo_grupo": "737736553",
+      "codigo_participante": "712114057",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "45"
+    },
+    {
+      "codigo_grupo": "737736553",
+      "codigo_participante": "733438915",
+      "es_lider_del_grupo": "Falso",
+      "es_proveedor": "No",
+      "esta_activo": "Si",
+      "fecha_creaci_n_grupo": "2026-09-02T00:00:00.000",
+      "participacion": "45"
+    }
+  ],
+  "sha256": "24bab6a756aae069e7fe2c7bc452cd8534761c81399b67f457cb3df18a64058b",
+  "status": "MATERIALIZED"
+}

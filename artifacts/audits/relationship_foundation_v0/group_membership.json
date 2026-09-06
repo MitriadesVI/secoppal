@@ -1,0 +1,368 @@
+{
+  "active_values_observed": {
+    "No": 105,
+    "Si": 1156
+  },
+  "canaries": {
+    "700131030": [
+      {
+        "from": "secop_supplier:700126048",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "65",
+        "participation_raw": "65",
+        "to": "supplier_group:700131030"
+      },
+      {
+        "from": "secop_supplier:700129018",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "35",
+        "participation_raw": "35",
+        "to": "supplier_group:700131030"
+      }
+    ],
+    "700134067": [
+      {
+        "from": "secop_supplier:700082068",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "51",
+        "participation_raw": "51",
+        "to": "supplier_group:700134067"
+      },
+      {
+        "from": "secop_supplier:700088073",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "49",
+        "participation_raw": "49",
+        "to": "supplier_group:700134067"
+      }
+    ],
+    "700135023": [
+      {
+        "from": "secop_supplier:700082043",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "5",
+        "participation_raw": "5",
+        "to": "supplier_group:700135023"
+      },
+      {
+        "from": "secop_supplier:700084064",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "95",
+        "participation_raw": "95",
+        "to": "supplier_group:700135023"
+      }
+    ],
+    "700191018": [
+      {
+        "from": "secop_supplier:700080047",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "50",
+        "participation_raw": "50",
+        "to": "supplier_group:700191018"
+      },
+      {
+        "from": "secop_supplier:700172018",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "50",
+        "participation_raw": "50",
+        "to": "supplier_group:700191018"
+      }
+    ],
+    "700208069": [
+      {
+        "from": "secop_supplier:700081060",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "10",
+        "participation_raw": "10",
+        "to": "supplier_group:700208069"
+      },
+      {
+        "from": "secop_supplier:700207079",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "90",
+        "participation_raw": "90",
+        "to": "supplier_group:700208069"
+      }
+    ],
+    "700251010": [
+      {
+        "from": "secop_supplier:700249030",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "49",
+        "participation_raw": "49",
+        "to": "supplier_group:700251010"
+      },
+      {
+        "from": "secop_supplier:700250012",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "51",
+        "participation_raw": "51",
+        "to": "supplier_group:700251010"
+      }
+    ],
+    "700251036": [
+      {
+        "from": "secop_supplier:700154024",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "1",
+        "participation_raw": "1",
+        "to": "supplier_group:700251036"
+      },
+      {
+        "from": "secop_supplier:700249030",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "1",
+        "participation_raw": "1",
+        "to": "supplier_group:700251036"
+      },
+      {
+        "from": "secop_supplier:700250012",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "98",
+        "participation_raw": "98",
+        "to": "supplier_group:700251036"
+      }
+    ],
+    "700251044": [
+      {
+        "from": "secop_supplier:700249030",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "49",
+        "participation_raw": "49",
+        "to": "supplier_group:700251044"
+      },
+      {
+        "from": "secop_supplier:700250012",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "51",
+        "participation_raw": "51",
+        "to": "supplier_group:700251044"
+      }
+    ],
+    "700251085": [
+      {
+        "from": "secop_supplier:700144066",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "70",
+        "participation_raw": "70",
+        "to": "supplier_group:700251085"
+      },
+      {
+        "from": "secop_supplier:700245046",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "30",
+        "participation_raw": "30",
+        "to": "supplier_group:700251085"
+      }
+    ],
+    "700261050": [
+      {
+        "from": "secop_supplier:700255011",
+        "is_leader": true,
+        "leader_raw": "Verdadero",
+        "participation_pct": "60",
+        "participation_raw": "60",
+        "to": "supplier_group:700261050"
+      },
+      {
+        "from": "secop_supplier:700259021",
+        "is_leader": false,
+        "leader_raw": "Falso",
+        "participation_pct": "40",
+        "participation_raw": "40",
+        "to": "supplier_group:700261050"
+      }
+    ]
+  },
+  "canary_capture_capped": false,
+  "coverage": "PARTIAL: omitted endpoint codes and unverified national universe",
+  "duplicate_definition": "same endpoint codes and all selected edge/group attributes; not full source-row equality",
+  "duplicate_exact_projected_memberships": [],
+  "duplicate_key_groups": [],
+  "duplicate_key_scan_capped": false,
+  "duplicate_projection_scan_capped": false,
+  "group_attribute_canaries": [
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556229"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556229"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556278"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556278"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556278"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556385"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556385"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556518"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556518"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556518"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556997"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733556997"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733557029"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733557029"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733558472"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733558472"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733558621"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733558621"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733558985"
+    },
+    {
+      "active": "Si",
+      "creation_date": "2025-10-08T00:00:00.000",
+      "group": "supplier_group:733558985"
+    },
+    {
+      "active": "No",
+      "creation_date": "2025-10-09T00:00:00.000",
+      "group": "supplier_group:733567218"
+    },
+    {
+      "active": "No",
+      "creation_date": "2025-10-09T00:00:00.000",
+      "group": "supplier_group:733567218"
+    },
+    {
+      "active": "No",
+      "creation_date": "2025-10-09T00:00:00.000",
+      "group": "supplier_group:733567218"
+    },
+    {
+      "active": "No",
+      "creation_date": "2025-11-12T00:00:00.000",
+      "group": "supplier_group:734034762"
+    },
+    {
+      "active": "No",
+      "creation_date": "2025-11-12T00:00:00.000",
+      "group": "supplier_group:734034762"
+    },
+    {
+      "active": "No",
+      "creation_date": "2015-10-14T00:00:00.000",
+      "group": "supplier_group:700367030"
+    },
+    {
+      "active": "No",
+      "creation_date": "2015-10-14T00:00:00.000",
+      "group": "supplier_group:700367030"
+    },
+    {
+      "active": "No",
+      "creation_date": "2016-02-15T00:00:00.000",
+      "group": "supplier_group:700636079"
+    },
+    {
+      "active": "No",
+      "creation_date": "2016-02-15T00:00:00.000",
+      "group": "supplier_group:700636079"
+    },
+    {
+      "active": "No",
+      "creation_date": "2016-04-18T00:00:00.000",
+      "group": "supplier_group:700810179"
+    }
+  ],
+  "leader_values_observed": {
+    "Falso": 718,
+    "No definido": 4,
+    "Verdadero": 539
+  },
+  "null_group_codes": 0,
+  "null_participant_codes": 9105,
+  "previous_audit": {
+    "null_group_codes": 0,
+    "null_participant_codes": 9105,
+    "rows_total": 701182
+  },
+  "rows_total": 701182
+}

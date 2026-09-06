@@ -1,0 +1,183 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:44:42.292059+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_portafolio,id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,id_del_portafolio,entidad",
+    "$where": "id_del_portafolio in ('CO1.BDOS.1287894','CO1.BDOS.1288050','CO1.BDOS.1288175','CO1.BDOS.1288292','CO1.BDOS.1288457','CO1.BDOS.1289740','CO1.BDOS.1289824','CO1.BDOS.1289931','CO1.BDOS.1290004','CO1.BDOS.1290013','CO1.BDOS.1290031','CO1.BDOS.1290039','CO1.BDOS.1290888','CO1.BDOS.1291158','CO1.BDOS.863443','CO1.BDOS.864519','CO1.BDOS.864539','CO1.BDOS.864722','CO1.BDOS.865236','CO1.BDOS.868353','CO1.BDOS.880301','CO1.BDOS.889701','CO1.BDOS.891330','CO1.BDOS.921035','CO1.BDOS.921303','CO1.BDOS.965924','CO1.BDOS.972923','CO1.BDOS.986323')"
+  },
+  "payload": [
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1287894",
+      "id_del_proceso": "CO1.REQ.1328206",
+      "referencia_del_proceso": "CD-191-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1288050",
+      "id_del_proceso": "CO1.REQ.1328084",
+      "referencia_del_proceso": "CD-190-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1288175",
+      "id_del_proceso": "CO1.REQ.1327869",
+      "referencia_del_proceso": "CD-189-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1288292",
+      "id_del_proceso": "CO1.REQ.1328247",
+      "referencia_del_proceso": "CD-193-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1288457",
+      "id_del_proceso": "CO1.REQ.1328274",
+      "referencia_del_proceso": "CD-192-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1289740",
+      "id_del_proceso": "CO1.REQ.1329353",
+      "referencia_del_proceso": "CD-194-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1289824",
+      "id_del_proceso": "CO1.REQ.1329820",
+      "referencia_del_proceso": "CD-200-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1289931",
+      "id_del_proceso": "CO1.REQ.1330003",
+      "referencia_del_proceso": "CD-196-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1290004",
+      "id_del_proceso": "CO1.REQ.1329837",
+      "referencia_del_proceso": "CD-198-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1290013",
+      "id_del_proceso": "CO1.REQ.1330202",
+      "referencia_del_proceso": "CD-197-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1290031",
+      "id_del_proceso": "CO1.REQ.1330404",
+      "referencia_del_proceso": "CD-201-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1290039",
+      "id_del_proceso": "CO1.REQ.1330414",
+      "referencia_del_proceso": "CD-199-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1290888",
+      "id_del_proceso": "CO1.REQ.1331418",
+      "referencia_del_proceso": "CD-202-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.1291158",
+      "id_del_proceso": "CO1.REQ.1330956",
+      "referencia_del_proceso": "CD-203-2020"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.863443",
+      "id_del_proceso": "CO1.REQ.892932",
+      "referencia_del_proceso": "SCP 023 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.864519",
+      "id_del_proceso": "CO1.REQ.894029",
+      "referencia_del_proceso": "SCP 022 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.864539",
+      "id_del_proceso": "CO1.REQ.894066",
+      "referencia_del_proceso": "SCP 025 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.864722",
+      "id_del_proceso": "CO1.REQ.894210",
+      "referencia_del_proceso": "SCP 024 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.865236",
+      "id_del_proceso": "CO1.REQ.895142",
+      "referencia_del_proceso": "SCP 026 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.868353",
+      "id_del_proceso": "CO1.REQ.897489",
+      "referencia_del_proceso": "SCP 027 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.880301",
+      "id_del_proceso": "CO1.REQ.910749",
+      "referencia_del_proceso": "SCP 028 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.889701",
+      "id_del_proceso": "CO1.REQ.920860",
+      "referencia_del_proceso": "SCP 029 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.891330",
+      "id_del_proceso": "CO1.REQ.922334",
+      "referencia_del_proceso": "SCP 030 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.921035",
+      "id_del_proceso": "CO1.REQ.954604",
+      "referencia_del_proceso": "SCP 031 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.921303",
+      "id_del_proceso": "CO1.REQ.954504",
+      "referencia_del_proceso": "SCP 032 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.965924",
+      "id_del_proceso": "CO1.REQ.1002829",
+      "referencia_del_proceso": "SCP 034 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.972923",
+      "id_del_proceso": "CO1.REQ.1010136",
+      "referencia_del_proceso": "SCP 035 DE 2019"
+    },
+    {
+      "entidad": "DEPARTAMENTO DEL ATLANTICO**",
+      "id_del_portafolio": "CO1.BDOS.986323",
+      "id_del_proceso": "CO1.REQ.1022816",
+      "referencia_del_proceso": "SCP 036 DE 2019"
+    }
+  ],
+  "sha256": "332ff7e38cbaf0ea1576fb2a03b2b609c35b61d4f30183e2d59a4ff468a983a1",
+  "status": "MATERIALIZED"
+}

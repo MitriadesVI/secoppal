@@ -1,0 +1,4710 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/hgi6-6wh3.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:41:45.421176+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_procedimiento,codigo_proveedor",
+    "$select": "id_procedimiento,codigo_proveedor,entidad_compradora",
+    "$where": "entidad_compradora in ('DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA') AND fecha_publicaci_n >= '2025-01-01T00:00:00' AND fecha_publicaci_n < '2026-09-07T00:00:00'"
+  },
+  "payload": [
+    {
+      "codigo_proveedor": "701101156",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10108287"
+    },
+    {
+      "codigo_proveedor": "700147119",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10118405"
+    },
+    {
+      "codigo_proveedor": "702020157",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10118405"
+    },
+    {
+      "codigo_proveedor": "702730920",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10118405"
+    },
+    {
+      "codigo_proveedor": "713720910",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10118405"
+    },
+    {
+      "codigo_proveedor": "726566193",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10118405"
+    },
+    {
+      "codigo_proveedor": "707679544",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10185424"
+    },
+    {
+      "codigo_proveedor": "712020130",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10185424"
+    },
+    {
+      "codigo_proveedor": "735610768",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10185424"
+    },
+    {
+      "codigo_proveedor": "735614059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10185424"
+    },
+    {
+      "codigo_proveedor": "701801227",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10185860"
+    },
+    {
+      "codigo_proveedor": "701910093",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10185860"
+    },
+    {
+      "codigo_proveedor": "704366038",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10185860"
+    },
+    {
+      "codigo_proveedor": "735610784",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10185860"
+    },
+    {
+      "codigo_proveedor": "735610834",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10185860"
+    },
+    {
+      "codigo_proveedor": "705337053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10186926"
+    },
+    {
+      "codigo_proveedor": "710519844",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10188074"
+    },
+    {
+      "codigo_proveedor": "700043037",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10190711"
+    },
+    {
+      "codigo_proveedor": "700117021",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10190711"
+    },
+    {
+      "codigo_proveedor": "700273022",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10190711"
+    },
+    {
+      "codigo_proveedor": "700036056",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10196744"
+    },
+    {
+      "codigo_proveedor": "726884059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10196744"
+    },
+    {
+      "codigo_proveedor": "701116139",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10200929"
+    },
+    {
+      "codigo_proveedor": "701258030",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10200929"
+    },
+    {
+      "codigo_proveedor": "702080037",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10200929"
+    },
+    {
+      "codigo_proveedor": "715209631",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10200929"
+    },
+    {
+      "codigo_proveedor": "717124077",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10200929"
+    },
+    {
+      "codigo_proveedor": "717398341",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10200929"
+    },
+    {
+      "codigo_proveedor": "705337053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10203519"
+    },
+    {
+      "codigo_proveedor": "700043037",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10206971"
+    },
+    {
+      "codigo_proveedor": "700951122",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10206971"
+    },
+    {
+      "codigo_proveedor": "703766451",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10208048"
+    },
+    {
+      "codigo_proveedor": "712690072",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10208048"
+    },
+    {
+      "codigo_proveedor": "726884059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10208520"
+    },
+    {
+      "codigo_proveedor": "700036056",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10216505"
+    },
+    {
+      "codigo_proveedor": "726884059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10216505"
+    },
+    {
+      "codigo_proveedor": "700442023",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10227037"
+    },
+    {
+      "codigo_proveedor": "709143531",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10227462"
+    },
+    {
+      "codigo_proveedor": "700147119",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10232559"
+    },
+    {
+      "codigo_proveedor": "702730920",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10232559"
+    },
+    {
+      "codigo_proveedor": "703778191",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10232559"
+    },
+    {
+      "codigo_proveedor": "707454088",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10232559"
+    },
+    {
+      "codigo_proveedor": "711979088",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10232559"
+    },
+    {
+      "codigo_proveedor": "713720910",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10232559"
+    },
+    {
+      "codigo_proveedor": "706858677",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10238850"
+    },
+    {
+      "codigo_proveedor": "701458077",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10245044"
+    },
+    {
+      "codigo_proveedor": "735872038",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10245044"
+    },
+    {
+      "codigo_proveedor": "702146408",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10252659"
+    },
+    {
+      "codigo_proveedor": "700273022",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10255338"
+    },
+    {
+      "codigo_proveedor": "700383037",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10255338"
+    },
+    {
+      "codigo_proveedor": "717527402",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10255338"
+    },
+    {
+      "codigo_proveedor": "735922114",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10255338"
+    },
+    {
+      "codigo_proveedor": "700457039",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10258130"
+    },
+    {
+      "codigo_proveedor": "707616447",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10262035"
+    },
+    {
+      "codigo_proveedor": "700014079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "700036056",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "700105018",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "700457013",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "701124059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "703776583",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "707104535",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "718041015",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "718437866",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "723650081",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "735966095",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10266624"
+    },
+    {
+      "codigo_proveedor": "700763014",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10269917"
+    },
+    {
+      "codigo_proveedor": "701110074",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10269917"
+    },
+    {
+      "codigo_proveedor": "701824500",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10269917"
+    },
+    {
+      "codigo_proveedor": "703935346",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10269917"
+    },
+    {
+      "codigo_proveedor": "704162379",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10269917"
+    },
+    {
+      "codigo_proveedor": "711750794",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10269917"
+    },
+    {
+      "codigo_proveedor": "717538169",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10269917"
+    },
+    {
+      "codigo_proveedor": "721430767",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10269917"
+    },
+    {
+      "codigo_proveedor": "725321467",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10269917"
+    },
+    {
+      "codigo_proveedor": "702146408",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10274853"
+    },
+    {
+      "codigo_proveedor": "710143090",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10274854"
+    },
+    {
+      "codigo_proveedor": "702146408",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10281959"
+    },
+    {
+      "codigo_proveedor": "700014079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10292139"
+    },
+    {
+      "codigo_proveedor": "700105018",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10292139"
+    },
+    {
+      "codigo_proveedor": "700879117",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10292139"
+    },
+    {
+      "codigo_proveedor": "700942154",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10292139"
+    },
+    {
+      "codigo_proveedor": "703776583",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10292139"
+    },
+    {
+      "codigo_proveedor": "704225051",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10292139"
+    },
+    {
+      "codigo_proveedor": "723650081",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10292139"
+    },
+    {
+      "codigo_proveedor": "711400390",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10293387"
+    },
+    {
+      "codigo_proveedor": "704018084",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10293857"
+    },
+    {
+      "codigo_proveedor": "705337053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10297902"
+    },
+    {
+      "codigo_proveedor": "702146408",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10300529"
+    },
+    {
+      "codigo_proveedor": "702634049",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10301017"
+    },
+    {
+      "codigo_proveedor": "702634049",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10301023"
+    },
+    {
+      "codigo_proveedor": "702368044",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10301520"
+    },
+    {
+      "codigo_proveedor": "736036666",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10305348"
+    },
+    {
+      "codigo_proveedor": "736038027",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10305348"
+    },
+    {
+      "codigo_proveedor": "736044371",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10305348"
+    },
+    {
+      "codigo_proveedor": "736189283",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10305348"
+    },
+    {
+      "codigo_proveedor": "736190059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10305348"
+    },
+    {
+      "codigo_proveedor": "736191230",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10305348"
+    },
+    {
+      "codigo_proveedor": "736193020",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10305348"
+    },
+    {
+      "codigo_proveedor": "732881370",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10325064"
+    },
+    {
+      "codigo_proveedor": "724102983",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10333309"
+    },
+    {
+      "codigo_proveedor": "734990765",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10333309"
+    },
+    {
+      "codigo_proveedor": "736242975",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10333309"
+    },
+    {
+      "codigo_proveedor": "701890261",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10336592"
+    },
+    {
+      "codigo_proveedor": "703831719",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10354631"
+    },
+    {
+      "codigo_proveedor": "708076013",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10354631"
+    },
+    {
+      "codigo_proveedor": "703766451",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10393657"
+    },
+    {
+      "codigo_proveedor": "733809727",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10395272"
+    },
+    {
+      "codigo_proveedor": "733809727",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10395720"
+    },
+    {
+      "codigo_proveedor": "700750110",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10398870"
+    },
+    {
+      "codigo_proveedor": "700787302",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10398870"
+    },
+    {
+      "codigo_proveedor": "701937153",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10398870"
+    },
+    {
+      "codigo_proveedor": "715312500",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10398870"
+    },
+    {
+      "codigo_proveedor": "709505564",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10398871"
+    },
+    {
+      "codigo_proveedor": "726884059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10398871"
+    },
+    {
+      "codigo_proveedor": "732634456",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10398871"
+    },
+    {
+      "codigo_proveedor": "700306053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "700314016",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "700326051",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "700333040",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "700334048",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "700341068",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "700359052",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "701350050",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "705489649",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "717199087",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "736483017",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "736483504",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "736506155",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10411822"
+    },
+    {
+      "codigo_proveedor": "730691631",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10413865"
+    },
+    {
+      "codigo_proveedor": "702458613",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10414612"
+    },
+    {
+      "codigo_proveedor": "707679544",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10415200"
+    },
+    {
+      "codigo_proveedor": "702368044",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10415787"
+    },
+    {
+      "codigo_proveedor": "703971937",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10419382"
+    },
+    {
+      "codigo_proveedor": "736482548",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10420440"
+    },
+    {
+      "codigo_proveedor": "701350050",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10420964"
+    },
+    {
+      "codigo_proveedor": "736480690",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10420964"
+    },
+    {
+      "codigo_proveedor": "701832065",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10424646"
+    },
+    {
+      "codigo_proveedor": "701890261",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10424646"
+    },
+    {
+      "codigo_proveedor": "733419097",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10424646"
+    },
+    {
+      "codigo_proveedor": "735928525",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10427119"
+    },
+    {
+      "codigo_proveedor": "736427139",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10427119"
+    },
+    {
+      "codigo_proveedor": "722485372",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10427279"
+    },
+    {
+      "codigo_proveedor": "703968628",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10429691"
+    },
+    {
+      "codigo_proveedor": "701910093",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "704277599",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "704369818",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "706399375",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "709505564",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "711465237",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "712916402",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "717124077",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "721124212",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "736462128",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437315"
+    },
+    {
+      "codigo_proveedor": "701245128",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437761"
+    },
+    {
+      "codigo_proveedor": "722816378",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437761"
+    },
+    {
+      "codigo_proveedor": "736579053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10437761"
+    },
+    {
+      "codigo_proveedor": "701171142",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10455737"
+    },
+    {
+      "codigo_proveedor": "702990359",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10455737"
+    },
+    {
+      "codigo_proveedor": "706641354",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10455737"
+    },
+    {
+      "codigo_proveedor": "710436478",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10455737"
+    },
+    {
+      "codigo_proveedor": "718628647",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10455737"
+    },
+    {
+      "codigo_proveedor": "727240095",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10455737"
+    },
+    {
+      "codigo_proveedor": "732634456",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10455737"
+    },
+    {
+      "codigo_proveedor": "735695231",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10455737"
+    },
+    {
+      "codigo_proveedor": "700147119",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10457004"
+    },
+    {
+      "codigo_proveedor": "702231416",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10457004"
+    },
+    {
+      "codigo_proveedor": "702814351",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10457004"
+    },
+    {
+      "codigo_proveedor": "700825086",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10458670"
+    },
+    {
+      "codigo_proveedor": "702955881",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10458670"
+    },
+    {
+      "codigo_proveedor": "704972058",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10458670"
+    },
+    {
+      "codigo_proveedor": "719540858",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10458670"
+    },
+    {
+      "codigo_proveedor": "730691631",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10458670"
+    },
+    {
+      "codigo_proveedor": "701878092",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10466803"
+    },
+    {
+      "codigo_proveedor": "701895278",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10466803"
+    },
+    {
+      "codigo_proveedor": "708457981",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10466803"
+    },
+    {
+      "codigo_proveedor": "711237693",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10466803"
+    },
+    {
+      "codigo_proveedor": "717323059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10466803"
+    },
+    {
+      "codigo_proveedor": "732634456",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10466803"
+    },
+    {
+      "codigo_proveedor": "733644397",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10466803"
+    },
+    {
+      "codigo_proveedor": "735745390",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10466803"
+    },
+    {
+      "codigo_proveedor": "700796048",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10467422"
+    },
+    {
+      "codigo_proveedor": "700947039",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10467422"
+    },
+    {
+      "codigo_proveedor": "701116139",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10467422"
+    },
+    {
+      "codigo_proveedor": "701412603",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10467422"
+    },
+    {
+      "codigo_proveedor": "704291582",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10467926"
+    },
+    {
+      "codigo_proveedor": "702368044",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10476701"
+    },
+    {
+      "codigo_proveedor": "709226120",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10478531"
+    },
+    {
+      "codigo_proveedor": "703968628",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10486365"
+    },
+    {
+      "codigo_proveedor": "703968628",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10486453"
+    },
+    {
+      "codigo_proveedor": "702368044",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10488741"
+    },
+    {
+      "codigo_proveedor": "700147119",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10493706"
+    },
+    {
+      "codigo_proveedor": "702020157",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10493706"
+    },
+    {
+      "codigo_proveedor": "703971937",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10494846"
+    },
+    {
+      "codigo_proveedor": "701654014",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "701732281",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "702106287",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "702618083",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "702627043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "702955881",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "704046028",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "704972058",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "707304481",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "709803092",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "713269389",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "714307709",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "718351612",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "727858110",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "730691631",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "732303052",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499558"
+    },
+    {
+      "codigo_proveedor": "704924166",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499808"
+    },
+    {
+      "codigo_proveedor": "731644134",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10499808"
+    },
+    {
+      "codigo_proveedor": "736763251",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10513149"
+    },
+    {
+      "codigo_proveedor": "736892183",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10513149"
+    },
+    {
+      "codigo_proveedor": "700991151",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "701436479",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "704337922",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "704827146",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "705321966",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "705666691",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "705706422",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "705907897",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "706840816",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "709023840",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "710264904",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "711349068",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "713482735",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "715996138",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "717804207",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "733287858",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "733291744",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "734655301",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "735781239",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "735851032",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736010125",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736505918",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736891052",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736907205",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736958448",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736977018",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736977026",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736987488",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736988395",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737001578",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737002758",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737002964",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737006015",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737010546",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737010553",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737015420",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737017103",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737017350",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737020040",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "737025247",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10541622"
+    },
+    {
+      "codigo_proveedor": "736886110",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10547741"
+    },
+    {
+      "codigo_proveedor": "707026126",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10561746"
+    },
+    {
+      "codigo_proveedor": "728116864",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10561746"
+    },
+    {
+      "codigo_proveedor": "703776583",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10575145"
+    },
+    {
+      "codigo_proveedor": "709932750",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10595384"
+    },
+    {
+      "codigo_proveedor": "700214026",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10632148"
+    },
+    {
+      "codigo_proveedor": "702831835",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10632148"
+    },
+    {
+      "codigo_proveedor": "707160131",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10632148"
+    },
+    {
+      "codigo_proveedor": "700014079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10721829"
+    },
+    {
+      "codigo_proveedor": "701408247",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10721829"
+    },
+    {
+      "codigo_proveedor": "702459140",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10721829"
+    },
+    {
+      "codigo_proveedor": "705437200",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10721829"
+    },
+    {
+      "codigo_proveedor": "723650081",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10721829"
+    },
+    {
+      "codigo_proveedor": "737342071",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10721829"
+    },
+    {
+      "codigo_proveedor": "705065282",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10732133"
+    },
+    {
+      "codigo_proveedor": "737293290",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10732133"
+    },
+    {
+      "codigo_proveedor": "700343064",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10739642"
+    },
+    {
+      "codigo_proveedor": "723286357",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10739642"
+    },
+    {
+      "codigo_proveedor": "700811300",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "701151151",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "701309155",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "701671299",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "701869307",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "702106287",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "704738079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "707304481",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "737252312",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "737252981",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "737257360",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10743002"
+    },
+    {
+      "codigo_proveedor": "700991151",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "701275034",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "701436479",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "701611147",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "701661746",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "701732281",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "702247024",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "702292574",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "702452442",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "702596123",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "703105791",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "703160473",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "704071224",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "704117175",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "704150515",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "704311620",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "706514924",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "706667516",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "706710472",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "706763422",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "707502712",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "707926192",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "709023840",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "710143074",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "710264904",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "710812389",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "714411048",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "714963790",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "715795332",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "717591515",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "717879043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "718898687",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "720598283",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "727754830",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "729045658",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "731156642",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "733290233",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "736513128",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "736729021",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "736916289",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "736918145",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737199059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737217224",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737325217",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737334219",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737347575",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737374439",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737376020",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737377093",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737380246",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737380386",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737380436",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "737380527",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10796278"
+    },
+    {
+      "codigo_proveedor": "701922122",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10800668"
+    },
+    {
+      "codigo_proveedor": "702853938",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10800668"
+    },
+    {
+      "codigo_proveedor": "703021154",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10800668"
+    },
+    {
+      "codigo_proveedor": "704961143",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10800668"
+    },
+    {
+      "codigo_proveedor": "707267803",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10800668"
+    },
+    {
+      "codigo_proveedor": "712663251",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10800668"
+    },
+    {
+      "codigo_proveedor": "715172193",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10800668"
+    },
+    {
+      "codigo_proveedor": "732706569",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10800668"
+    },
+    {
+      "codigo_proveedor": "733741268",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10800668"
+    },
+    {
+      "codigo_proveedor": "700358013",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10857467"
+    },
+    {
+      "codigo_proveedor": "700468085",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10857467"
+    },
+    {
+      "codigo_proveedor": "703778191",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10857467"
+    },
+    {
+      "codigo_proveedor": "710995671",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10857467"
+    },
+    {
+      "codigo_proveedor": "709932750",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10857669"
+    },
+    {
+      "codigo_proveedor": "701171142",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "701690653",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "702541400",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "703957589",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "704127356",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "704427269",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "705142149",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "715336137",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "715520649",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "726610884",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "726884059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "734958911",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "737477620",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10883340"
+    },
+    {
+      "codigo_proveedor": "737651125",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10898070"
+    },
+    {
+      "codigo_proveedor": "737708057",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10898070"
+    },
+    {
+      "codigo_proveedor": "737709857",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10898070"
+    },
+    {
+      "codigo_proveedor": "709143531",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10919644"
+    },
+    {
+      "codigo_proveedor": "719749715",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10919644"
+    },
+    {
+      "codigo_proveedor": "726966302",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10919644"
+    },
+    {
+      "codigo_proveedor": "700014079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "700252026",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "700406010",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "700711047",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "700756059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "700966062",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "702196213",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "702541400",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "703799809",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "703969220",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "704007624",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "705519478",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "706481348",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "710494170",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "717099105",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "718934771",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "723650081",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "737712356",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "737716399",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10928953"
+    },
+    {
+      "codigo_proveedor": "703971937",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.10954071"
+    },
+    {
+      "codigo_proveedor": "703717090",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "713157196",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "722094653",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "728798901",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "728981002",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "729966333",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "729978163",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730012507",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730058385",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730059102",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730075058",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730075074",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730078482",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730079498",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730080686",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730092293",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730092699",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730097664",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730098233",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730098399",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730099389",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730102126",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730102241",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730103132",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730105061",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7419804"
+    },
+    {
+      "codigo_proveedor": "730122876",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7436572"
+    },
+    {
+      "codigo_proveedor": "730126802",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7436572"
+    },
+    {
+      "codigo_proveedor": "730147196",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7436572"
+    },
+    {
+      "codigo_proveedor": "730152469",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7436572"
+    },
+    {
+      "codigo_proveedor": "730153624",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7436572"
+    },
+    {
+      "codigo_proveedor": "730155132",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7436572"
+    },
+    {
+      "codigo_proveedor": "730155769",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7436572"
+    },
+    {
+      "codigo_proveedor": "730164027",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7436572"
+    },
+    {
+      "codigo_proveedor": "703717090",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "705706422",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "713157196",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "729795344",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730064250",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730074119",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730097235",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730097425",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730138187",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730153103",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730156098",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730168978",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730170164",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730170768",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730173267",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730173689",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730177243",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730178464",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730179108",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730181179",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "730186095",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7437576"
+    },
+    {
+      "codigo_proveedor": "704595016",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7466673"
+    },
+    {
+      "codigo_proveedor": "712738632",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7466673"
+    },
+    {
+      "codigo_proveedor": "700043037",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7492010"
+    },
+    {
+      "codigo_proveedor": "704595016",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7492010"
+    },
+    {
+      "codigo_proveedor": "720748318",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7492010"
+    },
+    {
+      "codigo_proveedor": "730188885",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7501577"
+    },
+    {
+      "codigo_proveedor": "730201035",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7501577"
+    },
+    {
+      "codigo_proveedor": "711190058",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7544496"
+    },
+    {
+      "codigo_proveedor": "730242914",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7544496"
+    },
+    {
+      "codigo_proveedor": "730242971",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7544496"
+    },
+    {
+      "codigo_proveedor": "700273022",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7552746"
+    },
+    {
+      "codigo_proveedor": "700742141",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7552746"
+    },
+    {
+      "codigo_proveedor": "717792170",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7552746"
+    },
+    {
+      "codigo_proveedor": "700036056",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7580357"
+    },
+    {
+      "codigo_proveedor": "701124059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7580357"
+    },
+    {
+      "codigo_proveedor": "701301186",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7580357"
+    },
+    {
+      "codigo_proveedor": "730130226",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7585217"
+    },
+    {
+      "codigo_proveedor": "730138096",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7585217"
+    },
+    {
+      "codigo_proveedor": "703897173",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7586429"
+    },
+    {
+      "codigo_proveedor": "703973198",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7586429"
+    },
+    {
+      "codigo_proveedor": "704392026",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7586429"
+    },
+    {
+      "codigo_proveedor": "700006034",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7594462"
+    },
+    {
+      "codigo_proveedor": "722108834",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7594462"
+    },
+    {
+      "codigo_proveedor": "730269313",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7594462"
+    },
+    {
+      "codigo_proveedor": "701895278",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7598223"
+    },
+    {
+      "codigo_proveedor": "701910325",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7598223"
+    },
+    {
+      "codigo_proveedor": "705569218",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7598223"
+    },
+    {
+      "codigo_proveedor": "709709240",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7598223"
+    },
+    {
+      "codigo_proveedor": "712085547",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7598223"
+    },
+    {
+      "codigo_proveedor": "706568821",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7602530"
+    },
+    {
+      "codigo_proveedor": "717021497",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7602530"
+    },
+    {
+      "codigo_proveedor": "700359052",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7606063"
+    },
+    {
+      "codigo_proveedor": "729995555",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7606063"
+    },
+    {
+      "codigo_proveedor": "730299195",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7616520"
+    },
+    {
+      "codigo_proveedor": "730356649",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7645698"
+    },
+    {
+      "codigo_proveedor": "730415890",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7645698"
+    },
+    {
+      "codigo_proveedor": "730441250",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7645698"
+    },
+    {
+      "codigo_proveedor": "701895278",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7648605"
+    },
+    {
+      "codigo_proveedor": "730420460",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7692085"
+    },
+    {
+      "codigo_proveedor": "730433281",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7692085"
+    },
+    {
+      "codigo_proveedor": "730435435",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7692085"
+    },
+    {
+      "codigo_proveedor": "730488582",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7692085"
+    },
+    {
+      "codigo_proveedor": "730502531",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7692085"
+    },
+    {
+      "codigo_proveedor": "730513504",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7692085"
+    },
+    {
+      "codigo_proveedor": "730433307",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7708726"
+    },
+    {
+      "codigo_proveedor": "700147119",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7760449"
+    },
+    {
+      "codigo_proveedor": "702231416",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7760449"
+    },
+    {
+      "codigo_proveedor": "702412933",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7760449"
+    },
+    {
+      "codigo_proveedor": "702730920",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7760449"
+    },
+    {
+      "codigo_proveedor": "707454088",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7760449"
+    },
+    {
+      "codigo_proveedor": "708727425",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7760449"
+    },
+    {
+      "codigo_proveedor": "711979088",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7760449"
+    },
+    {
+      "codigo_proveedor": "713720910",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7760449"
+    },
+    {
+      "codigo_proveedor": "705337053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7800129"
+    },
+    {
+      "codigo_proveedor": "704738079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7848260"
+    },
+    {
+      "codigo_proveedor": "704972058",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7848260"
+    },
+    {
+      "codigo_proveedor": "700713035",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7852089"
+    },
+    {
+      "codigo_proveedor": "710143090",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7853967"
+    },
+    {
+      "codigo_proveedor": "701779357",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7861629"
+    },
+    {
+      "codigo_proveedor": "703719252",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7861629"
+    },
+    {
+      "codigo_proveedor": "703778191",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7861629"
+    },
+    {
+      "codigo_proveedor": "704392026",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7861629"
+    },
+    {
+      "codigo_proveedor": "704828615",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7861629"
+    },
+    {
+      "codigo_proveedor": "719293847",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7861629"
+    },
+    {
+      "codigo_proveedor": "700015043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7898660"
+    },
+    {
+      "codigo_proveedor": "700315047",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7898660"
+    },
+    {
+      "codigo_proveedor": "701191074",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7898660"
+    },
+    {
+      "codigo_proveedor": "730670130",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7903609"
+    },
+    {
+      "codigo_proveedor": "730691318",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7903609"
+    },
+    {
+      "codigo_proveedor": "700105018",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7910908"
+    },
+    {
+      "codigo_proveedor": "701301186",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7910908"
+    },
+    {
+      "codigo_proveedor": "702541400",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7910908"
+    },
+    {
+      "codigo_proveedor": "703776583",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7910908"
+    },
+    {
+      "codigo_proveedor": "708266069",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7910908"
+    },
+    {
+      "codigo_proveedor": "730805207",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7910908"
+    },
+    {
+      "codigo_proveedor": "730857448",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7910908"
+    },
+    {
+      "codigo_proveedor": "705337053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7928583"
+    },
+    {
+      "codigo_proveedor": "702618166",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "703719252",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "706878576",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "709542542",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "709851638",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "711237693",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "713294221",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "714633161",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "715545075",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "719293847",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "730425220",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7929125"
+    },
+    {
+      "codigo_proveedor": "730948114",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7940993"
+    },
+    {
+      "codigo_proveedor": "701732281",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7957703"
+    },
+    {
+      "codigo_proveedor": "700734015",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "701654014",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "701732281",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "701890261",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "702106287",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "702627043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "702955881",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "703811216",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "704738079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "704972058",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "707304481",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "707978706",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "720587104",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "725123376",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "725321467",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "725716153",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "726306046",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7964039"
+    },
+    {
+      "codigo_proveedor": "703743195",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7968602"
+    },
+    {
+      "codigo_proveedor": "730999117",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.7984344"
+    },
+    {
+      "codigo_proveedor": "705232031",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8043546"
+    },
+    {
+      "codigo_proveedor": "700801053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8057550"
+    },
+    {
+      "codigo_proveedor": "706568821",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8057550"
+    },
+    {
+      "codigo_proveedor": "717021497",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8057550"
+    },
+    {
+      "codigo_proveedor": "707679544",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8063753"
+    },
+    {
+      "codigo_proveedor": "700906183",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8087121"
+    },
+    {
+      "codigo_proveedor": "731401352",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8089958"
+    },
+    {
+      "codigo_proveedor": "703766451",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8092837"
+    },
+    {
+      "codigo_proveedor": "703766451",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8092837"
+    },
+    {
+      "codigo_proveedor": "731327813",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8095760"
+    },
+    {
+      "codigo_proveedor": "700561038",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8097220"
+    },
+    {
+      "codigo_proveedor": "700966062",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8097220"
+    },
+    {
+      "codigo_proveedor": "701011058",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8097220"
+    },
+    {
+      "codigo_proveedor": "702541400",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8097220"
+    },
+    {
+      "codigo_proveedor": "702600214",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8097220"
+    },
+    {
+      "codigo_proveedor": "703969220",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8097220"
+    },
+    {
+      "codigo_proveedor": "705142149",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8097220"
+    },
+    {
+      "codigo_proveedor": "710494170",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8097220"
+    },
+    {
+      "codigo_proveedor": "731299079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8097220"
+    },
+    {
+      "codigo_proveedor": "703766451",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8104290"
+    },
+    {
+      "codigo_proveedor": "700191034",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8109049"
+    },
+    {
+      "codigo_proveedor": "710010299",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8112080"
+    },
+    {
+      "codigo_proveedor": "702441221",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8144440"
+    },
+    {
+      "codigo_proveedor": "706582251",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8150106"
+    },
+    {
+      "codigo_proveedor": "700122047",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8167613"
+    },
+    {
+      "codigo_proveedor": "716609656",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8167613"
+    },
+    {
+      "codigo_proveedor": "700214026",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8198995"
+    },
+    {
+      "codigo_proveedor": "702831835",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8198995"
+    },
+    {
+      "codigo_proveedor": "701922163",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8215420"
+    },
+    {
+      "codigo_proveedor": "700079098",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8230989"
+    },
+    {
+      "codigo_proveedor": "700713035",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8230989"
+    },
+    {
+      "codigo_proveedor": "702231291",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8232791"
+    },
+    {
+      "codigo_proveedor": "702231572",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8232791"
+    },
+    {
+      "codigo_proveedor": "702475039",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8232791"
+    },
+    {
+      "codigo_proveedor": "700273022",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8248765"
+    },
+    {
+      "codigo_proveedor": "700657042",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8248765"
+    },
+    {
+      "codigo_proveedor": "700742141",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8248765"
+    },
+    {
+      "codigo_proveedor": "700773070",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8248765"
+    },
+    {
+      "codigo_proveedor": "701135063",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8248765"
+    },
+    {
+      "codigo_proveedor": "731641148",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8248765"
+    },
+    {
+      "codigo_proveedor": "701458077",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8250412"
+    },
+    {
+      "codigo_proveedor": "731672655",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8250412"
+    },
+    {
+      "codigo_proveedor": "731681375",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8250412"
+    },
+    {
+      "codigo_proveedor": "731699609",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8250412"
+    },
+    {
+      "codigo_proveedor": "700713035",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8254814"
+    },
+    {
+      "codigo_proveedor": "700153018",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8257131"
+    },
+    {
+      "codigo_proveedor": "704116110",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8257131"
+    },
+    {
+      "codigo_proveedor": "700153018",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8257252"
+    },
+    {
+      "codigo_proveedor": "704116110",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8257252"
+    },
+    {
+      "codigo_proveedor": "702289323",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8258687"
+    },
+    {
+      "codigo_proveedor": "703962340",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8258687"
+    },
+    {
+      "codigo_proveedor": "704407014",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8258687"
+    },
+    {
+      "codigo_proveedor": "704450204",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8258687"
+    },
+    {
+      "codigo_proveedor": "710245275",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8258687"
+    },
+    {
+      "codigo_proveedor": "714947215",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8258687"
+    },
+    {
+      "codigo_proveedor": "731585428",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8258687"
+    },
+    {
+      "codigo_proveedor": "731588042",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8258687"
+    },
+    {
+      "codigo_proveedor": "702634049",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8276013"
+    },
+    {
+      "codigo_proveedor": "704637297",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8276013"
+    },
+    {
+      "codigo_proveedor": "702600214",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8283066"
+    },
+    {
+      "codigo_proveedor": "701832065",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8285251"
+    },
+    {
+      "codigo_proveedor": "700879117",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8293421"
+    },
+    {
+      "codigo_proveedor": "702092099",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8293421"
+    },
+    {
+      "codigo_proveedor": "703776583",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8293421"
+    },
+    {
+      "codigo_proveedor": "704225051",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8293421"
+    },
+    {
+      "codigo_proveedor": "701110074",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8299462"
+    },
+    {
+      "codigo_proveedor": "701922163",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8299462"
+    },
+    {
+      "codigo_proveedor": "703935346",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8299462"
+    },
+    {
+      "codigo_proveedor": "704162379",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8299462"
+    },
+    {
+      "codigo_proveedor": "704837244",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8299462"
+    },
+    {
+      "codigo_proveedor": "706641354",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8299462"
+    },
+    {
+      "codigo_proveedor": "726966302",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8299932"
+    },
+    {
+      "codigo_proveedor": "700122047",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "701386229",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "702708256",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "703094128",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "704002054",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "707178794",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "715545075",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "723207502",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "727227811",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "730499340",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8308705"
+    },
+    {
+      "codigo_proveedor": "731823043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8313958"
+    },
+    {
+      "codigo_proveedor": "709226120",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8314131"
+    },
+    {
+      "codigo_proveedor": "700147119",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8321696"
+    },
+    {
+      "codigo_proveedor": "700079098",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8327580"
+    },
+    {
+      "codigo_proveedor": "709239792",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8327580"
+    },
+    {
+      "codigo_proveedor": "715545075",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8327580"
+    },
+    {
+      "codigo_proveedor": "727227811",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8327580"
+    },
+    {
+      "codigo_proveedor": "730499340",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8327580"
+    },
+    {
+      "codigo_proveedor": "700947039",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8348244"
+    },
+    {
+      "codigo_proveedor": "702853938",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8348602"
+    },
+    {
+      "codigo_proveedor": "704002054",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8348602"
+    },
+    {
+      "codigo_proveedor": "706638160",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8348602"
+    },
+    {
+      "codigo_proveedor": "707178794",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8348602"
+    },
+    {
+      "codigo_proveedor": "709851638",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8348602"
+    },
+    {
+      "codigo_proveedor": "710436478",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8348602"
+    },
+    {
+      "codigo_proveedor": "711188326",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8348602"
+    },
+    {
+      "codigo_proveedor": "726884059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8348602"
+    },
+    {
+      "codigo_proveedor": "727510927",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8363507"
+    },
+    {
+      "codigo_proveedor": "703038091",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8373813"
+    },
+    {
+      "codigo_proveedor": "703738781",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8373813"
+    },
+    {
+      "codigo_proveedor": "704142785",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8373813"
+    },
+    {
+      "codigo_proveedor": "704421148",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8373813"
+    },
+    {
+      "codigo_proveedor": "715545075",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8373813"
+    },
+    {
+      "codigo_proveedor": "723386124",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8373813"
+    },
+    {
+      "codigo_proveedor": "727227811",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8373813"
+    },
+    {
+      "codigo_proveedor": "730499340",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8373813"
+    },
+    {
+      "codigo_proveedor": "700581135",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8388066"
+    },
+    {
+      "codigo_proveedor": "701843575",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8392695"
+    },
+    {
+      "codigo_proveedor": "708462742",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8392695"
+    },
+    {
+      "codigo_proveedor": "711660589",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8392695"
+    },
+    {
+      "codigo_proveedor": "724019179",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8392695"
+    },
+    {
+      "codigo_proveedor": "729095364",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8392695"
+    },
+    {
+      "codigo_proveedor": "700787302",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8400125"
+    },
+    {
+      "codigo_proveedor": "708613948",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8400125"
+    },
+    {
+      "codigo_proveedor": "713897338",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8400125"
+    },
+    {
+      "codigo_proveedor": "704291582",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8400326"
+    },
+    {
+      "codigo_proveedor": "700906183",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8403366"
+    },
+    {
+      "codigo_proveedor": "732079256",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8414893"
+    },
+    {
+      "codigo_proveedor": "702634049",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8428554"
+    },
+    {
+      "codigo_proveedor": "700787302",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8431345"
+    },
+    {
+      "codigo_proveedor": "719782146",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8431345"
+    },
+    {
+      "codigo_proveedor": "732101191",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8431345"
+    },
+    {
+      "codigo_proveedor": "711349068",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8462723"
+    },
+    {
+      "codigo_proveedor": "732117437",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8462723"
+    },
+    {
+      "codigo_proveedor": "732126917",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8462723"
+    },
+    {
+      "codigo_proveedor": "732132089",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8462723"
+    },
+    {
+      "codigo_proveedor": "707616447",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8467831"
+    },
+    {
+      "codigo_proveedor": "711904060",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8467831"
+    },
+    {
+      "codigo_proveedor": "716151337",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8467831"
+    },
+    {
+      "codigo_proveedor": "700147119",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8480936"
+    },
+    {
+      "codigo_proveedor": "709780068",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8481990"
+    },
+    {
+      "codigo_proveedor": "732258785",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8481990"
+    },
+    {
+      "codigo_proveedor": "732267109",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8481990"
+    },
+    {
+      "codigo_proveedor": "732287750",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8481990"
+    },
+    {
+      "codigo_proveedor": "732296587",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8481990"
+    },
+    {
+      "codigo_proveedor": "700011042",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8500158"
+    },
+    {
+      "codigo_proveedor": "705337053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8508981"
+    },
+    {
+      "codigo_proveedor": "701272015",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8516895"
+    },
+    {
+      "codigo_proveedor": "703971937",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8534677"
+    },
+    {
+      "codigo_proveedor": "700796048",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8551804"
+    },
+    {
+      "codigo_proveedor": "700947039",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8551804"
+    },
+    {
+      "codigo_proveedor": "701116139",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8551804"
+    },
+    {
+      "codigo_proveedor": "701235020",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8551804"
+    },
+    {
+      "codigo_proveedor": "701961179",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8551804"
+    },
+    {
+      "codigo_proveedor": "704122795",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8551804"
+    },
+    {
+      "codigo_proveedor": "700181019",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8556108"
+    },
+    {
+      "codigo_proveedor": "700036056",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8567528"
+    },
+    {
+      "codigo_proveedor": "700273022",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8567528"
+    },
+    {
+      "codigo_proveedor": "701124059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8567528"
+    },
+    {
+      "codigo_proveedor": "703776583",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8567528"
+    },
+    {
+      "codigo_proveedor": "704002054",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8567528"
+    },
+    {
+      "codigo_proveedor": "707272084",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8567528"
+    },
+    {
+      "codigo_proveedor": "707855078",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8567528"
+    },
+    {
+      "codigo_proveedor": "723650081",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8567528"
+    },
+    {
+      "codigo_proveedor": "732498142",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8567528"
+    },
+    {
+      "codigo_proveedor": "703968628",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8571295"
+    },
+    {
+      "codigo_proveedor": "701234114",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8573906"
+    },
+    {
+      "codigo_proveedor": "701006165",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8594236"
+    },
+    {
+      "codigo_proveedor": "704616606",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8600557"
+    },
+    {
+      "codigo_proveedor": "700698079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8606623"
+    },
+    {
+      "codigo_proveedor": "716609656",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8606623"
+    },
+    {
+      "codigo_proveedor": "703968628",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8615628"
+    },
+    {
+      "codigo_proveedor": "700023047",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "702122078",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "703776583",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "704002054",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "704225051",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "706532579",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "707178794",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "709505564",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "718437866",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "723650081",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "731235099",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "732595046",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "732612072",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8616300"
+    },
+    {
+      "codigo_proveedor": "732694195",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8635591"
+    },
+    {
+      "codigo_proveedor": "732709142",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8635591"
+    },
+    {
+      "codigo_proveedor": "700211014",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8650937"
+    },
+    {
+      "codigo_proveedor": "702244435",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8650937"
+    },
+    {
+      "codigo_proveedor": "714605243",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8650937"
+    },
+    {
+      "codigo_proveedor": "719246381",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8650937"
+    },
+    {
+      "codigo_proveedor": "730691631",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8653993"
+    },
+    {
+      "codigo_proveedor": "732598875",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8673126"
+    },
+    {
+      "codigo_proveedor": "732729355",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8673126"
+    },
+    {
+      "codigo_proveedor": "732774062",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8673126"
+    },
+    {
+      "codigo_proveedor": "732776059",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8673126"
+    },
+    {
+      "codigo_proveedor": "732783691",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8673126"
+    },
+    {
+      "codigo_proveedor": "732843057",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8673126"
+    },
+    {
+      "codigo_proveedor": "700123060",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8678711"
+    },
+    {
+      "codigo_proveedor": "700105018",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "701031023",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "701301186",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "701890261",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "703998146",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "706543907",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "706567195",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "708462742",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "715545075",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "720587104",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "722766151",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "724019179",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "729095364",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "730499340",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8679651"
+    },
+    {
+      "codigo_proveedor": "700079031",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "701695090",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "703675579",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "704121417",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "704667237",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "705068765",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "705907897",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "706763422",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "711349068",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "717879043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "723409223",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "729994772",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "730186996",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "731144432",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "732608070",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "732658950",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "732665773",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "732682711",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8694068"
+    },
+    {
+      "codigo_proveedor": "702231572",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8700037"
+    },
+    {
+      "codigo_proveedor": "701732281",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "702106287",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "702627043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "702853938",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "702955881",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "702996547",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "704046028",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "704738079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "704892108",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "704972058",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "709803092",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "711188326",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "712401108",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "720792811",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "723175766",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "728462326",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "730691631",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "731302162",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8735764"
+    },
+    {
+      "codigo_proveedor": "702331216",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8747643"
+    },
+    {
+      "codigo_proveedor": "711369587",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8747643"
+    },
+    {
+      "codigo_proveedor": "732881370",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8763611"
+    },
+    {
+      "codigo_proveedor": "702368044",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8768390"
+    },
+    {
+      "codigo_proveedor": "723066668",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8768744"
+    },
+    {
+      "codigo_proveedor": "700014079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8774435"
+    },
+    {
+      "codigo_proveedor": "700713035",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8774435"
+    },
+    {
+      "codigo_proveedor": "708048061",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8774435"
+    },
+    {
+      "codigo_proveedor": "717239156",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8774435"
+    },
+    {
+      "codigo_proveedor": "721697498",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8774435"
+    },
+    {
+      "codigo_proveedor": "723650081",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8774435"
+    },
+    {
+      "codigo_proveedor": "702146408",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8793122"
+    },
+    {
+      "codigo_proveedor": "702451386",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8803849"
+    },
+    {
+      "codigo_proveedor": "701116139",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8831039"
+    },
+    {
+      "codigo_proveedor": "703971937",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8914140"
+    },
+    {
+      "codigo_proveedor": "725517908",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8914140"
+    },
+    {
+      "codigo_proveedor": "701118309",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8918435"
+    },
+    {
+      "codigo_proveedor": "713460483",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8918435"
+    },
+    {
+      "codigo_proveedor": "701116477",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8921391"
+    },
+    {
+      "codigo_proveedor": "707398491",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8931630"
+    },
+    {
+      "codigo_proveedor": "711064105",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8931630"
+    },
+    {
+      "codigo_proveedor": "702458613",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8934027"
+    },
+    {
+      "codigo_proveedor": "733419097",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8934027"
+    },
+    {
+      "codigo_proveedor": "701385080",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "702149105",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "704369818",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "706705860",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "709505564",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "711400390",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "711465237",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "723094546",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "728878331",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "733284244",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8949853"
+    },
+    {
+      "codigo_proveedor": "704291582",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8954282"
+    },
+    {
+      "codigo_proveedor": "718129380",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8954282"
+    },
+    {
+      "codigo_proveedor": "702368044",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8962325"
+    },
+    {
+      "codigo_proveedor": "700014079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8970299"
+    },
+    {
+      "codigo_proveedor": "700036056",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8970299"
+    },
+    {
+      "codigo_proveedor": "700211014",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8970299"
+    },
+    {
+      "codigo_proveedor": "700561038",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8970299"
+    },
+    {
+      "codigo_proveedor": "701972259",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8970299"
+    },
+    {
+      "codigo_proveedor": "721430767",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8975235"
+    },
+    {
+      "codigo_proveedor": "726966302",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8975235"
+    },
+    {
+      "codigo_proveedor": "702368044",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8993086"
+    },
+    {
+      "codigo_proveedor": "700598022",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8994633"
+    },
+    {
+      "codigo_proveedor": "702153321",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8994633"
+    },
+    {
+      "codigo_proveedor": "723066668",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.8994633"
+    },
+    {
+      "codigo_proveedor": "704291582",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9000068"
+    },
+    {
+      "codigo_proveedor": "700334048",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9010503"
+    },
+    {
+      "codigo_proveedor": "700345028",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9010503"
+    },
+    {
+      "codigo_proveedor": "701350050",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9010503"
+    },
+    {
+      "codigo_proveedor": "702561853",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9010503"
+    },
+    {
+      "codigo_proveedor": "711356659",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9010503"
+    },
+    {
+      "codigo_proveedor": "724332622",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9013139"
+    },
+    {
+      "codigo_proveedor": "732068143",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9015604"
+    },
+    {
+      "codigo_proveedor": "732942107",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9015604"
+    },
+    {
+      "codigo_proveedor": "733370571",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9015604"
+    },
+    {
+      "codigo_proveedor": "733453971",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9020901"
+    },
+    {
+      "codigo_proveedor": "733463012",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9020901"
+    },
+    {
+      "codigo_proveedor": "700014079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9040002"
+    },
+    {
+      "codigo_proveedor": "700761026",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9040002"
+    },
+    {
+      "codigo_proveedor": "700798044",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9040002"
+    },
+    {
+      "codigo_proveedor": "708048061",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9040002"
+    },
+    {
+      "codigo_proveedor": "712328103",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9040002"
+    },
+    {
+      "codigo_proveedor": "721021954",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9040002"
+    },
+    {
+      "codigo_proveedor": "701116477",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9080688"
+    },
+    {
+      "codigo_proveedor": "706858677",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9080688"
+    },
+    {
+      "codigo_proveedor": "702009010",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9113320"
+    },
+    {
+      "codigo_proveedor": "704291582",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9134855"
+    },
+    {
+      "codigo_proveedor": "705337053",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9135366"
+    },
+    {
+      "codigo_proveedor": "700153026",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9145675"
+    },
+    {
+      "codigo_proveedor": "700227028",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9154420"
+    },
+    {
+      "codigo_proveedor": "701654014",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9155842"
+    },
+    {
+      "codigo_proveedor": "702627043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9155842"
+    },
+    {
+      "codigo_proveedor": "703811216",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9155842"
+    },
+    {
+      "codigo_proveedor": "704017029",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9155842"
+    },
+    {
+      "codigo_proveedor": "712350180",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9155842"
+    },
+    {
+      "codigo_proveedor": "716495817",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9155842"
+    },
+    {
+      "codigo_proveedor": "727708687",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9155842"
+    },
+    {
+      "codigo_proveedor": "731053112",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9155842"
+    },
+    {
+      "codigo_proveedor": "729540096",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9158207"
+    },
+    {
+      "codigo_proveedor": "733970388",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9158207"
+    },
+    {
+      "codigo_proveedor": "733983050",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9158207"
+    },
+    {
+      "codigo_proveedor": "733983308",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9158207"
+    },
+    {
+      "codigo_proveedor": "733993455",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9158207"
+    },
+    {
+      "codigo_proveedor": "700598022",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9197215"
+    },
+    {
+      "codigo_proveedor": "701048043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9197215"
+    },
+    {
+      "codigo_proveedor": "701824104",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9197215"
+    },
+    {
+      "codigo_proveedor": "702137126",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9197215"
+    },
+    {
+      "codigo_proveedor": "702153321",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9197215"
+    },
+    {
+      "codigo_proveedor": "733809727",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9199416"
+    },
+    {
+      "codigo_proveedor": "702046079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9207176"
+    },
+    {
+      "codigo_proveedor": "703971937",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9207176"
+    },
+    {
+      "codigo_proveedor": "701651929",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9207457"
+    },
+    {
+      "codigo_proveedor": "700698079",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9229967"
+    },
+    {
+      "codigo_proveedor": "701010126",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9229967"
+    },
+    {
+      "codigo_proveedor": "702301185",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9229967"
+    },
+    {
+      "codigo_proveedor": "707708715",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9248198"
+    },
+    {
+      "codigo_proveedor": "702458613",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9265700"
+    },
+    {
+      "codigo_proveedor": "732881370",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9266877"
+    },
+    {
+      "codigo_proveedor": "734255482",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9269029"
+    },
+    {
+      "codigo_proveedor": "734259781",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9269029"
+    },
+    {
+      "codigo_proveedor": "734262553",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9269029"
+    },
+    {
+      "codigo_proveedor": "734257991",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9291181"
+    },
+    {
+      "codigo_proveedor": "700713035",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9297959"
+    },
+    {
+      "codigo_proveedor": "700358013",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9306432"
+    },
+    {
+      "codigo_proveedor": "701251134",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9306432"
+    },
+    {
+      "codigo_proveedor": "703778191",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9306432"
+    },
+    {
+      "codigo_proveedor": "710995671",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9306432"
+    },
+    {
+      "codigo_proveedor": "715959110",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9306432"
+    },
+    {
+      "codigo_proveedor": "703971937",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9332649"
+    },
+    {
+      "codigo_proveedor": "701477150",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9334475"
+    },
+    {
+      "codigo_proveedor": "702000035",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9334475"
+    },
+    {
+      "codigo_proveedor": "702637877",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9334475"
+    },
+    {
+      "codigo_proveedor": "709775670",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9334475"
+    },
+    {
+      "codigo_proveedor": "712501634",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9334475"
+    },
+    {
+      "codigo_proveedor": "721543916",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9334475"
+    },
+    {
+      "codigo_proveedor": "728273772",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9334475"
+    },
+    {
+      "codigo_proveedor": "731034229",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9334475"
+    },
+    {
+      "codigo_proveedor": "717104061",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9337030"
+    },
+    {
+      "codigo_proveedor": "703716381",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9340119"
+    },
+    {
+      "codigo_proveedor": "706568821",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9340119"
+    },
+    {
+      "codigo_proveedor": "717021497",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9340119"
+    },
+    {
+      "codigo_proveedor": "729200147",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9340119"
+    },
+    {
+      "codigo_proveedor": "706568821",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9366587"
+    },
+    {
+      "codigo_proveedor": "717021497",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9366587"
+    },
+    {
+      "codigo_proveedor": "729200147",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9366587"
+    },
+    {
+      "codigo_proveedor": "702199043",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9369082"
+    },
+    {
+      "codigo_proveedor": "702717356",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9383211"
+    },
+    {
+      "codigo_proveedor": "702009010",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9392136"
+    },
+    {
+      "codigo_proveedor": "710436478",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9392136"
+    },
+    {
+      "codigo_proveedor": "702331216",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9535154"
+    },
+    {
+      "codigo_proveedor": "702458613",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9535154"
+    },
+    {
+      "codigo_proveedor": "702020157",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9576454"
+    },
+    {
+      "codigo_proveedor": "702231416",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9576454"
+    },
+    {
+      "codigo_proveedor": "702814351",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9576454"
+    },
+    {
+      "codigo_proveedor": "709606099",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9576454"
+    },
+    {
+      "codigo_proveedor": "702458613",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9676580"
+    },
+    {
+      "codigo_proveedor": "700147119",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9739300"
+    },
+    {
+      "codigo_proveedor": "702020157",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9739300"
+    },
+    {
+      "codigo_proveedor": "700006034",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9807936"
+    },
+    {
+      "codigo_proveedor": "722108834",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9807936"
+    },
+    {
+      "codigo_proveedor": "729633545",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9807936"
+    },
+    {
+      "codigo_proveedor": "735248403",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9807936"
+    },
+    {
+      "codigo_proveedor": "735265399",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9807936"
+    },
+    {
+      "codigo_proveedor": "734993884",
+      "entidad_compradora": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "id_procedimiento": "CO1.REQ.9818359"
+    }
+  ],
+  "sha256": "0d98fbe58c5cdf8db45a3232b4c3bd1dc16eed2945e727a0c37e6bf053544c78",
+  "status": "MATERIALIZED"
+}

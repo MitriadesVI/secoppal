@@ -1,0 +1,940 @@
+{
+  "endpoint": "https://www.datos.gov.co/api/views/hgi6-6wh3.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:37:33.116933+00:00",
+  "params": {},
+  "payload": {
+    "attribution": "Agencia Nacional de Contratación Pública - Colombia Compra Eficiente, Bogotá D.C.",
+    "columns": [
+      {
+        "cachedContents": {
+          "cardinality": "2301286",
+          "count": "2301286",
+          "largest": "CO1.REQ.9999998",
+          "non_null": "2301286",
+          "null": "0",
+          "smallest": "CO1.REQ.1",
+          "top": [
+            {
+              "count": "1620",
+              "item": "CO1.REQ.7122588"
+            },
+            {
+              "count": "1417",
+              "item": "CO1.REQ.5459101"
+            },
+            {
+              "count": "786",
+              "item": "CO1.REQ.10097733"
+            },
+            {
+              "count": "766",
+              "item": "CO1.REQ.7257611"
+            },
+            {
+              "count": "531",
+              "item": "CO1.REQ.5289176"
+            },
+            {
+              "count": "515",
+              "item": "CO1.REQ.950812"
+            },
+            {
+              "count": "465",
+              "item": "CO1.REQ.1810026"
+            },
+            {
+              "count": "441",
+              "item": "CO1.REQ.1435540"
+            },
+            {
+              "count": "409",
+              "item": "CO1.REQ.10242076"
+            },
+            {
+              "count": "354",
+              "item": "CO1.REQ.1663261"
+            },
+            {
+              "count": "334",
+              "item": "CO1.REQ.6145171"
+            },
+            {
+              "count": "260",
+              "item": "CO1.REQ.4902019"
+            },
+            {
+              "count": "254",
+              "item": "CO1.REQ.1293440"
+            },
+            {
+              "count": "250",
+              "item": "CO1.REQ.19701"
+            },
+            {
+              "count": "247",
+              "item": "CO1.REQ.1377798"
+            },
+            {
+              "count": "239",
+              "item": "CO1.REQ.10093937"
+            },
+            {
+              "count": "231",
+              "item": "CO1.REQ.2016014"
+            },
+            {
+              "count": "227",
+              "item": "CO1.REQ.3060209"
+            },
+            {
+              "count": "210",
+              "item": "CO1.REQ.2037279"
+            },
+            {
+              "count": "208",
+              "item": "CO1.REQ.996703"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "fieldName": "id_procedimiento",
+        "format": {},
+        "id": 599481205,
+        "name": "ID Procedimiento",
+        "position": 1,
+        "renderTypeName": "text",
+        "tableColumnId": 73632143,
+        "width": 292
+      },
+      {
+        "cachedContents": {
+          "cardinality": "2301286",
+          "count": "2301286",
+          "largest": "2026-09-04T00:00:00.000",
+          "non_null": "2285093",
+          "null": "16193",
+          "smallest": "2015-02-14T00:00:00.000",
+          "top": [
+            {
+              "count": "3322",
+              "item": "2024-11-07T00:00:00.000"
+            },
+            {
+              "count": "2595",
+              "item": "2025-07-23T00:00:00.000"
+            },
+            {
+              "count": "2465",
+              "item": "2026-06-01T00:00:00.000"
+            },
+            {
+              "count": "2376",
+              "item": "2025-11-12T00:00:00.000"
+            },
+            {
+              "count": "2328",
+              "item": "2026-03-18T00:00:00.000"
+            },
+            {
+              "count": "2325",
+              "item": "2025-11-10T00:00:00.000"
+            },
+            {
+              "count": "2312",
+              "item": "2022-03-23T00:00:00.000"
+            },
+            {
+              "count": "2301",
+              "item": "2025-08-11T00:00:00.000"
+            },
+            {
+              "count": "2294",
+              "item": "2021-06-17T00:00:00.000"
+            },
+            {
+              "count": "2282",
+              "item": "2026-05-28T00:00:00.000"
+            },
+            {
+              "count": "2273",
+              "item": "2025-05-20T00:00:00.000"
+            },
+            {
+              "count": "2270",
+              "item": "2019-03-07T00:00:00.000"
+            },
+            {
+              "count": "2263",
+              "item": "2025-11-07T00:00:00.000"
+            },
+            {
+              "count": "2263",
+              "item": "2026-06-02T00:00:00.000"
+            },
+            {
+              "count": "2246",
+              "item": "2026-03-27T00:00:00.000"
+            },
+            {
+              "count": "2230",
+              "item": "2026-06-03T00:00:00.000"
+            },
+            {
+              "count": "2210",
+              "item": "2025-03-31T00:00:00.000"
+            },
+            {
+              "count": "2183",
+              "item": "2026-03-13T00:00:00.000"
+            },
+            {
+              "count": "2175",
+              "item": "2025-11-06T00:00:00.000"
+            },
+            {
+              "count": "2169",
+              "item": "2026-05-19T00:00:00.000"
+            }
+          ]
+        },
+        "dataTypeName": "calendar_date",
+        "description": "",
+        "fieldName": "fecha_publicaci_n",
+        "format": {
+          "view": "date"
+        },
+        "id": 599481206,
+        "name": "Fecha Publicación",
+        "position": 2,
+        "renderTypeName": "calendar_date",
+        "tableColumnId": 73632144,
+        "width": 304
+      },
+      {
+        "cachedContents": {
+          "cardinality": "2301286",
+          "count": "2301286",
+          "largest": " SUMINISTRO DE COMBUSTIBLE PARA LOS VEHiCULOS DEL CONCEJO DE BOGOTa",
+          "non_null": "2301286",
+          "null": "0",
+          "smallest": "||||||",
+          "top": [
+            {
+              "count": "15803",
+              "item": "CCE-05-CONTRATACION_DIRECTA"
+            },
+            {
+              "count": "6043",
+              "item": "MINIMA CUANTIA"
+            },
+            {
+              "count": "3729",
+              "item": "PRESTACION DE SERVICIOS"
+            },
+            {
+              "count": "2359",
+              "item": "MANTENIMIENTO AIRES ACONDICIONADOS"
+            },
+            {
+              "count": "2306",
+              "item": "CONVENIO INTERADMINISTRATIVO"
+            },
+            {
+              "count": "2281",
+              "item": "SUMINISTRO"
+            },
+            {
+              "count": "1967",
+              "item": "PRESTACIoN DE SERVICIOS"
+            },
+            {
+              "count": "1712",
+              "item": "MiNIMA CUANTiA"
+            },
+            {
+              "count": "1620",
+              "item": "PROCESO PRIMERA INFANCIA 2024-2025"
+            },
+            {
+              "count": "1551",
+              "item": "INTERVENTORIA (PRESENTACIoN DE OFERTA)"
+            },
+            {
+              "count": "1532",
+              "item": "CONTRATO INTERADMINISTRATIVO"
+            },
+            {
+              "count": "1442",
+              "item": "PAPELERIA"
+            },
+            {
+              "count": "1417",
+              "item": "PROCESO PRIMERA INFANCIA"
+            },
+            {
+              "count": "1412",
+              "item": "MANTENIMIENTO DE AIRES ACONDICIONADOS"
+            },
+            {
+              "count": "1291",
+              "item": "COMPRAVENTA"
+            },
+            {
+              "count": "1223",
+              "item": "VIGILANCIA (PRESENTACIoN DE OFERTA)"
+            },
+            {
+              "count": "1125",
+              "item": "CONTRATO DE SUMINISTRO"
+            },
+            {
+              "count": "1092",
+              "item": "CONTRATO DE COMPRAVENTA"
+            },
+            {
+              "count": "1017",
+              "item": "SUMINISTRO DE PAPELERIA"
+            },
+            {
+              "count": "960",
+              "item": "EXTINTORES"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "fieldName": "nombre_procedimiento",
+        "format": {},
+        "id": 599481207,
+        "name": "Nombre Procedimiento",
+        "position": 3,
+        "renderTypeName": "text",
+        "tableColumnId": 73632145,
+        "width": 340
+      },
+      {
+        "cachedContents": {
+          "cardinality": "2301286",
+          "count": "2301286",
+          "largest": "9876543210",
+          "non_null": "2301286",
+          "null": "0",
+          "smallest": "7180873",
+          "top": [
+            {
+              "count": "142720",
+              "item": "899999034"
+            },
+            {
+              "count": "101182",
+              "item": "899999061"
+            },
+            {
+              "count": "99608",
+              "item": "800215807"
+            },
+            {
+              "count": "47621",
+              "item": "899999059"
+            },
+            {
+              "count": "34901",
+              "item": "899999239"
+            },
+            {
+              "count": "27142",
+              "item": "8999990619"
+            },
+            {
+              "count": "25715",
+              "item": "890399011"
+            },
+            {
+              "count": "24750",
+              "item": "899999162"
+            },
+            {
+              "count": "20090",
+              "item": "890905211"
+            },
+            {
+              "count": "17442",
+              "item": "800211401"
+            },
+            {
+              "count": "16156",
+              "item": "890801053"
+            },
+            {
+              "count": "15955",
+              "item": "890900286"
+            },
+            {
+              "count": "15405",
+              "item": "899999102"
+            },
+            {
+              "count": "14909",
+              "item": "800150861"
+            },
+            {
+              "count": "14639",
+              "item": "900258711"
+            },
+            {
+              "count": "12946",
+              "item": "899999114"
+            },
+            {
+              "count": "12779",
+              "item": "800197268"
+            },
+            {
+              "count": "11909",
+              "item": "899999081"
+            },
+            {
+              "count": "11818",
+              "item": "830040256"
+            },
+            {
+              "count": "10226",
+              "item": "890801052"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "",
+        "fieldName": "nit_entidad",
+        "format": {
+          "decimalSeparator": ".",
+          "groupSeparator": ","
+        },
+        "id": 599481216,
+        "name": "NIT Entidad",
+        "position": 4,
+        "renderTypeName": "number",
+        "tableColumnId": 154880105,
+        "width": 232
+      },
+      {
+        "cachedContents": {
+          "cardinality": "2301286",
+          "count": "2301286",
+          "largest": "736714098",
+          "non_null": "2301286",
+          "null": "0",
+          "smallest": "700000011",
+          "top": [
+            {
+              "count": "99608",
+              "item": "700676059"
+            },
+            {
+              "count": "47604",
+              "item": "701110272"
+            },
+            {
+              "count": "24750",
+              "item": "700985252"
+            },
+            {
+              "count": "19439",
+              "item": "700221021"
+            },
+            {
+              "count": "17442",
+              "item": "700000011"
+            },
+            {
+              "count": "16156",
+              "item": "705412617"
+            },
+            {
+              "count": "15913",
+              "item": "700256027"
+            },
+            {
+              "count": "15405",
+              "item": "700409022"
+            },
+            {
+              "count": "14909",
+              "item": "701870321"
+            },
+            {
+              "count": "14639",
+              "item": "702046087"
+            },
+            {
+              "count": "13748",
+              "item": "700087026"
+            },
+            {
+              "count": "12779",
+              "item": "700795065"
+            },
+            {
+              "count": "11909",
+              "item": "701946188"
+            },
+            {
+              "count": "11818",
+              "item": "700587033"
+            },
+            {
+              "count": "11492",
+              "item": "701321135"
+            },
+            {
+              "count": "10224",
+              "item": "700613011"
+            },
+            {
+              "count": "10167",
+              "item": "702486788"
+            },
+            {
+              "count": "9985",
+              "item": "702359944"
+            },
+            {
+              "count": "9682",
+              "item": "700569072"
+            },
+            {
+              "count": "9631",
+              "item": "702769076"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "",
+        "fieldName": "codigo_entidad",
+        "format": {
+          "decimalSeparator": ".",
+          "groupSeparator": ","
+        },
+        "id": 599481215,
+        "name": "Codigo Entidad",
+        "position": 5,
+        "renderTypeName": "number",
+        "tableColumnId": 154880104,
+        "width": 268
+      },
+      {
+        "cachedContents": {
+          "cardinality": "2301286",
+          "count": "2301286",
+          "largest": "WENTIDAD WESTATAL",
+          "non_null": "2301286",
+          "null": "0",
+          "smallest": "_",
+          "top": [
+            {
+              "count": "99608",
+              "item": "INVIAS"
+            },
+            {
+              "count": "47604",
+              "item": "AEROCIVIL"
+            },
+            {
+              "count": "24750",
+              "item": "AGENCIA LOGISTICA DE LAS FUERZAS MILITARES"
+            },
+            {
+              "count": "19439",
+              "item": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN"
+            },
+            {
+              "count": "17442",
+              "item": "VORTAL COMPRADOR (ENTIDAD DE SISTEMA)"
+            },
+            {
+              "count": "16156",
+              "item": "MUNICIPIO DE MANIZALES"
+            },
+            {
+              "count": "15913",
+              "item": "DEPARTAMENTO DE ANTIOQUIA//"
+            },
+            {
+              "count": "15405",
+              "item": "FUERZA AEROESPACIAL COLOMBIANA"
+            },
+            {
+              "count": "14909",
+              "item": "INSTITUTO NACIONAL DE MEDICINA LEGAL Y CIENCIAS FORENSES"
+            },
+            {
+              "count": "14639",
+              "item": "INSTITUTO DE CAMINOS Y CONSTRUCCIONES DE CUNDINAMARCA - ICCU"
+            },
+            {
+              "count": "13748",
+              "item": "ICBF SEDE NACIONAL"
+            },
+            {
+              "count": "12779",
+              "item": "DIRECCION DE IMPUESTOS Y ADUANAS NACIONALES*"
+            },
+            {
+              "count": "11909",
+              "item": "INSTITUTO DE DESARROLLO URBANO"
+            },
+            {
+              "count": "11818",
+              "item": "HOSMIL"
+            },
+            {
+              "count": "11492",
+              "item": "SECRETARIA DE EDUCACION DEL DISTRITO"
+            },
+            {
+              "count": "10224",
+              "item": "GOBERNACION DE CALDAS"
+            },
+            {
+              "count": "10167",
+              "item": "SUBRED INTEGRADA DE SERVICIOS DE SALUD SUR OCCIDENTE ESE."
+            },
+            {
+              "count": "9985",
+              "item": "CENAC AVIACION"
+            },
+            {
+              "count": "9682",
+              "item": "DILOF"
+            },
+            {
+              "count": "9631",
+              "item": "SUBRED INTEGRADA DE SERVICIO DE SALUD CENTRO ORIENTE E.S.E 1"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "fieldName": "entidad_compradora",
+        "format": {},
+        "id": 599481210,
+        "name": "Entidad Compradora",
+        "position": 6,
+        "renderTypeName": "text",
+        "tableColumnId": 73632148,
+        "width": 316
+      },
+      {
+        "cachedContents": {
+          "cardinality": "2301286",
+          "count": "2301286",
+          "largest": "ZZZ ZUMA ZE",
+          "non_null": "2301286",
+          "null": "0",
+          "smallest": "`",
+          "top": [
+            {
+              "count": "17009",
+              "item": "CRR SOLUCIONES INTEGRALES S.A.S"
+            },
+            {
+              "count": "9016",
+              "item": "VORTAL PROVEEDOR1 COMMERCIAL(ENTIDAD DE SISTEMA)"
+            },
+            {
+              "count": "8425",
+              "item": "VORTAL PROVEEDOR2 (ENTIDAD DE SISTEMA)22"
+            },
+            {
+              "count": "5047",
+              "item": "GESCOM SAS"
+            },
+            {
+              "count": "4938",
+              "item": "LA PREVISORA S.A. COMPAÑiA DE SEGUROS"
+            },
+            {
+              "count": "4583",
+              "item": "ASEGURADORA SOLIDARIA DE COLOMBIA ENTIDAD COOPERATIVA."
+            },
+            {
+              "count": "4074",
+              "item": "CSE"
+            },
+            {
+              "count": "3882",
+              "item": "INDULTEC SOLUCIONES INTEGRALES SAS"
+            },
+            {
+              "count": "2945",
+              "item": "MAZU SERVICIOS INTEGRALES S.A.S"
+            },
+            {
+              "count": "2936",
+              "item": "IMPORTAREX SAS"
+            },
+            {
+              "count": "2866",
+              "item": "GRUPO LOS LAGOS SAS"
+            },
+            {
+              "count": "2827",
+              "item": "DEICY BRAVO JOJOA"
+            },
+            {
+              "count": "2518",
+              "item": "MAZU SERVICIOS INTEGRALES"
+            },
+            {
+              "count": "2511",
+              "item": "COMERCIALIZADORA SERLE.COM"
+            },
+            {
+              "count": "2436",
+              "item": "LYN INGENIERIA SAS."
+            },
+            {
+              "count": "2386",
+              "item": "SOLTEC VM SAS"
+            },
+            {
+              "count": "2319",
+              "item": "LYN INGENIERIA SAS"
+            },
+            {
+              "count": "2286",
+              "item": "COMERCIALIZADORA Y DISTRIBUIDORA TORRES S.A.S"
+            },
+            {
+              "count": "2222",
+              "item": "CONTROL SERVICES ENGINEERING S.A.S"
+            },
+            {
+              "count": "2067",
+              "item": "SIMCO GROUP SAS"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "fieldName": "proveedor",
+        "format": {},
+        "id": 599481211,
+        "name": "Proveedor",
+        "position": 7,
+        "renderTypeName": "text",
+        "tableColumnId": 73632149,
+        "width": 208
+      },
+      {
+        "cachedContents": {
+          "cardinality": "2301286",
+          "count": "2301286",
+          "largest": "Z6873303",
+          "non_null": "2301286",
+          "null": "0",
+          "smallest": "-",
+          "top": [
+            {
+              "count": "236047",
+              "item": "No Definido"
+            },
+            {
+              "count": "17009",
+              "item": "901406206"
+            },
+            {
+              "count": "9016",
+              "item": "52048168"
+            },
+            {
+              "count": "8425",
+              "item": "100000003"
+            },
+            {
+              "count": "5463",
+              "item": "901362906"
+            },
+            {
+              "count": "5047",
+              "item": "830145023"
+            },
+            {
+              "count": "4961",
+              "item": "860002400"
+            },
+            {
+              "count": "4755",
+              "item": "901148748"
+            },
+            {
+              "count": "4595",
+              "item": "860524654"
+            },
+            {
+              "count": "4436",
+              "item": "900846370"
+            },
+            {
+              "count": "3882",
+              "item": "901520694"
+            },
+            {
+              "count": "2936",
+              "item": "805031667"
+            },
+            {
+              "count": "2866",
+              "item": "860053274"
+            },
+            {
+              "count": "2827",
+              "item": "59706955"
+            },
+            {
+              "count": "2511",
+              "item": "800089897"
+            },
+            {
+              "count": "2387",
+              "item": "900825122"
+            },
+            {
+              "count": "2286",
+              "item": "900020938"
+            },
+            {
+              "count": "2222",
+              "item": "901692702"
+            },
+            {
+              "count": "2067",
+              "item": "901094964"
+            },
+            {
+              "count": "2004",
+              "item": "901340136"
+            }
+          ]
+        },
+        "dataTypeName": "text",
+        "fieldName": "nit_proveedor",
+        "format": {
+          "decimalSeparator": ".",
+          "groupSeparator": ","
+        },
+        "id": 599481212,
+        "name": "NIT Proveedor",
+        "position": 8,
+        "renderTypeName": "text",
+        "tableColumnId": 73632150,
+        "width": 256
+      },
+      {
+        "cachedContents": {
+          "cardinality": "2301286",
+          "count": "2301286",
+          "largest": "737766238",
+          "non_null": "2301286",
+          "null": "0",
+          "smallest": "700000011",
+          "top": [
+            {
+              "count": "17009",
+              "item": "711188326"
+            },
+            {
+              "count": "9016",
+              "item": "700001019"
+            },
+            {
+              "count": "8425",
+              "item": "700000029"
+            },
+            {
+              "count": "5047",
+              "item": "700960172"
+            },
+            {
+              "count": "4938",
+              "item": "700306053"
+            },
+            {
+              "count": "4583",
+              "item": "700326028"
+            },
+            {
+              "count": "4074",
+              "item": "702640343"
+            },
+            {
+              "count": "3882",
+              "item": "716495817"
+            },
+            {
+              "count": "2945",
+              "item": "709328025"
+            },
+            {
+              "count": "2936",
+              "item": "706543907"
+            },
+            {
+              "count": "2866",
+              "item": "700648058"
+            },
+            {
+              "count": "2827",
+              "item": "703835827"
+            },
+            {
+              "count": "2518",
+              "item": "725716153"
+            },
+            {
+              "count": "2511",
+              "item": "700105018"
+            },
+            {
+              "count": "2436",
+              "item": "726306046"
+            },
+            {
+              "count": "2386",
+              "item": "709775670"
+            },
+            {
+              "count": "2319",
+              "item": "718153513"
+            },
+            {
+              "count": "2286",
+              "item": "700827017"
+            },
+            {
+              "count": "2222",
+              "item": "725123376"
+            },
+            {
+              "count": "2067",
+              "item": "702743055"
+            }
+          ]
+        },
+        "dataTypeName": "number",
+        "description": "Identificador único de la plataforma SECOP II, del Proveedor",
+        "fieldName": "codigo_proveedor",
+        "format": {},
+        "id": 599481214,
+        "name": "Codigo Proveedor",
+        "position": 9,
+        "renderTypeName": "number",
+        "tableColumnId": 154880103
+      }
+    ],
+    "description": "Contiene información sobre los proveedores que presentan propuestas en los procesos de contratación pública gestionados a través de la plataforma SECOP II.",
+    "id": "hgi6-6wh3",
+    "name": "Proponentes por Proceso SECOP II",
+    "rowsUpdatedAt": 1788675337
+  },
+  "sha256": "26717c04decf114e31aaf1c03132cb73415d469d57dac220a62f238667479f01",
+  "status": "MATERIALIZED"
+}

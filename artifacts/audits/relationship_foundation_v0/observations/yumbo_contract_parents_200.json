@@ -1,0 +1,14 @@
+{
+  "endpoint": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "error": null,
+  "observed_at": "2026-09-06T07:40:07.564251+00:00",
+  "params": {
+    "$limit": 10000,
+    "$order": "id_del_proceso,entidad",
+    "$select": "id_del_proceso,referencia_del_proceso,entidad",
+    "$where": "id_del_proceso in ('CO1.BDOS.2078575','CO1.BDOS.2078659','CO1.BDOS.2079291','CO1.BDOS.2079658','CO1.BDOS.2084932','CO1.BDOS.2086386','CO1.BDOS.2092194','CO1.BDOS.2094653','CO1.BDOS.2097701','CO1.BDOS.2098403','CO1.BDOS.2099839','CO1.BDOS.2100821','CO1.BDOS.2103723','CO1.BDOS.2104707','CO1.BDOS.2105101','CO1.BDOS.2113504','CO1.BDOS.2118710','CO1.BDOS.2120263','CO1.BDOS.217922','CO1.BDOS.874324','CO1.BDOS.916433','CO1.BDOS.989010')"
+  },
+  "payload": [],
+  "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "status": "MATERIALIZED"
+}
