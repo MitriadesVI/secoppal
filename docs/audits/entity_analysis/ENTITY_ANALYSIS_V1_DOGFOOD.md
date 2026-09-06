@@ -59,11 +59,48 @@ aspectos.
 - Bogotá: membresía exacta tomada de `buyer_groups.json`; no reconstruida.
 - candidata territorial no reconocida: no produce scope y no consulta SECOP.
 
-## Limitación de integración observada
+## Limitación histórica y adjudicación de integración
 
 El postprocesador compartido de BuyerGroups en `app/core/orchestrator.py`
 antepone a cualquier respuesta la declaración completa de miembros. Para el
 canario Bogotá eso añade 38 nombres (1.777 caracteres en la declaración) y
 excede el contrato de 5–8 hechos. No se modificó porque está fuera de la
 propiedad del carril. El cálculo de BuyerGroup queda acreditado; su presentación
-de primer turno queda `PARTIAL`.
+de primer turno quedó `PARTIAL` en el carril fuente. La integración sobre
+`fac51c0` conserva la membresía estructurada y omite la declaración textual
+completa sólo para `analytical_intent == "entity_profile"`. Las demás rutas
+mantienen la declaración existente. El canario de workflow exige 38 miembros,
+referencia de grupo intacta, 5–8 hechos y seis llamadas.
+
+## Dogfood post-integración — 2026-09-06
+
+Tres perfiles contra SODA3, ejecutados secuencialmente, más cuatro consultas
+puntuales de contraste: 22 requests HTTP en total. No se construyó `Settings()`
+ni se escribió persistencia de producto. Las seis llamadas internas de cada
+perfil conservan concurrencia bounded y timeout de ocho segundos. No se
+repitieron Barranquilla ni la campaña histórica; estas muestras no son un SLA.
+
+| Scope (2026) | Calls / HTTP | Wall ms | Actividad | Valores | Modalidades | Proveedores | Temporal | Recientes |
+|---|---:|---:|---|---|---|---|---|---|
+| Baranoa | 6 / 6 | 1.119,4 | SUPPORTED | SUPPORTED | SUPPORTED | SUPPORTED | SUPPORTED | SUPPORTED |
+| Bogotá, 38 miembros | 6 / 6 | 3.370,8 | SUPPORTED | SUPPORTED | SUPPORTED | SUPPORTED | SUPPORTED | SUPPORTED |
+| Barranquilla | 6 / 6 | 8.344,4 | PARTIAL | UNAVAILABLE | SUPPORTED | UNAVAILABLE | PARTIAL | SUPPORTED |
+
+Baranoa y Bogotá muestran siete hechos visibles. Barranquilla conserva 1.632
+procesos y los recientes; `contract_values`, `supplier_count` y `supplier_value`
+fallaron con `Soda3TimeoutError`. Su `contract_count` y valor contractual son
+`null`, nunca cero. Se preservan también los timeouts históricos de Barranquilla
+y Yumbo descritos arriba.
+
+| Scope | process_count perfil / puntual | contract_count perfil / puntual | contract_value COP perfil / puntual | Igualdad |
+|---|---:|---:|---:|---|
+| Baranoa | 386 / 386 | 383 / 383 | 12.543.832.980,00 / 12.543.832.980,00 | EXACTA |
+| Bogotá | 37.960 / 37.960 | 34.546 / 34.546 | 3.044.068.665.270,19 / 3.044.068.665.270,19 | EXACTA |
+
+Cada contraste reutiliza parámetros productivos y compara la igualdad literal
+del `WHERE` con el de `source_calls`. Los conteos se comparan como enteros y los
+valores como `Decimal`, sin tolerancia ni universos aproximados. Las cifras
+live son observaciones nuevas y no sustituyen las de 2026-09-05.
+
+Recibos, SoQL literal, estados por llamada y respuestas:
+[`integration/dogfood.json`](integration/dogfood.json).

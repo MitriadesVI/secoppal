@@ -20,6 +20,9 @@ M2A = ROOT / "artifacts/audits/municipal_m2a"
 M2B = ROOT / "artifacts/audits/municipal_m2b"
 M2B1 = ROOT / "artifacts/audits/municipal_m2b_1"
 BOGOTA = "11001"
+AUTHORIZED_TERRITORIAL_RUNTIME_CONSUMERS = frozenset({
+    "app/core/entity_profile/scope.py",
+})
 BOGOTA_GROUPS = (
     "bogota_central",
     "bogota_executive",
@@ -71,6 +74,7 @@ def _normalized_department(value: str) -> str:
 
 
 def _runtime_imports() -> list[str]:
+    """Inventory every syntactically detected consumer, including authorized ones."""
     own_module = ROOT / "app/core/territorial_knowledge.py"
     return [
         str(path.relative_to(ROOT))
@@ -80,6 +84,11 @@ def _runtime_imports() -> list[str]:
             package=".".join(path.parent.relative_to(ROOT).parts),
         )
     ]
+
+
+def _unauthorized_runtime_imports() -> list[str]:
+    """ADR-081 permits metadata lookup only after productive buyer resolution."""
+    return sorted(set(_runtime_imports()) - AUTHORIZED_TERRITORIAL_RUNTIME_CONSUMERS)
 
 
 def _m2a_institutions(logical: dict, profiles: dict[str, dict]) -> list[dict]:
@@ -272,7 +281,9 @@ def _build_payload() -> dict:
         for profile_id in territory["identity_pending_profile_refs"]
         if pending[profile_id]["affiliation"] != "VERIFIED"
     ]
-    runtime_imports = _runtime_imports()
+    # Historical V0 RUNTIME_IMPORTS counts unauthorized consumers under ADR-081.
+    # Keep the frozen payload byte-exact; the actual inventory remains visible.
+    runtime_imports = _unauthorized_runtime_imports()
     gates = {
         "TERRITORIES": len(territories),
         "DUPLICATE_INSTITUTION_IDS": len(institution_ids) - len(set(institution_ids)),

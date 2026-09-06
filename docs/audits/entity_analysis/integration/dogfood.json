@@ -1,0 +1,2316 @@
+{
+  "observed_at": "2026-09-06T17:40:47.229503+00:00",
+  "transport": "SODA3",
+  "git_head_before_adjudication": "4e03855",
+  "settings_constructed": false,
+  "period": "2026",
+  "is_sla": false,
+  "canaries": [
+    {
+      "name": "BARANOA",
+      "query": "analiza la alcaldía de Baranoa en 2026",
+      "scope": {
+        "scope_type": "BUYER_UNIT",
+        "buyer_units": [
+          "ALCALDIA MUNICIPAL DE BARANOA"
+        ],
+        "buyer_group_id": null,
+        "territory_context": [
+          {
+            "divipola": "08078",
+            "municipality": "BARANOA",
+            "department": "ATLÁNTICO",
+            "macro_region": "Caribe",
+            "institution_id": "logical:ff77e2a68203442557da",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/993",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:00c5738e125cb0d27a9e"
+            ]
+          }
+        ],
+        "time_from": "2026-01-01",
+        "time_to": "2026-12-31",
+        "modality": [],
+        "topic": []
+      },
+      "identity": {
+        "display_name": "ALCALDIA MUNICIPAL DE BARANOA",
+        "canonical_buyers": [
+          "ALCALDIA MUNICIPAL DE BARANOA"
+        ],
+        "buyer_group_id": null,
+        "institution_refs": [
+          {
+            "institution_id": "logical:ff77e2a68203442557da",
+            "buyer_canonical": "ALCALDIA MUNICIPAL DE BARANOA",
+            "territory_divipola": "08078",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/993",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:00c5738e125cb0d27a9e"
+            ]
+          }
+        ],
+        "resolution_authority": "PRODUCT_BUYER_UNIT_RESOLUTION"
+      },
+      "wall_ms": 1119.4145420449786,
+      "calls": 6,
+      "http_calls": 6,
+      "source_calls": [
+        {
+          "call_id": "process_activity",
+          "aspect": "activity_modalities",
+          "dataset_id": "p6dx-8zbt",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 7,
+          "latency_ms": 453.1873330124654,
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "contract_values",
+          "aspect": "activity_values",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 1,
+          "latency_ms": 1111.9468749966472,
+          "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "supplier_count",
+          "aspect": "suppliers",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 5,
+          "latency_ms": 1084.686791000422,
+          "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "supplier_value",
+          "aspect": "suppliers",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 5,
+          "latency_ms": 1089.1099160071462,
+          "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "recent_processes",
+          "aspect": "recent",
+          "dataset_id": "p6dx-8zbt",
+          "operation": "query",
+          "status": "SUCCESS",
+          "rows_received": 3,
+          "latency_ms": 451.9823330338113,
+          "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "recent_contracts",
+          "aspect": "recent",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "query",
+          "status": "SUCCESS",
+          "rows_received": 3,
+          "latency_ms": 1099.939915991854,
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+          "error_type": null,
+          "attempted": true
+        }
+      ],
+      "sections": {
+        "activity": "SUPPORTED",
+        "values": "SUPPORTED",
+        "modalities": "SUPPORTED",
+        "suppliers": "SUPPORTED",
+        "temporal": "SUPPORTED",
+        "recent": "SUPPORTED"
+      },
+      "process_count": 386,
+      "contract_count": 383,
+      "contract_value": 12543832980.0,
+      "partial": false,
+      "response": "ALCALDIA MUNICIPAL DE BARANOA — 2026\n\nTerritorio: Baranoa, Atlántico (DIVIPOLA 08078).\n\n• Publicó 386 procesos en el periodo. [SECOP II Procesos]\n• Se observan 383 contratos por $12.5 mil millones; promedio $32.8 millones. [SECOP II Contratos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (91%), Mínima cuantía (4%), Contratación régimen especial (con ofertas) (2%). [SECOP II Procesos]\n• Principal contratista por valor: URBANOVA SOSTENIBLE SAS ($1.3 mil millones). [SECOP II Contratos]\n• Principal contratista por número de contratos: TRANSPORTES TRANSAMAR S.A.S. (5). [SECOP II Contratos]\n• Proceso reciente: AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS Y FINANCIEROS PARA FORMAR LÍDERES AMBIENTALES.... [SECOP II Procesos]\n• Contrato reciente: AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS Y FINANCIEROS PARA FORMAR LÍDERES AMBIENTALES.... [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+      "consistency": [
+        {
+          "dataset": "p6dx-8zbt",
+          "same_where": true,
+          "soql": "SELECT count(*) AS exact_count WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31'",
+          "point_count": 386,
+          "profile_count": 386,
+          "exact_count_match": true,
+          "status": "PASS"
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "same_where": true,
+          "soql": "SELECT count(*) AS exact_count, sum(valor_del_contrato) AS exact_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+          "point_count": 383,
+          "profile_count": 383,
+          "exact_count_match": true,
+          "point_value": "12543832980",
+          "profile_value": "12543832980.0",
+          "exact_value_match": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "BOGOTA",
+      "query": "perfil de la alcaldía mayor de Bogotá en 2026",
+      "scope": {
+        "scope_type": "BUYER_GROUP",
+        "buyer_units": [
+          "(Secretaría Distrital de Integración Social)",
+          "SECRETARIA DE EDUCACION DEL DISTRITO",
+          "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "SECRETARIA DISTRITAL DE AMBIENTE",
+          "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+          "SECRETARIA DISTRITAL DE GOBIERNO 1",
+          "SECRETARIA DISTRITAL DEL HABITAT-",
+          "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "SECRETARIA DISTRITAL DE LA MUJER",
+          "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+          "SECRETARIA DISTRITAL DE PLANEACION",
+          "SECRETARIA DISTRITAL DE HACIENDA",
+          "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+          "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "SECRETARIA JURIDICA DISTRITAL.",
+          "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+          ".SECRETARÍA DISTRITAL DE SALUD.",
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "ALCALDIA LOCAL DE KENNEDY",
+          "ALCALDÍA LOCAL DE SUBA",
+          "ALCALDIA LOCAL DE SAN CRISTOBAL",
+          "FONDO DE DESARROLLO LOCAL DE BOSA",
+          "ALCALDIA LOCAL DE USME",
+          "ALCALDIA LOCAL DE ENGATIVÁ",
+          "ALCALDIA LOCAL DE USAQUEN",
+          "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+          "ALCALDIA LOCAL DE FONTIBON",
+          "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "ALCALDIA LOCAL DE SUMAPAZ",
+          "ALCALDIA LOCAL DE TUNJUELITO",
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+          "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+          "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+          "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+          "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+          "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+          "ALCALDIA LOCAL DE MARTIRES"
+        ],
+        "buyer_group_id": "bogota_executive",
+        "territory_context": [
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:db512b22f97b7f71f595",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/874",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:3c51e6e575c84a4177a9"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:6c64629ade59853fc708",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/424",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:014719dc60cc63da7add"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:20fa9216792da558249f",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/98",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:e6b626fa56d57967c082"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:e3cc114fcc828b9352e9",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/908",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:92a0d80e48eb64fc301d"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:b1a90994edec7540dfa7",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/707",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:d19f05cedf2d6e930d76"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:d7c7c56ac3f5de75191b",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/862",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:8d8b5eee109bef7f616c"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:c59c03ca49befa389bee",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/783",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:93997fd4965c3fa16dc9"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:09850499bad19c983d34",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/34",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:7d8871419d2cca5a1d8e"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:b84a43d427b5c51ce1cd",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/730",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:9783318923012045f8c5"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:098470e97fc4b0bd28ba",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/33",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:dd957a3f18377e845ebf"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:3d0511f7408b1d7ce957",
+            "institutional_family": "FIRE_DEPARTMENT",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/226",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:b977a4959baac8fbc33b"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:43446fccc6c31a755131",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/252",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:e77c966b2badf38771b8"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:cdb04b9bb77b4b89322a",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/824",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:49eaacb882602b8341a4"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:26307845542f54ea315f",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/119",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:dd517d94c441aeeca9ad"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:803fe2d4cf6bf4599a20",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/501",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:1ef12757b0005f62e9e7"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:1753eab5c3969fb95af7",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/69",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:261b390a20ea6dd3b95a"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:d0b2901583f848e5d473",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/833",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:d2bb89f7cf6082501f00"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:caf3a82b5641b556667e",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/805",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:c0ddcbe787cf55feb8f7",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:c2a5ffca4ea99a739360"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:b08b992bac946335e019",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/703",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:0a053e8339cae2416bdc"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:a2aa812372a6143cb7b5",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/644",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:0be857e1e6f694af81e1"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:39ad326898005eb493d3",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/211",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:cab2fd921ae44e18f100"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:688df81509cf9997dfcc",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/404",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:0eb0f28e5d83056c326c"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:0a8fbb4451a8e42c0362",
+            "institutional_family": "FUND",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/37",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:7dd3dc3f63fcdbda9575"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:bdc725dd63eb0056dd92",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/748",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:08015b16d9c3fc36cd09"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:bcc21290e1d51d22c451",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/745",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:48ef84025e65162d9c37"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:90f58cf09832f68a5db1",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/564",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:63a5fd3f16fc7deba978"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:a26a97502fefa0421e53",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/640",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:8c388982e8659d0f6c60"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:16b30a766103e463ce16",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/67",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:b651ad1169ec0b3dd1f8"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:5dbf267495ee5bdd366c",
+            "institutional_family": "FUND",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/360",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f1d86b851ed264f4998a"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:e22c3aa4cbfdb0dc7edb",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/900",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:c367a7d244771f689d6b"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:b9e6f32dc94f2b63aa0c",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/735",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:0f40be434facdb41efe2"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:7f41ffd8fec53ea4ef8e",
+            "institutional_family": "FUND",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/497",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:be45dd7108b4507f1c0f"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:a53a3f7a6abfda7c919b",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/657",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:d1f069da45b259d9d54a"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:cd04e3a9a496100d3646",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/816",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:e67687f953e7016d8354"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:9510a4f0abb380f4b9e3",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/584",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:c8751161eb6c8647dd46"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:c52b030e0f948eda1236",
+            "institutional_family": "FUND",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/780",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:59cbcd898d6491eddd4c"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:8434a82d7f7d59dd13cd",
+            "institutional_family": "FUND",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/513",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:09abf5950cf97b22654b"
+            ]
+          },
+          {
+            "divipola": "11001",
+            "municipality": "BOGOTÁ, D.C.",
+            "department": "BOGOTÁ, D.C.",
+            "macro_region": "Andina",
+            "institution_id": "logical:c90f518370269c5f12cb",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/798",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:dfef5371ab879c5d5383"
+            ]
+          }
+        ],
+        "time_from": "2026-01-01",
+        "time_to": "2026-12-31",
+        "modality": [],
+        "topic": []
+      },
+      "identity": {
+        "display_name": "Ejecutivo de Bogotá: 18 entidades centrales y 20 alcaldías locales",
+        "canonical_buyers": [
+          "(Secretaría Distrital de Integración Social)",
+          "SECRETARIA DE EDUCACION DEL DISTRITO",
+          "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "SECRETARIA DISTRITAL DE AMBIENTE",
+          "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+          "SECRETARIA DISTRITAL DE GOBIERNO 1",
+          "SECRETARIA DISTRITAL DEL HABITAT-",
+          "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "SECRETARIA DISTRITAL DE LA MUJER",
+          "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+          "SECRETARIA DISTRITAL DE PLANEACION",
+          "SECRETARIA DISTRITAL DE HACIENDA",
+          "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+          "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "SECRETARIA JURIDICA DISTRITAL.",
+          "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+          ".SECRETARÍA DISTRITAL DE SALUD.",
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "ALCALDIA LOCAL DE KENNEDY",
+          "ALCALDÍA LOCAL DE SUBA",
+          "ALCALDIA LOCAL DE SAN CRISTOBAL",
+          "FONDO DE DESARROLLO LOCAL DE BOSA",
+          "ALCALDIA LOCAL DE USME",
+          "ALCALDIA LOCAL DE ENGATIVÁ",
+          "ALCALDIA LOCAL DE USAQUEN",
+          "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+          "ALCALDIA LOCAL DE FONTIBON",
+          "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "ALCALDIA LOCAL DE SUMAPAZ",
+          "ALCALDIA LOCAL DE TUNJUELITO",
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+          "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+          "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+          "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+          "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+          "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+          "ALCALDIA LOCAL DE MARTIRES"
+        ],
+        "buyer_group_id": "bogota_executive",
+        "institution_refs": [
+          {
+            "institution_id": "logical:db512b22f97b7f71f595",
+            "buyer_canonical": "(Secretaría Distrital de Integración Social)",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/874",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:3c51e6e575c84a4177a9"
+            ]
+          },
+          {
+            "institution_id": "logical:6c64629ade59853fc708",
+            "buyer_canonical": "SECRETARIA DE EDUCACION DEL DISTRITO",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/424",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:014719dc60cc63da7add"
+            ]
+          },
+          {
+            "institution_id": "logical:20fa9216792da558249f",
+            "buyer_canonical": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/98",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:e6b626fa56d57967c082"
+            ]
+          },
+          {
+            "institution_id": "logical:e3cc114fcc828b9352e9",
+            "buyer_canonical": "SECRETARIA DISTRITAL DE AMBIENTE",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/908",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:92a0d80e48eb64fc301d"
+            ]
+          },
+          {
+            "institution_id": "logical:b1a90994edec7540dfa7",
+            "buyer_canonical": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/707",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:d19f05cedf2d6e930d76"
+            ]
+          },
+          {
+            "institution_id": "logical:d7c7c56ac3f5de75191b",
+            "buyer_canonical": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/862",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:8d8b5eee109bef7f616c"
+            ]
+          },
+          {
+            "institution_id": "logical:c59c03ca49befa389bee",
+            "buyer_canonical": "SECRETARIA DISTRITAL DEL HABITAT-",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/783",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:93997fd4965c3fa16dc9"
+            ]
+          },
+          {
+            "institution_id": "logical:09850499bad19c983d34",
+            "buyer_canonical": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/34",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:7d8871419d2cca5a1d8e"
+            ]
+          },
+          {
+            "institution_id": "logical:b84a43d427b5c51ce1cd",
+            "buyer_canonical": "SECRETARIA DISTRITAL DE LA MUJER",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/730",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:9783318923012045f8c5"
+            ]
+          },
+          {
+            "institution_id": "logical:098470e97fc4b0bd28ba",
+            "buyer_canonical": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/33",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:dd957a3f18377e845ebf"
+            ]
+          },
+          {
+            "institution_id": "logical:3d0511f7408b1d7ce957",
+            "buyer_canonical": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/226",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:b977a4959baac8fbc33b"
+            ]
+          },
+          {
+            "institution_id": "logical:43446fccc6c31a755131",
+            "buyer_canonical": "SECRETARIA DISTRITAL DE PLANEACION",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/252",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:e77c966b2badf38771b8"
+            ]
+          },
+          {
+            "institution_id": "logical:cdb04b9bb77b4b89322a",
+            "buyer_canonical": "SECRETARIA DISTRITAL DE HACIENDA",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/824",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:49eaacb882602b8341a4"
+            ]
+          },
+          {
+            "institution_id": "logical:26307845542f54ea315f",
+            "buyer_canonical": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/119",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:dd517d94c441aeeca9ad"
+            ]
+          },
+          {
+            "institution_id": "logical:803fe2d4cf6bf4599a20",
+            "buyer_canonical": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/501",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:1ef12757b0005f62e9e7"
+            ]
+          },
+          {
+            "institution_id": "logical:1753eab5c3969fb95af7",
+            "buyer_canonical": "SECRETARIA JURIDICA DISTRITAL.",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/69",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:261b390a20ea6dd3b95a"
+            ]
+          },
+          {
+            "institution_id": "logical:d0b2901583f848e5d473",
+            "buyer_canonical": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/833",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:d2bb89f7cf6082501f00"
+            ]
+          },
+          {
+            "institution_id": "logical:caf3a82b5641b556667e",
+            "buyer_canonical": ".SECRETARÍA DISTRITAL DE SALUD.",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/805",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:c0ddcbe787cf55feb8f7",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:c2a5ffca4ea99a739360"
+            ]
+          },
+          {
+            "institution_id": "logical:b08b992bac946335e019",
+            "buyer_canonical": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/703",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:0a053e8339cae2416bdc"
+            ]
+          },
+          {
+            "institution_id": "logical:a2aa812372a6143cb7b5",
+            "buyer_canonical": "ALCALDIA LOCAL DE KENNEDY",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/644",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:0be857e1e6f694af81e1"
+            ]
+          },
+          {
+            "institution_id": "logical:39ad326898005eb493d3",
+            "buyer_canonical": "ALCALDÍA LOCAL DE SUBA",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/211",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:cab2fd921ae44e18f100"
+            ]
+          },
+          {
+            "institution_id": "logical:688df81509cf9997dfcc",
+            "buyer_canonical": "ALCALDIA LOCAL DE SAN CRISTOBAL",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/404",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:0eb0f28e5d83056c326c"
+            ]
+          },
+          {
+            "institution_id": "logical:0a8fbb4451a8e42c0362",
+            "buyer_canonical": "FONDO DE DESARROLLO LOCAL DE BOSA",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/37",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:7dd3dc3f63fcdbda9575"
+            ]
+          },
+          {
+            "institution_id": "logical:bdc725dd63eb0056dd92",
+            "buyer_canonical": "ALCALDIA LOCAL DE USME",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/748",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:08015b16d9c3fc36cd09"
+            ]
+          },
+          {
+            "institution_id": "logical:bcc21290e1d51d22c451",
+            "buyer_canonical": "ALCALDIA LOCAL DE ENGATIVÁ",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/745",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:48ef84025e65162d9c37"
+            ]
+          },
+          {
+            "institution_id": "logical:90f58cf09832f68a5db1",
+            "buyer_canonical": "ALCALDIA LOCAL DE USAQUEN",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/564",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:63a5fd3f16fc7deba978"
+            ]
+          },
+          {
+            "institution_id": "logical:a26a97502fefa0421e53",
+            "buyer_canonical": "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/640",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:8c388982e8659d0f6c60"
+            ]
+          },
+          {
+            "institution_id": "logical:16b30a766103e463ce16",
+            "buyer_canonical": "ALCALDIA LOCAL DE FONTIBON",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/67",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:b651ad1169ec0b3dd1f8"
+            ]
+          },
+          {
+            "institution_id": "logical:5dbf267495ee5bdd366c",
+            "buyer_canonical": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/360",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f1d86b851ed264f4998a"
+            ]
+          },
+          {
+            "institution_id": "logical:e22c3aa4cbfdb0dc7edb",
+            "buyer_canonical": "ALCALDIA LOCAL DE SUMAPAZ",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/900",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:c367a7d244771f689d6b"
+            ]
+          },
+          {
+            "institution_id": "logical:b9e6f32dc94f2b63aa0c",
+            "buyer_canonical": "ALCALDIA LOCAL DE TUNJUELITO",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/735",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:0f40be434facdb41efe2"
+            ]
+          },
+          {
+            "institution_id": "logical:7f41ffd8fec53ea4ef8e",
+            "buyer_canonical": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/497",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:be45dd7108b4507f1c0f"
+            ]
+          },
+          {
+            "institution_id": "logical:a53a3f7a6abfda7c919b",
+            "buyer_canonical": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/657",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:d1f069da45b259d9d54a"
+            ]
+          },
+          {
+            "institution_id": "logical:cd04e3a9a496100d3646",
+            "buyer_canonical": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/816",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:e67687f953e7016d8354"
+            ]
+          },
+          {
+            "institution_id": "logical:9510a4f0abb380f4b9e3",
+            "buyer_canonical": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/584",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:c8751161eb6c8647dd46"
+            ]
+          },
+          {
+            "institution_id": "logical:c52b030e0f948eda1236",
+            "buyer_canonical": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/780",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:59cbcd898d6491eddd4c"
+            ]
+          },
+          {
+            "institution_id": "logical:8434a82d7f7d59dd13cd",
+            "buyer_canonical": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/513",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:09abf5950cf97b22654b"
+            ]
+          },
+          {
+            "institution_id": "logical:c90f518370269c5f12cb",
+            "buyer_canonical": "ALCALDIA LOCAL DE MARTIRES",
+            "territory_divipola": "11001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/798",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:dfef5371ab879c5d5383"
+            ]
+          }
+        ],
+        "resolution_authority": "DECLARED_BUYER_GROUP"
+      },
+      "wall_ms": 3370.7615000312217,
+      "calls": 6,
+      "http_calls": 6,
+      "source_calls": [
+        {
+          "call_id": "process_activity",
+          "aspect": "activity_modalities",
+          "dataset_id": "p6dx-8zbt",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 15,
+          "latency_ms": 824.1576249711215,
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE (entidad = '(Secretaría Distrital de Integración Social)' OR entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "contract_values",
+          "aspect": "activity_values",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 1,
+          "latency_ms": 3353.498541051522,
+          "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "supplier_count",
+          "aspect": "suppliers",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 5,
+          "latency_ms": 3368.4066249988973,
+          "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "supplier_value",
+          "aspect": "suppliers",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 5,
+          "latency_ms": 3365.5312079936266,
+          "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "recent_processes",
+          "aspect": "recent",
+          "dataset_id": "p6dx-8zbt",
+          "operation": "query",
+          "status": "SUCCESS",
+          "rows_received": 3,
+          "latency_ms": 177.74645803729072,
+          "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (entidad = '(Secretaría Distrital de Integración Social)' OR entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "recent_contracts",
+          "aspect": "recent",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "query",
+          "status": "SUCCESS",
+          "rows_received": 3,
+          "latency_ms": 170.4728749464266,
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+          "error_type": null,
+          "attempted": true
+        }
+      ],
+      "sections": {
+        "activity": "SUPPORTED",
+        "values": "SUPPORTED",
+        "modalities": "SUPPORTED",
+        "suppliers": "SUPPORTED",
+        "temporal": "SUPPORTED",
+        "recent": "SUPPORTED"
+      },
+      "process_count": 37960,
+      "contract_count": 34546,
+      "contract_value": 3044068665270.19,
+      "partial": false,
+      "response": "EJECUTIVO DE BOGOTÁ: 18 ENTIDADES CENTRALES Y 20 ALCALDÍAS LOCALES — 2026\n\n• Publicó 37,960 procesos en el periodo. [SECOP II Procesos]\n• Se observan 34,546 contratos por $3.0 billones; promedio $88.1 millones. [SECOP II Contratos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (90%), Solicitud de información a los Proveedores (4%), Contratación régimen especial (con ofertas) (2%). [SECOP II Procesos]\n• Principal contratista por valor: FONDO DE DESARROLLO LOCAL DE SANTA FE ($265.7 mil millones). [SECOP II Contratos]\n• Principal contratista por número de contratos: FONDO DE DESARROLLO LOCAL DE SANTA FE (31). [SECOP II Contratos]\n• Proceso reciente: JAIME RICARDO CRUZ BENAVIDES. [SECOP II Procesos]\n• Contrato reciente: PRESTAR SERVICIOS PROFESIONALES PARA LA FORMULACIÓN; IMPLEMENTACIÓN; SEGUIMIENTO Y ACOM.... [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+      "consistency": [
+        {
+          "dataset": "p6dx-8zbt",
+          "same_where": true,
+          "soql": "SELECT count(*) AS exact_count WHERE (entidad = '(Secretaría Distrital de Integración Social)' OR entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31'",
+          "point_count": 37960,
+          "profile_count": 37960,
+          "exact_count_match": true,
+          "status": "PASS"
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "same_where": true,
+          "soql": "SELECT count(*) AS exact_count, sum(valor_del_contrato) AS exact_value WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+          "point_count": 34546,
+          "profile_count": 34546,
+          "exact_count_match": true,
+          "point_value": "3044068665270.19",
+          "profile_value": "3044068665270.19",
+          "exact_value_match": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "BARRANQUILLA",
+      "query": "analiza la alcaldía de Barranquilla en 2026",
+      "scope": {
+        "scope_type": "BUYER_UNIT",
+        "buyer_units": [
+          "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+        ],
+        "buyer_group_id": null,
+        "territory_context": [
+          {
+            "divipola": "08001",
+            "municipality": "BARRANQUILLA",
+            "department": "ATLÁNTICO",
+            "macro_region": "Caribe",
+            "institution_id": "logical:c8d8a696c59a03f93081",
+            "institutional_family": "UNKNOWN",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/797",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:8913749373d46c1fc81b"
+            ]
+          }
+        ],
+        "time_from": "2026-01-01",
+        "time_to": "2026-12-31",
+        "modality": [],
+        "topic": []
+      },
+      "identity": {
+        "display_name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "canonical_buyers": [
+          "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+        ],
+        "buyer_group_id": null,
+        "institution_refs": [
+          {
+            "institution_id": "logical:c8d8a696c59a03f93081",
+            "buyer_canonical": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "territory_divipola": "08001",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/797",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:8913749373d46c1fc81b"
+            ]
+          }
+        ],
+        "resolution_authority": "PRODUCT_BUYER_UNIT_RESOLUTION"
+      },
+      "wall_ms": 8344.374416978098,
+      "calls": 6,
+      "http_calls": 6,
+      "source_calls": [
+        {
+          "call_id": "process_activity",
+          "aspect": "activity_modalities",
+          "dataset_id": "p6dx-8zbt",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 10,
+          "latency_ms": 1868.6567079857923,
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "contract_values",
+          "aspect": "activity_values",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "TIMEOUT",
+          "rows_received": 0,
+          "latency_ms": 8343.637459038291,
+          "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+          "error_type": "Soda3TimeoutError",
+          "attempted": true
+        },
+        {
+          "call_id": "supplier_count",
+          "aspect": "suppliers",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "TIMEOUT",
+          "rows_received": 0,
+          "latency_ms": 8343.21112500038,
+          "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+          "error_type": "Soda3TimeoutError",
+          "attempted": true
+        },
+        {
+          "call_id": "supplier_value",
+          "aspect": "suppliers",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "TIMEOUT",
+          "rows_received": 0,
+          "latency_ms": 8343.206624966115,
+          "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+          "error_type": "Soda3TimeoutError",
+          "attempted": true
+        },
+        {
+          "call_id": "recent_processes",
+          "aspect": "recent",
+          "dataset_id": "p6dx-8zbt",
+          "operation": "query",
+          "status": "SUCCESS",
+          "rows_received": 3,
+          "latency_ms": 215.86904197465628,
+          "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "recent_contracts",
+          "aspect": "recent",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "query",
+          "status": "SUCCESS",
+          "rows_received": 3,
+          "latency_ms": 196.27179199596867,
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+          "error_type": null,
+          "attempted": true
+        }
+      ],
+      "sections": {
+        "activity": "PARTIAL",
+        "values": "UNAVAILABLE",
+        "modalities": "SUPPORTED",
+        "suppliers": "UNAVAILABLE",
+        "temporal": "PARTIAL",
+        "recent": "SUPPORTED"
+      },
+      "process_count": 1632,
+      "contract_count": null,
+      "contract_value": null,
+      "partial": true,
+      "response": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA — 2026\n\nTerritorio: Barranquilla, Atlántico (DIVIPOLA 08001).\n\n• Publicó 1,632 procesos en el periodo. [SECOP II Procesos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (86%), Selección Abreviada de Menor Cuantía (3%), Solicitud de información a los Proveedores (3%). [SECOP II Procesos]\n• Proceso reciente: El presente MOU tiene por objeto establecer los términos de colaboración institucional .... [SECOP II Procesos]\n• Contrato reciente: PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EX.... [SECOP II Contratos]\n\nNo pude calcular la actividad en este momento; la fuente no respondió.\n\nNo pude calcular los valores contractuales en este momento; la fuente no respondió.\n\nNo pude calcular los proveedores en este momento; la fuente no respondió.\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes."
+    }
+  ],
+  "receipts": [
+    {
+      "dataset_id": "p6dx-8zbt",
+      "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:47.327347+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "id_del_proceso": "CO1.REQ.10981193",
+          "referencia_del_proceso": "CA-002-2026",
+          "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+          "departamento_entidad": "Atlántico",
+          "ciudad_entidad": "Baranoa",
+          "nombre_del_procedimiento": "AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS Y FINANCIEROS PARA FORMAR LÍDERES AMBIENTALES ESCOLARES; FORTALECER CUATRO PRAE E IMPLEMENTAR ACCIONES AMBIENTALES VERIFICABLES EN ESTABLECIMIENTOS EDUCATIVOS",
+          "descripci_n_del_procedimiento": "AUNAR ESFUERZOS TÉCNICOS, ADMINISTRATIVOS Y FINANCIEROS PARA FORMAR LÍDERES AMBIENTALES ESCOLARES, FORTALECER CUATRO PRAE E IMPLEMENTAR ACCIONES AMBIENTALES VERIFICABLES EN ESTABLECIMIENTOS EDUCATIVOS",
+          "tipo_de_contrato": "Decreto 092 de 2017",
+          "modalidad_de_contratacion": "Contratación régimen especial",
+          "precio_base": "171428570",
+          "estado_de_apertura_del_proceso": "Abierto",
+          "estado_del_procedimiento": "Evaluación",
+          "fase": "Presentación de oferta",
+          "estado_resumen": "Presentación de oferta",
+          "fecha_de_publicacion_del": "2026-09-03T00:00:00.000",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10835932"
+          }
+        },
+        {
+          "id_del_proceso": "CO1.REQ.10983010",
+          "referencia_del_proceso": "CA002-2026",
+          "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+          "departamento_entidad": "Atlántico",
+          "ciudad_entidad": "Baranoa",
+          "nombre_del_procedimiento": "AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS Y FINANCIEROS PARA FORMAR LÍDERES AMBIENTALES ESCOLARES; FORTALECER CUATRO PRAE E IMPLEMENTAR ACCIONES AMBIENTALES VERIFICABLES EN ESTABLECIMIENTOS EDUCATIVOS",
+          "descripci_n_del_procedimiento": "AUNAR ESFUERZOS TÉCNICOS, ADMINISTRATIVOS Y FINANCIEROS PARA FORMAR LÍDERES AMBIENTALES ESCOLARES, FORTALECER CUATRO PRAE E IMPLEMENTAR ACCIONES AMBIENTALES VERIFICABLES EN ESTABLECIMIENTOS EDUCATIVOS OFICIALES DE BARANOA.",
+          "tipo_de_contrato": "Decreto 092 de 2017",
+          "modalidad_de_contratacion": "Contratación régimen especial",
+          "precio_base": "171428570",
+          "estado_de_apertura_del_proceso": "Abierto",
+          "estado_del_procedimiento": "Seleccionado",
+          "fase": "Presentación de oferta",
+          "estado_resumen": "Presentación de oferta",
+          "fecha_de_publicacion_del": "2026-09-03T00:00:00.000",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10836652"
+          }
+        },
+        {
+          "id_del_proceso": "CO1.REQ.10970658",
+          "referencia_del_proceso": "CD-337-2026",
+          "entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+          "departamento_entidad": "Atlántico",
+          "ciudad_entidad": "Baranoa",
+          "nombre_del_procedimiento": "PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN DE LA  SECRETARÍA DE SALUD EN LOS EJES GOBERNABILIDAD Y  GOBERNANZA DE LA SALUD PÚBLICA; DETERMINANTES  SOCIALES Y PUEBLOS Y COMUNIDADES ÉTNICAS Y  CAMPES",
+          "descripci_n_del_procedimiento": "PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN DE LA SECRETARÍA DE SALUD EN LOS EJES GOBERNABILIDAD Y GOBERNANZA DE LA SALUD PÚBLICA, DETERMINANTES SOCIALES Y PUEBLOS Y COMUNIDADES ÉTNICAS Y CAMPESINAS, MUJERES, SECTORES LGTBIQ+ Y OTRAS POBLACIONES POR CONDICIÓN Y/O SITUACIÓN PARA LA VIGENCIA 2026",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "precio_base": "6000000",
+          "estado_de_apertura_del_proceso": "Abierto",
+          "estado_del_procedimiento": "Seleccionado",
+          "fase": "Presentación de oferta",
+          "estado_resumen": "Presentación de oferta",
+          "fecha_de_publicacion_del": "2026-09-02T00:00:00.000",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10824605"
+          }
+        }
+      ],
+      "payload_sha256": "055690a371d0f8a2676d637056846cd1386469ac229928064539dc49b857a7e5",
+      "wall_ms": 451.91533298930153
+    },
+    {
+      "dataset_id": "p6dx-8zbt",
+      "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:47.326462+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "modalidad_de_contratacion": "Contratación directa",
+          "process_count": "351"
+        },
+        {
+          "modalidad_de_contratacion": "Mínima cuantía",
+          "process_count": "16"
+        },
+        {
+          "modalidad_de_contratacion": "Contratación régimen especial (con ofertas)",
+          "process_count": "9"
+        },
+        {
+          "modalidad_de_contratacion": "Concurso de méritos abierto",
+          "process_count": "3"
+        },
+        {
+          "modalidad_de_contratacion": "Contratación régimen especial",
+          "process_count": "3"
+        },
+        {
+          "modalidad_de_contratacion": "Licitación pública",
+          "process_count": "2"
+        },
+        {
+          "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+          "process_count": "2"
+        }
+      ],
+      "payload_sha256": "81962ddd8cee254d3d37297292f1483792c26bf673a5a8fa4ce6004e7f74352f",
+      "wall_ms": 453.12741701491177
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:47.327037+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "documento_proveedor": "901065949",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "TRANSPORTES TRANSAMAR S.A.S.",
+          "contract_count": "5",
+          "total_contract_value": "203085000"
+        },
+        {
+          "documento_proveedor": "901800626",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "FUNDACION PARA EL FOMENTO DEL DESARROLLO INTEGRAL DE LAS COMUNIDADES",
+          "contract_count": "4",
+          "total_contract_value": "281588690"
+        },
+        {
+          "documento_proveedor": "890103002",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "E S E HOSPITAL DE BARANOA",
+          "contract_count": "3",
+          "total_contract_value": "860681872"
+        },
+        {
+          "documento_proveedor": "900505746",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "FUNDACION PARA EL DESARROLLO Y LA PROSPERIDAD COLOMBIANA PROCOLOMXXI",
+          "contract_count": "3",
+          "total_contract_value": "380000000"
+        },
+        {
+          "documento_proveedor": "1041770036",
+          "tipodocproveedor": "Cédula de Ciudadanía",
+          "supplier_name": "JUAN PABLO SANTIAGO MARTELO",
+          "contract_count": "2",
+          "total_contract_value": "18000000"
+        }
+      ],
+      "payload_sha256": "2355d703426aaa25047d9af1e6ab30283b42e363f859ba92d90c80b86af90716",
+      "wall_ms": 1084.6512500429526
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:47.327169+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "documento_proveedor": "902005492",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "URBANOVA SOSTENIBLE SAS",
+          "contract_count": "1",
+          "total_contract_value": "1253991104"
+        },
+        {
+          "documento_proveedor": "890103002",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "E S E HOSPITAL DE BARANOA",
+          "contract_count": "3",
+          "total_contract_value": "860681872"
+        },
+        {
+          "documento_proveedor": "901210754",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "Fundación caja de sueños",
+          "contract_count": "2",
+          "total_contract_value": "640000000"
+        },
+        {
+          "documento_proveedor": "901825666",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "CREAPPTECH S.A.S.",
+          "contract_count": "1",
+          "total_contract_value": "600000000"
+        },
+        {
+          "documento_proveedor": "901379007",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "S&GM ABOGADOS SAS",
+          "contract_count": "2",
+          "total_contract_value": "480000000"
+        }
+      ],
+      "payload_sha256": "6ca1fd6282136c20bad8762e3e64a79da889a69eec7a397d0707f717218a9a03",
+      "wall_ms": 1089.087207976263
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:47.327497+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "id_contrato": "CO1.PCCNTR.9903212",
+          "referencia_del_contrato": "CA002-2026",
+          "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+          "departamento": "Atlántico",
+          "ciudad": "Baranoa",
+          "objeto_del_contrato": "AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS Y FINANCIEROS PARA FORMAR LÍDERES AMBIENTALES ESCOLARES; FORTALECER CUATRO PRAE E IMPLEMENTAR ACCIONES AMBIENTALES VERIFICABLES EN ESTABLECIMIENTOS EDUCATIVOS OFICIALES DE BARANOA.",
+          "descripcion_del_proceso": "AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS Y FINANCIEROS PARA FORMAR LÍDERES AMBIENTALES ESCOLARES; FORTALECER CUATRO PRAE E IMPLEMENTAR ACCIONES AMBIENTALES VERIFICABLES EN ESTABLECIMIENTOS EDUCATIVOS OFICIALES DE BARANOA.",
+          "tipo_de_contrato": "Decreto 092 de 2017",
+          "modalidad_de_contratacion": "Contratación régimen especial",
+          "valor_del_contrato": "171428570",
+          "estado_contrato": "Aprobado",
+          "fecha_de_firma": "2026-09-04T00:00:00.000",
+          "proveedor_adjudicado": "FUNDACIÓN PARA EL DESARROLLO LA INNOVACIÓN Y LA COMPETITIVIDAD DE COLOMBIA",
+          "documento_proveedor": "900937349",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10836652&isFromPublicArea=True&isModal=true&asPopupView=true"
+          },
+          "tipodocproveedor": "NIT"
+        },
+        {
+          "id_contrato": "CO1.PCCNTR.9906410",
+          "referencia_del_contrato": "CD-345-2026",
+          "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+          "departamento": "Atlántico",
+          "ciudad": "Baranoa",
+          "objeto_del_contrato": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE APOYO A LA GESTIÓN DE LA SECRETARIA DE SALUD MUNICIPAL EN LOS PROCESOS ADMINISTRATIVOS Y JURIDICOS PARA LA VIGENCIA 2026.",
+          "descripcion_del_proceso": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE APOYO A LA GESTIÓN DE LA SECRETARIA DE SALUD MUNICIPAL EN LOS PROCESOS ADMINISTRATIVOS Y JURIDICOS PARA LA VIGENCIA 2026.",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "valor_del_contrato": "8000000",
+          "estado_contrato": "En ejecución",
+          "fecha_de_firma": "2026-09-04T00:00:00.000",
+          "proveedor_adjudicado": "EDGARDO ALFONSO INSIGNARES MOLINA",
+          "documento_proveedor": "72020298",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10841729&isFromPublicArea=True&isModal=true&asPopupView=true"
+          },
+          "tipodocproveedor": "Cédula de Ciudadanía"
+        },
+        {
+          "id_contrato": "CO1.PCCNTR.9906809",
+          "referencia_del_contrato": "CD-346-2026",
+          "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+          "departamento": "Atlántico",
+          "ciudad": "Baranoa",
+          "objeto_del_contrato": "PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN DE LA SECRETARÍA DE SALUD EN LOS EJES GOBERNABILIDAD Y GOBERNANZA DE LA SALUD PUBLICA Y ATENCION PRIMARIA EN SALUD PARA LA VIGENCIA 2026",
+          "descripcion_del_proceso": "PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN DE LA SECRETARÍA DE SALUD EN LOS EJES GOBERNABILIDAD Y GOBERNANZA DE LA SALUD PUBLICA Y ATENCION PRIMARIA EN SALUD PARA LA VIGENCIA 2026",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "valor_del_contrato": "6500000",
+          "estado_contrato": "En ejecución",
+          "fecha_de_firma": "2026-09-04T00:00:00.000",
+          "proveedor_adjudicado": "MILENA ANTONIA CONSUEGRA ALGARIN",
+          "documento_proveedor": "32833547",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10841959&isFromPublicArea=True&isModal=true&asPopupView=true"
+          },
+          "tipodocproveedor": "Cédula de Ciudadanía"
+        }
+      ],
+      "payload_sha256": "40237c8960315104319e80562c1e332e56cbe3ed3e5f3f0e2b73a2e3b813d315",
+      "wall_ms": 1099.8789160512388
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:47.326845+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "contract_count": "383",
+          "total_contract_value": "12543832980",
+          "average_contract_value": "32751522.140992167102"
+        }
+      ],
+      "payload_sha256": "d52fd8f793121789bfad9d9628003329fe5f59134755eab8c174c3c896e4c820",
+      "wall_ms": 1111.9042499922216
+    },
+    {
+      "dataset_id": "p6dx-8zbt",
+      "soql": "SELECT count(*) AS exact_count WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31'",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:48.440516+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "exact_count": "386"
+        }
+      ],
+      "payload_sha256": "ebcb38b91ddbf1a84b95f89c993cea7f7800a596de6ebc163aff8a4b572313bf",
+      "wall_ms": 163.0754999932833
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT count(*) AS exact_count, sum(valor_del_contrato) AS exact_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:48.603832+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "exact_count": "383",
+          "exact_value": "12543832980"
+        }
+      ],
+      "payload_sha256": "04518199985a79732e45bc6fe2019bb75b1f00a6d0baadc3b66446d4cc68bacb",
+      "wall_ms": 224.97045900672674
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:48.924914+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "id_contrato": "CO1.PCCNTR.9848316",
+          "referencia_del_contrato": "9301-2026",
+          "nombre_entidad": "(Secretaría Distrital de Integración Social)",
+          "departamento": "Distrito Capital de Bogotá",
+          "ciudad": "No Definido",
+          "objeto_del_contrato": "PRESTAR SERVICIOS PROFESIONALES PARA LA FORMULACIÓN; IMPLEMENTACIÓN; SEGUIMIENTO Y ACOMPAÑAMIENTO DEL SERVICIO RESIDENCIAS DE ATENCIÓN INTEGRAL PARA PERSONAS MAYORES; ASÍ COMO PARA REALIZACIÓN DE ACCIONES DE VALIDACIÓN; INGRESO; EGRESO Y TRASLADO DE LAS PERSONAS MAYORES BENEFICIARIOS DE ESTE SERVICIO EN CUMPLIMIENTO DE LOS LINEAMIENTOS TÉCNICOS; NORMATIVOS Y OPERATIVOS DEFINIDOS POR LA SECRETARÍA DISTRITAL DE INTEGRACIÓN SOCIAL",
+          "descripcion_del_proceso": "PRESTAR SERVICIOS PROFESIONALES PARA LA FORMULACIÓN; IMPLEMENTACIÓN; SEGUIMIENTO Y ACOMPAÑAMIENTO DEL SERVICIO RESIDENCIAS DE ATENCIÓN INTEGRAL PARA PERSONAS MAYORES; ASÍ COMO PARA REALIZACIÓN DE ACCIONES DE VALIDACIÓN; INGRESO; EGRESO Y TRASLADO DE LAS PERSONAS MAYORES BENEFICIARIOS DE ESTE SERVICI",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "valor_del_contrato": "40686600",
+          "estado_contrato": "Aprobado",
+          "fecha_de_firma": "2026-09-04T00:00:00.000",
+          "proveedor_adjudicado": "ingrid tatiana rodrguez contreras",
+          "documento_proveedor": "1018472034",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10739040&isFromPublicArea=True&isModal=true&asPopupView=true"
+          },
+          "tipodocproveedor": "Cédula de Ciudadanía"
+        },
+        {
+          "id_contrato": "CO1.PCCNTR.9867439",
+          "referencia_del_contrato": "9272-2026",
+          "nombre_entidad": "(Secretaría Distrital de Integración Social)",
+          "departamento": "Distrito Capital de Bogotá",
+          "ciudad": "No Definido",
+          "objeto_del_contrato": "PRESTAR SERVICIOS DE APOYO A LA GESTION PARA LAS DIFERENTES GESTIONES DE LA SUBDIRECCION PARA LA VEJEZ",
+          "descripcion_del_proceso": "PRESTAR SERVICIOS DE APOYO A LA GESTION PARA LAS DIFERENTES GESTIONES DE LA SUBDIRECCION PARA LA VEJEZ",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "valor_del_contrato": "23280000",
+          "estado_contrato": "Aprobado",
+          "fecha_de_firma": "2026-09-04T00:00:00.000",
+          "proveedor_adjudicado": "Pilar Rios Suarez",
+          "documento_proveedor": "1024490933",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10787630&isFromPublicArea=True&isModal=true&asPopupView=true"
+          },
+          "tipodocproveedor": "Cédula de Ciudadanía"
+        },
+        {
+          "id_contrato": "CO1.PCCNTR.9869348",
+          "referencia_del_contrato": "1085-2026",
+          "nombre_entidad": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "departamento": "Distrito Capital de Bogotá",
+          "ciudad": "No Definido",
+          "objeto_del_contrato": "Contratar las pólizas de seguros que amparen los bienes muebles; inmuebles; e intereses patrimoniales actuales y futuros de propiedad de la Secretaría Distrital de Desarrollo Económico; que estén bajo su responsabilidad y custodia y aquellos que sean adquiridos para desarrollar las funciones inherentes a su actividad y por los que llegare a ser responsable; así como cualquier otra póliza de seguros que requiera la entidad en el desarrollo de su activida",
+          "descripcion_del_proceso": "Contratar las pólizas de seguros que amparen los bienes muebles; inmuebles; e intereses patrimoniales actuales y futuros de propiedad de la Secretaría Distrital de Desarrollo Económico; que estén bajo su responsabilidad y custodia y aquellos que sean adquiridos para desarrollar las funciones inheren",
+          "tipo_de_contrato": "Seguros",
+          "modalidad_de_contratacion": "Licitación pública",
+          "valor_del_contrato": "1032203690",
+          "estado_contrato": "Aprobado",
+          "fecha_de_firma": "2026-09-04T00:00:00.000",
+          "proveedor_adjudicado": "UNION TEMPORAL LA PREVISORA SA COMPAÑÍA DE SEGUROS - SEGUROS DEL ESTADO - SDDE- LP-005-2026",
+          "documento_proveedor": "No Definido",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10591563&isFromPublicArea=True&isModal=true&asPopupView=true"
+          },
+          "tipodocproveedor": "No Definido"
+        }
+      ],
+      "payload_sha256": "6e184814f802382e8b2bffceb549f1c4a40b0a5aa66e5d622e680ee6f9d3f1ad",
+      "wall_ms": 170.42229196522385
+    },
+    {
+      "dataset_id": "p6dx-8zbt",
+      "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (entidad = '(Secretaría Distrital de Integración Social)' OR entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:48.924813+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "id_del_proceso": "CO1.REQ.10792165",
+          "referencia_del_proceso": "SDM-CPS-2104-2026",
+          "entidad": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "departamento_entidad": "Distrito Capital de Bogotá",
+          "ciudad_entidad": "Bogotá",
+          "nombre_del_procedimiento": "JAIME RICARDO CRUZ BENAVIDES",
+          "descripci_n_del_procedimiento": "PRESTAR SERVICIOS PROFESIONALES ESPECIALIZADOS A LA SUBDIRECCION DE\nTRANSPORTE PRIVADO DE LA SECRETARIA DISTRITAL DE MOVILIDAD PARA\nACOMPANAR EN LA FORMULACION DESARROLLO IMPLEMENTACION Y\nSEGUIMIENTO DE POLITICAS PUBLICAS DE MOVILIDAD RELACIONADAS CON EL\nTRANSPORTE PRIVADO Y GESTION DE LA DEMANDA DE TRANSPORTE",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "precio_base": "69780000",
+          "estado_de_apertura_del_proceso": "Abierto",
+          "estado_del_procedimiento": "Seleccionado",
+          "fase": "Presentación de oferta",
+          "estado_resumen": "Presentación de oferta",
+          "fecha_de_publicacion_del": "2026-09-04T00:00:00.000",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10837973"
+          }
+        },
+        {
+          "id_del_proceso": "CO1.REQ.10904352",
+          "referencia_del_proceso": "SDM-CPS-2431-2026",
+          "entidad": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "departamento_entidad": "Distrito Capital de Bogotá",
+          "ciudad_entidad": "Bogotá",
+          "nombre_del_procedimiento": "JOSE EDILBERTO GARZON DIAZ",
+          "descripci_n_del_procedimiento": "PRESTAR SERVICIOS ASISTENCIALES BRINDANDO APOYO A LAS ACTIVIDADES DE GESTION INSPECCION Y MONITOREO EN VIA CON LA FINALIDAD DE MITIGAR FACTORES QUE AFECTAN EL DESARROLLO NORMAL DE LA MOVILIDAD EN LA CIUDAD DE BOGOTA CONFORME A LO ESTABLECIDO POR LA SUBDIRECCION DE GESTION EN VIA",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "precio_base": "15804000",
+          "estado_de_apertura_del_proceso": "Abierto",
+          "estado_del_procedimiento": "Seleccionado",
+          "fase": "Presentación de oferta",
+          "estado_resumen": "Presentación de oferta",
+          "fecha_de_publicacion_del": "2026-09-04T00:00:00.000",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10838901"
+          }
+        },
+        {
+          "id_del_proceso": "CO1.REQ.10951359",
+          "referencia_del_proceso": "SDM-CPS-3623-2026",
+          "entidad": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "departamento_entidad": "Distrito Capital de Bogotá",
+          "ciudad_entidad": "Bogotá",
+          "nombre_del_procedimiento": "GUSTAVO ADOLFO MURILLLO ROJAS",
+          "descripci_n_del_procedimiento": "Prestar servicios profesionales especializados a la Secretaria Distrital de Movilidad para la creación\ny seguimiento de contenidos comunicativos en redes sociales y canales digitales, así como apoyo\na la planeación y el seguimiento de acciones de comunicación y divulgación de la información en la\nOficina Asesora de Comunicaciones y Cultura para la Movilidad.",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "precio_base": "70000000",
+          "estado_de_apertura_del_proceso": "Abierto",
+          "estado_del_procedimiento": "Seleccionado",
+          "fase": "Presentación de oferta",
+          "estado_resumen": "Presentación de oferta",
+          "fecha_de_publicacion_del": "2026-09-04T00:00:00.000",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10838255"
+          }
+        }
+      ],
+      "payload_sha256": "24de3e64a3fec673ea7af410babdbd70070e7caca6466cae0107e7fd82d80c8f",
+      "wall_ms": 177.70212498726323
+    },
+    {
+      "dataset_id": "p6dx-8zbt",
+      "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE (entidad = '(Secretaría Distrital de Integración Social)' OR entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:48.924033+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "modalidad_de_contratacion": "Contratación directa",
+          "process_count": "34043"
+        },
+        {
+          "modalidad_de_contratacion": "Solicitud de información a los Proveedores",
+          "process_count": "1369"
+        },
+        {
+          "modalidad_de_contratacion": "Contratación régimen especial (con ofertas)",
+          "process_count": "894"
+        },
+        {
+          "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+          "process_count": "453"
+        },
+        {
+          "modalidad_de_contratacion": "Mínima cuantía",
+          "process_count": "364"
+        },
+        {
+          "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+          "process_count": "311"
+        },
+        {
+          "modalidad_de_contratacion": "Licitación pública",
+          "process_count": "240"
+        },
+        {
+          "modalidad_de_contratacion": "Contratación régimen especial",
+          "process_count": "87"
+        },
+        {
+          "modalidad_de_contratacion": "Concurso de méritos abierto",
+          "process_count": "78"
+        },
+        {
+          "modalidad_de_contratacion": "Contratación Directa (con ofertas)",
+          "process_count": "54"
+        },
+        {
+          "modalidad_de_contratacion": "Licitación pública Obra Publica",
+          "process_count": "44"
+        },
+        {
+          "modalidad_de_contratacion": "Subasta de prueba",
+          "process_count": "10"
+        },
+        {
+          "modalidad_de_contratacion": "Enajenación de bienes con subasta",
+          "process_count": "5"
+        },
+        {
+          "modalidad_de_contratacion": "No Definido",
+          "process_count": "5"
+        },
+        {
+          "modalidad_de_contratacion": "Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes",
+          "process_count": "3"
+        }
+      ],
+      "payload_sha256": "929c9362a8b3e5147298ba31466d4c7b929d4b184cab50f9ab19b4138093a16d",
+      "wall_ms": 824.0921249962412
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:48.924282+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "contract_count": "34546",
+          "total_contract_value": "3044068665270.19",
+          "average_contract_value": "88116385.841202744167"
+        }
+      ],
+      "payload_sha256": "436ebb77fc7ea1453f479aa3d4375851eafe1f4c164f85df8640863665589914",
+      "wall_ms": 3353.455832984764
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:48.924684+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "documento_proveedor": "899999061",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "contract_count": "31",
+          "total_contract_value": "265700930195"
+        },
+        {
+          "documento_proveedor": "No Definido",
+          "tipodocproveedor": "No Definido",
+          "supplier_name": "UT YUNEX TRAFFIC 2026",
+          "contract_count": "24",
+          "total_contract_value": "109990857951.01"
+        },
+        {
+          "documento_proveedor": "860066942",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "CAJA DE COMPENSACION FAMILIAR COMPENSAR",
+          "contract_count": "14",
+          "total_contract_value": "65304142011"
+        },
+        {
+          "documento_proveedor": "901508361",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "AGENCIA DISTRITAL PARA LA EDUCACIÓN SUPERIOR, LA CIENCIA Y LA TECNOLOGÍA, ATENEA",
+          "contract_count": "14",
+          "total_contract_value": "63041718333"
+        },
+        {
+          "documento_proveedor": "901142353",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "FUNDACION OBRAS DE MISERICORDIA CON CRISTO CONSTRUYENDO VIDA",
+          "contract_count": "2",
+          "total_contract_value": "40457771467"
+        }
+      ],
+      "payload_sha256": "aceb4750d733f91fe7f6d051d1e649b4b810b42a2ce0d6397576bcafa87ab3d7",
+      "wall_ms": 3365.4135830001906
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:48.924468+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "documento_proveedor": "899999061",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "contract_count": "31",
+          "total_contract_value": "265700930195"
+        },
+        {
+          "documento_proveedor": "No Definido",
+          "tipodocproveedor": "No Definido",
+          "supplier_name": "UT YUNEX TRAFFIC 2026",
+          "contract_count": "24",
+          "total_contract_value": "109990857951.01"
+        },
+        {
+          "documento_proveedor": "860524654",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "Aseguradora Solidaria de Colombia Entidad Cooperativa.",
+          "contract_count": "16",
+          "total_contract_value": "6869020349"
+        },
+        {
+          "documento_proveedor": "860066942",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "CAJA DE COMPENSACION FAMILIAR COMPENSAR",
+          "contract_count": "14",
+          "total_contract_value": "65304142011"
+        },
+        {
+          "documento_proveedor": "901508361",
+          "tipodocproveedor": "NIT",
+          "supplier_name": "AGENCIA DISTRITAL PARA LA EDUCACIÓN SUPERIOR, LA CIENCIA Y LA TECNOLOGÍA, ATENEA",
+          "contract_count": "14",
+          "total_contract_value": "63041718333"
+        }
+      ],
+      "payload_sha256": "e28c143136ab56ef92f4eff921aea07957c6935c546ed0daec9fed6a0aa50905",
+      "wall_ms": 3368.3728750329465
+    },
+    {
+      "dataset_id": "p6dx-8zbt",
+      "soql": "SELECT count(*) AS exact_count WHERE (entidad = '(Secretaría Distrital de Integración Social)' OR entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31'",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:52.295213+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "exact_count": "37960"
+        }
+      ],
+      "payload_sha256": "5ebffed8c0f31ca29447f5c28b263b6044d5fd4c7f5c27be64c3b15fcc2730cb",
+      "wall_ms": 764.0336659969762
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT count(*) AS exact_count, sum(valor_del_contrato) AS exact_value WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:53.059909+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "exact_count": "34546",
+          "exact_value": "3044068665270.19"
+        }
+      ],
+      "payload_sha256": "4d8eedf03b5c16fc72f2fd4ec88a534e47188d9508e26560dbdbb17931ef443d",
+      "wall_ms": 552.203459024895
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:53.623381+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "id_contrato": "CO1.PCCNTR.9813629",
+          "referencia_del_contrato": "CD-45-2026-9502",
+          "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "departamento": "Atlántico",
+          "ciudad": "Barranquilla",
+          "objeto_del_contrato": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+          "descripcion_del_proceso": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "valor_del_contrato": "38826666.67",
+          "estado_contrato": "Aprobado",
+          "fecha_de_firma": "2026-09-04T00:00:00.000",
+          "proveedor_adjudicado": "EDUARDO LUIS GOMEZ LORA",
+          "documento_proveedor": "1102835983",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10712719&isFromPublicArea=True&isModal=true&asPopupView=true"
+          },
+          "tipodocproveedor": "Cédula de Ciudadanía"
+        },
+        {
+          "id_contrato": "CO1.PCCNTR.9813901",
+          "referencia_del_contrato": "CD-45-2026-9495",
+          "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "departamento": "Atlántico",
+          "ciudad": "Barranquilla",
+          "objeto_del_contrato": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+          "descripcion_del_proceso": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "valor_del_contrato": "20189866.67",
+          "estado_contrato": "Aprobado",
+          "fecha_de_firma": "2026-09-04T00:00:00.000",
+          "proveedor_adjudicado": "EUGENIO RAFAEL SIERRA BLANCO",
+          "documento_proveedor": "72013179",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10712719&isFromPublicArea=True&isModal=true&asPopupView=true"
+          },
+          "tipodocproveedor": "Cédula de Ciudadanía"
+        },
+        {
+          "id_contrato": "CO1.PCCNTR.9814360",
+          "referencia_del_contrato": "CD-45-2026-9493",
+          "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "departamento": "Atlántico",
+          "ciudad": "Barranquilla",
+          "objeto_del_contrato": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+          "descripcion_del_proceso": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "valor_del_contrato": "20189866.67",
+          "estado_contrato": "Aprobado",
+          "fecha_de_firma": "2026-09-04T00:00:00.000",
+          "proveedor_adjudicado": "LAURA ARTUZ DELGADO",
+          "documento_proveedor": "1045717087",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10712719&isFromPublicArea=True&isModal=true&asPopupView=true"
+          },
+          "tipodocproveedor": "Cédula de Ciudadanía"
+        }
+      ],
+      "payload_sha256": "1d1232602febffcd21cc7035042c61213ba6e68e9313aba7de97a5ed4b97df70",
+      "wall_ms": 196.2199590052478
+    },
+    {
+      "dataset_id": "p6dx-8zbt",
+      "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:53.623150+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "id_del_proceso": "CO1.REQ.10976545",
+          "referencia_del_proceso": "CD-05-2026-10472",
+          "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "departamento_entidad": "Atlántico",
+          "ciudad_entidad": "Barranquilla",
+          "nombre_del_procedimiento": "El presente MOU tiene por objeto establecer los términos de colaboración institucional entre OMBIA y el DISTRITO  ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA para facilitar la participación de las",
+          "descripci_n_del_procedimiento": "El presente MOU tiene por objeto establecer los términos de colaboración institucional entre OMBIA y el DISTRITO \nESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA para facilitar la participación de las 156 \ninstituciones educativas públicas de Barranquilla en la XX Olimpiada Regional de Matemáticas y la XLVI Competencia \nRegional, organizadas por LA UAN en el marco del convenio referido en los considerandos.",
+          "tipo_de_contrato": "Otro",
+          "modalidad_de_contratacion": "Contratación régimen especial",
+          "precio_base": "0",
+          "estado_de_apertura_del_proceso": "Abierto",
+          "estado_del_procedimiento": "Publicado",
+          "fase": "Presentación de oferta",
+          "estado_resumen": "Presentación de oferta",
+          "fecha_de_publicacion_del": "2026-09-03T00:00:00.000",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10829982"
+          }
+        },
+        {
+          "id_del_proceso": "CO1.REQ.10976565",
+          "referencia_del_proceso": "CD-03-2026-7807",
+          "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "departamento_entidad": "Atlántico",
+          "ciudad_entidad": "Barranquilla",
+          "nombre_del_procedimiento": "EL PRESENTE MEMORANDO DE ENTENDIMIENTO  ESTABLECE UN MARCO DE COLABORACIÓN ENTRE LAS PARTES PARA DESARROLLAR LAS  DECLARACIONES DE INTENCIÓN CONJUNTAS; ENFOCADAS A GENERAR INICIATIVAS QUE  FACILITEN L",
+          "descripci_n_del_procedimiento": "EL PRESENTE MEMORANDO DE ENTENDIMIENTO \nESTABLECE UN MARCO DE COLABORACIÓN ENTRE LAS PARTES PARA DESARROLLAR LAS \nDECLARACIONES DE INTENCIÓN CONJUNTAS, ENFOCADAS A GENERAR INICIATIVAS QUE \nFACILITEN LA REINSERCIÓN Y DIGNIFICACIÓN A LA VIDA DE LA POBLACIÓN PRIVADA DE \nLA LIBERTAD Y POST PENADAS, A TRAVÉS DE ACCIONES DE CIUDAD EN EL MARCO DE LA \nESTRATEGIA DENOMINADA  ASISTENCIA PARA LA ATENCIÓN INTEGRAL A LA POBLACIÓN \nDE INTERNOS (AS) EN EL DISTRITO DE BARRANQUILLA",
+          "tipo_de_contrato": "Otro",
+          "modalidad_de_contratacion": "Contratación régimen especial",
+          "precio_base": "0",
+          "estado_de_apertura_del_proceso": "Abierto",
+          "estado_del_procedimiento": "Publicado",
+          "fase": "Presentación de oferta",
+          "estado_resumen": "Presentación de oferta",
+          "fecha_de_publicacion_del": "2026-09-03T00:00:00.000",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10830242"
+          }
+        },
+        {
+          "id_del_proceso": "CO1.REQ.10977783",
+          "referencia_del_proceso": "CD-11-2026-10500",
+          "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "departamento_entidad": "Atlántico",
+          "ciudad_entidad": "Barranquilla",
+          "nombre_del_procedimiento": "LA PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN PARA EL FORTALECIMIENTO E IMPLEMENTACIÓN DEL SISTEMA INTEGRADO DE ATENCIÓN CIUDADANA EN SALUD DE LA SECRETARÍA DE SALUD DEL DISTRITO DE BARRANQUILLA",
+          "descripci_n_del_procedimiento": "LA PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN PARA EL FORTALECIMIENTO E IMPLEMENTACIÓN DEL SISTEMA INTEGRADO DE ATENCIÓN CIUDADANA EN SALUD DE LA SECRETARÍA DE SALUD DEL DISTRITO DE BARRANQUILLA",
+          "tipo_de_contrato": "Prestación de servicios",
+          "modalidad_de_contratacion": "Contratación directa",
+          "precio_base": "10816000",
+          "estado_de_apertura_del_proceso": "Abierto",
+          "estado_del_procedimiento": "Seleccionado",
+          "fase": "Presentación de oferta",
+          "estado_resumen": "Presentación de oferta",
+          "fecha_de_publicacion_del": "2026-09-03T00:00:00.000",
+          "urlproceso": {
+            "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10831198"
+          }
+        }
+      ],
+      "payload_sha256": "3353b0290af86be14628b78775e291336c313d3cad01cb762376df9d0c54a8c6",
+      "wall_ms": 215.82020801724866
+    },
+    {
+      "dataset_id": "p6dx-8zbt",
+      "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:53.622455+00:00",
+      "status": "SUCCESS",
+      "payload": [
+        {
+          "modalidad_de_contratacion": "Contratación directa",
+          "process_count": "1398"
+        },
+        {
+          "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+          "process_count": "56"
+        },
+        {
+          "modalidad_de_contratacion": "Solicitud de información a los Proveedores",
+          "process_count": "52"
+        },
+        {
+          "modalidad_de_contratacion": "Contratación régimen especial (con ofertas)",
+          "process_count": "31"
+        },
+        {
+          "modalidad_de_contratacion": "Licitación pública",
+          "process_count": "29"
+        },
+        {
+          "modalidad_de_contratacion": "Mínima cuantía",
+          "process_count": "24"
+        },
+        {
+          "modalidad_de_contratacion": "Contratación régimen especial",
+          "process_count": "16"
+        },
+        {
+          "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+          "process_count": "16"
+        },
+        {
+          "modalidad_de_contratacion": "Licitación pública Obra Publica",
+          "process_count": "7"
+        },
+        {
+          "modalidad_de_contratacion": "Contratación Directa (con ofertas)",
+          "process_count": "3"
+        }
+      ],
+      "payload_sha256": "2a77853381dfc1d76be3b3571c920ad38904fc1ef86f5945cce3b3aca2912fa5",
+      "wall_ms": 1868.6091660056263
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:53.622886+00:00",
+      "status": "Soda3TimeoutError",
+      "error": "SODA3 request exceeded its budget on dataset jbjy-vk9h",
+      "wall_ms": 8005.039665964432
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:53.623020+00:00",
+      "status": "Soda3TimeoutError",
+      "error": "SODA3 request exceeded its budget on dataset jbjy-vk9h",
+      "wall_ms": 8005.055583023932
+    },
+    {
+      "dataset_id": "jbjy-vk9h",
+      "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+      "timeout_seconds": 8,
+      "ordering_specifier": "Soda3OrderingSpecifier.TOTAL",
+      "observed_at": "2026-09-06T17:40:53.622685+00:00",
+      "status": "Soda3TimeoutError",
+      "error": "SODA3 request exceeded its budget on dataset jbjy-vk9h",
+      "wall_ms": 8005.566000007093
+    }
+  ],
+  "http_calls_total": 22
+}

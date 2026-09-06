@@ -267,7 +267,12 @@ class SecopalWorkflow:
             )
             if result.get("analytical_intent") == "value_stats":
                 result["total_count_metric"] = "not_available"
-            result["response"] = group_declaration(group_params) + "\n\n" + result.get("response", "")
+            # Entity Analysis already presents the group in its bounded overview.
+            # Preserve all members above and the declaration on every other route.
+            if result.get("analytical_intent") != "entity_profile":
+                result["response"] = (
+                    group_declaration(group_params) + "\n\n" + result.get("response", "")
+                )
         return result
 
     def select_actor_candidate(

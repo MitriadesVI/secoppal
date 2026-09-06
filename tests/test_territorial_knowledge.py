@@ -19,7 +19,13 @@ from app.core.territorial_knowledge import (
     load,
     validate,
 )
-from scripts.build_territorial_knowledge_v0 import _build_payload, _runtime_imports, render
+from scripts.build_territorial_knowledge_v0 import (
+    AUTHORIZED_TERRITORIAL_RUNTIME_CONSUMERS,
+    _build_payload,
+    _runtime_imports,
+    _unauthorized_runtime_imports,
+    render,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -207,9 +213,13 @@ def test_build_is_byte_reproducible_and_matches_committed_registry(tmp_path):
     assert replay.read_bytes() == DATA_PATH.read_bytes()
 
 
-def test_registry_has_no_runtime_imports_or_prohibited_surfaces():
+def test_registry_has_exactly_one_authorized_runtime_consumer_and_no_prohibited_surfaces():
     module = ROOT / "app/core/territorial_knowledge.py"
-    assert _runtime_imports() == []
+    assert AUTHORIZED_TERRITORIAL_RUNTIME_CONSUMERS == frozenset({
+        "app/core/entity_profile/scope.py",
+    })
+    assert _runtime_imports() == ["app/core/entity_profile/scope.py"]
+    assert _unauthorized_runtime_imports() == []
     tree = ast.parse(module.read_text(encoding="utf-8"))
     imports = {
         alias.name.lower()

@@ -210,6 +210,17 @@ def test_one_supplier_timeout_makes_only_that_section_partial(baranoa_turn):
     assert "fuente no respondió" in profile.suppliers.warnings[0]
 
 
+def test_contract_timeout_preserves_processes_and_never_fabricates_zero(baranoa_turn):
+    profile = _profile(baranoa_turn, FakeClient(fail="AS contract_count"))
+    assert profile.activity.status is SectionStatus.PARTIAL
+    assert profile.activity.fact("process_count") == 10
+    assert profile.activity.fact("contract_count") is None
+    assert profile.values.status is SectionStatus.UNAVAILABLE
+    assert profile.values.fact("total_contract_value") is None
+    assert profile.modalities.status is SectionStatus.SUPPORTED
+    assert profile.source_calls.calls_total == 6
+
+
 def test_source_calls_honor_remaining_turn_deadline(baranoa_turn):
     client = FakeClient()
     set_clock(lambda: 10.0)

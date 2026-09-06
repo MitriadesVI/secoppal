@@ -4350,3 +4350,33 @@ y PAA permanecen diferidas. No modifica ADR-074, ADR-075 ni ADR-080.
 
 [Decisión completa](decisions/2026-09-06_ADR-092_procurement-relationship-foundation-v0.md).
 [Validación](../artifacts/audits/relationship_foundation_v0/validation.json).
+
+## ADR-081: Entity Analysis consume metadata territorial sólo después de resolver BuyerUnit
+
+**Fecha:** 2026-09-05; integración: 2026-09-06. **Estado:** Accepted — primer
+consumidor runtime acotado. Territorial Knowledge no adquiere autoridad de
+resolución ni de scope.
+
+Entity Analysis V1 fija primero BuyerUnit/BuyerGroup con las autoridades
+productivas, y sólo después consulta metadata exacta de `PRODUCT_RECOGNIZED`:
+ID institucional, DIVIPOLA, municipio, departamento, macro-región, familia y
+provenance. No resuelve texto, crea buyers/aliases/bindings, promueve candidatos,
+resuelve identity_pending, infiere BuyerGroups ni cambia SoQL.
+
+El AST compartido conserva el inventario completo de consumidores reales;
+`app/core/entity_profile/scope.py` es el único autorizado. `RUNTIME_IMPORTS = 0`
+en el payload histórico cuenta consumidores no autorizados. Cualquier segundo
+consumidor falla cerrado, incluido Procurement Relationships. El JSON V0
+permanece byte-exacto.
+
+El overview usa hasta seis llamadas bounded y mantiene procesos/contratos y
+fallos/ceros separados. Bogotá conserva 38 miembros estructurados sin volcar
+la declaración textual sólo para `entity_profile`; las demás rutas no cambian.
+Procurement Relationship Foundation V0 permanece shadow y sin dependencia
+runtime de Entity Analysis. Sin graph traversal, warehouse ni base de grafos.
+
+El barrido global reconfirmó ADR-081 único; ADR-092 ya preservaba su reserva.
+Se añade esta entrada sin reordenar ni eliminar historia.
+
+[Decisión completa](decisions/2026-09-05_ADR-081_entity-analysis-territorial-metadata-consumer.md).
+[Arquitectura](architecture/ENTITY_ANALYSIS_V1.md).

@@ -140,6 +140,64 @@ def test_product_response_does_not_expose_internal_profile_jargon():
         assert forbidden not in text
 
 
+def test_bogota_profile_keeps_all_members_without_the_full_text_declaration():
+    from app.core.buyer_groups import group_declaration, group_for_params
+
+    workflow, client = _workflow()
+    result = workflow.run_query("perfil de la alcaldía mayor de Bogotá en 2026")
+    params = result["resolved_params"]
+    group = group_for_params(params)
+    assert result["analytical_intent"] == "entity_profile"
+    assert result["buyer_group"]["id"] == group.group_id == "bogota_executive"
+    assert result["buyer_group"]["members"] == list(group.members)
+    assert len(result["buyer_group"]["members"]) == 38
+    assert group_declaration(params) not in result["response"]
+    assert 5 <= result["response"].count("•") <= 8
+    assert len(client.calls) == 6
+
+
+@pytest.mark.parametrize("query", [
+    "contratos de la alcaldía mayor de Bogotá en 2026",
+    "cuánto suma lo contratado por la alcaldía mayor de Bogotá en 2026",
+])
+def test_other_bogota_routes_keep_the_full_group_declaration(query):
+    from app.core.buyer_groups import group_declaration
+
+    workflow, _ = _workflow()
+    result = workflow.run_query(query)
+    assert result["analytical_intent"] != "entity_profile"
+    assert result["response"].startswith(group_declaration(result["resolved_params"]) + "\n\n")
+    assert len(result["buyer_group"]["members"]) == 38
+
+
+@pytest.mark.parametrize("query, intent", [
+    ("cuánto suma lo contratado por la alcaldía de Baranoa", "aggregate_sum"),
+    ("analiza la alcaldía de Baranoa", "entity_profile"),
+    ("contratos de alimentación en 2026", ""),
+])
+def test_integration_preserves_explicit_intent_precedence(query, intent):
+    workflow, _ = _workflow()
+    assert workflow.run_query(query)["analytical_intent"] == intent
+
+
+def test_funsocom_keeps_actor_profile_with_an_accredited_test_index(tmp_path, monkeypatch):
+    from app.data.actor_alias_index import build_actor_alias_index
+
+    index = tmp_path / "actors.sqlite"
+    build_actor_alias_index(
+        [{"tipodocproveedor": "NIT", "documento_proveedor": "900334689",
+          "proveedor_adjudicado": "FUNSOCOM", "occurrences": 5,
+          "first_seen": "2024-01-01", "last_seen": "2026-01-01"}],
+        index, source_dataset="entity-integration-fixture",
+        built_at="2026-09-06T00:00:00+00:00",
+    )
+    monkeypatch.setenv("SECOP_ACTOR_ALIAS_INDEX_PATH", str(index))
+    workflow, _ = _workflow()
+    result = workflow.run_query("busca proveedor FUNSOCOM")
+    assert result["analytical_intent"] == "actor_profile"
+    assert result["route_reason"] == "actor_profile"
+
+
 def test_territory_only_canary_clarifies_without_source_calls():
     workflow, client = _workflow()
     result = workflow.run_query("analiza Baranoa")

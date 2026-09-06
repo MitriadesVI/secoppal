@@ -1,0 +1,12 @@
+{
+  "worktrees_scanned": 40,
+  "command": "rg --hidden --no-ignore -n --glob *.md ^#{1,4} ADR[- ]081\\b <all registered worktrees/docs>",
+  "exit_code": 0,
+  "matches": [
+    "/Users/rodrigoortiz/Documents/secoppal-entity-integration/docs/decisions_log.md:4354:## ADR-081: Entity Analysis consume metadata territorial sólo después de resolver BuyerUnit",
+    "/Users/rodrigoortiz/Documents/secoppal-codex-entity/docs/decisions_log.md:4341:## ADR-081: Entity Analysis consume metadata territorial sólo después de resolver BuyerUnit",
+    "/Users/rodrigoortiz/Documents/secoppal-entity-integration/docs/decisions/2026-09-05_ADR-081_entity-analysis-territorial-metadata-consumer.md:1:# ADR-081 — Territorial Knowledge como metadata posterior a BuyerUnit",
+    "/Users/rodrigoortiz/Documents/secoppal-codex-entity/docs/decisions/2026-09-05_ADR-081_entity-analysis-territorial-metadata-consumer.md:1:# ADR-081 — Territorial Knowledge como metadata posterior a BuyerUnit"
+  ],
+  "errors": ""
+}

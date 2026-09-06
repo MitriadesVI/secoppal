@@ -1,0 +1,35 @@
+{
+  "mapping": [
+    {
+      "source": "0e3c4ed9bca5c3f9d3ecfd617006e3c4746fd283",
+      "applied": "9982a863c4508d508bae867f2bf4cd51e9621e80",
+      "patch_id": "3dc09bc616ac283423f108be1a2761abe6896fc6"
+    },
+    {
+      "source": "4b23e35fddefddc8cd220b19909a62260d9c3e8e",
+      "applied": "ca852eabac680659f53fb4277467ffcbaf7a5ea7",
+      "patch_id": "71e8aeef1fe2986fe6c2b63b9ee568037603bdc7"
+    },
+    {
+      "source": "fbdd99d2700831913c0277e4f4c536288928a990",
+      "applied": "6ee9db1cad5c3792d29ceef99b4b694a5e88ad4a",
+      "patch_id": "9aeb31ebcf91fd63ced584219b16541d6d3bdc86"
+    },
+    {
+      "source": "7dd274a421b193c66ed75d4cb2282e09369090d6",
+      "applied": "b963597d3d980a66d6d4a3be2e0776990cdb1889",
+      "patch_id": "bdab3b51d09a23db82c6788be079596000e43588"
+    },
+    {
+      "source": "b93c24411dd6c562a195ba5d512ec31d2fe01a85",
+      "applied": "7cde09f2dfb9aab2791dd3c3970de5e10c44ce31",
+      "patch_id": "0e736496b6a6a3ac3ca993661538dab9fe0a3f37"
+    },
+    {
+      "source": "e8ba54ebbeaca91c8ab3110287a94e030885b964",
+      "applied": "4e038551ce3520c1d4a2964f4ec8cfb4cd6dc12e",
+      "patch_id": "380c25639840393e39c9d2d166be520d7871ff6e"
+    }
+  ],
+  "source_last_not_cherry_picked": "94431254efbc65267d13ce7694e2bf6cdb0565b0"
+}

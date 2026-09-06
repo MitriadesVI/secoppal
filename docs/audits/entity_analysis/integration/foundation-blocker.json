@@ -1,0 +1,26 @@
+{
+  "runtime_references": [],
+  "changed_existing_app_files": [
+    "app/core/entity_profile/__init__.py",
+    "app/core/entity_profile/aspects/__init__.py",
+    "app/core/entity_profile/aspects/activity.py",
+    "app/core/entity_profile/aspects/common.py",
+    "app/core/entity_profile/aspects/recent.py",
+    "app/core/entity_profile/aspects/suppliers.py",
+    "app/core/entity_profile/aspects/temporal.py",
+    "app/core/entity_profile/aspects/values.py",
+    "app/core/entity_profile/assembler.py",
+    "app/core/entity_profile/models.py",
+    "app/core/entity_profile/query_runner.py",
+    "app/core/entity_profile/render.py",
+    "app/core/entity_profile/scope.py",
+    "app/core/entity_profile/sections.py",
+    "app/core/entity_profile/turn.py",
+    "app/core/orchestrator.py",
+    "app/core/workflow/actions/entity_profile.py",
+    "app/core/workflow/actions/execution.py"
+  ],
+  "forbidden_storage_dependencies": [],
+  "database_files": [],
+  "base_sha": "c79f8460c84ab26631c2534af106405cb16803f2"
+}

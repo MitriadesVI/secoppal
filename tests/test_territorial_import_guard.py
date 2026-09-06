@@ -1,5 +1,7 @@
 """Syntax and mutation regressions for the single territorial runtime guard."""
 import ast
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from hypothesis import given, settings, strategies as st
 import pytest
@@ -115,20 +117,63 @@ def test_import_detection_survives_aliases_nesting_formatting_and_data(alias, fo
     'importlib.import_module("app.core.territorial_knowledge")',
     "from . import territorial_knowledge",
 ])
-def test_procurement_is_not_allowlisted_and_builder_rejects_real_imports(tmp_path, monkeypatch, statement):
+@pytest.mark.parametrize("consumer", [
+    "app/core/procurement_relationships.py",
+    "app/core/entity_profile/second.py",
+    "app/other.py",
+])
+def test_only_scope_is_authorized_and_builder_rejects_second_consumer(
+    tmp_path, monkeypatch, statement, consumer,
+):
     core = tmp_path / "app/core"
     core.mkdir(parents=True)
     (tmp_path / "app/data").symlink_to(builder.ROOT / "app/data", target_is_directory=True)
     (tmp_path / "artifacts").symlink_to(builder.ROOT / "artifacts", target_is_directory=True)
-    # The loader itself remains the only excluded module.
+    # The loader is excluded from the inventory; scope remains a real consumer.
     (core / "territorial_knowledge.py").write_text(statement, encoding="utf-8")
-    procurement = core / "procurement_relationships.py"
+    scope = core / "entity_profile/scope.py"
+    scope.parent.mkdir()
+    scope.write_text("from app.core.territorial_knowledge import load\n", encoding="utf-8")
+    procurement = tmp_path / consumer
     provenance = 'AUTHORITY = "app/core/territorial_knowledge.py:Institution.institution_id"\n'
     procurement.write_text(provenance, encoding="utf-8")
     monkeypatch.setattr(builder, "ROOT", tmp_path)
-    assert builder._runtime_imports() == []
+    assert builder._runtime_imports() == ["app/core/entity_profile/scope.py"]
+    assert builder._unauthorized_runtime_imports() == []
     assert builder._build_payload()["gates"]["RUNTIME_IMPORTS"] == 0
+    # Resolve relative imports in the second consumer's own package.
+    if statement == "from . import territorial_knowledge":
+        if consumer == "app/core/entity_profile/second.py":
+            statement = "from .. import territorial_knowledge"
+        elif consumer == "app/other.py":
+            statement = "from .core import territorial_knowledge"
     procurement.write_text(provenance + statement, encoding="utf-8")
-    assert builder._runtime_imports() == ["app/core/procurement_relationships.py"]
+    assert builder._runtime_imports() == sorted(["app/core/entity_profile/scope.py", consumer])
+    assert builder._unauthorized_runtime_imports() == [consumer]
     with pytest.raises(ValueError, match="territorial knowledge gates failed"):
         builder._build_payload()
+
+
+@settings(max_examples=50, derandomize=True, deadline=None)
+@given(
+    consumers=st.sets(st.from_regex(r"consumer_[a-z]{1,12}", fullmatch=True), max_size=5),
+    statement=st.sampled_from([
+        "import app.core.territorial_knowledge",
+        "from app.core import territorial_knowledge",
+        "from app.core.territorial_knowledge import load",
+        'importlib.import_module("app.core.territorial_knowledge")',
+        '__import__("app.core.territorial_knowledge")',
+    ]),
+)
+def test_authorizing_scope_never_hides_other_syntactic_consumers(consumers, statement):
+    with TemporaryDirectory() as directory, pytest.MonkeyPatch.context() as patch:
+        root = Path(directory)
+        scope = root / "app/core/entity_profile/scope.py"
+        scope.parent.mkdir(parents=True)
+        scope.write_text("from app.core.territorial_knowledge import load\n", encoding="utf-8")
+        for name in consumers:
+            (root / f"app/core/{name}.py").write_text(statement, encoding="utf-8")
+        patch.setattr(builder, "ROOT", root)
+        expected = {f"app/core/{name}.py" for name in consumers}
+        assert set(builder._runtime_imports()) == expected | {"app/core/entity_profile/scope.py"}
+        assert builder._unauthorized_runtime_imports() == sorted(expected)

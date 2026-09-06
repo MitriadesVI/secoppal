@@ -58,20 +58,37 @@ consumidor por:
 
 ```text
 ENTITY_PROFILE_RUNTIME_CONSUMERS = 1
+AUTHORIZED_CONSUMERS = 1
+UNAUTHORIZED_CONSUMERS = 0
 TEXT_RESOLUTION_FROM_KNOWLEDGE = 0
 QUERY_SCOPE_FROM_KNOWLEDGE = 0
 CANDIDATE_PRODUCTIVE_USE = 0
 BUYER_GROUP_MEMBERSHIP_REDEFINED = 0
 ```
 
-El inventario de consumidores y el gate `RUNTIME_IMPORTS = 0` del builder
-histórico deben alinearse con esta decisión antes de integrar. No se modificó
-ninguno porque quedan fuera de la propiedad del carril, y no se repinó el
-artefacto congelado. Esta ADR no autoriza ningún segundo consumidor. Cada
-ampliación requiere una decisión nueva.
+El inventario `_runtime_imports()` conserva todos los imports reales detectados
+por el AST compartido de `fac51c0`, incluido `scope.py`. La autorización es
+exactamente `frozenset({"app/core/entity_profile/scope.py"})`.
+`_unauthorized_runtime_imports()` devuelve actual menos autorizado; el gate
+histórico `RUNTIME_IMPORTS = 0` cuenta esos consumidores no autorizados.
+La provenance textual no constituye import runtime. Procurement Relationships
+no está autorizado: cualquier import real suyo hace fallar el gate.
+
+El replay permanece byte-exacto, sin repin del JSON V0 ni cambio a su estado
+histórico. SHA-256:
+`c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63`.
+Esta ADR no autoriza ningún segundo consumidor; cada ampliación requiere una
+decisión nueva. Entity Analysis no depende del runtime de Procurement Layers,
+no carga snapshots ni hace traversal (`PROCUREMENT_LAYERS_RUNTIME_DEPENDENCY =
+NONE`, `GRAPH_DATABASE = NONE`). ADR-092 permanece intacta.
 
 ## Numeración
 
 Antes de reservar se recorrieron los `docs/` de todos los worktrees registrados
 por `git worktree list --porcelain`. El máximo global observado fue ADR-080 y no
 se encontró ninguna reserva 081–090. Carril A usa ADR-081 de su rango 081–085.
+
+Reconfirmación de integración, 2026-09-06: barrido global de los worktrees
+registrados; el único ADR-081 previo corresponde a esta misma decisión en
+`feature/entity-analysis-v1-core`. ADR-092 conserva expresamente la reserva
+081–090 de los otros carriles. No se renumera por el orden de integración.

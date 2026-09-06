@@ -1,0 +1,72 @@
+{
+  "baseline": 10,
+  "current": 10,
+  "delta": 0,
+  "method": "exact multiset of path + rule + literal matched source; line movement ignored",
+  "baseline_findings": [
+    {
+      "path": "app/core/formatter.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 171,
+      "source": "requires login"
+    },
+    {
+      "path": "app/core/formatter.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 699,
+      "source": "requires login"
+    },
+    {
+      "path": "app/core/response_policy.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 508,
+      "source": "requires login"
+    },
+    {
+      "path": "app/core/response_policy.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 577,
+      "source": "requires login"
+    },
+    {
+      "path": "app/core/workflow/actions/execution.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 339,
+      "source": "requires login"
+    },
+    {
+      "path": "app/core/workflow/handlers/direct_lookup.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 366,
+      "source": "requires login"
+    },
+    {
+      "path": "app/core/workflow/handlers/normal_flow.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 170,
+      "source": "requires login"
+    },
+    {
+      "path": "app/core/workflow/handlers/pagination.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 177,
+      "source": "requires login"
+    },
+    {
+      "path": "app/core/workflow/handlers/radar.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 109,
+      "source": "requires login"
+    },
+    {
+      "path": "app/core/workflow/handlers/refinement.py",
+      "rule": "semgrep.except-exception-que-silencia",
+      "line": 93,
+      "source": "requires login"
+    }
+  ],
+  "existing_findings_in_changed_files": [
+    "app/core/workflow/actions/execution.py"
+  ],
+  "known_limit": "Semgrep scans app/, not every script/test; one file above 1MB skipped by default"
+}

@@ -60,11 +60,23 @@ periodo. No se creó un segundo motor conversacional ni se modificaron
 | `assembler.py` | ensamblar el perfil sin cálculos de negocio propios |
 | `render.py` | respuesta breve y etiquetada por fuente |
 
-El resultado conserva referencias graph-ready sin implementar un grafo:
-`institution_id`, BuyerUnit canónica, DIVIPOLA, identidad documental tipada del
-proveedor, `id_del_proceso` e `id_contrato`. Son suficientes para modelar en el
-futuro `IN_TERRITORY`, `PUBLISHED` y `CONTRACTED_WITH`, pero V1 no añade
-traversal, schema general ni base de grafos.
+El resultado conserva referencias graph-ready: `institution_id`, BuyerUnit
+canónica, DIVIPOLA, identidad documental tipada del proveedor, `id_del_proceso`
+e `id_contrato`. Procurement Relationship Foundation V0 ya existe en main
+([ADR-092](../decisions/2026-09-06_ADR-092_procurement-relationship-foundation-v0.md)).
+Ambas capas comparten identidades conceptualmente compatibles, manteniendo
+distintas BuyerUnit, territorio, cuenta SECOP y Actor. Una futura fase de
+Competition/Relationships podrá usar ese contrato con sus gates propios.
+
+Entity Analysis V1 no importa `app/core/procurement_relationships.py` ni
+`scripts/procurement_layers/**`, no carga snapshots, consulta el graph offline,
+hace traversal ni crea edges runtime. La Foundation es un contrato conceptual
+futuro y no el motor del overview actual.
+
+```text
+PROCUREMENT_LAYERS_RUNTIME_DEPENDENCY = NONE
+GRAPH_DATABASE = NONE
+```
 
 ## Aspectos y denominadores
 
@@ -125,16 +137,15 @@ en scope productivo.
 - El subset conversacional no introduce cambios en QueryPlan; operaciones más
   complejas siguen el sistema de follow-up existente o requieren una fase
   posterior.
-- El postprocesador compartido de BuyerGroups antepone hoy la lista completa de
-  miembros. En Bogotá son 38 y rompe la brevedad de producto aunque el perfil y
-  sus seis llamadas sean correctos. El carril no es dueño de
-  `app/core/orchestrator.py`; por eso BuyerGroup se entrega `PARTIAL` hasta que
-  el orquestador adjudique una presentación compacta.
-- Dos canarios históricos de Territorial Knowledge exigen literalmente cero
-  imports runtime: el inventario de consumidores y el gate del replay
-  byte-exacto. ADR-081 sustituye esa premisa por un único consumidor acotado,
-  pero el test y el builder históricos están fuera de la propiedad de este
-  carril y requieren adjudicación del orquestador; el artefacto no se repinó.
+- Para `entity_profile`, BuyerGroups conserva `group_id`, sus 38 miembros y
+  scope estructurado, sin anteponer la declaración textual completa. Todas las
+  demás rutas conservan `group_declaration()`.
+- El detector AST compartido de `fac51c0` sigue enumerando todos los imports
+  reales. `scope.py` es el único consumidor autorizado por ADR-081. El gate
+  histórico `RUNTIME_IMPORTS = 0` cuenta consumidores **no autorizados**; un
+  segundo consumidor falla cerrado, incluido Procurement Relationships. Sus
+  strings de provenance no son imports. El JSON V0 no se modifica ni repinea;
+  su estado histórico `SHADOW_NO_RUNTIME` se interpreta junto a ADR-081.
 
 ## Contratos de prueba
 
