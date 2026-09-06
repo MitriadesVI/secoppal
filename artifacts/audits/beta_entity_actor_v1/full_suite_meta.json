@@ -1,0 +1,8 @@
+{
+  "started_at": "2026-09-06T20:49:16.635736+00:00",
+  "head": "a39186410a51ed25858cb19c7254b170d7cf34e5",
+  "other_pytest_processes": [],
+  "command": ".venv/bin/python -m pytest -q",
+  "exit_code": 0,
+  "finished_at": "2026-09-06T20:57:18.411153+00:00"
+}

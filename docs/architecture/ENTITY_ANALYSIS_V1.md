@@ -38,12 +38,24 @@ El enganche mínimo vive en la acción de ejecución existente, con este orden:
 4. consulta tabular normal.
 
 Esto conserva, por ejemplo, la ruta puntual de `cuánto suma lo contratado`.
+Dentro de un perfil activo, las preguntas completas de proveedores (incluidas
+`quién tiene más contratos` y `quiénes contratan más con esa entidad`) se
+interpretan como foco suppliers antes del ranking genérico de entidades.
+Esta desambiguación contextual no captura suma, promedio ni contenido nuevo.
 Entity Analysis sólo reconoce `analiza`, `analízame`, `cómo contrata`, `cómo ha
 contratado`, `qué sabes de`, `perfil de` y `radiografía de`, y exige scope de
 buyer. El marcador conversacional se guarda en los parámetros resueltos ya
 existentes: proveedor, modalidad, tiempo y recientes pueden reutilizar buyer y
 periodo. No se creó un segundo motor conversacional ni se modificaron
 `query_plan.py` o `query_router.py`.
+
+Una solicitud explícita que nombra el comprador, como `analízame la Alcaldía
+de Galapa`, inicia `new_search`: no hereda al actor, tema o filtros de una
+búsqueda anterior. Las preguntas de proveedores reutilizan buyer, periodo y
+tema mediante `refine_filter`, tanto si el dataset persistido era procesos
+como si era contratos. `_entity_profile_focus` conserva el foco actual;
+`y por valor` después de suppliers vuelve a mostrar ambos rankings separados.
+Los dos marcadores del perfil se retiran al abandonar esa ruta.
 
 ## Arquitectura
 
@@ -54,9 +66,11 @@ periodo. No se creó un segundo motor conversacional ni se modificaron
 | `models.py` | scope, identidad, secciones, hechos y telemetría tipados |
 | `scope.py` | aceptar BuyerUnit/BuyerGroup productivo y anexar metadata territorial |
 | `turn.py` | intención, foco, aclaración Territory-vs-Buyer y follow-up seguro |
+| `followup.py` | gramática acotada de preguntas contextuales de proveedores |
 | `query_runner.py` | plan fijo, presupuesto, concurrencia acotada y deadline |
 | `aspects/` | construir y leer agregaciones por aspecto |
 | `sections.py` | estado `SUPPORTED/PARTIAL/UNAVAILABLE` independiente |
+| `evidence.py` | rechazar agregados inválidos o contradictorios para construir hechos |
 | `assembler.py` | ensamblar el perfil sin cálculos de negocio propios |
 | `render.py` | respuesta breve y etiquetada por fuente |
 
@@ -116,6 +130,13 @@ dataset, aspecto, operación, estado, filas, latencia y SoQL; el perfil agrega
 Cada sección se degrada por separado y el render dice qué no pudo calcular. La
 mediana no se simula: queda explícitamente no disponible en V1.
 
+El scope mostrado debe coincidir con los parámetros ejecutables: Actor o
+predicados alternativos de comprador bloquean el perfil antes de consultar.
+Un agregado contractual vacío o malformado no confirma cero. Un conteo cero
+contradicho por filas de otra llamada exitosa de contratos invalida los hechos
+de actividad/valor contractual y explica la contradicción, conservando el
+resultado original de transporte en SourceCalls.
+
 ## Territorial Knowledge: frontera del primer consumidor
 
 Entity Analysis importa el loader de Territorial Knowledge sólo después de que
@@ -149,10 +170,13 @@ en scope productivo.
 
 ## Contratos de prueba
 
-El corpus congelado contiene exactamente 40 turnos simples y 15 conversaciones
-multiturno. Cubre Baranoa, Barranquilla, Bucaramanga, Yumbo, Gobernación del
+El corpus contiene 41 turnos simples y 20 conversaciones multiturno: conserva
+los 40/15 originales y añade las regresiones beta de Galapa. Cubre Baranoa,
+Galapa, Barranquilla, Bucaramanga, Yumbo, Gobernación del
 Atlántico y Bogotá; overview, tiempo, modalidades, proveedores, valores,
 recientes, Territory-vs-Buyer, BuyerGroup, fallo parcial y follow-up.
 
 Los dogfoods y contrastes live se registran en
 [`ENTITY_ANALYSIS_V1_DOGFOOD.md`](../audits/entity_analysis/ENTITY_ANALYSIS_V1_DOGFOOD.md).
+El diagnóstico causal y la verificación beta posterior están en
+[`BETA_ENTITY_ACTOR_HARDENING.md`](../audits/beta_entity_actor_v1/BETA_ENTITY_ACTOR_HARDENING.md).

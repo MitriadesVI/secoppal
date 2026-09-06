@@ -1,0 +1,44 @@
+{
+  "symbol": "is_explicit_entity_profile_search",
+  "depth": 2,
+  "nodeCount": 6,
+  "edgeCount": 5,
+  "affected": [
+    {
+      "name": "is_explicit_entity_profile_search",
+      "kind": "function",
+      "filePath": "app/core/entity_profile/turn.py",
+      "startLine": 197
+    },
+    {
+      "name": "classify_followup",
+      "kind": "method",
+      "filePath": "app/core/followup_engine.py",
+      "startLine": 274
+    },
+    {
+      "name": "detect_and_merge",
+      "kind": "function",
+      "filePath": "app/core/followup_engine.py",
+      "startLine": 954
+    },
+    {
+      "name": "check_workflow_entry",
+      "kind": "function",
+      "filePath": "scripts/run_query_corpus.py",
+      "startLine": 213
+    },
+    {
+      "name": "FollowupClassifier",
+      "kind": "class",
+      "filePath": "app/core/followup_engine.py",
+      "startLine": 186
+    },
+    {
+      "name": "turn.py",
+      "kind": "file",
+      "filePath": "app/core/entity_profile/turn.py",
+      "startLine": 1
+    }
+  ]
+}

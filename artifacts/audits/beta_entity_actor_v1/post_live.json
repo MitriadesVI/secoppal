@@ -1,0 +1,1057 @@
+{
+  "captured_at": "2026-09-06T20:46:49.707620+00:00",
+  "transport": "soda3",
+  "entity": [
+    {
+      "query": "analizame la alcaldia de galapa",
+      "response": "MUNICIPIO DE GALAPA. — todo el histórico disponible\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\n• Publicó 4,418 procesos en el periodo. [SECOP II Procesos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (88%), Selección Abreviada de Menor Cuantía (4%), Contratación régimen especial (con ofertas) (3%). [SECOP II Procesos]\n• Principal contratista por valor: FABIAN ALBERTO ACOSTA POLO ($41.9 billones). [SECOP II Contratos]\n• Principal contratista por número de contratos: Aseguradora Solidaria de Colombia Entidad Cooperativa. (26). [SECOP II Contratos]\n• Proceso reciente: AUNAR ESFUERZO TÉCNICOS; ADMINISTRATIVOS Y FINANCIEROS PARA GARANTIZAR LA PRESTACIÓN DE.... [SECOP II Procesos]\n• Contrato reciente: No definido. [SECOP II Contratos]\n\nNo pude calcular la actividad en este momento; la fuente no respondió.\n\nNo pude calcular los valores contractuales en este momento; la fuente no respondió.\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+      "resolved_params": {
+        "dataset": "procesos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "_entity_profile_active": true,
+        "_entity_profile_focus": "overview"
+      },
+      "route_reason": "entity_profile_overview",
+      "intent_type": "new_search",
+      "query_error": "",
+      "profile": {
+        "scope": {
+          "scope_type": "BUYER_UNIT",
+          "buyer_units": [
+            "MUNICIPIO DE GALAPA."
+          ],
+          "buyer_group_id": null,
+          "territory_context": [
+            {
+              "divipola": "08296",
+              "municipality": "GALAPA",
+              "department": "ATLÁNTICO",
+              "macro_region": "Caribe",
+              "institution_id": "logical:8f1ffd811868fb6de329",
+              "institutional_family": "MUNICIPAL_EXECUTIVE",
+              "knowledge_status": "PRODUCT_RECOGNIZED",
+              "provenance": [
+                "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+                "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+              ]
+            }
+          ],
+          "time_from": null,
+          "time_to": null,
+          "modality": [],
+          "topic": []
+        },
+        "identity": {
+          "display_name": "MUNICIPIO DE GALAPA.",
+          "canonical_buyers": [
+            "MUNICIPIO DE GALAPA."
+          ],
+          "buyer_group_id": null,
+          "institution_refs": [
+            {
+              "institution_id": "logical:8f1ffd811868fb6de329",
+              "buyer_canonical": "MUNICIPIO DE GALAPA.",
+              "territory_divipola": "08296",
+              "knowledge_status": "PRODUCT_RECOGNIZED",
+              "provenance": [
+                "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+                "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+              ]
+            }
+          ],
+          "resolution_authority": "PRODUCT_BUYER_UNIT_RESOLUTION"
+        },
+        "activity": {
+          "status": "PARTIAL",
+          "source": [
+            "p6dx-8zbt",
+            "jbjy-vk9h"
+          ],
+          "coverage": [
+            [
+              "period",
+              "todo el histórico disponible"
+            ]
+          ],
+          "facts": [
+            {
+              "key": "process_count",
+              "value": 4418,
+              "source": "p6dx-8zbt",
+              "unit": "processes"
+            }
+          ],
+          "warnings": [
+            "No pude calcular la actividad en este momento; la fuente no respondió."
+          ],
+          "attempted": true
+        },
+        "values": {
+          "status": "UNAVAILABLE",
+          "source": [
+            "jbjy-vk9h"
+          ],
+          "coverage": [
+            [
+              "median",
+              "UNAVAILABLE_V1"
+            ]
+          ],
+          "facts": [],
+          "warnings": [
+            "No pude calcular los valores contractuales en este momento; la fuente no respondió."
+          ],
+          "attempted": true
+        },
+        "modalities": {
+          "status": "SUPPORTED",
+          "source": [
+            "p6dx-8zbt"
+          ],
+          "coverage": [
+            [
+              "group_limit",
+              100
+            ]
+          ],
+          "facts": [
+            {
+              "key": "top_modalities",
+              "value": [
+                [
+                  "Contratación directa",
+                  3872,
+                  0.8764146672702581
+                ],
+                [
+                  "Selección Abreviada de Menor Cuantía",
+                  156,
+                  0.03531009506564056
+                ],
+                [
+                  "Contratación régimen especial (con ofertas)",
+                  117,
+                  0.02648257129923042
+                ]
+              ],
+              "source": "p6dx-8zbt",
+              "unit": null
+            }
+          ],
+          "warnings": [],
+          "attempted": true
+        },
+        "suppliers": {
+          "status": "SUPPORTED",
+          "source": [
+            "jbjy-vk9h"
+          ],
+          "coverage": [
+            [
+              "identity",
+              "typed_supplier_document"
+            ]
+          ],
+          "facts": [
+            {
+              "key": "top_by_contract_count",
+              "value": [
+                {
+                  "actor_identity": "NIT:860524654",
+                  "document_type": "NIT",
+                  "document": "860524654",
+                  "observed_name": "Aseguradora Solidaria de Colombia Entidad Cooperativa.",
+                  "contract_count": 26,
+                  "total_contract_value": 501380472.0
+                },
+                {
+                  "actor_identity": "CC:8792834",
+                  "document_type": "CC",
+                  "document": "8792834",
+                  "observed_name": "JULIO CESAR CASTRO BLANCO",
+                  "contract_count": 16,
+                  "total_contract_value": 90707759.0
+                },
+                {
+                  "actor_identity": "NIT:900870011",
+                  "document_type": "NIT",
+                  "document": "900870011",
+                  "observed_name": "FUNDACION  SOCIAL INNOVA",
+                  "contract_count": 16,
+                  "total_contract_value": 3181701274.0
+                },
+                {
+                  "actor_identity": "CC:72002618",
+                  "document_type": "CC",
+                  "document": "72002618",
+                  "observed_name": "Sean Ronald Barraza Zúñiga",
+                  "contract_count": 15,
+                  "total_contract_value": 160253899.0
+                }
+              ],
+              "source": "jbjy-vk9h",
+              "unit": null
+            },
+            {
+              "key": "top_by_contract_value",
+              "value": [
+                {
+                  "actor_identity": "CC:1047215223",
+                  "document_type": "CC",
+                  "document": "1047215223",
+                  "observed_name": "FABIAN ALBERTO ACOSTA POLO",
+                  "contract_count": 9,
+                  "total_contract_value": 41924387634700.0
+                },
+                {
+                  "actor_identity": "CC:1047223551",
+                  "document_type": "CC",
+                  "document": "1047223551",
+                  "observed_name": "Edinson Yesid Iguaran Mendoza",
+                  "contract_count": 2,
+                  "total_contract_value": 27156112933727.0
+                },
+                {
+                  "actor_identity": "NIT:806009116",
+                  "document_type": "NIT",
+                  "document": "806009116",
+                  "observed_name": "ASOCIACION HOMBRES DE  MI TIERRA",
+                  "contract_count": 6,
+                  "total_contract_value": 498856957617.0
+                },
+                {
+                  "actor_identity": "NIT:890101681",
+                  "document_type": "NIT",
+                  "document": "890101681",
+                  "observed_name": "UNINORTE",
+                  "contract_count": 5,
+                  "total_contract_value": 79117451723.0
+                },
+                {
+                  "actor_identity": "NIT:800135913",
+                  "document_type": "NIT",
+                  "document": "800135913",
+                  "observed_name": "SOCIEDAD DE ACUEDUCTO ALCANTARILLADO Y ASEO DE BARRANQUILLA S.A. E.S.P.",
+                  "contract_count": 1,
+                  "total_contract_value": 39703500000.0
+                }
+              ],
+              "source": "jbjy-vk9h",
+              "unit": null
+            }
+          ],
+          "warnings": [],
+          "attempted": true
+        },
+        "temporal": {
+          "status": "PARTIAL",
+          "source": [
+            "p6dx-8zbt",
+            "jbjy-vk9h"
+          ],
+          "coverage": [
+            [
+              "period",
+              "todo el histórico disponible"
+            ],
+            [
+              "granularity",
+              "selected_period"
+            ]
+          ],
+          "facts": [
+            {
+              "key": "period",
+              "value": "todo el histórico disponible",
+              "source": "USER_TIME_SCOPE",
+              "unit": null
+            },
+            {
+              "key": "process_count",
+              "value": 4418,
+              "source": "p6dx-8zbt",
+              "unit": null
+            }
+          ],
+          "warnings": [
+            "No pude calcular la actividad en este momento; la fuente no respondió."
+          ],
+          "attempted": true
+        },
+        "recent": {
+          "status": "SUPPORTED",
+          "source": [
+            "p6dx-8zbt",
+            "jbjy-vk9h"
+          ],
+          "coverage": [
+            [
+              "limit_each",
+              3
+            ],
+            [
+              "ordering",
+              "date_desc_identity_asc"
+            ]
+          ],
+          "facts": [
+            {
+              "key": "processes",
+              "value": [
+                {
+                  "dataset_id": "p6dx-8zbt",
+                  "stable_identity": "CO1.REQ.10339958",
+                  "identity_status": "stable",
+                  "title": "AUNAR ESFUERZO TÉCNICOS; ADMINISTRATIVOS Y  FINANCIEROS PARA GARANTIZAR LA PRESTACIÓN DEL  SERVICIO PÚBLICO ESENCIAL RELACIONADO CON LA GESTIÓN  INTEGRAL DEL RIESGO CONTRA INCENDIOS Y DEMÁS  FUNCIONE",
+                  "date": null,
+                  "value": 800000000.0,
+                  "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10206308"
+                },
+                {
+                  "dataset_id": "p6dx-8zbt",
+                  "stable_identity": "CO1.REQ.10372017",
+                  "identity_status": "stable",
+                  "title": "AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS; LOGÍSTICOS Y FINANCIEROS PARA PROMOVER EL EMPRENDIMIENTO Y DESARROLLAR PROGRAMAS ESPECIALES DIRIGIDOS A LOS SECTORES SOCIALES DE DISCAPACIDAD; LGBTIQ+; MUJER",
+                  "date": null,
+                  "value": 777000000.0,
+                  "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10231236"
+                },
+                {
+                  "dataset_id": "p6dx-8zbt",
+                  "stable_identity": "CO1.REQ.10372017",
+                  "identity_status": "stable",
+                  "title": "AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS; LOGÍSTICOS Y FINANCIEROS PARA PROMOVER EL EMPRENDIMIENTO Y DESARROLLAR PROGRAMAS ESPECIALES DIRIGIDOS A LOS SECTORES SOCIALES DE DISCAPACIDAD; LGBTIQ+; MUJER",
+                  "date": null,
+                  "value": 777000000.0,
+                  "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10231236"
+                }
+              ],
+              "source": "p6dx-8zbt",
+              "unit": null
+            },
+            {
+              "key": "contracts",
+              "value": [
+                {
+                  "dataset_id": "jbjy-vk9h",
+                  "stable_identity": "CO1.PCCNTR.2494138",
+                  "identity_status": "stable",
+                  "title": "No definido",
+                  "date": null,
+                  "value": 0.0,
+                  "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1959310&isFromPublicArea=True&isModal=true&asPopupView=true"
+                },
+                {
+                  "dataset_id": "jbjy-vk9h",
+                  "stable_identity": "CO1.PCCNTR.2538116",
+                  "identity_status": "stable",
+                  "title": "AUNAR ESFUERZOS Y RECURSOS ENTRE LAS ENTIDADES COMPROMETIDAS CON LA FINALIDAD DE ESTRUCTURAR; GERENCIAR; DESARROLLAR LOS PROGRAMAS Y EJECUTAR PROYECTOS DETERMINADOS POR ESTAS ENTIDADES ; ORIENTADOS AL CUMPLIMIENTO DE LAS POLÍTICAS DEL ORDEN SOCIAL; ECONÓMICA; INSTITUCIONAL; DE INFRAESTRUCTURA; VIVIENDA; AMBIENTAL Y CATASTRAL EN EL MARCO DEL PLAN DE DESARROLLO Y DEL PLAN BÁSICO DE ORDENAMIENTO TERRITORIAL DE GALAPA - ATLÁNTICO",
+                  "date": null,
+                  "value": 0.0,
+                  "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1994530&isFromPublicArea=True&isModal=true&asPopupView=true"
+                },
+                {
+                  "dataset_id": "jbjy-vk9h",
+                  "stable_identity": "CO1.PCCNTR.2572789",
+                  "identity_status": "stable",
+                  "title": "PRESTACION DE SERVICIOS PROFESIONALES DE UN ABOGADO PARA LA REVISION Y PROYECCIÓN DE LAS ACTUACIONES JURIDICAS Y ADMINISTRATIVAS DE LA OFICINA DE COBRO COACTIVO DE LA SECRETARIA DE HACIENDA DEL MUNICIPIO DE GALAPA - ATLANTICO",
+                  "date": null,
+                  "value": 6000000.0,
+                  "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.2022208&isFromPublicArea=True&isModal=true&asPopupView=true"
+                }
+              ],
+              "source": "jbjy-vk9h",
+              "unit": null
+            }
+          ],
+          "warnings": [],
+          "attempted": true
+        },
+        "source_calls": {
+          "calls": [
+            {
+              "call_id": "process_activity",
+              "aspect": "activity_modalities",
+              "dataset_id": "p6dx-8zbt",
+              "operation": "aggregate",
+              "status": "SUCCESS",
+              "rows_received": 11,
+              "latency_ms": 474.1653749952093,
+              "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+              "error_type": null,
+              "attempted": true
+            },
+            {
+              "call_id": "contract_values",
+              "aspect": "activity_values",
+              "dataset_id": "jbjy-vk9h",
+              "operation": "aggregate",
+              "status": "TIMEOUT",
+              "rows_received": 0,
+              "latency_ms": 8291.24791600043,
+              "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%'))",
+              "error_type": "Soda3TimeoutError",
+              "attempted": true
+            },
+            {
+              "call_id": "supplier_count",
+              "aspect": "suppliers",
+              "dataset_id": "jbjy-vk9h",
+              "operation": "aggregate",
+              "status": "SUCCESS",
+              "rows_received": 5,
+              "latency_ms": 4064.7133329766802,
+              "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+              "error_type": null,
+              "attempted": true
+            },
+            {
+              "call_id": "supplier_value",
+              "aspect": "suppliers",
+              "dataset_id": "jbjy-vk9h",
+              "operation": "aggregate",
+              "status": "SUCCESS",
+              "rows_received": 5,
+              "latency_ms": 6335.766999982297,
+              "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+              "error_type": null,
+              "attempted": true
+            },
+            {
+              "call_id": "recent_processes",
+              "aspect": "recent",
+              "dataset_id": "p6dx-8zbt",
+              "operation": "query",
+              "status": "SUCCESS",
+              "rows_received": 3,
+              "latency_ms": 418.9389579696581,
+              "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+              "error_type": null,
+              "attempted": true
+            },
+            {
+              "call_id": "recent_contracts",
+              "aspect": "recent",
+              "dataset_id": "jbjy-vk9h",
+              "operation": "query",
+              "status": "SUCCESS",
+              "rows_received": 3,
+              "latency_ms": 2865.289416979067,
+              "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+              "error_type": null,
+              "attempted": true
+            }
+          ],
+          "total_latency_ms": 8293.110999977216
+        },
+        "warnings": [
+          "No pude calcular la actividad en este momento; la fuente no respondió.",
+          "No pude calcular los valores contractuales en este momento; la fuente no respondió."
+        ],
+        "focus": "overview"
+      }
+    },
+    {
+      "query": "cuales son sus mayores proveedores?",
+      "response": "MUNICIPIO DE GALAPA. — histórico disponible\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\nPrincipales contratistas por número de contratos\n• Aseguradora Solidaria de Colombia Entidad Cooperativa.: 26 contratos\n• JULIO CESAR CASTRO BLANCO: 16 contratos\n• FUNDACION  SOCIAL INNOVA: 16 contratos\n• Sean Ronald Barraza Zúñiga: 15 contratos\nPrincipales contratistas por valor contratado\n• FABIAN ALBERTO ACOSTA POLO: $41.9 billones\n• Edinson Yesid Iguaran Mendoza: $27.2 billones\n• ASOCIACION HOMBRES DE  MI TIERRA: $498.9 mil millones\n• UNINORTE: $79.1 mil millones\n• SOCIEDAD DE ACUEDUCTO ALCANTARILLADO Y ASEO DE BARRANQUILLA S.A. E.S.P.: $39.7 mil millones",
+      "resolved_params": {
+        "dataset": "procesos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "_entity_profile_focus": "suppliers",
+        "_entity_profile_active": true
+      },
+      "route_reason": "entity_profile_suppliers",
+      "intent_type": "refine_filter",
+      "query_error": "",
+      "profile": {
+        "scope": {
+          "scope_type": "BUYER_UNIT",
+          "buyer_units": [
+            "MUNICIPIO DE GALAPA."
+          ],
+          "buyer_group_id": null,
+          "territory_context": [
+            {
+              "divipola": "08296",
+              "municipality": "GALAPA",
+              "department": "ATLÁNTICO",
+              "macro_region": "Caribe",
+              "institution_id": "logical:8f1ffd811868fb6de329",
+              "institutional_family": "MUNICIPAL_EXECUTIVE",
+              "knowledge_status": "PRODUCT_RECOGNIZED",
+              "provenance": [
+                "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+                "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+              ]
+            }
+          ],
+          "time_from": null,
+          "time_to": null,
+          "modality": [],
+          "topic": []
+        },
+        "identity": {
+          "display_name": "MUNICIPIO DE GALAPA.",
+          "canonical_buyers": [
+            "MUNICIPIO DE GALAPA."
+          ],
+          "buyer_group_id": null,
+          "institution_refs": [
+            {
+              "institution_id": "logical:8f1ffd811868fb6de329",
+              "buyer_canonical": "MUNICIPIO DE GALAPA.",
+              "territory_divipola": "08296",
+              "knowledge_status": "PRODUCT_RECOGNIZED",
+              "provenance": [
+                "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+                "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+              ]
+            }
+          ],
+          "resolution_authority": "PRODUCT_BUYER_UNIT_RESOLUTION"
+        },
+        "activity": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "values": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "modalities": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "suppliers": {
+          "status": "SUPPORTED",
+          "source": [
+            "jbjy-vk9h"
+          ],
+          "coverage": [
+            [
+              "identity",
+              "typed_supplier_document"
+            ]
+          ],
+          "facts": [
+            {
+              "key": "top_by_contract_count",
+              "value": [
+                {
+                  "actor_identity": "NIT:860524654",
+                  "document_type": "NIT",
+                  "document": "860524654",
+                  "observed_name": "Aseguradora Solidaria de Colombia Entidad Cooperativa.",
+                  "contract_count": 26,
+                  "total_contract_value": 501380472.0
+                },
+                {
+                  "actor_identity": "CC:8792834",
+                  "document_type": "CC",
+                  "document": "8792834",
+                  "observed_name": "JULIO CESAR CASTRO BLANCO",
+                  "contract_count": 16,
+                  "total_contract_value": 90707759.0
+                },
+                {
+                  "actor_identity": "NIT:900870011",
+                  "document_type": "NIT",
+                  "document": "900870011",
+                  "observed_name": "FUNDACION  SOCIAL INNOVA",
+                  "contract_count": 16,
+                  "total_contract_value": 3181701274.0
+                },
+                {
+                  "actor_identity": "CC:72002618",
+                  "document_type": "CC",
+                  "document": "72002618",
+                  "observed_name": "Sean Ronald Barraza Zúñiga",
+                  "contract_count": 15,
+                  "total_contract_value": 160253899.0
+                }
+              ],
+              "source": "jbjy-vk9h",
+              "unit": null
+            },
+            {
+              "key": "top_by_contract_value",
+              "value": [
+                {
+                  "actor_identity": "CC:1047215223",
+                  "document_type": "CC",
+                  "document": "1047215223",
+                  "observed_name": "FABIAN ALBERTO ACOSTA POLO",
+                  "contract_count": 9,
+                  "total_contract_value": 41924387634700.0
+                },
+                {
+                  "actor_identity": "CC:1047223551",
+                  "document_type": "CC",
+                  "document": "1047223551",
+                  "observed_name": "Edinson Yesid Iguaran Mendoza",
+                  "contract_count": 2,
+                  "total_contract_value": 27156112933727.0
+                },
+                {
+                  "actor_identity": "NIT:806009116",
+                  "document_type": "NIT",
+                  "document": "806009116",
+                  "observed_name": "ASOCIACION HOMBRES DE  MI TIERRA",
+                  "contract_count": 6,
+                  "total_contract_value": 498856957617.0
+                },
+                {
+                  "actor_identity": "NIT:890101681",
+                  "document_type": "NIT",
+                  "document": "890101681",
+                  "observed_name": "UNINORTE",
+                  "contract_count": 5,
+                  "total_contract_value": 79117451723.0
+                },
+                {
+                  "actor_identity": "NIT:800135913",
+                  "document_type": "NIT",
+                  "document": "800135913",
+                  "observed_name": "SOCIEDAD DE ACUEDUCTO ALCANTARILLADO Y ASEO DE BARRANQUILLA S.A. E.S.P.",
+                  "contract_count": 1,
+                  "total_contract_value": 39703500000.0
+                }
+              ],
+              "source": "jbjy-vk9h",
+              "unit": null
+            }
+          ],
+          "warnings": [],
+          "attempted": true
+        },
+        "temporal": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "recent": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "source_calls": {
+          "calls": [
+            {
+              "call_id": "supplier_count",
+              "aspect": "suppliers",
+              "dataset_id": "jbjy-vk9h",
+              "operation": "aggregate",
+              "status": "SUCCESS",
+              "rows_received": 5,
+              "latency_ms": 413.09195902431384,
+              "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+              "error_type": null,
+              "attempted": true
+            },
+            {
+              "call_id": "supplier_value",
+              "aspect": "suppliers",
+              "dataset_id": "jbjy-vk9h",
+              "operation": "aggregate",
+              "status": "SUCCESS",
+              "rows_received": 5,
+              "latency_ms": 433.5184159572236,
+              "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+              "error_type": null,
+              "attempted": true
+            }
+          ],
+          "total_latency_ms": 434.72841603215784
+        },
+        "warnings": [],
+        "focus": "suppliers"
+      }
+    },
+    {
+      "query": "y por valor",
+      "response": "MUNICIPIO DE GALAPA. — histórico disponible\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\nPrincipales contratistas por número de contratos\n• Aseguradora Solidaria de Colombia Entidad Cooperativa.: 26 contratos\n• JULIO CESAR CASTRO BLANCO: 16 contratos\n• FUNDACION  SOCIAL INNOVA: 16 contratos\n• Sean Ronald Barraza Zúñiga: 15 contratos\nPrincipales contratistas por valor contratado\n• FABIAN ALBERTO ACOSTA POLO: $41.9 billones\n• Edinson Yesid Iguaran Mendoza: $27.2 billones\n• ASOCIACION HOMBRES DE  MI TIERRA: $498.9 mil millones\n• UNINORTE: $79.1 mil millones\n• SOCIEDAD DE ACUEDUCTO ALCANTARILLADO Y ASEO DE BARRANQUILLA S.A. E.S.P.: $39.7 mil millones",
+      "resolved_params": {
+        "dataset": "procesos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "ordering_signal": "valor_desc",
+        "_entity_profile_focus": "suppliers",
+        "_entity_profile_active": true
+      },
+      "route_reason": "entity_profile_suppliers",
+      "intent_type": "refine_filter",
+      "query_error": "",
+      "profile": {
+        "scope": {
+          "scope_type": "BUYER_UNIT",
+          "buyer_units": [
+            "MUNICIPIO DE GALAPA."
+          ],
+          "buyer_group_id": null,
+          "territory_context": [
+            {
+              "divipola": "08296",
+              "municipality": "GALAPA",
+              "department": "ATLÁNTICO",
+              "macro_region": "Caribe",
+              "institution_id": "logical:8f1ffd811868fb6de329",
+              "institutional_family": "MUNICIPAL_EXECUTIVE",
+              "knowledge_status": "PRODUCT_RECOGNIZED",
+              "provenance": [
+                "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+                "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+              ]
+            }
+          ],
+          "time_from": null,
+          "time_to": null,
+          "modality": [],
+          "topic": []
+        },
+        "identity": {
+          "display_name": "MUNICIPIO DE GALAPA.",
+          "canonical_buyers": [
+            "MUNICIPIO DE GALAPA."
+          ],
+          "buyer_group_id": null,
+          "institution_refs": [
+            {
+              "institution_id": "logical:8f1ffd811868fb6de329",
+              "buyer_canonical": "MUNICIPIO DE GALAPA.",
+              "territory_divipola": "08296",
+              "knowledge_status": "PRODUCT_RECOGNIZED",
+              "provenance": [
+                "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+                "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+              ]
+            }
+          ],
+          "resolution_authority": "PRODUCT_BUYER_UNIT_RESOLUTION"
+        },
+        "activity": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "values": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "modalities": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "suppliers": {
+          "status": "SUPPORTED",
+          "source": [
+            "jbjy-vk9h"
+          ],
+          "coverage": [
+            [
+              "identity",
+              "typed_supplier_document"
+            ]
+          ],
+          "facts": [
+            {
+              "key": "top_by_contract_count",
+              "value": [
+                {
+                  "actor_identity": "NIT:860524654",
+                  "document_type": "NIT",
+                  "document": "860524654",
+                  "observed_name": "Aseguradora Solidaria de Colombia Entidad Cooperativa.",
+                  "contract_count": 26,
+                  "total_contract_value": 501380472.0
+                },
+                {
+                  "actor_identity": "CC:8792834",
+                  "document_type": "CC",
+                  "document": "8792834",
+                  "observed_name": "JULIO CESAR CASTRO BLANCO",
+                  "contract_count": 16,
+                  "total_contract_value": 90707759.0
+                },
+                {
+                  "actor_identity": "NIT:900870011",
+                  "document_type": "NIT",
+                  "document": "900870011",
+                  "observed_name": "FUNDACION  SOCIAL INNOVA",
+                  "contract_count": 16,
+                  "total_contract_value": 3181701274.0
+                },
+                {
+                  "actor_identity": "CC:72002618",
+                  "document_type": "CC",
+                  "document": "72002618",
+                  "observed_name": "Sean Ronald Barraza Zúñiga",
+                  "contract_count": 15,
+                  "total_contract_value": 160253899.0
+                }
+              ],
+              "source": "jbjy-vk9h",
+              "unit": null
+            },
+            {
+              "key": "top_by_contract_value",
+              "value": [
+                {
+                  "actor_identity": "CC:1047215223",
+                  "document_type": "CC",
+                  "document": "1047215223",
+                  "observed_name": "FABIAN ALBERTO ACOSTA POLO",
+                  "contract_count": 9,
+                  "total_contract_value": 41924387634700.0
+                },
+                {
+                  "actor_identity": "CC:1047223551",
+                  "document_type": "CC",
+                  "document": "1047223551",
+                  "observed_name": "Edinson Yesid Iguaran Mendoza",
+                  "contract_count": 2,
+                  "total_contract_value": 27156112933727.0
+                },
+                {
+                  "actor_identity": "NIT:806009116",
+                  "document_type": "NIT",
+                  "document": "806009116",
+                  "observed_name": "ASOCIACION HOMBRES DE  MI TIERRA",
+                  "contract_count": 6,
+                  "total_contract_value": 498856957617.0
+                },
+                {
+                  "actor_identity": "NIT:890101681",
+                  "document_type": "NIT",
+                  "document": "890101681",
+                  "observed_name": "UNINORTE",
+                  "contract_count": 5,
+                  "total_contract_value": 79117451723.0
+                },
+                {
+                  "actor_identity": "NIT:800135913",
+                  "document_type": "NIT",
+                  "document": "800135913",
+                  "observed_name": "SOCIEDAD DE ACUEDUCTO ALCANTARILLADO Y ASEO DE BARRANQUILLA S.A. E.S.P.",
+                  "contract_count": 1,
+                  "total_contract_value": 39703500000.0
+                }
+              ],
+              "source": "jbjy-vk9h",
+              "unit": null
+            }
+          ],
+          "warnings": [],
+          "attempted": true
+        },
+        "temporal": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "recent": {
+          "status": "UNAVAILABLE",
+          "source": [],
+          "coverage": [
+            [
+              "reason",
+              "NOT_REQUESTED"
+            ]
+          ],
+          "facts": [],
+          "warnings": [],
+          "attempted": false
+        },
+        "source_calls": {
+          "calls": [
+            {
+              "call_id": "supplier_count",
+              "aspect": "suppliers",
+              "dataset_id": "jbjy-vk9h",
+              "operation": "aggregate",
+              "status": "SUCCESS",
+              "rows_received": 5,
+              "latency_ms": 206.89487498020753,
+              "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+              "error_type": null,
+              "attempted": true
+            },
+            {
+              "call_id": "supplier_value",
+              "aspect": "suppliers",
+              "dataset_id": "jbjy-vk9h",
+              "operation": "aggregate",
+              "status": "SUCCESS",
+              "rows_received": 5,
+              "latency_ms": 211.67779102688655,
+              "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+              "error_type": null,
+              "attempted": true
+            }
+          ],
+          "total_latency_ms": 212.83116698032245
+        },
+        "warnings": [],
+        "focus": "suppliers"
+      }
+    }
+  ],
+  "actors": {
+    "codetec": {
+      "direct": {
+        "status": "UNRESOLVED",
+        "method": "no_match",
+        "candidates_count": 0
+      },
+      "trace": {
+        "actor_resolution_status": "UNRESOLVED",
+        "actor_resolution_method": "no_match",
+        "candidates_count": 0
+      },
+      "query_plan_reason": "actor_name_requires_resolution",
+      "response": "Para darte la huella contractual de CODETEC necesito su NIT o su cédula. Con el nombre solo no puedo distinguirlo de otros proveedores de nombre parecido, y atribuirle contratos ajenos sería peor que no responder.",
+      "observed_name": "codetec"
+    },
+    "camila araujo": {
+      "direct": {
+        "status": "CANDIDATES",
+        "method": "fts5_trigram_bm25",
+        "candidates_count": 10
+      },
+      "trace": {
+        "actor_resolution_status": "CANDIDATES",
+        "actor_resolution_method": "fts5_trigram_bm25",
+        "candidates_count": 10
+      },
+      "query_plan_reason": "actor_name_candidates",
+      "response": "No encontré una coincidencia exacta para CAMILA ARAUJO; sí nombres similares.\n\n1. MARÍA CAMILA MONJE ARAUJO — CC 1075288857\n2. ANDREA CAMILA RAMOS ARAUJO — CC 1065853305\n3. CAMILA SOFIA ARAUJO OROZCO — CC 1234091142\n4. LAURA CAMILA CANCINO ARAUJO — CC 1014245001\n5. MARIA CAMILA REDONDO ARAUJO — CC 1026273500\n6. CAROLINA CAMILA GUTIÉRREZ ARAUJO — CC 1002371435\n7. CAMILA ALEJANDRA VILLALOBOS ARAÚJO — CC 1026285438\n8. ROSANGELA  ARAUJO ARAUJO — CC 1065580101\n9. NELCAR PAOLA ARAUJO ARAUJO — CC 1065598409\n10. ALIX CLEMENCIA ARAUJO ARAUJO — CC 36163654\n\nResponde con el número correcto o comparte el NIT/cédula.",
+      "observed_name": "camila araujo"
+    },
+    "rodrigo ortiz": {
+      "direct": {
+        "status": "AMBIGUOUS",
+        "method": "exact_ambiguous_alias",
+        "candidates_count": 3
+      },
+      "trace": {
+        "actor_resolution_status": "AMBIGUOUS",
+        "actor_resolution_method": "exact_ambiguous_alias",
+        "candidates_count": 3
+      },
+      "query_plan_reason": "actor_name_ambiguous",
+      "response": "El nombre RODRIGO ORTIZ corresponde a más de un actor observado en SECOP.\n\n1. RODRIGO ORTIZ — CC 79958413\n2. RODRIGO ORTIZ — CC 1140835135\n3. RODRIGO ORTIZ — CC 1140873612\n\nResponde con el número correcto o comparte el NIT/cédula.",
+      "observed_name": "rodrigo ortiz"
+    }
+  }
+}

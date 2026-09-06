@@ -1,0 +1,25 @@
+..............F......................................................... [ 30%]
+........................................................................ [ 60%]
+........................................................................ [ 91%]
+.....................                                                    [100%]
+=================================== FAILURES ===================================
+________ test_strong_actor_new_search_discards_previous_topic_and_scope ________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-575/test_strong_actor_new_search_d0')
+
+    def test_strong_actor_new_search_discards_previous_topic_and_scope(tmp_path):
+        workflow = actor_workflow(tmp_path, [_row("NIT", "900111222", "ACTOR X")])
+        workflow.secop_client = WorkflowClient()
+        workflow.run_query("contratos de alimentacion de la alcaldia de galapa en 2025", chat_id="new")
+        result = workflow.run_query("busca proveedor ACTOR X", chat_id="new")
+        params = result["resolved_params"]
+>       assert params["actor_scope"]["observed_name"] == "ACTOR X"
+E       AssertionError: assert 'actor x' == 'ACTOR X'
+E
+E         - ACTOR X
+E         + actor x
+
+tests/test_beta_entity_actor_conversation.py:166: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_beta_entity_actor_conversation.py::test_strong_actor_new_search_discards_previous_topic_and_scope
+1 failed, 236 passed in 26.34s

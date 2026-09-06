@@ -1,0 +1,396 @@
+{
+  "captured_at": "2026-09-06T20:31:00.748986+00:00",
+  "transport": "soda3",
+  "profile": {
+    "scope": {
+      "scope_type": "BUYER_UNIT",
+      "buyer_units": [
+        "MUNICIPIO DE GALAPA."
+      ],
+      "buyer_group_id": null,
+      "territory_context": [
+        {
+          "divipola": "08296",
+          "municipality": "GALAPA",
+          "department": "ATLÁNTICO",
+          "macro_region": "Caribe",
+          "institution_id": "logical:8f1ffd811868fb6de329",
+          "institutional_family": "MUNICIPAL_EXECUTIVE",
+          "knowledge_status": "PRODUCT_RECOGNIZED",
+          "provenance": [
+            "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+            "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+          ]
+        }
+      ],
+      "time_from": null,
+      "time_to": null,
+      "modality": [],
+      "topic": []
+    },
+    "identity": {
+      "display_name": "MUNICIPIO DE GALAPA.",
+      "canonical_buyers": [
+        "MUNICIPIO DE GALAPA."
+      ],
+      "buyer_group_id": null,
+      "institution_refs": [
+        {
+          "institution_id": "logical:8f1ffd811868fb6de329",
+          "buyer_canonical": "MUNICIPIO DE GALAPA.",
+          "territory_divipola": "08296",
+          "knowledge_status": "PRODUCT_RECOGNIZED",
+          "provenance": [
+            "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+            "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+          ]
+        }
+      ],
+      "resolution_authority": "PRODUCT_BUYER_UNIT_RESOLUTION"
+    },
+    "activity": {
+      "status": "PARTIAL",
+      "source": [
+        "p6dx-8zbt",
+        "jbjy-vk9h"
+      ],
+      "coverage": [
+        [
+          "period",
+          "todo el histórico disponible"
+        ]
+      ],
+      "facts": [
+        {
+          "key": "process_count",
+          "value": 4418,
+          "source": "p6dx-8zbt",
+          "unit": "processes"
+        }
+      ],
+      "warnings": [
+        "No pude calcular la actividad en este momento; la fuente no respondió."
+      ],
+      "attempted": true
+    },
+    "values": {
+      "status": "UNAVAILABLE",
+      "source": [
+        "jbjy-vk9h"
+      ],
+      "coverage": [
+        [
+          "median",
+          "UNAVAILABLE_V1"
+        ]
+      ],
+      "facts": [],
+      "warnings": [
+        "No pude calcular los valores contractuales en este momento; la fuente no respondió."
+      ],
+      "attempted": true
+    },
+    "modalities": {
+      "status": "SUPPORTED",
+      "source": [
+        "p6dx-8zbt"
+      ],
+      "coverage": [
+        [
+          "group_limit",
+          100
+        ]
+      ],
+      "facts": [
+        {
+          "key": "top_modalities",
+          "value": [
+            [
+              "Contratación directa",
+              3872,
+              0.8764146672702581
+            ],
+            [
+              "Selección Abreviada de Menor Cuantía",
+              156,
+              0.03531009506564056
+            ],
+            [
+              "Contratación régimen especial (con ofertas)",
+              117,
+              0.02648257129923042
+            ]
+          ],
+          "source": "p6dx-8zbt",
+          "unit": null
+        }
+      ],
+      "warnings": [],
+      "attempted": true
+    },
+    "suppliers": {
+      "status": "UNAVAILABLE",
+      "source": [
+        "jbjy-vk9h"
+      ],
+      "coverage": [
+        [
+          "identity",
+          "typed_supplier_document"
+        ]
+      ],
+      "facts": [],
+      "warnings": [
+        "No pude calcular los proveedores en este momento; la fuente no respondió."
+      ],
+      "attempted": true
+    },
+    "temporal": {
+      "status": "PARTIAL",
+      "source": [
+        "p6dx-8zbt",
+        "jbjy-vk9h"
+      ],
+      "coverage": [
+        [
+          "period",
+          "todo el histórico disponible"
+        ],
+        [
+          "granularity",
+          "selected_period"
+        ]
+      ],
+      "facts": [
+        {
+          "key": "period",
+          "value": "todo el histórico disponible",
+          "source": "USER_TIME_SCOPE",
+          "unit": null
+        },
+        {
+          "key": "process_count",
+          "value": 4418,
+          "source": "p6dx-8zbt",
+          "unit": null
+        }
+      ],
+      "warnings": [
+        "No pude calcular la actividad en este momento; la fuente no respondió."
+      ],
+      "attempted": true
+    },
+    "recent": {
+      "status": "PARTIAL",
+      "source": [
+        "p6dx-8zbt",
+        "jbjy-vk9h"
+      ],
+      "coverage": [
+        [
+          "limit_each",
+          3
+        ],
+        [
+          "ordering",
+          "date_desc_identity_asc"
+        ]
+      ],
+      "facts": [
+        {
+          "key": "processes",
+          "value": [
+            {
+              "dataset_id": "p6dx-8zbt",
+              "stable_identity": "CO1.REQ.10339958",
+              "identity_status": "stable",
+              "title": "AUNAR ESFUERZO TÉCNICOS; ADMINISTRATIVOS Y  FINANCIEROS PARA GARANTIZAR LA PRESTACIÓN DEL  SERVICIO PÚBLICO ESENCIAL RELACIONADO CON LA GESTIÓN  INTEGRAL DEL RIESGO CONTRA INCENDIOS Y DEMÁS  FUNCIONE",
+              "date": null,
+              "value": 800000000.0,
+              "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10206308"
+            },
+            {
+              "dataset_id": "p6dx-8zbt",
+              "stable_identity": "CO1.REQ.10372017",
+              "identity_status": "stable",
+              "title": "AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS; LOGÍSTICOS Y FINANCIEROS PARA PROMOVER EL EMPRENDIMIENTO Y DESARROLLAR PROGRAMAS ESPECIALES DIRIGIDOS A LOS SECTORES SOCIALES DE DISCAPACIDAD; LGBTIQ+; MUJER",
+              "date": null,
+              "value": 777000000.0,
+              "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10231236"
+            },
+            {
+              "dataset_id": "p6dx-8zbt",
+              "stable_identity": "CO1.REQ.10372017",
+              "identity_status": "stable",
+              "title": "AUNAR ESFUERZOS TÉCNICOS; ADMINISTRATIVOS; LOGÍSTICOS Y FINANCIEROS PARA PROMOVER EL EMPRENDIMIENTO Y DESARROLLAR PROGRAMAS ESPECIALES DIRIGIDOS A LOS SECTORES SOCIALES DE DISCAPACIDAD; LGBTIQ+; MUJER",
+              "date": null,
+              "value": 777000000.0,
+              "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10231236"
+            }
+          ],
+          "source": "p6dx-8zbt",
+          "unit": null
+        }
+      ],
+      "warnings": [
+        "No pude calcular la actividad reciente en este momento; la fuente no respondió."
+      ],
+      "attempted": true
+    },
+    "source_calls": {
+      "calls": [
+        {
+          "call_id": "process_activity",
+          "aspect": "activity_modalities",
+          "dataset_id": "p6dx-8zbt",
+          "operation": "aggregate",
+          "status": "SUCCESS",
+          "rows_received": 11,
+          "latency_ms": 465.86270799161866,
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "contract_values",
+          "aspect": "activity_values",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "TIMEOUT",
+          "rows_received": 0,
+          "latency_ms": 8770.657667017076,
+          "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%'))",
+          "error_type": "Soda3TimeoutError",
+          "attempted": true
+        },
+        {
+          "call_id": "supplier_count",
+          "aspect": "suppliers",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "TIMEOUT",
+          "rows_received": 0,
+          "latency_ms": 8270.986917021219,
+          "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+          "error_type": "Soda3TimeoutError",
+          "attempted": true
+        },
+        {
+          "call_id": "supplier_value",
+          "aspect": "suppliers",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "status": "TIMEOUT",
+          "rows_received": 0,
+          "latency_ms": 8746.355958050117,
+          "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+          "error_type": "Soda3TimeoutError",
+          "attempted": true
+        },
+        {
+          "call_id": "recent_processes",
+          "aspect": "recent",
+          "dataset_id": "p6dx-8zbt",
+          "operation": "query",
+          "status": "SUCCESS",
+          "rows_received": 3,
+          "latency_ms": 437.06204200861976,
+          "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+          "error_type": null,
+          "attempted": true
+        },
+        {
+          "call_id": "recent_contracts",
+          "aspect": "recent",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "query",
+          "status": "TIMEOUT",
+          "rows_received": 0,
+          "latency_ms": 8305.476707988419,
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+          "error_type": "RuntimeError",
+          "attempted": true
+        }
+      ],
+      "total_latency_ms": 8776.548707974143
+    },
+    "warnings": [
+      "No pude calcular la actividad en este momento; la fuente no respondió.",
+      "No pude calcular los valores contractuales en este momento; la fuente no respondió.",
+      "No pude calcular los proveedores en este momento; la fuente no respondió.",
+      "No pude calcular la actividad reciente en este momento; la fuente no respondió."
+    ],
+    "focus": "overview"
+  },
+  "response": "MUNICIPIO DE GALAPA. — todo el histórico disponible\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\n• Publicó 4,418 procesos en el periodo. [SECOP II Procesos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (88%), Selección Abreviada de Menor Cuantía (4%), Contratación régimen especial (con ofertas) (3%). [SECOP II Procesos]\n• Proceso reciente: AUNAR ESFUERZO TÉCNICOS; ADMINISTRATIVOS Y FINANCIEROS PARA GARANTIZAR LA PRESTACIÓN DE.... [SECOP II Procesos]\n\nNo pude calcular la actividad en este momento; la fuente no respondió.\n\nNo pude calcular los valores contractuales en este momento; la fuente no respondió.\n\nNo pude calcular los proveedores en este momento; la fuente no respondió.\n\nNo pude calcular la actividad reciente en este momento; la fuente no respondió.\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+  "probes": [
+    {
+      "label": "A_generated",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT count(*) AS n WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%'))",
+      "status": "ERROR",
+      "error_type": "Soda3TimeoutError",
+      "error": "SODA3 request exceeded its budget on dataset jbjy-vk9h"
+    },
+    {
+      "label": "A_generated",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT nombre_entidad, id_contrato, valor_del_contrato WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) LIMIT 3",
+      "status": "SUCCESS",
+      "rows_received": 3,
+      "rows": [
+        {
+          "nombre_entidad": "MUNICIPIO DE GALAPA.",
+          "id_contrato": "CO1.PCCNTR.4978280",
+          "valor_del_contrato": "15000000"
+        },
+        {
+          "nombre_entidad": "MUNICIPIO DE GALAPA.",
+          "id_contrato": "CO1.PCCNTR.7481073",
+          "valor_del_contrato": "9200000"
+        },
+        {
+          "nombre_entidad": "MUNICIPIO DE GALAPA.",
+          "id_contrato": "CO1.PCCNTR.8454252",
+          "valor_del_contrato": "5730000"
+        }
+      ]
+    },
+    {
+      "label": "B_physical",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT count(*) AS n WHERE nombre_entidad = 'MUNICIPIO DE GALAPA.'",
+      "status": "SUCCESS",
+      "rows_received": 1,
+      "rows": [
+        {
+          "n": "4273"
+        }
+      ]
+    },
+    {
+      "label": "B_physical",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT nombre_entidad, id_contrato, valor_del_contrato WHERE nombre_entidad = 'MUNICIPIO DE GALAPA.' LIMIT 3",
+      "status": "SUCCESS",
+      "rows_received": 3,
+      "rows": [
+        {
+          "nombre_entidad": "MUNICIPIO DE GALAPA.",
+          "id_contrato": "CO1.PCCNTR.4978280",
+          "valor_del_contrato": "15000000"
+        },
+        {
+          "nombre_entidad": "MUNICIPIO DE GALAPA.",
+          "id_contrato": "CO1.PCCNTR.7481073",
+          "valor_del_contrato": "9200000"
+        },
+        {
+          "nombre_entidad": "MUNICIPIO DE GALAPA.",
+          "id_contrato": "CO1.PCCNTR.8454252",
+          "valor_del_contrato": "5730000"
+        }
+      ]
+    }
+  ]
+}

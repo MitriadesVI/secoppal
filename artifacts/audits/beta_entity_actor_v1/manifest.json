@@ -1,0 +1,71 @@
+{
+  "base": "c546eb6bb69f69be996840a29edb7afb2349e249",
+  "branch": "fix/beta-entity-actor-conversation-v1",
+  "runtime_head": "a39186410a51ed25858cb19c7254b170d7cf34e5",
+  "worktree": "/Users/rodrigoortiz/Documents/secoppal-beta-entity-actor-conversation-v1",
+  "tools": {
+    "ruff": "0.16.4",
+    "semgrep": "1.176.0",
+    "hypothesis": "6.165.10",
+    "codegraph": "0.9.6",
+    "codegraph_mcp": "loaded and used on validated main base",
+    "codegraph_local_index": "initialized independently; 785 files; CLI status up to date",
+    "codegraph_affected_limit": "returns zero dependents/tests; not treated as proof of no impact; focal tests selected by verified imports and workflow consumers"
+  },
+  "production_persistence": "all diagnostic Settings redirected to dedicated temporary feedback and conversation paths",
+  "network": "bounded SECOP read-only SourceCalls/probes; production actor index read-only",
+  "new_semgrep_findings": 0,
+  "focal_test_files": [
+    "tests/test_entity_profile_queries.py",
+    "tests/test_entity_profile_scope.py",
+    "tests/test_entity_profile_workflow.py",
+    "tests/test_entity_profile_evidence.py",
+    "tests/test_actor_conversation.py",
+    "tests/test_actor_resolution_orchestration.py",
+    "tests/test_followup_engine_new_search_classification.py",
+    "tests/test_beta_entity_actor_conversation.py",
+    "tests/test_beta_conversation_properties.py"
+  ],
+  "changed_source_and_test_files": [
+    "app/core/actor_resolution_admission.py",
+    "app/core/actor_resolution_trace.py",
+    "app/core/entity_profile/aspects/values.py",
+    "app/core/entity_profile/assembler.py",
+    "app/core/entity_profile/evidence.py",
+    "app/core/entity_profile/followup.py",
+    "app/core/entity_profile/scope.py",
+    "app/core/entity_profile/sections.py",
+    "app/core/entity_profile/turn.py",
+    "app/core/feedback.py",
+    "app/core/followup_engine.py",
+    "app/core/workflow/actions/execution.py",
+    "app/core/workflow/actions/parsing.py",
+    "tests/fixtures/entity_profile_corpus_v1.yaml",
+    "tests/test_beta_conversation_properties.py",
+    "tests/test_beta_entity_actor_conversation.py",
+    "tests/test_entity_profile_evidence.py",
+    "tests/test_entity_profile_scope.py",
+    "tests/test_entity_profile_workflow.py"
+  ],
+  "commits": [
+    "a201365ddcc52666e64ecea2dde594224e726377 test(beta): freeze entity and actor dogfood regressions",
+    "01bf7699d40eac8befa9454eef1d16f9bfa22a3b fix(entity-profile): prevent false zero for buyer contract activity",
+    "639c8d999696e01b2b976144acb701a403506608 fix(actor): let strong new actor search reach resolution after context",
+    "c5b2fbcc0d869f5ce5bd6277a6c82911812536dc fix(entity-profile): preserve buyer scope across supplier followups",
+    "a39186410a51ed25858cb19c7254b170d7cf34e5 fix(actor): record resolution status and candidate count in traces"
+  ],
+  "full_suite": {
+    "started_at": "2026-09-06T20:49:16.635736+00:00",
+    "head": "a39186410a51ed25858cb19c7254b170d7cf34e5",
+    "other_pytest_processes": [],
+    "command": ".venv/bin/python -m pytest -q",
+    "exit_code": 0,
+    "finished_at": "2026-09-06T20:57:18.411153+00:00",
+    "summary": "11509 passed, 11 skipped, 14 xfailed in 480.09s (0:08:00)"
+  },
+  "verdict": "PARTIAL",
+  "verdict_reasons": [
+    "Pre-existing dialogue corpus failure GOB-DEPTO-001",
+    "Live contract_values timeout; reported unavailable, not zero"
+  ]
+}

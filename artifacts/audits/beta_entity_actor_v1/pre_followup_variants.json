@@ -1,0 +1,851 @@
+[
+  {
+    "query": "cuales son sus mayores proveedores?",
+    "parser": {
+      "dataset": "contratos",
+      "dataset_explicit": true
+    },
+    "previous_frame": {
+      "dataset": "contratos",
+      "dataset_explicit": false,
+      "scope": {
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "topic": [],
+      "objeto_exclude": [],
+      "modifiers": {
+        "contratista": [
+          "1122415233"
+        ]
+      },
+      "raw_params": {
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true,
+        "objeto": []
+      },
+      "intent_type": "new_search"
+    },
+    "direct_merge": [
+      "new_search",
+      {
+        "dataset": "contratos",
+        "objeto": []
+      }
+    ],
+    "result": {
+      "response": "Te entendi como refinamiento, pero perdi el contexto anterior. Haz una busqueda base primero o usa reset.\n\nPuedo buscar de varias formas:\n1. Procesos mas recientes\n2. Procesos de mayor valor\n3. Procesos de mantenimiento vial\n\nCual camino quieres?",
+      "parsed_params": {
+        "dataset": "contratos",
+        "objeto": []
+      },
+      "resolved_params": {},
+      "route_reason": "heuristic_only",
+      "intent_type": "new_search",
+      "followup_mutation": {
+        "intent": "new_search",
+        "requested_fields": [
+          "dataset",
+          "dataset_explicit"
+        ],
+        "accepted_fields": [
+          "dataset",
+          "dataset_explicit"
+        ],
+        "transition_cleared_fields": [],
+        "rejected_fields": [],
+        "rejection_reasons": {}
+      }
+    }
+  },
+  {
+    "query": "quienes son sus principales proveedores",
+    "parser": {
+      "dataset": "contratos",
+      "dataset_explicit": true,
+      "objeto": [
+        "quienes",
+        "principales"
+      ]
+    },
+    "previous_frame": {
+      "dataset": "contratos",
+      "dataset_explicit": false,
+      "scope": {
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "topic": [],
+      "objeto_exclude": [],
+      "modifiers": {
+        "contratista": [
+          "1122415233"
+        ]
+      },
+      "raw_params": {
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true,
+        "objeto": []
+      },
+      "intent_type": "new_search"
+    },
+    "direct_merge": [
+      "contextual_requery",
+      {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "quienes",
+          "principales"
+        ],
+        "contratista": [
+          "1122415233"
+        ],
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true
+      }
+    ],
+    "result": {
+      "response": "MUNICIPIO DE GALAPA. — histórico disponible\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\nPrincipales contratistas por número de contratos\n• PROVEEDOR FRECUENTE SAS: 3 contratos\nPrincipales contratistas por valor contratado\n• PROVEEDOR MAYOR SAS: $700 millones",
+      "parsed_params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "quienes",
+          "principales"
+        ],
+        "contratista": [
+          "1122415233"
+        ],
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "quienes"
+        ],
+        "contratista": [
+          "1122415233"
+        ],
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true
+      },
+      "route_reason": "entity_profile_suppliers",
+      "intent_type": "contextual_requery",
+      "followup_mutation": {
+        "intent": "contextual_requery",
+        "requested_fields": [
+          "dataset",
+          "dataset_explicit",
+          "objeto"
+        ],
+        "accepted_fields": [
+          "objeto"
+        ],
+        "transition_cleared_fields": [],
+        "rejected_fields": [
+          "dataset",
+          "dataset_explicit"
+        ],
+        "rejection_reasons": {
+          "dataset": "field_not_allowed_for_intent",
+          "dataset_explicit": "field_not_allowed_for_intent"
+        }
+      }
+    }
+  },
+  {
+    "query": "quien tiene mas contratos",
+    "parser": {
+      "dataset": "contratos",
+      "dataset_explicit": true,
+      "objeto": [
+        "quien"
+      ]
+    },
+    "previous_frame": {
+      "dataset": "contratos",
+      "dataset_explicit": false,
+      "scope": {
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "topic": [],
+      "objeto_exclude": [],
+      "modifiers": {
+        "contratista": [
+          "1122415233"
+        ]
+      },
+      "raw_params": {
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true,
+        "objeto": []
+      },
+      "intent_type": "new_search"
+    },
+    "direct_merge": [
+      "contextual_requery",
+      {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "quien"
+        ],
+        "contratista": [
+          "1122415233"
+        ],
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true
+      }
+    ],
+    "result": {
+      "response": "📋 Contratos de quien de MUNICIPIO DE GALAPA.\nEncontre 1 resultados más recientes:\n\n1. OBRA PÚBLICA\n   ALCALDIA MUNICIPAL DE BARANOA\n   $700,000,000 | 2026-07-15\n   PROVEEDOR MAYOR SAS\n   https://community.secop.gov.co/contract/1\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados",
+      "parsed_params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "quien"
+        ],
+        "contratista": [
+          "1122415233"
+        ],
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "quien"
+        ],
+        "contratista": [
+          "1122415233"
+        ],
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "limit": 50
+      },
+      "route_reason": "heuristic_only",
+      "intent_type": "contextual_requery",
+      "followup_mutation": {
+        "intent": "contextual_requery",
+        "requested_fields": [
+          "dataset",
+          "dataset_explicit",
+          "objeto"
+        ],
+        "accepted_fields": [
+          "objeto"
+        ],
+        "transition_cleared_fields": [],
+        "rejected_fields": [
+          "dataset",
+          "dataset_explicit"
+        ],
+        "rejection_reasons": {
+          "dataset": "field_not_allowed_for_intent",
+          "dataset_explicit": "field_not_allowed_for_intent"
+        }
+      }
+    }
+  },
+  {
+    "query": "quienes contratan mas con esa entidad",
+    "parser": {
+      "dataset": "procesos",
+      "dataset_explicit": false,
+      "objeto": [
+        "quienes",
+        "contratan",
+        "entidad"
+      ]
+    },
+    "previous_frame": {
+      "dataset": "contratos",
+      "dataset_explicit": false,
+      "scope": {
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "topic": [],
+      "objeto_exclude": [],
+      "modifiers": {
+        "contratista": [
+          "1122415233"
+        ]
+      },
+      "raw_params": {
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true,
+        "objeto": []
+      },
+      "intent_type": "new_search"
+    },
+    "direct_merge": [
+      "contextual_requery",
+      {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "quienes",
+          "contratan",
+          "entidad"
+        ],
+        "contratista": [
+          "1122415233"
+        ],
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true
+      }
+    ],
+    "result": {
+      "response": "No encontré entidades para ese universo.",
+      "parsed_params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "quienes",
+          "contratan",
+          "entidad"
+        ],
+        "contratista": [
+          "1122415233"
+        ],
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "quienes",
+          "contratan",
+          "entidad"
+        ],
+        "contratista": [
+          "1122415233"
+        ],
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "limit": 50
+      },
+      "route_reason": "analytics_ranking",
+      "intent_type": "contextual_requery",
+      "followup_mutation": {
+        "intent": "contextual_requery",
+        "requested_fields": [
+          "objeto"
+        ],
+        "accepted_fields": [
+          "objeto"
+        ],
+        "transition_cleared_fields": [],
+        "rejected_fields": [],
+        "rejection_reasons": {}
+      }
+    }
+  },
+  {
+    "query": "y por valor",
+    "parser": {
+      "dataset": "procesos",
+      "dataset_explicit": false,
+      "ordering_signal": "valor_desc"
+    },
+    "previous_frame": {
+      "dataset": "contratos",
+      "dataset_explicit": false,
+      "scope": {
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "topic": [],
+      "objeto_exclude": [],
+      "modifiers": {
+        "contratista": [
+          "1122415233"
+        ]
+      },
+      "raw_params": {
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true,
+        "objeto": []
+      },
+      "intent_type": "new_search"
+    },
+    "direct_merge": [
+      "change_order",
+      {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "contratista": [
+          "1122415233"
+        ],
+        "ordering_signal": "valor_desc",
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true,
+        "objeto": []
+      }
+    ],
+    "result": {
+      "response": "📋 Contratos de MUNICIPIO DE GALAPA.\nEncontre 1 resultados de mayor valor:\n\nLectura rapida: El mayor valor mostrado es $700,000,000 (PROVEEDOR MAYOR SAS, 2026-07-15).\n\n1. OBRA PÚBLICA\n   ALCALDIA MUNICIPAL DE BARANOA\n   $700,000,000 | 2026-07-15\n   PROVEEDOR MAYOR SAS\n   https://community.secop.gov.co/contract/1\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados",
+      "parsed_params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "contratista": [
+          "1122415233"
+        ],
+        "ordering_signal": "valor_desc",
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "_entity_profile_active": true,
+        "objeto": []
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "contratista": [
+          "1122415233"
+        ],
+        "ordering_signal": "valor_desc",
+        "actor_resolution": "user_selected_candidate",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "user_selected_candidate",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "1122415233",
+          "observed_name": "LINA MARÍA BARRIOS DÍAZ"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "user_selected_candidate",
+        "actor_selection_rank": 2,
+        "objeto": [],
+        "limit": 50
+      },
+      "route_reason": "heuristic_only",
+      "intent_type": "change_order",
+      "followup_mutation": {
+        "intent": "change_order",
+        "requested_fields": [
+          "ordering_signal"
+        ],
+        "accepted_fields": [
+          "ordering_signal"
+        ],
+        "transition_cleared_fields": [],
+        "rejected_fields": [],
+        "rejection_reasons": {}
+      }
+    }
+  }
+]

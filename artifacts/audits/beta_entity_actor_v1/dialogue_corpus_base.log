@@ -1,0 +1,13 @@
+Summary: 60/61 PASS, 1 FAIL
+  city_as_scope: 11/11 (100.0%)
+  city_not_entity: 6/6 (100.0%)
+  discourse_filler: 8/8 (100.0%)
+  entity_resolution: 0/1 (0.0%)
+  implicit_opportunity: 13/13 (100.0%)
+  negative: 15/15 (100.0%)
+  non_query_followup: 1/1 (100.0%)
+  number_phrase_scrub: 1/1 (100.0%)
+  temporal_month: 5/5 (100.0%)
+
+FAIL GOB-DEPTO-001:
+  - entidad_resolved: expected 'GOBERNACIÓN DE BOYACÁ', got None

@@ -1,0 +1,11 @@
+{
+  "changedFiles": [
+    "app/core/entity_profile/turn.py",
+    "app/core/entity_profile/sections.py",
+    "app/core/followup_engine.py",
+    "app/core/workflow/actions/parsing.py",
+    "app/core/feedback.py"
+  ],
+  "affectedTests": [],
+  "totalDependentsTraversed": 0
+}

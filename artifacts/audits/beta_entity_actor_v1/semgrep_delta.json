@@ -1,0 +1,74 @@
+{
+  "baseline_findings": 10,
+  "post_findings": 10,
+  "baseline_signatures": [
+    [
+      "app/core/formatter.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/formatter.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/response_policy.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/response_policy.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/workflow/handlers/direct_lookup.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/workflow/handlers/normal_flow.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/workflow/handlers/radar.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/workflow/handlers/refinement.py",
+      "except Exception:"
+    ]
+  ],
+  "post_signatures": [
+    [
+      "app/core/formatter.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/formatter.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/response_policy.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/response_policy.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/workflow/handlers/direct_lookup.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/workflow/handlers/normal_flow.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/workflow/handlers/radar.py",
+      "except Exception:"
+    ],
+    [
+      "app/core/workflow/handlers/refinement.py",
+      "except Exception:"
+    ]
+  ],
+  "new_signatures": [],
+  "same_exception_sites": true
+}

@@ -1,0 +1,306 @@
+FFFFFFFF.FFFFF..                                                         [100%]
+=================================== FAILURES ===================================
+___________ test_malformed_contract_aggregate_cannot_be_zero[rows0] ____________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+rows = []
+
+    @pytest.mark.parametrize("rows", [[], [{}], [{"contract_count": "invalid"}],
+        [{"contract_count": "1", "total_contract_value": None}],
+        [{"contract_count": "0.5", "total_contract_value": "0"}],
+        [{"contract_count": "-1", "total_contract_value": "0"}],
+        [{"contract_count": "0", "total_contract_value": "100"}],
+    ])
+    def test_malformed_contract_aggregate_cannot_be_zero(profile_turn, rows):
+        class Client(FakeClient):
+            def aggregate(self, dataset, soql):
+                if "AS contract_count" in soql and "GROUP BY" not in soql:
+                    return rows
+                return super().aggregate(dataset, soql)
+        profile = _build(profile_turn, Client())
+>       assert profile.activity.fact("contract_count") is None
+E       assert 0 is None
+E        +  where 0 = fact('contract_count')
+E        +    where fact = EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True).fact
+E        +      where EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True) = EntityProfile(scope=EntityProfileScope(scope_type=<ScopeType.BUYER_UNIT: 'BUYER_UNIT'>, buyer_units=('MUNICIPIO DE GAL...o ASC LIMIT 3", error_type=None, attempted=True)), total_latency_ms=14.856458001304418), warnings=(), focus='overview').activity
+
+tests/test_entity_profile_evidence.py:44: AssertionError
+___________ test_malformed_contract_aggregate_cannot_be_zero[rows1] ____________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+rows = [{}]
+
+    @pytest.mark.parametrize("rows", [[], [{}], [{"contract_count": "invalid"}],
+        [{"contract_count": "1", "total_contract_value": None}],
+        [{"contract_count": "0.5", "total_contract_value": "0"}],
+        [{"contract_count": "-1", "total_contract_value": "0"}],
+        [{"contract_count": "0", "total_contract_value": "100"}],
+    ])
+    def test_malformed_contract_aggregate_cannot_be_zero(profile_turn, rows):
+        class Client(FakeClient):
+            def aggregate(self, dataset, soql):
+                if "AS contract_count" in soql and "GROUP BY" not in soql:
+                    return rows
+                return super().aggregate(dataset, soql)
+        profile = _build(profile_turn, Client())
+>       assert profile.activity.fact("contract_count") is None
+E       assert 0 is None
+E        +  where 0 = fact('contract_count')
+E        +    where fact = EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True).fact
+E        +      where EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True) = EntityProfile(scope=EntityProfileScope(scope_type=<ScopeType.BUYER_UNIT: 'BUYER_UNIT'>, buyer_units=('MUNICIPIO DE GAL...o ASC LIMIT 3", error_type=None, attempted=True)), total_latency_ms=0.3696669591590762), warnings=(), focus='overview').activity
+
+tests/test_entity_profile_evidence.py:44: AssertionError
+___________ test_malformed_contract_aggregate_cannot_be_zero[rows2] ____________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+rows = [{'contract_count': 'invalid'}]
+
+    @pytest.mark.parametrize("rows", [[], [{}], [{"contract_count": "invalid"}],
+        [{"contract_count": "1", "total_contract_value": None}],
+        [{"contract_count": "0.5", "total_contract_value": "0"}],
+        [{"contract_count": "-1", "total_contract_value": "0"}],
+        [{"contract_count": "0", "total_contract_value": "100"}],
+    ])
+    def test_malformed_contract_aggregate_cannot_be_zero(profile_turn, rows):
+        class Client(FakeClient):
+            def aggregate(self, dataset, soql):
+                if "AS contract_count" in soql and "GROUP BY" not in soql:
+                    return rows
+                return super().aggregate(dataset, soql)
+        profile = _build(profile_turn, Client())
+>       assert profile.activity.fact("contract_count") is None
+E       assert 0 is None
+E        +  where 0 = fact('contract_count')
+E        +    where fact = EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True).fact
+E        +      where EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True) = EntityProfile(scope=EntityProfileScope(scope_type=<ScopeType.BUYER_UNIT: 'BUYER_UNIT'>, buyer_units=('MUNICIPIO DE GAL... ASC LIMIT 3", error_type=None, attempted=True)), total_latency_ms=0.38533302722498775), warnings=(), focus='overview').activity
+
+tests/test_entity_profile_evidence.py:44: AssertionError
+___________ test_malformed_contract_aggregate_cannot_be_zero[rows3] ____________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+rows = [{'contract_count': '1', 'total_contract_value': None}]
+
+    @pytest.mark.parametrize("rows", [[], [{}], [{"contract_count": "invalid"}],
+        [{"contract_count": "1", "total_contract_value": None}],
+        [{"contract_count": "0.5", "total_contract_value": "0"}],
+        [{"contract_count": "-1", "total_contract_value": "0"}],
+        [{"contract_count": "0", "total_contract_value": "100"}],
+    ])
+    def test_malformed_contract_aggregate_cannot_be_zero(profile_turn, rows):
+        class Client(FakeClient):
+            def aggregate(self, dataset, soql):
+                if "AS contract_count" in soql and "GROUP BY" not in soql:
+                    return rows
+                return super().aggregate(dataset, soql)
+        profile = _build(profile_turn, Client())
+>       assert profile.activity.fact("contract_count") is None
+E       assert 1 is None
+E        +  where 1 = fact('contract_count')
+E        +    where fact = EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=1, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True).fact
+E        +      where EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=1, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True) = EntityProfile(scope=EntityProfileScope(scope_type=<ScopeType.BUYER_UNIT: 'BUYER_UNIT'>, buyer_units=('MUNICIPIO DE GAL... ASC LIMIT 3", error_type=None, attempted=True)), total_latency_ms=0.35391596611589193), warnings=(), focus='overview').activity
+
+tests/test_entity_profile_evidence.py:44: AssertionError
+___________ test_malformed_contract_aggregate_cannot_be_zero[rows4] ____________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+rows = [{'contract_count': '0.5', 'total_contract_value': '0'}]
+
+    @pytest.mark.parametrize("rows", [[], [{}], [{"contract_count": "invalid"}],
+        [{"contract_count": "1", "total_contract_value": None}],
+        [{"contract_count": "0.5", "total_contract_value": "0"}],
+        [{"contract_count": "-1", "total_contract_value": "0"}],
+        [{"contract_count": "0", "total_contract_value": "100"}],
+    ])
+    def test_malformed_contract_aggregate_cannot_be_zero(profile_turn, rows):
+        class Client(FakeClient):
+            def aggregate(self, dataset, soql):
+                if "AS contract_count" in soql and "GROUP BY" not in soql:
+                    return rows
+                return super().aggregate(dataset, soql)
+        profile = _build(profile_turn, Client())
+>       assert profile.activity.fact("contract_count") is None
+E       assert 0 is None
+E        +  where 0 = fact('contract_count')
+E        +    where fact = EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True).fact
+E        +      where EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True) = EntityProfile(scope=EntityProfileScope(scope_type=<ScopeType.BUYER_UNIT: 'BUYER_UNIT'>, buyer_units=('MUNICIPIO DE GAL...o ASC LIMIT 3", error_type=None, attempted=True)), total_latency_ms=0.3626249963417649), warnings=(), focus='overview').activity
+
+tests/test_entity_profile_evidence.py:44: AssertionError
+___________ test_malformed_contract_aggregate_cannot_be_zero[rows5] ____________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+rows = [{'contract_count': '-1', 'total_contract_value': '0'}]
+
+    @pytest.mark.parametrize("rows", [[], [{}], [{"contract_count": "invalid"}],
+        [{"contract_count": "1", "total_contract_value": None}],
+        [{"contract_count": "0.5", "total_contract_value": "0"}],
+        [{"contract_count": "-1", "total_contract_value": "0"}],
+        [{"contract_count": "0", "total_contract_value": "100"}],
+    ])
+    def test_malformed_contract_aggregate_cannot_be_zero(profile_turn, rows):
+        class Client(FakeClient):
+            def aggregate(self, dataset, soql):
+                if "AS contract_count" in soql and "GROUP BY" not in soql:
+                    return rows
+                return super().aggregate(dataset, soql)
+        profile = _build(profile_turn, Client())
+>       assert profile.activity.fact("contract_count") is None
+E       assert -1 is None
+E        +  where -1 = fact('contract_count')
+E        +    where fact = EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per... EntityProfileFact(key='contract_count', value=-1, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True).fact
+E        +      where EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per... EntityProfileFact(key='contract_count', value=-1, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True) = EntityProfile(scope=EntityProfileScope(scope_type=<ScopeType.BUYER_UNIT: 'BUYER_UNIT'>, buyer_units=('MUNICIPIO DE GAL...o ASC LIMIT 3", error_type=None, attempted=True)), total_latency_ms=0.4427909734658897), warnings=(), focus='overview').activity
+
+tests/test_entity_profile_evidence.py:44: AssertionError
+___________ test_malformed_contract_aggregate_cannot_be_zero[rows6] ____________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+rows = [{'contract_count': '0', 'total_contract_value': '100'}]
+
+    @pytest.mark.parametrize("rows", [[], [{}], [{"contract_count": "invalid"}],
+        [{"contract_count": "1", "total_contract_value": None}],
+        [{"contract_count": "0.5", "total_contract_value": "0"}],
+        [{"contract_count": "-1", "total_contract_value": "0"}],
+        [{"contract_count": "0", "total_contract_value": "100"}],
+    ])
+    def test_malformed_contract_aggregate_cannot_be_zero(profile_turn, rows):
+        class Client(FakeClient):
+            def aggregate(self, dataset, soql):
+                if "AS contract_count" in soql and "GROUP BY" not in soql:
+                    return rows
+                return super().aggregate(dataset, soql)
+        profile = _build(profile_turn, Client())
+>       assert profile.activity.fact("contract_count") is None
+E       assert 0 is None
+E        +  where 0 = fact('contract_count')
+E        +    where fact = EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True).fact
+E        +      where EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True) = EntityProfile(scope=EntityProfileScope(scope_type=<ScopeType.BUYER_UNIT: 'BUYER_UNIT'>, buyer_units=('MUNICIPIO DE GAL...o ASC LIMIT 3", error_type=None, attempted=True)), total_latency_ms=0.3932500258088112), warnings=(), focus='overview').activity
+
+tests/test_entity_profile_evidence.py:44: AssertionError
+________ test_zero_contradicted_by_other_contract_calls_is_unavailable _________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+
+    def test_zero_contradicted_by_other_contract_calls_is_unavailable(profile_turn):
+        class Client(FakeClient):
+            def aggregate(self, dataset, soql):
+                if "AS contract_count" in soql and "GROUP BY" not in soql:
+                    return [{"contract_count": "0", "total_contract_value": None}]
+                return super().aggregate(dataset, soql)
+        profile = _build(profile_turn, Client())
+        assert profile.recent.fact("contracts")
+>       assert profile.activity.fact("contract_count") is None
+E       assert 0 is None
+E        +  where 0 = fact('contract_count')
+E        +    where fact = EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True).fact
+E        +      where EntityProfileSection(status=<SectionStatus.SUPPORTED: 'SUPPORTED'>, source=('p6dx-8zbt', 'jbjy-vk9h'), coverage=(('per..., EntityProfileFact(key='contract_count', value=0, source='jbjy-vk9h', unit='contracts')), warnings=(), attempted=True) = EntityProfile(scope=EntityProfileScope(scope_type=<ScopeType.BUYER_UNIT: 'BUYER_UNIT'>, buyer_units=('MUNICIPIO DE GAL...o ASC LIMIT 3", error_type=None, attempted=True)), total_latency_ms=0.3605830133892596), warnings=(), focus='overview').activity
+
+tests/test_entity_profile_evidence.py:58: AssertionError
+________ test_profile_scope_mismatch_fails_before_source_calls[extra0] _________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+extra = {'contratista': ['900123456']}
+
+    @pytest.mark.parametrize("extra", [
+        {"contratista": ["900123456"]},
+        {"actor_scope": {"requires_resolution": True, "observed_name": "actor"}},
+        {"entidad_like": "OTRO COMPRADOR"},
+        {"entidad_resolved": "OTRO COMPRADOR"},
+        {"entidad_contains_all": ["OTRO"]},
+    ])
+    def test_profile_scope_mismatch_fails_before_source_calls(profile_turn, extra):
+        client = FakeClient()
+>       with pytest.raises(ValueError, match="scope"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_entity_profile_evidence.py:85: Failed
+________ test_profile_scope_mismatch_fails_before_source_calls[extra1] _________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+extra = {'actor_scope': {'observed_name': 'actor', 'requires_resolution': True}}
+
+    @pytest.mark.parametrize("extra", [
+        {"contratista": ["900123456"]},
+        {"actor_scope": {"requires_resolution": True, "observed_name": "actor"}},
+        {"entidad_like": "OTRO COMPRADOR"},
+        {"entidad_resolved": "OTRO COMPRADOR"},
+        {"entidad_contains_all": ["OTRO"]},
+    ])
+    def test_profile_scope_mismatch_fails_before_source_calls(profile_turn, extra):
+        client = FakeClient()
+>       with pytest.raises(ValueError, match="scope"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_entity_profile_evidence.py:85: Failed
+________ test_profile_scope_mismatch_fails_before_source_calls[extra2] _________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+extra = {'entidad_like': 'OTRO COMPRADOR'}
+
+    @pytest.mark.parametrize("extra", [
+        {"contratista": ["900123456"]},
+        {"actor_scope": {"requires_resolution": True, "observed_name": "actor"}},
+        {"entidad_like": "OTRO COMPRADOR"},
+        {"entidad_resolved": "OTRO COMPRADOR"},
+        {"entidad_contains_all": ["OTRO"]},
+    ])
+    def test_profile_scope_mismatch_fails_before_source_calls(profile_turn, extra):
+        client = FakeClient()
+>       with pytest.raises(ValueError, match="scope"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_entity_profile_evidence.py:85: Failed
+________ test_profile_scope_mismatch_fails_before_source_calls[extra3] _________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+extra = {'entidad_resolved': 'OTRO COMPRADOR'}
+
+    @pytest.mark.parametrize("extra", [
+        {"contratista": ["900123456"]},
+        {"actor_scope": {"requires_resolution": True, "observed_name": "actor"}},
+        {"entidad_like": "OTRO COMPRADOR"},
+        {"entidad_resolved": "OTRO COMPRADOR"},
+        {"entidad_contains_all": ["OTRO"]},
+    ])
+    def test_profile_scope_mismatch_fails_before_source_calls(profile_turn, extra):
+        client = FakeClient()
+>       with pytest.raises(ValueError, match="scope"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_entity_profile_evidence.py:85: Failed
+________ test_profile_scope_mismatch_fails_before_source_calls[extra4] _________
+
+profile_turn = EntityProfileTurn(detected=True, focus='overview', params={'dataset': 'procesos', 'dataset_explicit': False, 'entidad'...ofile_id=physical:f803f45d84143831332a')),), resolution_authority='PRODUCT_BUYER_UNIT_RESOLUTION'), clarification=None)
+extra = {'entidad_contains_all': ['OTRO']}
+
+    @pytest.mark.parametrize("extra", [
+        {"contratista": ["900123456"]},
+        {"actor_scope": {"requires_resolution": True, "observed_name": "actor"}},
+        {"entidad_like": "OTRO COMPRADOR"},
+        {"entidad_resolved": "OTRO COMPRADOR"},
+        {"entidad_contains_all": ["OTRO"]},
+    ])
+    def test_profile_scope_mismatch_fails_before_source_calls(profile_turn, extra):
+        client = FakeClient()
+>       with pytest.raises(ValueError, match="scope"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_entity_profile_evidence.py:85: Failed
+=========================== short test summary info ============================
+FAILED tests/test_entity_profile_evidence.py::test_malformed_contract_aggregate_cannot_be_zero[rows0]
+FAILED tests/test_entity_profile_evidence.py::test_malformed_contract_aggregate_cannot_be_zero[rows1]
+FAILED tests/test_entity_profile_evidence.py::test_malformed_contract_aggregate_cannot_be_zero[rows2]
+FAILED tests/test_entity_profile_evidence.py::test_malformed_contract_aggregate_cannot_be_zero[rows3]
+FAILED tests/test_entity_profile_evidence.py::test_malformed_contract_aggregate_cannot_be_zero[rows4]
+FAILED tests/test_entity_profile_evidence.py::test_malformed_contract_aggregate_cannot_be_zero[rows5]
+FAILED tests/test_entity_profile_evidence.py::test_malformed_contract_aggregate_cannot_be_zero[rows6]
+FAILED tests/test_entity_profile_evidence.py::test_zero_contradicted_by_other_contract_calls_is_unavailable
+FAILED tests/test_entity_profile_evidence.py::test_profile_scope_mismatch_fails_before_source_calls[extra0]
+FAILED tests/test_entity_profile_evidence.py::test_profile_scope_mismatch_fails_before_source_calls[extra1]
+FAILED tests/test_entity_profile_evidence.py::test_profile_scope_mismatch_fails_before_source_calls[extra2]
+FAILED tests/test_entity_profile_evidence.py::test_profile_scope_mismatch_fails_before_source_calls[extra3]
+FAILED tests/test_entity_profile_evidence.py::test_profile_scope_mismatch_fails_before_source_calls[extra4]
+13 failed, 3 passed in 1.87s

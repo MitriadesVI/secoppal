@@ -1,0 +1,391 @@
+F.F..FFFFFFFFFFF.F                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_entity_profile_galapa_does_not_report_false_zero _____________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-571/test_entity_profile_galapa_doe0')
+
+    def test_entity_profile_galapa_does_not_report_false_zero(tmp_path):
+        workflow = actor_workflow(tmp_path, [
+            _row("NIT", "900111222", "ACTOR ALFA", 9),
+            _row("NIT", "900333444", "ACTOR ALFA", 8),
+        ])
+        workflow.run_query("busca proveedor ACTOR ALFA", chat_id="galapa")
+        selected = workflow.run_query("2", chat_id="galapa")
+        assert selected["resolved_params"]["actor_resolution_method"] == "user_selected_candidate"
+        client = SqlProfileClient()
+        workflow.secop_client = client
+        result = workflow.run_query("analizame la alcaldia de galapa", chat_id="galapa")
+>       assert "Se observan 0 contratos" not in result["response"]
+E       AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'
+E
+E         'Se observan 0 contratos' is contained here:
+E           ocesos]
+E           • Se observan 0 contratos por $0. [SECOP II Contratos]
+E           • Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]
+E           • Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]
+E
+E           Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes.
+
+tests/test_beta_entity_actor_conversation.py:80: AssertionError
+_ test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos] _
+
+previous_dataset = 'contratos', query = 'cuales son sus mayores proveedores?'
+
+    @pytest.mark.parametrize("previous_dataset", ["procesos", "contratos"])
+    @pytest.mark.parametrize("query", [
+        "cuales son sus mayores proveedores?",
+        "quienes son sus principales proveedores",
+        "quien tiene mas contratos",
+        "quienes contratan mas con esa entidad",
+    ])
+    def test_entity_profile_supplier_followup_keeps_buyer(previous_dataset, query):
+        workflow, client = _workflow()
+        first = workflow.run_query("analiza la alcaldia de galapa", chat_id="suppliers")
+        # Historical persisted profiles can be in either dataset; both must work.
+        params = {**first["resolved_params"], "dataset": previous_dataset}
+        workflow.conv_store.append_turn(
+            chat_id="suppliers", user_query="analiza la alcaldia de galapa",
+            response=first["response"], parsed_params=params,
+        )
+        client.calls.clear()
+        result = workflow.run_query(query, chat_id="suppliers")
+>       assert result["route_reason"] == "entity_profile_suppliers"
+E       AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E         - entity_profile_suppliers
+E         + heuristic_only
+
+tests/test_beta_entity_actor_conversation.py:108: AssertionError
+_ test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-procesos] _
+
+previous_dataset = 'procesos', query = 'quien tiene mas contratos'
+
+    @pytest.mark.parametrize("previous_dataset", ["procesos", "contratos"])
+    @pytest.mark.parametrize("query", [
+        "cuales son sus mayores proveedores?",
+        "quienes son sus principales proveedores",
+        "quien tiene mas contratos",
+        "quienes contratan mas con esa entidad",
+    ])
+    def test_entity_profile_supplier_followup_keeps_buyer(previous_dataset, query):
+        workflow, client = _workflow()
+        first = workflow.run_query("analiza la alcaldia de galapa", chat_id="suppliers")
+        # Historical persisted profiles can be in either dataset; both must work.
+        params = {**first["resolved_params"], "dataset": previous_dataset}
+        workflow.conv_store.append_turn(
+            chat_id="suppliers", user_query="analiza la alcaldia de galapa",
+            response=first["response"], parsed_params=params,
+        )
+        client.calls.clear()
+        result = workflow.run_query(query, chat_id="suppliers")
+>       assert result["route_reason"] == "entity_profile_suppliers"
+E       AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E         - entity_profile_suppliers
+E         + heuristic_only
+
+tests/test_beta_entity_actor_conversation.py:108: AssertionError
+_ test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos] _
+
+previous_dataset = 'contratos', query = 'quien tiene mas contratos'
+
+    @pytest.mark.parametrize("previous_dataset", ["procesos", "contratos"])
+    @pytest.mark.parametrize("query", [
+        "cuales son sus mayores proveedores?",
+        "quienes son sus principales proveedores",
+        "quien tiene mas contratos",
+        "quienes contratan mas con esa entidad",
+    ])
+    def test_entity_profile_supplier_followup_keeps_buyer(previous_dataset, query):
+        workflow, client = _workflow()
+        first = workflow.run_query("analiza la alcaldia de galapa", chat_id="suppliers")
+        # Historical persisted profiles can be in either dataset; both must work.
+        params = {**first["resolved_params"], "dataset": previous_dataset}
+        workflow.conv_store.append_turn(
+            chat_id="suppliers", user_query="analiza la alcaldia de galapa",
+            response=first["response"], parsed_params=params,
+        )
+        client.calls.clear()
+        result = workflow.run_query(query, chat_id="suppliers")
+>       assert result["route_reason"] == "entity_profile_suppliers"
+E       AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E         - entity_profile_suppliers
+E         + heuristic_only
+
+tests/test_beta_entity_actor_conversation.py:108: AssertionError
+_ test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-procesos] _
+
+previous_dataset = 'procesos', query = 'quienes contratan mas con esa entidad'
+
+    @pytest.mark.parametrize("previous_dataset", ["procesos", "contratos"])
+    @pytest.mark.parametrize("query", [
+        "cuales son sus mayores proveedores?",
+        "quienes son sus principales proveedores",
+        "quien tiene mas contratos",
+        "quienes contratan mas con esa entidad",
+    ])
+    def test_entity_profile_supplier_followup_keeps_buyer(previous_dataset, query):
+        workflow, client = _workflow()
+        first = workflow.run_query("analiza la alcaldia de galapa", chat_id="suppliers")
+        # Historical persisted profiles can be in either dataset; both must work.
+        params = {**first["resolved_params"], "dataset": previous_dataset}
+        workflow.conv_store.append_turn(
+            chat_id="suppliers", user_query="analiza la alcaldia de galapa",
+            response=first["response"], parsed_params=params,
+        )
+        client.calls.clear()
+        result = workflow.run_query(query, chat_id="suppliers")
+>       assert result["route_reason"] == "entity_profile_suppliers"
+E       AssertionError: assert 'analytics_ranking' == 'entity_profile_suppliers'
+E
+E         - entity_profile_suppliers
+E         + analytics_ranking
+
+tests/test_beta_entity_actor_conversation.py:108: AssertionError
+_ test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos] _
+
+previous_dataset = 'contratos', query = 'quienes contratan mas con esa entidad'
+
+    @pytest.mark.parametrize("previous_dataset", ["procesos", "contratos"])
+    @pytest.mark.parametrize("query", [
+        "cuales son sus mayores proveedores?",
+        "quienes son sus principales proveedores",
+        "quien tiene mas contratos",
+        "quienes contratan mas con esa entidad",
+    ])
+    def test_entity_profile_supplier_followup_keeps_buyer(previous_dataset, query):
+        workflow, client = _workflow()
+        first = workflow.run_query("analiza la alcaldia de galapa", chat_id="suppliers")
+        # Historical persisted profiles can be in either dataset; both must work.
+        params = {**first["resolved_params"], "dataset": previous_dataset}
+        workflow.conv_store.append_turn(
+            chat_id="suppliers", user_query="analiza la alcaldia de galapa",
+            response=first["response"], parsed_params=params,
+        )
+        client.calls.clear()
+        result = workflow.run_query(query, chat_id="suppliers")
+>       assert result["route_reason"] == "entity_profile_suppliers"
+E       AssertionError: assert 'analytics_ranking' == 'entity_profile_suppliers'
+E
+E         - entity_profile_suppliers
+E         + analytics_ranking
+
+tests/test_beta_entity_actor_conversation.py:108: AssertionError
+______ test_entity_profile_supplier_followup_by_value_keeps_both_rankings ______
+
+    def test_entity_profile_supplier_followup_by_value_keeps_both_rankings():
+        workflow, client = _workflow()
+        workflow.run_query("analiza la alcaldia de galapa", chat_id="value")
+        workflow.run_query("y sus proveedores", chat_id="value")
+        client.calls.clear()
+        result = workflow.run_query("y por valor", chat_id="value")
+>       assert result["route_reason"] == "entity_profile_suppliers"
+E       AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E         - entity_profile_suppliers
+E         + heuristic_only
+
+tests/test_beta_entity_actor_conversation.py:124: AssertionError
+_ test_strong_actor_new_search_reaches_resolution[rodrigo ortiz-rows0-AMBIGUOUS-actor_name_ambiguous] _
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-571/test_strong_actor_new_search_r0')
+name = 'rodrigo ortiz'
+rows = [{'documento_proveedor': '10000001', 'first_seen': '2024-01-01', 'last_seen': '2026-01-01', 'occurrences': 5, ...}, {'documento_proveedor': '10000002', 'first_seen': '2024-01-01', 'last_seen': '2026-01-01', 'occurrences': 5, ...}]
+status = 'AMBIGUOUS', reason = 'actor_name_ambiguous'
+
+    @pytest.mark.parametrize("name, rows, status, reason", [
+        ("rodrigo ortiz", [_row("CC", "10000001", "RODRIGO ORTIZ"),
+                           _row("CC", "10000002", "RODRIGO ORTIZ")],
+         "AMBIGUOUS", "actor_name_ambiguous"),
+        ("camila araujo", [_row("CC", "10000001", "CAMILA ANDREA ARAUJO")],
+         "CANDIDATES", "actor_name_candidates"),
+        ("actor inexistente", [], "UNRESOLVED", "actor_name_requires_resolution"),
+        ("actor unico", [_row("NIT", "900111222", "ACTOR UNICO")], "RESOLVED", None),
+    ])
+    def test_strong_actor_new_search_reaches_resolution(tmp_path, name, rows, status, reason):
+        workflow = actor_workflow(tmp_path, rows)
+        workflow.run_query("reset", chat_id="actor")
+        workflow.run_query("busca proveedor codetec", chat_id="actor")
+        client = WorkflowClient()
+        workflow.secop_client = client
+        result = workflow.run_query(f"busca proveedor {name}", chat_id="actor")
+>       assert "perdi el contexto" not in result["response"].lower()
+E       AssertionError: assert 'perdi el contexto' not in 'te entendi ...ino quieres?'
+E
+E         'perdi el contexto' is contained here:
+E           te entendi como refinamiento, pero perdi el contexto anterior. haz una busqueda base primero o usa reset.
+E         ?                                    +++++++++++++++++
+E
+E           puedo buscar de varias formas:
+E           1. procesos mas recientes...
+E
+E         ...Full output truncated (4 lines hidden), use '-vv' to show
+
+tests/test_beta_entity_actor_conversation.py:146: AssertionError
+_ test_strong_actor_new_search_reaches_resolution[camila araujo-rows1-CANDIDATES-actor_name_candidates] _
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-571/test_strong_actor_new_search_r1')
+name = 'camila araujo'
+rows = [{'documento_proveedor': '10000001', 'first_seen': '2024-01-01', 'last_seen': '2026-01-01', 'occurrences': 5, ...}]
+status = 'CANDIDATES', reason = 'actor_name_candidates'
+
+    @pytest.mark.parametrize("name, rows, status, reason", [
+        ("rodrigo ortiz", [_row("CC", "10000001", "RODRIGO ORTIZ"),
+                           _row("CC", "10000002", "RODRIGO ORTIZ")],
+         "AMBIGUOUS", "actor_name_ambiguous"),
+        ("camila araujo", [_row("CC", "10000001", "CAMILA ANDREA ARAUJO")],
+         "CANDIDATES", "actor_name_candidates"),
+        ("actor inexistente", [], "UNRESOLVED", "actor_name_requires_resolution"),
+        ("actor unico", [_row("NIT", "900111222", "ACTOR UNICO")], "RESOLVED", None),
+    ])
+    def test_strong_actor_new_search_reaches_resolution(tmp_path, name, rows, status, reason):
+        workflow = actor_workflow(tmp_path, rows)
+        workflow.run_query("reset", chat_id="actor")
+        workflow.run_query("busca proveedor codetec", chat_id="actor")
+        client = WorkflowClient()
+        workflow.secop_client = client
+        result = workflow.run_query(f"busca proveedor {name}", chat_id="actor")
+>       assert "perdi el contexto" not in result["response"].lower()
+E       AssertionError: assert 'perdi el contexto' not in 'te entendi ...ino quieres?'
+E
+E         'perdi el contexto' is contained here:
+E           te entendi como refinamiento, pero perdi el contexto anterior. haz una busqueda base primero o usa reset.
+E         ?                                    +++++++++++++++++
+E
+E           puedo buscar de varias formas:
+E           1. procesos mas recientes...
+E
+E         ...Full output truncated (4 lines hidden), use '-vv' to show
+
+tests/test_beta_entity_actor_conversation.py:146: AssertionError
+_ test_strong_actor_new_search_reaches_resolution[actor inexistente-rows2-UNRESOLVED-actor_name_requires_resolution] _
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-571/test_strong_actor_new_search_r2')
+name = 'actor inexistente', rows = [], status = 'UNRESOLVED'
+reason = 'actor_name_requires_resolution'
+
+    @pytest.mark.parametrize("name, rows, status, reason", [
+        ("rodrigo ortiz", [_row("CC", "10000001", "RODRIGO ORTIZ"),
+                           _row("CC", "10000002", "RODRIGO ORTIZ")],
+         "AMBIGUOUS", "actor_name_ambiguous"),
+        ("camila araujo", [_row("CC", "10000001", "CAMILA ANDREA ARAUJO")],
+         "CANDIDATES", "actor_name_candidates"),
+        ("actor inexistente", [], "UNRESOLVED", "actor_name_requires_resolution"),
+        ("actor unico", [_row("NIT", "900111222", "ACTOR UNICO")], "RESOLVED", None),
+    ])
+    def test_strong_actor_new_search_reaches_resolution(tmp_path, name, rows, status, reason):
+        workflow = actor_workflow(tmp_path, rows)
+        workflow.run_query("reset", chat_id="actor")
+        workflow.run_query("busca proveedor codetec", chat_id="actor")
+        client = WorkflowClient()
+        workflow.secop_client = client
+        result = workflow.run_query(f"busca proveedor {name}", chat_id="actor")
+>       assert "perdi el contexto" not in result["response"].lower()
+E       AssertionError: assert 'perdi el contexto' not in 'te entendi ...ino quieres?'
+E
+E         'perdi el contexto' is contained here:
+E           te entendi como refinamiento, pero perdi el contexto anterior. haz una busqueda base primero o usa reset.
+E         ?                                    +++++++++++++++++
+E
+E           puedo buscar de varias formas:
+E           1. procesos mas recientes...
+E
+E         ...Full output truncated (4 lines hidden), use '-vv' to show
+
+tests/test_beta_entity_actor_conversation.py:146: AssertionError
+_ test_strong_actor_new_search_reaches_resolution[actor unico-rows3-RESOLVED-None] _
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-571/test_strong_actor_new_search_r3')
+name = 'actor unico'
+rows = [{'documento_proveedor': '900111222', 'first_seen': '2024-01-01', 'last_seen': '2026-01-01', 'occurrences': 5, ...}]
+status = 'RESOLVED', reason = None
+
+    @pytest.mark.parametrize("name, rows, status, reason", [
+        ("rodrigo ortiz", [_row("CC", "10000001", "RODRIGO ORTIZ"),
+                           _row("CC", "10000002", "RODRIGO ORTIZ")],
+         "AMBIGUOUS", "actor_name_ambiguous"),
+        ("camila araujo", [_row("CC", "10000001", "CAMILA ANDREA ARAUJO")],
+         "CANDIDATES", "actor_name_candidates"),
+        ("actor inexistente", [], "UNRESOLVED", "actor_name_requires_resolution"),
+        ("actor unico", [_row("NIT", "900111222", "ACTOR UNICO")], "RESOLVED", None),
+    ])
+    def test_strong_actor_new_search_reaches_resolution(tmp_path, name, rows, status, reason):
+        workflow = actor_workflow(tmp_path, rows)
+        workflow.run_query("reset", chat_id="actor")
+        workflow.run_query("busca proveedor codetec", chat_id="actor")
+        client = WorkflowClient()
+        workflow.secop_client = client
+        result = workflow.run_query(f"busca proveedor {name}", chat_id="actor")
+>       assert "perdi el contexto" not in result["response"].lower()
+E       AssertionError: assert 'perdi el contexto' not in 'te entendi ...ino quieres?'
+E
+E         'perdi el contexto' is contained here:
+E           te entendi como refinamiento, pero perdi el contexto anterior. haz una busqueda base primero o usa reset.
+E         ?                                    +++++++++++++++++
+E
+E           puedo buscar de varias formas:
+E           1. procesos mas recientes...
+E
+E         ...Full output truncated (4 lines hidden), use '-vv' to show
+
+tests/test_beta_entity_actor_conversation.py:146: AssertionError
+________ test_strong_actor_new_search_discards_previous_topic_and_scope ________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-571/test_strong_actor_new_search_d0')
+
+    def test_strong_actor_new_search_discards_previous_topic_and_scope(tmp_path):
+        workflow = actor_workflow(tmp_path, [_row("NIT", "900111222", "ACTOR X")])
+        workflow.secop_client = WorkflowClient()
+        workflow.run_query("contratos de alimentacion de la alcaldia de galapa en 2025", chat_id="new")
+        result = workflow.run_query("busca proveedor ACTOR X", chat_id="new")
+        params = result["resolved_params"]
+>       assert params["actor_scope"]["observed_name"] == "ACTOR X"
+               ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'actor_scope'
+
+tests/test_beta_entity_actor_conversation.py:166: KeyError
+___________ test_strong_actor_missing_index_reaches_dedicated_policy ___________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-571/test_strong_actor_missing_inde0')
+
+    def test_strong_actor_missing_index_reaches_dedicated_policy(tmp_path):
+        workflow = SecopalWorkflow(Settings(secop_actor_alias_index_path=tmp_path / "missing.sqlite"))
+        client = WorkflowClient()
+        workflow.secop_client = client
+        workflow.run_query("busca proveedor codetec", chat_id="missing")
+        result = workflow.run_query("busca proveedor rodrigo ortiz", chat_id="missing")
+>       assert result["query_plan"]["reason"] == "actor_index_unavailable"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'reason'
+
+tests/test_beta_entity_actor_conversation.py:177: KeyError
+______________ test_actor_candidate_summary_is_persisted_in_trace ______________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-571/test_actor_candidate_summary_i0')
+
+    def test_actor_candidate_summary_is_persisted_in_trace(tmp_path):
+        workflow = actor_workflow(tmp_path, [_row("CC", "10000001", "CAMILA ANDREA ARAUJO")])
+        result = workflow.run_query("busca proveedor camila araujo")
+        trace = json.loads((tmp_path / "feedback.jsonl").read_text().splitlines()[-1])
+>       assert trace["actor_resolution_status"] == "CANDIDATES"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'actor_resolution_status'
+
+tests/test_beta_entity_actor_conversation.py:194: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-procesos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-procesos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_by_value_keeps_both_rankings
+FAILED tests/test_beta_entity_actor_conversation.py::test_strong_actor_new_search_reaches_resolution[rodrigo ortiz-rows0-AMBIGUOUS-actor_name_ambiguous]
+FAILED tests/test_beta_entity_actor_conversation.py::test_strong_actor_new_search_reaches_resolution[camila araujo-rows1-CANDIDATES-actor_name_candidates]
+FAILED tests/test_beta_entity_actor_conversation.py::test_strong_actor_new_search_reaches_resolution[actor inexistente-rows2-UNRESOLVED-actor_name_requires_resolution]
+FAILED tests/test_beta_entity_actor_conversation.py::test_strong_actor_new_search_reaches_resolution[actor unico-rows3-RESOLVED-None]
+FAILED tests/test_beta_entity_actor_conversation.py::test_strong_actor_new_search_discards_previous_topic_and_scope
+FAILED tests/test_beta_entity_actor_conversation.py::test_strong_actor_missing_index_reaches_dedicated_policy
+FAILED tests/test_beta_entity_actor_conversation.py::test_actor_candidate_summary_is_persisted_in_trace
+14 failed, 4 passed in 2.97s

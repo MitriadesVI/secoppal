@@ -1,0 +1,907 @@
+{
+  "base": "c546eb6",
+  "scratch": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-beta-pre-n4kdm5i8",
+  "galapa": {
+    "parsed": {
+      "dataset": "procesos",
+      "dataset_explicit": false,
+      "entidad": "Municipio de galapa",
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution": {
+        "value": "MUNICIPIO DE GALAPA.",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de galapa",
+          "resolution_method": "exact"
+        }
+      },
+      "objeto": [
+        "analizame"
+      ]
+    },
+    "turn": {
+      "detected": true,
+      "focus": "overview",
+      "params": {
+        "dataset": "procesos",
+        "dataset_explicit": false,
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "_entity_profile_active": true
+      },
+      "scope": {
+        "scope_type": "BUYER_UNIT",
+        "buyer_units": [
+          "MUNICIPIO DE GALAPA."
+        ],
+        "buyer_group_id": null,
+        "territory_context": [
+          {
+            "divipola": "08296",
+            "municipality": "GALAPA",
+            "department": "ATLÁNTICO",
+            "macro_region": "Caribe",
+            "institution_id": "logical:8f1ffd811868fb6de329",
+            "institutional_family": "MUNICIPAL_EXECUTIVE",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+            ]
+          }
+        ],
+        "time_from": null,
+        "time_to": null,
+        "modality": [],
+        "topic": []
+      },
+      "identity": {
+        "display_name": "MUNICIPIO DE GALAPA.",
+        "canonical_buyers": [
+          "MUNICIPIO DE GALAPA."
+        ],
+        "buyer_group_id": null,
+        "institution_refs": [
+          {
+            "institution_id": "logical:8f1ffd811868fb6de329",
+            "buyer_canonical": "MUNICIPIO DE GALAPA.",
+            "territory_divipola": "08296",
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "provenance": [
+              "artifacts/audits/municipal_m2a/logical_units.json#/units/552",
+              "artifacts/audits/municipal_m2a/physical_profiles.json#profile_id=physical:f803f45d84143831332a"
+            ]
+          }
+        ],
+        "resolution_authority": "PRODUCT_BUYER_UNIT_RESOLUTION"
+      },
+      "clarification": null
+    },
+    "binding": null,
+    "jobs": [
+      {
+        "call_id": "process_activity",
+        "dataset": "p6dx-8zbt",
+        "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100"
+      },
+      {
+        "call_id": "contract_values",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%'))"
+      },
+      {
+        "call_id": "supplier_count",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+      },
+      {
+        "call_id": "supplier_value",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+      },
+      {
+        "call_id": "recent_processes",
+        "dataset": "p6dx-8zbt",
+        "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3"
+      },
+      {
+        "call_id": "recent_contracts",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3"
+      }
+    ]
+  },
+  "entity": [
+    {
+      "query": "analizame la alcaldia de galapa",
+      "prior_params": {},
+      "frame": {
+        "dataset": null,
+        "dataset_explicit": false,
+        "scope": {},
+        "topic": [],
+        "objeto_exclude": [],
+        "modifiers": {},
+        "raw_params": {
+          "objeto": []
+        },
+        "intent_type": "new_search"
+      },
+      "direct_merge": [
+        "new_search",
+        {
+          "dataset": "procesos",
+          "entidad": "Municipio de galapa",
+          "entidad_resolved": "MUNICIPIO DE GALAPA.",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE GALAPA.",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de galapa",
+              "resolution_method": "exact"
+            }
+          },
+          "objeto": [
+            "analizame"
+          ]
+        }
+      ],
+      "result": {
+        "response": "MUNICIPIO DE GALAPA. — todo el histórico disponible\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\n• Publicó 10 procesos en el periodo. [SECOP II Procesos]\n• Se observan 4 contratos por $1.0 mil millones; promedio $250 millones. [SECOP II Contratos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (70%), Selección abreviada (30%). [SECOP II Procesos]\n• Principal contratista por valor: PROVEEDOR MAYOR SAS ($700 millones). [SECOP II Contratos]\n• Principal contratista por número de contratos: PROVEEDOR FRECUENTE SAS (3). [SECOP II Contratos]\n• Proceso reciente: MANTENIMIENTO DE VÍAS. [SECOP II Procesos]\n• Contrato reciente: OBRA PÚBLICA. [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "p6dx-8zbt",
+        "soql_query": "",
+        "parsed_params": {
+          "dataset": "procesos",
+          "dataset_explicit": false,
+          "entidad": "Municipio de galapa",
+          "entidad_resolved": "MUNICIPIO DE GALAPA.",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE GALAPA.",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de galapa",
+              "resolution_method": "exact"
+            }
+          },
+          "objeto": [
+            "analizame"
+          ]
+        },
+        "resolved_params": {
+          "dataset": "procesos",
+          "entidad": "Municipio de galapa",
+          "entidad_resolved": "MUNICIPIO DE GALAPA.",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE GALAPA.",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de galapa",
+              "resolution_method": "exact"
+            }
+          },
+          "_entity_profile_active": true
+        },
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "entity_profile_overview",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "",
+        "followup_intent_type": "",
+        "followup_mutation": {},
+        "analytical_intent": "entity_profile",
+        "analytical_response": "MUNICIPIO DE GALAPA. — todo el histórico disponible\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\n• Publicó 10 procesos en el periodo. [SECOP II Procesos]\n• Se observan 4 contratos por $1.0 mil millones; promedio $250 millones. [SECOP II Contratos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (70%), Selección abreviada (30%). [SECOP II Procesos]\n• Principal contratista por valor: PROVEEDOR MAYOR SAS ($700 millones). [SECOP II Contratos]\n• Principal contratista por número de contratos: PROVEEDOR FRECUENTE SAS (3). [SECOP II Contratos]\n• Proceso reciente: MANTENIMIENTO DE VÍAS. [SECOP II Procesos]\n• Contrato reciente: OBRA PÚBLICA. [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+        "clarification_reason": "",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": true,
+          "params": {
+            "dataset": "procesos",
+            "dataset_explicit": false,
+            "entidad": "Municipio de galapa",
+            "entidad_resolved": "MUNICIPIO DE GALAPA.",
+            "entidad_resolution": {
+              "value": "MUNICIPIO DE GALAPA.",
+              "method": "rewrite_alcald[ií]a",
+              "kind": "buyer_entity",
+              "confidence": "high",
+              "like_value": null,
+              "metadata": {
+                "rewritten_from": "alcaldia de galapa",
+                "resolution_method": "exact"
+              }
+            },
+            "objeto": [
+              "analizame"
+            ]
+          },
+          "missing_slots": [],
+          "risk_flags": [],
+          "clarification_question": null,
+          "reason": "valid_query",
+          "signals": []
+        },
+        "followup": false,
+        "timings_ms": {
+          "parse_ms": 0.76,
+          "resolve_ms": 3.69,
+          "build_soql_ms": 0.05,
+          "entity_profile_calls_total": 6.0,
+          "entity_profile_total_latency_ms": 0.5654580309055746,
+          "entity_profile_activity_modalities_calls": 1.0,
+          "entity_profile_activity_values_calls": 1.0,
+          "entity_profile_suppliers_calls": 2.0,
+          "entity_profile_recent_calls": 2.0,
+          "entity_profile_activity_modalities_ms": 0.005041016265749931,
+          "entity_profile_activity_values_ms": 0.0030830269679427147,
+          "entity_profile_suppliers_ms": 0.008167000487446785,
+          "entity_profile_recent_ms": 0.004209054168313742,
+          "execute_total_ms": 0.71,
+          "degrade_ms": 0.0,
+          "observe_ms": 0.0,
+          "suggest_ms": 0.0,
+          "rank_ms": 0.01,
+          "format_ms": 0.0,
+          "advisor_response_ms": 0.01,
+          "total_ms": 7.92
+        },
+        "contextual_filters": {},
+        "should_execute_decision": true,
+        "source_candidate_total": 0,
+        "validated_total_known": 0,
+        "displayed_so_far": 0,
+        "source_total_approximate": false,
+        "outcome": "success",
+        "outcome_reason": "results_found",
+        "query_fingerprint": "6630ef6d4356aa850c9c7346bbd9abff903284b1b8e35f8c245e40dfae18c5c3",
+        "trace_id": "537b437602ff",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 12.1
+      }
+    },
+    {
+      "query": "cuales son sus mayores proveedores?",
+      "prior_params": {
+        "dataset": "procesos",
+        "entidad": "Municipio de galapa",
+        "entidad_resolved": "MUNICIPIO DE GALAPA.",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE GALAPA.",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de galapa",
+            "resolution_method": "exact"
+          }
+        },
+        "_entity_profile_active": true
+      },
+      "frame": {
+        "dataset": "procesos",
+        "dataset_explicit": false,
+        "scope": {
+          "entidad": "Municipio de galapa",
+          "entidad_resolved": "MUNICIPIO DE GALAPA.",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE GALAPA.",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de galapa",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "topic": [],
+        "objeto_exclude": [],
+        "modifiers": {},
+        "raw_params": {
+          "_entity_profile_active": true,
+          "objeto": []
+        },
+        "intent_type": "new_search"
+      },
+      "direct_merge": [
+        "change_dataset",
+        {
+          "dataset": "contratos",
+          "entidad": "Municipio de galapa",
+          "entidad_resolved": "MUNICIPIO DE GALAPA.",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE GALAPA.",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de galapa",
+              "resolution_method": "exact"
+            }
+          },
+          "_entity_profile_active": true,
+          "objeto": []
+        }
+      ],
+      "result": {
+        "response": "MUNICIPIO DE GALAPA. — histórico disponible\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\nPrincipales contratistas por número de contratos\n• PROVEEDOR FRECUENTE SAS: 3 contratos\nPrincipales contratistas por valor contratado\n• PROVEEDOR MAYOR SAS: $700 millones",
+        "rows": [],
+        "results": [],
+        "dataset_id": "jbjy-vk9h",
+        "soql_query": "",
+        "parsed_params": {
+          "dataset": "contratos",
+          "entidad": "Municipio de galapa",
+          "entidad_resolved": "MUNICIPIO DE GALAPA.",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE GALAPA.",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de galapa",
+              "resolution_method": "exact"
+            }
+          },
+          "_entity_profile_active": true,
+          "objeto": []
+        },
+        "resolved_params": {
+          "dataset": "contratos",
+          "entidad": "Municipio de galapa",
+          "entidad_resolved": "MUNICIPIO DE GALAPA.",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE GALAPA.",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de galapa",
+              "resolution_method": "exact"
+            }
+          },
+          "_entity_profile_active": true
+        },
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "entity_profile_suppliers",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [
+          "Suggestion(label='Ver contratos activos (en ejecución)', modified_params={'dataset': 'contratos', 'entidad': 'Municipio de galapa', 'entidad_resolved': 'MUNICIPIO DE GALAPA.', 'entidad_resolution': {'value': 'MUNICIPIO DE GALAPA.', 'method': 'rewrite_alcald[ií]a', 'kind': 'buyer_entity', 'confidence': 'high', 'like_value': None, 'metadata': {'rewritten_from': 'alcaldia de galapa', 'resolution_method': 'exact'}}, '_entity_profile_active': True, 'estado': ['En ejecución', 'Modificado', 'Prorrogado']}, expected_count=None, reason='Contratos actualmente activos')",
+          "Suggestion(label='Ver contratos cerrados', modified_params={'dataset': 'contratos', 'entidad': 'Municipio de galapa', 'entidad_resolved': 'MUNICIPIO DE GALAPA.', 'entidad_resolution': {'value': 'MUNICIPIO DE GALAPA.', 'method': 'rewrite_alcald[ií]a', 'kind': 'buyer_entity', 'confidence': 'high', 'like_value': None, 'metadata': {'rewritten_from': 'alcaldia de galapa', 'resolution_method': 'exact'}}, '_entity_profile_active': True, 'estado': ['Cerrado']}, expected_count=None, reason='Contratos con gestión cerrada')",
+          "Suggestion(label='Ver suspendidos', modified_params={'dataset': 'contratos', 'entidad': 'Municipio de galapa', 'entidad_resolved': 'MUNICIPIO DE GALAPA.', 'entidad_resolution': {'value': 'MUNICIPIO DE GALAPA.', 'method': 'rewrite_alcald[ií]a', 'kind': 'buyer_entity', 'confidence': 'high', 'like_value': None, 'metadata': {'rewritten_from': 'alcaldia de galapa', 'resolution_method': 'exact'}}, '_entity_profile_active': True, 'estado': ['Suspendido']}, expected_count=None, reason='Contratos suspendidos')"
+        ],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "change_dataset",
+        "followup_intent_type": "change_dataset",
+        "followup_mutation": {
+          "intent": "change_dataset",
+          "requested_fields": [
+            "dataset",
+            "dataset_explicit"
+          ],
+          "accepted_fields": [
+            "dataset",
+            "dataset_explicit"
+          ],
+          "transition_cleared_fields": [],
+          "rejected_fields": [],
+          "rejection_reasons": {}
+        },
+        "analytical_intent": "entity_profile",
+        "analytical_response": "MUNICIPIO DE GALAPA. — histórico disponible\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\nPrincipales contratistas por número de contratos\n• PROVEEDOR FRECUENTE SAS: 3 contratos\nPrincipales contratistas por valor contratado\n• PROVEEDOR MAYOR SAS: $700 millones",
+        "clarification_reason": "",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": true,
+          "params": {
+            "dataset": "contratos",
+            "entidad": "Municipio de galapa",
+            "entidad_resolved": "MUNICIPIO DE GALAPA.",
+            "entidad_resolution": {
+              "value": "MUNICIPIO DE GALAPA.",
+              "method": "rewrite_alcald[ií]a",
+              "kind": "buyer_entity",
+              "confidence": "high",
+              "like_value": null,
+              "metadata": {
+                "rewritten_from": "alcaldia de galapa",
+                "resolution_method": "exact"
+              }
+            },
+            "_entity_profile_active": true,
+            "objeto": []
+          },
+          "missing_slots": [],
+          "risk_flags": [],
+          "clarification_question": null,
+          "reason": "filler_scrubbed",
+          "signals": [
+            {
+              "kind": "discourse_filler",
+              "payload": {
+                "tokens_to_scrub": [
+                  "son"
+                ]
+              },
+              "confidence": "high",
+              "source_tokens": [
+                "son"
+              ]
+            }
+          ]
+        },
+        "followup": true,
+        "timings_ms": {
+          "parse_ms": 0.45,
+          "apply_context_ms": 0.16,
+          "resolve_ms": 0.02,
+          "build_soql_ms": 0.03,
+          "entity_profile_calls_total": 2.0,
+          "entity_profile_total_latency_ms": 0.18808298045769334,
+          "entity_profile_suppliers_calls": 2.0,
+          "entity_profile_suppliers_ms": 0.0070820096880197525,
+          "execute_total_ms": 0.29,
+          "degrade_ms": 0.0,
+          "observe_ms": 0.0,
+          "suggest_ms": 0.01,
+          "rank_ms": 0.01,
+          "format_ms": 0.0,
+          "advisor_response_ms": 0.01,
+          "total_ms": 2.99
+        },
+        "contextual_filters": {},
+        "should_execute_decision": true,
+        "source_candidate_total": 0,
+        "validated_total_known": 0,
+        "displayed_so_far": 0,
+        "source_total_approximate": false,
+        "outcome": "success",
+        "outcome_reason": "results_found",
+        "query_fingerprint": "d0f5242be6e5d944296a5d3f1f2836c786569f2c4cca6ae51efcca70ef6aaa2b",
+        "trace_id": "225fff25b364",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 3.9
+      }
+    }
+  ],
+  "actor": [
+    {
+      "query": "reset",
+      "prior_params": {},
+      "frame": {
+        "dataset": null,
+        "dataset_explicit": false,
+        "scope": {},
+        "topic": [],
+        "objeto_exclude": [],
+        "modifiers": {},
+        "raw_params": {
+          "objeto": []
+        },
+        "intent_type": "new_search"
+      },
+      "direct_merge": [
+        "new_search",
+        {
+          "dataset": "procesos",
+          "objeto": [
+            "reset"
+          ]
+        }
+      ],
+      "result": {
+        "response": "Conversacion reiniciada. Olvide el contexto anterior.\n\nSobre que quieres buscar ahora? Puedo ayudarte con:\n1. Contratos firmados de una entidad o tema.\n2. Procesos abiertos para licitar.\n3. Analisis de contratistas o concentracion por sector.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "",
+        "soql_query": "",
+        "parsed_params": {},
+        "resolved_params": {},
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "reset",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [],
+        "timeout_suggestions": [],
+        "intent_type": "",
+        "followup": false,
+        "trace_id": "",
+        "narrated": false,
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 0.0
+      }
+    },
+    {
+      "query": "busca proveedor codetec",
+      "prior_params": {},
+      "frame": {
+        "dataset": null,
+        "dataset_explicit": false,
+        "scope": {},
+        "topic": [],
+        "objeto_exclude": [],
+        "modifiers": {},
+        "raw_params": {
+          "objeto": []
+        },
+        "intent_type": "new_search"
+      },
+      "direct_merge": [
+        "new_search",
+        {
+          "dataset": "contratos",
+          "actor_resolution": "name_unresolved",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "codetec",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "objeto": []
+        }
+      ],
+      "result": {
+        "response": "Para darte la huella contractual de CODETEC necesito su NIT o su cédula. Con el nombre solo no puedo distinguirlo de otros proveedores de nombre parecido, y atribuirle contratos ajenos sería peor que no responder.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "",
+        "soql_query": "",
+        "parsed_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "no_match",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "codetec",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "actor_resolution_status": "UNRESOLVED",
+          "actor_resolution_method": "no_match"
+        },
+        "resolved_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "no_match",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "codetec",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "actor_resolution_status": "UNRESOLVED",
+          "actor_resolution_method": "no_match"
+        },
+        "needs_llm": false,
+        "needs_clarification": true,
+        "route_reason": "heuristic_only",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "",
+        "followup_intent_type": "",
+        "followup_mutation": {},
+        "analytical_intent": "",
+        "analytical_response": "",
+        "clarification_reason": "actor_name_requires_resolution",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": false,
+          "params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "actor_resolution": "no_match",
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "strong_actor_syntax",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "name_unresolved",
+              "requires_resolution": true,
+              "observed_name": "codetec",
+              "reason_codes": [
+                "ACTOR_ROLE_MARKER",
+                "ACTOR_NAME_NEEDS_RESOLUTION"
+              ]
+            },
+            "actor_resolution_status": "UNRESOLVED",
+            "actor_resolution_method": "no_match"
+          },
+          "missing_slots": [
+            "actor_document"
+          ],
+          "risk_flags": [
+            "actor_requires_resolution"
+          ],
+          "clarification_question": "Para darte la huella contractual de CODETEC necesito su NIT o su cédula. Con el nombre solo no puedo distinguirlo de otros proveedores de nombre parecido, y atribuirle contratos ajenos sería peor que no responder.",
+          "reason": "actor_name_requires_resolution",
+          "signals": []
+        },
+        "followup": false,
+        "timings_ms": {
+          "parse_ms": 1.21,
+          "clarify_ms": 0.0,
+          "advisor_response_ms": 0.02,
+          "total_ms": 37.9
+        },
+        "contextual_filters": {},
+        "should_execute_decision": false,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "query_fingerprint": "ba7fea7f48b1ac91162747fd991e6a105f771c17927dd552593b1633502bfdb3",
+        "trace_id": "21f9b64902f1",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 38.9
+      }
+    },
+    {
+      "query": "busca proveedor rodrigo ortiz",
+      "prior_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution": "no_match",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "name_unresolved",
+          "requires_resolution": true,
+          "observed_name": "codetec",
+          "reason_codes": [
+            "ACTOR_ROLE_MARKER",
+            "ACTOR_NAME_NEEDS_RESOLUTION"
+          ]
+        },
+        "actor_resolution_status": "UNRESOLVED",
+        "actor_resolution_method": "no_match"
+      },
+      "frame": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "scope": {},
+        "topic": [],
+        "objeto_exclude": [],
+        "modifiers": {},
+        "raw_params": {
+          "actor_resolution": "no_match",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "codetec",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "actor_resolution_status": "UNRESOLVED",
+          "actor_resolution_method": "no_match",
+          "objeto": []
+        },
+        "intent_type": "new_search"
+      },
+      "direct_merge": [
+        "new_search",
+        {
+          "dataset": "contratos",
+          "actor_resolution": "name_unresolved",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "rodrigo ortiz",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "objeto": []
+        }
+      ],
+      "result": {
+        "response": "Te entendi como refinamiento, pero perdi el contexto anterior. Haz una busqueda base primero o usa reset.\n\nPuedo buscar de varias formas:\n1. Procesos mas recientes\n2. Procesos de mayor valor\n3. Procesos de mantenimiento vial\n\nCual camino quieres?",
+        "rows": [],
+        "results": [],
+        "dataset_id": "",
+        "soql_query": "",
+        "parsed_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "name_unresolved",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "rodrigo ortiz",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          }
+        },
+        "resolved_params": {},
+        "needs_llm": false,
+        "needs_clarification": true,
+        "route_reason": "heuristic_only",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "set_actor",
+        "followup_intent_type": "set_actor",
+        "followup_mutation": {
+          "intent": "set_actor",
+          "requested_fields": [
+            "actor_conversation_construction",
+            "actor_conversation_operation",
+            "actor_resolution",
+            "actor_scope",
+            "dataset",
+            "dataset_explicit"
+          ],
+          "accepted_fields": [
+            "actor_conversation_construction",
+            "actor_conversation_operation",
+            "actor_resolution",
+            "actor_scope",
+            "dataset",
+            "dataset_explicit"
+          ],
+          "transition_cleared_fields": [
+            "actor_resolution_method",
+            "actor_resolution_status"
+          ],
+          "rejected_fields": [],
+          "rejection_reasons": {}
+        },
+        "analytical_intent": "",
+        "analytical_response": "",
+        "clarification_reason": "Te entendi como refinamiento, pero perdi el contexto anterior. Haz una busqueda base primero o usa reset.",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {},
+        "followup": true,
+        "timings_ms": {
+          "parse_ms": 0.39,
+          "apply_context_ms": 0.02,
+          "clarify_ms": 0.0,
+          "advisor_response_ms": 0.02,
+          "total_ms": 1.14
+        },
+        "contextual_filters": {},
+        "should_execute_decision": true,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "query_fingerprint": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "trace_id": "b67631a37c7b",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 1.7
+      }
+    }
+  ],
+  "actors": {
+    "codetec": {
+      "status": "UNRESOLVED",
+      "method": "no_match",
+      "candidates_count": 0
+    },
+    "camila araujo": {
+      "status": "CANDIDATES",
+      "method": "fts5_trigram_bm25",
+      "candidates_count": 10
+    },
+    "rodrigo ortiz": {
+      "status": "AMBIGUOUS",
+      "method": "exact_ambiguous_alias",
+      "candidates_count": 3
+    }
+  }
+}
