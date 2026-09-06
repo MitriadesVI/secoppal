@@ -2,6 +2,7 @@
 from copy import deepcopy
 from decimal import Decimal
 import json
+import shutil
 
 from hypothesis import given, settings, strategies as st
 import pytest
@@ -13,6 +14,7 @@ from app.core.procurement_relationships import (
 )
 from app.core.result_identity import result_identity
 from scripts.audits.audit_relationship_foundation_v0 import run
+from scripts.audits.relationship_foundation import gates
 from scripts.audits.relationship_foundation.edge_evidence import OUT, Probe, render
 from scripts.audits.relationship_foundation.group_membership import membership
 from scripts.audits.relationship_foundation.identity_spine import actor_id, platform_code, transaction_id
@@ -190,3 +192,61 @@ def test_complete_offline_replay_canaries_and_runtime_isolation(monkeypatch):
     baranoa = next(e for e in territorial if e["institution"] == "ALCALDIA MUNICIPAL DE BARANOA")
     assert baranoa["to"] == "territory:08078" and baranoa["from"] != baranoa["to"]
     assert len(artifacts["canaries.json"]["buyer_group"]) == 38
+
+
+def test_foundation_effects_use_exact_delivery_range_not_later_entity_changes(monkeypatch):
+    assert gates.BASE == "c79f8460c84ab26631c2534af106405cb16803f2"
+    assert gates.FOUNDATION_HEAD == "d608336a32553ac11a69924d663491ce852e1446"
+    git_output = gates.subprocess.check_output
+    later = git_output(
+        ["git", "diff", gates.FOUNDATION_HEAD, "--name-only"],
+        cwd=gates.ROOT, text=True,
+    ).splitlines()
+    assert "app/core/entity_profile/scope.py" in later
+    assert "app/core/workflow/actions/execution.py" in later
+    commands = []
+
+    def record(command, **kwargs):
+        commands.append(command)
+        return git_output(command, **kwargs)
+
+    monkeypatch.setattr(gates.subprocess, "check_output", record)
+    assert gates.isolation()["changed_existing_app_files"] == []
+    assert commands == [["git", "diff", gates.BASE, gates.FOUNDATION_HEAD, "--name-only"]]
+
+
+@pytest.mark.parametrize("statement", [
+    "import app.core.procurement_relationships",
+    "from app.core.procurement_relationships import load",
+])
+def test_frozen_history_does_not_hide_a_current_runtime_consumer(tmp_path, monkeypatch, statement):
+    # Mutate only a temporary current tree; historical Git reads use the real repo.
+    for relative in (
+        "app/core/procurement_relationships.py",
+        "scripts/audits/audit_relationship_foundation_v0.py",
+    ):
+        target = tmp_path / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(gates.ROOT / relative, target)
+    shutil.copytree(
+        gates.ROOT / "scripts/audits/relationship_foundation",
+        tmp_path / "scripts/audits/relationship_foundation",
+        ignore=shutil.ignore_patterns("__pycache__"),
+    )
+    git_output = gates.subprocess.check_output
+
+    def read_history(command, **kwargs):
+        assert command == ["git", "diff", gates.BASE, gates.FOUNDATION_HEAD, "--name-only"]
+        return git_output(command, **{**kwargs, "cwd": gates.ROOT})
+
+    monkeypatch.setattr(gates.subprocess, "check_output", read_history)
+    current_isolation = gates.isolation
+    monkeypatch.setattr(gates, "isolation", lambda: current_isolation(root=tmp_path))
+    assert gates.isolation()["runtime_references"] == []
+    consumer = tmp_path / "app/core/current_consumer.py"
+    consumer.write_text(statement + "\n", encoding="utf-8")
+    state = gates.isolation()
+    assert state["changed_existing_app_files"] == []
+    assert state["runtime_references"] == ["app/core/current_consumer.py"]
+    with pytest.raises(ValueError, match="invalid procurement relationship contract: closed gates"):
+        run()

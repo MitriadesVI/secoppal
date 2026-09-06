@@ -1,8 +1,19 @@
 # Entity Analysis V1 — integración sobre Procurement Relationship Foundation
 
 2026-09-06. Rama `integration/entity-analysis-v1`, worktree propio. Un agente,
-sin merge ni push. Estado: **NO_GO**, pendiente de decisión sobre un gate
-histórico de Foundation y de la suite completa obligatoria.
+sin merge ni push. Este documento preserva el informe histórico de `b4425ac`:
+**NO_GO** por la decisión pendiente sobre Foundation y la suite completa.
+
+Actualización autorizada de Foundation: se fija exclusivamente el diff histórico
+a `c79f8460c84ab26631c2534af106405cb16803f2..d608336a32553ac11a69924d663491ce852e1446`;
+el aislamiento runtime sigue inspeccionando el árbol actual. Las nuevas
+regresiones prueban el rango literal, exclusión de cambios posteriores de Entity
+Analysis y fallo cerrado ante un consumidor actual. No se modifica ni repinea
+ningún artefacto Foundation ni territorial. Verificación previa al commit:
+`191 passed in 12.86s`; Ruff PASS, Semgrep baseline 10/delta 0, module-size,
+lint-core y diff-check PASS; ambos replays byte-exactos y Baranoa 1037/1376.
+La única suite completa se ejecuta después del commit acotado de esta corrección;
+su resultado y el veredicto final se entregan en el reporte de cierre de la tarea.
 
 ## Cambio y frontera
 
@@ -94,7 +105,7 @@ Reproducción opcional de esa muestra live, con un archivo de salida nuevo:
 .venv/bin/python docs/audits/entity_analysis/integration/reproduce_dogfood.py --output /tmp/entity-integration-new-observation.json
 ```
 
-## Bloqueo fuera del carril
+## Bloqueo histórico fuera del carril en b4425ac
 
 `tests/test_procurement_relationships.py::test_complete_offline_replay_canaries_and_runtime_isolation`
 falla con `ValueError: invalid procurement relationship contract: closed gates`.
@@ -121,7 +132,7 @@ Contradicción documental observada: `.claude/CLAUDE.md` prescribe
 vigente de AGENTS.md: `ruff → semgrep → pytest`, con preflight real. No se editó
 esa documentación compartida ni los hallazgos históricos.
 
-## Veredicto
+## Veredicto histórico de b4425ac
 
 ```text
 ENTITY_ANALYSIS_V1_INTEGRATION: NO_GO
