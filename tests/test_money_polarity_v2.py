@@ -6,6 +6,7 @@ import yaml
 from hypothesis import given, settings, strategies as st
 
 from app.core.money_polarity import MoneyRelation, resolve_money_polarity
+from app.core.money_admission import protected_money_spans
 from app.core.query_router import QueryRouter
 
 
@@ -94,3 +95,11 @@ def test_partial_conversion_cannot_leave_one_side(amount, template):
     params = _extract(template.format(a=f"{amount} millones"))
     assert params.get("money_clarification")
     assert "valor_min" not in params and "valor_max" not in params
+
+
+@PROPERTY_SETTINGS
+@given(st.integers(min_value=2000, max_value=2099))
+def test_years_are_not_protected_as_money_without_monetary_evidence(year):
+    assert protected_money_spans(f"menos {year}") == ()
+    assert protected_money_spans(f"menos {year} millones")
+    assert protected_money_spans(f"no menor a {year} pesos")

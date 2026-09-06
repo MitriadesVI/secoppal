@@ -38,7 +38,6 @@ from app.core.control_language import interpret_control_language
 from app.core.money_polarity import (
     MoneyRelation,
     has_money_relation_before,
-    protected_money_spans,
     resolve_money_polarity,
 )
 from app.core.estado_projection import project_estado_family
@@ -53,6 +52,7 @@ from app.core.money_admission import (
     admit_range,
     has_explicit_monetary_evidence,
     is_admissible_amount,
+    protected_money_spans,
 )
 from app.core.intent_vocabulary import PAST_PROCUREMENT_ACTION_RE
 from app.core.negation_binding import (

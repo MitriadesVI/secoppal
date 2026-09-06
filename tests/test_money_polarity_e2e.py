@@ -127,6 +127,16 @@ def test_generic_uncertainty_with_valid_smmlv_metadata_is_not_a_year_error():
     assert params["valor_min"] == 1  # caller-owned input is unchanged
 
 
+def test_explicit_correction_after_unknown_unblocks_the_followup(workflow):
+    workflow.run_query("contratos de alimentación por menos de 500 millones", channel="streamlit", chat_id="mpv2-correction")
+    blocked = workflow.run_query("ahora de 200 millones", channel="streamlit", chat_id="mpv2-correction")
+    assert blocked["needs_clarification"] is True
+    corrected = workflow.run_query("ahora por mas 200 millones", channel="streamlit", chat_id="mpv2-correction")
+    assert corrected["query_plan"]["should_execute"] is True
+    assert corrected["resolved_params"]["valor_min"] == 200_000_000
+    assert not corrected["resolved_params"].get("money_clarification")
+
+
 @pytest.mark.parametrize("topic,expected", [("alimentacion", "alimentacion"), ("mantenimiento", "mantenimiento"),
                                            ("software", "software"), ("adulto mayor", "adulto_mayor")])
 @pytest.mark.parametrize("phrase", ["por mas 200 millones", "supera los 500 millones", "no exceda 300 millones"])

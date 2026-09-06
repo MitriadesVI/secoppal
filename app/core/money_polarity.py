@@ -38,7 +38,7 @@ class MoneyPolarityDecision:
 _DIGIT = r"(?:\$\s*|cop\s+)?\d+(?:[.,]\d+)*"
 _VERBAL = rf"{CARDINAL_WORD_PATTERN}(?:\s+{CARDINAL_WORD_PATTERN})*"
 _AMOUNT = (
-    rf"(?:{_DIGIT}|{_VERBAL})\s*{MONETARY_UNIT_PATTERN}?"
+    rf"(?:{_DIGIT}|{_VERBAL})(?:\s*{MONETARY_UNIT_PATTERN})?"
     r"(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?"
 )
 _AMOUNT_RE = re.compile(rf"(?<![\w.,]){_AMOUNT}", re.IGNORECASE)
@@ -176,9 +176,3 @@ def resolve_money_polarity(text: str) -> tuple[MoneyPolarityDecision, ...]:
                                start=match.start(), source_span=match.group().strip())
         decisions.append(decision)
     return _coordinated(text, sorted(decisions, key=lambda d: d.start))
-
-
-def protected_money_spans(text: str) -> tuple[tuple[int, int], ...]:
-    """Negation binding consumes the same complete lexical decisions."""
-    return tuple((decision.start, decision.end) for decision in resolve_money_polarity(text)
-                 if decision.comparator_span or decision.relation is MoneyRelation.RANGE)

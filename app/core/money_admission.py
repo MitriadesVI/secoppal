@@ -37,11 +37,13 @@ from __future__ import annotations
 import re
 from enum import Enum
 
+from app.core.money_polarity import MoneyRelation, resolve_money_polarity
 from app.utils.money import (
     CURRENCY_MARKER_PATTERN,
     MONETARY_SCALE_UNIT_PATTERN,
     SMMLV_UNIT_PATTERN,
     normalize_text,
+    money_to_cop,
 )
 
 __all__ = [
@@ -52,6 +54,7 @@ __all__ = [
     "has_explicit_monetary_evidence",
     "is_admissible_amount",
     "shared_currency_marker",
+    "protected_money_spans",
 ]
 
 # Piso anti-ruido histórico. Sigue vigente, pero solo para cifras SIN unidad
@@ -80,6 +83,25 @@ def is_admissible_amount(amount: int | None, span: str) -> bool:
     if has_explicit_monetary_evidence(span):
         return True
     return amount >= MIN_BARE_AMOUNT_COP
+
+
+def protected_money_spans(text: str) -> tuple[tuple[int, int], ...]:
+    """Protect lexical money relations only after monetary admission.
+
+    "menos 2025" is a time exclusion, not an economic upper bound. Explicit
+    units also protect unconvertible money so it can reach clarification.
+    Lexical families remain exclusively owned by money_polarity.
+    """
+    return tuple(
+        (decision.start, decision.end)
+        for decision in resolve_money_polarity(text)
+        if (decision.comparator_span or decision.relation is MoneyRelation.RANGE)
+        and any(
+            has_explicit_monetary_evidence(operand)
+            or is_admissible_amount(money_to_cop(operand), operand)
+            for operand in decision.amount_spans
+        )
+    )
 
 
 # ── Rangos explícitos ────────────────────────────────────────────────────

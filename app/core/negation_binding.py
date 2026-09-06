@@ -7,7 +7,7 @@ text governed by a negative marker is masked before positive extractors run.
 """
 from __future__ import annotations
 
-from app.core.money_polarity import protected_money_spans
+from app.core.money_admission import protected_money_spans
 
 import re
 from dataclasses import dataclass, replace
