@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from app.data.colombia_geography import REGION_BY_DEPARTMENT
+from scripts.territorial_import_guard import source_imports_territorial_knowledge
 
 OUTPUT = ROOT / "app/data/territorial_knowledge_v0.json"
 M2A = ROOT / "artifacts/audits/municipal_m2a"
@@ -70,13 +71,14 @@ def _normalized_department(value: str) -> str:
 
 
 def _runtime_imports() -> list[str]:
-    pattern = re.compile(r"(?:from\s+app\.core\s+import\s+territorial_knowledge|"
-                         r"(?:from|import)\s+app\.core\.territorial_knowledge)")
     own_module = ROOT / "app/core/territorial_knowledge.py"
     return [
         str(path.relative_to(ROOT))
         for path in sorted((ROOT / "app").rglob("*.py"))
-        if path != own_module and pattern.search(path.read_text(encoding="utf-8"))
+        if path != own_module and source_imports_territorial_knowledge(
+            path.read_text(encoding="utf-8"),
+            package=".".join(path.parent.relative_to(ROOT).parts),
+        )
     ]
 
 

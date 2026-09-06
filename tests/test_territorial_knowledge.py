@@ -19,7 +19,7 @@ from app.core.territorial_knowledge import (
     load,
     validate,
 )
-from scripts.build_territorial_knowledge_v0 import _build_payload, render
+from scripts.build_territorial_knowledge_v0 import _build_payload, _runtime_imports, render
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -200,6 +200,7 @@ def test_build_is_byte_reproducible_and_matches_committed_registry(tmp_path):
     first = render(_build_payload())
     second = render(_build_payload())
     assert first == second == DATA_PATH.read_bytes()
+    assert hashlib.sha256(first).hexdigest() == "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63"
     assert hashlib.sha256(first).hexdigest() == hashlib.sha256(second).hexdigest()
     replay = tmp_path / "territorial_knowledge_v0.json"
     replay.write_bytes(second)
@@ -208,12 +209,7 @@ def test_build_is_byte_reproducible_and_matches_committed_registry(tmp_path):
 
 def test_registry_has_no_runtime_imports_or_prohibited_surfaces():
     module = ROOT / "app/core/territorial_knowledge.py"
-    consumers = [
-        path
-        for path in (ROOT / "app").rglob("*.py")
-        if path != module and "territorial_knowledge" in path.read_text(encoding="utf-8")
-    ]
-    assert consumers == []
+    assert _runtime_imports() == []
     tree = ast.parse(module.read_text(encoding="utf-8"))
     imports = {
         alias.name.lower()
