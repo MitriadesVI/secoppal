@@ -26,6 +26,7 @@ from decimal import Decimal
 from typing import Any
 
 from app.core.actor_conversation import ActorPendingTurn, classify_actor_pending_turn
+from app.core.entity_profile.turn import is_explicit_entity_profile_search
 from app.core.query_frame import (
     QueryFrame,
     frame_from_params,
@@ -293,6 +294,8 @@ class FollowupClassifier:
             return "new_search"
 
         current_params = params_from_frame(current_frame)
+        if is_explicit_entity_profile_search(text, current_params):
+            return "new_search"
         pending = previous_frame.raw_params.get("actor_pending")
         if isinstance(pending, dict) and classify_actor_pending_turn(
             text, current_params, pending,

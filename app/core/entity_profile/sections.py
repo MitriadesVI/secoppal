@@ -12,6 +12,7 @@ from app.core.entity_profile.aspects import (
 )
 from app.core.entity_profile.aspects.activity import MODALITY_CARDINALITY_LIMIT
 from app.core.entity_profile.aspects.temporal import YEAR_LIMIT
+from app.core.entity_profile.evidence import section_evidence_calls
 from app.core.entity_profile.models import (
     CONTRACT_DATASET,
     PROCESS_DATASET,
@@ -44,6 +45,11 @@ def _warnings(
     ]
     if not failed:
         return ()
+    statuses = {calls[key].status for key in failed if key in calls}
+    if "INCONSISTENT_RESPONSE" in statuses:
+        return (f"La fuente devolvió datos contradictorios para {label}; no puedo afirmar un cero.",)
+    if "INVALID_RESPONSE" in statuses:
+        return (f"No pude confirmar {label}; la fuente devolvió un agregado incompleto o inválido.",)
     return (f"No pude calcular {label} en este momento; la fuente no respondió.",)
 
 
@@ -186,6 +192,7 @@ def build_sections(
     calls: dict[str, SourceCall],
     soql_builder: Any,
 ) -> tuple[EntityProfileSection, ...]:
+    calls = section_evidence_calls(rows, calls)
     activity = values = modalities = suppliers = temporal = recent = unavailable_section()
     if focus == "overview":
         process = parse_process_activity(rows.get("process_activity", []))

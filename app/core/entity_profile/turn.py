@@ -187,3 +187,11 @@ def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfile
         resolution.scope,
         resolution.identity,
     )
+
+
+def is_explicit_entity_profile_search(user_query: str, params: dict) -> bool:
+    """A named institutional analysis starts its own conversational universe."""
+    if not _OVERVIEW.search(_fold(user_query)):
+        return False
+    turn = classify_entity_profile_turn(user_query, params)
+    return turn.detected and (turn.scope is not None or bool(turn.clarification))

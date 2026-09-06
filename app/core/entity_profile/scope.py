@@ -163,3 +163,25 @@ def resolve_profile_scope(params: dict) -> ScopeResolution:
 
 def _text_or_none(value: object) -> str | None:
     return value if isinstance(value, str) and value else None
+
+
+def validate_query_scope(scope: EntityProfileScope, params: dict) -> None:
+    """Reject execution parameters that do not describe the displayed scope."""
+    from app.core.actor_scope_policy import has_actor_scope
+
+    if has_actor_scope(params) or params.get("contratista"):
+        raise ValueError("Entity Profile scope cannot contain an actor filter")
+    if any(params.get(key) for key in (
+        "entidad_like", "entidad_ecosystem", "entidad_contains_all",
+        "entidad_in_candidates",
+    )):
+        raise ValueError("Entity Profile scope has an unaccredited buyer override")
+    resolved = resolve_profile_scope(params)
+    if resolved.scope != scope:
+        raise ValueError("Entity Profile scope does not match execution parameters")
+    resolution = params.get("entidad_resolution") or {}
+    if (
+        not scope.buyer_group_id
+        and resolution.get("value") not in (None, scope.buyer_units[0])
+    ):
+        raise ValueError("Entity Profile scope disagrees with buyer resolution")

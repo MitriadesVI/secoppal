@@ -12,6 +12,7 @@ from app.core.entity_profile.models import (
 )
 from app.core.entity_profile.query_runner import execute_jobs, jobs_for_focus
 from app.core.entity_profile.sections import build_sections
+from app.core.entity_profile.scope import validate_query_scope
 
 
 def build_entity_profile(
@@ -25,6 +26,7 @@ def build_entity_profile(
 ) -> EntityProfile:
     """Build one profile; an individual failed call never aborts other sections."""
     started = time.perf_counter()
+    validate_query_scope(scope, params)
     jobs = jobs_for_focus(focus)
     rows, calls = execute_jobs(jobs, params, secop_client, soql_builder)
     sections = build_sections(focus, scope, rows, calls, soql_builder)
