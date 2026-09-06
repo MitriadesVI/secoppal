@@ -1,0 +1,30 @@
+[1m
+CodeGraph Status
+[0m
+[36mProject:[0m /Users/rodrigoortiz/Documents/secoppal-layer-model
+
+[1mIndex Statistics:[0m
+  Files:     772
+  Nodes:     18,293
+  Edges:     44,745
+  DB Size:   33.90 MB
+  Backend:   [32mnode:sqlite — built-in (full WAL)[0m
+  Journal:   [32mwal[0m
+
+[1mNodes by Kind:[0m
+  function        7,543
+  import          4,428
+  variable        2,949
+  method          1,896
+  file            752
+  class           716
+  route           9
+
+[1mFiles by Language:[0m
+  python          752
+  yaml            20
+
+[32m✓[0m Index is up to date
+
+(node:16493) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,291 @@
+{
+  "atlantico": {
+    "edge_types": {
+      "BID_ON": 1369,
+      "HAS_CONTRACTOR": 234,
+      "HAS_RECORDED_CONTRACT": 250,
+      "MEMBER_OF_SUPPLIER_GROUP": 578
+    },
+    "edges": 2431,
+    "issues": {
+      "BID_ENDPOINT_UNACCREDITED": 4,
+      "BUYER_LOGICAL_ID_UNAVAILABLE": 1,
+      "CONTRACTOR_ACCOUNT_UNAVAILABLE": 16,
+      "PAA_IDENTITY_AUTHORITY_REQUIRED": 1,
+      "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED": 1
+    },
+    "node_types": {
+      "CONTRACT": 250,
+      "PROCESS": 3319,
+      "SECOP_SUPPLIER": 1599,
+      "SUPPLIER_GROUP": 241
+    },
+    "nodes": 5409,
+    "scope": {
+      "buyer_unit": "DEPARTAMENTO DEL ATLANTICO**",
+      "cohort": "atlantico",
+      "contract_sampling": "First 250 ordered by id_contrato; all dates",
+      "group_sampling": "Only captured groups involving observed accounts; partial membership",
+      "identity_scope": "Recorded source identities; no independent legal certification",
+      "inputs": {
+        "app/data/aliases_db.json": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
+        "artifacts/audits/relationship_foundation_v0/observations/atlantico_bid_recheck_0.json": "ecfb1af5ecc07757d62ed42b0f4668d1805d56e011268af1ef09e2afc88a3ee3",
+        "artifacts/audits/relationship_foundation_v0/observations/atlantico_bids.json": "23184520094e0354e617591eec2bcbca689fcba74dbb70719e9a042da1c2b277",
+        "artifacts/audits/relationship_foundation_v0/observations/atlantico_contracts.json": "31bc66e24dab9ac09b2d76ce1b3bb04a13ea2507d67fa6a3f3fe121ed2eaaf47",
+        "artifacts/audits/relationship_foundation_v0/observations/atlantico_portfolio_parents_0.json": "65f0df2ce6cdb0ec68bdb6356ae28948fdbacc0fa54cfdf4b7cf104ecbeec665",
+        "artifacts/audits/relationship_foundation_v0/observations/atlantico_portfolio_parents_100.json": "bc327a78d2e300cd350b0c7917542913c3187e27c46125c88cbb9d0aa9ae2f1a",
+        "artifacts/audits/relationship_foundation_v0/observations/atlantico_portfolio_parents_200.json": "6d79b04e45778f27a04becdfbf9819b1530d18951e55befc54e666265ea6aa71",
+        "artifacts/audits/relationship_foundation_v0/observations/atlantico_processes.json": "5653d82e9f134abbe1f52ec5dba2e6e16367f87338e5ed03fe5592db8b7ce31a",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_0.json": "575aec2eee9d5c7bf5e5c692894623f936f012b2df3f67427ac811006a9f646d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_100.json": "8047e2da80d5db45e49dc99aa1b10613fa2731038c3d36e646c8d2e93fa40835",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_200.json": "d9af5de491af80899022da88de2cbd8fbdf9d7732e4d74d805054484e840565f",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_300.json": "493eced67bafcf1a56104327b5301ac07d9f9afe920b7a7141a7dfd70839211d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_400.json": "e280116a2bc8c45654b524a456dba42fb8f5f31ea9ef2c0f7d3a07d7ec639f2c",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_0.json": "55d0e426fc617362c97496bb150f4e633b970859e60498d47a556b09340035b4",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_100.json": "296acc292aab9bc5cc6cb5b88c302473d5c6d7947bcd729750062b68fe283bdd",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_200.json": "3b05ebcc12c649c2588567aeb8f6a4a0163e5440c46db6729245acffe728d400",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_300.json": "d2fd25fc112654c1737f7140ef8bf200697db62ace98cd2ebc5ae128cdc97370",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_400.json": "ced6dc2e83b2ea55bb050ebaafbe3f26a3641c4055d8ec9b2df11f470fbe360d",
+        "artifacts/audits/relationship_foundation_v0/observations/group_canaries_complete.json": "d98161c0ef39a137f9ba1bd330772bde643a3f445fad7e5733dea52ed1cd5cb7"
+      },
+      "manifest_sha256": "c9a256403dd52986bbe26905853bc3c038fb55b9798e50b59ecb1407b75a04cf",
+      "process_window": "2025-01-01 inclusive to 2026-09-07 exclusive, plus exact parent/recheck lookups"
+    }
+  },
+  "baranoa": {
+    "edge_types": {
+      "BID_ON": 102,
+      "HAS_CONTRACTOR": 227,
+      "HAS_RECORDED_CONTRACT": 248,
+      "IN_TERRITORY": 1,
+      "MEMBER_OF_SUPPLIER_GROUP": 69,
+      "PUBLISHED": 479,
+      "PUBLISHED_CONTRACT": 250
+    },
+    "edges": 1376,
+    "issues": {
+      "CONTRACTOR_ACCOUNT_UNAVAILABLE": 23,
+      "MEMBERSHIP_ENDPOINT_UNACCREDITED": 2,
+      "PAA_IDENTITY_AUTHORITY_REQUIRED": 1,
+      "PROCESS_CONTRACT_ORPHANS": 2,
+      "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED": 1
+    },
+    "node_types": {
+      "CONTRACT": 250,
+      "INSTITUTION": 1,
+      "PROCESS": 479,
+      "SECOP_SUPPLIER": 280,
+      "SUPPLIER_GROUP": 26,
+      "TERRITORY": 1
+    },
+    "nodes": 1037,
+    "scope": {
+      "buyer_unit": "ALCALDIA MUNICIPAL DE BARANOA",
+      "cohort": "baranoa",
+      "contract_sampling": "First 250 ordered by id_contrato; all dates",
+      "group_sampling": "Only captured groups involving observed accounts; partial membership",
+      "identity_scope": "Recorded source identities; no independent legal certification",
+      "inputs": {
+        "app/data/buyer_source_names.json": "98148e1c5676b90a9c1cde4f43f89c165550cef02db55dfca615c16916d275c2",
+        "app/data/territorial_knowledge_v0.json": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+        "artifacts/audits/relationship_foundation_v0/observations/baranoa_bids.json": "ea8e6416ffa80829113144c0dc2c55bae5f935b553baf218bcd3376f2bf41dbe",
+        "artifacts/audits/relationship_foundation_v0/observations/baranoa_contracts.json": "73fbd8c839429a63d901dad33741408c8ffa2f466c67e45351de94079f2ebbed",
+        "artifacts/audits/relationship_foundation_v0/observations/baranoa_portfolio_parents_0.json": "3780286fd08ff047b44942a204c63c421dff39f75c12011ad8d70e2a5932fa84",
+        "artifacts/audits/relationship_foundation_v0/observations/baranoa_portfolio_parents_100.json": "4554a619590ba25226a6d53077b0dcabb60f9b774e1458645c3d697ae5fd269c",
+        "artifacts/audits/relationship_foundation_v0/observations/baranoa_portfolio_parents_200.json": "3a3811ad43668e50f42d3d12f89bf78220330fc9d924b1eca55ffd197172120f",
+        "artifacts/audits/relationship_foundation_v0/observations/baranoa_processes.json": "6204d7da67b5ecd6328a3284681dde2c4a914f30b6e0b5e6da8084dc1e927a35",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_0.json": "575aec2eee9d5c7bf5e5c692894623f936f012b2df3f67427ac811006a9f646d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_100.json": "8047e2da80d5db45e49dc99aa1b10613fa2731038c3d36e646c8d2e93fa40835",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_200.json": "d9af5de491af80899022da88de2cbd8fbdf9d7732e4d74d805054484e840565f",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_300.json": "493eced67bafcf1a56104327b5301ac07d9f9afe920b7a7141a7dfd70839211d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_400.json": "e280116a2bc8c45654b524a456dba42fb8f5f31ea9ef2c0f7d3a07d7ec639f2c",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_0.json": "55d0e426fc617362c97496bb150f4e633b970859e60498d47a556b09340035b4",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_100.json": "296acc292aab9bc5cc6cb5b88c302473d5c6d7947bcd729750062b68fe283bdd",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_200.json": "3b05ebcc12c649c2588567aeb8f6a4a0163e5440c46db6729245acffe728d400",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_300.json": "d2fd25fc112654c1737f7140ef8bf200697db62ace98cd2ebc5ae128cdc97370",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_400.json": "ced6dc2e83b2ea55bb050ebaafbe3f26a3641c4055d8ec9b2df11f470fbe360d",
+        "artifacts/audits/relationship_foundation_v0/observations/group_canaries_complete.json": "d98161c0ef39a137f9ba1bd330772bde643a3f445fad7e5733dea52ed1cd5cb7"
+      },
+      "manifest_sha256": "c9a256403dd52986bbe26905853bc3c038fb55b9798e50b59ecb1407b75a04cf",
+      "process_window": "2025-01-01 inclusive to 2026-09-07 exclusive, plus exact parent/recheck lookups"
+    }
+  },
+  "barranquilla": {
+    "edge_types": {
+      "BID_ON": 927,
+      "HAS_CONTRACTOR": 245,
+      "HAS_RECORDED_CONTRACT": 250,
+      "IN_TERRITORY": 1,
+      "MEMBER_OF_SUPPLIER_GROUP": 263,
+      "PUBLISHED": 4109,
+      "PUBLISHED_CONTRACT": 250
+    },
+    "edges": 6045,
+    "issues": {
+      "BID_ENDPOINT_UNACCREDITED": 11,
+      "CONTRACTOR_ACCOUNT_UNAVAILABLE": 5,
+      "PAA_IDENTITY_AUTHORITY_REQUIRED": 1,
+      "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED": 1
+    },
+    "node_types": {
+      "CONTRACT": 250,
+      "INSTITUTION": 1,
+      "PROCESS": 4109,
+      "SECOP_SUPPLIER": 1073,
+      "SUPPLIER_GROUP": 107,
+      "TERRITORY": 1
+    },
+    "nodes": 5541,
+    "scope": {
+      "buyer_unit": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "cohort": "barranquilla",
+      "contract_sampling": "First 250 ordered by id_contrato; all dates",
+      "group_sampling": "Only captured groups involving observed accounts; partial membership",
+      "identity_scope": "Recorded source identities; no independent legal certification",
+      "inputs": {
+        "app/data/aliases_db.json": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
+        "app/data/territorial_knowledge_v0.json": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+        "artifacts/audits/relationship_foundation_v0/observations/barranquilla_bid_recheck_0.json": "615e80d8f70950d3b392ec2d477338054be85a6c100c463a93c6e631f99fde13",
+        "artifacts/audits/relationship_foundation_v0/observations/barranquilla_bids.json": "8d724e97541d605bf8bf6e0496a16f35f4d0462c42cfd071279231ea3a80aaa8",
+        "artifacts/audits/relationship_foundation_v0/observations/barranquilla_contracts.json": "1b0ac95e9313fd39afc53d3a23a82396935e7439560a9f3214f7b4caa636a735",
+        "artifacts/audits/relationship_foundation_v0/observations/barranquilla_portfolio_parents_0.json": "9db3d2081e29d3ac23c93878380c383aa0e3a694f340a2d90d7c14bf5ddc0e61",
+        "artifacts/audits/relationship_foundation_v0/observations/barranquilla_portfolio_parents_100.json": "a6d9d6fa5d648921f17f10c4d598d3d042c6b27912ee3a174c5549b60713c7ad",
+        "artifacts/audits/relationship_foundation_v0/observations/barranquilla_portfolio_parents_200.json": "5944ce831ac9b09dfdc9f8bb376f7115af15d91b0c77ba269ebdf202c9f319df",
+        "artifacts/audits/relationship_foundation_v0/observations/barranquilla_processes.json": "d3bb3e4d8b2ad7d30d09064e4f553d798f0a829f4eeeeebf989e7b54acba1f04",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_0.json": "575aec2eee9d5c7bf5e5c692894623f936f012b2df3f67427ac811006a9f646d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_100.json": "8047e2da80d5db45e49dc99aa1b10613fa2731038c3d36e646c8d2e93fa40835",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_200.json": "d9af5de491af80899022da88de2cbd8fbdf9d7732e4d74d805054484e840565f",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_300.json": "493eced67bafcf1a56104327b5301ac07d9f9afe920b7a7141a7dfd70839211d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_400.json": "e280116a2bc8c45654b524a456dba42fb8f5f31ea9ef2c0f7d3a07d7ec639f2c",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_0.json": "55d0e426fc617362c97496bb150f4e633b970859e60498d47a556b09340035b4",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_100.json": "296acc292aab9bc5cc6cb5b88c302473d5c6d7947bcd729750062b68fe283bdd",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_200.json": "3b05ebcc12c649c2588567aeb8f6a4a0163e5440c46db6729245acffe728d400",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_300.json": "d2fd25fc112654c1737f7140ef8bf200697db62ace98cd2ebc5ae128cdc97370",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_400.json": "ced6dc2e83b2ea55bb050ebaafbe3f26a3641c4055d8ec9b2df11f470fbe360d",
+        "artifacts/audits/relationship_foundation_v0/observations/group_canaries_complete.json": "d98161c0ef39a137f9ba1bd330772bde643a3f445fad7e5733dea52ed1cd5cb7"
+      },
+      "manifest_sha256": "c9a256403dd52986bbe26905853bc3c038fb55b9798e50b59ecb1407b75a04cf",
+      "process_window": "2025-01-01 inclusive to 2026-09-07 exclusive, plus exact parent/recheck lookups"
+    }
+  },
+  "bucaramanga": {
+    "edge_types": {
+      "BID_ON": 1233,
+      "HAS_CONTRACTOR": 246,
+      "HAS_RECORDED_CONTRACT": 237,
+      "IN_TERRITORY": 1,
+      "MEMBER_OF_SUPPLIER_GROUP": 403,
+      "PUBLISHED": 10135,
+      "PUBLISHED_CONTRACT": 250
+    },
+    "edges": 12505,
+    "issues": {
+      "BID_ENDPOINT_UNACCREDITED": 1,
+      "CONTRACTOR_ACCOUNT_UNAVAILABLE": 4,
+      "MEMBERSHIP_ENDPOINT_UNACCREDITED": 2,
+      "PAA_IDENTITY_AUTHORITY_REQUIRED": 1,
+      "PROCESS_CONTRACT_AMBIGUOUS_ROWS": 13,
+      "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED": 1
+    },
+    "node_types": {
+      "CONTRACT": 250,
+      "INSTITUTION": 1,
+      "PROCESS": 10135,
+      "SECOP_SUPPLIER": 1284,
+      "SUPPLIER_GROUP": 173,
+      "TERRITORY": 1
+    },
+    "nodes": 11844,
+    "scope": {
+      "buyer_unit": "MUNICIPIO DE BUCARAMANGA",
+      "cohort": "bucaramanga",
+      "contract_sampling": "First 250 ordered by id_contrato; all dates",
+      "group_sampling": "Only captured groups involving observed accounts; partial membership",
+      "identity_scope": "Recorded source identities; no independent legal certification",
+      "inputs": {
+        "app/data/buyer_source_names.json": "98148e1c5676b90a9c1cde4f43f89c165550cef02db55dfca615c16916d275c2",
+        "app/data/territorial_knowledge_v0.json": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_0.json": "575aec2eee9d5c7bf5e5c692894623f936f012b2df3f67427ac811006a9f646d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_100.json": "8047e2da80d5db45e49dc99aa1b10613fa2731038c3d36e646c8d2e93fa40835",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_200.json": "d9af5de491af80899022da88de2cbd8fbdf9d7732e4d74d805054484e840565f",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_300.json": "493eced67bafcf1a56104327b5301ac07d9f9afe920b7a7141a7dfd70839211d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_400.json": "e280116a2bc8c45654b524a456dba42fb8f5f31ea9ef2c0f7d3a07d7ec639f2c",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_0.json": "55d0e426fc617362c97496bb150f4e633b970859e60498d47a556b09340035b4",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_100.json": "296acc292aab9bc5cc6cb5b88c302473d5c6d7947bcd729750062b68fe283bdd",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_200.json": "3b05ebcc12c649c2588567aeb8f6a4a0163e5440c46db6729245acffe728d400",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_300.json": "d2fd25fc112654c1737f7140ef8bf200697db62ace98cd2ebc5ae128cdc97370",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_400.json": "ced6dc2e83b2ea55bb050ebaafbe3f26a3641c4055d8ec9b2df11f470fbe360d",
+        "artifacts/audits/relationship_foundation_v0/observations/bucaramanga_bid_recheck_0.json": "144c26ebfb3221e921da3cfad7bff33aa550cc31436b264506e47d709afd0121",
+        "artifacts/audits/relationship_foundation_v0/observations/bucaramanga_bid_recheck_full_population_0.json": "55fa0293218b77fc7d54a400159b5ace6a5055b4af52c874e03891266d874a66",
+        "artifacts/audits/relationship_foundation_v0/observations/bucaramanga_bids.json": "068fb5165cc52f3223a6622d5431f2bd113e6d01a442d5e47ddda538e72a0398",
+        "artifacts/audits/relationship_foundation_v0/observations/bucaramanga_contracts.json": "e2c7bfb6c325e96748bf512a5c136a474907abcfd027acd300ca5ded87e57e78",
+        "artifacts/audits/relationship_foundation_v0/observations/bucaramanga_portfolio_parents_0.json": "1257dda06a7c2cb1efe65a78e34bd0ea937f56e1270c856164c9e2b90fa29948",
+        "artifacts/audits/relationship_foundation_v0/observations/bucaramanga_portfolio_parents_100.json": "e06e717049854bf363acd9ea562d6f3af66439c7bfacc098331c4750ce8d6330",
+        "artifacts/audits/relationship_foundation_v0/observations/bucaramanga_portfolio_parents_200.json": "1bdd6477ab53d5dca5d3a8248c618626b9ea7b8c146e9b878fc9d14b8a571352",
+        "artifacts/audits/relationship_foundation_v0/observations/bucaramanga_processes.json": "45ef59885d8e9cd73f30e782e3067fba835b8b40dcff353298ca27a051db585d",
+        "artifacts/audits/relationship_foundation_v0/observations/bucaramanga_processes_page2.json": "807bfa0747835f5aabee8818eaafcd66fcc2d57e6dc04a3160c681c2e619472c",
+        "artifacts/audits/relationship_foundation_v0/observations/group_canaries_complete.json": "d98161c0ef39a137f9ba1bd330772bde643a3f445fad7e5733dea52ed1cd5cb7"
+      },
+      "manifest_sha256": "c9a256403dd52986bbe26905853bc3c038fb55b9798e50b59ecb1407b75a04cf",
+      "process_window": "2025-01-01 inclusive to 2026-09-07 exclusive, plus exact parent/recheck lookups"
+    }
+  },
+  "yumbo": {
+    "edge_types": {
+      "BID_ON": 334,
+      "HAS_CONTRACTOR": 225,
+      "HAS_RECORDED_CONTRACT": 223,
+      "IN_TERRITORY": 1,
+      "MEMBER_OF_SUPPLIER_GROUP": 42,
+      "PUBLISHED": 7507,
+      "PUBLISHED_CONTRACT": 250
+    },
+    "edges": 8582,
+    "issues": {
+      "CONTRACTOR_ACCOUNT_UNAVAILABLE": 25,
+      "PAA_IDENTITY_AUTHORITY_REQUIRED": 1,
+      "PROCESS_CONTRACT_AMBIGUOUS_ROWS": 6,
+      "PROCESS_CONTRACT_ORPHANS": 21,
+      "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED": 1
+    },
+    "node_types": {
+      "CONTRACT": 250,
+      "INSTITUTION": 1,
+      "PROCESS": 7507,
+      "SECOP_SUPPLIER": 390,
+      "SUPPLIER_GROUP": 18,
+      "TERRITORY": 1
+    },
+    "nodes": 8167,
+    "scope": {
+      "buyer_unit": "MUNICIPIO DE YUMBO VALLE",
+      "cohort": "yumbo",
+      "contract_sampling": "First 250 ordered by id_contrato; all dates",
+      "group_sampling": "Only captured groups involving observed accounts; partial membership",
+      "identity_scope": "Recorded source identities; no independent legal certification",
+      "inputs": {
+        "app/data/aliases_db.json": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
+        "app/data/territorial_knowledge_v0.json": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_0.json": "575aec2eee9d5c7bf5e5c692894623f936f012b2df3f67427ac811006a9f646d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_100.json": "8047e2da80d5db45e49dc99aa1b10613fa2731038c3d36e646c8d2e93fa40835",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_200.json": "d9af5de491af80899022da88de2cbd8fbdf9d7732e4d74d805054484e840565f",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_300.json": "493eced67bafcf1a56104327b5301ac07d9f9afe920b7a7141a7dfd70839211d",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_400.json": "e280116a2bc8c45654b524a456dba42fb8f5f31ea9ef2c0f7d3a07d7ec639f2c",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_0.json": "55d0e426fc617362c97496bb150f4e633b970859e60498d47a556b09340035b4",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_100.json": "296acc292aab9bc5cc6cb5b88c302473d5c6d7947bcd729750062b68fe283bdd",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_200.json": "3b05ebcc12c649c2588567aeb8f6a4a0163e5440c46db6729245acffe728d400",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_300.json": "d2fd25fc112654c1737f7140ef8bf200697db62ace98cd2ebc5ae128cdc97370",
+        "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_400.json": "ced6dc2e83b2ea55bb050ebaafbe3f26a3641c4055d8ec9b2df11f470fbe360d",
+        "artifacts/audits/relationship_foundation_v0/observations/group_canaries_complete.json": "d98161c0ef39a137f9ba1bd330772bde643a3f445fad7e5733dea52ed1cd5cb7",
+        "artifacts/audits/relationship_foundation_v0/observations/yumbo_bids.json": "fdadaf8ffe0d9fce2f2ba2ff0c43f5e397c52444ce131a9d9634ed546ad07311",
+        "artifacts/audits/relationship_foundation_v0/observations/yumbo_contracts.json": "7d41230bbbf41bad4a6395c8c3237f1be1bf07c7b892fea5127c2ca90854b854",
+        "artifacts/audits/relationship_foundation_v0/observations/yumbo_portfolio_parents_0.json": "e2fe0988eaf93fa61b797a2b27def644d574103245ad9a13a66425b1a96e1568",
+        "artifacts/audits/relationship_foundation_v0/observations/yumbo_portfolio_parents_100.json": "eab85951aba89ccd7a5ede3b3b7214de1460f09e054dd98d4532b67f801d0117",
+        "artifacts/audits/relationship_foundation_v0/observations/yumbo_portfolio_parents_200.json": "a57b287d7dcd4b09e6387959b1974a896ecb3e9cddac24eb1a7a46e4819aa1f3",
+        "artifacts/audits/relationship_foundation_v0/observations/yumbo_processes.json": "8d067594e8d5a23d2955f44c935e12005905e2ee06a3a4fec8640ff97ac0966f"
+      },
+      "manifest_sha256": "c9a256403dd52986bbe26905853bc3c038fb55b9798e50b59ecb1407b75a04cf",
+      "process_window": "2025-01-01 inclusive to 2026-09-07 exclusive, plus exact parent/recheck lookups"
+    }
+  }
+}

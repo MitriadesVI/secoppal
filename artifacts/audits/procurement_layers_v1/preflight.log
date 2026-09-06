@@ -1,0 +1,8 @@
+COMMAND: .venv/bin/ruff --version
+ruff 0.16.4
+COMMAND: .venv/bin/semgrep --version
+1.176.0
+COMMAND: .venv/bin/python -c import hypothesis; print(hypothesis.__version__)
+6.165.10
+COMMAND: codegraph --version
+0.9.6

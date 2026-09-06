@@ -1,0 +1,80 @@
+artifacts/audits/procurement_layers_v1/codegraph_sync.log:14: new blank line at EOF.
+artifacts/audits/procurement_layers_v1/semgrep.log:1: trailing whitespace.
++               
+artifacts/audits/procurement_layers_v1/semgrep.log:2: trailing whitespace.
++               
+artifacts/audits/procurement_layers_v1/semgrep.log:8: trailing whitespace.
++                
+artifacts/audits/procurement_layers_v1/semgrep.log:9: trailing whitespace.
++                
+artifacts/audits/procurement_layers_v1/semgrep.log:18: trailing whitespace.
++ • Scan skipped: 
+artifacts/audits/procurement_layers_v1/semgrep.log:23: trailing whitespace.
++                    
+artifacts/audits/procurement_layers_v1/semgrep.log:24: trailing whitespace.
++                    
+artifacts/audits/procurement_layers_v1/semgrep.log:28: trailing whitespace.
++                         
+artifacts/audits/procurement_layers_v1/semgrep.log:34: trailing whitespace.
++          Registra o re-lanza.                                                                         
+artifacts/audits/procurement_layers_v1/semgrep.log:35: trailing whitespace.
++                                                                                                       
+artifacts/audits/procurement_layers_v1/semgrep.log:39: trailing whitespace.
++               "nombre_del_procedimiento"                                         
+artifacts/audits/procurement_layers_v1/semgrep.log:49: trailing whitespace.
++                               
+artifacts/audits/procurement_layers_v1/semgrep.log:55: trailing whitespace.
++          Registra o re-lanza.                                                                         
+artifacts/audits/procurement_layers_v1/semgrep.log:56: trailing whitespace.
++                                                                                                       
+artifacts/audits/procurement_layers_v1/semgrep.log:71: trailing whitespace.
++                                          
+artifacts/audits/procurement_layers_v1/semgrep.log:77: trailing whitespace.
++          Registra o re-lanza.                                                                         
+artifacts/audits/procurement_layers_v1/semgrep.log:78: trailing whitespace.
++                                                                                                       
+artifacts/audits/procurement_layers_v1/semgrep.log:89: trailing whitespace.
++             [hid 9 additional lines, adjust with --max-lines-per-finding] 
+artifacts/audits/procurement_layers_v1/semgrep.log:90: trailing whitespace.
++                                               
+artifacts/audits/procurement_layers_v1/semgrep.log:96: trailing whitespace.
++          Registra o re-lanza.                                                                         
+artifacts/audits/procurement_layers_v1/semgrep.log:97: trailing whitespace.
++                                                                                                       
+artifacts/audits/procurement_layers_v1/semgrep.log:108: trailing whitespace.
++             [hid 3 additional lines, adjust with --max-lines-per-finding] 
+artifacts/audits/procurement_layers_v1/semgrep.log:109: trailing whitespace.
++                                             
+artifacts/audits/procurement_layers_v1/semgrep.log:115: trailing whitespace.
++          Registra o re-lanza.                                                                         
+artifacts/audits/procurement_layers_v1/semgrep.log:116: trailing whitespace.
++                                                                                                       
+artifacts/audits/procurement_layers_v1/semgrep.log:127: trailing whitespace.
++                                            
+artifacts/audits/procurement_layers_v1/semgrep.log:133: trailing whitespace.
++          Registra o re-lanza.                                                                         
+artifacts/audits/procurement_layers_v1/semgrep.log:134: trailing whitespace.
++                                                                                                       
+artifacts/audits/procurement_layers_v1/semgrep.log:145: trailing whitespace.
++             [hid 164 additional lines, adjust with --max-lines-per-finding] 
+artifacts/audits/procurement_layers_v1/semgrep.log:146: trailing whitespace.
++                                       
+artifacts/audits/procurement_layers_v1/semgrep.log:152: trailing whitespace.
++          Registra o re-lanza.                                                                         
+artifacts/audits/procurement_layers_v1/semgrep.log:153: trailing whitespace.
++                                                                                                       
+artifacts/audits/procurement_layers_v1/semgrep.log:158: trailing whitespace.
++                                            
+artifacts/audits/procurement_layers_v1/semgrep.log:164: trailing whitespace.
++          Registra o re-lanza.                                                                         
+artifacts/audits/procurement_layers_v1/semgrep.log:165: trailing whitespace.
++                                                                                                       
+artifacts/audits/procurement_layers_v1/semgrep.log:173: new blank line at EOF.
+artifacts/audits/procurement_layers_v1/semgrep_owned.log:1: trailing whitespace.
++               
+artifacts/audits/procurement_layers_v1/semgrep_owned.log:2: trailing whitespace.
++               
+artifacts/audits/procurement_layers_v1/semgrep_owned.log:8: trailing whitespace.
++                
+artifacts/audits/procurement_layers_v1/semgrep_owned.log:9: trailing whitespace.
++                

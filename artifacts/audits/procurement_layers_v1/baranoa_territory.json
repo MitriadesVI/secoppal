@@ -1,0 +1,381 @@
+{
+  "absence_means_zero": false,
+  "coverage_status": "PARTIAL",
+  "deferred_relations": [
+    "REPRESENTS_ACTOR",
+    "PLANNED_AS"
+  ],
+  "edges": [
+    {
+      "assertion_status": "SUPPORTED",
+      "attributes": {
+        "meaning": "ACCREDITED_AFFILIATION"
+      },
+      "coverage_status": "PARTIAL",
+      "evidence": [
+        {
+          "locator": "logical:ff77e2a68203442557da",
+          "observed_at": "LOCAL_VERSIONED_SNAPSHOT",
+          "path": "app/data/territorial_knowledge_v0.json",
+          "sha256": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+          "source": "territorial"
+        }
+      ],
+      "from": "institution:logical:ff77e2a68203442557da",
+      "kind": "IN_TERRITORY",
+      "runtime_status": "SHADOW",
+      "to": "territory:08078"
+    }
+  ],
+  "issues": [
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.1558701",
+        "row": "/payload/12"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.1558702",
+        "row": "/payload/13"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.1678155",
+        "row": "/payload/15"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.1871903",
+        "row": "/payload/18"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.2279544",
+        "row": "/payload/25"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.2597706",
+        "row": "/payload/32"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.3767808",
+        "row": "/payload/47"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.3768519",
+        "row": "/payload/49"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.4704892",
+        "row": "/payload/60"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.6765658",
+        "row": "/payload/75"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.6770120",
+        "row": "/payload/81"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.6773012",
+        "row": "/payload/84"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.6972447",
+        "row": "/payload/89"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.6972451",
+        "row": "/payload/90"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.7944297",
+        "row": "/payload/96"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.7944620",
+        "row": "/payload/99"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.8820762",
+        "row": "/payload/110"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.8820897",
+        "row": "/payload/111"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.8820998",
+        "row": "/payload/112"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.9042659",
+        "row": "/payload/170"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.9096127",
+        "row": "/payload/226"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.9098039",
+        "row": "/payload/233"
+      }
+    },
+    {
+      "code": "CONTRACTOR_ACCOUNT_UNAVAILABLE",
+      "detail": {
+        "id": "contract:jbjy-vk9h:CO1.PCCNTR.9102862",
+        "row": "/payload/243"
+      }
+    },
+    {
+      "code": "MEMBERSHIP_ENDPOINT_UNACCREDITED",
+      "detail": {
+        "path": "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_200.json",
+        "row": "/payload/128"
+      }
+    },
+    {
+      "code": "MEMBERSHIP_ENDPOINT_UNACCREDITED",
+      "detail": {
+        "path": "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_200.json",
+        "row": "/payload/129"
+      }
+    },
+    {
+      "code": "PAA_IDENTITY_AUTHORITY_REQUIRED",
+      "detail": {
+        "status": "DEFERRED"
+      }
+    },
+    {
+      "code": "PROCESS_CONTRACT_ORPHANS",
+      "detail": {
+        "codigo_proveedor": "729856047",
+        "estado_contrato": "Modificado",
+        "fecha_de_firma": "2026-01-20T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.8976046",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.9593563",
+        "referencia_del_contrato": "CD-002-2026"
+      }
+    },
+    {
+      "code": "PROCESS_CONTRACT_ORPHANS",
+      "detail": {
+        "codigo_proveedor": "734365471",
+        "estado_contrato": "Cancelado",
+        "id_contrato": "CO1.PCCNTR.8977722",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE BARANOA",
+        "proceso_de_compra": "CO1.BDOS.9595529",
+        "referencia_del_contrato": "CD-001-2026"
+      }
+    },
+    {
+      "code": "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED",
+      "detail": {
+        "status": "DEFERRED"
+      }
+    }
+  ],
+  "layers": [
+    {
+      "label": "Dónde",
+      "node_count": 1,
+      "node_types": [
+        "TERRITORY"
+      ],
+      "number": 1,
+      "status": "OBSERVED"
+    },
+    {
+      "label": "Quién compra",
+      "node_count": 1,
+      "node_types": [
+        "INSTITUTION",
+        "BUYER_GROUP"
+      ],
+      "number": 2,
+      "status": "OBSERVED"
+    },
+    {
+      "label": "Qué tramita y contrata",
+      "node_count": 0,
+      "node_types": [
+        "PROCESS",
+        "CONTRACT"
+      ],
+      "number": 3,
+      "status": "NO_OBSERVATIONS"
+    },
+    {
+      "label": "Con qué registro participa en SECOP",
+      "node_count": 0,
+      "node_types": [
+        "SECOP_SUPPLIER",
+        "SUPPLIER_GROUP"
+      ],
+      "number": 4,
+      "status": "NO_OBSERVATIONS"
+    },
+    {
+      "label": "Identidad documental",
+      "node_count": 0,
+      "node_types": [
+        "ACTOR"
+      ],
+      "number": 5,
+      "status": "NO_OBSERVATIONS"
+    },
+    {
+      "label": "Qué planea comprar",
+      "node_count": 0,
+      "node_types": [
+        "PAA_ITEM"
+      ],
+      "number": 6,
+      "status": "DEFERRED"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "institution:logical:ff77e2a68203442557da",
+      "kind": "INSTITUTION",
+      "label": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observations": [
+        {
+          "attributes": {
+            "knowledge_status": "PRODUCT_RECOGNIZED",
+            "product_buyer_unit": "ALCALDIA MUNICIPAL DE BARANOA"
+          },
+          "evidence": {
+            "locator": "logical:ff77e2a68203442557da",
+            "observed_at": "LOCAL_VERSIONED_SNAPSHOT",
+            "path": "app/data/territorial_knowledge_v0.json",
+            "sha256": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+            "source": "territorial"
+          },
+          "label": "ALCALDIA MUNICIPAL DE BARANOA"
+        }
+      ]
+    },
+    {
+      "id": "territory:08078",
+      "kind": "TERRITORY",
+      "label": "BARANOA",
+      "observations": [
+        {
+          "attributes": {
+            "department": "ATLÁNTICO"
+          },
+          "evidence": {
+            "locator": "logical:ff77e2a68203442557da",
+            "observed_at": "LOCAL_VERSIONED_SNAPSHOT",
+            "path": "app/data/territorial_knowledge_v0.json",
+            "sha256": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+            "source": "territorial"
+          },
+          "label": "BARANOA"
+        }
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "scope": {
+    "buyer_unit": "ALCALDIA MUNICIPAL DE BARANOA",
+    "cohort": "baranoa",
+    "contract_sampling": "First 250 ordered by id_contrato; all dates",
+    "group_sampling": "Only captured groups involving observed accounts; partial membership",
+    "identity_scope": "Recorded source identities; no independent legal certification",
+    "inputs": {
+      "app/data/buyer_source_names.json": "98148e1c5676b90a9c1cde4f43f89c165550cef02db55dfca615c16916d275c2",
+      "app/data/territorial_knowledge_v0.json": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+      "artifacts/audits/relationship_foundation_v0/observations/baranoa_bids.json": "ea8e6416ffa80829113144c0dc2c55bae5f935b553baf218bcd3376f2bf41dbe",
+      "artifacts/audits/relationship_foundation_v0/observations/baranoa_contracts.json": "73fbd8c839429a63d901dad33741408c8ffa2f466c67e45351de94079f2ebbed",
+      "artifacts/audits/relationship_foundation_v0/observations/baranoa_portfolio_parents_0.json": "3780286fd08ff047b44942a204c63c421dff39f75c12011ad8d70e2a5932fa84",
+      "artifacts/audits/relationship_foundation_v0/observations/baranoa_portfolio_parents_100.json": "4554a619590ba25226a6d53077b0dcabb60f9b774e1458645c3d697ae5fd269c",
+      "artifacts/audits/relationship_foundation_v0/observations/baranoa_portfolio_parents_200.json": "3a3811ad43668e50f42d3d12f89bf78220330fc9d924b1eca55ffd197172120f",
+      "artifacts/audits/relationship_foundation_v0/observations/baranoa_processes.json": "6204d7da67b5ecd6328a3284681dde2c4a914f30b6e0b5e6da8084dc1e927a35",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_0.json": "575aec2eee9d5c7bf5e5c692894623f936f012b2df3f67427ac811006a9f646d",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_100.json": "8047e2da80d5db45e49dc99aa1b10613fa2731038c3d36e646c8d2e93fa40835",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_200.json": "d9af5de491af80899022da88de2cbd8fbdf9d7732e4d74d805054484e840565f",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_300.json": "493eced67bafcf1a56104327b5301ac07d9f9afe920b7a7141a7dfd70839211d",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_400.json": "e280116a2bc8c45654b524a456dba42fb8f5f31ea9ef2c0f7d3a07d7ec639f2c",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_0.json": "55d0e426fc617362c97496bb150f4e633b970859e60498d47a556b09340035b4",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_100.json": "296acc292aab9bc5cc6cb5b88c302473d5c6d7947bcd729750062b68fe283bdd",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_200.json": "3b05ebcc12c649c2588567aeb8f6a4a0163e5440c46db6729245acffe728d400",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_300.json": "d2fd25fc112654c1737f7140ef8bf200697db62ace98cd2ebc5ae128cdc97370",
+      "artifacts/audits/relationship_foundation_v0/observations/bid_groups_tail_400.json": "ced6dc2e83b2ea55bb050ebaafbe3f26a3641c4055d8ec9b2df11f470fbe360d",
+      "artifacts/audits/relationship_foundation_v0/observations/group_canaries_complete.json": "d98161c0ef39a137f9ba1bd330772bde643a3f445fad7e5733dea52ed1cd5cb7"
+    },
+    "manifest_sha256": "c9a256403dd52986bbe26905853bc3c038fb55b9798e50b59ecb1407b75a04cf",
+    "process_window": "2025-01-01 inclusive to 2026-09-07 exclusive, plus exact parent/recheck lookups"
+  },
+  "state": "SHADOW",
+  "view": {
+    "counts_scope": "VIEW_ONLY",
+    "hops": 1,
+    "root": "territory:08078"
+  }
+}
