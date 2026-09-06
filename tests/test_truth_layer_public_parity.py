@@ -103,7 +103,12 @@ M2_MODIFIED_FILE_SHA256 = {
     # M1A.2 rejects unresolved complete municipal buyer identities, even if
     # topic/date filters exist. The ordinary-query oracles below remain
     # byte-identical; test_compound_identity_guard pins the new rejection.
-    "app/core/soql_builder.py": "0cbc0f1944914b34a195b608c1b7dfe17d2465d0b8fe31aa561d897a61da1b39",
+    # VALUE-SANITY-REACHABILITY-V1 restores ADR-005 by adding valor_facturado
+    # to the contracts SELECT only. test_value_sanity_reachability freezes the
+    # previous 15 fields and proves that removing this one column restores the
+    # query byte for byte, with identical count, WHERE, ORDER BY and LIMIT.
+    # The process/public oracles below and all other pins remain unchanged.
+    "app/core/soql_builder.py": "b64a3f1bd7bf22c77c6cca36bf094176af6f47b61cfebc2c4e61819f7eae7a46",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de

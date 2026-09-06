@@ -231,6 +231,7 @@ class SoQLBuilder:
                 "tipo_de_contrato",
                 "modalidad_de_contratacion",
                 "valor_del_contrato",
+                "valor_facturado",  # ADR-005: diagnostic reference, never the principal value.
                 "estado_contrato",
                 "fecha_de_firma",
                 "proveedor_adjudicado",

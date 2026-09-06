@@ -279,7 +279,10 @@ class SecopClient:
         normalized["urlproceso"] = url_value
 
         # Normalize monetary values to float for consistent handling
-        for money_field in ("precio_base", "valor_del_contrato", "valor_contrato_con_adiciones"):
+        money_fields = ("precio_base", "valor_del_contrato", "valor_contrato_con_adiciones")
+        if dataset_id == "jbjy-vk9h":
+            money_fields += ("valor_facturado",)  # ADR-005 needs comparable numbers.
+        for money_field in money_fields:
             if money_field in normalized:
                 normalized[money_field] = self._safe_money(normalized[money_field])
 
@@ -301,4 +304,3 @@ class SecopClient:
             except ValueError:
                 return None
         return None
-

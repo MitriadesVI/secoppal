@@ -36,7 +36,8 @@ def _payload(value="344398000000", billed="2108000000"):
     return {
         "id_contrato": "CO1.PCCNTR.9281738",
         "referencia_del_contrato": "CD-58-2026-6993",
-        "nombre_entidad": "EDUBAR S.A.",
+        "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "proveedor_adjudicado": "EDUBAR S.A.",
         "valor_del_contrato": value,
         "valor_facturado": billed,
         "estado_contrato": "Modificado",
@@ -74,6 +75,8 @@ def test_source_string_reaches_detector_and_existing_channel_warnings():
     assert item["valor_facturado"] == 2_108_000_000
     assert item["valor_del_contrato"] == 344_398_000_000
     assert row["valor"] == "$344,398,000,000"
+    assert row["entidad"] == payload["nombre_entidad"]
+    assert row["contratista"] == payload["proveedor_adjudicado"]
     assert row["value_quality"] == "suspect"
     assert row["value_reference"] == 2_108_000_000
     assert "difiere significativamente" in row["value_warning"]
