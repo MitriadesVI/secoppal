@@ -1,0 +1,18 @@
+{
+  "note": "Paridad de SoQL sobre 18 consultas sanas, BASE f9cb8c9 vs HEAD. La comparación es insensible al orden porque la expansión morfológica del objeto se ordena de forma no determinista POR PROCESO: BASE contra sí mismo en dos procesos da la misma tasa 16/18, con consultas diferentes cada vez. Esa nodeterminación es preexistente y ajena a este frente.",
+  "healthy_queries": 18,
+  "set_identical_base_vs_head": 16,
+  "set_identical_base_vs_base": 16,
+  "differing_base_vs_head": [
+    "contratos de alimentacion escolar con alcaldia de medellin",
+    "contratos de nutricion con ese hospital del sur"
+  ],
+  "differing_base_vs_base": [
+    "contratos de nutricion con ese hospital del sur",
+    "contratos del NIT 900123456"
+  ],
+  "difference_kind": "orden de los términos de expansión morfológica dentro del OR; mismo conjunto de términos",
+  "source_calls_base": 51,
+  "source_calls_head": 51,
+  "source_call_delta": 0
+}

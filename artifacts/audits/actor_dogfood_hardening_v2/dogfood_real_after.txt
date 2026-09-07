@@ -1,0 +1,110 @@
+Dogfood local real — after (rama fix/actor-dogfood-hardening-v2, 2026-09-07)
+Índice de producción en solo lectura; persistencia redirigida a tmp; sin red.
+Todo documento aparece enmascarado como digest con sal — nunca una cédula.
+======================================================================
+======================================================================
+B — región dentro del span acreditado
+
+### contratos de wilson herrera llanos
+    route=actor_profile clarify=False
+    contratista = ['doc:14d9ad70da']
+    actor_scope = {'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'observed_name': 'wilson herrera llanos', 'base_number': 'doc:14d9ad70da'}
+    actor_resolution_method = exact_unique_alias
+
+### … en Meta
+    route=actor_profile clarify=False
+    contratista = ['doc:14d9ad70da']
+    actor_scope = {'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'observed_name': 'wilson herrera llanos', 'base_number': 'doc:14d9ad70da'}
+    departamento_resolved = Meta
+    actor_resolution_method = exact_unique_alias
+
+======================================================================
+C — nombre aseverado junto a documento
+
+### busca WILSON HERRERA — CC doc:87ba4bb163
+    route=actor_profile clarify=False
+    contratista = ['doc:87ba4bb163']
+    actor_scope = {'resolution_method': 'explicit_document', 'requires_resolution': False, 'document_type': 'CC', 'base_number': 'doc:87ba4bb163'}
+    actor_resolution_method = explicit_document
+
+### WILSON HERRERA — CC doc:87ba4bb163
+    route=actor_profile clarify=False
+    contratista = ['doc:87ba4bb163']
+    actor_scope = {'resolution_method': 'explicit_document', 'requires_resolution': False, 'document_type': 'CC', 'base_number': 'doc:87ba4bb163'}
+    actor_resolution_method = explicit_document
+
+### busca proveedor WILSON HERRERA — CC doc:87ba4bb163
+    route=actor_profile clarify=False
+    contratista = ['doc:87ba4bb163']
+    actor_scope = {'resolution_method': 'explicit_document', 'requires_resolution': False, 'document_type': 'CC', 'base_number': 'doc:87ba4bb163'}
+    actor_resolution_method = explicit_document
+
+======================================================================
+D — puntuación terminal de comprador
+
+### contratos con alcaldia de barranquilla?
+    route=heuristic_only clarify=False
+    entidad_resolved = DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+    entidad = Municipio de barranquilla
+
+======================================================================
+A — split brain (selección → documento nuevo)
+
+### t1 contratos de wilson herrera con alcaldia de barranquilla
+    route=heuristic_only clarify=True
+    actor_scope = {'resolution_method': 'name_unresolved', 'requires_resolution': True, 'observed_name': 'wilson herrera', 'base_number': None}
+    entidad_resolved = DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+    entidad = alcaldia de barranquilla
+    actor_resolution_method = exact_ambiguous_alias
+    actor_pending = {'n': 2}
+
+### t2 CC doc:ff5baa98e4
+    route=actor_profile clarify=False
+    contratista = ['doc:ff5baa98e4']
+    actor_scope = {'resolution_method': 'explicit_document_pending_selection', 'requires_resolution': False, 'document_type': 'CC', 'observed_name': 'WILSON HERRERA', 'base_number': 'doc:ff5baa98e4'}
+    entidad_resolved = DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+    entidad = alcaldia de barranquilla
+    actor_resolution_method = explicit_document_pending_selection
+
+### t3 y ahora: WILSON HERRERA — CC doc:87ba4bb163
+    route=actor_profile clarify=False
+    contratista = ['doc:87ba4bb163']
+    actor_scope = {'resolution_method': 'explicit_document', 'requires_resolution': False, 'document_type': 'CC', 'base_number': 'doc:87ba4bb163'}
+    entidad_resolved = DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+    entidad = alcaldia de barranquilla
+    actor_resolution_method = explicit_document
+
+======================================================================
+D follow-up — actor + año + comprador con '?'
+
+### t1 actor
+    route=actor_profile clarify=False
+    contratista = ['doc:14d9ad70da']
+    actor_scope = {'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'observed_name': 'wilson herrera llanos', 'base_number': 'doc:14d9ad70da'}
+    actor_resolution_method = exact_unique_alias
+
+### t2 ok que tiene en 2026 con alcaldia de barranquilla?
+    route=actor_profile clarify=False
+    contratista = ['doc:14d9ad70da']
+    actor_scope = {'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'observed_name': 'wilson herrera llanos', 'base_number': 'doc:14d9ad70da'}
+    entidad_resolved = DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+    entidad = Municipio de barranquilla
+    fecha_desde = 2026-01-01
+    fecha_hasta = 2026-12-31
+    actor_resolution_method = exact_unique_alias
+
+======================================================================
+E — fuzzy multi typo
+
+### wikson Herrera Llanaos
+    route=heuristic_only clarify=True
+    actor_scope = {'resolution_method': 'name_unresolved', 'requires_resolution': True, 'observed_name': 'wikson herrera llanaos', 'base_number': None}
+    actor_resolution_method = fts5_trigram_bm25
+    actor_pending = {'n': 10}
+       #1 'IVAN HERRERA HERRERA' doc:786679ba57
+       #2 'LUIS HERRERA HERRERA' doc:ac2e1f7ef0
+       #3 'Herrera' doc:14d1ea47e7
+       #4 'HERRERA' doc:972af1f507
+       #5 'herrera' doc:8db5ea5831
+
+SoQL emitidos: 73

@@ -2295,3 +2295,69 @@ sola suite en serie sobre `ddcc6b8`: **11738 passed, 11 skipped, 14 xfailed in
 controles de personas hasta pedir proveedor explícito. Ruff y corpus verdes;
 Semgrep conserva 10 hallazgos de baseline, delta cero. **NO_GO** del benchmark
 primario permanece vigente; el pase funcional no autoriza promoción.
+
+### 2026-09-07 — ACTOR_DOGFOOD_HARDENING_V2
+
+Cuatro defectos de corrección encontrados usando Actor Profile de verdad, tratados
+como una sola cadena causal —parser → propiedad del span → arbitraje
+actor/comprador/geografía → frame conversacional → query plan— y entregados en
+slices independientes.
+
+**A, identidad partida.** Un turno con documento tipado no declaraba operación de
+actor, así que el merge genérico tomaba `contratista` del turno nuevo (es un
+*modifier* del `QueryFrame`) y dejaba `actor_scope` en el anterior (vive en
+`raw_params`). El frame filtraba por una persona y nombraba a otra, y se ejecutaba
+sin que nada se viera mal. Ahora un documento declarado sobre un actor
+**establecido** es `REPLACE_ACTOR`; un frame con lista pendiente no está
+establecido y conserva la semántica congelada de búsqueda nueva. `INV-ACTOR-
+SINGLE-IDENTITY` falla cerrado en las dos puertas al SoQL —`semantic_preflight` y
+`execute_resolved_params`— sin reparar el frame.
+
+**B, propiedad del span.** La región es la única geografía cuyo valor guardado no
+son las palabras que lo produjeron (`llanos` → `Orinoquia`), así que el scrub
+comparaba el canónico contra el nombre y conservaba el filtro: cero falso sobre
+alguien que sí tiene contratos. Se le da la procedencia que las demás claves ya
+tenían (`region_resolution.matched_alias`), y la clave viaja con su clúster. Sin
+gazetteer tocado y sin nombres en listas.
+
+**C, nombre junto a documento.** El marcador de rol era una superficie del acto de
+habla, no el acto. Tercera puerta en `asserted_actor_name.py`, estrecha: documento
+tipado, prefijo que sea todo lo que queda, cero dígitos, forma juzgada por
+evidencia semántica y no por tipografía.
+
+**D, puntuación de comprador.** `CAPTURE_BOUNDARY` dejaba pegada la puntuación que
+cierra la frase, en una cadena compartida por siete familias. Se corrige en esa
+primitiva: se descarta la corrida terminal salvo el punto que sigue a una letra
+suelta dentro de una sigla —`E.S.E.`, `S.A.S.` conservan el suyo—.
+
+**E, fuzzy multi-typo: auditoría primero.** La sonda de pool decidió antes que el
+ranking: con dos tokens mal escritos el objetivo llega al pool el **20%** de las
+veces, y el caso ancla del dogfood está en rank BM25 1050 de 10 747, fuera del
+pool de 100. El techo de cualquier cambio de ranking es 0.200. Con el gate
+congelado antes de escribir la política, el candidato alcanza ese techo exacto
+(`recall@10 0.058 → 0.200`, MRR 0.036 → 0.200) sin regresión ni pérdida de
+precisión, y entra a runtime. **El caso ancla sigue sin recuperarse**: es
+recuperación, no ranking, y ampliarla no está autorizado.
+
+G5 (p95 ±20%) se re-adjudicó, no se relajó: el brazo AFTER era bimodal porque el
+p95 extremo a extremo lo domina FTS. Medida la función aislada con las dos
+versiones alternadas en un proceso, el coste es 0.529 → 0.618 ms por cuatro
+ordenamientos, ≈ **+0.02 ms por consulta** — tres órdenes de magnitud bajo el
+ruido del instrumento que G5 pedía. El umbral no se movió; G5 queda registrado
+como defecto de diseño del gate.
+
+**Sin ADR.** A–D hacen cumplir invariantes ya declarados añadiendo la evidencia
+que les faltaba; E cambia una clave de ordenamiento que ADR-060 ya declara no
+autoritativa.
+
+Validación: suite completa una sola vez en serie sobre `fix/actor-dogfood-
+hardening-v2`, **11 845 passed, 11 skipped, 14 xfailed, 0 failed (8:34)**; +63
+tests; Ruff y `lint-core` limpios; `git diff --check` limpio; Semgrep 10 hallazgos
+de base y **delta 0**; 12 propiedades Hypothesis, cada una verificada por
+mutación. Paridad de SoQL sobre 18 consultas sanas: **SourceCalls 51 vs 51**, 16/18
+conjuntos idénticos, y las 2 restantes se reproducen comparando BASE contra sí
+mismo en dos procesos (orden de expansión morfológica, nodeterminación
+preexistente). Dogfood local real contra el índice de producción con documentos
+enmascarados. Rama sin merge y sin push.
+
+Detalle: [ACTOR_DOGFOOD_HARDENING_V2](audits/ACTOR_DOGFOOD_HARDENING_V2.md).

@@ -108,6 +108,8 @@ Actor Profile V1 devuelve la **huella contractual observada en SECOP II**:
 | `app/core/actor_intent.py` | detección de intención de actor (no resuelve identidad) |
 | `app/core/actor_arbitration.py` | arbitraje entre las dos puertas de nombre; evidencia temática vs. de entidad |
 | `app/core/actor_resolution.py` | contrato puro estado × método + predicado de autoridad + token de lista pendiente |
+| `app/core/actor_identity_coherence.py` | `INV-ACTOR-SINGLE-IDENTITY`: `actor_scope` y `contratista` son una sola identidad; falla cerrado si divergen |
+| `app/core/asserted_actor_name.py` | tercera puerta: el nombre desnudo escrito junto a un documento tipado es contexto de actor, nunca objeto |
 | `app/core/actor_legal_forms.py` | equivalencias de cola `S.A.S.↔SAS`, `S.A.↔SA`, `E.S.E.↔ESE` |
 | `app/core/actor_scope_policy.py` | capacidad de dataset para alcance de actor |
 | `app/core/actor_conversation.py` | álgebra conversacional determinista |
@@ -118,6 +120,7 @@ Actor Profile V1 devuelve la **huella contractual observada en SECOP II**:
 | `app/data/actor_alias_index.py` | builder del artefacto SQLite |
 | `app/data/actor_alias_resolver.py` | resolver local precision-first |
 | `app/data/actor_alias_source.py` | adquisición acotada desde SECOP II |
+| `scripts/audits/run_actor_multi_typo_fuzzy_audit.py` | auditoría de recall difuso (solo lectura; no toca runtime) |
 | `app/config.py` | flag y ruta del índice |
 
 ### Scripts
@@ -270,6 +273,35 @@ Método resultante: `exact_legal_form_variant`.
   interpretación geográfica cuando el contexto lo sostiene. Un alias de actor
   homónimo no secuestra la consulta. El lenguaje explícito de actor
   (*proveedor*, *contratista*, *qué ha contratado*) sí puede sobreponerse.
+- `INV-ACTOR-SPAN-OWNERSHIP` — una vez acreditado el span completo del actor,
+  sus palabras **no** pueden además convertirse en objeto, región, departamento,
+  ciudad, comprador o modalidad. Solo evidencia **fuera** del span produce esos
+  filtros: *"Persona Llanos"* es solo el actor, *"Persona Llanos en Meta"* es el
+  actor y Meta.
+
+  La propiedad se decide sobre la **procedencia**, no sobre el valor guardado.
+  La región es la única geografía cuyo valor almacenado no son las palabras que
+  lo produjeron (`llanos` → `Orinoquia`), así que `region_resolution` lleva el
+  `matched_alias` junto a la zona canónica y el scrub compara contra él. Sin esa
+  evidencia el filtro parecía venir de ninguna parte y sobrevivía
+  (`ACTOR-GEO-SPAN-OWNERSHIP-001`).
+
+### Nombre aseverado junto a un documento
+
+Un nombre escrito al lado de un documento tipado es **contexto del actor** y
+nunca objeto contractual. Tres puertas lo consumen, y las tres exigen que el
+usuario haya declarado el tipo documental:
+
+| Puerta | Módulo | Abre con |
+|---|---|---|
+| marcador de rol | `actor_intent` | *proveedor / contratista / adjudicatario X* |
+| construcción verbal | `actor_intent` | *qué ha contratado X*, *historial de X* |
+| nombre desnudo | `asserted_actor_name` | *busca X — CC N*, *X — CC N*, *ahora X — CC N* |
+
+La tercera es deliberadamente estrecha: el prefijo, menos el encuadre
+conversacional, debe ser **todo** lo que queda; cualquier dígito lo rechaza; y la
+forma de nombre la juzga la misma evidencia semántica que la sonda desnuda,
+nunca la tipografía. Un número no autoriza a leer como nombre lo que lo precede.
 
 ---
 
@@ -303,6 +335,35 @@ Método resultante: `exact_legal_form_variant`.
 **La recuperación difusa nunca es autoridad** (`INV-NAME-NO-GUESS`). El trigram
 recupera; no identifica. Un candidato solo se vuelve autoritativo por **selección
 explícita del usuario**.
+
+El **orden** de esos candidatos sí puede mejorar sin tocar esa regla.
+`_anchored_name_distance` admite hasta **dos** tokens imperfectos cuando la
+consulta conserva un anclaje literal, a una edición cada uno y con presupuesto
+total dos; una palabra del alias responde a un solo token, para que una sola no
+absorba ambos typos y fabrique cobertura. Es una clave de ordenamiento sobre
+filas que la recuperación ya trajo: el estado sigue siendo `CANDIDATES`.
+
+### Una sola identidad por frame ejecutable
+
+`INV-ACTOR-SINGLE-IDENTITY` — `actor_scope` dice **quién** es el actor;
+`contratista` dice **cómo se filtra** esa misma identidad en SECOP. Son la
+proyección de un solo hecho y no pueden discrepar.
+
+Cuando discrepan la consulta igual se ejecuta y devuelve filas: filtra por una
+persona mientras la cabecera, el frame de follow-up y la traza nombran a otra, y
+nada en la respuesta se ve mal. Por eso el chequeo falla cerrado en vez de
+elegir.
+
+- **Autoridad de reemplazo.** Un documento tipado declarado sobre un actor ya
+  establecido es `REPLACE_ACTOR`, no una segunda identidad: purga la
+  IdentityKey anterior y conserva los filtros ortogonales. Un frame que aún
+  sostiene una lista pendiente **no** está establecido, así que un documento
+  ajeno a esa lista conserva su significado de búsqueda nueva.
+- **Guard.** `actor_identity_coherence` re-deriva la proyección desde el scope
+  con la misma autoridad que la produce (`document_variants`) y bloquea si
+  divergen. Está en las dos puertas al SoQL: `semantic_preflight` (planner) y
+  `execute_resolved_params` (barra de refinamiento, Radar). Nunca repara el
+  frame; la causa se corrige aguas arriba.
 
 ---
 
@@ -502,6 +563,22 @@ no afirman conteos actuales del índice productivo. TRANSPORTE conserva su colis
 exacta actor/tema. Cantillo Exact Prefix Challenger estaba pendiente al cierre de ese frente;
 la decisión posterior ADR-094 se implementa en esta rama con promoción NO_GO.
 
+### Dogfood Hardening V2 — 2026-09-07
+
+Cuatro defectos de corrección encontrados usando el producto, corregidos como
+una sola cadena causal: identidad partida entre `contratista` y `actor_scope`,
+geografía robada al span acreditado, nombre aseverado fugado al objeto, y
+puntuación conversacional leída como identidad de comprador.
+
+Suite completa **11 845 passed · 0 failed**; +63 tests; Ruff, `lint-core` y
+`git diff --check` limpios; Semgrep 10 hallazgos con **delta 0**. Paridad de
+SoQL sobre 18 consultas sanas con **SourceCalls 51 vs 51**; las dos diferencias
+son orden de expansión morfológica y se reproducen comparando BASE contra sí
+mismo en dos procesos. Dogfood local real contra el índice de producción, con
+documentos enmascarados.
+
+Detalle: `docs/audits/ACTOR_DOGFOOD_HARDENING_V2.md`.
+
 ---
 
 ## 12. Flag y despliegue
@@ -584,6 +661,7 @@ Informes: `docs/audits/2026-08-18_ACTOR_PROFILE_DIAGNOSTIC.md` ·
 | Aprovisionamiento del índice como requisito de activación | operativo |
 | Mismatch histórico de dialogue corpus `GOB-DEPTO-001` | preexistente, ajeno a este frente |
 | Deuda de lint del repositorio | `make lint-core` limpio; deuda en superficies legacy |
+| **Recall con dos tokens mal escritos**: el objetivo llega al pool solo el **20%** de las veces; el ranking ya recupera ese 20% entero (`recall@10 0.058 → 0.200`) y el 80% restante es **recuperación**, no ranking | auditado; ampliar la recuperación (índice de n-gramas por token) es una decisión de arquitectura propia, no autorizada — ver `docs/audits/ACTOR_DOGFOOD_HARDENING_V2.md` |
 
 ---
 
