@@ -312,6 +312,19 @@ def test_asserted_name_does_not_swallow_an_amount():
     assert params.get("valor_min")
 
 
+@pytest.mark.parametrize("query,field", [
+    # Organization-shaped prefixes pass the name-shape door on their head noun
+    # alone, so the digit rejection is the only thing keeping the amount and
+    # the year out of the consumed span.
+    ("fundacion abc de mas de 1000 millones con NIT 900123456", "valor_min"),
+    ("fundacion abc en 2024 con NIT 900123456", "fecha_desde"),
+])
+def test_an_organization_prefix_does_not_swallow_money_or_year(query, field):
+    params = _params(query)
+    assert params["contratista"] == ["900123456"]
+    assert params.get(field), params
+
+
 # ══════════════════════════════════════════════════════════════════════════
 # D — BUYER-TERMINAL-PUNCTUATION-BOUNDARY-001
 # ══════════════════════════════════════════════════════════════════════════
