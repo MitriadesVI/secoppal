@@ -40,11 +40,14 @@ from app.core.entity_profile.frame_values import (
     StatePredicate,
     TemporalEventKind,
     TopicAll,
-    TopicNode,
-    TopicTerm,
-    TopicTrue,
     ValueConstraint,
     decimal_or_none,
+)
+from app.core.entity_profile.legacy_equivalence import (
+    legacy_contract_type,
+    legacy_modality,
+    legacy_topic,
+    material_conflict,
 )
 
 
@@ -109,6 +112,10 @@ def migrate_legacy_context(request: Any, params: dict) -> MigrationOutcome:
     if isinstance(period, str):
         return MigrationOutcome(MigrationStatus.INVALID_CONTEXT, reason=period)
 
+    conflict = material_conflict(request, params, sources)
+    if conflict is not None:
+        return MigrationOutcome(MigrationStatus.INVALID_CONTEXT, reason=conflict)
+
     buyer = _buyer(params)
     if buyer is None:
         return MigrationOutcome(
@@ -119,7 +126,7 @@ def migrate_legacy_context(request: Any, params: dict) -> MigrationOutcome:
     if isinstance(state, str):
         return MigrationOutcome(MigrationStatus.NEEDS_CLARIFICATION, reason=state)
 
-    topic = _topic(request)
+    topic = legacy_topic(request)
     events = _events(request)
     selection = SourceSelection(requested=sources, origin=origin)
     predicates = {
@@ -139,9 +146,8 @@ def migrate_legacy_context(request: Any, params: dict) -> MigrationOutcome:
             ),
             current_state=state.get(source, StateExpression()),
             topic=topic,
-            modality=Selection(
-                include=tuple(str(v) for v in request.get("modality") or ()),
-            ),
+            modality=legacy_modality(request),
+            contract_type=legacy_contract_type(request),
             value=_value(request, source),
         )
         for source in selection.ordered
@@ -248,18 +254,6 @@ def _state(params: dict, sources: frozenset[SourceKind]):
         existing.predicates + (StatePredicate(field, tuple(_values(params["estado"]))),),
     )
     return states
-
-
-def _topic(request: dict) -> TopicNode:
-    """La tupla plana de V1.1 sólo puede migrar como conjunción.
-
-    Es todo lo que esa representación acredita: cuando el parser aplanó un
-    grupo OR, la forma se perdió antes de guardarse y aquí ya no existe.
-    """
-    terms = tuple(TopicTerm(str(t)) for t in request.get("topic") or () if t)
-    if not terms:
-        return TopicTrue()
-    return terms[0] if len(terms) == 1 else TopicAll(terms)
 
 
 def _value(request: dict, source: SourceKind) -> ValueConstraint:
