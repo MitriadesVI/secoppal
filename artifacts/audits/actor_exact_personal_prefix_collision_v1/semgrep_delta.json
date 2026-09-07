@@ -1,0 +1,70 @@
+{
+  "baseline_global": "RED",
+  "baseline_findings": 10,
+  "after_findings": 10,
+  "new_findings": 0,
+  "removed_findings": 0,
+  "identical_rule_path_start_end": true,
+  "after_locations": [
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/formatter.py",
+      171,
+      177
+    ],
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/formatter.py",
+      699,
+      702
+    ],
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/response_policy.py",
+      508,
+      516
+    ],
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/response_policy.py",
+      577,
+      580
+    ],
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/workflow/actions/execution.py",
+      365,
+      383
+    ],
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/workflow/handlers/direct_lookup.py",
+      366,
+      378
+    ],
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/workflow/handlers/normal_flow.py",
+      170,
+      179
+    ],
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/workflow/handlers/pagination.py",
+      177,
+      350
+    ],
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/workflow/handlers/radar.py",
+      109,
+      112
+    ],
+    [
+      "semgrep.except-exception-que-silencia",
+      "app/core/workflow/handlers/refinement.py",
+      93,
+      99
+    ]
+  ]
+}

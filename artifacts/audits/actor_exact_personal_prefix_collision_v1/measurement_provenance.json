@@ -1,0 +1,11 @@
+{
+  "runtime_commit": "0e6e2c3",
+  "final_runtime_commit": "ddcc6b8ac4312e63ff34d3e9d187045300412268",
+  "later_runtime_change": "ddcc6b8 only removes newly created prefix pending during an existing actor/topic conflict; resolver SQL/deadlines/materialization unchanged since measurements",
+  "after_primary_retained": "after_benchmark.json",
+  "after_primary_verdict": "NO_GO",
+  "impact_primary_retained": "impact_runtime.json",
+  "impact_inconclusive_retained": 1,
+  "semgrep_delta_comparison": "JSON check_id/path/start.line/end.line identical to baseline; textual output also retained",
+  "dense_loader_note": "Dense measurement used the same immutable resolver Git blob; replay script now uses importlib loading instead of exec to obey Ruff S102 without changing the loaded blob."
+}

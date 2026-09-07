@@ -1,0 +1,25 @@
+{
+  "index_path": "/Users/rodrigoortiz/Documents/secoppal/data/actor_alias_index.sqlite",
+  "sha256": "464add1dbb479e616ee80a079b11c256db0d67dc6b979e4f285612233bdb8690",
+  "size": 662409216,
+  "mtime_ns": 1787249492985828920,
+  "unchanged_stat": true,
+  "encoding": "UTF-8",
+  "metadata": {
+    "singleton": 1,
+    "schema_version": "1",
+    "normalization_version": "N2",
+    "built_at": "2026-08-20T18:10:58+00:00",
+    "source_dataset": "jbjy-vk9h",
+    "source_max_date": "2026-08-18",
+    "source_row_count": 1235591,
+    "identity_count": 1214351,
+    "alias_count": 1217203,
+    "ambiguous_alias_count": 14305,
+    "excluded_dirty_count": 15936,
+    "build_parameters_json": "{\"acquisition\": {\"complete\": true, \"duplicate_group_keys\": 0, \"expected_contract_rows\": 5784468, \"global_group_scan\": true, \"groups_received\": 1235591, \"observed_contract_rows\": 5784468, \"order_by\": \"documento_proveedor,tipodocproveedor,proveedor_adjudicado\", \"page_boundaries\": [{\"first_document\": \"-\", \"last_document\": \"1005822919\", \"page\": \"1\", \"rows\": \"50000\"}, {\"first_document\": \"1005822943\", \"last_document\": \"1013668724\", \"page\": \"2\", \"rows\": \"50000\"}, {\"first_document\": \"1013668735\", \"last_document\": \"1020725650\", \"page\": \"3\", \"rows\": \"50000\"}, {\"first_document\": \"1020725693\", \"last_document\": \"1030623911\", \"page\": \"4\", \"rows\": \"50000\"}, {\"first_document\": \"1030623913\", \"last_document\": \"1041891578\", \"page\": \"5\", \"rows\": \"50000\"}, {\"first_document\": \"1041891655\", \"last_document\": \"1056775599\", \"page\": \"6\", \"rows\": \"50000\"}, {\"first_document\": \"1056775617\", \"last_document\": \"1072193085\", \"page\": \"7\", \"rows\": \"50000\"}, {\"first_document\": \"1072193091\", \"last_document\": \"1085276369\", \"page\": \"8\", \"rows\": \"50000\"}, {\"first_document\": \"1085276370\", \"last_document\": \"1095939230\", \"page\": \"9\", \"rows\": \"50000\"}, {\"first_document\": \"1095939302\", \"last_document\": \"1110465471\", \"page\": \"10\", \"rows\": \"50000\"}, {\"first_document\": \"1110465495\", \"last_document\": \"1120741988\", \"page\": \"11\", \"rows\": \"50000\"}, {\"first_document\": \"1120742044\", \"last_document\": \"1140886781\", \"page\": \"12\", \"rows\": \"50000\"}, {\"first_document\": \"1140886785\", \"last_document\": \"12952516\", \"page\": \"13\", \"rows\": \"50000\"}, {\"first_document\": \"12952911\", \"last_document\": \"20979562\", \"page\": \"14\", \"rows\": \"50000\"}, {\"first_document\": \"20979754\", \"last_document\": \"32228497\", \"page\": \"15\", \"rows\": \"50000\"}, {\"first_document\": \"32228538\", \"last_document\": \"39743277\", \"page\": \"16\", \"rows\": \"50000\"}, {\"first_document\": \"39743303\", \"last_document\": \"47438225\", \"page\": \"17\", \"rows\": \"50000\"}, {\"first_document\": \"47438236\", \"last_document\": \"52844528\", \"page\": \"18\", \"rows\": \"50000\"}, {\"first_document\": \"52844530\", \"last_document\": \"65769554\", \"page\": \"19\", \"rows\": \"50000\"}, {\"first_document\": \"65769560\", \"last_document\": \"7570245\", \"page\": \"20\", \"rows\": \"50000\"}, {\"first_document\": \"7570307\", \"last_document\": \"80066247\", \"page\": \"21\", \"rows\": \"50000\"}, {\"first_document\": \"80066271\", \"last_document\": \"86081836\", \"page\": \"22\", \"rows\": \"50000\"}, {\"first_document\": \"86081837\", \"last_document\": \"901023006\", \"page\": \"23\", \"rows\": \"50000\"}, {\"first_document\": \"901023056\", \"last_document\": \"91237352\", \"page\": \"24\", \"rows\": \"50000\"}, {\"first_document\": \"91237366\", \"last_document\": \"ZU\u00d1IGA MORENO\", \"page\": \"25\", \"rows\": \"35591\"}], \"page_size\": 50000, \"pages\": 25, \"policy\": \"FULL_SERVER_SIDE_GROUP_TRAVERSAL\", \"raw_contract_download\": false, \"reconciled\": true, \"unique_group_keys\": 1235591}, \"build_policy\": {\"exclude_cross_document_type_collisions\": true, \"exclude_secondary_group_aliases\": true, \"exclude_unbridged_document_form_collapses\": true, \"maximum_distinct_observed_names\": 25, \"minimum_dominant_name_share\": 0.5, \"minimum_total_occurrences\": 1}, \"dataset_id\": \"jbjy-vk9h\"}",
+    "source_quality_json": "{\"accepted_aggregated_rows\": 1229684, \"dirty_buckets_excluded\": 6963, \"dirty_reason_counts\": {\"CROSS_TYPE_COLLISION\": 4968, \"EXTREME_ALIAS_CARDINALITY\": 4, \"LOW_DOMINANT_NAME_SHARE\": 60, \"SECONDARY_GROUP_ALIAS\": 415, \"UNBRIDGED_DOCUMENT_FORM_COLLAPSE\": 1964}, \"disposition_counts\": {\"EXCLUDED_DIRTY\": 15936, \"INDEXED_AMBIGUOUS\": 44385, \"INDEXED_STABLE\": 1175270}, \"empty_or_sentinel_name\": 243, \"known_document_types_only\": [\"NIT\", \"CC\"], \"rejected_aggregated_rows\": 5907, \"secondary_group_aliases_excluded\": 415, \"unbridged_document_form_collapse_buckets_excluded\": 1964, \"unknown_document_type\": 5354, \"unusable_document\": 310}"
+  },
+  "external_calls": 0,
+  "readonly": true
+}

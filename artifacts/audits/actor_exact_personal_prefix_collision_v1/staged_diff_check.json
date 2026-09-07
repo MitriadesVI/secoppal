@@ -1,0 +1,11 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "stdout": "",
+  "stderr": "",
+  "exit_code": 0
+}

@@ -1,0 +1,3449 @@
+{
+  "base": "345804cf55becaf728d3ec9c20dc9e2f76a3a5b9",
+  "sqlite_version": "3.53.1",
+  "sql": "SELECT normalized_alias,raw_alias,raw_aliases_json,document_type,base_number,occurrences,first_seen,last_seen FROM actor_aliases INDEXED BY sqlite_autoindex_actor_aliases_1 WHERE normalized_alias >= ? AND normalized_alias < ? AND document_type = 'CC' AND base_number != ? ORDER BY normalized_alias,document_type,base_number",
+  "plans": {
+    "existence": [
+      "SEARCH actor_aliases USING INDEX sqlite_autoindex_actor_aliases_1 (normalized_alias>? AND normalized_alias<?)",
+      "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+    ],
+    "enumeration": [
+      "SEARCH actor_aliases USING INDEX sqlite_autoindex_actor_aliases_1 (normalized_alias>? AND normalized_alias<?)",
+      "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+    ]
+  },
+  "samples": 160,
+  "warmups": 5,
+  "repetitions": 50,
+  "cache": "warm, after full local index traversal; no claim of cold-cache bound",
+  "results": [
+    {
+      "query_sha256": "0012119fb32f5b2451f5e9568bde7cca2e72372b3c3dc057a4e509d47bc7e60d",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090666,
+        "p95_ms": 0.105834,
+        "max_ms": 0.109334
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002833,
+        "p95_ms": 0.003042,
+        "max_ms": 0.003125
+      }
+    },
+    {
+      "query_sha256": "001ccd7c8bea6d5ed91d9f0c1fc7daadef972e20047c3084e8a5752cf61a16a3",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090917,
+        "p95_ms": 0.103333,
+        "max_ms": 0.105542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002791,
+        "p95_ms": 0.004417,
+        "max_ms": 0.006708
+      }
+    },
+    {
+      "query_sha256": "001cd7b81458adf726f390c38be63660c52c206ed6111e6ca5c1dd05f028c455",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.093458,
+        "p95_ms": 0.102958,
+        "max_ms": 0.10425
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00275,
+        "p95_ms": 0.003125,
+        "max_ms": 0.004625
+      }
+    },
+    {
+      "query_sha256": "002484cbf184ec2dca37144dad8f00567e3d60a5e7d23e3ec63e106579313b7f",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095333,
+        "p95_ms": 0.101208,
+        "max_ms": 0.106167
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002958,
+        "p95_ms": 0.003125,
+        "max_ms": 0.005666
+      }
+    },
+    {
+      "query_sha256": "002742357c3689ccf5b906d6d418978814afcc5aab1e8514ea8c72117ce6a75f",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.096334,
+        "p95_ms": 0.103917,
+        "max_ms": 0.106542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002958,
+        "p95_ms": 0.003167,
+        "max_ms": 0.003916
+      }
+    },
+    {
+      "query_sha256": "0033dedaea5ee5ab8ef60e1bd5e951df2d6f53f3b9629941f6330b7b6022573e",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090334,
+        "p95_ms": 0.112042,
+        "max_ms": 0.114125
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00275,
+        "p95_ms": 0.0035,
+        "max_ms": 0.003666
+      }
+    },
+    {
+      "query_sha256": "004c760c3270674d00c470ec1e9680bc242171ead7de40c0088f8eba79ff13d5",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.089958,
+        "p95_ms": 0.103958,
+        "max_ms": 0.105667
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002708,
+        "p95_ms": 0.003084,
+        "max_ms": 0.003417
+      }
+    },
+    {
+      "query_sha256": "004d652203c89dd28ec173870c5831ce4c6e5ed5eb347b84ddc0d5fb865e2e86",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.088583,
+        "p95_ms": 0.104417,
+        "max_ms": 0.113792
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002833,
+        "p95_ms": 0.00325,
+        "max_ms": 0.004792
+      }
+    },
+    {
+      "query_sha256": "004f93007edb0b18b4f886d69772154c0dd4a8b30dcada3731b6fb08682b192d",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090333,
+        "p95_ms": 0.101708,
+        "max_ms": 0.105959
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00275,
+        "p95_ms": 0.003125,
+        "max_ms": 0.00325
+      }
+    },
+    {
+      "query_sha256": "005ae3e64774371357b7e7f8629e19571528bc211eefc15d85a1b98de02e1eed",
+      "shape": "1",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.089792,
+        "p95_ms": 0.098417,
+        "max_ms": 0.106875
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00275,
+        "p95_ms": 0.003,
+        "max_ms": 0.00325
+      }
+    },
+    {
+      "query_sha256": "00211591ce366b871a8d3851499f9441d8c41e944e0f9bf18087b1f343e2d56d",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090916,
+        "p95_ms": 0.100416,
+        "max_ms": 0.103667
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004208,
+        "p95_ms": 0.004667,
+        "max_ms": 0.004708
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003375,
+        "p95_ms": 0.003834,
+        "max_ms": 0.00475
+      }
+    },
+    {
+      "query_sha256": "008529b5720f6749ff88a49b4b6f07e1eb4d448f416b039a7a21ca48dd4a1b94",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091625,
+        "p95_ms": 0.109167,
+        "max_ms": 0.113875
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004083,
+        "p95_ms": 0.00475,
+        "max_ms": 0.005458
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003333,
+        "p95_ms": 0.003917,
+        "max_ms": 0.004584
+      }
+    },
+    {
+      "query_sha256": "016ad5c3f5c9694a3e754eae34d1d27af7e53de1d0b004244039209ec9cb56df",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091708,
+        "p95_ms": 0.103,
+        "max_ms": 0.106166
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004125,
+        "p95_ms": 0.004584,
+        "max_ms": 0.005792
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003208,
+        "p95_ms": 0.003667,
+        "max_ms": 0.0045
+      }
+    },
+    {
+      "query_sha256": "03167f6e19c45fb7c205f93734df206f4c49999f5de0308df5934c72133dedae",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090625,
+        "p95_ms": 0.108541,
+        "max_ms": 0.113209
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004208,
+        "p95_ms": 0.004917,
+        "max_ms": 0.005334
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003333,
+        "p95_ms": 0.003792,
+        "max_ms": 0.004334
+      }
+    },
+    {
+      "query_sha256": "045df3a089b04e54f97507d0761adfe44d915a64cd2b573226d55d96238902f4",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095583,
+        "p95_ms": 0.11375,
+        "max_ms": 0.193125
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00425,
+        "p95_ms": 0.005875,
+        "max_ms": 0.016417
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003417,
+        "p95_ms": 0.004667,
+        "max_ms": 0.005416
+      }
+    },
+    {
+      "query_sha256": "059780e4fe656a0f4e4b8a9f3dc9d7b24078eb5487b314073a587be8e45a670b",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095083,
+        "p95_ms": 0.100792,
+        "max_ms": 0.103209
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004041,
+        "p95_ms": 0.004458,
+        "max_ms": 0.005625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003291,
+        "p95_ms": 0.003542,
+        "max_ms": 0.003833
+      }
+    },
+    {
+      "query_sha256": "08ddff4ebe39249a9208cd305b7d14091b1ebabef6adfa897cc34675fa0e0848",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097,
+        "p95_ms": 0.101708,
+        "max_ms": 0.105083
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004416,
+        "p95_ms": 0.004584,
+        "max_ms": 0.004625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003416,
+        "p95_ms": 0.003584,
+        "max_ms": 0.003708
+      }
+    },
+    {
+      "query_sha256": "092e020fab594eaf8767f598cb3b242c1e9905aa0765d2d63d358ef85c26b5f8",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098209,
+        "p95_ms": 0.108666,
+        "max_ms": 0.114584
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004375,
+        "p95_ms": 0.005333,
+        "max_ms": 0.006042
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003458,
+        "p95_ms": 0.0045,
+        "max_ms": 0.004875
+      }
+    },
+    {
+      "query_sha256": "094fbbc949203f3aefd570029b15dc91c1eff906b53393c68416f0732599c126",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091792,
+        "p95_ms": 0.103584,
+        "max_ms": 0.1045
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00425,
+        "p95_ms": 0.004833,
+        "max_ms": 0.005
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003416,
+        "p95_ms": 0.003875,
+        "max_ms": 0.004375
+      }
+    },
+    {
+      "query_sha256": "09e6dfd64185b98978ef2a2fd3470c344c071dc96b82f8d1e0f96373cda0a1fd",
+      "shape": "1",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.093917,
+        "p95_ms": 0.105667,
+        "max_ms": 0.110667
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004292,
+        "p95_ms": 0.00525,
+        "max_ms": 0.005834
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003375,
+        "p95_ms": 0.003917,
+        "max_ms": 0.004584
+      }
+    },
+    {
+      "query_sha256": "005cbdb4d7e4ee50ba196286267ed80dc3dc39f2b321eae831a12631e0564e16",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098333,
+        "p95_ms": 0.1055,
+        "max_ms": 0.112042
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004792,
+        "p95_ms": 0.0055,
+        "max_ms": 0.0065
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015958,
+        "p95_ms": 0.017208,
+        "max_ms": 0.022166
+      }
+    },
+    {
+      "query_sha256": "0065dde542f23d7762aae2061200e92423dd8b712f4c6a20e0ed95eb59ffb33c",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092333,
+        "p95_ms": 0.100042,
+        "max_ms": 0.101375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004583,
+        "p95_ms": 0.004917,
+        "max_ms": 0.005459
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.01525,
+        "p95_ms": 0.016708,
+        "max_ms": 0.016958
+      }
+    },
+    {
+      "query_sha256": "00939cee650f3e652a6eb358ccdea992dcfe9e3b3413fb6caaf731ca638ddd44",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092042,
+        "p95_ms": 0.103625,
+        "max_ms": 0.108459
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004417,
+        "p95_ms": 0.005125,
+        "max_ms": 0.005125
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.014292,
+        "p95_ms": 0.015959,
+        "max_ms": 0.016333
+      }
+    },
+    {
+      "query_sha256": "0096df58b7b6be96d8d8174a88a3793cee2e5e2cecaa11d6ec40995beb64c07d",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091625,
+        "p95_ms": 0.100125,
+        "max_ms": 0.101541
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004584,
+        "p95_ms": 0.005084,
+        "max_ms": 0.006041
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015208,
+        "p95_ms": 0.016792,
+        "max_ms": 0.017
+      }
+    },
+    {
+      "query_sha256": "00aa47c8a6ebbddedd75ae2522724ac4573c01791c7028d7a0622fa0ad06ce3f",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090584,
+        "p95_ms": 0.111209,
+        "max_ms": 0.117333
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004541,
+        "p95_ms": 0.005375,
+        "max_ms": 0.006583
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015208,
+        "p95_ms": 0.017542,
+        "max_ms": 0.019791
+      }
+    },
+    {
+      "query_sha256": "00d89a30f637437a54e698a3840c5a527b95f58e9afae93ba7c84a370d8dd0e0",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092125,
+        "p95_ms": 0.09975,
+        "max_ms": 0.100583
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004459,
+        "p95_ms": 0.004959,
+        "max_ms": 0.005167
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015042,
+        "p95_ms": 0.016625,
+        "max_ms": 0.016959
+      }
+    },
+    {
+      "query_sha256": "00ea0489056facb2ce9561cf58e20469e00e808132dee0555bcec389b447ce99",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.094542,
+        "p95_ms": 0.104833,
+        "max_ms": 0.112292
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004583,
+        "p95_ms": 0.005125,
+        "max_ms": 0.006459
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015583,
+        "p95_ms": 0.017625,
+        "max_ms": 0.018416
+      }
+    },
+    {
+      "query_sha256": "011a6f7738ebbc315641fa6f3e31918e796277dcb7f626485fc1db17fccb5f6b",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091459,
+        "p95_ms": 0.110708,
+        "max_ms": 0.118709
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004583,
+        "p95_ms": 0.005333,
+        "max_ms": 0.005542
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015042,
+        "p95_ms": 0.017666,
+        "max_ms": 0.020292
+      }
+    },
+    {
+      "query_sha256": "011e9c61f0fa84d6d9c234b6d9786fc7c3c5e73eb45f65ce8713f04eaad9207d",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091625,
+        "p95_ms": 0.102,
+        "max_ms": 0.105875
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004541,
+        "p95_ms": 0.005209,
+        "max_ms": 0.005666
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015291,
+        "p95_ms": 0.01775,
+        "max_ms": 0.019958
+      }
+    },
+    {
+      "query_sha256": "015b8a8cfd9704b9ea6ae8ddddc48cbc3df5536de6d29df26833633c08a831a8",
+      "shape": "1",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.103666,
+        "p95_ms": 0.127542,
+        "max_ms": 0.131375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.005042,
+        "p95_ms": 0.005667,
+        "max_ms": 0.006292
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.016792,
+        "p95_ms": 0.0215,
+        "max_ms": 0.026542
+      }
+    },
+    {
+      "query_sha256": "000439bbf5bf35f0243accb55fc715347299260ef4bf639849afbb5865d94d19",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09525,
+        "p95_ms": 0.112375,
+        "max_ms": 0.115333
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.005875,
+        "max_ms": 0.006666
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.012166,
+        "p95_ms": 0.014,
+        "max_ms": 0.014292
+      }
+    },
+    {
+      "query_sha256": "0034c9999248485f8263a52e9bde295d1c5c319bb8a946bf1fbcba22cf69088b",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09025,
+        "p95_ms": 0.105458,
+        "max_ms": 0.112542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004584,
+        "p95_ms": 0.005167,
+        "max_ms": 0.005667
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.005792,
+        "p95_ms": 0.00675,
+        "max_ms": 0.007125
+      }
+    },
+    {
+      "query_sha256": "013b779d6383f628be6c2ac23905eb97e9b7c04aaef51f4d61c0ac55c40d2ea2",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091167,
+        "p95_ms": 0.104375,
+        "max_ms": 0.111
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004458,
+        "p95_ms": 0.005167,
+        "max_ms": 0.005416
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.009625,
+        "p95_ms": 0.011125,
+        "max_ms": 0.011208
+      }
+    },
+    {
+      "query_sha256": "017033381014b001cb53df159a686f8d5d8b50fd253b92030bc22962bdc3aec1",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092375,
+        "p95_ms": 0.10725,
+        "max_ms": 0.114625
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00475,
+        "p95_ms": 0.005583,
+        "max_ms": 0.005875
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.005375,
+        "p95_ms": 0.006416,
+        "max_ms": 0.007042
+      }
+    },
+    {
+      "query_sha256": "020590f65f2f304a276886a4c5e4395a497fdbec2e916b3bcc863c0f33265df1",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092709,
+        "p95_ms": 0.10875,
+        "max_ms": 0.115708
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004417,
+        "p95_ms": 0.00575,
+        "max_ms": 0.006
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004417,
+        "p95_ms": 0.005667,
+        "max_ms": 0.006083
+      }
+    },
+    {
+      "query_sha256": "02a1b0c01d3afa5f578367ff74c55966452e6b6f2b7dbde8ceeda9bfbf8e0e34",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091292,
+        "p95_ms": 0.100959,
+        "max_ms": 0.10375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.005041,
+        "max_ms": 0.005125
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004542,
+        "p95_ms": 0.005083,
+        "max_ms": 0.005083
+      }
+    },
+    {
+      "query_sha256": "02b1d1fb5c8017c78e62504f8128ad5c5628af9b5c1b7f7278a37bd71c879940",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.096583,
+        "p95_ms": 0.103792,
+        "max_ms": 0.109625
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.005125,
+        "max_ms": 0.005625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.007333,
+        "p95_ms": 0.007875,
+        "max_ms": 0.009792
+      }
+    },
+    {
+      "query_sha256": "05f5842dbc23c00abaca9e3c59f113a664ab134811cab5824ad8246bc2d1fa99",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097042,
+        "p95_ms": 0.100708,
+        "max_ms": 0.1085
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004917,
+        "p95_ms": 0.005625,
+        "max_ms": 0.006791
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.007458,
+        "p95_ms": 0.007917,
+        "max_ms": 0.008208
+      }
+    },
+    {
+      "query_sha256": "0614e7dae124bfdaada946e242f6f05bb526b7effaf4e4a8e0ac5a7426534d90",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.089958,
+        "p95_ms": 0.104583,
+        "max_ms": 0.108209
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004584,
+        "p95_ms": 0.005334,
+        "max_ms": 0.005917
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.00575,
+        "p95_ms": 0.007125,
+        "max_ms": 0.007458
+      }
+    },
+    {
+      "query_sha256": "066835281b4d5007548fe09276aa8bc266c830b1f72abb841c7f331a9aa55060",
+      "shape": "1",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.096708,
+        "p95_ms": 0.131458,
+        "max_ms": 0.188541
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.006625,
+        "max_ms": 0.00925
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.009458,
+        "p95_ms": 0.012666,
+        "max_ms": 0.014125
+      }
+    },
+    {
+      "query_sha256": "0000e9f83446993be3fab3c1fb1f635a277be9b834e55b689ee4ea6dee979d39",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091792,
+        "p95_ms": 0.109667,
+        "max_ms": 0.156708
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002834,
+        "p95_ms": 0.003333,
+        "max_ms": 0.004334
+      }
+    },
+    {
+      "query_sha256": "00051b24a55bcf22b663a84a530b2bbe33c9505eb36f54f5ef50325608440d0b",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090125,
+        "p95_ms": 0.107375,
+        "max_ms": 0.119375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00275,
+        "p95_ms": 0.003167,
+        "max_ms": 0.003917
+      }
+    },
+    {
+      "query_sha256": "00066a056d5b37f6239357deff7ba1e74f6afab1ec3f3a21b989e25421f460f4",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095125,
+        "p95_ms": 0.110917,
+        "max_ms": 0.130083
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002833,
+        "p95_ms": 0.003541,
+        "max_ms": 0.004291
+      }
+    },
+    {
+      "query_sha256": "000c55a86a2fd303ebcb13d9a9e4259a4b87df14398b773a58560f716e6751ef",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.088708,
+        "p95_ms": 0.09825,
+        "max_ms": 0.099542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002708,
+        "p95_ms": 0.003042,
+        "max_ms": 0.003125
+      }
+    },
+    {
+      "query_sha256": "00103764fbde3c626d42216664e8dea58064c2e77cf99de63890d46fc6c4126f",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.094125,
+        "p95_ms": 0.100916,
+        "max_ms": 0.105917
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002917,
+        "p95_ms": 0.003333,
+        "max_ms": 0.00375
+      }
+    },
+    {
+      "query_sha256": "0010bd88a7457657107c1dcd149fb1b65461134697043587a79b226e0d4e5e89",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.093917,
+        "p95_ms": 0.113875,
+        "max_ms": 0.120708
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002791,
+        "p95_ms": 0.003542,
+        "max_ms": 0.0125
+      }
+    },
+    {
+      "query_sha256": "0010eb16a173a376fe4ba09047e953c67603c16fe62d8916bc2e3034773bc088",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.096916,
+        "p95_ms": 0.102042,
+        "max_ms": 0.109916
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002958,
+        "p95_ms": 0.003166,
+        "max_ms": 0.004417
+      }
+    },
+    {
+      "query_sha256": "0011d857620cf96fada74c077aa60aeae9cc218924b84b60b3c1c4c973fccaa4",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.089166,
+        "p95_ms": 0.099292,
+        "max_ms": 0.105541
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002708,
+        "p95_ms": 0.002958,
+        "max_ms": 0.003084
+      }
+    },
+    {
+      "query_sha256": "0012c4bb44f3faa8e5169272de8f2a7ae582132c0c2fa42fd0c27721cbe543ae",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095083,
+        "p95_ms": 0.106167,
+        "max_ms": 0.110917
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002833,
+        "p95_ms": 0.00325,
+        "max_ms": 0.003583
+      }
+    },
+    {
+      "query_sha256": "0014765380bcf16e3ad7bda7a8e424000d9dae85d2b8473b0aef8794171b1f7d",
+      "shape": "2",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092958,
+        "p95_ms": 0.100333,
+        "max_ms": 0.102542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002791,
+        "p95_ms": 0.003084,
+        "max_ms": 0.003292
+      }
+    },
+    {
+      "query_sha256": "0000694c785db63577bc8e1400533c21f76a64228993bdd40a94aa17189fbbfc",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097667,
+        "p95_ms": 0.103875,
+        "max_ms": 0.109791
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004583,
+        "p95_ms": 0.005375,
+        "max_ms": 0.005833
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003541,
+        "p95_ms": 0.004041,
+        "max_ms": 0.004542
+      }
+    },
+    {
+      "query_sha256": "000d3cf0b521e1271082cc9b92693b3396a4987a715b1bbbabff2f35da8445b1",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099083,
+        "p95_ms": 0.108917,
+        "max_ms": 0.114959
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004375,
+        "p95_ms": 0.005375,
+        "max_ms": 0.00575
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003417,
+        "p95_ms": 0.004042,
+        "max_ms": 0.0055
+      }
+    },
+    {
+      "query_sha256": "001693e22596aa410dc206dd48947dce8e9d966323db31ecef92a5d0c8ccad67",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097084,
+        "p95_ms": 0.100958,
+        "max_ms": 0.103833
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004417,
+        "p95_ms": 0.004709,
+        "max_ms": 0.005208
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003459,
+        "p95_ms": 0.003791,
+        "max_ms": 0.004
+      }
+    },
+    {
+      "query_sha256": "001a442442b53c1b11d4bcb968e39203cc53b0c93973a9ba241e985f6565a6f1",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099209,
+        "p95_ms": 0.104583,
+        "max_ms": 0.108042
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004375,
+        "p95_ms": 0.005542,
+        "max_ms": 0.006166
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003458,
+        "p95_ms": 0.003917,
+        "max_ms": 0.004083
+      }
+    },
+    {
+      "query_sha256": "0029e0eb890723b8eab2980b2d827dc01e3e9c219d1e34557f924ccf3d81977b",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097958,
+        "p95_ms": 0.104583,
+        "max_ms": 0.106625
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004334,
+        "p95_ms": 0.004542,
+        "max_ms": 0.004709
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003416,
+        "p95_ms": 0.003583,
+        "max_ms": 0.003708
+      }
+    },
+    {
+      "query_sha256": "00450ace1788a1cb8c7f3b7c90e533a335219e4a3bef7d6534b694448d8f0a29",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098458,
+        "p95_ms": 0.105709,
+        "max_ms": 0.11075
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004417,
+        "p95_ms": 0.004667,
+        "max_ms": 0.004792
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.0035,
+        "p95_ms": 0.003667,
+        "max_ms": 0.00525
+      }
+    },
+    {
+      "query_sha256": "0045f560b64ecba7c70b9481e61b80f008f7405be3a33edc94a5f8b135123deb",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.100291,
+        "p95_ms": 0.108875,
+        "max_ms": 0.123792
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.004709,
+        "max_ms": 0.012875
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003542,
+        "p95_ms": 0.003834,
+        "max_ms": 0.004
+      }
+    },
+    {
+      "query_sha256": "005ac3d764f623820df0e15822b660479a61b6c663dca6eb40c0aa90dea19bb9",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097,
+        "p95_ms": 0.104042,
+        "max_ms": 0.106375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004416,
+        "p95_ms": 0.005125,
+        "max_ms": 0.006334
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003375,
+        "p95_ms": 0.003917,
+        "max_ms": 0.004584
+      }
+    },
+    {
+      "query_sha256": "0063886b5abcdda73ca00d4a1c5ba3f50a3c2aa6ad37fd01d2ff97da1891d7c7",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099416,
+        "p95_ms": 0.105542,
+        "max_ms": 0.109042
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004375,
+        "p95_ms": 0.004709,
+        "max_ms": 0.004834
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003417,
+        "p95_ms": 0.003667,
+        "max_ms": 0.003875
+      }
+    },
+    {
+      "query_sha256": "006717a917cd93b07224140a1c37cf940351c780511d3120262f850951f6ae63",
+      "shape": "2",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.101875,
+        "p95_ms": 0.108791,
+        "max_ms": 0.114959
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004375,
+        "p95_ms": 0.004792,
+        "max_ms": 0.004917
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003542,
+        "p95_ms": 0.00375,
+        "max_ms": 0.005292
+      }
+    },
+    {
+      "query_sha256": "003d0d29e6b6c406e3529a4d68fbfbe2d27666abc205b67b80b5be0e46708340",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095,
+        "p95_ms": 0.104125,
+        "max_ms": 0.105125
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.005167,
+        "max_ms": 0.006167
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.01675,
+        "p95_ms": 0.017583,
+        "max_ms": 0.0205
+      }
+    },
+    {
+      "query_sha256": "005fd4a777b4be0a86e1b6b7e8018021b894c20f4cc2f1dc9af13bc26ce5e816",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.100416,
+        "p95_ms": 0.113834,
+        "max_ms": 0.135167
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.005042,
+        "p95_ms": 0.006875,
+        "max_ms": 0.008084
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.01675,
+        "p95_ms": 0.022541,
+        "max_ms": 0.039042
+      }
+    },
+    {
+      "query_sha256": "00b2f2c5a50f52a6f3f44ac777e8c593312ac2847db2d1e691af3bf593ec6b9e",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09175,
+        "p95_ms": 0.097042,
+        "max_ms": 0.120375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004541,
+        "p95_ms": 0.004875,
+        "max_ms": 0.006333
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.014833,
+        "p95_ms": 0.0165,
+        "max_ms": 0.020208
+      }
+    },
+    {
+      "query_sha256": "00ca081d35667261bf4453ba5784573eeddc5b73c0f456cc5c49a809668740f3",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.094709,
+        "p95_ms": 0.103709,
+        "max_ms": 0.108042
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.005042,
+        "max_ms": 0.005625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015125,
+        "p95_ms": 0.017,
+        "max_ms": 0.020292
+      }
+    },
+    {
+      "query_sha256": "00ee6ecb3ae5441285bc3c0b7183a91ef48e6c30f5a85f80bf5a8fc37ca20ff0",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091917,
+        "p95_ms": 0.100917,
+        "max_ms": 0.102208
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.00575,
+        "max_ms": 0.00675
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015208,
+        "p95_ms": 0.016958,
+        "max_ms": 0.017083
+      }
+    },
+    {
+      "query_sha256": "00f560aeb80945a62ba2ad288b062162ff684ce8d54d217a62464aba5f2b0f6c",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.093083,
+        "p95_ms": 0.103875,
+        "max_ms": 0.107792
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004667,
+        "p95_ms": 0.005334,
+        "max_ms": 0.005792
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015334,
+        "p95_ms": 0.0175,
+        "max_ms": 0.01775
+      }
+    },
+    {
+      "query_sha256": "00fc1b69ccbbe6accd7a8ae342096e9e768b5a2671beda65a8a54e7a3f65af0d",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09425,
+        "p95_ms": 0.113625,
+        "max_ms": 0.12125
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004708,
+        "p95_ms": 0.00575,
+        "max_ms": 0.007167
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.0155,
+        "p95_ms": 0.019125,
+        "max_ms": 0.020666
+      }
+    },
+    {
+      "query_sha256": "011617a5c98386750d2aefc639e4a9f255725aadf8d5c9a6089e864db3074130",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091333,
+        "p95_ms": 0.1025,
+        "max_ms": 0.10275
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004875,
+        "p95_ms": 0.005334,
+        "max_ms": 0.005417
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.014709,
+        "p95_ms": 0.016333,
+        "max_ms": 0.017459
+      }
+    },
+    {
+      "query_sha256": "0155a66ae7c6ca14091f8810c7777bd49791f4928a1e51b274b70f38aa6e98a5",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095083,
+        "p95_ms": 0.101708,
+        "max_ms": 0.107875
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004583,
+        "p95_ms": 0.005167,
+        "max_ms": 0.005958
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015125,
+        "p95_ms": 0.016791,
+        "max_ms": 0.017208
+      }
+    },
+    {
+      "query_sha256": "01b760898a083d0d4b5ba6e8eb0f911b2bc0e077bc1310ffaf015ec77ea24e91",
+      "shape": "2",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09175,
+        "p95_ms": 0.102291,
+        "max_ms": 0.1025
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004459,
+        "p95_ms": 0.004959,
+        "max_ms": 0.005167
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.014625,
+        "p95_ms": 0.016208,
+        "max_ms": 0.016375
+      }
+    },
+    {
+      "query_sha256": "001e91a13eb44437f9d342f21e973836d5994db491fe2e1410286f13e8909658",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.096709,
+        "p95_ms": 0.103583,
+        "max_ms": 0.110292
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.005,
+        "p95_ms": 0.005209,
+        "max_ms": 0.00525
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.010416,
+        "p95_ms": 0.010791,
+        "max_ms": 0.016541
+      }
+    },
+    {
+      "query_sha256": "0046d3aa6d09007eaa770a495dae9e4a6fbd4b852a16ff6d73c6b41314099948",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.10125,
+        "p95_ms": 0.107916,
+        "max_ms": 0.114333
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004791,
+        "p95_ms": 0.005292,
+        "max_ms": 0.006084
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.006292,
+        "p95_ms": 0.006625,
+        "max_ms": 0.008
+      }
+    },
+    {
+      "query_sha256": "00519aaab4d8440f0fc7f5496148d17496215e25e83602e70d32154b1cc19fbe",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.100666,
+        "p95_ms": 0.107416,
+        "max_ms": 0.115166
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004875,
+        "p95_ms": 0.006042,
+        "max_ms": 0.006333
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.01025,
+        "p95_ms": 0.0115,
+        "max_ms": 0.011917
+      }
+    },
+    {
+      "query_sha256": "006ccbe0e9987d7dfbf0f88abacd6f6e62a8990dbe3dae6df4d9f1a17f8dbf45",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.100834,
+        "p95_ms": 0.107458,
+        "max_ms": 0.108958
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004875,
+        "p95_ms": 0.00525,
+        "max_ms": 0.005458
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.010291,
+        "p95_ms": 0.011916,
+        "max_ms": 0.012625
+      }
+    },
+    {
+      "query_sha256": "0078d16b54433f2cecf6ff8b900fcaf69262d0ed82d6168d429fb53e5746901e",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091458,
+        "p95_ms": 0.111709,
+        "max_ms": 0.12075
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004333,
+        "p95_ms": 0.005125,
+        "max_ms": 0.0055
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.005625,
+        "p95_ms": 0.006708,
+        "max_ms": 0.007208
+      }
+    },
+    {
+      "query_sha256": "00862cfd3589ab9db553ef5e7d72ca4b3f6cf3e0789a1516304c8249eebfa7b7",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091042,
+        "p95_ms": 0.102958,
+        "max_ms": 0.110917
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004417,
+        "p95_ms": 0.005583,
+        "max_ms": 0.006
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.006958,
+        "p95_ms": 0.008375,
+        "max_ms": 0.012709
+      }
+    },
+    {
+      "query_sha256": "00a470f3b7413ae0c97c94c3120db6924602887d34da6d52af23c8eaac347961",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.093709,
+        "p95_ms": 0.109291,
+        "max_ms": 0.111833
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004542,
+        "p95_ms": 0.005583,
+        "max_ms": 0.011667
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.008208,
+        "p95_ms": 0.0095,
+        "max_ms": 0.011875
+      }
+    },
+    {
+      "query_sha256": "00a4a0458a37b974144a7999fa553b93a46aa2e6178e843acb145981ceec0671",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090917,
+        "p95_ms": 0.10975,
+        "max_ms": 0.114792
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004375,
+        "p95_ms": 0.0055,
+        "max_ms": 0.00625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.005625,
+        "p95_ms": 0.006917,
+        "max_ms": 0.007334
+      }
+    },
+    {
+      "query_sha256": "00b89a08dd82eb8d678baae6ce7ec5e642135c2f4e2b06fda2280ce859aeb212",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092875,
+        "p95_ms": 0.104833,
+        "max_ms": 0.111625
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004417,
+        "p95_ms": 0.005083,
+        "max_ms": 0.005084
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.011792,
+        "p95_ms": 0.013583,
+        "max_ms": 0.01675
+      }
+    },
+    {
+      "query_sha256": "00bc13595444f090f933abec6650ee93e118c56c99e4ec962410820a609020e0",
+      "shape": "2",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095042,
+        "p95_ms": 0.108625,
+        "max_ms": 0.117542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004709,
+        "p95_ms": 0.00525,
+        "max_ms": 0.006708
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.007333,
+        "p95_ms": 0.008042,
+        "max_ms": 0.008167
+      }
+    },
+    {
+      "query_sha256": "00001c50690c440f209e84b4616edabdf4b81c343d38fbb12d202fc119d26176",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099042,
+        "p95_ms": 0.10225,
+        "max_ms": 0.106084
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.003,
+        "p95_ms": 0.003125,
+        "max_ms": 0.003209
+      }
+    },
+    {
+      "query_sha256": "00003e7ea2b79a98888acd4999a4d10ce29866fb6ccaf898f783dc9795403fd0",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090875,
+        "p95_ms": 0.102333,
+        "max_ms": 0.104791
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002709,
+        "p95_ms": 0.003209,
+        "max_ms": 0.003958
+      }
+    },
+    {
+      "query_sha256": "0000a8c786bebb5f2ef8543810a368932db1078aa1a89507c1a2f5f934b0fa3d",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090958,
+        "p95_ms": 0.110417,
+        "max_ms": 0.141208
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002791,
+        "p95_ms": 0.003708,
+        "max_ms": 0.004625
+      }
+    },
+    {
+      "query_sha256": "0000f648bb6896a050a5e9c9586444d494ae1fbab787d34ae8b2767d032e2ead",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090833,
+        "p95_ms": 0.095083,
+        "max_ms": 0.095292
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002709,
+        "p95_ms": 0.002833,
+        "max_ms": 0.002958
+      }
+    },
+    {
+      "query_sha256": "00013a689f2aae7aed24844173098c173dbb6111bfd461135b2f3e65cbbf0d4d",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.089666,
+        "p95_ms": 0.10175,
+        "max_ms": 0.107667
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002667,
+        "p95_ms": 0.003084,
+        "max_ms": 0.003792
+      }
+    },
+    {
+      "query_sha256": "000145329490c27c5dbe9818f6569f59d6541718f83bfca3803503a75eab3dba",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092167,
+        "p95_ms": 0.09925,
+        "max_ms": 0.104542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00275,
+        "p95_ms": 0.003042,
+        "max_ms": 0.003291
+      }
+    },
+    {
+      "query_sha256": "000164bf12f0977e7b228eb3442917e887edbad7407bb03f98efd6a878cacfe7",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098042,
+        "p95_ms": 0.105,
+        "max_ms": 0.106292
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002917,
+        "p95_ms": 0.003125,
+        "max_ms": 0.004834
+      }
+    },
+    {
+      "query_sha256": "0001fea53af4b3b498237393bcd6f8a222ced5572d1fbdb0fef2eebfcaf11694",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097833,
+        "p95_ms": 0.10275,
+        "max_ms": 0.128459
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.003,
+        "p95_ms": 0.003208,
+        "max_ms": 0.003833
+      }
+    },
+    {
+      "query_sha256": "00020a77678a361d41c1e4c3e24dea9ec68c9a9372445f8f056062cd8157d11c",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.088708,
+        "p95_ms": 0.102708,
+        "max_ms": 0.104333
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00275,
+        "p95_ms": 0.003125,
+        "max_ms": 0.003208
+      }
+    },
+    {
+      "query_sha256": "0002ba774781c23e6a9bcc87701b8af31d36b107bfb1a53764572f5aba7581c9",
+      "shape": "3",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091959,
+        "p95_ms": 0.101625,
+        "max_ms": 0.103083
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00275,
+        "p95_ms": 0.003167,
+        "max_ms": 0.004375
+      }
+    },
+    {
+      "query_sha256": "00296ea145cd2e3a9c64e9e85d1fe471750bf2b29795490c826aa0d4bb3e192a",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.100208,
+        "p95_ms": 0.107042,
+        "max_ms": 0.116208
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004458,
+        "p95_ms": 0.004709,
+        "max_ms": 0.004791
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.0035,
+        "p95_ms": 0.003833,
+        "max_ms": 0.003917
+      }
+    },
+    {
+      "query_sha256": "003ae6c5a7367711d0bd86fc094be6d045d2f0de09fc72903998ca8c9dd131b3",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090958,
+        "p95_ms": 0.107208,
+        "max_ms": 0.11925
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004125,
+        "p95_ms": 0.004792,
+        "max_ms": 0.005792
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003292,
+        "p95_ms": 0.003792,
+        "max_ms": 0.004167
+      }
+    },
+    {
+      "query_sha256": "0053a570c8ec6a53619df546b140373fa46c2aa065202ed58d5b21ff235e2d09",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.096208,
+        "p95_ms": 0.106083,
+        "max_ms": 0.125334
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004333,
+        "p95_ms": 0.004709,
+        "max_ms": 0.004834
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003333,
+        "p95_ms": 0.003708,
+        "max_ms": 0.003709
+      }
+    },
+    {
+      "query_sha256": "006aea7119314574e1f717b307438177d9528031ddd6bc0871050df5700f037c",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.102542,
+        "p95_ms": 0.121083,
+        "max_ms": 0.137833
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.005666,
+        "max_ms": 0.006042
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003542,
+        "p95_ms": 0.004459,
+        "max_ms": 0.005417
+      }
+    },
+    {
+      "query_sha256": "00a094838703d2150a032de40f46e960ee46f52143d82a616cb08d78b8a2d8e2",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098167,
+        "p95_ms": 0.1035,
+        "max_ms": 0.105208
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004459,
+        "p95_ms": 0.004667,
+        "max_ms": 0.00475
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003625,
+        "p95_ms": 0.004042,
+        "max_ms": 0.004417
+      }
+    },
+    {
+      "query_sha256": "00b839245fdf2a4df48b61ebe76da8cc4bbbe8a16a88288247ef5d665aede337",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.103333,
+        "p95_ms": 0.113041,
+        "max_ms": 0.1615
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004416,
+        "p95_ms": 0.005208,
+        "max_ms": 0.006459
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003542,
+        "p95_ms": 0.004083,
+        "max_ms": 0.00475
+      }
+    },
+    {
+      "query_sha256": "00be8102de94b2a0910bc1ede3b1aa6a6a3b570c8654a111cbec1aeb18bf32f5",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.094042,
+        "p95_ms": 0.11625,
+        "max_ms": 0.1375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00425,
+        "p95_ms": 0.005125,
+        "max_ms": 0.00625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003334,
+        "p95_ms": 0.004166,
+        "max_ms": 0.004833
+      }
+    },
+    {
+      "query_sha256": "00c18fa2e06601212f9b7a55e1ec6336942bba7c149c82643771df555dbaa4db",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09725,
+        "p95_ms": 0.102709,
+        "max_ms": 0.106333
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004375,
+        "p95_ms": 0.004708,
+        "max_ms": 0.0055
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003375,
+        "p95_ms": 0.003833,
+        "max_ms": 0.0055
+      }
+    },
+    {
+      "query_sha256": "00d3cd94477e439990da7d0a9016a414ed2e03d09789f6d11ad1d99e3a440c72",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099209,
+        "p95_ms": 0.107833,
+        "max_ms": 0.109375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.004667,
+        "max_ms": 0.004791
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003541,
+        "p95_ms": 0.003791,
+        "max_ms": 0.003875
+      }
+    },
+    {
+      "query_sha256": "00e90a1d0f0b4b7115d01414205b745c77204be4a9fc41519f2733bbc9939908",
+      "shape": "3",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090208,
+        "p95_ms": 0.099917,
+        "max_ms": 0.103292
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004,
+        "p95_ms": 0.004417,
+        "max_ms": 0.005625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003125,
+        "p95_ms": 0.0035,
+        "max_ms": 0.003584
+      }
+    },
+    {
+      "query_sha256": "008bf0a20e4bc487d934966492365116f590cdacd7a76f84610e46d379bd8d4d",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.096959,
+        "p95_ms": 0.102833,
+        "max_ms": 0.103584
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.005042,
+        "max_ms": 0.00975
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.014875,
+        "p95_ms": 0.015416,
+        "max_ms": 0.017292
+      }
+    },
+    {
+      "query_sha256": "008f5bb31be88172e23d32ba4286f369a94b0a845d26f73d516b61d027aa9f5b",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099167,
+        "p95_ms": 0.109375,
+        "max_ms": 0.127417
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.005042,
+        "max_ms": 0.01225
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.0155,
+        "p95_ms": 0.017416,
+        "max_ms": 0.023417
+      }
+    },
+    {
+      "query_sha256": "00d0e4a3c5a5aab83d3735588224204343f2f52913e7ab2389a9d8aae0fde521",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097666,
+        "p95_ms": 0.117792,
+        "max_ms": 0.123
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004667,
+        "p95_ms": 0.005459,
+        "max_ms": 0.009959
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015125,
+        "p95_ms": 0.023042,
+        "max_ms": 0.025792
+      }
+    },
+    {
+      "query_sha256": "00f7dedb4793eb8c1f585dbd57467889df48e06960dafa88cff9fd5fb9169a04",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.106167,
+        "p95_ms": 0.121333,
+        "max_ms": 0.136208
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.005084,
+        "p95_ms": 0.005625,
+        "max_ms": 0.007125
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.017125,
+        "p95_ms": 0.021375,
+        "max_ms": 0.023125
+      }
+    },
+    {
+      "query_sha256": "0162995a04ccb9651ee812f5155f8540e385bcbee9c68df34f331be0ccacd2f1",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099291,
+        "p95_ms": 0.11775,
+        "max_ms": 0.119666
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.006416,
+        "max_ms": 0.011291
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015584,
+        "p95_ms": 0.0235,
+        "max_ms": 0.028167
+      }
+    },
+    {
+      "query_sha256": "019b0175513b9f016bb3a0802297d14b0edd20a88c2d83cf91994331e8fbff72",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.106459,
+        "p95_ms": 0.118209,
+        "max_ms": 0.14375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.005083,
+        "p95_ms": 0.005583,
+        "max_ms": 0.007125
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.017292,
+        "p95_ms": 0.021958,
+        "max_ms": 0.027208
+      }
+    },
+    {
+      "query_sha256": "01b3d0d10bf06884bc6b410124432fede70544eaf10cd381ca46ee691e6af81f",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.101,
+        "p95_ms": 0.115584,
+        "max_ms": 0.122416
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.005084,
+        "max_ms": 0.006292
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015,
+        "p95_ms": 0.019791,
+        "max_ms": 0.028917
+      }
+    },
+    {
+      "query_sha256": "01db52839ad475c0141255d8778bc5e6623f21b9a62c09d2c9c7fce7da3d01c4",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.1055,
+        "p95_ms": 0.131792,
+        "max_ms": 0.141333
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004875,
+        "p95_ms": 0.006167,
+        "max_ms": 0.016458
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015917,
+        "p95_ms": 0.021542,
+        "max_ms": 0.035834
+      }
+    },
+    {
+      "query_sha256": "023107fc569e95166266d33c44480242910a799ee42917c271e9f4b39116110c",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.10525,
+        "p95_ms": 0.113792,
+        "max_ms": 0.117959
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004666,
+        "p95_ms": 0.00875,
+        "max_ms": 0.013333
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015417,
+        "p95_ms": 0.023333,
+        "max_ms": 0.024042
+      }
+    },
+    {
+      "query_sha256": "02bb9bb96f964faa015270f2299945ef2ec992e53aefb40339d5e41a7c03e912",
+      "shape": "3",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.103167,
+        "p95_ms": 0.114708,
+        "max_ms": 0.118125
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004667,
+        "p95_ms": 0.006875,
+        "max_ms": 0.012458
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015916,
+        "p95_ms": 0.023458,
+        "max_ms": 0.025416
+      }
+    },
+    {
+      "query_sha256": "0002bb5bc7d06be920ad4719acbc9c2a10247f2cc27a874d43afd30a0469f7bd",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.105125,
+        "p95_ms": 0.124125,
+        "max_ms": 0.126708
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004958,
+        "p95_ms": 0.009167,
+        "max_ms": 0.009875
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004958,
+        "p95_ms": 0.00625,
+        "max_ms": 0.009708
+      }
+    },
+    {
+      "query_sha256": "001020aac308d69a0ff6f53189f39537dea1460a3ae23a5280738ea2d8b22031",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.103125,
+        "p95_ms": 0.117375,
+        "max_ms": 0.122667
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.00525,
+        "max_ms": 0.007458
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.005792,
+        "p95_ms": 0.007042,
+        "max_ms": 0.014292
+      }
+    },
+    {
+      "query_sha256": "0011c7f364deb6dea7f83fa636303d61984b1cd645102451d9dc32cae5ec4c93",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.108458,
+        "p95_ms": 0.124209,
+        "max_ms": 0.131917
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.005,
+        "p95_ms": 0.005208,
+        "max_ms": 0.006416
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.010709,
+        "p95_ms": 0.014958,
+        "max_ms": 0.019292
+      }
+    },
+    {
+      "query_sha256": "001327bc2cb24e81c6c767933b2d8133f51e297717191af2f62be2d2cee4252f",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.093291,
+        "p95_ms": 0.104667,
+        "max_ms": 0.105167
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.005125,
+        "max_ms": 0.006208
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.013333,
+        "p95_ms": 0.014584,
+        "max_ms": 0.015
+      }
+    },
+    {
+      "query_sha256": "00194ffbcb42649c733ab8f3753bd25b4f8dbbefaab3419c738a015a1208ac4a",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.100041,
+        "p95_ms": 0.110292,
+        "max_ms": 0.125875
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004959,
+        "p95_ms": 0.005667,
+        "max_ms": 0.006959
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004917,
+        "p95_ms": 0.00625,
+        "max_ms": 0.012208
+      }
+    },
+    {
+      "query_sha256": "002f2b774e0789335438afdcd45ce55aab2cf88267777497b1e9b8026688c736",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.100416,
+        "p95_ms": 0.107167,
+        "max_ms": 0.11
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004917,
+        "p95_ms": 0.005208,
+        "max_ms": 0.00575
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004917,
+        "p95_ms": 0.005166,
+        "max_ms": 0.006916
+      }
+    },
+    {
+      "query_sha256": "0049c42f6c97f0cdd41d07cdfbcc7e14c48182bb84f1b9eeaa0f65e2fa2cedf7",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.093125,
+        "p95_ms": 0.100125,
+        "max_ms": 0.105041
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004584,
+        "p95_ms": 0.005167,
+        "max_ms": 0.005917
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.00475,
+        "p95_ms": 0.005375,
+        "max_ms": 0.005666
+      }
+    },
+    {
+      "query_sha256": "007b20ead6d20373d9255ef213912be7d2167a61b9b37f4e7c2cc9f69e80b418",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.0955,
+        "p95_ms": 0.103917,
+        "max_ms": 0.10825
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004667,
+        "p95_ms": 0.005125,
+        "max_ms": 0.006666
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004541,
+        "p95_ms": 0.005084,
+        "max_ms": 0.005541
+      }
+    },
+    {
+      "query_sha256": "007f8751488269928650be4635d6a420e12ead7b2dbd10200b5bdd6c5b410a80",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098791,
+        "p95_ms": 0.103292,
+        "max_ms": 0.105583
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004875,
+        "p95_ms": 0.005291,
+        "max_ms": 0.006333
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.00775,
+        "p95_ms": 0.008,
+        "max_ms": 0.009166
+      }
+    },
+    {
+      "query_sha256": "007ff5a575caedf163724ac62d2918406487def811175348170e72dd2574fb9a",
+      "shape": "3",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091208,
+        "p95_ms": 0.101542,
+        "max_ms": 0.104625
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004458,
+        "p95_ms": 0.005042,
+        "max_ms": 0.005708
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.005625,
+        "p95_ms": 0.006333,
+        "max_ms": 0.007
+      }
+    },
+    {
+      "query_sha256": "00000d29eb9ade927fc9bc814158ac20208cf417784c1db9ae574b18c399669d",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098792,
+        "p95_ms": 0.104666,
+        "max_ms": 0.105
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.003,
+        "p95_ms": 0.00325,
+        "max_ms": 0.003334
+      }
+    },
+    {
+      "query_sha256": "00002694f44d50de159c0d490d6400a8b558afc39d0e2d0e12e1826dab825508",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099208,
+        "p95_ms": 0.110375,
+        "max_ms": 0.125834
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.003041,
+        "p95_ms": 0.003542,
+        "max_ms": 0.005
+      }
+    },
+    {
+      "query_sha256": "00002f178855cb28dd721fdaac00f92a58f8e27cf419a64bc0e65c7cc783b80a",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098791,
+        "p95_ms": 0.105292,
+        "max_ms": 0.109708
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.003,
+        "p95_ms": 0.003166,
+        "max_ms": 0.003167
+      }
+    },
+    {
+      "query_sha256": "00003f9bb366b777267c314814017410b7c913ae41fb037d9597b5c8443fbc7e",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.0985,
+        "p95_ms": 0.10375,
+        "max_ms": 0.104667
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002959,
+        "p95_ms": 0.003167,
+        "max_ms": 0.003375
+      }
+    },
+    {
+      "query_sha256": "00005fa182d06265bf29a677bbbb2bf40523c8156507b979d0520501cc98a63f",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099208,
+        "p95_ms": 0.105417,
+        "max_ms": 0.118208
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.003,
+        "p95_ms": 0.003375,
+        "max_ms": 0.003542
+      }
+    },
+    {
+      "query_sha256": "000073f195d0b6639f8a286a6b0e8e1f247e4ac671e810cfa10faf9e50bc817d",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090917,
+        "p95_ms": 0.1045,
+        "max_ms": 0.114625
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002791,
+        "p95_ms": 0.003208,
+        "max_ms": 0.004292
+      }
+    },
+    {
+      "query_sha256": "000075be8c4d223b522730cd943fd62ab8ee95e82ac2bc8db974a013298f63cc",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.091625,
+        "p95_ms": 0.1065,
+        "max_ms": 0.113791
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00275,
+        "p95_ms": 0.003166,
+        "max_ms": 0.003958
+      }
+    },
+    {
+      "query_sha256": "00007edc69e37c56857d128cf98205a663de27f0bfd2a806cdf77515f320abd6",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095792,
+        "p95_ms": 0.101333,
+        "max_ms": 0.152791
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002958,
+        "p95_ms": 0.00325,
+        "max_ms": 0.003833
+      }
+    },
+    {
+      "query_sha256": "00008d27eb1262a1c3b7399b7515378a71ce24c56b1658b8378a58043ca5858f",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09875,
+        "p95_ms": 0.104875,
+        "max_ms": 0.111291
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002958,
+        "p95_ms": 0.003417,
+        "max_ms": 0.003791
+      }
+    },
+    {
+      "query_sha256": "00008f4c41c207ffe31d93d5219b71efc7053ac15276599909eaf6e8aa3ab3b6",
+      "shape": "4",
+      "challengers_bucket": "absent",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090459,
+        "p95_ms": 0.111,
+        "max_ms": 0.119333
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002709,
+        "p95_ms": 0.003792,
+        "max_ms": 0.004375
+      }
+    },
+    {
+      "query_sha256": "0457af39b61b18781b525cf4878829ca3c3a105c0c02b45a840bbe7a768e72d8",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095625,
+        "p95_ms": 0.105709,
+        "max_ms": 0.109417
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004333,
+        "p95_ms": 0.00475,
+        "max_ms": 0.005917
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003334,
+        "p95_ms": 0.003875,
+        "max_ms": 0.009792
+      }
+    },
+    {
+      "query_sha256": "0c3331e5b3198e4f921b4800ff84c1a0666f9bd0e469075b68e3c8a6e3e94b0d",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099208,
+        "p95_ms": 0.102959,
+        "max_ms": 0.104542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004542,
+        "p95_ms": 0.004916,
+        "max_ms": 0.006084
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003625,
+        "p95_ms": 0.003875,
+        "max_ms": 0.004791
+      }
+    },
+    {
+      "query_sha256": "0f7dd095ec008222156da43de9aa33f4d164e3714f32332482c189dc9bbc2e43",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099292,
+        "p95_ms": 0.103833,
+        "max_ms": 0.109333
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004875,
+        "p95_ms": 0.005125,
+        "max_ms": 0.00625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003833,
+        "p95_ms": 0.004083,
+        "max_ms": 0.00475
+      }
+    },
+    {
+      "query_sha256": "11cf787b3734ad94b567c5370c330fa65ca43efa91e4234b7752e996c27f3106",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.100958,
+        "p95_ms": 0.108875,
+        "max_ms": 0.11375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004542,
+        "p95_ms": 0.00475,
+        "max_ms": 0.005541
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003542,
+        "p95_ms": 0.00375,
+        "max_ms": 0.003833
+      }
+    },
+    {
+      "query_sha256": "13a4b831c3c15b0f643031e9d3a9c4f42d7506869bfae422be66806447e3ccb6",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.10125,
+        "p95_ms": 0.10825,
+        "max_ms": 0.114458
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.004875,
+        "max_ms": 0.005542
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003542,
+        "p95_ms": 0.003792,
+        "max_ms": 0.004542
+      }
+    },
+    {
+      "query_sha256": "154d6a52b7667133241f5e109dcdec74aa118839fbde75e6cef791402e6727a2",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.100417,
+        "p95_ms": 0.106167,
+        "max_ms": 0.138584
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004583,
+        "p95_ms": 0.004833,
+        "max_ms": 0.006042
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003542,
+        "p95_ms": 0.003792,
+        "max_ms": 0.004292
+      }
+    },
+    {
+      "query_sha256": "1639fe5147e0707289c36f3b02b2187d8f744be3edcc0418224a2aad50cf78f4",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099166,
+        "p95_ms": 0.104083,
+        "max_ms": 0.105333
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.004667,
+        "max_ms": 0.006167
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003417,
+        "p95_ms": 0.003625,
+        "max_ms": 0.003917
+      }
+    },
+    {
+      "query_sha256": "183bdfe7c3b7b2ce6034e44356681d2159662f81609b3c3f49e82ddaa640020d",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099375,
+        "p95_ms": 0.117667,
+        "max_ms": 0.127458
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00425,
+        "p95_ms": 0.005292,
+        "max_ms": 0.006333
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003375,
+        "p95_ms": 0.004375,
+        "max_ms": 0.00475
+      }
+    },
+    {
+      "query_sha256": "1841cc5a7522e4593e824f72784e215e09d3941fd5fa0a04736e93c31eed3efa",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090166,
+        "p95_ms": 0.100333,
+        "max_ms": 0.108458
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004083,
+        "p95_ms": 0.004542,
+        "max_ms": 0.004583
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003209,
+        "p95_ms": 0.003584,
+        "max_ms": 0.004833
+      }
+    },
+    {
+      "query_sha256": "1b1260aceb05fcab6ead709bd2fdf1f07dae4a2c4602526b6c6bf18c4471ed67",
+      "shape": "4",
+      "challengers_bucket": "one",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097042,
+        "p95_ms": 0.106792,
+        "max_ms": 0.109416
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004167,
+        "p95_ms": 0.00475,
+        "max_ms": 0.005792
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.003375,
+        "p95_ms": 0.003875,
+        "max_ms": 0.004583
+      }
+    },
+    {
+      "query_sha256": "199af7f54a07376646850cc85e53c385d25e0bf2659964a9944f794228d02691",
+      "shape": "4",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.094708,
+        "p95_ms": 0.119083,
+        "max_ms": 0.13625
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004584,
+        "p95_ms": 0.006167,
+        "max_ms": 0.006667
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015584,
+        "p95_ms": 0.019375,
+        "max_ms": 0.023
+      }
+    },
+    {
+      "query_sha256": "1a2c6dfbc0a27b835890d60794299b59ed6e579b4694d9ec29ee59039a871b57",
+      "shape": "4",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09475,
+        "p95_ms": 0.104917,
+        "max_ms": 0.105542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004708,
+        "p95_ms": 0.00525,
+        "max_ms": 0.006625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015084,
+        "p95_ms": 0.017042,
+        "max_ms": 0.020375
+      }
+    },
+    {
+      "query_sha256": "1cca659d2e922ceffd5697e53980ad8953c912c18e060d23975a7ead687c1346",
+      "shape": "4",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095667,
+        "p95_ms": 0.107125,
+        "max_ms": 0.12825
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004666,
+        "p95_ms": 0.00525,
+        "max_ms": 0.005792
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015541,
+        "p95_ms": 0.017333,
+        "max_ms": 0.020583
+      }
+    },
+    {
+      "query_sha256": "3f17d7125d20e484ac2104dacb1cd2aed56f3630107e8b688081dba606de6744",
+      "shape": "4",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092833,
+        "p95_ms": 0.1085,
+        "max_ms": 0.127125
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.0045,
+        "p95_ms": 0.005333,
+        "max_ms": 0.006292
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015041,
+        "p95_ms": 0.017458,
+        "max_ms": 0.017708
+      }
+    },
+    {
+      "query_sha256": "6966b5fd362c427c3866e4fcf4da11bddbf256c81c1aa6b1d05599ccf0fed613",
+      "shape": "4",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.092417,
+        "p95_ms": 0.106625,
+        "max_ms": 0.134167
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004541,
+        "p95_ms": 0.005666,
+        "max_ms": 0.0065
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.014958,
+        "p95_ms": 0.017333,
+        "max_ms": 0.021083
+      }
+    },
+    {
+      "query_sha256": "b4589578a93269264639601a237da429096d54df2ac302ea70800f0ad4797237",
+      "shape": "4",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090791,
+        "p95_ms": 0.104666,
+        "max_ms": 0.110084
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.005417,
+        "max_ms": 0.005667
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.015208,
+        "p95_ms": 0.017417,
+        "max_ms": 0.018459
+      }
+    },
+    {
+      "query_sha256": "d8f6a00ae28b2e5c820b191b9c7ba146326ad9be6cb28c8078ab5a06a55140a8",
+      "shape": "4",
+      "challengers_bucket": "ten_plus",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.097416,
+        "p95_ms": 0.104875,
+        "max_ms": 0.112625
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004875,
+        "p95_ms": 0.005292,
+        "max_ms": 0.005542
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.016291,
+        "p95_ms": 0.017166,
+        "max_ms": 0.018958
+      }
+    },
+    {
+      "query_sha256": "009ead9c7393d250732fb716a27d3c7de68ad5475e3cc0e16b9cd91ee5881ab6",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.101209,
+        "p95_ms": 0.112333,
+        "max_ms": 0.114375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004917,
+        "p95_ms": 0.006417,
+        "max_ms": 0.006875
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.007625,
+        "p95_ms": 0.009167,
+        "max_ms": 0.009834
+      }
+    },
+    {
+      "query_sha256": "02684592120353491f62e42cfadba7cd87684e26d11c11a72e672193d8e04074",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.090917,
+        "p95_ms": 0.103209,
+        "max_ms": 0.113458
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004459,
+        "p95_ms": 0.004917,
+        "max_ms": 0.005166
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.007,
+        "p95_ms": 0.007792,
+        "max_ms": 0.008083
+      }
+    },
+    {
+      "query_sha256": "05822806a5a0fab3319a3d832f2ea7ad0f84a07d136b97b099596e66dc5bd75e",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095208,
+        "p95_ms": 0.104625,
+        "max_ms": 0.106542
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.005208,
+        "max_ms": 0.005209
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.013583,
+        "p95_ms": 0.016334,
+        "max_ms": 0.019208
+      }
+    },
+    {
+      "query_sha256": "06cedb50768c7473be7954dfea195a25cff1a125319ed849ee11a2f597a1a804",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095334,
+        "p95_ms": 0.104042,
+        "max_ms": 0.104709
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004584,
+        "p95_ms": 0.005042,
+        "max_ms": 0.010333
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004625,
+        "p95_ms": 0.005166,
+        "max_ms": 0.005958
+      }
+    },
+    {
+      "query_sha256": "07a74dea6490f20ee63e9c96bb54072df6d9947d889f8876771e0a922de9f573",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.095375,
+        "p95_ms": 0.103291,
+        "max_ms": 0.105375
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004792,
+        "p95_ms": 0.005083,
+        "max_ms": 0.005958
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004875,
+        "p95_ms": 0.00525,
+        "max_ms": 0.00575
+      }
+    },
+    {
+      "query_sha256": "0879fd12728b86d9e98ab331d6a9a20ac77c37a105ef59e6e41fd9a4c02939be",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098333,
+        "p95_ms": 0.108375,
+        "max_ms": 0.1245
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004792,
+        "p95_ms": 0.005208,
+        "max_ms": 0.00625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.00625,
+        "p95_ms": 0.007042,
+        "max_ms": 0.007917
+      }
+    },
+    {
+      "query_sha256": "09ede0b2c130b79b2e1ac28bc572a336c76d7407f1289219ea5c6c2b1bb5a5b1",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098584,
+        "p95_ms": 0.104459,
+        "max_ms": 0.105166
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004917,
+        "p95_ms": 0.005125,
+        "max_ms": 0.005625
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.006292,
+        "p95_ms": 0.007083,
+        "max_ms": 0.0075
+      }
+    },
+    {
+      "query_sha256": "0f8034c4cf2bf82aee045a9fb8de032793dde33d16ca896dcc084be1122baa77",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098542,
+        "p95_ms": 0.103417,
+        "max_ms": 0.103875
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004792,
+        "p95_ms": 0.004958,
+        "max_ms": 0.005458
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004833,
+        "p95_ms": 0.005166,
+        "max_ms": 0.005833
+      }
+    },
+    {
+      "query_sha256": "18c89278eaeccfa436ab57f338580cf958395cacd7df29df13e2cdfb35e782fa",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.099791,
+        "p95_ms": 0.106792,
+        "max_ms": 0.107916
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004916,
+        "p95_ms": 0.005875,
+        "max_ms": 0.006167
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.006208,
+        "p95_ms": 0.006541,
+        "max_ms": 0.008
+      }
+    },
+    {
+      "query_sha256": "1c0becf61e0bfcfb06323b64aad6f83da64d6ed17e95f20fc2f2de3262485702",
+      "shape": "4",
+      "challengers_bucket": "two_to_nine",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098,
+        "p95_ms": 0.103541,
+        "max_ms": 0.103958
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004709,
+        "p95_ms": 0.004958,
+        "max_ms": 0.005084
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004875,
+        "p95_ms": 0.005208,
+        "max_ms": 0.009291
+      }
+    },
+    {
+      "query_sha256": "dc1bf89ba24ea8f9c8711ca563b7dd6e8daca9d11f42f966a0125e342fd667ec",
+      "shape": "3",
+      "challengers_bucket": "case_cantillo",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09575,
+        "p95_ms": 0.115,
+        "max_ms": 0.149125
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004458,
+        "p95_ms": 0.004875,
+        "max_ms": 0.004958
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.004459,
+        "p95_ms": 0.005042,
+        "max_ms": 0.005542
+      }
+    },
+    {
+      "query_sha256": "fbe0358c06ced41f77809a4c89d883b2c1eac99dc8d1a4c8dc862d58176d9002",
+      "shape": "4",
+      "challengers_bucket": "case_cantillo",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098833,
+        "p95_ms": 0.10375,
+        "max_ms": 0.104875
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002917,
+        "p95_ms": 0.003083,
+        "max_ms": 0.003208
+      }
+    },
+    {
+      "query_sha256": "190367f23855c8e518981b113ec1a28061d199a9a8ceea572266eba42838646a",
+      "shape": "4",
+      "challengers_bucket": "case_cantillo",
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.098958,
+        "p95_ms": 0.10175,
+        "max_ms": 0.103084
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.002959,
+        "p95_ms": 0.00325,
+        "max_ms": 0.0045
+      }
+    }
+  ]
+}

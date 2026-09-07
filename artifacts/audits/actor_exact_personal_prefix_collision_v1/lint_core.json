@@ -1,0 +1,9 @@
+{
+  "command": [
+    "make",
+    "lint-core"
+  ],
+  "stdout": "app/core/ limpio\n",
+  "stderr": "",
+  "exit_code": 0
+}

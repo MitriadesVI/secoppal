@@ -1,0 +1,51 @@
+{
+  "ruff": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "--version"
+    ],
+    "stdout": "ruff 0.16.4\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "semgrep": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+      "--version"
+    ],
+    "stdout": "1.176.0\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "hypothesis": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-c",
+      "import hypothesis; print(hypothesis.__version__)"
+    ],
+    "stdout": "6.165.10\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "codegraph_version": {
+    "command": [
+      "codegraph",
+      "--version"
+    ],
+    "cwd": "/Users/rodrigoortiz/Documents/secoppal",
+    "stdout": "0.9.6\n",
+    "stderr": "",
+    "exit_code": 0
+  },
+  "codegraph_status": {
+    "command": [
+      "codegraph",
+      "status"
+    ],
+    "cwd": "/Users/rodrigoortiz/Documents/secoppal",
+    "stdout": "\u001b[1m\nCodeGraph Status\n\u001b[0m\n\u001b[36mProject:\u001b[0m /Users/rodrigoortiz/Documents/secoppal\n\n\u001b[1mIndex Statistics:\u001b[0m\n  Files:     819\n  Nodes:     19,018\n  Edges:     42,431\n  DB Size:   62.84 MB\n  Backend:   \u001b[32mnode:sqlite \u2014 built-in (full WAL)\u001b[0m\n  Journal:   \u001b[32mwal\u001b[0m\n\n\u001b[1mNodes by Kind:\u001b[0m\n  function        7,791\n  import          4,711\n  variable        3,032\n  method          1,930\n  file            797\n  class           748\n  route           9\n\n\u001b[1mFiles by Language:\u001b[0m\n  python          797\n  yaml            22\n\n\u001b[32m\u2713\u001b[0m Index is up to date\n\n",
+    "stderr": "(node:55067) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+    "exit_code": 0
+  },
+  "codegraph_scope": "Loaded MCP status/context/impact consulted on unchanged main baseline; direct reads and rg inventory supplement incomplete constant-consumer graph. Changed worktree files read directly; main index is not claimed to include edits."
+}

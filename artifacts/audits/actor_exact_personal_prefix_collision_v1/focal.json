@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_actor_name_resolver.py",
+    "tests/test_actor_name_properties.py",
+    "tests/test_actor_exact_prefix.py",
+    "tests/test_actor_candidate_ux.py",
+    "tests/test_actor_routing.py",
+    "tests/test_actor_resolution_orchestration.py",
+    "tests/test_actor_exact_prefix_workflow.py",
+    "tests/test_actor_conversation.py",
+    "tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_mention_completeness.py",
+    "tests/test_actor_geography_precedence.py",
+    "tests/test_actor_typed_projection.py",
+    "tests/test_actor_exact_prefix_properties.py",
+    "tests/test_module_size_limits.py",
+    "-q"
+  ],
+  "stdout": "........................................................................ [ 18%]\n........................................................................ [ 36%]\n........................................................................ [ 54%]\n........................................................................ [ 72%]\n........................................................................ [ 90%]\n.....................................                                    [100%]\n397 passed in 74.93s (0:01:14)\n",
+  "stderr": "",
+  "exit_code": 0
+}

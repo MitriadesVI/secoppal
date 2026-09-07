@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "scripts/run_query_corpus.py",
+    "--mode",
+    "all"
+  ],
+  "stdout": "\nSummary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)\n",
+  "stderr": "",
+  "exit_code": 0
+}

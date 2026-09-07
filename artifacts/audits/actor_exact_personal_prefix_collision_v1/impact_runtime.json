@@ -1,0 +1,55 @@
+{
+  "eligible_exact_unique_cc_aliases": 1066953,
+  "affected_found": 20787,
+  "unaffected_absent_confirmed": 1046165,
+  "inconclusive_checks": 1,
+  "by_token_count": {
+    "1": {
+      "ABSENT_CONFIRMED": 8938,
+      "eligible": 10552,
+      "FOUND": 1614,
+      "one": 301,
+      "ten_plus": 745,
+      "two_to_nine": 568
+    },
+    "3": {
+      "ABSENT_CONFIRMED": 223856,
+      "eligible": 231621,
+      "FOUND": 7765,
+      "one": 2837,
+      "two_to_nine": 4024,
+      "ten_plus": 904
+    },
+    "4": {
+      "ABSENT_CONFIRMED": 781491,
+      "eligible": 781690,
+      "FOUND": 198,
+      "one": 105,
+      "two_to_nine": 86,
+      "ten_plus": 7,
+      "INCONCLUSIVE": 1
+    },
+    "2": {
+      "ABSENT_CONFIRMED": 31880,
+      "eligible": 43090,
+      "FOUND": 11210,
+      "one": 4653,
+      "ten_plus": 1659,
+      "two_to_nine": 4898
+    }
+  },
+  "enumeration": {
+    "one": 7896,
+    "ten_plus": 3315,
+    "two_to_nine": 9576
+  },
+  "failure_reasons": {
+    "TimeoutError": 1
+  },
+  "oracle_affected": 20788,
+  "oracle_absent": 1046165,
+  "runtime_vs_oracle_mismatch_query_sha256": [],
+  "elapsed_seconds": 14.075528374989517,
+  "readonly": true,
+  "method": "All eligible aliases checked with runtime existence and budget; FOUND enumerated with runtime dedup/representative/order and its own budget; independent full token-prefix oracle comparison"
+}

@@ -1,0 +1,40 @@
+{
+  "method": "Independent full traversal; proper token prefixes intersect globally unique CC aliases; distinct challenger keys capped at 10 only for 1/2-9/10+ classification",
+  "eligible_exact_unique_cc_aliases": 1066953,
+  "affected_found": 20788,
+  "unaffected_absent_confirmed": 1046165,
+  "inconclusive_checks": 0,
+  "cc_alias_rows_traversed": 1106849,
+  "by_token_count": {
+    "1": {
+      "eligible": 10552,
+      "absent": 8938,
+      "one": 301,
+      "ten_plus": 745,
+      "two_to_nine": 568
+    },
+    "2": {
+      "eligible": 43090,
+      "absent": 31880,
+      "one": 4653,
+      "ten_plus": 1659,
+      "two_to_nine": 4898
+    },
+    "3": {
+      "eligible": 231621,
+      "absent": 223856,
+      "one": 2837,
+      "two_to_nine": 4024,
+      "ten_plus": 904
+    },
+    "4": {
+      "eligible": 781690,
+      "absent": 781491,
+      "one": 105,
+      "two_to_nine": 87,
+      "ten_plus": 7
+    }
+  },
+  "found_fraction": 0.019483519892628823,
+  "elapsed_seconds": 7.5830659159692
+}

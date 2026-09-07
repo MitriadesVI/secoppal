@@ -1,0 +1,137 @@
+{
+  "head_loaded": "ddcc6b8ac4312e63ff34d3e9d187045300412268",
+  "worktree": "/Users/rodrigoortiz/Documents/secoppal-actor-exact-personal-prefix-collision-v1",
+  "runtime_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "actor_profile_flag_effective": true,
+  "index_path": "/Users/rodrigoortiz/Documents/secoppal/data/actor_alias_index.sqlite",
+  "index_sha256": "464add1dbb479e616ee80a079b11c256db0d67dc6b979e4f285612233bdb8690",
+  "schema": "1",
+  "N2": "N2",
+  "index_built_at": "2026-08-20T18:10:58+00:00",
+  "channel": "local workflow, isolated chats, real readonly index, SECOP EMPTY double",
+  "external_calls": 0,
+  "sockets_blocked": true,
+  "reset_previous": true,
+  "cases": [
+    {
+      "query": "contratos de jose david cantillo",
+      "reset_previous": true,
+      "route_reason": "heuristic_only",
+      "needs_clarification": true,
+      "clarification_reason": "actor_name_ambiguous",
+      "candidate_controls": 3,
+      "pending": true,
+      "trace": {
+        "actor_resolution_status": "AMBIGUOUS",
+        "actor_resolution_method": "exact_prefix_ambiguous",
+        "candidates_count": 3,
+        "candidates_has_more": false,
+        "enumeration_incomplete": false
+      },
+      "candidates": [
+        {
+          "rank": 1,
+          "matched_alias": "jose david cantillo",
+          "identity_masked": "CC:******3153"
+        },
+        {
+          "rank": 2,
+          "matched_alias": "jose david cantillo arcon",
+          "identity_masked": "CC:******2711"
+        },
+        {
+          "rank": 3,
+          "matched_alias": "jose david cantillo solano",
+          "identity_masked": "CC:******5396"
+        }
+      ],
+      "source_double_calls": 0,
+      "response_redacted": "Encontré una coincidencia exacta para JOSE DAVID CANTILLO, pero también nombres observados más largos que comienzan exactamente por ese nombre y corresponden a otras cédulas.\n\n1. JOSE DAVID CANTILLO — CC ******3153\n2. JOSE DAVID CANTILLO ARCON — CC ******2711\n3. JOSE DAVID CANTILLO SOLANO — CC ******5396\n\nResponde con el número correcto o comparte el NIT/cédula."
+    },
+    {
+      "query": "contratos de jose david cantillo arcon",
+      "reset_previous": true,
+      "route_reason": "actor_profile",
+      "needs_clarification": false,
+      "clarification_reason": "",
+      "candidate_controls": 0,
+      "pending": false,
+      "trace": {
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "exact_unique_alias",
+        "candidates_count": 0
+      },
+      "candidates": [],
+      "source_double_calls": 8,
+      "response_redacted": "CC ******2711\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 21:48 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales."
+    },
+    {
+      "query": "contratos de jose david cantillo solano",
+      "reset_previous": true,
+      "route_reason": "actor_profile",
+      "needs_clarification": false,
+      "clarification_reason": "",
+      "candidate_controls": 0,
+      "pending": false,
+      "trace": {
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "exact_unique_alias",
+        "candidates_count": 0
+      },
+      "candidates": [],
+      "source_double_calls": 8,
+      "response_redacted": "CC ******5396\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 21:48 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales."
+    },
+    {
+      "query": "contratos del proveedor jose cantillo",
+      "reset_previous": true,
+      "route_reason": "heuristic_only",
+      "needs_clarification": true,
+      "clarification_reason": "actor_name_ambiguous",
+      "candidate_controls": 3,
+      "pending": true,
+      "trace": {
+        "actor_resolution_status": "AMBIGUOUS",
+        "actor_resolution_method": "exact_ambiguous_alias",
+        "candidates_count": 3
+      },
+      "candidates": [
+        {
+          "rank": 1,
+          "matched_alias": "jose cantillo",
+          "identity_masked": "CC:******7432"
+        },
+        {
+          "rank": 2,
+          "matched_alias": "jose cantillo",
+          "identity_masked": "CC:***5467"
+        },
+        {
+          "rank": 3,
+          "matched_alias": "jose cantillo",
+          "identity_masked": "CC:******4265"
+        }
+      ],
+      "source_double_calls": 0,
+      "response_redacted": "El nombre JOSE CANTILLO corresponde a más de un actor observado en SECOP.\n\n1. JOSE CANTILLO — CC ******7432\n2. JOSE CANTILLO — CC ***5467\n3. JOSE CANTILLO — CC ******4265\n\nResponde con el número correcto o comparte el NIT/cédula."
+    },
+    {
+      "query": "contratos de transporte",
+      "reset_previous": true,
+      "route_reason": "heuristic_only",
+      "needs_clarification": true,
+      "clarification_reason": "actor_or_topic_ambiguous",
+      "candidate_controls": 0,
+      "pending": false,
+      "trace": {
+        "actor_resolution_status": "AMBIGUOUS",
+        "actor_resolution_method": "exact_prefix_ambiguous",
+        "candidates_count": 0
+      },
+      "candidates": [],
+      "source_double_calls": 0,
+      "response_redacted": "¿Te refieres a contratos sobre TRANSPORTE como tema, o al proveedor observado como ‘TRANSPORTE’? No voy a elegir una interpretación silenciosamente."
+    }
+  ],
+  "limitation": "Routing, selection requests and source-call admission only; empty double never accredits current contract counts or identity by activity."
+}

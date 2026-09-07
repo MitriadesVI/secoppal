@@ -23,9 +23,25 @@ resolución de identidad adicional. Inventario de filtros y límites de routing 
 
 ARCON completo sigue pasando; Franklin → Fundacaribe ya estaba corregido. Se
 conservan como regresiones, al igual que los seis temas y la ambigüedad exacta de
-TRANSPORTE. Cantillo Exact Prefix Challenger queda **PENDIENTE DE DECISIÓN**.
+TRANSPORTE. Cantillo Exact Prefix Challenger quedó pendiente en ese cierre; su decisión
+posterior es ADR-094, descrita abajo.
 Puertas y evidencia de cierre en
 [la revisión del dogfood](audits/ACTOR_DOGFOOD_BUG_BATCH_V2_REVIEW.md).
+
+## Actor Exact Personal Prefix Collision V1 — 2026-09-06
+
+ADR-094 implementa una nueva restricción de autoridad: alias exacto único CC
+requiere comprobar extensiones N2 de otras CC. FOUND pide selección; un chequeo
+inconcluso bloquea ejecución/fuzzy/fallback. Se conservan N2, esquema, NIT,
+exact_ambiguous_alias y la precedencia de documento/selección. Exacto original
+primero y máximo nueve challengers visibles; has_more e incomplete son hechos
+separados, sin total inventado. Se transportan en pending y traza.
+
+**Promoción NO_GO:** primer AFTER incumple un umbral fijado antes del cambio;
+una sonda diagnóstica que no reproduce el pico no reemplaza esa puerta. Oráculo:
+20.788/1.066.953 afectados; runtime: 20.787 FOUND, 1.046.165 ABSENT, 1 INCONCLUSIVE.
+No se reconstruye índice ni se integra esta rama. Informe y puertas:
+[ACTOR_EXACT_PERSONAL_PREFIX_COLLISION_V1](audits/ACTOR_EXACT_PERSONAL_PREFIX_COLLISION_V1.md).
 
 ## Estado canónico actual — 2026-08-31
 
@@ -2224,3 +2240,11 @@ nuevo: el replay de Procurement Relationships exige el hash fuente congelado de
 `actor_identity.py`; el mismo test pasa en BASE. Se conserva la evidencia sin
 repin y se entrega **PARTIAL**, pendiente de decisión sobre ese replay ajeno al
 carril. No se declara integración lista.
+
+
+Cierre de validación ADR-094 (rama, sin merge/push): el coordinador ejecutó una
+sola suite en serie sobre `ddcc6b8`: **11738 passed, 11 skipped, 14 xfailed in
+505.61s (0:08:25)**. El guard de arbitraje conserva TRANSPORTE sin pendiente ni
+controles de personas hasta pedir proveedor explícito. Ruff y corpus verdes;
+Semgrep conserva 10 hallazgos de baseline, delta cero. **NO_GO** del benchmark
+primario permanece vigente; el pase funcional no autoriza promoción.

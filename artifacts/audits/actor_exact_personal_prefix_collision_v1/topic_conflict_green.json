@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_actor_exact_prefix_workflow.py",
+    "tests/test_actor_resolution_orchestration.py",
+    "tests/test_actor_candidate_ux.py",
+    "tests/test_actor_conversation.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "stdout": "........................................................................ [ 39%]\n........................................................................ [ 78%]\n.......................................                                  [100%]\n183 passed in 20.60s\n",
+  "stderr": ""
+}

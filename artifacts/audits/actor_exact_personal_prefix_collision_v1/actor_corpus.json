@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "scripts/run_query_corpus.py",
+    "--corpus",
+    "tests/fixtures/actor_profile_corpus_v1.yaml",
+    "--mode",
+    "all"
+  ],
+  "stdout": "\nSummary: 41/41 PASS, 0 FAIL (mode=all, severity=any, limit=none)\n",
+  "stderr": "",
+  "exit_code": 0
+}

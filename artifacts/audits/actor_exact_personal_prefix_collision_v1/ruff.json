@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+    "check",
+    "app/",
+    "tests/",
+    "scripts/"
+  ],
+  "stdout": "All checks passed!\n",
+  "stderr": "",
+  "exit_code": 0
+}

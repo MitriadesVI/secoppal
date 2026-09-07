@@ -1,0 +1,802 @@
+[
+  {
+    "query": "mariapuentes",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "maomesa",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "jeimyjohanatrianaavila",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "fumitaz",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "dagobertoamarisrodriguez",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "anpa",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "ferrara",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "dmc",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "saz",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "mpgdc",
+    "shape": "1",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "lima",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "feidy",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "chavez",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "nebys",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "ediana",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "roos",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "ginger",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "mariav",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "jas",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "pacho",
+    "shape": "1",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "belsy",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "yovany",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "yirly",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "miyer",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "rubio",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "jhoiner",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "yurley",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "ivanna",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "yojhan",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "madeleine",
+    "shape": "1",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "kateryne",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "ayllen",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "quiroga",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "secop",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "criollo",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "zurima",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "naya",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "dilmar",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "mayori",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "clary",
+    "shape": "1",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria ilce",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "owen aponte",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "sandra muriel",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "juan mulett",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "medardo pantoja",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "dustin dario",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "eduardo dominguez",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "jessika saavedra",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "campos duque",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "erlyn antonio",
+    "shape": "2",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "harold lozano",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "victor gutierrez",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "andres ariza",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "liliana leyton",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "catalina orozco",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "alexandra cardona",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "paula pineros",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "monica casas",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "karen parra",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "helber yecid",
+    "shape": "2",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "luis orlando",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "carlos hernan",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "yudi lorena",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "oscar armando",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "jair alexander",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "ingrid julieth",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "sandra ines",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "carolina rincon",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "angel miguel",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "natalia bedoya",
+    "shape": "2",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "sonia lopez",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "nataly gonzalez",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "santiago carmona",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "yaneth hernandez",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "julieth jaramillo",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "javier ospina",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "leonardo ruiz",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "valentina benitez",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "nicolas beltran",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "cielo alejandra",
+    "shape": "2",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "milena petro villarreal",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "yuly cruz chavarro",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "graciela silva gelves",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "isamar moreno salcedo",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "rodolfo vidal astaiza",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "rene garzon ruiz",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "vemaray viola recuero",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "aracely diaz witt",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "jose soto soto",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "gloridis sanchez ricardo",
+    "shape": "3",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "juan manuel alarcon",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "juan sebastian ossa",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "mayra alejandra silva",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "luisa fernanda yate",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "norma patricia hernandez",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "edgar alexander lopez",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "yeny milena cuervo",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "jose raul rodriguez",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "andres mauricio obando",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "martha lucia rivera",
+    "shape": "3",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "gloria del carmen",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "luis fernando ortiz",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "juan carlos rojas",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "sandra milena torres",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "maria camila hernandez",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "jose luis sanchez",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "paula andrea toro",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "juan pablo londono",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "paola andrea ruiz",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "andres felipe bonilla",
+    "shape": "3",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "diego fernando cordoba",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "carlos andres paz",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria camila henao",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "diana marcela cruz",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "liliana patricia restrepo",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "edwin alexander gomez",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "lina marcela riano",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "carlos arturo uribe",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "pablo andres jaramillo",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria isabel naranjo",
+    "shape": "3",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "yuri katiana landazuri portilla",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "stefany xiomara guevara cifuentes",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "julian david mesa pinto",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "ana deysi serrano rodriguez",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "jair alberto bedoya velez",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "jhon walter soto mira",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "leidy johana renteria cordoba",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "karen lizeth perez gonzalez",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "maria jose visbal caraballo",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "wilmer alexander mendoza ochoa",
+    "shape": "4",
+    "challengers_bucket": "absent"
+  },
+  {
+    "query": "maria del pilar carabali",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "maria del socorro rivera",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "casa de la cultura",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "maria alejandra diaz granados",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "orlando de jesus monsalve",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "melisa bernarda mejia sierra",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "lorena de la hoz",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "liney del carmen gonzalez",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "lizeth de la cruz",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "maria del carmen alarcon",
+    "shape": "4",
+    "challengers_bucket": "one"
+  },
+  {
+    "query": "maria de la paz",
+    "shape": "4",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "andrea del pilar rodriguez",
+    "shape": "4",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "maria del pilar sanchez",
+    "shape": "4",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "maria del pilar gonzalez",
+    "shape": "4",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "maria del pilar rojas",
+    "shape": "4",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "maria de la cruz",
+    "shape": "4",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "andrea del pilar ramirez",
+    "shape": "4",
+    "challengers_bucket": "ten_plus"
+  },
+  {
+    "query": "andrea del pilar moreno",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria del carmen ortiz",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria del pilar londono",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria del mar ramirez",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria de los angeles orozco",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "rocio del pilar rodriguez",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria del pilar ruiz",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria del carmen barreto",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria del mar mendez",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "maria del mar lopez",
+    "shape": "4",
+    "challengers_bucket": "two_to_nine"
+  },
+  {
+    "query": "jose david cantillo",
+    "shape": "3",
+    "challengers_bucket": "case_cantillo"
+  },
+  {
+    "query": "jose david cantillo arcon",
+    "shape": "4",
+    "challengers_bucket": "case_cantillo"
+  },
+  {
+    "query": "jose david cantillo solano",
+    "shape": "4",
+    "challengers_bucket": "case_cantillo"
+  }
+]

@@ -1,0 +1,336 @@
+{
+  "base": "345804cf55becaf728d3ec9c20dc9e2f76a3a5b9",
+  "baseline_resolver_blob_sha256": "82f20e11a1a430f7418113cbc4e7dd52380366508e272ca4252fa060b96ed0a7",
+  "repetitions": 50,
+  "warmups": 5,
+  "synthetic": true,
+  "results": [
+    {
+      "case": "exact_without_challenger",
+      "rows": 1,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:RESOLVED": 50,
+        "existence:ABSENT_CONFIRMED": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.10000000474974513,
+        "p95_ms": 0.11062499834224582,
+        "max_ms": 0.11491699842736125
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 0.11041696416214108,
+        "p95_ms": 0.12087501818314195,
+        "max_ms": 0.12312497710809112
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.004207948222756386,
+        "p95_ms": 0.004750036168843508,
+        "max_ms": 0.008333998266607523
+      }
+    },
+    {
+      "case": "exact_plus_one",
+      "rows": 2,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:AMBIGUOUS": 50,
+        "existence:FOUND": 50,
+        "enumeration:complete": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09916594717651606,
+        "p95_ms": 0.10412500705569983,
+        "max_ms": 0.10458397446200252
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 0.13095798203721642,
+        "p95_ms": 0.14345900854095817,
+        "max_ms": 0.14645897317677736
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00904203625395894,
+        "p95_ms": 0.009917013812810183,
+        "max_ms": 0.011000025551766157
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.006999995093792677,
+        "p95_ms": 0.007875030860304832,
+        "max_ms": 0.007958966307342052
+      }
+    },
+    {
+      "case": "three_way_synthetic",
+      "rows": 3,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:AMBIGUOUS": 50,
+        "existence:FOUND": 50,
+        "enumeration:complete": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.10066601680591702,
+        "p95_ms": 0.11150003410875797,
+        "max_ms": 0.1128750154748559
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 0.13800000306218863,
+        "p95_ms": 0.15216704923659563,
+        "max_ms": 0.1556670176796615
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.009583018254488707,
+        "p95_ms": 0.010957999620586634,
+        "max_ms": 0.010999967344105244
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.011374999303370714,
+        "p95_ms": 0.012666976545006037,
+        "max_ms": 0.01287501072511077
+      }
+    },
+    {
+      "case": "same_exact_identity_10000",
+      "rows": 10001,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:RESOLVED": 50,
+        "existence:ABSENT_CONFIRMED": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.11058303061872721,
+        "p95_ms": 0.15437498223036528,
+        "max_ms": 0.18087500939145684
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 0.6574579747393727,
+        "p95_ms": 0.7342920289374888,
+        "max_ms": 0.7798329461365938
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.47679198905825615,
+        "p95_ms": 0.5011250032112002,
+        "max_ms": 0.5056249792687595
+      }
+    },
+    {
+      "case": "same_challenger_identity_10000",
+      "rows": 10002,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:AMBIGUOUS": 50,
+        "existence:FOUND": 50,
+        "enumeration:complete": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.13087497791275382,
+        "p95_ms": 0.3215000033378601,
+        "max_ms": 0.3340410185046494
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 11.089833977166563,
+        "p95_ms": 11.306874977890402,
+        "max_ms": 11.904874991159886
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.012541015166789293,
+        "p95_ms": 0.025332963559776545,
+        "max_ms": 0.03429199568927288
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 10.675208002794534,
+        "p95_ms": 10.91741700656712,
+        "max_ms": 10.957666963804513
+      }
+    },
+    {
+      "case": "same_alias_10000_identities",
+      "rows": 10001,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:AMBIGUOUS": 50,
+        "existence:FOUND": 50,
+        "enumeration:complete": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.11916697258129716,
+        "p95_ms": 0.13050000416114926,
+        "max_ms": 0.15270797302946448
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 4.483249969780445,
+        "p95_ms": 4.573500016704202,
+        "max_ms": 4.909374983981252
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 2.018874976783991,
+        "p95_ms": 2.0682080066762865,
+        "max_ms": 2.073916024528444
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 2.1482500014826655,
+        "p95_ms": 2.202457981184125,
+        "max_ms": 2.2052499698475003
+      }
+    },
+    {
+      "case": "tokens_1",
+      "rows": 2,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:AMBIGUOUS": 50,
+        "existence:FOUND": 50,
+        "enumeration:complete": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.09887502528727055,
+        "p95_ms": 0.11016702046617866,
+        "max_ms": 0.11274998541921377
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 0.12987502850592136,
+        "p95_ms": 0.1431250129826367,
+        "max_ms": 0.14525000005960464
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.008917006198316813,
+        "p95_ms": 0.009875046089291573,
+        "max_ms": 0.010500021744519472
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.007040973287075758,
+        "p95_ms": 0.007707974873483181,
+        "max_ms": 0.007874972652643919
+      }
+    },
+    {
+      "case": "tokens_2",
+      "rows": 2,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:AMBIGUOUS": 50,
+        "existence:FOUND": 50,
+        "enumeration:complete": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.10204198770225048,
+        "p95_ms": 0.1112080062739551,
+        "max_ms": 0.11333299335092306
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 0.13162504183128476,
+        "p95_ms": 0.1459590275771916,
+        "max_ms": 0.14958303654566407
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.009333016350865364,
+        "p95_ms": 0.010500021744519472,
+        "max_ms": 0.010583025868982077
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.007166003342717886,
+        "p95_ms": 0.00804202863946557,
+        "max_ms": 0.008458970114588737
+      }
+    },
+    {
+      "case": "tokens_3",
+      "rows": 2,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:AMBIGUOUS": 50,
+        "existence:FOUND": 50,
+        "enumeration:complete": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.10212499182671309,
+        "p95_ms": 0.1129580195993185,
+        "max_ms": 0.11424999684095383
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 0.1337910071015358,
+        "p95_ms": 0.14762498904019594,
+        "max_ms": 0.14991703210398555
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.00933295814320445,
+        "p95_ms": 0.010417017620056868,
+        "max_ms": 0.010750023648142815
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.0072499969974160194,
+        "p95_ms": 0.00804202863946557,
+        "max_ms": 0.008125032763928175
+      }
+    },
+    {
+      "case": "tokens_4",
+      "rows": 2,
+      "statuses": {
+        "resolver_before:RESOLVED": 50,
+        "resolver_after:AMBIGUOUS": 50,
+        "existence:FOUND": 50,
+        "enumeration:complete": 50
+      },
+      "resolver_before": {
+        "n": 50,
+        "p50_ms": 0.10308297351002693,
+        "p95_ms": 0.11145800817757845,
+        "max_ms": 0.11299998732283711
+      },
+      "resolver_after": {
+        "n": 50,
+        "p50_ms": 0.13870798284187913,
+        "p95_ms": 0.1485419925302267,
+        "max_ms": 0.14950003242120147
+      },
+      "existence": {
+        "n": 50,
+        "p50_ms": 0.009207986295223236,
+        "p95_ms": 0.010541989468038082,
+        "max_ms": 0.010666029993444681
+      },
+      "enumeration": {
+        "n": 50,
+        "p50_ms": 0.0072080292738974094,
+        "p95_ms": 0.008000002708286047,
+        "max_ms": 0.008125032763928175
+      }
+    }
+  ],
+  "limitation": "Supplemental dense full-runtime comparison against frozen resolver blob. Original production BEFORE/AFTER gate remains NO_GO; this cannot replace it or change thresholds."
+}

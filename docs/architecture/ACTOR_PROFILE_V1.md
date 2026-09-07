@@ -219,12 +219,37 @@ El SQLite generado está **ignorado por git y nunca se commitea**.
 
 Orden de autoridad en `actor_alias_resolver.py`:
 
-1. alias N2 exacto asociado a **una sola** `IdentityKey` → `RESOLVED`;
+1. alias N2 exacto asociado a **una sola** `IdentityKey`: NIT conserva `RESOLVED`;
+   CC requiere ausencia confirmada de extensiones N2 bajo otras CC (ADR-094);
 2. alias N2 exacto asociado a **varias** `IdentityKey` → `AMBIGUOUS`;
 3. sin exacto, FTS5 trigram/BM25 → **`CANDIDATES` solamente**.
 
 No importa RapidFuzz, ni clientes HTTP, ni LLM, ni routing. Artefacto ausente,
 corrupto o de esquema incompatible → `INDEX_UNAVAILABLE` **sin fallback**.
+
+### Colisión de prefijo personal exacto — ADR-094
+
+Un exacto único CC entre todos los tipos documentales deja de auto-resolver si
+otra CC posee un alias N2 que empieza por `query + " "` y tiene tokens adicionales.
+Todas las longitudes están cubiertas. La misma IdentityKey no desafía el exacto;
+NIT y ambigüedad exacta anterior conservan su comportamiento.
+
+`actor_exact_prefix.py` separa existencia, enumeración y presentación. Hay tres
+resultados de existencia: ausencia confirmada, FOUND con testigo e INCONCLUSIVE.
+Este último bloquea perfil, nuevas sondas y fuzzy. Tras FOUND se muestran exacto
+original y hasta nueve challengers, deduplicados antes del cap y ordenados por
+menor alias representante, tipo y número. La décima identidad prueba has_more;
+un fallo conserva exacto + testigo y has_more desconocido/incomplete verdadero.
+En conflicto actor/tema no se abre el nuevo pendiente prefix hasta que haya
+intención de proveedor explícita; las ambigüedades anteriores conservan su UI.
+No hay total exhaustivo. El pendiente transporta metadata y la traza conserva
+`candidates_count`; documento o selección explícitos salen de la aclaración.
+
+Esquema/N2 intactos y ambas SQL con rango nominal sobre autoindex existente.
+Presupuestos 5/20 ms fijados desde BEFORE; VM y streaming usan deadline monotónico.
+**Implementado en rama, promoción NO_GO** por la primera medición AFTER. Contrato,
+evidencia y límites en [ADR-094](../decisions/2026-09-06_ADR-094_actor-exact-personal-prefix-collision.md)
+y [el informe](../audits/ACTOR_EXACT_PERSONAL_PREFIX_COLLISION_V1.md).
 
 ### Variantes de forma jurídica
 
@@ -257,10 +282,11 @@ Método resultante: `exact_legal_form_variant`.
 | Estado | Significado |
 |---|---|
 | `RESOLVED` | una identidad determinada |
-| `AMBIGUOUS` | alias exacto con varias identidades |
+| `AMBIGUOUS` | alias exacto con varias identidades o colisión estructural CC |
 | `CANDIDATES` | solo recuperación léxica |
 | `UNRESOLVED` | nada utilizable |
 | `INDEX_UNAVAILABLE` | artefacto ausente/incompatible |
+| `INCONCLUSIVE` | no terminó el chequeo requerido de extensión exacta CC; no autoriza ejecución |
 
 **Método** — *por qué una identidad es autoritativa*
 (`AUTHORITATIVE_ACTOR_METHODS`):
@@ -433,7 +459,8 @@ modalidades se cruza con inclusión/exclusión y disponibilidad en contratos.
 `ARCON_FULL_NAME = ALREADY_PASSING`; `PENDING_NEW_ACTOR = ALREADY_FIXED`.
 Regresiones Burr con nombres del dogfood, identidades sintéticas y fuente vacía;
 no afirman conteos actuales del índice productivo. TRANSPORTE conserva su colisión
-exacta actor/tema. Cantillo Exact Prefix Challenger: **PENDIENTE DE DECISIÓN**.
+exacta actor/tema. Cantillo Exact Prefix Challenger estaba pendiente al cierre de ese frente;
+la decisión posterior ADR-094 se implementa en esta rama con promoción NO_GO.
 
 ---
 

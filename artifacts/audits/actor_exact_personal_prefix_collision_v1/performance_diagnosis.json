@@ -1,0 +1,121 @@
+{
+  "query_sha256": "00d89a30f637437a54e698a3840c5a527b95f58e9afae93ba7c84a370d8dd0e0",
+  "purpose": "Diagnostic paired profile after failed gate; does not replace frozen AFTER verdict",
+  "alternating_order": true,
+  "warmups_per_version": 20,
+  "repetitions_per_version": 2000,
+  "measurements": {
+    "before_blob": {
+      "connect_wall_ms": {
+        "n": 2000,
+        "p50": 0.037417,
+        "p95": 0.054208,
+        "max": 0.453875
+      },
+      "connect_cpu_ms": {
+        "n": 2000,
+        "p50": 0.0375,
+        "p95": 0.053875,
+        "max": 0.240416
+      },
+      "verify_wall_ms": {
+        "n": 2000,
+        "p50": 0.033083,
+        "p95": 0.044333,
+        "max": 0.285458
+      },
+      "verify_cpu_ms": {
+        "n": 2000,
+        "p50": 0.033125,
+        "p95": 0.044375,
+        "max": 0.174
+      },
+      "collapse_exact_wall_ms": {
+        "n": 2000,
+        "p50": 0.006083,
+        "p95": 0.00925,
+        "max": 0.062417
+      },
+      "collapse_exact_cpu_ms": {
+        "n": 2000,
+        "p50": 0.006125,
+        "p95": 0.009333,
+        "max": 0.062625
+      },
+      "total_wall_ms": {
+        "n": 2000,
+        "p50": 0.102083,
+        "p95": 0.143292,
+        "max": 1.292125
+      },
+      "total_cpu_ms": {
+        "n": 2000,
+        "p50": 0.102125,
+        "p95": 0.140291,
+        "max": 0.631584
+      }
+    },
+    "after_current": {
+      "connect_wall_ms": {
+        "n": 2000,
+        "p50": 0.037292,
+        "p95": 0.055042,
+        "max": 0.666334
+      },
+      "connect_cpu_ms": {
+        "n": 2000,
+        "p50": 0.037375,
+        "p95": 0.05525,
+        "max": 0.373958
+      },
+      "verify_wall_ms": {
+        "n": 2000,
+        "p50": 0.033042,
+        "p95": 0.043916,
+        "max": 0.16925
+      },
+      "verify_cpu_ms": {
+        "n": 2000,
+        "p50": 0.033125,
+        "p95": 0.043834,
+        "max": 0.169792
+      },
+      "collapse_exact_wall_ms": {
+        "n": 2000,
+        "p50": 0.006042,
+        "p95": 0.008916,
+        "max": 0.10875
+      },
+      "collapse_exact_cpu_ms": {
+        "n": 2000,
+        "p50": 0.006084,
+        "p95": 0.008959,
+        "max": 0.056625
+      },
+      "prefix_wall_ms": {
+        "n": 2000,
+        "p50": 0.094167,
+        "p95": 0.128083,
+        "max": 0.876583
+      },
+      "prefix_cpu_ms": {
+        "n": 2000,
+        "p50": 0.094292,
+        "p95": 0.126542,
+        "max": 0.417833
+      },
+      "total_wall_ms": {
+        "n": 2000,
+        "p50": 0.199042,
+        "p95": 0.27225,
+        "max": 2.1565
+      },
+      "total_cpu_ms": {
+        "n": 2000,
+        "p50": 0.199083,
+        "p95": 0.268083,
+        "max": 1.129708
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "345804cf55becaf728d3ec9c20dc9e2f76a3a5b9..HEAD",
+    "--check"
+  ],
+  "stdout": "",
+  "stderr": "",
+  "exit_code": 0
+}

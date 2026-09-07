@@ -1,0 +1,18 @@
+{
+  "before_resolver": {
+    "status": "RESOLVED",
+    "method": "exact_unique_alias",
+    "pending": false,
+    "candidate_controls": 0,
+    "reason": "actor_or_topic_ambiguous",
+    "text": "\u00bfTe refieres a contratos sobre TRANSPORTE como tema, o al proveedor observado como \u2018TRANSPORTE\u2019? No voy a elegir una interpretaci\u00f3n silenciosamente."
+  },
+  "after_resolver": {
+    "status": "AMBIGUOUS",
+    "method": "exact_prefix_ambiguous",
+    "pending": true,
+    "candidate_controls": 2,
+    "reason": "actor_or_topic_ambiguous",
+    "text": "\u00bfTe refieres a contratos sobre TRANSPORTE como tema, o al proveedor observado como \u2018TRANSPORTE\u2019? No voy a elegir una interpretaci\u00f3n silenciosamente."
+  }
+}

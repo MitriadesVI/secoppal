@@ -1,0 +1,12 @@
+{
+  "baseline_head": "345804cf55becaf728d3ec9c20dc9e2f76a3a5b9",
+  "loaded_resolver": "/Users/rodrigoortiz/Documents/secoppal/app/data/actor_alias_resolver.py",
+  "fixture": "synthetic existing same-alias exact ambiguity, sockets blocked, temporary feedback/conversations",
+  "first_method": "exact_ambiguous_alias",
+  "first_fecha_desde": "2025-01-01",
+  "document_followup_method": "explicit_document",
+  "document_followup_fecha_desde": null,
+  "document_followup_route": "actor_profile",
+  "external_calls": 0,
+  "conclusion": "Existing AMBIGUOUS -> explicit document acts as new search and drops prior year; preserved outside this prefix fix."
+}

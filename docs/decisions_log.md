@@ -4442,3 +4442,31 @@ La suite completa se repitió tras cerrar ese guard: `11527 passed, 11 skipped,
 Base `b123c5ac7e97870bbbc220ea9f0405f2001b7a21`; rama
 `fix/value-sanity-reachability-v1`. Informe, límites y salidas literales:
 [VALUE-SANITY-REACHABILITY-V1](audits/value_sanity_reachability_v1/REPORT.md).
+
+
+## ADR-094: Actor Exact Personal Prefix Collision V1
+
+**Fecha:** 2026-09-06. **Estado:** implementado en rama; promoción NO_GO.
+**Rama:** `feature/actor-exact-personal-prefix-collision-v1`.
+
+La orden FINAL cambia deliberadamente la suficiencia del exacto único CC:
+cuando otra CC tiene una extensión exacta N2, se pide selección. No se infiere
+identidad ni se usa fuzzy/actividad. La misma IdentityKey, NIT y ambigüedades
+exactas existentes conservan sus autoridades. INCONCLUSIVE falla cerrado.
+
+Existencia, enumeración y presentación tienen contratos separados. El resultado
+preserva testigo, exacto primero y máximo nueve challengers; has_more acreditado
+y enumeración incompleta no se confunden. Rango nominal sobre autoindex existente,
+esquema/N2 intactos, budgets 5/20 ms medidos antes. El primer AFTER incumple la
+puerta p95 por consulta: se conserva NO_GO sin reescribir los umbrales.
+
+[Decisión completa](decisions/2026-09-06_ADR-094_actor-exact-personal-prefix-collision.md).
+[Informe y evidencia](audits/ACTOR_EXACT_PERSONAL_PREFIX_COLLISION_V1.md).
+
+
+Cierre de validación ADR-094 (rama, sin merge/push): el coordinador ejecutó una
+sola suite en serie sobre `ddcc6b8`: **11738 passed, 11 skipped, 14 xfailed in
+505.61s (0:08:25)**. El guard de arbitraje conserva TRANSPORTE sin pendiente ni
+controles de personas hasta pedir proveedor explícito. Ruff y corpus verdes;
+Semgrep conserva 10 hallazgos de baseline, delta cero. **NO_GO** del benchmark
+primario permanece vigente; el pase funcional no autoriza promoción.

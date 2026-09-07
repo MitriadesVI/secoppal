@@ -1,0 +1,14 @@
+{
+  "head": "0e6e2c3",
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_actor_exact_prefix_workflow.py",
+    "-k",
+    "topic_conflict_has_no_rank or existing_exact_ambiguity_topic",
+    "-q"
+  ],
+  "exit_code": 1,
+  "output": "F.                                                                       [100%]\n=================================== FAILURES ===================================\n_ test_prefix_topic_conflict_has_no_rank_selection_until_actor_intent_is_explicit _\n\ntmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-615/test_prefix_topic_conflict_has0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x119cf2780>\n\n    def test_prefix_topic_conflict_has_no_rank_selection_until_actor_intent_is_explicit(tmp_path, monkeypatch):\n        workflow, calls = _workflow(tmp_path, monkeypatch)\n        resolver = resolver_for(tmp_path / \"topics.sqlite\", [\n            (\"CC\", \"76000001\", \"transporte\"), (\"CC\", \"76000002\", \"transporte escolar\"),\n        ])\n        monkeypatch.setattr(workflow, \"actor_name_resolver\", resolver)\n        first = workflow.run_query(\"contratos de transporte\", chat_id=\"topic-prefix\")\n        params = first[\"resolved_params\"]\n        assert evaluate_actor_scope(params).reason == \"actor_or_topic_ambiguous\"\n        assert calls == []\n>       assert \"actor_pending\" not in params\nE       AssertionError: assert 'actor_pending' not in {'actor_intent_conflict': {'actor_name': 'transporte', 'resolution_status': 'AMBIGUOUS'}, 'actor_pending': {'actor_nam...': False, ...}, 'actor_resolution': 'exact_prefix_ambiguous', 'actor_resolution_method': 'exact_prefix_ambiguous', ...}\n\ntests/test_actor_exact_prefix_workflow.py:204: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_actor_exact_prefix_workflow.py::test_prefix_topic_conflict_has_no_rank_selection_until_actor_intent_is_explicit\n1 failed, 1 passed, 21 deselected in 1.11s\n"
+}

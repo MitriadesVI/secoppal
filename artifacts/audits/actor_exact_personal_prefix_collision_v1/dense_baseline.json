@@ -1,0 +1,50 @@
+[
+  {
+    "case": "same_exact_identity_25",
+    "existence": {
+      "n": 50,
+      "p50_ms": 0.00325,
+      "p95_ms": 0.005792,
+      "max_ms": 0.00775
+    }
+  },
+  {
+    "case": "same_exact_identity_10000",
+    "existence": {
+      "n": 50,
+      "p50_ms": 0.399917,
+      "p95_ms": 0.484083,
+      "max_ms": 0.525791
+    }
+  },
+  {
+    "case": "same_challenger_identity_10000",
+    "existence": {
+      "n": 50,
+      "p50_ms": 0.010625,
+      "p95_ms": 0.023,
+      "max_ms": 0.025417
+    },
+    "enumeration": {
+      "n": 50,
+      "p50_ms": 9.085625,
+      "p95_ms": 9.79625,
+      "max_ms": 10.342958
+    }
+  },
+  {
+    "case": "same_alias_10000_identities",
+    "existence": {
+      "n": 50,
+      "p50_ms": 1.672625,
+      "p95_ms": 1.927083,
+      "max_ms": 2.06425
+    },
+    "enumeration": {
+      "n": 50,
+      "p50_ms": 1.841041,
+      "p95_ms": 2.035167,
+      "max_ms": 2.357458
+    }
+  }
+]
