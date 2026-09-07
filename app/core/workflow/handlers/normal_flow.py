@@ -44,6 +44,7 @@ from app.core.modality_followup_telemetry import append_event, project_event
 from app.core.response_policy import build_advisor_response
 from app.core.workflow.graph import build_application
 from app.core.workflow.helpers import _elapsed_ms
+from app.core.workflow.result_ownership import owns_execution_and_presentation
 
 if TYPE_CHECKING:
     from app.core.workflow.context import HandlerContext
@@ -246,10 +247,15 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     # ── Dual-dataset (Commit 2+3): ejecuta el hijo secundario, agrupa y PRESENTA.
     # El primario NO se re-ejecuta (sale del estado del pipeline). Best-effort: un
     # fallo aquí nunca rompe la respuesta del dataset primario.
+    # Un turno con dueño terminal —Entity Profile, incluidas su aclaración y su
+    # error honesto— conserva ejecución y presentación hasta el final. Sin esta
+    # guarda el postprocesador dual volvía a decidir desde `dataset_scope`,
+    # consultaba fuentes que el plan no autorizó y reemplazaba la respuesta.
+    profile_owns_turn = owns_execution_and_presentation(result, state)
     groups = None
     try:
         from app.core.workflow.dual_dataset import build_dataset_groups
-        groups = build_dataset_groups(deps, result, state)
+        groups = None if profile_owns_turn else build_dataset_groups(deps, result, state)
         if groups is not None:
             response, displayed = deps.formatter.format_grouped(
                 groups, ctx.channel, params=state.get("resolved_params"),
@@ -306,7 +312,14 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
                     "displayed_so_far": buffer.displayed_so_far,
                     "source_total_approximate": buffer.source_total_approximate,
                 })
-        elif result.get("dataset_id") and not result.get("needs_clarification"):
+        elif (
+            result.get("dataset_id")
+            and not result.get("needs_clarification")
+            and not profile_owns_turn
+        ):
+            # El perfil no publica un universo tabular paginable: sembrar un
+            # buffer aquí haría que un "más" posterior recorriera filas que su
+            # plan nunca mostró.
             dataset_id = result["dataset_id"]
             name = "contratos" if dataset_id == "jbjy-vk9h" else "procesos"
             validated = list(state.get("ranked_results") or state.get("results") or [])

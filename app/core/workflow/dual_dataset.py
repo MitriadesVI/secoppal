@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 from app.core.phrase_ranking import validate_rank_and_dedupe
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.helpers import _query_first_then_count
+from app.core.workflow.result_ownership import owns_execution_and_presentation
 
 _DATASET_NAME_BY_ID = {"p6dx-8zbt": "procesos", "jbjy-vk9h": "contratos"}
 
@@ -123,6 +124,11 @@ def build_dataset_groups(deps, result: dict, state) -> dict[str, DatasetGroupRes
     El primario sale del estado del pipeline; el secundario corre por
     `execute_dataset_child`. None si no es dual o no debe ejecutarse.
     """
+    # Cinturón: aunque un llamador futuro olvide la guarda, un resultado que ya
+    # tiene dueño terminal no se expande. La condición es de PROPIEDAD del
+    # resultado, no la ausencia de una palabra en params.
+    if owns_execution_and_presentation(result, state):
+        return None
     rp = result.get("resolved_params") or state.get("resolved_params") or {}
     scope = rp.get("dataset_scope")
     if not (isinstance(scope, list) and len(scope) >= 2):
