@@ -37,8 +37,23 @@ _FOCUS = (
     ("recent", re.compile(r"\b(?:recientes?|ultimos?|actividad\s+reciente)\b")),
     ("temporal", re.compile(r"\b(?:evolucion|por\s+anos?|compar(?:a|ar)\s+anos?)\b")),
 )
+_MONTHS = (
+    "enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre"
+    "|octubre|noviembre|diciembre"
+)
 _TIME_FOLLOWUP = re.compile(
-    r"\b(?:este\s+ano|ano\s+pasado|en\s+20\d{2}|entre\s+20\d{2})\b"
+    r"\b(?:este\s+ano|ano\s+pasado|en\s+20\d{2}|entre\s+20\d{2}"
+    rf"|en\s+(?:{_MONTHS}))\b"
+)
+# Un cambio de FUENTE dentro de un perfil activo. Gramática completa y no
+# subcadena, como el resto de follow-ups del perfil: "solo contratos" es un
+# turno de perfil, pero "contratos de obra en cali" es una búsqueda nueva.
+_SOURCE_NOUN = r"(?:procesos?|contratos?|licitaciones?|convocatorias?)"
+_SOURCE_FOLLOWUP = re.compile(
+    r"(?:(?:y|ahora|solo|solamente|unicamente)\s+)?"
+    r"(?:(?:muestrame|muestra|dame|analiza(?:me)?)\s+)?"
+    rf"(?:(?:los|las)\s+)?{_SOURCE_NOUN}"
+    rf"(?:\s+y\s+(?:(?:los|las)\s+)?{_SOURCE_NOUN})?"
 )
 _MODALITY_FOLLOWUP = re.compile(r"\b(?:solo|solamente)\b.*\bcontratacion\b")
 _PROFILE_NOISE = frozenset({
@@ -97,7 +112,16 @@ def detect_entity_profile_turn(user_query: str, params: dict) -> tuple[bool, str
         return True, focus
     if _TIME_FOLLOWUP.search(normalized) or _MODALITY_FOLLOWUP.search(normalized):
         return True, "overview"
+    if _SOURCE_FOLLOWUP.fullmatch(_cleaned(normalized)):
+        return True, "overview"
     return False, None
+
+
+def _cleaned(normalized: str) -> str:
+    """Texto sin puntuación ni cortesía, para gramáticas de coincidencia total."""
+    folded = re.sub(r"[¿?¡!.,;:]+", " ", normalized)
+    folded = re.sub(r"\b(?:por favor|porfa|gracias)\b", " ", folded)
+    return " ".join(folded.split())
 
 
 def _clean_topic_value(value: object) -> object:

@@ -292,7 +292,6 @@ def test_contract_only_profile_does_not_report_processes(router):
     assert "Contratos" in rendered
 
 
-@pytest.mark.xfail(strict=True, reason="P1: el foco no-overview reduce agosto a '2026'")
 def test_focused_render_keeps_the_requested_month(router):
     turn = _turn(router, INCIDENT)
     profile = build_entity_profile(

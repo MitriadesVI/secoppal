@@ -120,7 +120,15 @@ def test_overview_reaches_product_response_without_advisor_rewrite():
     assert result["route_reason"] == "entity_profile_overview"
     assert result["analytical_intent"] == "entity_profile"
     assert result["needs_clarification"] is False
-    assert result["response"].startswith("ALCALDIA MUNICIPAL DE BARANOA — 2026")
+    # ADJUDICADO en ENTITY_PROFILE_SEMANTIC_PLAN_V1 (ADR-095): el encabezado
+    # dejó de ser "comprador — periodo". El periodo solo no dice sobre QUÉ se
+    # midió, y con dos fuentes son dos fechas distintas; ahora nombra la fuente
+    # efectiva y declara la base temporal de cada una.
+    assert result["response"].startswith(
+        "ALCALDIA MUNICIPAL DE BARANOA — actividad contractual",
+    )
+    assert "Procesos: 2026, según fecha de publicación." in result["response"]
+    assert "Contratos: 2026, según fecha de firma." in result["response"]
     assert "Publicó 10 procesos" in result["response"]
     assert "Se observan 4 contratos" in result["response"]
     assert "SECOP II Procesos" in result["response"]

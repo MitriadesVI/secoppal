@@ -2,12 +2,20 @@
 from __future__ import annotations
 
 from app.core.analytics.base import format_currency
+from app.core.entity_profile.effective_scope import build_effective_scope
 from app.core.entity_profile.models import EntityProfile, RecentRecord, SupplierMetric
+from app.core.entity_profile.source_request import RequestedSources
 
 
 _SOURCES = {
     "p6dx-8zbt": "SECOP II Procesos",
     "jbjy-vk9h": "SECOP II Contratos",
+}
+
+_SCOPE_NOUN = {
+    RequestedSources.PROCESSES: "procesos",
+    RequestedSources.CONTRACTS: "contratos",
+    RequestedSources.BOTH: "procesos y contratos",
 }
 
 
@@ -180,9 +188,19 @@ def _short(text: str, limit: int = 90) -> str:
 
 
 def render_entity_profile(profile: EntityProfile) -> str:
-    """Render supported facts and name failed aspects without turning them into zero."""
-    title = f"{profile.identity.display_name.upper()} — {_period(profile)}"
-    blocks: list[str] = [title]
+    """Render supported facts and name failed aspects without turning them into zero.
+
+    El bloque de alcance sale del plan EJECUTADO, nunca del foco ni del scope
+    pedido: es lo que hace que el texto no pueda hablar de una fuente que no se
+    consultó (INV-RENDERED-SCOPE-EQUALS-EXECUTED-SCOPE).
+    """
+    scope = build_effective_scope(profile)
+    blocks: list[str] = [
+        scope.title if scope else
+        f"{profile.identity.display_name.upper()} — {_period(profile)}"
+    ]
+    if scope:
+        blocks.extend(_scope_lines(scope))
     if profile.scope.territory_context and profile.scope.buyer_group_id is None:
         territory = profile.scope.territory_context[0]
         blocks.append(
@@ -194,7 +212,30 @@ def render_entity_profile(profile: EntityProfile) -> str:
         blocks.append("\n".join(facts))
     blocks.extend(profile.warnings)
     if profile.focus == "overview":
-        blocks.append(
-            "Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes."
-        )
+        blocks.append(_next_steps(scope))
     return "\n\n".join(blocks)
+
+
+def _scope_lines(scope) -> list[str]:
+    lines = list(scope.basis_lines)
+    if not lines and scope.period != "todo el histórico disponible":
+        lines.append(f"Periodo: {scope.period}.")
+    if scope.topic:
+        lines.append(f"Tema: {', '.join(scope.topic)}.")
+    if scope.narrowed:
+        lines.append(
+            "Esta vista sólo se puede responder sobre "
+            f"{_SCOPE_NOUN[scope.effective_sources]}."
+        )
+    return ["\n".join(lines)] if lines else []
+
+
+def _next_steps(scope) -> str:
+    """No se ofrece profundizar en una fuente que este perfil no cubre."""
+    if scope is not None and scope.effective_sources is RequestedSources.CONTRACTS:
+        return "Puedes pedirme sus proveedores, valores o contratos recientes."
+    if scope is not None and scope.effective_sources is RequestedSources.PROCESSES:
+        return "Puedes pedirme sus modalidades, evolución o procesos recientes."
+    return (
+        "Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes."
+    )
