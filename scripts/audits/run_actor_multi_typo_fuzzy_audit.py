@@ -15,6 +15,12 @@ questions and the second is only meaningful if the first says so:
     the assignment is explicit that retrieval is not to be widened on the
     strength of one case.
 
+``candidate``
+    Re-runs the *identical* measurement with one module attribute swapped —
+    the distance function — so the two numbers differ in nothing else.  It is
+    evaluated against ``fuzzy_acceptance_gate.md``, which was frozen before
+    this policy was written.
+
 ``baseline``
     Measures recall@1/3/10, MRR, in-pool rate and latency over a reproducible
     perturbation corpus drawn from the real index, split by perturbation
@@ -42,6 +48,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from app.core.actor_name import ActorResolutionStatus, normalize_actor_name  # noqa: E402
+from app.data import actor_alias_resolver as resolver_module  # noqa: E402
 from app.data.actor_alias_resolver import (  # noqa: E402
     ACTOR_CANDIDATE_POOL,
     ACTOR_RESOLUTION_TOP_K,
@@ -322,10 +329,65 @@ def run_pool_probe(index_path: Path, query: str, target_alias: str) -> dict:
     }
 
 
+# ── Candidate policy (audit only — never imported by runtime) ─────────────
+
+def candidate_distance(tokens: tuple[str, ...], alias: str) -> int:
+    """Bounded two-token variant of ``_anchored_name_distance``.
+
+    Same contract: rank evidence only, never identity.  Single-token behaviour
+    is copied unchanged so the working families cannot move.  A *second*
+    imperfect token is admitted only for a 3+ token query that still keeps a
+    literal anchor, and only at one edit each — total budget two.
+    """
+    bounded = resolver_module._bounded_edit_distance
+    remaining = alias.split()
+    missing: list[str] = []
+    anchors = 0
+    for token in tokens:
+        if token in remaining:
+            anchors += 1
+            remaining.remove(token)
+        else:
+            missing.append(token)
+    if not missing:
+        return 0
+    if not anchors:
+        return 3
+    if len(missing) == 1:
+        token = missing[0]
+        if len(token) < 5:
+            return 3
+        limit = 2 if len(token) >= 7 else 1
+        distance = min(
+            (bounded(token, word, limit) for word in remaining), default=3,
+        )
+        return distance if distance <= limit else 3
+    if len(tokens) < 3 or len(missing) != 2:
+        return 3
+    pool = list(remaining)
+    total = 0
+    for token in missing:
+        if len(token) < 5:
+            return 3
+        best, best_word = 3, None
+        for word in pool:
+            distance = bounded(token, word, 1)
+            if distance < best:
+                best, best_word = distance, word
+        if best > 1:
+            return 3
+        total += best
+        if best_word is not None:
+            pool.remove(best_word)
+    return total
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--index", type=Path, required=True)
-    parser.add_argument("--stage", choices=("pool", "baseline"), required=True)
+    parser.add_argument(
+        "--stage", choices=("pool", "baseline", "candidate"), required=True,
+    )
     parser.add_argument("--size", type=int, default=120)
     parser.add_argument("--query", default="wikson herrera llanaos")
     parser.add_argument("--target-alias", default="wilson herrera llanos")
@@ -335,6 +397,8 @@ def main() -> int:
     if args.stage == "pool":
         payload = run_pool_probe(args.index, args.query, args.target_alias)
     else:
+        if args.stage == "candidate":
+            resolver_module._anchored_name_distance = candidate_distance
         payload = run_baseline(args.index, args.size)
     payload["stage"] = args.stage
     payload["index_sha_prefix"] = hashlib.sha256(

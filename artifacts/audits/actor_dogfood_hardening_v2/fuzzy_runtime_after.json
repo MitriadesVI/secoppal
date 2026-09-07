@@ -1,0 +1,82 @@
+{
+  "corpus_size": 120,
+  "families": {
+    "clean": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 0.3,
+      "latency_p95_ms": 0.8,
+      "mrr": 1.0,
+      "n": 120,
+      "recall_at_1": 1.0,
+      "recall_at_10": 1.0,
+      "recall_at_3": 1.0
+    },
+    "deletion": {
+      "in_pool_rate": 0.9917,
+      "latency_p50_ms": 59.5,
+      "latency_p95_ms": 176.3,
+      "mrr": 0.8931,
+      "n": 120,
+      "recall_at_1": 0.8583,
+      "recall_at_10": 0.9417,
+      "recall_at_3": 0.925
+    },
+    "insertion": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 61.0,
+      "latency_p95_ms": 181.2,
+      "mrr": 0.9917,
+      "n": 120,
+      "recall_at_1": 0.9833,
+      "recall_at_10": 1.0,
+      "recall_at_3": 1.0
+    },
+    "one_typo": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 69.5,
+      "latency_p95_ms": 300.8,
+      "mrr": 0.9917,
+      "n": 120,
+      "recall_at_1": 0.9833,
+      "recall_at_10": 1.0,
+      "recall_at_3": 1.0
+    },
+    "transposition": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 57.2,
+      "latency_p95_ms": 184.8,
+      "mrr": 0.8391,
+      "n": 120,
+      "recall_at_1": 0.8,
+      "recall_at_10": 0.9333,
+      "recall_at_3": 0.8667
+    },
+    "two_token_typo": {
+      "in_pool_rate": 0.2,
+      "latency_p50_ms": 25.1,
+      "latency_p95_ms": 133.1,
+      "mrr": 0.2,
+      "n": 120,
+      "recall_at_1": 0.2,
+      "recall_at_10": 0.2,
+      "recall_at_3": 0.2
+    },
+    "typo_plus_noise": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 56.1,
+      "latency_p95_ms": 173.0,
+      "mrr": 0.9917,
+      "n": 120,
+      "recall_at_1": 0.9833,
+      "recall_at_10": 1.0,
+      "recall_at_3": 1.0
+    }
+  },
+  "hard_negatives": {
+    "contaminated": 5,
+    "contamination_rate": 0.0417,
+    "total": 120
+  },
+  "index_sha_prefix": "337f1168515070bc",
+  "stage": "baseline"
+}
