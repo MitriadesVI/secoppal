@@ -133,7 +133,7 @@ def collect_claims(
     if buyer is not None:
         claims.append(buyer)
 
-    sources = _source_claims(normalized, clauses, turn_id, next_id)
+    sources = _source_claims(normalized, masked, turn_id, next_id)
     claims.extend(sources.values())
     if _SOURCE_OR.search(masked):
         issues.append(UnresolvedIssue(
@@ -224,7 +224,10 @@ def _buyer_span(normalized: NormalizedText, params: dict) -> tuple[int, int]:
 
 
 def _source_claims(
-    normalized: NormalizedText, clauses: tuple[Clause, ...], turn_id, next_id,
+    normalized: NormalizedText,
+    masked: str,
+    turn_id,
+    next_id,
 ) -> dict[int, SemanticClaim]:
     """La PRIMERA palabra de fuente de cada cláusula, indexada por cláusula.
 
@@ -233,7 +236,7 @@ def _source_claims(
     elección de fuente.
     """
     found: dict[int, SemanticClaim] = {}
-    for occurrence in source_head_occurrences(normalized.text):
+    for occurrence in source_head_occurrences(masked):
         index = occurrence.clause_index
         if index in found:
             continue
