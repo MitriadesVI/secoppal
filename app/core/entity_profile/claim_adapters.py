@@ -48,8 +48,6 @@ from app.core.entity_profile.frame_values import (
     TemporalEventKind,
 )
 from app.core.entity_profile.source_request import (
-    _ANY_SOURCE_WORD,
-    _PROCESS_WORDS,
     _buyer_surfaces,
 )
 from app.core.entity_profile.temporal_event import (
@@ -60,9 +58,10 @@ from app.core.entity_profile.temporal_event import (
     _governed_by_current_marker,
 )
 from app.core.entity_profile.text_offsets import NormalizedText, normalize_with_offsets
-from app.core.entity_profile.turn import _FOCUS, _PROFILE_NOISE
+from app.core.entity_profile.turn import _FOCUS
 from app.core.estado_families import detect_estado_family
 from app.core.query_text_consumption import mask_consumed_spans
+from app.core.source_occurrence import source_head_occurrences
 from app.core.temporal_semantics import civil_today, resolve_temporal_scope
 
 
@@ -88,17 +87,6 @@ _SOURCE_OR = re.compile(
     r"\b(?:procesos?|licitaciones?|convocatorias?|procedimientos?|contratos?)\s+o\s+"
     r"(?:procesos?|licitaciones?|convocatorias?|procedimientos?|contratos?)\b"
 )
-# Lo único que puede preceder al núcleo de fuente sin dejar de ser núcleo:
-# el lenguaje con que se pide un perfil —``_PROFILE_NOISE`` ya es esa
-# autoridad— más determinantes y conectores. Cualquier otra palabra abre un
-# complemento: en "gestión de procesos industriales" la ocurrencia pertenece
-# al tema, no a la elección de fuente.
-_HEAD_FILLERS = frozenset({
-    "de", "del", "la", "el", "los", "las", "un", "una", "y", "e", "o",
-    "solo", "solamente", "unicamente", "ahora", "tambien", "sobre", "en",
-    "que", "quiero", "ver", "muestra", "muestrame", "dame", "como", "ha",
-    "analisis", "hoy", "actualmente", "aun", "todavia",
-})
 _CLEAR_PERIOD = re.compile(
     r"\bsin\s+(?:filtro\s+de\s+)?fecha\b|\bsin\s+(?:filtro\s+)?tempora\w*\b"
     r"|\bquita\s+(?:el\s+)?(?:filtro\s+de\s+)?fecha\b|\btodo\s+el\s+historico\b"
@@ -245,18 +233,16 @@ def _source_claims(
     elección de fuente.
     """
     found: dict[int, SemanticClaim] = {}
-    for index, clause in enumerate(clauses):
-        head = _clause_head(clause.text)
-        if head is None:
+    for occurrence in source_head_occurrences(normalized.text):
+        index = occurrence.clause_index
+        if index in found:
             continue
-        span = normalized.to_original(
-            (clause.start + head.start(), clause.start + head.end()),
-        )
+        span = normalized.to_original(occurrence.span)
         if span is None:
             continue
         kind = (
             SourceKind.PROCESSES
-            if _PROCESS_WORDS.fullmatch(head.group(0))
+            if occurrence.is_process
             else SourceKind.CONTRACTS
         )
         found[index] = SemanticClaim(
@@ -265,25 +251,6 @@ def _source_claims(
             authority=SOURCE_AUTHORITY[0], authority_version=SOURCE_AUTHORITY[1],
         )
     return found
-
-
-def _clause_head(text: str) -> re.Match[str] | None:
-    """La palabra de fuente que ENCABEZA la cláusula, si la encabeza.
-
-    ``source_request`` leía la primera aparición de la cláusula, y eso basta
-    para "procesos y contratos" pero no para "gestión de procesos
-    industriales": ahí la primera aparición ya está dentro del complemento. La
-    cabeza exige que todo lo anterior sea lenguaje de petición, no un
-    sustantivo con su propio complemento.
-    """
-    for match in _ANY_SOURCE_WORD.finditer(text):
-        prefix = text[:match.start()].split()
-        if all(
-            token in _PROFILE_NOISE or token in _HEAD_FILLERS for token in prefix
-        ):
-            return match
-        return None
-    return None
 
 
 def _event_claims(normalized, clauses, sources, turn_id, next_id):

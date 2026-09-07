@@ -66,6 +66,7 @@ from app.core.negation_binding import (
 from app.core.negation_policy import apply_negation_policy
 from app.core.modality_parser_integration import resolve_parser_modality
 from app.core.query_text_consumption import mask_consumed_spans
+from app.core.source_occurrence import is_source_word, mask_source_heads
 from app.utils.money import (
     SMMLV_UNIT_PATTERN,
     is_smmlv_expression,
@@ -1062,7 +1063,8 @@ class QueryRouter:
             scrubbed = ""
 
         from app.core.phrase_catalog import detect_phrases
-        objeto_phrases, objeto_text = detect_phrases(scrubbed)
+        source_owned_text = mask_source_heads(scrubbed)
+        objeto_phrases, objeto_text = detect_phrases(source_owned_text)
         if objeto_phrases:
             params["objeto_phrases"] = objeto_phrases
 
@@ -1828,7 +1830,8 @@ class QueryRouter:
                 token = words[i]
                 if token == "o":
                     tokens.append(token)
-                elif token not in STOPWORDS and token not in DEPARTAMENTOS and (
+                elif (token not in STOPWORDS or is_source_word(token)) and (
+                    token not in DEPARTAMENTOS and
                     len(token) >= 4 or token in VARIANT_TO_ROOT
                 ):
                     tokens.append(VARIANT_TO_ROOT.get(token, token))
