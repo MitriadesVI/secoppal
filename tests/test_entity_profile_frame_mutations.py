@@ -13,6 +13,7 @@ import socket
 
 import pytest
 
+import app.core.query_router as query_router
 from app.core.entity_profile import (
     claim_composition,
     frame_compiler,
@@ -301,3 +302,109 @@ def test_mutation_reassigning_an_incompatible_event_at_compile_is_killed(monkeyp
 
 def migrate_status(legacy, params) -> str:
     return frame_migration.migrate_legacy_context(legacy, params).status.value
+
+
+def test_mutation_restoring_mutable_source_plans_is_killed(monkeypatch):
+    def invariant():
+        plan = observe(
+            f"analiza contratos firmados en agosto de {BUYER}",
+        ).decision.plan
+        try:
+            plan.source_plans[SourceKind.CONTRACTS] = plan.source_plans[
+                SourceKind.CONTRACTS
+            ]
+        except TypeError:
+            return
+        raise AssertionError("compiled source plans remained mutable")
+
+    invariant()
+    monkeypatch.setattr(frame_compiler, "deep_freeze", lambda value: value)
+    with pytest.raises(AssertionError):
+        invariant()
+
+
+def test_mutation_accepting_a_forged_job_id_is_killed(monkeypatch):
+    plan = observe(f"analiza contratos de {BUYER}").decision.plan
+    job = plan.jobs[0]
+
+    def invariant():
+        try:
+            frame_evidence.bind_observation(
+                plan=plan, plan_id=plan.plan_id, job_id="forged-job",
+                fingerprint=plan.source_plans[job.source].fingerprint,
+                dataset_id=job.dataset_id, sql=job.sql,
+                status="SUCCESS", rows=({"contract_count": "4"},),
+            )
+        except ValueError:
+            return
+        raise AssertionError("forged job metadata was accredited")
+
+    invariant()
+    monkeypatch.setattr(
+        frame_evidence, "_authorized_job", lambda authorizing_plan, job_id: job,
+    )
+    with pytest.raises(AssertionError):
+        invariant()
+
+
+@pytest.mark.parametrize("preferred", ["request", "params"])
+def test_mutation_preferring_either_legacy_copy_is_killed(monkeypatch, preferred):
+    request = {
+        "focus": "overview", "sources": "CONTRACTS",
+        "sources_provenance": "EXPLICIT", "time_from": None, "time_to": None,
+        "event": "NONE", "temporal_claims": [], "unsupported_events": [],
+        "topic": ["software"], "modality": [],
+        "value_min": None, "value_max": None,
+    }
+    params = {
+        "entidad_resolved": "ALCALDIA MUNICIPAL DE BARANOA",
+        "objeto": ["mantenimiento"],
+    }
+
+    def invariant():
+        assert migrate_status(request, params) == "INVALID_CONTEXT"
+
+    invariant()
+    monkeypatch.setattr(frame_migration, "material_conflict", lambda *args: None)
+    if preferred == "params":
+        monkeypatch.setattr(
+            frame_migration, "legacy_topic", lambda raw: TopicTerm("mantenimiento"),
+        )
+    with pytest.raises(AssertionError):
+        invariant()
+
+
+def test_mutation_dropping_unambiguous_legacy_state_is_killed(monkeypatch):
+    request = {
+        "focus": "overview", "sources": "CONTRACTS",
+        "sources_provenance": "EXPLICIT", "time_from": None, "time_to": None,
+        "event": "NONE", "temporal_claims": [], "unsupported_events": [],
+        "topic": [], "modality": [], "value_min": None, "value_max": None,
+    }
+    params = {
+        "entidad_resolved": "ALCALDIA MUNICIPAL DE BARANOA",
+        "estado": ["Suspendido"], "estado_field": "estado_contrato",
+    }
+
+    def invariant():
+        outcome = frame_migration.migrate_legacy_context(request, params)
+        state = outcome.frame.source_predicates[SourceKind.CONTRACTS].current_state
+        assert not state.is_true and state.values == ("Suspendido",)
+
+    invariant()
+    monkeypatch.setattr(frame_migration, "_state", lambda *args: {})
+    with pytest.raises(AssertionError):
+        invariant()
+
+
+def test_mutation_consuming_a_thematic_source_word_is_killed(monkeypatch):
+    query = f"analiza contratos de gestion de procesos industriales de {BUYER}"
+
+    def invariant():
+        topic = observe(query).predicates(SourceKind.CONTRACTS).topic.fingerprint()
+        assert "procesos" in topic
+
+    invariant()
+    monkeypatch.setattr(query_router, "is_source_word", lambda token: False)
+    with pytest.raises(AssertionError):
+        invariant()
