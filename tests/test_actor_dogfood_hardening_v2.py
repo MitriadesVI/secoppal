@@ -317,14 +317,12 @@ def test_asserted_name_does_not_swallow_an_amount():
 # ══════════════════════════════════════════════════════════════════════════
 
 @pytest.mark.parametrize("mark", ["?", "!", ".", ";", ":", ","])
-@pytest.mark.xfail(strict=True, reason="BUYER-TERMINAL-PUNCTUATION-BOUNDARY-001 — frozen before slice D")
 def test_terminal_punctuation_is_not_buyer_identity(mark):
     params = _params(f"contratos con {BUYER_QUERY}{mark}")
     assert params.get("entidad_resolved") == BUYER_RESOLVED
 
 
 @pytest.mark.parametrize("mark", [",", ";", ":"])
-@pytest.mark.xfail(strict=True, reason="BUYER-TERMINAL-PUNCTUATION-BOUNDARY-001 — frozen before slice D")
 def test_punctuation_before_a_modifier_keeps_both(mark):
     params = _params(f"contratos con {BUYER_QUERY}{mark} en 2026")
     assert params.get("entidad_resolved") == BUYER_RESOLVED
@@ -346,13 +344,11 @@ def test_internal_institutional_punctuation_is_preserved(name, expected):
     assert f"hospital {expected}" in spans
 
 
-@pytest.mark.xfail(strict=True, reason="BUYER-TERMINAL-PUNCTUATION-BOUNDARY-001 — frozen before slice D")
 def test_terminal_question_mark_is_not_captured_into_the_name():
     spans = {c.consumed_span for c in rewrite_entity("hospital san jose de maicao?")}
     assert "hospital san jose de maicao" in spans
 
 
-@pytest.mark.xfail(strict=True, reason="BUYER-TERMINAL-PUNCTUATION-BOUNDARY-001 — frozen before slice D")
 def test_buyer_punctuation_followup_keeps_actor_and_year(workflow):
     workflow.run_query("contratos de ana maria llanos", chat_id="dpunct")
     params = workflow.run_query(

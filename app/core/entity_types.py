@@ -32,6 +32,21 @@ CAPTURE_BOUNDARY = r"(?=\s+(?:para\b|donde\b|por\b|con\b|en\b|sobre\b)|\s*$)"
 # Conectores internos de nombre propio. No terminan un nombre: lo articulan.
 _NAME_CONNECTORS = frozenset({"de", "del"})
 
+# BUYER-TERMINAL-PUNCTUATION-BOUNDARY-001. La frontera de captura termina en
+# un conector de cláusula o en fin de línea, así que la puntuación que cierra
+# la FRASE quedaba pegada al último token del nombre: "alcaldía de
+# barranquilla?" pedía al gazetteer un municipio llamado "barranquilla?" y
+# fallaba. Es la misma cadena para las siete familias, así que el defecto
+# también lo era.
+#
+# Ninguno de estos signos aparece dentro de un nombre institucional... salvo
+# el punto, que cierra las abreviaturas reales del sector (E.S.E., S.A.S.).
+# La diferencia no es el signo sino lo que lo precede: un punto que sigue a
+# una letra SUELTA cierra una sigla y es material del nombre; cualquier otro
+# es sintaxis de la conversación.
+_TERMINAL_PUNCTUATION = "?!¿¡,;:."
+
+
 
 class EntityCandidate(NamedTuple):
     """Un intento de nombre canónico con su span y su nivel de exigencia.
@@ -186,6 +201,21 @@ def name_tokens(text: str) -> list[str]:
     return _WORD_RUN.findall(_fold(text))
 
 
+def strip_conversational_terminal_punctuation(text: str) -> str:
+    """Quita la puntuación que cierra la frase, nunca la que cierra una sigla."""
+    trimmed = text.rstrip()
+    stripped = trimmed.rstrip(_TERMINAL_PUNCTUATION)
+    if stripped == trimmed:
+        return text
+    removed = trimmed[len(stripped):]
+    runs = _WORD_RUN.findall(_fold(stripped))
+    if "." in removed and runs and len(runs[-1]) == 1 and "." in stripped:
+        # E.S.E. / S.A.S. — la última corrida es una letra sola dentro de una
+        # sigla punteada: el punto final le pertenece.
+        return stripped + "."
+    return stripped
+
+
 # Cabezas que nombran una institución sectorial. No son un lexicón de
 # entidades: son las cabezas que ESTE módulo produce en ``ENTITY_REWRITES``
 # para las familias hospital / ESE / universidad.
@@ -280,7 +310,9 @@ def rewrite_entity(query: str) -> list[EntityCandidate]:
             is_name_connector(word) for index, word in enumerate(words) if index > 0
         )
         for k in _candidate_lengths(words):
-            captured = " ".join(words[:k]).strip()
+            captured = strip_conversational_terminal_punctuation(
+                " ".join(words[:k]).strip()
+            )
             if not captured or captured.lower() in _EXCLUSION_CAPTURES:
                 continue
             truncates_compound = compound and k < len(words)
