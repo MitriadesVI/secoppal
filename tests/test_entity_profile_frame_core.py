@@ -120,6 +120,18 @@ def test_conflicting_material_and_physical_legacy_state_never_executes():
     assert "LEGACY_STATE_INVALID_CONTEXT" in out.issues
 
 
+@pytest.mark.parametrize("marker", ["actualmente", "todavia"])
+def test_current_marker_governs_only_a_later_lifecycle_occurrence(marker):
+    out = observe(
+        f"analiza contratos firmados en agosto {marker} terminados de {BUYER}",
+    )
+    assert out.ready, out.issues
+    predicates = out.predicates(SourceKind.CONTRACTS)
+    assert predicates.temporal.event is TemporalEventKind.CONTRACT_SIGNATURE
+    assert predicates.temporal.period.lower == "2026-08-01"
+    assert not predicates.current_state.is_true
+
+
 # ---------------------------------------------------------------- R3
 # Una palabra de fuente dentro del tema no vuelve a elegir fuente.
 

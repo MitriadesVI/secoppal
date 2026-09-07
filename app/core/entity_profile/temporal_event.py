@@ -130,8 +130,11 @@ def _has_time_range(params: dict) -> bool:
 
 def _governed_by_current_marker(clause: Clause, span: tuple[int, int]) -> bool:
     """¿Un marcador de actualidad de ESTA cláusula gobierna esta ocurrencia?"""
-    del span  # el gobierno es de cláusula: basta con que el marcador viva aquí.
-    return bool(_CURRENT_MARKER.search(clause.text))
+    relative_start = span[0] - clause.start
+    return any(
+        marker.end() <= relative_start
+        for marker in _CURRENT_MARKER.finditer(clause.text)
+    )
 
 
 def resolve_temporal_events(user_query: str, params: dict) -> TemporalResolution:
@@ -146,12 +149,11 @@ def resolve_temporal_events(user_query: str, params: dict) -> TemporalResolution
     current_spans: list[tuple[int, int]] = []
 
     for clause in clauses:
-        governed = bool(_CURRENT_MARKER.search(clause.text))
         offset = clause.start
         for pattern, event in _SUPPORTED:
             for match in pattern.finditer(clause.text):
                 span = (offset + match.start(), offset + match.end())
-                if governed:
+                if _governed_by_current_marker(clause, span):
                     # "actualmente publicados": el tramo describe el estado de
                     # hoy, no un hecho fechado.
                     current_spans.append(span)
@@ -159,10 +161,9 @@ def resolve_temporal_events(user_query: str, params: dict) -> TemporalResolution
                 if event not in {claim.event for claim in claims}:
                     claims.append(TemporalEventClaim(event, span, match.group(0)))
         for match in _UNSUPPORTED_EVENTS.finditer(clause.text):
-            if governed:
-                current_spans.append(
-                    (offset + match.start(), offset + match.end()),
-                )
+            span = (offset + match.start(), offset + match.end())
+            if _governed_by_current_marker(clause, span):
+                current_spans.append(span)
                 continue
             unsupported.append(match.group(0))
 

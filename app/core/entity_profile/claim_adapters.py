@@ -57,6 +57,7 @@ from app.core.entity_profile.temporal_event import (
     _PUBLICATION,
     _SIGNATURE,
     _UNSUPPORTED_EVENTS,
+    _governed_by_current_marker,
 )
 from app.core.entity_profile.text_offsets import NormalizedText, normalize_with_offsets
 from app.core.entity_profile.turn import _FOCUS, _PROFILE_NOISE
@@ -291,13 +292,15 @@ def _event_claims(normalized, clauses, sources, turn_id, next_id):
     issues: list[UnresolvedIssue] = []
     single_source = _single_source(sources)
     for index, clause in enumerate(clauses):
-        governed = bool(_CURRENT_MARKER.search(clause.text))
         for pattern, kind in (
             (_PUBLICATION, TemporalEventKind.PROCESS_PUBLICATION),
             (_SIGNATURE, TemporalEventKind.CONTRACT_SIGNATURE),
         ):
             for match in pattern.finditer(clause.text):
-                if governed:
+                normalized_span = (
+                    clause.start + match.start(), clause.start + match.end(),
+                )
+                if _governed_by_current_marker(clause, normalized_span):
                     # "actualmente publicados" describe el estado de hoy, no un
                     # hecho fechado; su cláusula lo trata como estado.
                     continue
@@ -325,7 +328,10 @@ def _event_claims(normalized, clauses, sources, turn_id, next_id):
                     relations=relations,
                 )
         for match in _UNSUPPORTED_EVENTS.finditer(clause.text):
-            if governed:
+            normalized_span = (
+                clause.start + match.start(), clause.start + match.end(),
+            )
+            if _governed_by_current_marker(clause, normalized_span):
                 continue
             issues.append(UnresolvedIssue(
                 "UNSUPPORTED_EVENT",
