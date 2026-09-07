@@ -47,7 +47,13 @@ class EntityProfileSemanticRequest:
 
     focus: str
     sources: RequestedSources
+    # Cómo llegó la fuente A ESTE turno: EXPLICIT si la nombró, INHERITED si
+    # viene del turno anterior, DEFAULT si nadie la eligió nunca.
     sources_provenance: SourceProvenance
+    # De dónde salió ORIGINALMENTE. V1 convertía EXPLICIT en INHERITED al
+    # heredar y perdía para siempre el hecho de que la persona la había
+    # nombrado, que es justo lo que decide si se puede acotar en silencio.
+    sources_origin: SourceProvenance = SourceProvenance.DEFAULT
     time_from: str | None = None
     time_to: str | None = None
     # Un escalar no puede representar "procesos publicados y contratos firmados
@@ -103,6 +109,7 @@ class EntityProfileSemanticRequest:
             "focus": self.focus,
             "sources": self.sources.value,
             "sources_provenance": self.sources_provenance.value,
+            "sources_origin": self.sources_origin.value,
             "time_from": self.time_from,
             "time_to": self.time_to,
             "event": self.event.value,
@@ -126,6 +133,9 @@ class EntityProfileSemanticRequest:
                 focus=str(raw["focus"]),
                 sources=RequestedSources(raw["sources"]),
                 sources_provenance=SourceProvenance(raw["sources_provenance"]),
+                sources_origin=SourceProvenance(
+                    raw.get("sources_origin", raw["sources_provenance"]),
+                ),
                 time_from=_text_or_none(raw.get("time_from")),
                 time_to=_text_or_none(raw.get("time_to")),
                 temporal_claims=_claims_from(raw),
@@ -188,6 +198,7 @@ def build_semantic_request(
         focus=focus,
         sources=source.sources,
         sources_provenance=source.provenance,
+        sources_origin=source.provenance,
         time_from=scope.time_from,
         time_to=scope.time_to,
         temporal_claims=resolution.claims,
@@ -227,19 +238,36 @@ def inherit_request(
     *,
     source_is_explicit: bool,
 ) -> EntityProfileSemanticRequest:
-    """Compone un turno sobre el anterior sin ensanchar ninguna dimensión.
+    """Compone el turno sobre el anterior, dimensión por dimensión.
 
-    Cambiar sólo el foco no reinicia fuente, tema ni periodo; cambiar sólo el
-    periodo no reinicia el foco. Una fuente que el turno actual no nombró se
-    hereda con procedencia INHERITED, nunca se reabre al default.
+    Cada dimensión hace una de tres cosas: la conserva (el turno no la nombró),
+    la fija (el turno la nombró) o la limpia. V1 sólo componía la FUENTE, así
+    que un "y en 2025" borraba el evento y un "proveedores" borraba el periodo
+    del turno anterior aunque el motor de follow-up sí lo arrastrara.
+
+    Lo que el turno nombró siempre gana; lo que calló se hereda. Una fuente
+    heredada conserva su ORIGEN: si la persona la nombró en su momento, sigue
+    siendo suya y no puede acotarse en silencio tres turnos después.
     """
-    if source_is_explicit:
-        return current
-    return replace(
-        current,
-        sources=previous.sources,
-        sources_provenance=SourceProvenance.INHERITED,
-    )
+    merged = current
+    if not source_is_explicit:
+        merged = replace(
+            merged,
+            sources=previous.sources,
+            sources_provenance=SourceProvenance.INHERITED,
+            sources_origin=previous.sources_origin,
+        )
+    if not merged.temporal_claims and not merged.unsupported_events:
+        # El turno no nombró ningún hecho: el anterior sigue vigente mientras
+        # siga habiendo un periodo al que anclarlo.
+        if merged.has_period:
+            merged = replace(merged, temporal_claims=previous.temporal_claims)
+    if not merged.has_period and previous.has_period:
+        merged = replace(
+            merged, time_from=previous.time_from, time_to=previous.time_to,
+            temporal_claims=merged.temporal_claims or previous.temporal_claims,
+        )
+    return merged
 
 
 def request_context(request: EntityProfileSemanticRequest) -> dict[str, Any]:

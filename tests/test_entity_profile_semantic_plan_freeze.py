@@ -63,7 +63,13 @@ def _run(router: QueryRouter, text: str, client: FakeClient | None = None):
     """Devuelve (turn, cliente ejecutado, render) para un turno de perfil."""
     turn = _turn(router, text)
     client = client or FakeClient()
-    if turn.scope is None or turn.identity is None or turn.focus is None:
+    # Una aclaración termina el turno ANTES de consultar la fuente, igual que en
+    # `run_entity_profile_turn`. El arnés no puede seguir adelante donde la ruta
+    # productiva se detiene.
+    if (
+        turn.scope is None or turn.identity is None or turn.focus is None
+        or turn.clarification
+    ):
         return turn, client, ""
     profile = build_entity_profile(
         scope=turn.scope,
@@ -72,6 +78,7 @@ def _run(router: QueryRouter, text: str, client: FakeClient | None = None):
         focus=turn.focus,
         secop_client=client,
         soql_builder=SoQLBuilder(),
+        plan=turn.plan,
     )
     return turn, client, render_entity_profile(profile)
 

@@ -12,11 +12,15 @@ from app.core.entity_profile.execution_plan import (
 from app.core.entity_profile.models import EntityProfileIdentity, EntityProfileScope
 from app.core.entity_profile.followup import PROFILE_FOCUS_PARAM, is_supplier_followup
 from app.core.entity_profile.scope import resolve_profile_scope
+from app.core.entity_profile.conversation_state import (
+    STATE_PARAM,
+    state_context,
+    state_from_params,
+)
 from app.core.entity_profile.semantic_request import (
     EntityProfileSemanticRequest,
     build_semantic_request,
     inherit_request,
-    request_context,
 )
 from app.core.entity_profile.source_request import SourceProvenance
 from app.core.entity_profile.temporal_event import is_consumed_temporal_term
@@ -25,7 +29,9 @@ from app.core.municipal_territory import get_municipal_territories
 
 PROFILE_ACTIVE_PARAM = "_entity_profile_active"
 PROFILE_REQUEST_PARAM = "_entity_profile_request"
-PROFILE_REQUEST_PARAMS = (PROFILE_REQUEST_PARAM, "_entity_profile_sources")
+PROFILE_REQUEST_PARAMS = (
+    PROFILE_REQUEST_PARAM, "_entity_profile_sources", STATE_PARAM,
+)
 
 _OVERVIEW = re.compile(
     r"\b(?:analiza(?:me)?|como\s+(?:ha\s+)?contrata(?:do)?|que\s+sabes\s+de|"
@@ -109,13 +115,36 @@ def detect_entity_profile_turn(user_query: str, params: dict) -> tuple[bool, str
         return True, focus or "overview"
     if not params.get(PROFILE_ACTIVE_PARAM):
         return False, None
+    if state_from_params(params).has_pending and _is_bare_affirmative(user_query):
+        return True, _current_focus(params)
     if focus:
         return True, focus
+    # Un cambio de periodo o de modalidad es ORTOGONAL al foco: forzar overview
+    # aquí hacía que "proveedores" -> "en 2025" volviera a la vista general y
+    # ejecutara cuatro llamadas cuando sólo se pidió cambiar el periodo.
     if _TIME_FOLLOWUP.search(normalized) or _MODALITY_FOLLOWUP.search(normalized):
-        return True, "overview"
+        return True, _current_focus(params)
     if _SOURCE_FOLLOWUP.fullmatch(_cleaned(normalized)):
-        return True, "overview"
+        return True, _current_focus(params)
     return False, None
+
+
+# Un "sí" a secas no SELECCIONA nada cuando la aclaración ofrecía alternativas.
+# Tratarlo como confirmación obligaría al sistema a elegir por la persona, que
+# es exactamente lo que la aclaración existía para evitar.
+_BARE_AFFIRMATIVE = re.compile(
+    r"(?:si|claro|dale|ok|okay|listo|bueno|correcto|exacto|obvio)"
+    r"(?:\s+(?:claro|gracias))?"
+)
+
+
+def _is_bare_affirmative(user_query: str) -> bool:
+    return bool(_BARE_AFFIRMATIVE.fullmatch(_cleaned(_fold(user_query))))
+
+
+def _current_focus(params: dict) -> str:
+    focus = params.get(PROFILE_FOCUS_PARAM)
+    return focus if isinstance(focus, str) and focus else "overview"
 
 
 def _cleaned(normalized: str) -> str:
@@ -232,18 +261,34 @@ def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfile
             }
             else _territory_clarification(user_query),
         )
+    previous_state = state_from_params(params)
+    if previous_state.has_pending and _is_bare_affirmative(user_query):
+        # Se repite la MISMA pregunta en vez de escoger una alternativa por la
+        # persona o dejar el turno caer a una búsqueda tabular heurística.
+        clean[PROFILE_ACTIVE_PARAM] = True
+        clean[PROFILE_FOCUS_PARAM] = _current_focus(params)
+        clean.update(state_context(previous_state))
+        return EntityProfileTurn(
+            True, focus, clean, resolution.scope, resolution.identity,
+            previous_state.pending_question, previous_state.confirmed, None,
+        )
     request = _composed_request(user_query, clean, resolution.scope, focus, params)
     plan = build_execution_plan(request, clean)
     clean[PROFILE_ACTIVE_PARAM] = True
-    clean[PROFILE_FOCUS_PARAM] = focus
-    clean.update(request_context(request))
     if plan.clarification:
-        # Con una aclaración pendiente la petición anterior queda intacta: no se
-        # muta fuente, tema ni evento hasta que la persona confirme.
+        # La lectura que provocó la aclaración queda RETENIDA, no confirmada:
+        # preguntar no puede destruir el frame que la persona ya había aceptado.
+        held = previous_state.hold(request, plan.clarification)
+        clean[PROFILE_FOCUS_PARAM] = (
+            previous_state.confirmed.focus if previous_state.confirmed else focus
+        )
+        clean.update(state_context(held))
         return EntityProfileTurn(
             True, focus, clean, resolution.scope, resolution.identity,
             plan.clarification, request, plan,
         )
+    clean[PROFILE_FOCUS_PARAM] = focus
+    clean.update(state_context(previous_state.confirm(request)))
     return EntityProfileTurn(
         True,
         focus,
@@ -267,9 +312,11 @@ def _composed_request(
     current = build_semantic_request(
         user_query=user_query, params=clean, scope=scope, focus=focus,
     )
-    previous = EntityProfileSemanticRequest.from_dict(
-        original_params.get(PROFILE_REQUEST_PARAM),
-    )
+    previous = state_from_params(original_params).confirmed
+    if previous is None:
+        previous = EntityProfileSemanticRequest.from_dict(
+            original_params.get(PROFILE_REQUEST_PARAM),
+        )
     if previous is None:
         return current
     return inherit_request(
