@@ -194,10 +194,23 @@ CONTROL_LANGUAGE_REPINNED_SHA256 = {
 
 # Still byte-frozen: M2/SEARCH-SH1 touch neither ranking nor the surrounding
 # public result contracts.
+#
+# ENTITY-PROFILE-SEMANTIC-V1.1 re-pins dual_dataset.py for the first time since
+# pre-M1. Its independent review proved that `build_dataset_groups` executed
+# SourceCalls and REPLACED the response after Entity Profile had already run its
+# own plan — a second executor with no owner. The file gains exactly one
+# early return, gated on `owns_execution_and_presentation(result, state)`, which
+# is true only when `analytical_intent == "entity_profile"`.
+#
+# The divergence is not taken on trust. It is bounded by
+# test_entity_profile_ownership_gate_is_inert_for_tabular_turns below, which
+# proves the gate answers False for every non-profile intent and that an
+# ordinary dual query still expands; the oracles in this module stay
+# byte-identical because none of them is a profile turn.
 BASELINE_FILE_SHA256 = {
     "app/core/pagination_buffer.py": "18165ce221b19f49aa190f0c57a399112f72ce4a6906c49062967b7978c474ea",
     "app/core/phrase_ranking.py": "0a99c8f4ebc10dd71556f1796a40c9192404475831a424964871954bab598c5a",
-    "app/core/workflow/dual_dataset.py": "5ccaca040a78273ff873c37ca422645a0005b8bb241ac79bd018a88aed2dcba8",
+    "app/core/workflow/dual_dataset.py": "0332333bfa744906d06d3ea4a0588f0995292c5819f0b7ddecd4a09b73b43240",
     "app/core/workflow/handlers/refinement.py": "fe1a08d26550d5a39fb4fdddbcb40fd623b89e7ab09c634d0bba7a95db00e076",
     "app/core/workflow/results.py": "b4e869d985dadcb50679a19aafda27d92ead18ef756d4833a0ad9e4100d51057",
     "app/main.py": "bad1f025e142301e036fd40d6dbde78077719850bfda45e45ff1ff0bf4dda282",
@@ -221,13 +234,19 @@ BASELINE_FILE_SHA256 = {
 # No predicate, projection or ordering moves; the oracles below stay
 # byte-identical and tests/test_linguistic_family_coverage.py pins the reset
 # behaviour this argument protects.
+# ENTITY-PROFILE-SEMANTIC-V1.1 adds the upstream half of the same guard: the
+# dual expansion and the tabular pagination bootstrap are skipped when the turn
+# already has a terminal owner. Seeding a tabular buffer for a profile turn made
+# a later "más" paginate rows its plan never showed. No predicate, projection,
+# ranking or ordering moves for tabular turns — the same bounding test applies,
+# and the 461 dual/grouped/pagination/normal_flow tests stay green unchanged.
 SEARCH_SH1_MODIFIED_FILE_SHA256 = {
     # ADR-074 / D retira la inyección geográfica posterior al fetch. El nuevo
     # oráculo instrumentado test_buyer_execution_truth compara ejecución y
     # contexto asesor; pagination_buffer exige ausencia de la inyección en
     # ambos turnos. No cambian los oráculos de ranking/conteo/paginación.
     "app/core/workflow/handlers/normal_flow.py": (
-        "4147a2f3f057a70162e4e1582be3452b51e2047740ccd235da9ff99f0b7e8d83"
+        "d64c051fc21f044565a6a81d7fb6f09644010bd9791d17007e22fa330dccd872"
     ),
 }
 
@@ -539,3 +558,64 @@ def test_normal_application_import_does_not_activate_truth_layer():
         text=True,
     )
     assert completed.stdout.strip() == "False"
+
+
+def test_entity_profile_ownership_gate_is_inert_for_tabular_turns():
+    """Acota la divergencia de V1.1 en dual_dataset.py y normal_flow.py.
+
+    Los dos archivos ganan una sola condición: ``owns_execution_and_presentation``.
+    Que sea inerte para todo lo que no sea un turno de perfil es lo que permite
+    re-pinearlos sin tirar el guard — el mismo criterio que M2 y SEARCH-SH1
+    aplicaron a los suyos.
+    """
+    from app.core.workflow.result_ownership import (
+        ResultOwner,
+        owns_execution_and_presentation,
+        result_owner,
+    )
+
+    # Ningún intent tabular ni analítico reclama el turno.
+    for intent in (
+        "", None, "aggregate_sum", "actor_profile", "count", "ranking",
+        "unknown_future_intent",
+    ):
+        for source in ({"analytical_intent": intent}, {}):
+            assert owns_execution_and_presentation(source, {}) is False
+            assert result_owner(source, {}) is ResultOwner.TABULAR
+
+    # Y sólo el perfil lo reclama, en sus tres finales (respuesta, aclaración,
+    # error honesto comparten el mismo analytical_intent).
+    profile = {"analytical_intent": "entity_profile"}
+    assert owns_execution_and_presentation(profile, {}) is True
+    assert owns_execution_and_presentation({}, profile) is True
+    assert result_owner(profile, {}) is ResultOwner.ENTITY_PROFILE
+
+
+def test_dual_expansion_still_runs_for_an_ordinary_dual_query():
+    """La otra mitad de la cota: la búsqueda normal conserva su expansión."""
+    from app.core.workflow.dual_dataset import build_dataset_groups
+
+    class _State(dict):
+        pass
+
+    result = {
+        "resolved_params": {"dataset_scope": ["procesos", "contratos"]},
+        "query_plan": {"should_execute": True},
+    }
+    state = _State({"dataset_id": "p6dx-8zbt", "resolved_params": result["resolved_params"]})
+
+    class _Deps:
+        class soql_builder:  # noqa: N801 - stub mínimo
+            @staticmethod
+            def build(*_args, **_kwargs):
+                raise AssertionError("el hijo secundario SÍ se intentó ejecutar")
+
+    # Sin dueño terminal la expansión llega hasta el hijo secundario: el stub
+    # falla al construirlo, y `execute_dataset_child` lo captura como error.
+    groups = build_dataset_groups(_Deps(), result, state)
+    assert groups is not None
+    assert set(groups) == {"procesos", "contratos"}
+
+    # Con dueño terminal ni siquiera se intenta.
+    owned = {**result, "analytical_intent": "entity_profile"}
+    assert build_dataset_groups(_Deps(), owned, state) is None

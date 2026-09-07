@@ -1,0 +1,137 @@
+{
+  "captured_at_utc": "2026-09-07T17:26:52.761863+00:00",
+  "probes": [
+    {
+      "dataTypeName": "calendar_date",
+      "dataset": "jbjy-vk9h",
+      "field": "fecha_de_firma",
+      "kind": "column_metadata",
+      "renderTypeName": "calendar_date"
+    },
+    {
+      "dataTypeName": "calendar_date",
+      "dataset": "p6dx-8zbt",
+      "field": "fecha_de_publicacion_del",
+      "kind": "column_metadata",
+      "renderTypeName": "calendar_date"
+    },
+    {
+      "boundary_sample": [
+        {
+          "fecha_de_firma": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_firma": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_firma": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_firma": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_firma": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        }
+      ],
+      "dataset": "jbjy-vk9h",
+      "field": "fecha_de_firma",
+      "kind": "boundary",
+      "month": "2026-07",
+      "query_boundary_sample": "SELECT fecha_de_firma WHERE departamento = 'Atlántico' AND fecha_de_firma >= '2026-07-31' AND fecha_de_firma < '2026-08-01' LIMIT 5",
+      "query_exclusive": "SELECT count(*) AS n WHERE departamento = 'Atlántico' AND fecha_de_firma >= '2026-07-01' AND fecha_de_firma < '2026-08-01'",
+      "query_inclusive": "SELECT count(*) AS n WHERE departamento = 'Atlántico' AND fecha_de_firma >= '2026-07-01' AND fecha_de_firma <= '2026-07-31'",
+      "response_exclusive": [
+        {
+          "n": "2180"
+        }
+      ],
+      "response_inclusive": [
+        {
+          "n": "2180"
+        }
+      ],
+      "scope": "departamento = 'Atlántico'"
+    },
+    {
+      "boundary_sample": [
+        {
+          "fecha_de_publicacion_del": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_publicacion_del": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_publicacion_del": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_publicacion_del": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_publicacion_del": "2026-07-31T00:00:00.000",
+          "urlproceso": ""
+        }
+      ],
+      "dataset": "p6dx-8zbt",
+      "field": "fecha_de_publicacion_del",
+      "kind": "boundary",
+      "month": "2026-07",
+      "query_boundary_sample": "SELECT fecha_de_publicacion_del WHERE departamento_entidad = 'Atlántico' AND fecha_de_publicacion_del >= '2026-07-31' AND fecha_de_publicacion_del < '2026-08-01' LIMIT 5",
+      "query_exclusive": "SELECT count(*) AS n WHERE departamento_entidad = 'Atlántico' AND fecha_de_publicacion_del >= '2026-07-01' AND fecha_de_publicacion_del < '2026-08-01'",
+      "query_inclusive": "SELECT count(*) AS n WHERE departamento_entidad = 'Atlántico' AND fecha_de_publicacion_del >= '2026-07-01' AND fecha_de_publicacion_del <= '2026-07-31'",
+      "response_exclusive": [
+        {
+          "n": "3535"
+        }
+      ],
+      "response_inclusive": [
+        {
+          "n": "3535"
+        }
+      ],
+      "scope": "departamento_entidad = 'Atlántico'"
+    },
+    {
+      "boundary_sample": [
+        {
+          "fecha_de_firma": "2026-05-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_firma": "2026-05-31T00:00:00.000",
+          "urlproceso": ""
+        },
+        {
+          "fecha_de_firma": "2026-05-31T00:00:00.000",
+          "urlproceso": ""
+        }
+      ],
+      "dataset": "jbjy-vk9h",
+      "field": "fecha_de_firma",
+      "kind": "boundary",
+      "month": "2026-05",
+      "query_boundary_sample": "SELECT fecha_de_firma WHERE departamento = 'Antioquia' AND fecha_de_firma >= '2026-05-31' AND fecha_de_firma < '2026-06-01' LIMIT 5",
+      "query_exclusive": "SELECT count(*) AS n WHERE departamento = 'Antioquia' AND fecha_de_firma >= '2026-05-01' AND fecha_de_firma < '2026-06-01'",
+      "query_inclusive": "SELECT count(*) AS n WHERE departamento = 'Antioquia' AND fecha_de_firma >= '2026-05-01' AND fecha_de_firma <= '2026-05-31'",
+      "response_exclusive": [
+        {
+          "n": "1391"
+        }
+      ],
+      "response_inclusive": [
+        {
+          "n": "1391"
+        }
+      ],
+      "scope": "departamento = 'Antioquia'"
+    }
+  ]
+}
