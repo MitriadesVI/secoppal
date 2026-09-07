@@ -80,8 +80,19 @@ def test_nonintegral_source_count_never_becomes_integer_fact(numerator):
     assert merge_periods([{"period": "2026", "row_count": raw}], None)[0].process_count is None
 
 
+# ADJUDICADO en V1.1: "procesos publicados y contratos firmados en agosto" sale
+# de esta lista y pasa al control de abajo.
+#
+# Los dos artefactos de la auditoría se contradicen en ESA frase. El texto de F1
+# fija como criterio de aceptación «ambos órdenes conservan ambos eventos **o**
+# ambos aclaran», y esta parametrización exigía sólo la segunda mitad. La
+# petición es enteramente representable —procesos por publicación, contratos por
+# firma, un único periodo— y aclararla sería negarse a contestar una pregunta
+# bien formada, que es una regresión de utilidad, no una protección.
+#
+# Las otras dos frases se conservan estrictas: en ellas una fuente explícita NO
+# puede honrar la interpretación, y ahí la aclaración sí es la respuesta.
 @pytest.mark.parametrize("phrase", [
-    "procesos publicados y contratos firmados en agosto",
     "contratos terminados en agosto y actualmente activos",
     "procesos y contratos publicados en agosto",
 ])
@@ -94,6 +105,25 @@ def test_full_product_workflow_rejects_partial_temporal_interpretation(phrase):
         "route": result["route_reason"], "calls": client.calls,
     })
     assert result["needs_clarification"] and not client.calls
+
+
+@pytest.mark.parametrize("phrase", [
+    "procesos publicados y contratos firmados en agosto",
+    "contratos firmados y procesos publicados en agosto",
+])
+def test_full_product_workflow_honors_two_representable_events(phrase):
+    """El criterio de aceptación de F1, en su primera mitad y de extremo a extremo."""
+    workflow, client = _workflow()
+    result = workflow.run_query(f"analiza {phrase} de {BUYER}", today=TODAY)
+    assert not result["needs_clarification"]
+    assert {call[1] for call in client.calls} == {"p6dx-8zbt", "jbjy-vk9h"}
+    for _, dataset, soql in client.calls:
+        where = soql.split(" WHERE ", 1)[1]
+        expected = (
+            "fecha_de_publicacion_del >=" if dataset == "p6dx-8zbt"
+            else "fecha_de_firma >="
+        )
+        assert expected in where
 
 
 def test_purity_keeps_metadata_in_its_source_schema():

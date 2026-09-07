@@ -56,13 +56,15 @@ BOTH_TEXT = "analiza procesos y contratos de alcaldia de baranoa"
     (BOTH_TEXT, "overview", RequestedSources.BOTH),
     (CONTRACTS_TEXT, "overview", RequestedSources.CONTRACTS),
     (PROCESSES_TEXT, "overview", RequestedSources.PROCESSES),
-    (BOTH_TEXT, "suppliers", RequestedSources.CONTRACTS),
     (CONTRACTS_TEXT, "suppliers", RequestedSources.CONTRACTS),
     (BOTH_TEXT, "recent", RequestedSources.BOTH),
     (BOTH_TEXT, "temporal", RequestedSources.BOTH),
-    (BOTH_TEXT, "modalities", RequestedSources.PROCESSES),
-    (BOTH_TEXT, "values", RequestedSources.CONTRACTS),
     (BUYER, "overview", RequestedSources.BOTH),
+    # BOTH por DEFAULT sí se acota: nadie nombró las dos fuentes, así que
+    # acotarlas no contradice a nadie.
+    (BUYER, "suppliers", RequestedSources.CONTRACTS),
+    (BUYER, "modalities", RequestedSources.PROCESSES),
+    (BUYER, "values", RequestedSources.CONTRACTS),
 ])
 def test_effective_sources_are_the_requested_ones_narrowed_by_capability(
     router, text, focus, expected,
@@ -73,9 +75,21 @@ def test_effective_sources_are_the_requested_ones_narrowed_by_capability(
 
 
 def test_focus_never_rewrites_the_requested_source(router):
-    plan = _plan(router, BOTH_TEXT, "suppliers")
+    plan = _plan(router, BUYER, "suppliers")
     assert plan.request.sources is RequestedSources.BOTH
     assert plan.effective_sources is RequestedSources.CONTRACTS
+
+
+# ADJUDICADO en V1.1 (F1/3A, EXPLICIT REQUEST COMPLETENESS): una fuente que la
+# persona NOMBRÓ no se acota en silencio ni siquiera cuando el foco no la cubre.
+# V1 la acotaba y lo declaraba en el render; la revisión independiente lo contó
+# como ejecución parcial no acordada.
+@pytest.mark.parametrize("focus", ["suppliers", "modalities", "values"])
+def test_an_explicitly_named_source_is_never_dropped_by_the_focus(router, focus):
+    plan = _plan(router, BOTH_TEXT, focus)
+    assert plan.request.sources is RequestedSources.BOTH
+    assert plan.clarification is not None
+    assert plan.jobs == ()
 
 
 @pytest.mark.parametrize("text,focus", [
@@ -200,3 +214,33 @@ def test_an_executed_section_still_declares_only_its_real_sources(router):
 def test_only_an_analytical_request_becomes_a_profile(router, text, is_profile):
     turn = classify_entity_profile_turn(text, router.parse(text, today=TODAY).params)
     assert turn.detected is is_profile
+
+
+# ── 3D: el plan declara sus secciones, nadie las re-deriva ──────────────────
+
+@pytest.mark.parametrize("text,focus", [
+    (BUYER, "overview"), (BUYER, "suppliers"), (BUYER, "values"),
+    (BUYER, "modalities"), (BUYER, "recent"), (BUYER, "temporal"),
+    (CONTRACTS_TEXT, "overview"), (PROCESSES_TEXT, "overview"),
+])
+def test_the_plan_declares_which_sections_it_can_sustain(router, text, focus):
+    from app.core.entity_profile.execution_plan import SECTION_CALLS
+
+    plan = _plan(router, text, focus)
+    assert plan.clarification is None
+    expected = plan.expected_sections
+    assert expected
+    assert expected | plan.not_requested_sections == frozenset(SECTION_CALLS)
+
+    turn = classify_entity_profile_turn(text, router.parse(text, today=TODAY).params)
+    client = FakeClient()
+    profile = build_entity_profile(
+        scope=turn.scope, identity=turn.identity, params=turn.params,
+        focus=focus, secop_client=client, soql_builder=SoQLBuilder(), plan=plan,
+    )
+    # Lo declarado por el plan y lo que el perfil intentó coinciden exactamente.
+    attempted = {
+        name for name in SECTION_CALLS
+        if getattr(profile, name).attempted
+    }
+    assert attempted == expected

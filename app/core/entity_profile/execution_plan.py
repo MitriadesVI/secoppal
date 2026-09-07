@@ -22,7 +22,8 @@ from app.core.entity_profile.models import CONTRACT_DATASET, PROCESS_DATASET
 from app.core.entity_profile.query_runner import QueryJob, jobs_for_focus
 from app.core.entity_profile.semantic_request import EntityProfileSemanticRequest
 from app.core.entity_profile.source_plan import SourcePlan, project_sources
-from app.core.entity_profile.source_request import RequestedSources
+from app.core.entity_profile.source_request import RequestedSources, SourceProvenance
+from app.core.entity_profile.temporal_event import TemporalEvent
 
 
 # Qué fuentes puede responder cada foco. No es una preferencia de producto: es
@@ -52,9 +53,39 @@ _JOB_DATASET_BY_ID = {
     "temporal_contracts": CONTRACT_DATASET,
 }
 
+# Qué llamadas sostiene cada sección, y qué secciones produce cada foco. El
+# plan las DECLARA (3D) en vez de dejar que cada consumidor las re-derive.
+SECTION_CALLS: dict[str, frozenset[str]] = {
+    "activity": frozenset({"process_activity", "contract_values"}),
+    "values": frozenset({"contract_values"}),
+    "modalities": frozenset({"process_activity"}),
+    "suppliers": frozenset({"supplier_count", "supplier_value"}),
+    "temporal": frozenset({
+        "temporal_processes", "temporal_contracts",
+        "process_activity", "contract_values",
+    }),
+    "recent": frozenset({"recent_processes", "recent_contracts"}),
+}
+
+FOCUS_SECTIONS: dict[str, frozenset[str]] = {
+    "overview": frozenset({
+        "activity", "values", "modalities", "suppliers", "temporal", "recent",
+    }),
+    "suppliers": frozenset({"suppliers"}),
+    "modalities": frozenset({"modalities"}),
+    "values": frozenset({"values"}),
+    "recent": frozenset({"recent"}),
+    "temporal": frozenset({"temporal"}),
+}
+
 _SOURCE_LABEL = {
     PROCESS_DATASET: "procesos",
     CONTRACT_DATASET: "contratos",
+}
+
+_EVENT_PHRASE = {
+    TemporalEvent.PROCESS_PUBLICATION: "publicación",
+    TemporalEvent.CONTRACT_SIGNATURE: "firma",
 }
 
 _FOCUS_LABEL = {
@@ -96,6 +127,20 @@ class EntityProfileExecutionPlan:
             return RequestedSources.CONTRACTS
         return None
 
+    @property
+    def expected_sections(self) -> frozenset[str]:
+        """Las secciones que ESTE plan puede sostener con lo que ejecutó."""
+        executed = self.executed_call_ids
+        return frozenset(
+            name for name, call_ids in SECTION_CALLS.items()
+            if executed & call_ids and name in FOCUS_SECTIONS[self.focus]
+        )
+
+    @property
+    def not_requested_sections(self) -> frozenset[str]:
+        """Ni cero ni fallo: nadie las pidió."""
+        return frozenset(SECTION_CALLS) - self.expected_sections
+
     def plan_for(self, dataset_id: str) -> SourcePlan:
         return (
             self.process_plan if dataset_id == PROCESS_DATASET else self.contract_plan
@@ -132,8 +177,35 @@ def _capability_clarification(
     subject = _FOCUS_LABEL.get(request.focus, f"el foco «{request.focus}»")
     return (
         f"Pediste {asked}, y {subject} sólo se puede responder sobre "
-        f"{available}. ¿Quieres que analice {available}, o prefieres otra "
-        f"vista de {asked}?"
+        f"{available}. ¿Quieres que analice {subject} sólo en {available}, o "
+        f"prefieres una vista general de {asked}?"
+    )
+
+
+def _incomplete_clarification(
+    request: EntityProfileSemanticRequest,
+    plans: dict[str, SourcePlan],
+    unhonored: list[str],
+) -> str:
+    """Nombra QUÉ fuente se queda fuera y POR QUÉ, no un texto genérico."""
+    names = ", ".join(_SOURCE_LABEL[dataset] for dataset in unhonored)
+    events = sorted({
+        _EVENT_PHRASE.get(claim.event, claim.event.value)
+        for claim in request.temporal_claims
+    })
+    if events:
+        reason = (
+            f"SECOP II no publica una fecha de {' ni de '.join(events)} para "
+            f"{names}"
+        )
+    else:
+        reason = f"esa dimensión no existe en {names}"
+    asked = ", ".join(
+        sorted(_SOURCE_LABEL[dataset] for dataset in _requested_datasets(request))
+    )
+    return (
+        f"Pediste {asked}, y {reason}. ¿Quieres que analice sólo las fuentes "
+        f"que sí pueden responder, o prefieres otro periodo o filtro para {names}?"
     )
 
 
@@ -157,8 +229,35 @@ def build_execution_plan(
     if capability is None:
         raise ValueError(f"unknown Entity Profile focus: {request.focus}")
 
-    effective = _requested_datasets(request) & capability
-    if not effective:
+    requested = _requested_datasets(request)
+    explicit = request.sources_provenance is SourceProvenance.EXPLICIT
+    effective = requested & capability
+
+    # EXPLICIT REQUEST COMPLETENESS. Una fuente que la persona NOMBRÓ no
+    # desaparece en silencio. Si el foco no la cubre —proveedores no existen en
+    # procesos— o su plan declaró una dimensión que no puede honrar —contratos
+    # no tienen fecha de publicación—, se pregunta antes de emitir un job.
+    #
+    # Una fuente que sólo entró por DEFAULT o herencia sí puede acotarse: nadie
+    # la pidió, y acotarla no contradice a nadie. Esa es toda la diferencia
+    # entre "analiza X" + proveedores, que responde contratos, y "analiza
+    # proveedores de procesos y contratos de X", que pregunta.
+    if explicit:
+        uncovered = sorted(requested - capability)
+        if uncovered:
+            return EntityProfileExecutionPlan(
+                request, process_plan, contract_plan,
+                clarification=_capability_clarification(request, capability),
+            )
+        unhonored = sorted(
+            dataset for dataset in effective if not plans[dataset].should_execute
+        )
+        if unhonored:
+            return EntityProfileExecutionPlan(
+                request, process_plan, contract_plan,
+                clarification=_incomplete_clarification(request, plans, unhonored),
+            )
+    elif not effective:
         return EntityProfileExecutionPlan(
             request, process_plan, contract_plan,
             clarification=_capability_clarification(request, capability),
@@ -168,8 +267,6 @@ def build_execution_plan(
         dataset for dataset in effective if plans[dataset].should_execute
     }
     if not executable:
-        # La fuente se pidió y el foco la soporta, pero el plan de esa fuente
-        # declaró una dimensión que no puede honrar. No se degrada en silencio.
         blocked = sorted(
             dimension
             for dataset in effective
