@@ -2361,3 +2361,73 @@ preexistente). Dogfood local real contra el índice de producción con documento
 enmascarados. Rama sin merge y sin push.
 
 Detalle: [ACTOR_DOGFOOD_HARDENING_V2](audits/ACTOR_DOGFOOD_HARDENING_V2.md).
+
+### 2026-09-07 — ACTOR_DOGFOOD_HARDENING_V2_1 (remediación de revisión independiente)
+
+Una auditoría independiente (`dda1e81`) adjudicó el bloque V2 (`05f1749`) como
+**`NO_GO`**: tres P1 y un P2 reproducidos, y la promoción de E hecha sin
+autorización para sustituir su gate. La entrada V2 de esta bitácora sobreafirmó
+el resultado. Esta remediación cierra los cuatro hallazgos y retira E.
+
+Un patrón detrás de los cuatro: **la prueba verificaba la forma que el fix
+producía, no el contrato que el fix prometía.**
+
+**P1-A · escalar.** El guard prometía que ningún frame incoherente llega a SECOP
+e inspeccionaba sólo `list`/`tuple`; `SoQLBuilder` también acepta un escalar y
+convierte una cadena de dígitos en igualdad contra `documento_proveedor`. Ahora
+lee toda representación —una cadena es un valor, no un iterable de caracteres—,
+más ancho que el propio `isinstance(..., list)` del builder a propósito. Un
+`contratista` textual junto a un scope tipado también bloquea: su único escritor
+corre con Actor Profile desactivado y nunca escribe `actor_scope`, así que no hay
+ruta legítima que exceptuar.
+
+**P1-B · ocurrencia.** Una selección de candidato ejecutaba ocho llamadas sin la
+región pedida; BASE la conservaba. Dos mitades: el reconocedor de colas comparaba
+geografía por su valor **canónico** (`Orinoquia`) y nunca reconocía «en los
+llanos», así que la mención se tragaba el territorio —el camino exacto lo ocultaba
+porque su reparación de frontera lo recuperaba después, algo que ningún camino
+difuso puede hacer—; y la propiedad se decidía léxicamente, lo que no distingue
+dos apariciones de la misma palabra. Ahora la región ofrece su alias observado
+(introducido con EN o PARA, **nunca con DE**, para no truncar `CORPORACIÓN DE LA
+COSTA`) y la propiedad se decide por **ocurrencia**.
+
+**P2-B · procedencia huérfana.** Entity Profile purgaba `region` y
+`departamentos_in` y dejaba `region_resolution`. Los demás caminos se verificaron
+—negación, reinclusión, cambio de departamento, reset ya purgan las tres juntas—;
+era la única omisión. Una regresión exige que los cuatro inventarios del clúster
+nombren la procedencia.
+
+**P1-C · dimensiones ajenas.** La puerta de nombre autorizaba el consumo con
+evidencia de **forma**, y su rama de sigla devolvía `True` antes de cualquier
+control temático: `busca mantenimiento referencia XYZ — CC A` borraba un tema, y
+`busca LA PREVISORA S.A. — NIT X` borraba un comprador. Ahora responden las
+autoridades dueñas de la pregunta —vocabulario temático y resolver de comprador
+inyectado— y el artículo deja de ser encuadre. Un parecido cuenta como reclamo de
+comprador a propósito: BASE responde así, y borrar lo que esa autoridad reconoció
+es el fallo que se remedia.
+
+**D congelado.** `entity_types.py` no se tocó.
+
+**E retirado.** `efa28ec` revertido; `actor_alias_resolver.py` vuelve a ser
+byte-idéntico a `f9cb8c9`. `FUZZY_RANKING_VALUE=demostrado` (dos cohortes),
+`FUZZY_RUNTIME=HOLD`, `TWO_TYPO_RETRIEVAL=DEFERRED`. La corrección es de
+procedimiento, no de medición: el gate decía «cualquier fallo = NO_GO» y la
+autorización para sustituir el instrumento apareció en el propio commit de
+promoción. La evidencia se conserva; lo que se retira es la promoción.
+
+**Correcciones factuales al cierre V2:** las propiedades eran **11**, no 12; y
+hubo **dos** suites, no una — 8:34 fue la primera y 8:10 la acreditada sobre
+`05f1749`.
+
+Validación: suite completa una sola vez en serie, **11 884 passed, 11 skipped,
+16 xfailed, 0 failed (9:02)**. Ruff, `make lint-core` y `git diff --check`
+limpios; Semgrep 10 hallazgos de base y **delta 0**; corpus de query 89/89 PASS;
+corpus de diálogo 60/61 con el mismo `GOB-DEPTO-001` que falla en BASE. Paridad
+de SoQL 16/18 por conjunto con **SourceCalls 51 vs 51**. La sonda adversarial de
+la auditoría pasa de **6 fallos a 2**, y esos dos fallan igual en BASE
+(`actor + región + comprador` termina en `CANDIDATES`), verificado directamente y
+congelado como `xfail(strict)`. Dogfood real contra el índice de producción con
+documentos enmascarados. Rama sin merge y sin push.
+
+Detalle: [ACTOR_DOGFOOD_HARDENING_V2](audits/ACTOR_DOGFOOD_HARDENING_V2.md)
+§ `INDEPENDENT_REVIEW_REMEDIATION_V2_1`.

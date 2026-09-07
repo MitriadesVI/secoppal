@@ -1,5 +1,12 @@
 # Actor Dogfood Hardening V2 — corrección, propiedad de span y frontera de comprador
 
+> **Este bloque fue adjudicado `NO_GO` por una auditoría independiente
+> (`dda1e81`, 2026-09-07): tres P1 y un P2 reproducidos, y la promoción de E
+> sin autorización para sustituir su gate.** Lo que sigue es el cierre V2 tal
+> como se escribió, sin retoques. La remediación, las correcciones factuales y
+> el resultado vigente están al final, en
+> [`INDEPENDENT_REVIEW_REMEDIATION_V2_1`](#independent_review_remediation_v2_1).
+
 **Base:** `f9cb8c9` · **Rama:** `fix/actor-dogfood-hardening-v2` · **Fecha:** 2026-09-07
 
 Cuatro defectos encontrados usando Actor Profile de verdad. No son cuatro
@@ -342,13 +349,13 @@ puerta se cierra antes y la mutación quedaba invisible.
 
 | Puerta | Resultado |
 |---|---|
-| Suite completa (una sola vez, en serie) | **11 845 passed · 11 skipped · 14 xfailed · 0 failed** (8:34) |
+| Suite completa | **11 845 passed · 11 skipped · 14 xfailed · 0 failed** — corregido en V2.1: fueron **dos** corridas, y 8:34 es la primera; la acreditada sobre `05f1749` tardó 8:10 |
 | Tests añadidos | +63 (11 807 → 11 870 recolectados) |
 | Ruff | limpio sobre `app/` y `tests/` |
 | `make lint-core` | `app/core/` limpio |
 | Semgrep `.semgrep/secoppal-laws.yml` sobre `app/` | 10 hallazgos, **delta 0** contra baseline conocido |
 | `git diff --check` `f9cb8c9..HEAD` | limpio |
-| Hypothesis | 12 propiedades, cada una verificada por mutación |
+| Hypothesis | **11** propiedades (el cierre V2 dijo 12), cada una verificada por mutación |
 | Dogfood sintético | 35 casos + 12 propiedades + 15 de ranking, verdes |
 | Dogfood local real | A–D confirmados contra el índice de producción |
 
@@ -403,5 +410,221 @@ Ninguno de esos frentes se reabrió.
 | Ítem | Estado |
 |---|---|
 | **Recuperación de `two_token_typo`**: el objetivo llega al pool el 20% de las veces | reportado, **no autorizado**. Ampliarla exige índice de n-gramas por token: decisión de arquitectura con su propio coste de build, memoria y latencia |
-| G5 del gate pedía p95 extremo a extremo para un efecto de +0.02 ms | defecto de diseño del gate, registrado; el umbral no se movió |
+| G5 del gate pedía p95 extremo a extremo para un efecto de +0.02 ms | **SUPERSEDIDO por V2.1.** El defecto de instrumento es real, pero no autorizaba sustituirlo: el gate decía «cualquier fallo = NO_GO» y no existía permiso previo. E queda en HOLD y el runtime revertido |
 | Nodeterminación por proceso en el orden de expansión morfológica | preexistente, ajena a este frente; hace que la paridad de SoQL deba compararse por conjunto |
+
+---
+
+# INDEPENDENT_REVIEW_REMEDIATION_V2_1
+
+**Base productiva:** `f9cb8c9` · **Candidato V2:** `05f1749` ·
+**Auditoría independiente:** `dda1e81` · **Rama:** `fix/actor-dogfood-hardening-v2-remediation`
+
+## El veredicto original, sin maquillaje
+
+La auditoría independiente del 2026-09-07 dictaminó:
+
+```
+VERDICT_A_D_CORRECTNESS: NO_GO
+VERDICT_E_FUZZY:         HOLD
+MERGE_RECOMMENDED:       NO
+```
+
+**A–D era NO_GO y este documento lo decía GO.** Tres P1 reproducidos y un P2.
+La sección anterior de este archivo se escribió antes de esa auditoría y
+sobreafirmó el resultado; queda como está, y esta sección la corrige.
+
+Dos correcciones factuales adicionales al cierre V2:
+
+- **Propiedades: 11, no 12.** El archivo de propiedades tiene once funciones
+  con `@given`. El reporte dijo doce.
+- **Dos suites, no una.** El cierre afirmó «una sola vez, en serie». El
+  registro muestra dos corridas: 05:30:45–05:39:37 (8:34) y, tras la reescritura
+  de historia, 05:44:01–05:52:36 (8:10) sobre `05f1749`. La cifra 8:34 citada en
+  el reporte pertenece a la **primera**. La suite sobre el HEAD final sí está
+  acreditada; lo incorrecto fue el relato.
+
+## Por qué los cuatro defectos sobrevivieron a las pruebas de V2
+
+Un patrón, cuatro veces: **la prueba verificó la forma que el fix produjo, no
+el contrato que el fix prometió.**
+
+| | Prometía | Verificaba |
+|---|---|---|
+| A | ningún frame incoherente llega a SECOP | listas y tuplas incoherentes |
+| B | el span acreditado es dueño de sus palabras | que el alias aparezca en el nombre |
+| C | el nombre junto al documento no roba dimensiones | que un nombre limpio se consuma |
+| P2 | el clúster territorial muta entero | que `region` desapareciera |
+
+---
+
+## P1-A · El escalar evitaba las dos puertas
+
+`actor_identity_coherence` inspeccionaba sólo `list`/`tuple`.
+`SoQLBuilder._build_where` también acepta un escalar y convierte una cadena de
+dígitos en igualdad contra `documento_proveedor`. Con documento A en el scope y
+escalar B en el filtro: `guard=false`, `should_execute=true`, un `build`, una
+llamada. La promesa era falsa para una forma que las puertas aceptan.
+
+**Fix.** `_projected_documents` lee toda representación: una cadena es **un**
+valor, no un iterable de caracteres; cualquier otra cosa iterable es un
+contenedor. Es deliberadamente más ancho que el `isinstance(..., list)` del
+propio builder, para que una forma que el builder acepte mañana quede revisada
+hoy en vez de exenta en silencio.
+
+**Adjudicado, no supuesto.** Un `contratista` textual no documental junto a un
+scope tipado **también bloquea**. El único escritor de un `contratista` textual
+(`query_router._extract_contractor`) corre exclusivamente con Actor Profile
+desactivado, y ese camino nunca escribe `actor_scope`: no pueden coexistir
+legítimamente, así que no hay ruta que exceptuar. Además, un `LIKE` de nombre
+junto a una identidad tipada es justo el filtro que fusiona actores que
+`INV-NAME-NO-GUESS` prohíbe. Si aparece una ruta legítima, se adjudica antes de
+crear la excepción.
+
+---
+
+## P1-B · La propiedad es de la ocurrencia, no de la palabra
+
+Una selección de candidato ejecutaba ocho llamadas **sin la región que el
+usuario había pedido**. BASE la conservaba.
+
+El defecto tenía dos mitades y V2 sólo vio una.
+
+**Primera.** El reconocedor de colas de modificador comparaba geografía por su
+valor **canónico**. El scan lee `los llanos` y guarda `Orinoquia`, así que
+«… en los llanos» nunca se reconocía como modificador externo y la mención del
+actor se tragaba el territorio. El camino exacto lo ocultaba: su bucle de
+reparación de frontera recuperaba el sufijo después — algo que ningún camino
+difuso puede hacer. Ahora la región ofrece ahí su alias observado, como el
+resto de claves geográficas ya hacía.
+
+El alias se introduce con **EN o PARA, nunca con DE**. Los alias de zona son
+palabras corrientes —«la costa», «los llanos»— y DE es el conector de medio
+nombre registrado del país. Introducirlo con DE truncaba `CORPORACIÓN DE LA
+COSTA`, un contrato que `INV-ACTOR-RESOLUTION-REQUIRES-COMPLETE-MENTION` ya
+tenía congelado. Ambas lecturas quedan con regresión propia.
+
+**Segunda.** La propiedad se decidía léxicamente: ¿aparece el alias dentro del
+nombre? Eso no distingue dos apariciones del mismo texto, y «proveedor Ana
+Llanos en llanos» nombra el apellido una vez y el territorio otra. Ahora decide
+la **ocurrencia**: un alias que aparece más veces en el turno que dentro del
+span acreditado tiene al menos una aparición fuera, y ésa es un filtro que el
+usuario pidió. El texto del turno llega al scrub sólo para esa comparación; sin
+él, el llamador conserva su respuesta léxica anterior.
+
+| Consulta | Resultado |
+|---|---|
+| `proveedor Persona Llanos` | sin región |
+| `proveedor Persona Llanos en Meta` | Meta |
+| `proveedor Persona Llanos en los llanos` | Orinoquia |
+| `proveedor Persona Llanos en llanos` | Orinoquia |
+| `proveedor Fundación Caribe` | sin región |
+| `proveedor Fundación Caribe en Caribe` | Caribe |
+| difuso `Persona Llanoss en los llanos` → selección `1` | Orinoquia |
+
+---
+
+## P2-B · Procedencia territorial huérfana
+
+Entity Profile purgaba `region` y `departamentos_in` y dejaba
+`region_resolution`: evidencia de un territorio que el frame ya no filtra. El
+builder no la consume —no es un filtro— pero sí la leen el arbitraje de span y
+las auditorías, y una evidencia huérfana miente.
+
+Los demás caminos se **verificaron**, no se supusieron: negación de
+departamento, reinclusión, cambio a un departamento concreto y reset ya purgan
+las tres claves juntas. Entity Profile era la única omisión.
+
+Una regresión cubre los cuatro módulos que mantienen su propio inventario del
+clúster: todo inventario que nombre `region` debe nombrar `region_resolution`.
+
+**Registrado, no corregido, y preexistente:** reincluir un departamento excluido
+no reconstruye la zona completa, porque la exclusión ya purgó la procedencia que
+haría falta.
+
+---
+
+## P1-C · La puerta de nombre no puede gastar una dimensión ajena
+
+`busca mantenimiento referencia XYZ — CC A` conservaba la identidad y **borraba
+un tema** que BASE sí emitía. La misma puerta borraba un comprador: `busca LA
+PREVISORA S.A. — NIT X` perdía FIDUCIARIA LA PREVISORA.
+
+**Causa.** La puerta autorizaba el consumo con `has_entity_like_name_evidence`,
+que sólo aportaba evidencia de **forma** de nombre. Su rama de sigla devuelve
+`True` ante un grupo consonántico antes de cualquier control temático, así que
+`XYZ` dejaba pasar el prefijo entero.
+
+**Fix.** La forma no es permiso. Un span que otra autoridad ya lee como otra
+cosa no es de esta puerta, y esas autoridades responden en el orden en que son
+dueñas de la pregunta: el vocabulario temático y el resolver de comprador del
+llamador —inyectado, para que este módulo no tenga gazetteer propio—. Fechas,
+montos y referencias numéricas ya los excluía la regla de dígitos; una palabra
+de dataset la rechaza la propia evidencia de forma.
+
+El **artículo deja de ser encuadre**: `LA PREVISORA S.A.` está registrada con
+él, y recortarlo entregaba a la autoridad de comprador un nombre que no podía
+reconocer.
+
+**Un parecido cuenta como reclamo de comprador, a propósito.** La regla más fina
+excluiría el fuzzy —`universidad solano` resolviendo fuzzy(85) a UNIVERSIDAD
+NACIONAL es una mala respuesta— pero esta puerta no es donde eso se revierte:
+BASE responde así, y borrar lo que la autoridad de comprador reconoció es
+precisamente el fallo que se está remediando. Ambas superficies quedan idénticas
+a BASE.
+
+**Adjudicado, no hardcodeado.** `busca referencia XYZ — CC A` **sí** se sigue
+consumiendo como nombre. Ninguna gramática de referencia lo reconoce (exigen
+prefijo tipado y dígitos), el vocabulario temático no lo contiene y ningún
+comprador lo reclama: el `objeto=['referencia']` de BASE era el tokenizador de
+respaldo guardando una palabra suelta, no una dimensión acreditada. Bloquearlo
+exigiría la lista de palabras que esta puerta existe para evitar. Una referencia
+tipada, `SAMC-006-2025`, la rechaza la regla de dígitos.
+
+---
+
+## D · Congelado
+
+`BUYER-TERMINAL-PUNCTUATION` pasó la auditoría independiente —siete familias ×
+seis signos, cuatro siglas, puntuación residual y 48 nombres reales del
+gazetteer—. **`entity_types.py` no se tocó en esta remediación.**
+
+---
+
+## E · Retirado del runtime
+
+```
+FUZZY_RANKING_VALUE   demostrado — reproducido en dos cohortes independientes
+FUZZY_RUNTIME         HOLD
+TWO_TYPO_RETRIEVAL    DEFERRED
+```
+
+`efa28ec` se revierte explícitamente. `app/data/actor_alias_resolver.py` vuelve
+a ser byte-idéntico a `f9cb8c9`.
+
+El gate congelado decía «todas obligatorias, cualquier fallo = NO_GO», y la
+primera corrida candidata falló G5 (one_typo p95 282.8 ms contra 169.7 ms). **No
+existía autorización previa para sustituir el instrumento**: la cláusula que lo
+permitía apareció en el propio commit de promoción, después del fallo. Un
+microbenchmark posterior puede diagnosticar el efecto; no puede hacer que un
+gate congelado pase retroactivamente. La corrección aquí no es de medición sino
+de procedimiento.
+
+La evidencia se conserva a propósito —las cuatro cohortes JSON y la etapa
+candidata del script—: lo que se retira es la promoción, no el hallazgo. Una
+futura `FUZZY_RANKING_PERFORMANCE_ADJUDICATION_V1` debe congelar contrato y SHA
+antes de medir, separar el presupuesto de ranking de la latencia extremo a
+extremo, y definir de antemano cuándo el instrumento es inválido.
+
+El caso ancla `wikson herrera llanaos` sigue sin recuperarse, y con el runtime
+revertido tampoco se intenta: está en el 80% que nunca llega al pool.
+
+---
+
+## Deuda preexistente, rastreada
+
+`actor + región explícita + comprador explícito` termina en `CANDIDATES` en vez
+de resolver. **Falla igual en BASE `f9cb8c9`** —verificado directamente, no
+inferido— así que no es regresión de V2 ni alcance de esta remediación. Queda
+como `xfail(strict=True)` con esa razón, para que sea deuda visible y no un
+hueco silencioso.

@@ -279,12 +279,29 @@ Método resultante: `exact_legal_form_variant`.
   filtros: *"Persona Llanos"* es solo el actor, *"Persona Llanos en Meta"* es el
   actor y Meta.
 
-  La propiedad se decide sobre la **procedencia**, no sobre el valor guardado.
+  La propiedad se decide sobre la **procedencia** y sobre la **ocurrencia**,
+  nunca sobre el valor guardado ni sobre el léxico.
+
   La región es la única geografía cuyo valor almacenado no son las palabras que
   lo produjeron (`llanos` → `Orinoquia`), así que `region_resolution` lleva el
-  `matched_alias` junto a la zona canónica y el scrub compara contra él. Sin esa
-  evidencia el filtro parecía venir de ninguna parte y sobrevivía
-  (`ACTOR-GEO-SPAN-OWNERSHIP-001`).
+  `matched_alias` junto a la zona canónica. Ese alias gobierna dos decisiones:
+
+  1. **frontera de la mención** — `recognized_actor_modifier_tails` lo usa para
+     reconocer «… en los llanos» como modificador externo. Comparando sólo el
+     canónico, la mención se tragaba el territorio. El alias se introduce con
+     **EN o PARA, nunca con DE**: los alias de zona son palabras corrientes y DE
+     es conector de nombre propio (`CORPORACIÓN DE LA COSTA` es una sola
+     organización);
+  2. **propiedad del filtro** — el scrub compara **ocurrencias**, no textos. Un
+     alias que aparece más veces en el turno que dentro del span acreditado
+     tiene al menos una aparición fuera, y ésa es un filtro independiente.
+     Preguntar «¿está el alias en el nombre?» no distingue dos apariciones de la
+     misma palabra, y por ahí se borraba una región explícita
+     (`ACTOR-GEO-SPAN-OWNERSHIP-001`, P1-B de la revisión independiente).
+
+  El clúster territorial —`region`, `departamentos_in`, `region_resolution`—
+  muta o se purga **entero**. Una evidencia huérfana afirma un territorio que el
+  frame ya no filtra.
 
 ### Nombre aseverado junto a un documento
 
@@ -302,6 +319,17 @@ La tercera es deliberadamente estrecha: el prefijo, menos el encuadre
 conversacional, debe ser **todo** lo que queda; cualquier dígito lo rechaza; y la
 forma de nombre la juzga la misma evidencia semántica que la sonda desnuda,
 nunca la tipografía. Un número no autoriza a leer como nombre lo que lo precede.
+
+**La forma de nombre no es permiso para consumir.** Un span que otra autoridad
+ya lee como otra cosa no es de esta puerta, y esas autoridades responden en el
+orden en que son dueñas de la pregunta: el vocabulario temático y el resolver de
+comprador del llamador (inyectado, para que el módulo no tenga gazetteer
+propio). Sin eso, la rama de sigla de `has_entity_like_name_evidence` devolvía
+`True` ante un grupo consonántico antes de cualquier control temático, y
+`mantenimiento referencia XYZ` se volvía nombre borrando un tema real.
+
+El **artículo es material del nombre**, no encuadre: `LA PREVISORA S.A.` está
+registrada con él. Sólo `a`/`al` cuentan como marca de objeto personal.
 
 ---
 
@@ -336,12 +364,17 @@ nunca la tipografía. Un número no autoriza a leer como nombre lo que lo preced
 recupera; no identifica. Un candidato solo se vuelve autoritativo por **selección
 explícita del usuario**.
 
-El **orden** de esos candidatos sí puede mejorar sin tocar esa regla.
-`_anchored_name_distance` admite hasta **dos** tokens imperfectos cuando la
-consulta conserva un anclaje literal, a una edición cada uno y con presupuesto
-total dos; una palabra del alias responde a un solo token, para que una sola no
-absorba ambos typos y fabrique cobertura. Es una clave de ordenamiento sobre
-filas que la recuperación ya trajo: el estado sigue siendo `CANDIDATES`.
+El **orden** de esos candidatos podría mejorar sin tocar esa regla, y se
+demostró que mejora: una variante acotada de `_anchored_name_distance` que
+admite dos tokens imperfectos lleva `recall@10` de 0.058 a 0.200 —el techo del
+pool— en dos cohortes independientes, sin regresión ni pérdida de precisión.
+
+**No está en runtime.** La revisión independiente refutó la promoción por
+procedimiento, no por medición: el gate congelado decía «cualquier fallo =
+NO_GO», la primera corrida falló G5, y la autorización para sustituir el
+instrumento apareció en el commit de promoción, después del fallo.
+`FUZZY_RANKING_VALUE=demostrado`, `FUZZY_RUNTIME=HOLD`,
+`TWO_TYPO_RETRIEVAL=DEFERRED`.
 
 ### Una sola identidad por frame ejecutable
 
@@ -364,6 +397,17 @@ elegir.
   divergen. Está en las dos puertas al SoQL: `semantic_preflight` (planner) y
   `execute_resolved_params` (barra de refinamiento, Radar). Nunca repara el
   frame; la causa se corrige aguas arriba.
+- **Toda representación.** El guard lee `contratista` en cualquier forma que una
+  puerta ejecutable acepte: una cadena es **un** valor —no un iterable de
+  caracteres— y cualquier otra cosa iterable es un contenedor. Es más ancho que
+  el `isinstance(..., list)` del propio builder, a propósito: una forma que el
+  builder acepte mañana queda revisada hoy. Mirar sólo `list`/`tuple` hacía la
+  promesa falsa para el escalar, que el builder convierte en igualdad contra
+  `documento_proveedor` (P1-A de la revisión independiente).
+- **Textual junto a tipado bloquea.** El único escritor de un `contratista`
+  textual corre con Actor Profile desactivado y nunca escribe `actor_scope`: no
+  pueden coexistir legítimamente, y un `LIKE` de nombre junto a una identidad
+  tipada es el filtro que fusiona actores que `INV-NAME-NO-GUESS` prohíbe.
 
 ---
 
@@ -661,7 +705,9 @@ Informes: `docs/audits/2026-08-18_ACTOR_PROFILE_DIAGNOSTIC.md` ·
 | Aprovisionamiento del índice como requisito de activación | operativo |
 | Mismatch histórico de dialogue corpus `GOB-DEPTO-001` | preexistente, ajeno a este frente |
 | Deuda de lint del repositorio | `make lint-core` limpio; deuda en superficies legacy |
-| **Recall con dos tokens mal escritos**: el objetivo llega al pool solo el **20%** de las veces; el ranking ya recupera ese 20% entero (`recall@10 0.058 → 0.200`) y el 80% restante es **recuperación**, no ranking | auditado; ampliar la recuperación (índice de n-gramas por token) es una decisión de arquitectura propia, no autorizada — ver `docs/audits/ACTOR_DOGFOOD_HARDENING_V2.md` |
+| **Recall con dos tokens mal escritos**: el objetivo llega al pool solo el **20%** de las veces | ranking en **HOLD** (mejora demostrada, promoción sin autorización de gate); recuperación **DEFERRED** — ver `docs/audits/ACTOR_DOGFOOD_HARDENING_V2.md` §V2.1 |
+| `actor + región explícita + comprador explícito` termina en `CANDIDATES` en vez de resolver | **preexistente en `f9cb8c9`**, verificado directamente; `xfail(strict)` en `tests/test_actor_hardening_v2_1_remediation.py` |
+| Reincluir un departamento excluido no reconstruye la zona completa | preexistente: la exclusión ya purgó la procedencia necesaria |
 
 ---
 

@@ -332,3 +332,68 @@ def test_a_buyer_the_parser_resolves_is_never_replaced_by_a_name(name):
     assert params["contratista"][0] == NIT_A
     assert params.get("entidad_resolved")
     assert not _asserted(params)
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Pre-existing boundary, tracked rather than hidden
+# ══════════════════════════════════════════════════════════════════════════
+
+@pytest.mark.xfail(strict=True, reason=(
+    "Pre-existing in BASE f9cb8c9, not a V2 regression: actor + explicit region"
+    " + explicit buyer ends CANDIDATES instead of resolving. Verified on BASE"
+    " directly; out of scope for this remediation."
+))
+@pytest.mark.parametrize("query,region", [
+    ("contratos del proveedor ana maria llanos en los llanos con alcaldia de barranquilla",
+     "Orinoquia"),
+    ("contratos del proveedor carlos rueda caribe en Caribe con alcaldia de barranquilla",
+     "Caribe"),
+])
+def test_actor_region_and_buyer_together_still_resolve(workflow, query, region):
+    params = workflow.run_query(query, chat_id="triple")["resolved_params"]
+    assert params.get("actor_resolution_status") == "RESOLVED"
+    assert params.get("region") == region
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Cross-slice adversarial
+# ══════════════════════════════════════════════════════════════════════════
+
+def test_cross_document_replacement_keeps_buyer(workflow):
+    workflow.run_query("contratos de ana maria llanos con alcaldia de barranquilla", chat_id="x1")
+    params = workflow.run_query(f"y ahora: BEATRIZ SOLANO — CC {CC_A}", chat_id="x1")["resolved_params"]
+    assert params["contratista"] == [CC_A]
+    assert (params.get("actor_scope") or {}).get("base_number") == CC_A
+    assert params.get("entidad_resolved")
+    assert not params.get("objeto")
+
+
+def test_cross_document_replacement_keeps_year(workflow):
+    workflow.run_query("contratos de ana maria llanos en 2025", chat_id="x2")
+    params = workflow.run_query(f"ahora BEATRIZ SOLANO — CC {CC_A}", chat_id="x2")["resolved_params"]
+    assert params["contratista"] == [CC_A]
+    assert params.get("fecha_desde") == "2025-01-01"
+
+
+def test_cross_foreign_document_after_pending_inherits_nothing(workflow):
+    first = workflow.run_query(
+        "contratos de beatriz solano con alcaldia de barranquilla", chat_id="x3",
+    )["resolved_params"]
+    assert first.get("actor_pending")
+    params = workflow.run_query(f"CC {LLANOS[1]}", chat_id="x3")["resolved_params"]
+    assert params["contratista"] == [LLANOS[1]]
+    assert not params.get("entidad_resolved")
+
+
+def test_cross_span_ownership_survives_a_buyer_free_selection(workflow):
+    workflow.run_query("contratos del proveedor ana mariia llanos en los llanos", chat_id="x4")
+    params = workflow.run_query("1", chat_id="x4")["resolved_params"]
+    assert params.get("region") == "Orinoquia"
+    assert params.get("actor_resolution_status") == "RESOLVED"
+
+
+def test_cross_scalar_split_brain_blocks_both_doors():
+    plan, direct, builds, calls = _doors(_contradictory_frame(str))
+    assert not plan.should_execute
+    assert direct is None
+    assert builds == calls == 0

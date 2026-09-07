@@ -1,0 +1,93 @@
+Dogfood local real — V2.1 (fix/actor-dogfood-hardening-v2-remediation, 2026-09-07)
+Índice de producción en solo lectura; persistencia en tmp; sin red.
+Todo documento enmascarado como digest con sal.
+======================================================================
+======================================================================
+B — región dentro y fuera del span
+
+### contratos de wilson herrera llanos
+    route=actor_profile clarify=False
+    contratista = ['doc:83dd62b9f3']
+    actor_scope = {'resolution_method': 'exact_unique_alias', 'document_type': 'CC', 'observed_name': 'wilson herrera llanos', 'base_number': 'doc:83dd62b9f3'}
+    actor_resolution_method = exact_unique_alias
+
+### contratos de wilson herrera llanos en Meta
+    route=actor_profile clarify=False
+    contratista = ['doc:83dd62b9f3']
+    actor_scope = {'resolution_method': 'exact_unique_alias', 'document_type': 'CC', 'observed_name': 'wilson herrera llanos', 'base_number': 'doc:83dd62b9f3'}
+    departamento_resolved = Meta
+    actor_resolution_method = exact_unique_alias
+
+### contratos del proveedor wilson herrera llanos en los llanos
+    route=actor_profile clarify=False
+    contratista = ['doc:83dd62b9f3']
+    actor_scope = {'resolution_method': 'exact_unique_alias', 'document_type': 'CC', 'observed_name': 'wilson herrera llanos', 'base_number': 'doc:83dd62b9f3'}
+    region = Orinoquia
+    region_resolution = {'alias': 'los llanos', 'value': 'Orinoquia'}
+    departamentos_in = ['Arauca', 'Casanare', 'Meta', 'Vichada']
+    actor_resolution_method = exact_unique_alias
+
+======================================================================
+C — nombre aseverado / tema / comprador
+
+### busca WILSON HERRERA — CC doc:6f430ab072
+    route=actor_profile clarify=False
+    contratista = ['doc:6f430ab072']
+    actor_scope = {'resolution_method': 'explicit_document', 'document_type': 'CC', 'asserted_name': 'wilson herrera', 'base_number': 'doc:6f430ab072'}
+    actor_resolution_method = explicit_document
+
+### busca mantenimiento referencia XYZ — CC doc:6f430ab072
+    route=heuristic_only clarify=False
+    contratista = ['doc:6f430ab072']
+    actor_scope = {'resolution_method': 'explicit_document', 'document_type': 'CC', 'base_number': 'doc:6f430ab072'}
+    objeto = ['mantenimiento', 'referencia']
+    actor_resolution_method = explicit_document
+
+### busca LA PREVISORA S.A. — NIT doc:578fe0dd50
+    route=actor_profile clarify=False
+    contratista = ['doc:578fe0dd50']
+    actor_scope = {'resolution_method': 'explicit_document', 'document_type': 'NIT', 'base_number': 'doc:578fe0dd50'}
+    entidad_resolved = FIDUCIARIA LA PREVISORA S.A.- FIDUPREVISORA S.A.
+    actor_resolution_method = explicit_document
+
+======================================================================
+D — puntuación de comprador (congelada)
+
+### contratos con alcaldia de barranquilla?
+    route=heuristic_only clarify=False
+    entidad_resolved = DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+
+======================================================================
+A — reemplazo por documento
+
+### t1
+    route=heuristic_only clarify=True
+    actor_scope = {'resolution_method': 'name_unresolved', 'observed_name': 'wilson herrera', 'base_number': None}
+    entidad_resolved = DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+    actor_resolution_method = exact_ambiguous_alias
+    actor_pending = {'n': 2}
+
+### t2 CC doc:4b0b1fe6f6
+    route=actor_profile clarify=False
+    contratista = ['doc:4b0b1fe6f6']
+    actor_scope = {'resolution_method': 'explicit_document_pending_selection', 'document_type': 'CC', 'observed_name': 'WILSON HERRERA', 'base_number': 'doc:4b0b1fe6f6'}
+    entidad_resolved = DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+    actor_resolution_method = explicit_document_pending_selection
+
+### t3 y ahora: WILSON HERRERA — CC doc:6f430ab072
+    route=actor_profile clarify=False
+    contratista = ['doc:6f430ab072']
+    actor_scope = {'resolution_method': 'explicit_document', 'document_type': 'CC', 'asserted_name': 'wilson herrera', 'base_number': 'doc:6f430ab072'}
+    entidad_resolved = DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+    actor_resolution_method = explicit_document
+
+======================================================================
+E — fuzzy multi typo (runtime revertido)
+
+### wikson Herrera Llanaos
+    route=heuristic_only clarify=True
+    actor_scope = {'resolution_method': 'name_unresolved', 'observed_name': 'wikson herrera llanaos', 'base_number': None}
+    actor_resolution_method = fts5_trigram_bm25
+    actor_pending = {'n': 10}
+
+SoQL emitidos: 58

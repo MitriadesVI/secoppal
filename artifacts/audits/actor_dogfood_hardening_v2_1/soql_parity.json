@@ -1,0 +1,13 @@
+{
+  "note": "Paridad de SoQL sobre 18 consultas sanas, BASE f9cb8c9 vs V2.1. Comparación insensible al orden: la expansión morfológica del objeto se ordena de forma no determinista POR PROCESO. La auditoría independiente comparó árboles de predicados y obtuvo 18/18.",
+  "healthy_queries": 18,
+  "set_identical_base_vs_v2_1": 16,
+  "differing": [
+    "contratos de alimentacion escolar con alcaldia de medellin",
+    "contratos de nutricion con ese hospital del sur"
+  ],
+  "difference_kind": "orden de los términos de expansión morfológica dentro del OR",
+  "source_calls_base": 51,
+  "source_calls_v2_1": 51,
+  "source_call_delta": 0
+}
