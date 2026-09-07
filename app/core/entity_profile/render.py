@@ -18,6 +18,13 @@ def _money(value: object) -> str:
         return "valor no disponible"
 
 
+def _count(value: object, noun: str) -> str:
+    """Un conteo que la fuente no acreditó se dice, no se imprime como 0."""
+    if not isinstance(value, int) or isinstance(value, bool):
+        return f"número de {noun} no disponible"
+    return f"{value:,} {noun}"
+
+
 def _period(profile: EntityProfile) -> str:
     period = profile.temporal.fact("period")
     if isinstance(period, str):
@@ -74,7 +81,7 @@ def _overview(profile: EntityProfile) -> list[str]:
         supplier = by_count[0]
         lines.append(
             f"• Principal contratista por número de contratos: "
-            f"{supplier.observed_name} ({supplier.contract_count:,}). "
+            f"{supplier.observed_name} ({_count(supplier.contract_count, 'contratos')}). "
             f"[{_source('jbjy-vk9h')}]"
         )
 
@@ -99,7 +106,7 @@ def _supplier_lines(title: str, suppliers: tuple[SupplierMetric, ...], metric: s
     lines = [title]
     for supplier in suppliers:
         value = (
-            f"{supplier.contract_count:,} contratos"
+            _count(supplier.contract_count, "contratos")
             if metric == "count"
             else _money(supplier.total_contract_value)
         )
@@ -159,7 +166,7 @@ def _focused(profile: EntityProfile) -> list[str]:
             if period.process_count is not None:
                 parts.append(f"{period.process_count:,} procesos publicados")
             if period.contract_count is not None:
-                parts.append(f"{period.contract_count:,} contratos")
+                parts.append(_count(period.contract_count, "contratos"))
             if period.contract_value is not None:
                 parts.append(_money(period.contract_value))
             lines.append(f"• {period.period}: {', '.join(parts)}.")

@@ -89,8 +89,8 @@ class SupplierMetric:
     document_type: str
     document: str
     observed_name: str
-    contract_count: int
-    total_contract_value: float
+    contract_count: int | None
+    total_contract_value: float | None
 
 
 @dataclass(frozen=True, slots=True)

@@ -29,8 +29,15 @@ def _build(turn, client, params=None):
     )
 
 
+# ADJUDICADO en ENTITY_PROFILE_SEMANTIC_PLAN_V1 (ADR-095): el caso
+# ``{"contract_count": "1", "total_contract_value": None}`` sale de esta lista.
+# La expectativa original trataba "una métrica ausente" como "el agregado entero
+# es inservible", y eso perdía un hecho acreditado: ``count(*)`` no depende de
+# la columna de valor, así que un universo cuyos contratos tienen valor nulo
+# tiene un conteo cierto. Su contrato nuevo vive en
+# ``test_count_survives_an_absent_value_as_independent_metrics``. Los seis casos
+# que quedan siguen siendo agregados genuinamente inservibles.
 @pytest.mark.parametrize("rows", [[], [{}], [{"contract_count": "invalid"}],
-    [{"contract_count": "1", "total_contract_value": None}],
     [{"contract_count": "0.5", "total_contract_value": "0"}],
     [{"contract_count": "-1", "total_contract_value": "0"}],
     [{"contract_count": "0", "total_contract_value": "100"}],
@@ -46,6 +53,22 @@ def test_malformed_contract_aggregate_cannot_be_zero(profile_turn, rows):
     assert profile.values.fact("total_contract_value") is None
     assert profile.values.status is SectionStatus.UNAVAILABLE
     assert "Se observan 0 contratos" not in render_entity_profile(profile)
+
+
+def test_count_survives_an_absent_value_as_independent_metrics(profile_turn):
+    """Conteo y valor son métricas distintas del mismo agregado."""
+    class Client(FakeClient):
+        def aggregate(self, dataset, soql):
+            if "AS contract_count" in soql and "GROUP BY" not in soql:
+                return [{"contract_count": "1", "total_contract_value": None}]
+            return super().aggregate(dataset, soql)
+    profile = _build(profile_turn, Client())
+    assert profile.activity.fact("contract_count") == 1
+    assert profile.values.fact("total_contract_value") is None
+    assert profile.values.status is SectionStatus.UNAVAILABLE
+    rendered = render_entity_profile(profile)
+    assert "1 contratos" in rendered
+    assert "$0" not in rendered
 
 
 def test_zero_contradicted_by_other_contract_calls_is_unavailable(profile_turn):

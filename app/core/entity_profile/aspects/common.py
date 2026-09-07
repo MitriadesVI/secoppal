@@ -12,11 +12,12 @@ def build_where(builder: Any, dataset_id: str, params: dict) -> tuple[Any, str]:
     return spec, where
 
 
-def as_int(value: object) -> int:
+def as_optional_int(value: object) -> int | None:
+    """Como ``as_int`` pero sin inventar un cero cuando no hay número."""
     try:
         return int(float(value))
     except (TypeError, ValueError):
-        return 0
+        return None
 
 
 def as_float(value: object) -> float | None:

@@ -218,9 +218,6 @@ def test_a_plain_listing_question_is_not_an_entity_profile(router):
 
 # ── Verdad de la evidencia por métrica ──────────────────────────────────────
 
-@pytest.mark.xfail(
-    strict=True, reason="P1: un valor ausente invalida también el conteo",
-)
 def test_contract_count_survives_a_missing_contract_value(router):
     class Client(FakeClient):
         def aggregate(self, dataset, soql):
@@ -243,7 +240,6 @@ def test_contract_count_survives_a_missing_contract_value(router):
     assert "$0" not in render_entity_profile(profile)
 
 
-@pytest.mark.xfail(strict=True, reason="P1: as_int convierte un agregado inválido en 0")
 def test_invalid_process_aggregate_is_not_zero_processes(router):
     class Client(FakeClient):
         def aggregate(self, dataset, soql):
@@ -263,7 +259,6 @@ def test_invalid_process_aggregate_is_not_zero_processes(router):
     assert "Publicó 0 procesos" not in render_entity_profile(profile)
 
 
-@pytest.mark.xfail(strict=True, reason="P1: as_float(...) or 0.0 inventa un cero")
 def test_temporal_period_without_value_is_not_zero_pesos(router):
     class Client(FakeClient):
         def aggregate(self, dataset, soql):
@@ -280,10 +275,13 @@ def test_temporal_period_without_value_is_not_zero_pesos(router):
         scope=turn.scope, identity=turn.identity, params=turn.params,
         focus="temporal", secop_client=Client(), soql_builder=SoQLBuilder(),
     )
-    periods = profile.temporal.fact("periods") or ()
-    assert periods
-    assert periods[0].contract_count == 4
-    assert periods[0].contract_value is None
+    # El cliente base devuelve además una serie de procesos 2025+2026, así que
+    # el periodo se busca por su nombre y no por posición.
+    periods = {period.period: period for period in profile.temporal.fact("periods") or ()}
+    assert "2026" in periods
+    assert periods["2026"].contract_count == 4
+    assert periods["2026"].contract_value is None
+    assert "$0" not in render_entity_profile(profile)
 
 
 # ── Coherencia del render con lo ejecutado ──────────────────────────────────

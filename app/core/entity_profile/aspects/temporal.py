@@ -3,7 +3,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from app.core.entity_profile.aspects.common import as_float, as_int, build_where
+from app.core.entity_profile.aspects.common import (
+    as_float,
+    as_optional_int,
+    build_where,
+)
 from app.core.entity_profile.models import CONTRACT_DATASET, PeriodMetric
 
 
@@ -34,14 +38,18 @@ def merge_periods(
         raw = row.get("period")
         if not isinstance(raw, str) or len(raw) < 4:
             continue
-        periods.setdefault(raw[:4], {})["process_count"] = as_int(row.get("row_count"))
+        periods.setdefault(raw[:4], {})["process_count"] = as_optional_int(
+            row.get("row_count"),
+        )
     for row in contract_rows or ():
         raw = row.get("period")
         if not isinstance(raw, str) or len(raw) < 4:
             continue
         slot = periods.setdefault(raw[:4], {})
-        slot["contract_count"] = as_int(row.get("row_count"))
-        slot["contract_value"] = as_float(row.get("contract_value")) or 0.0
+        slot["contract_count"] = as_optional_int(row.get("row_count"))
+        # Un periodo con contratos cuya suma la fuente no entregó vale
+        # "no disponible", no $0. El cero era del parser, no del periodo.
+        slot["contract_value"] = as_float(row.get("contract_value"))
     return tuple(
         PeriodMetric(
             period=period,

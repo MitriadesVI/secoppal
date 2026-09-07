@@ -108,17 +108,35 @@ def _values(
     if not ids:
         return unavailable_section()
     parsed = parse_contract_values(rows.get("contract_values", []))
-    success = _status(ids, calls) is SectionStatus.SUPPORTED
-    facts = () if not success else (
-        _fact("total_contract_value", parsed.total_contract_value, CONTRACT_DATASET, "COP"),
-        _fact("average_contract_value", parsed.average_contract_value, CONTRACT_DATASET, "COP"),
-    )
+    status = _status(ids, calls)
+    warnings = list(_warnings("los valores contractuales", ids, calls))
+    facts: list[EntityProfileFact] = []
+    if status is SectionStatus.SUPPORTED and parsed is not None:
+        # El transporte respondió y el agregado es legible; cada métrica se
+        # publica sólo si la fuente la entregó. Una suma ausente deja la
+        # sección no disponible SIN convertirse en $0 ni tocar el conteo.
+        if parsed.total_contract_value is not None:
+            facts.append(_fact(
+                "total_contract_value", parsed.total_contract_value,
+                CONTRACT_DATASET, "COP",
+            ))
+        if parsed.average_contract_value is not None:
+            facts.append(_fact(
+                "average_contract_value", parsed.average_contract_value,
+                CONTRACT_DATASET, "COP",
+            ))
+        if parsed.total_contract_value is None:
+            status = SectionStatus.UNAVAILABLE
+            warnings.append(
+                "La fuente no reportó el valor de esos contratos; no puedo "
+                "afirmar un total, y eso no significa cero.",
+            )
     return EntityProfileSection(
-        _status(ids, calls),
+        status,
         (CONTRACT_DATASET,),
         (("median", "UNAVAILABLE_V1"),),
-        facts,
-        _warnings("los valores contractuales", ids, calls),
+        tuple(facts),
+        tuple(warnings),
     )
 
 
@@ -134,6 +152,12 @@ def _modalities(
     if status is SectionStatus.SUPPORTED and process.truncated:
         status = SectionStatus.PARTIAL
         warnings.append("La fuente alcanzó el límite de modalidades; las participaciones son parciales.")
+    if status is not SectionStatus.UNAVAILABLE and process.process_count is None:
+        status = SectionStatus.PARTIAL
+        warnings.append(
+            "La fuente devolvió un conteo de procesos ilegible; no puedo "
+            "afirmar cuántos publicó.",
+        )
     facts = () if status is SectionStatus.UNAVAILABLE else (
         _fact("top_modalities", process.modalities, PROCESS_DATASET),
     )
@@ -247,10 +271,19 @@ def build_sections(
         contracts = parse_contract_values(rows.get("contract_values", []))
         ids = _executed(("process_activity", "contract_values"), executed)
         facts = []
+        activity_warnings = list(_warnings("la actividad", ids, calls))
         if "process_activity" in ids and calls.get("process_activity") and (
             calls["process_activity"].status == "SUCCESS"
         ):
-            facts.append(_fact("process_count", process.process_count, PROCESS_DATASET, "processes"))
+            if process.process_count is None:
+                activity_warnings.append(
+                    "La fuente devolvió un conteo de procesos ilegible; no "
+                    "puedo afirmar cuántos publicó.",
+                )
+            else:
+                facts.append(_fact(
+                    "process_count", process.process_count, PROCESS_DATASET, "processes",
+                ))
         if "contract_values" in ids and calls.get("contract_values") and (
             calls["contract_values"].status == "SUCCESS"
         ):
@@ -260,7 +293,7 @@ def build_sections(
             _sources_for(ids),
             (("period", _period(scope)),),
             tuple(facts),
-            _warnings("la actividad", ids, calls),
+            tuple(activity_warnings),
         ) if ids else unavailable_section()
         values = _values(rows, calls, executed)
         modalities = _modalities(rows, calls, executed)
