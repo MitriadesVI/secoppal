@@ -1,0 +1,1374 @@
+{
+  "baseline_commit": "f6fa8499e060294e47df25ea2c7ba3355c7a3638",
+  "cases": [
+    {
+      "name": "global",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "buyer",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "year",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "fecha_desde": "2026-01-01",
+        "fecha_hasta": "2026-12-31"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "buyer_year",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "fecha_desde": "2026-01-01",
+        "fecha_hasta": "2026-12-31"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "value",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "valor_min": 0,
+        "valor_max": 2000000000
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE valor_del_contrato >= 0 AND valor_del_contrato <= 2000000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE valor_del_contrato >= 0 AND valor_del_contrato <= 2000000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE valor_del_contrato >= 0 AND valor_del_contrato <= 2000000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE valor_del_contrato >= 0 AND valor_del_contrato <= 2000000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE valor_del_contrato >= 0 AND valor_del_contrato <= 2000000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE valor_del_contrato >= 0 AND valor_del_contrato <= 2000000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE valor_del_contrato >= 0 AND valor_del_contrato <= 2000000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE valor_del_contrato >= 0 AND valor_del_contrato <= 2000000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "state",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "estado_contrato": [
+          "En ejecución",
+          "Modificado"
+        ],
+        "estado_contrato_adicional": "Prorrogado"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE estado_contrato IN ('En ejecución', 'Modificado') AND estado_contrato_adicional = 'Prorrogado' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE estado_contrato IN ('En ejecución', 'Modificado') AND estado_contrato_adicional = 'Prorrogado' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE estado_contrato IN ('En ejecución', 'Modificado') AND estado_contrato_adicional = 'Prorrogado' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE estado_contrato IN ('En ejecución', 'Modificado') AND estado_contrato_adicional = 'Prorrogado' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE estado_contrato IN ('En ejecución', 'Modificado') AND estado_contrato_adicional = 'Prorrogado' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE estado_contrato IN ('En ejecución', 'Modificado') AND estado_contrato_adicional = 'Prorrogado' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE estado_contrato IN ('En ejecución', 'Modificado') AND estado_contrato_adicional = 'Prorrogado' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE estado_contrato IN ('En ejecución', 'Modificado') AND estado_contrato_adicional = 'Prorrogado' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "modality",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "modalidad_include_procedure_ids": [
+          "contratacion_directa"
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE modalidad_de_contratacion = 'Contratación directa' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE modalidad_de_contratacion = 'Contratación directa' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE modalidad_de_contratacion = 'Contratación directa' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE modalidad_de_contratacion = 'Contratación directa' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE modalidad_de_contratacion = 'Contratación directa' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE modalidad_de_contratacion = 'Contratación directa' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE modalidad_de_contratacion = 'Contratación directa' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE modalidad_de_contratacion = 'Contratación directa' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "topic",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "objeto": [
+          "software",
+          [
+            "soporte",
+            "licencia"
+          ]
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%licencia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%licencia%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%licencia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%licencia%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%licencia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%licencia%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%licencia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%licencia%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%licencia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%licencia%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%licencia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%licencia%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%licencia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%licencia%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%licencia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%licencia%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "buyer_topic_value",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "objeto": [
+          "aseo"
+        ],
+        "valor_min": 1000000
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "geography",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "departamento_resolved": "Atlántico",
+        "departamentos_in": [
+          "Bolívar"
+        ],
+        "ciudad": "Barranquilla"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "region",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "departamentos_in": [
+          "Atlántico",
+          "Bolívar"
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE departamento IN ('Atlántico', 'Bolívar') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE departamento IN ('Atlántico', 'Bolívar') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE departamento IN ('Atlántico', 'Bolívar') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE departamento IN ('Atlántico', 'Bolívar') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE departamento IN ('Atlántico', 'Bolívar') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE departamento IN ('Atlántico', 'Bolívar') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE departamento IN ('Atlántico', 'Bolívar') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento IN ('Atlántico', 'Bolívar') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "approximate_buyer",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_like": "alcaldia"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%alcaldia%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%alcaldia%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%alcaldia%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%alcaldia%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%alcaldia%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%alcaldia%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%alcaldia%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%alcaldia%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "group",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "buyer_group": {
+          "id": "bogota_central",
+          "version": "2026-09-03.v1"
+        }
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC, :id DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "buyer_candidates",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "entidad_in_candidates": [
+          "COMPRADOR A",
+          "COMPRADOR B"
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "buyer_ecosystem",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "entidad_ecosystem": [
+          "COMPRADOR A",
+          "COMPRADOR B"
+        ],
+        "entidad_contains_all": [
+          "SENA",
+          "NORTE"
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NORTE%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NORTE%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NORTE%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NORTE%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NORTE%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NORTE%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NORTE%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR A%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%COMPRADOR B%'))) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NORTE%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "contract_type",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "contract_type_include": [
+          "prestacion_servicios",
+          "convenio_solidario"
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (tipo_de_contrato = 'Prestación de servicios' OR justificacion_modalidad_de IN ('Convenios Solidarios Regimen articulo 92 Ley 2166 de 2021', 'Law2166of2021_Article95_SolidarityAgreements')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (tipo_de_contrato = 'Prestación de servicios' OR justificacion_modalidad_de IN ('Convenios Solidarios Regimen articulo 92 Ley 2166 de 2021', 'Law2166of2021_Article95_SolidarityAgreements')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE (tipo_de_contrato = 'Prestación de servicios' OR justificacion_modalidad_de IN ('Convenios Solidarios Regimen articulo 92 Ley 2166 de 2021', 'Law2166of2021_Article95_SolidarityAgreements')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (tipo_de_contrato = 'Prestación de servicios' OR justificacion_modalidad_de IN ('Convenios Solidarios Regimen articulo 92 Ley 2166 de 2021', 'Law2166of2021_Article95_SolidarityAgreements')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (tipo_de_contrato = 'Prestación de servicios' OR justificacion_modalidad_de IN ('Convenios Solidarios Regimen articulo 92 Ley 2166 de 2021', 'Law2166of2021_Article95_SolidarityAgreements')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE (tipo_de_contrato = 'Prestación de servicios' OR justificacion_modalidad_de IN ('Convenios Solidarios Regimen articulo 92 Ley 2166 de 2021', 'Law2166of2021_Article95_SolidarityAgreements')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (tipo_de_contrato = 'Prestación de servicios' OR justificacion_modalidad_de IN ('Convenios Solidarios Regimen articulo 92 Ley 2166 de 2021', 'Law2166of2021_Article95_SolidarityAgreements')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (tipo_de_contrato = 'Prestación de servicios' OR justificacion_modalidad_de IN ('Convenios Solidarios Regimen articulo 92 Ley 2166 de 2021', 'Law2166of2021_Article95_SolidarityAgreements')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "topic_exclusion",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "objeto_exclude": [
+          "vigilancia"
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%vigilancia%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%vigilancia%')), false)) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%vigilancia%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%vigilancia%')), false)) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%vigilancia%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%vigilancia%')), false)) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%vigilancia%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%vigilancia%')), false)) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%vigilancia%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%vigilancia%')), false)) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%vigilancia%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%vigilancia%')), false)) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%vigilancia%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%vigilancia%')), false)) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%vigilancia%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%vigilancia%')), false)) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "topic_or_phrases",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "objeto_or": [
+          "software",
+          "soporte"
+        ],
+        "objeto_phrases": [
+          "aire acondicionado",
+          "frase no catalogada"
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%'))) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%acondicionado%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%acondicionado%')))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%'))) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%acondicionado%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%acondicionado%')))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%'))) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%acondicionado%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%acondicionado%')))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%'))) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%acondicionado%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%acondicionado%')))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%'))) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%acondicionado%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%acondicionado%')))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%'))) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%acondicionado%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%acondicionado%')))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%'))) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%acondicionado%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%acondicionado%')))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%soporte%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%soporte%'))) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%acondicionado%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aire%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%acondicionado%')))) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "legacy_state",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "estado": "Activo"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE estado_contrato = 'Activo' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE estado_contrato = 'Activo' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE estado_contrato = 'Activo' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE estado_contrato = 'Activo' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE estado_contrato = 'Activo' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE estado_contrato = 'Activo' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE estado_contrato = 'Activo' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE estado_contrato = 'Activo' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "state_precedence",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "estado": "Ignorado",
+        "estado_contrato": [
+          "En ejecución"
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE estado_contrato = 'En ejecución' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE estado_contrato = 'En ejecución' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE estado_contrato = 'En ejecución' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE estado_contrato = 'En ejecución' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE estado_contrato = 'En ejecución' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE estado_contrato = 'En ejecución' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE estado_contrato = 'En ejecución' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE estado_contrato = 'En ejecución' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "modality_exclusion",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "modalidad_exclude_procedure_ids": [
+          "contratacion_directa"
+        ]
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE modalidad_de_contratacion NOT IN ('Contratación directa') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE modalidad_de_contratacion NOT IN ('Contratación directa') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE modalidad_de_contratacion NOT IN ('Contratación directa') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE modalidad_de_contratacion NOT IN ('Contratación directa') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE modalidad_de_contratacion NOT IN ('Contratación directa') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE modalidad_de_contratacion NOT IN ('Contratación directa') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE modalidad_de_contratacion NOT IN ('Contratación directa') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE modalidad_de_contratacion NOT IN ('Contratación directa') AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "date_from",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "fecha_desde": "2025-02-03"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma >= '2025-02-03' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma >= '2025-02-03' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma >= '2025-02-03' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma >= '2025-02-03' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma >= '2025-02-03' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma >= '2025-02-03' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma >= '2025-02-03' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2025-02-03' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    },
+    {
+      "name": "date_to",
+      "params": {
+        "dataset": "contratos",
+        "contratista": "10000001",
+        "actor_scope": {
+          "document_type": "CC",
+          "base_number": "10000001",
+          "resolution_method": "explicit_document"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document",
+        "fecha_hasta": "2026-09-06"
+      },
+      "queries": {
+        "core": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma <= '2026-09-06' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        },
+        "date_range": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma <= '2026-09-06' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        },
+        "buyers": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma <= '2026-09-06' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        },
+        "years": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma <= '2026-09-06' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        },
+        "modalities": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma <= '2026-09-06' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        },
+        "territories": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma <= '2026-09-06' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        },
+        "observed_names": {
+          "transport": "aggregate",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma <= '2026-09-06' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        },
+        "recent_contracts": {
+          "transport": "query",
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma <= '2026-09-06' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        }
+      }
+    }
+  ],
+  "global_render": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS · NIT 860002400\n\n*Huella contractual observada* — SECOP II contratos, consultado el 18/08/2026 14:32 (hora de Colombia)\n\n- 4.230 contratos\n- $1.4 billones en valor contractual reportado\n- actividad observada entre 2016 y 2026\n\n*Principales compradores*\n- Universidad del Atlántico: 36\n- MUNICIPIO DE MONTERIA: 35\n- GOBERNACION DEL CASANARE: 28\n\n*Actividad por año*\n- 2026: 511\n- 2025: 844\n\n*Modalidades*\n- Mínima cuantía: 2.115\n- Selección Abreviada de Menor Cuantía: 1.049\n- Contratación régimen especial: 375\n\n*Territorios*\n- Distrito Capital de Bogotá: 959\n- Boyacá: 396\n- Valle del Cauca: 293\n\n*Nombres con que aparece en SECOP*\n- LA PREVISORA S.A. COMPAÑÍA DE SEGUROS (4.211)\n- UNIÓN TEMPORAL LA PREVISORA S.A. COMPAÑÍA DE SEGUROS -  POSITIVA COMPAÑÍA DE SEGUROS S.A. (7)\n- UNION TEMPORAL LA PREVISORA - AXA COLPATRIA - ALLIANZ SEGUROS - HDI - 26001053 H3 DE 2026 - AEROCIVIL (3)\n- UT PREVISORA-SOLIDARIA DEQUIN LP 003 2025 (1)\n_Son los nombres que las entidades escribieron en cada contrato, no una razón social registrada. Algunos pueden ser uniones temporales o consorcios publicados bajo este mismo documento: el conteo los incluye tal como la fuente los reporta._\n\n*Contratos recientes*\n- DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN: Adquirir pólizas de seguros del Distrito y conglomerado (grupo 5 SOAT)\n  https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.8772995&isFromPublicArea=True&isModal=true&asPopupView=true\n- PERSONERIA MUNICIPAL  DE SAN PEDRO  SUCRE: No definido\n  https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.342256&isFromPublicArea=True&isModal=true&asPopupView=true\n\nEl rango de actividad se calcula sobre los contratos que publican fecha de firma; cerca del 7% no la reporta.\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales."
+}
