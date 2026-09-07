@@ -19,6 +19,7 @@ from app.core.entity_profile.semantic_request import (
     request_context,
 )
 from app.core.entity_profile.source_request import SourceProvenance
+from app.core.entity_profile.temporal_event import is_consumed_temporal_term
 from app.core.municipal_territory import get_municipal_territories
 
 
@@ -130,7 +131,9 @@ def _clean_topic_value(value: object) -> object:
         return [item for item in cleaned if item not in (None, "", [], ())]
     if not isinstance(value, str):
         return value
-    return "" if _fold(value) in _PROFILE_NOISE else value
+    if _fold(value) in _PROFILE_NOISE or is_consumed_temporal_term(value):
+        return ""
+    return value
 
 
 def profile_query_params(params: dict) -> dict:

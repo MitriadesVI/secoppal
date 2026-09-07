@@ -130,3 +130,28 @@ def current_state_survives_event(
     text = normalize_text(user_query)
     masked = mask_consumed_spans(text, [resolution.claimed_span])
     return detect_estado_family(masked, dataset) is not None
+
+
+def is_consumed_temporal_term(term: str) -> bool:
+    """¿Este término ya lo reclamó una dimensión de tiempo, evento o vigencia?
+
+    ``INV-STRUCTURED-DIMENSION-NOT-TOPIC``: un tramo consumido como dimensión
+    estructurada no puede además filtrarse como tema. Sin esta comprobación
+    "analiza procesos publicados en agosto y todavía abiertos" consultaba
+    ``LIKE '%todavia%'`` sobre el objeto del proceso, y "contratos finalizados
+    en 2026" —que además se responde con una aclaración— guardaba
+    ``finalizados`` como tema de la conversación.
+
+    El vocabulario es exactamente el que este módulo ya usa para decidir; no se
+    inventa uno nuevo, y por eso los sustantivos homónimos ("firma", "firma
+    digital", "publicación de avisos") quedan fuera por construcción.
+    """
+    folded = normalize_text(term)
+    if not folded:
+        return False
+    return any(
+        pattern.fullmatch(folded)
+        for pattern in (
+            _PUBLICATION, _SIGNATURE, _UNSUPPORTED_EVENTS, _CURRENT_MARKER,
+        )
+    )
