@@ -1,0 +1,55 @@
+{
+  "reviewed_head": "9164df0606b0ba9424d627aa37b12e742a7cd707",
+  "execution_scope": "isolated copied implementations; NOT target repository pytest",
+  "checks": [
+    {
+      "case": "mapping/base-setitem",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "mapping/base-update",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "mapping/inherited-init",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "list/base-setitem",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "list/base-append",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "list/inherited-init",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "source/''",
+      "expected_invariant": "PASS"
+    },
+    {
+      "case": "source/'busca '",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "source/'buscar '",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "source/'cuales '",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "source/'por favor '",
+      "expected_invariant": "FAIL"
+    },
+    {
+      "case": "source/coordinated-topic",
+      "expected_invariant": "FAIL"
+    }
+  ],
+  "migration_hypothesis": "NOT_RUN"
+}
