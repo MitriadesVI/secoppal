@@ -180,7 +180,6 @@ def test_organization_tail_repeated_outside_the_span(workflow):
 # P2-B — the region cluster mutates transactionally, evidence included
 # ══════════════════════════════════════════════════════════════════════════
 
-@pytest.mark.xfail(strict=True, reason="P2-B — profile projection leaves orphan region evidence")
 def test_profile_projection_purges_region_evidence():
     from app.core.entity_profile.turn import profile_query_params
 
@@ -271,3 +270,25 @@ def test_a_zone_alias_after_en_or_para_is_an_external_modifier(text):
     params = QueryRouter().parse(text).params
     assert params["actor_scope"]["observed_name"] == "ana maria llanos"
     assert params.get("region") == "Orinoquia"
+
+
+def test_every_territorial_cluster_inventory_carries_its_provenance():
+    """The next omission of region_resolution fails here, not in production.
+
+    Four modules keep their own list of the territorial cluster. A region
+    filter and its provenance must appear or disappear together, so any
+    inventory naming ``region`` must also name ``region_resolution``.
+    """
+    from app.core.entity_profile.turn import _GEOGRAPHY_PARAM_KEYS
+    from app.core.followup_mutations import SCOPE_FIELDS
+    from app.core.query_frame import _SCOPE_KEYS
+    from app.core.workflow.actions.actor_resolution import _BOUNDARY_MODIFIER_KEYS
+
+    for name, inventory in {
+        "entity_profile._GEOGRAPHY_PARAM_KEYS": _GEOGRAPHY_PARAM_KEYS,
+        "followup_mutations.SCOPE_FIELDS": SCOPE_FIELDS,
+        "query_frame._SCOPE_KEYS": _SCOPE_KEYS,
+        "actor_resolution._BOUNDARY_MODIFIER_KEYS": _BOUNDARY_MODIFIER_KEYS,
+    }.items():
+        assert "region" in inventory, name
+        assert "region_resolution" in inventory, f"{name} drops region provenance"

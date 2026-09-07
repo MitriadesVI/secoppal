@@ -35,9 +35,15 @@ _PROFILE_NOISE = frozenset({
     "valor", "montos", "monto", "recientes", "reciente", "ultimos", "ultimo",
     "evolucion",
 })
+# El clúster territorial se purga entero o no se purga. ``region_resolution``
+# es la procedencia de ``region``/``departamentos_in``: dejarla atrás produce
+# metadata que afirma un territorio que el frame ya no filtra. No la consume el
+# builder —no es un filtro—, pero sí la leen el arbitraje de span de actor y las
+# auditorías, y ahí una evidencia huérfana miente.
 _GEOGRAPHY_PARAM_KEYS = frozenset({
     "ciudad", "ciudad_resolved", "departamento", "departamento_resolved",
-    "departamento_resolution", "departamentos_in", "region", "municipal_territory",
+    "departamento_resolution", "departamentos_in", "region", "region_resolution",
+    "municipal_territory",
 })
 
 
