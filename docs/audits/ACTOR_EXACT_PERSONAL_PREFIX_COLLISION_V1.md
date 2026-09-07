@@ -1,6 +1,11 @@
 # ACTOR_EXACT_PERSONAL_PREFIX_COLLISION_V1
 
-**Implementado; VERDICT = NO_GO para promoción.** El nombre personal exacto único
+**Implementado. PRIMARY_PERFORMANCE_GATE = NO_GO (conservado);
+PERFORMANCE_ADJUDICATION = GO; FINAL_PROMOTION_VERDICT = GO.** El texto que sigue
+es el informe de la entrega original y **no se reescribe**: describe el estado en
+que la puerta primaria falló. La re-adjudicación posterior, con su propia regla
+escrita antes de medir, está al final en
+[PERFORMANCE_ADJUDICATION_V1](#performance_adjudication_v1). El nombre personal exacto único
 CC ahora requiere comprobar extensiones exactas N2 de otras CC. Una colisión pide
 selección; un chequeo inconcluso bloquea perfil, fuzzy y fallback. No cambian N2,
 esquema del índice, NIT ni ambigüedades exactas anteriores. No hubo merge ni push.
@@ -337,7 +342,161 @@ Commits, sin squash:
 4. Cierre documental y evidencia de este informe, posterior a suite serial.
 
 La corrección de arbitraje justifica un cuarto commit frente a la preferencia
-inicial de tres. No hay merge ni push. **VERDICT: NO_GO** hasta resolver la puerta
-primaria de rendimiento; los pases funcionales no la sustituyen.
+inicial de tres. No hay merge ni push. **VERDICT de esta entrega: NO_GO** hasta
+resolver la puerta primaria de rendimiento; los pases funcionales no la sustituyen.
+Esa puerta se resolvió después, por adjudicación predefinida y no por
+reinterpretación: ver PERFORMANCE_ADJUDICATION_V1 al final.
 
 Inventario exacto de cambios: `files_changed.json` en el directorio de evidencia.
+
+## PERFORMANCE_ADJUDICATION_V1
+
+Adjudicación posterior, sólo auditoría. **No sustituye ni borra el resultado
+original**: `after_benchmark.json`, `performance_diagnosis.json` y
+`budget_contract.json` quedan intactos y la puerta primaria sigue siendo la que
+fue. Responde una única pregunta, definida antes de volver a medir: *el
+incumplimiento observado, ¿es una degradación reproducible del resolver nuevo o
+una observación transitoria no reproducida?*
+
+- PRIMARY_PERFORMANCE_GATE: **NO_GO** (conservado, no reinterpretado).
+- PERFORMANCE_ADJUDICATION: **GO** — 0 campañas fallidas de 5.
+- ORIGINAL_GATE_FAILURE_RETAINED: **YES**.
+- ORIGINAL_SPIKE_REPRODUCED: **NO**.
+- FINAL_PROMOTION_VERDICT: **GO**, si no aparece otro blocker.
+
+### Por qué la regla se escribió antes
+
+El diagnóstico de 2.000 repeticiones ya existía y no reprodujo el pico, pero no
+anuló el NO_GO porque **no había una regla previa de re-adjudicación**: decidir
+después de ver el número es escoger el resultado. Por eso
+`performance_adjudication_contract.json` —commits, hash de la consulta, cinco
+campañas, 2.000 mediciones por versión, umbrales y regla de decisión— se escribió
+y se hasheó **antes** de la primera medición, y el ejecutor vuelve a verificar ese
+SHA-256 al arrancar.
+
+CONTRACT_SHA256: `1d77b02ee29520977cb978539b72425b3325e450fd5c9c64d6f97dc2e3ac3270`.
+
+### Condiciones congeladas
+
+- RUNTIME_CHANGED: **NO**. `git status --porcelain -- app` vacío antes y después;
+  HEAD `030def55fdf7a013acac8ca4d10419f0d0a47102`. El runtime medido es el de
+  `ddcc6b8`; `030def5` sólo añade documentación y evidencia.
+- BEFORE real: blob Git de
+  `345804cf55becaf728d3ec9c20dc9e2f76a3a5b9:app/data/actor_alias_resolver.py`,
+  SHA-256 `82f20e11a1a430f7418113cbc4e7dd52380366508e272ca4252fa060b96ed0a7`,
+  cargado con el mismo mecanismo `importlib` de `actor_prefix_dense.py`. No se
+  reimplementó el algoritmo anterior. El blob importa `app.core.actor_name` de la
+  rama, que sólo añade un estado extra, dos campos opcionales y un validador al
+  que sólo llega `method='exact_prefix_ambiguous'`: el camino RESOLVED de BEFORE
+  no cambia. Los estados observados lo confirman —BEFORE devolvió `RESOLVED`
+  2.000/2.000 y AFTER `AMBIGUOUS` 2.000/2.000 en cada campaña—, así que las dos
+  versiones ejecutaron de verdad algoritmos distintos.
+- INDEX_CHANGED: **NO**. `data/actor_alias_index.sqlite`, SHA-256
+  `464add1dbb479e616ee80a079b11c256db0d67dc6b979e4f285612233bdb8690`,
+  662.409.216 bytes, mtime_ns 1787249492985828920, schema 1, N2,
+  `built_at` 2026-08-20T18:10:58+00:00. Idéntico al de `manifest.json` y al SHA-256
+  recalculado tras las campañas. Abierto `mode=ro&immutable=1` como en producción.
+- Sin concurrencia: ninguna suite, dogfood, build de índice, auditoría masiva ni
+  otro benchmark SECOPPAL corriendo; las campañas se ejecutaron en serie. La carga
+  del sistema (`load average` 4,7–5,0, de la interfaz gráfica del equipo, no de
+  procesos SECOPPAL) queda registrada por campaña como metadata diagnóstica, no
+  como excusa: **ninguna campaña se descartó por el entorno**.
+- Consulta: exactamente la que falló,
+  `00d89a30f637437a54e698a3840c5a527b95f58e9afae93ba7c84a370d8dd0e0`, resuelta
+  desde `benchmark_queries.json`. Un token, ≥10 challengers. Nunca escrita en claro.
+
+### Diseño
+
+Cinco campañas independientes. Cada una: 20 warmups por versión y 2.000
+mediciones por versión, **pareadas e intercaladas**, con el orden alternando por
+par (BEFORE primero en los pares, AFTER primero en los impares), de modo que cada
+versión pasa la mitad de sus muestras en cada posición y la deriva temporal no
+puede favorecer a ninguna. Autoridad del gate: reloj de pared `perf_counter_ns`.
+El tiempo de CPU se recogió en una pasada aparte, sólo como diagnóstico, para no
+contaminar la medición que decide. Los percentiles son **por campaña**; no se
+mezclan campañas en un percentil global. Umbrales sin tocar: resolver Δp95 ≤ 0,5
+ms, existencia p95 ≤ 0,5 ms, enumeración p95 ≤ 1,0 ms; presupuestos operativos de
+5 ms y 20 ms sin cambios.
+
+### Resultado por campaña
+
+| Campaña | BEFORE p95 (ms) | AFTER p95 (ms) | Δ (ms) | Existencia p95 (ms) | Enumeración p95 (ms) | PASS |
+|---|---:|---:|---:|---:|---:|:--:|
+| 1 | 0,173708 | 0,346709 | 0,173001 | 0,018458 | 0,068125 | sí |
+| 2 | 0,201458 | 0,365541 | 0,164083 | 0,018000 | 0,064209 | sí |
+| 3 | 0,195500 | 0,360500 | 0,165000 | 0,019916 | 0,069166 | sí |
+| 4 | 0,137750 | 0,271000 | 0,133250 | 0,014792 | 0,063667 | sí |
+| 5 | 0,115458 | 0,221875 | 0,106417 | 0,012458 | 0,054459 | sí |
+
+FAIL_CAMPAIGNS: **ninguna**. El peor Δ observado, 0,173 ms, es el 35 % del umbral
+de 0,5 ms; el pico primario era 1,563 ms. Ni una campaña se repitió, ni se
+descartó, ni se añadió una sexta.
+
+### Qué se reproduce y qué no
+
+El pico **no** desaparece del mundo: los máximos absolutos por campaña llegan a
+4,78 / 4,00 / 9,23 / 1,26 / 0,46 ms en AFTER. Pero también en BEFORE —5,50 / 3,08 /
+2,91 / 0,45 / 0,26 ms—, con el algoritmo antiguo, sobre el mismo índice y en el
+mismo proceso. La cola larga es del entorno, no del resolver nuevo. Lo que no se
+reproduce es que esa cola contamine el p95: con n=50 un solo outlier lo arrastra,
+con n=2.000 no. Ésa es la lectura honesta del GO —**el pico primario no se
+reprodujo bajo una campaña predefinida y suficientemente repetida**—, y no una
+afirmación de que el resolver nuevo no tenga cola.
+
+El coste real y sostenido del resolver nuevo en esta consulta es de unos 0,10 ms
+de p50 (0,106 → 0,203 ms en la campaña 1), coherente con el tiempo de CPU medido aparte (p95
+BEFORE 0,111 ms, AFTER 0,217 ms): el trabajo añadido es cómputo, no espera.
+
+### SANITY_COHORT
+
+Doce consultas del corpus ya congelado —tres exactas CC sin challenger, tres con
+uno, tres con 2–9 y tres con ≥10—, elegidas de forma determinista por SHA-256
+dentro de cada bucket, 500 pares alternados cada una. Sólo diagnóstico: no entran
+en la regla 0/1/≥2.
+
+| Bucket | Δ p95 resolver (ms) | Existencia p95 (ms) | Enumeración p95 (ms) |
+|---|---:|---:|---:|
+| absent (3) | 0,0150–0,0165 | 0,0053–0,0054 | — |
+| one (3) | 0,0397–0,0783 | 0,0115–0,0140 | 0,0087–0,0102 |
+| two_to_nine (3) | 0,0820–0,1415 | 0,0173–0,0202 | 0,0176–0,0530 |
+| ten_plus (3) | 0,1102–0,1805 | 0,0129–0,0158 | 0,0597–0,0607 |
+
+SYSTEMATIC_REGRESSION_FOUND: **NO**. Ninguna de las doce roza un umbral; el peor
+Δ es 0,1805 ms. El coste crece monótonamente con el número de challengers, que es
+exactamente lo que el algoritmo predice: sin challenger casi no cuesta nada
+(0,015 ms) y sólo el caso denso paga. No hay blocker nuevo que reportar.
+
+### Verificación
+
+`ruff check` limpio sobre los archivos nuevos; los 17 tests del adjudicador pasan;
+`git diff --check` limpio. **No se volvió a correr la suite completa**: ya pasó
+—11.738 passed, 11 skipped, 14 xfailed— y el runtime no cambió en esta
+adjudicación, así que repetirla no aportaría evidencia.
+
+### Reproducción
+
+```bash
+PY=/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python
+INDEX=/Users/rodrigoortiz/Documents/secoppal/data/actor_alias_index.sqlite
+EV=/ruta/evidencia-nueva   # copiar benchmark_queries.json, baseline_benchmark.json
+                           # y after_benchmark.json, sin cambiar su contenido
+$PY scripts/audits/actor_prefix_adjudication.py --index-path "$INDEX" \
+  --evidence-dir "$EV" --phase contract
+$PY scripts/audits/actor_prefix_adjudication.py --index-path "$INDEX" \
+  --evidence-dir "$EV" --phase run --contract-sha256 <sha impreso arriba>
+```
+
+La regla de decisión vive aparte, en `scripts/audits/actor_prefix_adjudicator.py`,
+sin reloj ni I/O, y `tests/test_actor_prefix_adjudicator.py` la fija: 0/5 → GO,
+1/5 → INCONCLUSIVE, 2+/5 → NO_GO, umbrales exactos, fallo por cada una de las tres
+puertas, y rechazo de cualquier número de campañas distinto de cinco —que es la
+forma de impedir que una sexta campaña rompa un empate o que una campaña fallida
+se caiga de la cuenta.
+
+Mediciones crudas completas —cada valor individual en nanosegundos, no sólo el
+p95— en `performance_adjudication_raw.jsonl.gz`. Resumen y veredicto en
+`performance_adjudication.json`.
+
+Commit adicional, sin squash ni modificación de los commits de runtime:
+
+5. `test(actor): adjudicate exact-prefix performance gate`.

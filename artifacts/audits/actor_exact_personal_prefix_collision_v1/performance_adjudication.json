@@ -1,0 +1,839 @@
+{
+  "contract": "performance_adjudication_contract.json",
+  "contract_sha256": "1d77b02ee29520977cb978539b72425b3325e450fd5c9c64d6f97dc2e3ac3270",
+  "raw_measurements": "performance_adjudication_raw.jsonl.gz",
+  "commits": {
+    "base_before": "345804cf55becaf728d3ec9c20dc9e2f76a3a5b9",
+    "runtime_after": "ddcc6b8ac4312e63ff34d3e9d187045300412268",
+    "head": "030def55fdf7a013acac8ca4d10419f0d0a47102",
+    "branch": "feature/actor-exact-personal-prefix-collision-v1"
+  },
+  "before_blob_sha256": "82f20e11a1a430f7418113cbc4e7dd52380366508e272ca4252fa060b96ed0a7",
+  "index_sha256": "464add1dbb479e616ee80a079b11c256db0d67dc6b979e4f285612233bdb8690",
+  "index_unchanged": true,
+  "runtime_tracked_diff_empty": true,
+  "primary_gate": {
+    "verdict": "NO_GO",
+    "retained_artifact": "after_benchmark.json",
+    "before_p95_ms": 0.09975,
+    "after_p95_ms": 1.6623330302536488,
+    "limit_ms": 0.59975,
+    "must_not_be_deleted": true
+  },
+  "failed_query_sha256": "00d89a30f637437a54e698a3840c5a527b95f58e9afae93ba7c84a370d8dd0e0",
+  "campaigns": [
+    {
+      "campaign": 1,
+      "environment": {
+        "stage": "campaign_1",
+        "timestamp_utc": "2026-09-07T03:18:26.378451+00:00",
+        "load_average": [
+          5.017578125,
+          4.26904296875,
+          3.63330078125
+        ],
+        "pid": 57901,
+        "python": "3.14.5",
+        "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+        "machine": "arm64"
+      },
+      "statuses": {
+        "before:RESOLVED": 2000,
+        "after:AMBIGUOUS": 2000,
+        "existence:FOUND": 2000
+      },
+      "resolver_before": {
+        "n": 2000,
+        "p50_ms": 0.106209,
+        "p95_ms": 0.173708,
+        "p99_ms": 0.354958,
+        "max_ms": 5.503542
+      },
+      "resolver_after": {
+        "n": 2000,
+        "p50_ms": 0.202875,
+        "p95_ms": 0.346709,
+        "p99_ms": 0.50625,
+        "max_ms": 4.78075
+      },
+      "existence": {
+        "n": 2000,
+        "p50_ms": 0.011041,
+        "p95_ms": 0.018458,
+        "p99_ms": 0.042833,
+        "max_ms": 0.366083
+      },
+      "enumeration": {
+        "n": 2000,
+        "p50_ms": 0.049292,
+        "p95_ms": 0.068125,
+        "p99_ms": 0.141334,
+        "max_ms": 0.374208
+      },
+      "resolver_p95_delta_ms": 0.173001,
+      "failed_gates": [],
+      "pass": true
+    },
+    {
+      "campaign": 2,
+      "environment": {
+        "stage": "campaign_2",
+        "timestamp_utc": "2026-09-07T03:18:27.225687+00:00",
+        "load_average": [
+          5.017578125,
+          4.26904296875,
+          3.63330078125
+        ],
+        "pid": 57901,
+        "python": "3.14.5",
+        "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+        "machine": "arm64"
+      },
+      "statuses": {
+        "before:RESOLVED": 2000,
+        "after:AMBIGUOUS": 2000,
+        "existence:FOUND": 2000
+      },
+      "resolver_before": {
+        "n": 2000,
+        "p50_ms": 0.107166,
+        "p95_ms": 0.201458,
+        "p99_ms": 0.369208,
+        "max_ms": 3.083416
+      },
+      "resolver_after": {
+        "n": 2000,
+        "p50_ms": 0.20475,
+        "p95_ms": 0.365541,
+        "p99_ms": 0.793417,
+        "max_ms": 4.004333
+      },
+      "existence": {
+        "n": 2000,
+        "p50_ms": 0.011042,
+        "p95_ms": 0.018,
+        "p99_ms": 0.039375,
+        "max_ms": 0.148541
+      },
+      "enumeration": {
+        "n": 2000,
+        "p50_ms": 0.05,
+        "p95_ms": 0.064209,
+        "p99_ms": 0.145875,
+        "max_ms": 0.75475
+      },
+      "resolver_p95_delta_ms": 0.164083,
+      "failed_gates": [],
+      "pass": true
+    },
+    {
+      "campaign": 3,
+      "environment": {
+        "stage": "campaign_3",
+        "timestamp_utc": "2026-09-07T03:18:28.084045+00:00",
+        "load_average": [
+          5.017578125,
+          4.26904296875,
+          3.63330078125
+        ],
+        "pid": 57901,
+        "python": "3.14.5",
+        "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+        "machine": "arm64"
+      },
+      "statuses": {
+        "before:RESOLVED": 2000,
+        "after:AMBIGUOUS": 2000,
+        "existence:FOUND": 2000
+      },
+      "resolver_before": {
+        "n": 2000,
+        "p50_ms": 0.107666,
+        "p95_ms": 0.1955,
+        "p99_ms": 0.312584,
+        "max_ms": 2.910708
+      },
+      "resolver_after": {
+        "n": 2000,
+        "p50_ms": 0.207959,
+        "p95_ms": 0.3605,
+        "p99_ms": 0.557125,
+        "max_ms": 9.228709
+      },
+      "existence": {
+        "n": 2000,
+        "p50_ms": 0.011209,
+        "p95_ms": 0.019916,
+        "p99_ms": 0.05075,
+        "max_ms": 0.095125
+      },
+      "enumeration": {
+        "n": 2000,
+        "p50_ms": 0.050375,
+        "p95_ms": 0.069166,
+        "p99_ms": 0.123875,
+        "max_ms": 0.263375
+      },
+      "resolver_p95_delta_ms": 0.16499999999999998,
+      "failed_gates": [],
+      "pass": true
+    },
+    {
+      "campaign": 4,
+      "environment": {
+        "stage": "campaign_4",
+        "timestamp_utc": "2026-09-07T03:18:28.948691+00:00",
+        "load_average": [
+          4.69580078125,
+          4.21435546875,
+          3.61767578125
+        ],
+        "pid": 57901,
+        "python": "3.14.5",
+        "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+        "machine": "arm64"
+      },
+      "statuses": {
+        "before:RESOLVED": 2000,
+        "after:AMBIGUOUS": 2000,
+        "existence:FOUND": 2000
+      },
+      "resolver_before": {
+        "n": 2000,
+        "p50_ms": 0.107125,
+        "p95_ms": 0.13775,
+        "p99_ms": 0.229292,
+        "max_ms": 0.452208
+      },
+      "resolver_after": {
+        "n": 2000,
+        "p50_ms": 0.205417,
+        "p95_ms": 0.271,
+        "p99_ms": 0.422333,
+        "max_ms": 1.255292
+      },
+      "existence": {
+        "n": 2000,
+        "p50_ms": 0.011084,
+        "p95_ms": 0.014792,
+        "p99_ms": 0.024375,
+        "max_ms": 0.138375
+      },
+      "enumeration": {
+        "n": 2000,
+        "p50_ms": 0.050208,
+        "p95_ms": 0.063667,
+        "p99_ms": 0.092167,
+        "max_ms": 0.281833
+      },
+      "resolver_p95_delta_ms": 0.13325,
+      "failed_gates": [],
+      "pass": true
+    },
+    {
+      "campaign": 5,
+      "environment": {
+        "stage": "campaign_5",
+        "timestamp_utc": "2026-09-07T03:18:29.744237+00:00",
+        "load_average": [
+          4.69580078125,
+          4.21435546875,
+          3.61767578125
+        ],
+        "pid": 57901,
+        "python": "3.14.5",
+        "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+        "machine": "arm64"
+      },
+      "statuses": {
+        "before:RESOLVED": 2000,
+        "after:AMBIGUOUS": 2000,
+        "existence:FOUND": 2000
+      },
+      "resolver_before": {
+        "n": 2000,
+        "p50_ms": 0.105125,
+        "p95_ms": 0.115458,
+        "p99_ms": 0.133709,
+        "max_ms": 0.256708
+      },
+      "resolver_after": {
+        "n": 2000,
+        "p50_ms": 0.200666,
+        "p95_ms": 0.221875,
+        "p99_ms": 0.250958,
+        "max_ms": 0.464667
+      },
+      "existence": {
+        "n": 2000,
+        "p50_ms": 0.010917,
+        "p95_ms": 0.012458,
+        "p99_ms": 0.014709,
+        "max_ms": 0.02975
+      },
+      "enumeration": {
+        "n": 2000,
+        "p50_ms": 0.049959,
+        "p95_ms": 0.054459,
+        "p99_ms": 0.064542,
+        "max_ms": 0.183458
+      },
+      "resolver_p95_delta_ms": 0.10641699999999998,
+      "failed_gates": [],
+      "pass": true
+    }
+  ],
+  "performance_adjudication": "GO",
+  "fail_campaigns": [],
+  "fail_count": 0,
+  "performance_regression_confirmed": false,
+  "original_gate_failure_retained": true,
+  "original_spike_reproduced": false,
+  "merge_recommended": true,
+  "thresholds": {
+    "resolver_delta_max_ms": 0.5,
+    "existence_p95_max_ms": 0.5,
+    "enumeration_p95_max_ms": 1.0
+  },
+  "cpu_time_diagnostic_ms": {
+    "before_ns": {
+      "n": 500,
+      "p50_ms": 0.1,
+      "p95_ms": 0.111,
+      "p99_ms": 0.126,
+      "max_ms": 0.152
+    },
+    "after_ns": {
+      "n": 500,
+      "p50_ms": 0.197,
+      "p95_ms": 0.217,
+      "p99_ms": 0.235,
+      "max_ms": 0.402
+    }
+  },
+  "sanity_cohort": {
+    "queries": 12,
+    "pairs_per_query": 500,
+    "threshold_breaches": [],
+    "systematic_regression_found": false,
+    "worst_resolver_p95_delta_ms": 0.18045799999999998,
+    "diagnostic_only": true,
+    "results": [
+      {
+        "query_sha256": "00000d29eb9ade927fc9bc814158ac20208cf417784c1db9ae574b18c399669d",
+        "challengers_bucket": "absent",
+        "shape": "4",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:RESOLVED": 500,
+          "existence:ABSENT_CONFIRMED": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.097875,
+          "p95_ms": 0.108167,
+          "p99_ms": 0.128791,
+          "max_ms": 0.146583
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.112292,
+          "p95_ms": 0.123792,
+          "p99_ms": 0.14325,
+          "max_ms": 0.178042
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.004625,
+          "p95_ms": 0.005417,
+          "p99_ms": 0.006583,
+          "max_ms": 0.012666
+        },
+        "enumeration": null,
+        "resolver_p95_delta_ms": 0.015625,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "00001c50690c440f209e84b4616edabdf4b81c343d38fbb12d202fc119d26176",
+        "challengers_bucket": "absent",
+        "shape": "3",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:RESOLVED": 500,
+          "existence:ABSENT_CONFIRMED": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.097708,
+          "p95_ms": 0.106833,
+          "p99_ms": 0.124333,
+          "max_ms": 0.1665
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.112459,
+          "p95_ms": 0.123375,
+          "p99_ms": 0.141666,
+          "max_ms": 0.15725
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.0045,
+          "p95_ms": 0.00525,
+          "p99_ms": 0.006542,
+          "max_ms": 0.014041
+        },
+        "enumeration": null,
+        "resolver_p95_delta_ms": 0.016542,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "00002694f44d50de159c0d490d6400a8b558afc39d0e2d0e12e1826dab825508",
+        "challengers_bucket": "absent",
+        "shape": "4",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:RESOLVED": 500,
+          "existence:ABSENT_CONFIRMED": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.100833,
+          "p95_ms": 0.109375,
+          "p99_ms": 0.133209,
+          "max_ms": 0.155166
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.115583,
+          "p95_ms": 0.124333,
+          "p99_ms": 0.139584,
+          "max_ms": 0.181542
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.004583,
+          "p95_ms": 0.005375,
+          "p99_ms": 0.006708,
+          "max_ms": 0.01575
+        },
+        "enumeration": null,
+        "resolver_p95_delta_ms": 0.014957999999999999,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "0000694c785db63577bc8e1400533c21f76a64228993bdd40a94aa17189fbbfc",
+        "challengers_bucket": "one",
+        "shape": "2",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:AMBIGUOUS": 500,
+          "existence:FOUND": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.09975,
+          "p95_ms": 0.111334,
+          "p99_ms": 0.133041,
+          "max_ms": 0.315417
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.13725,
+          "p95_ms": 0.151,
+          "p99_ms": 0.177917,
+          "max_ms": 0.29575
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.010084,
+          "p95_ms": 0.011542,
+          "p99_ms": 0.013917,
+          "max_ms": 0.019333
+        },
+        "enumeration": {
+          "n": 500,
+          "p50_ms": 0.007791,
+          "p95_ms": 0.008708,
+          "p99_ms": 0.01025,
+          "max_ms": 0.141875
+        },
+        "resolver_p95_delta_ms": 0.03966599999999999,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "000d3cf0b521e1271082cc9b92693b3396a4987a715b1bbbabff2f35da8445b1",
+        "challengers_bucket": "one",
+        "shape": "2",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:AMBIGUOUS": 500,
+          "existence:FOUND": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.100125,
+          "p95_ms": 0.1175,
+          "p99_ms": 0.142542,
+          "max_ms": 0.158625
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.136458,
+          "p95_ms": 0.159666,
+          "p99_ms": 0.186792,
+          "max_ms": 0.233875
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.009792,
+          "p95_ms": 0.0115,
+          "p99_ms": 0.014375,
+          "max_ms": 0.065667
+        },
+        "enumeration": {
+          "n": 500,
+          "p50_ms": 0.0075,
+          "p95_ms": 0.008667,
+          "p99_ms": 0.010875,
+          "max_ms": 0.017584
+        },
+        "resolver_p95_delta_ms": 0.04216600000000001,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "001693e22596aa410dc206dd48947dce8e9d966323db31ecef92a5d0c8ccad67",
+        "challengers_bucket": "one",
+        "shape": "2",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:AMBIGUOUS": 500,
+          "existence:FOUND": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.101542,
+          "p95_ms": 0.137916,
+          "p99_ms": 0.254541,
+          "max_ms": 0.394458
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.141959,
+          "p95_ms": 0.216208,
+          "p99_ms": 0.338875,
+          "max_ms": 0.479084
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.010208,
+          "p95_ms": 0.014042,
+          "p99_ms": 0.020709,
+          "max_ms": 0.113333
+        },
+        "enumeration": {
+          "n": 500,
+          "p50_ms": 0.007875,
+          "p95_ms": 0.010167,
+          "p99_ms": 0.017,
+          "max_ms": 0.045666
+        },
+        "resolver_p95_delta_ms": 0.078292,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "0002bb5bc7d06be920ad4719acbc9c2a10247f2cc27a874d43afd30a0469f7bd",
+        "challengers_bucket": "two_to_nine",
+        "shape": "3",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:AMBIGUOUS": 500,
+          "existence:FOUND": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.106542,
+          "p95_ms": 0.171792,
+          "p99_ms": 0.381833,
+          "max_ms": 0.458792
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.154459,
+          "p95_ms": 0.290083,
+          "p99_ms": 0.417542,
+          "max_ms": 0.63775
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.011,
+          "p95_ms": 0.017792,
+          "p99_ms": 0.027375,
+          "max_ms": 0.054583
+        },
+        "enumeration": {
+          "n": 500,
+          "p50_ms": 0.012542,
+          "p95_ms": 0.017625,
+          "p99_ms": 0.0255,
+          "max_ms": 0.057167
+        },
+        "resolver_p95_delta_ms": 0.11829099999999998,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "000439bbf5bf35f0243accb55fc715347299260ef4bf639849afbb5865d94d19",
+        "challengers_bucket": "two_to_nine",
+        "shape": "1",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:AMBIGUOUS": 500,
+          "existence:FOUND": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.106833,
+          "p95_ms": 0.177958,
+          "p99_ms": 0.272375,
+          "max_ms": 0.434334
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.190542,
+          "p95_ms": 0.319417,
+          "p99_ms": 0.531875,
+          "max_ms": 0.726167
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.011125,
+          "p95_ms": 0.020167,
+          "p99_ms": 0.038125,
+          "max_ms": 0.102875
+        },
+        "enumeration": {
+          "n": 500,
+          "p50_ms": 0.0395,
+          "p95_ms": 0.053,
+          "p99_ms": 0.076209,
+          "max_ms": 0.136333
+        },
+        "resolver_p95_delta_ms": 0.141459,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "001020aac308d69a0ff6f53189f39537dea1460a3ae23a5280738ea2d8b22031",
+        "challengers_bucket": "two_to_nine",
+        "shape": "3",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:AMBIGUOUS": 500,
+          "existence:FOUND": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.103166,
+          "p95_ms": 0.1655,
+          "p99_ms": 0.307708,
+          "max_ms": 0.382
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.155125,
+          "p95_ms": 0.247458,
+          "p99_ms": 0.371167,
+          "max_ms": 0.448666
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.010791,
+          "p95_ms": 0.01725,
+          "p99_ms": 0.027334,
+          "max_ms": 0.088125
+        },
+        "enumeration": {
+          "n": 500,
+          "p50_ms": 0.016833,
+          "p95_ms": 0.022834,
+          "p99_ms": 0.049042,
+          "max_ms": 0.169667
+        },
+        "resolver_p95_delta_ms": 0.081958,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "003d0d29e6b6c406e3529a4d68fbfbe2d27666abc205b67b80b5be0e46708340",
+        "challengers_bucket": "ten_plus",
+        "shape": "2",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:AMBIGUOUS": 500,
+          "existence:FOUND": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.105167,
+          "p95_ms": 0.149917,
+          "p99_ms": 0.269834,
+          "max_ms": 0.35
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.20275,
+          "p95_ms": 0.330375,
+          "p99_ms": 0.472416,
+          "max_ms": 0.597667
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.010792,
+          "p95_ms": 0.015833,
+          "p99_ms": 0.02275,
+          "max_ms": 0.061042
+        },
+        "enumeration": {
+          "n": 500,
+          "p50_ms": 0.049125,
+          "p95_ms": 0.0605,
+          "p99_ms": 0.078666,
+          "max_ms": 0.151917
+        },
+        "resolver_p95_delta_ms": 0.18045799999999998,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "005cbdb4d7e4ee50ba196286267ed80dc3dc39f2b321eae831a12631e0564e16",
+        "challengers_bucket": "ten_plus",
+        "shape": "1",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:AMBIGUOUS": 500,
+          "existence:FOUND": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.10525,
+          "p95_ms": 0.127375,
+          "p99_ms": 0.184833,
+          "max_ms": 0.266708
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.2035,
+          "p95_ms": 0.241334,
+          "p99_ms": 0.319167,
+          "max_ms": 0.411916
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.010833,
+          "p95_ms": 0.013375,
+          "p99_ms": 0.021458,
+          "max_ms": 0.090416
+        },
+        "enumeration": {
+          "n": 500,
+          "p50_ms": 0.049917,
+          "p95_ms": 0.06075,
+          "p99_ms": 0.082792,
+          "max_ms": 0.306959
+        },
+        "resolver_p95_delta_ms": 0.113959,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      },
+      {
+        "query_sha256": "005fd4a777b4be0a86e1b6b7e8018021b894c20f4cc2f1dc9af13bc26ce5e816",
+        "challengers_bucket": "ten_plus",
+        "shape": "2",
+        "statuses": {
+          "before:RESOLVED": 500,
+          "after:AMBIGUOUS": 500,
+          "existence:FOUND": 500
+        },
+        "resolver_before": {
+          "n": 500,
+          "p50_ms": 0.106292,
+          "p95_ms": 0.128458,
+          "p99_ms": 0.166333,
+          "max_ms": 0.304416
+        },
+        "resolver_after": {
+          "n": 500,
+          "p50_ms": 0.202542,
+          "p95_ms": 0.238625,
+          "p99_ms": 0.293625,
+          "max_ms": 0.448
+        },
+        "existence": {
+          "n": 500,
+          "p50_ms": 0.010875,
+          "p95_ms": 0.012875,
+          "p99_ms": 0.023542,
+          "max_ms": 0.052667
+        },
+        "enumeration": {
+          "n": 500,
+          "p50_ms": 0.050584,
+          "p95_ms": 0.05975,
+          "p99_ms": 0.069833,
+          "max_ms": 0.086417
+        },
+        "resolver_p95_delta_ms": 0.11016700000000001,
+        "within_resolver_delta_threshold": true,
+        "within_existence_threshold": true,
+        "within_enumeration_threshold": true
+      }
+    ]
+  },
+  "environment": {
+    "start": {
+      "stage": "run_start",
+      "timestamp_utc": "2026-09-07T03:18:26.352129+00:00",
+      "load_average": [
+        5.017578125,
+        4.26904296875,
+        3.63330078125
+      ],
+      "pid": 57901,
+      "python": "3.14.5",
+      "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+      "machine": "arm64"
+    },
+    "end": {
+      "stage": "run_end",
+      "timestamp_utc": "2026-09-07T03:18:32.635856+00:00",
+      "load_average": [
+        4.69580078125,
+        4.21435546875,
+        3.61767578125
+      ],
+      "pid": 57901,
+      "python": "3.14.5",
+      "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+      "machine": "arm64"
+    }
+  },
+  "scope": "Warm local cache, single machine, read-only immutable index. Re-adjudicates reproducibility of one frozen observation; it does not replace after_benchmark.json and does not relax any threshold."
+}

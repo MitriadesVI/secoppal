@@ -1,0 +1,158 @@
+{
+  "purpose": "Predefined re-adjudication of the ADR-094 resolver p95 gate. Written and hashed before any measurement.",
+  "written_at_utc": "2026-09-07T03:18:05.887003+00:00",
+  "commits": {
+    "base_before": "345804cf55becaf728d3ec9c20dc9e2f76a3a5b9",
+    "runtime_after": "ddcc6b8ac4312e63ff34d3e9d187045300412268",
+    "head": "030def55fdf7a013acac8ca4d10419f0d0a47102",
+    "branch": "feature/actor-exact-personal-prefix-collision-v1"
+  },
+  "before_source": {
+    "mechanism": "git show <base>:app/data/actor_alias_resolver.py loaded with importlib",
+    "blob_sha256": "82f20e11a1a430f7418113cbc4e7dd52380366508e272ca4252fa060b96ed0a7",
+    "reused_from": "scripts/audits/actor_prefix_dense.py",
+    "note": "The frozen blob imports app.core.actor_name from the branch. That module only adds an extra status, two optional fields and a validator reached solely by method='exact_prefix_ambiguous'; the BEFORE RESOLVED path is unchanged. The AFTER algorithm is never executed for BEFORE."
+  },
+  "query": {
+    "failed_query_sha256": "00d89a30f637437a54e698a3840c5a527b95f58e9afae93ba7c84a370d8dd0e0",
+    "resolved_from": "benchmark_queries.json",
+    "shape": "1",
+    "challengers_bucket": "ten_plus",
+    "never_written_in_clear": true
+  },
+  "primary_gate": {
+    "verdict": "NO_GO",
+    "retained_artifact": "after_benchmark.json",
+    "before_p95_ms": 0.09975,
+    "after_p95_ms": 1.6623330302536488,
+    "limit_ms": 0.59975,
+    "must_not_be_deleted": true
+  },
+  "design": {
+    "campaigns": 5,
+    "measurements_per_version_per_campaign": 2000,
+    "warmups_per_version_per_campaign": 20,
+    "paired": true,
+    "alternating_order": "pair k: BEFORE first when k even, AFTER first when k odd",
+    "percentiles_per_campaign_only": true,
+    "clock": "time.perf_counter_ns wall clock is the gate authority; process_time_ns is collected in a separate diagnostic pass"
+  },
+  "thresholds": {
+    "resolver_after_p95_minus_before_p95_max_ms": 0.5,
+    "existence_p95_max_ms": 0.5,
+    "enumeration_p95_max_ms": 1.0,
+    "existence_operational_budget_ms": 5.0,
+    "enumeration_operational_budget_ms": 20.0,
+    "unchanged_from": "budget_contract.json"
+  },
+  "decision_rule": {
+    "campaign_fails_if": [
+      "resolver delta p95 > 0.5 ms",
+      "existence p95 > 0.5 ms",
+      "enumeration p95 > 1.0 ms"
+    ],
+    "0_of_5": "GO; original spike not reproduced; original failure retained",
+    "1_of_5": "INCONCLUSIVE; no merge; no sixth campaign",
+    "2_or_more_of_5": "NO_GO; performance regression confirmed",
+    "forbidden": [
+      "discarding an outlier campaign",
+      "re-running a failed campaign",
+      "a sixth campaign",
+      "lowering thresholds",
+      "raising budgets",
+      "changing runtime, index or data",
+      "picking the best result"
+    ]
+  },
+  "sanity_cohort": {
+    "queries": [
+      {
+        "query_sha256": "00000d29eb9ade927fc9bc814158ac20208cf417784c1db9ae574b18c399669d",
+        "challengers_bucket": "absent",
+        "shape": "4"
+      },
+      {
+        "query_sha256": "00001c50690c440f209e84b4616edabdf4b81c343d38fbb12d202fc119d26176",
+        "challengers_bucket": "absent",
+        "shape": "3"
+      },
+      {
+        "query_sha256": "00002694f44d50de159c0d490d6400a8b558afc39d0e2d0e12e1826dab825508",
+        "challengers_bucket": "absent",
+        "shape": "4"
+      },
+      {
+        "query_sha256": "0000694c785db63577bc8e1400533c21f76a64228993bdd40a94aa17189fbbfc",
+        "challengers_bucket": "one",
+        "shape": "2"
+      },
+      {
+        "query_sha256": "000d3cf0b521e1271082cc9b92693b3396a4987a715b1bbbabff2f35da8445b1",
+        "challengers_bucket": "one",
+        "shape": "2"
+      },
+      {
+        "query_sha256": "001693e22596aa410dc206dd48947dce8e9d966323db31ecef92a5d0c8ccad67",
+        "challengers_bucket": "one",
+        "shape": "2"
+      },
+      {
+        "query_sha256": "0002bb5bc7d06be920ad4719acbc9c2a10247f2cc27a874d43afd30a0469f7bd",
+        "challengers_bucket": "two_to_nine",
+        "shape": "3"
+      },
+      {
+        "query_sha256": "000439bbf5bf35f0243accb55fc715347299260ef4bf639849afbb5865d94d19",
+        "challengers_bucket": "two_to_nine",
+        "shape": "1"
+      },
+      {
+        "query_sha256": "001020aac308d69a0ff6f53189f39537dea1460a3ae23a5280738ea2d8b22031",
+        "challengers_bucket": "two_to_nine",
+        "shape": "3"
+      },
+      {
+        "query_sha256": "003d0d29e6b6c406e3529a4d68fbfbe2d27666abc205b67b80b5be0e46708340",
+        "challengers_bucket": "ten_plus",
+        "shape": "2"
+      },
+      {
+        "query_sha256": "005cbdb4d7e4ee50ba196286267ed80dc3dc39f2b321eae831a12631e0564e16",
+        "challengers_bucket": "ten_plus",
+        "shape": "1"
+      },
+      {
+        "query_sha256": "005fd4a777b4be0a86e1b6b7e8018021b894c20f4cc2f1dc9af13bc26ce5e816",
+        "challengers_bucket": "ten_plus",
+        "shape": "2"
+      }
+    ],
+    "pairs_per_query": 500,
+    "diagnostic_only": true,
+    "cannot_change_the_primary_rule": true
+  },
+  "index": {
+    "path": "/Users/rodrigoortiz/Documents/secoppal/data/actor_alias_index.sqlite",
+    "sha256": "464add1dbb479e616ee80a079b11c256db0d67dc6b979e4f285612233bdb8690",
+    "size": 662409216,
+    "mtime_ns": 1787249492985828920,
+    "schema_version": "1",
+    "normalization_version": "N2",
+    "built_at": "2026-08-20T18:10:58+00:00",
+    "alias_count": 1217203,
+    "identity_count": 1214351
+  },
+  "environment_at_contract_time": {
+    "stage": "contract",
+    "timestamp_utc": "2026-09-07T03:18:06.419316+00:00",
+    "load_average": [
+      4.5947265625,
+      4.134765625,
+      3.572265625
+    ],
+    "pid": 57876,
+    "python": "3.14.5",
+    "platform": "macOS-26.6.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64"
+  }
+}
