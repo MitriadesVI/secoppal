@@ -1,0 +1,32 @@
+...........................F..............................               [100%]
+=================================== FAILURES ===================================
+___________________ test_visible_dimensions[value-expected3] ___________________
+
+name = 'value', expected = ['$0', '$2.000.000.000']
+
+    @pytest.mark.parametrize('name, expected', [
+        ('buyer', ['Entidad: DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA']),
+        ('year', ['Periodo: 2026']),
+        ('buyer_year', ['Entidad:', 'Periodo: 2026']),
+        ('value', ['$0', '$2.000.000.000']),
+        ('state', ['En ejecución', 'Modificado', 'Prorrogado']),
+        ('modality', ['Modalidad:', 'Contratación directa']),
+        ('contract_type', ['Prestación de servicios', 'Convenio solidario']),
+        ('topic', ['software', 'soporte', 'licencia']),
+        ('topic_exclusion', ['Excluir del objeto:', 'vigilancia']),
+        ('topic_or_phrases', ['software', 'soporte', 'aire acondicionado']),
+        ('region', ['Atlántico', 'Bolívar']),
+        ('date_from', ['Desde 2025-02-03']),
+        ('date_to', ['Hasta 2026-09-06']),
+    ])
+    def test_visible_dimensions(name, expected):
+        text = render_actor_profile(replace(make_profile(), applied_scope=scope_for(name)))
+        assert '*Filtros aplicados*' in text
+        for label in expected:
+>           assert label in text
+E           AssertionError: assert '$2.000.000.000' in 'LA PREVISORA S.A. COMPAÑÍA DE SEGUROS · NIT 860002400\n\n*Huella contractual observada* — SECOP II contratos, consult...ros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.'
+
+tests/test_actor_profile_scope.py:106: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_actor_profile_scope.py::test_visible_dimensions[value-expected3]
+1 failed, 57 passed in 2.46s

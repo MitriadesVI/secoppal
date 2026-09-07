@@ -1,0 +1,84 @@
+{
+  "task": "ACTOR_PROFILE_APPLIED_SCOPE_VISIBILITY_V1",
+  "baseline_commit": "f6fa8499e060294e47df25ea2c7ba3355c7a3638",
+  "original_base": "76b78c35e8505a092bcd5b3e82d88c8ab15992d2",
+  "implementation_commit": "06fb2a8ee527ebbc7a116c11c48caec63e2671c8",
+  "branch": "fix/actor-cantillo-scope-pending-v1",
+  "sql_fixture_sha256": "8ab74a3fc268686975cf63b1e810cc6e5aaf2e8cca1d0bb4f5575fb27e9566be",
+  "sql_cases": 23,
+  "aspects_per_case": 8,
+  "source_call_delta": 0,
+  "sql_delta": 0,
+  "catalog_classifications": 17,
+  "catalog_projection_checks": 34,
+  "hypothesis": {
+    "deterministic": true,
+    "properties": 2,
+    "max_examples": [
+      35,
+      25
+    ]
+  },
+  "protected_runtime": {
+    "app/data/actor_alias_resolver.py": {
+      "unchanged": true,
+      "sha256": "82f20e11a1a430f7418113cbc4e7dd52380366508e272ca4252fa060b96ed0a7"
+    },
+    "app/data/actor_alias_index.py": {
+      "unchanged": true,
+      "sha256": "f1c938baa9589dc94dedb70c13431d17c6d2dff916694f9657eaeab641b869ad"
+    },
+    "app/core/actor_name.py": {
+      "unchanged": true,
+      "sha256": "f87ff93a8dc53431ac6c6e0f8a83de497f872b72d2d8d8d3fa972cd9ac421a2d"
+    },
+    "app/core/actor_profile/aspects.py": {
+      "unchanged": true,
+      "sha256": "9a476d1dba0bd0b1a054143632d335fdae724d309733752a6b699b647a35dff1"
+    },
+    "app/core/actor_profile/turn.py": {
+      "unchanged": true,
+      "sha256": "2d197b1a12d8807a3fe766784a3b462460a106453b3a5c85662336785e3af519"
+    },
+    "app/core/soql_builder.py": {
+      "unchanged": true,
+      "sha256": "b64a3f1bd7bf22c77c6cca36bf094176af6f47b61cfebc2c4e61819f7eae7a46"
+    }
+  },
+  "instrumentation": {
+    "ruff": "0.16.4",
+    "semgrep": "1.176.0",
+    "hypothesis": "6.165.10",
+    "codegraph": "0.9.6",
+    "codegraph_mcp": "loaded; status/context/explore/impact",
+    "codegraph_index": "main index up to date (813 files); app and tests identical at task start; no index in target worktree",
+    "direct_read_fallback": "live reads for SQL branches and graph gaps"
+  },
+  "limits": [
+    "deterministic empty source and synthetic dogfood identities; no live contract totals",
+    "positive topics tested at assembler; current profile gate sends them to listings",
+    "exact-prefix challenger pending decision; no resolver/index edits",
+    "no merge or push"
+  ],
+  "verdict": "GO",
+  "status": "CLOSED",
+  "full_suite": {
+    "summary": "11672 passed, 11 skipped, 14 xfailed in 530.72s (0:08:50)",
+    "exit_code": 0,
+    "serialized": true,
+    "runs": 1
+  },
+  "focal_tests": {
+    "expanded": "441 passed in 70.90s (0:01:10)",
+    "final_scope": "86 passed in 2.51s"
+  },
+  "corpora": {
+    "actor_profile": "41/41 PASS",
+    "natural_actor": "6 tests passed in focal and full suite"
+  },
+  "semgrep": {
+    "baseline": 10,
+    "delta": 0,
+    "owned_findings": 0
+  }
+}

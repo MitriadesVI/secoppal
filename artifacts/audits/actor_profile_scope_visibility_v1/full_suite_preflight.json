@@ -1,0 +1,10 @@
+{
+  "started_at": "2026-09-07T01:39:28.287456+00:00",
+  "other_pytest": [],
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q"
+  ]
+}

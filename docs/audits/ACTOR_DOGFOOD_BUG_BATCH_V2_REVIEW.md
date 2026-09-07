@@ -219,3 +219,174 @@ Los documentos personales se enmascaran en diagnósticos. Los probes de aliases
 preservan igualdad mediante digest tipado. La SQL redacted del workflow sirve
 para inspección; no es un replay con documentos reales. No se publican registros
 de límites de páginas que contengan documentos ajenos al caso.
+
+## Implementación posterior: ACTOR_PROFILE_APPLIED_SCOPE_VISIBILITY_V1
+
+Este cierre corresponde a la orden posterior de implementación. Conserva la
+investigación de `f6fa849` arriba como evidencia histórica; actualiza solamente
+el pendiente de visibilidad de scope y las regresiones B/D.
+
+- Base original: `76b78c35e8505a092bcd5b3e82d88c8ab15992d2`.
+- Continuación preservada: `f6fa8499e060294e47df25ea2c7ba3355c7a3638`.
+- Rama: `fix/actor-cantillo-scope-pending-v1`.
+- Commit de pruebas rojas: `733be43`.
+- Commit de implementación: `06fb2a8`.
+
+### Causa y corrección
+
+Los ocho aspectos ya recibían los filtros resueltos, pero `ActorProfileResult`
+no transportaba semántica de presentación de esos filtros. Se añade un tipo
+inmutable separado de identidad y métricas, una derivación pura y un bloque
+compacto cerca del conteo. La derivación consume las precedencias efectivas de
+`_build_where`; nunca reescribe params ni SQL.
+
+El caso Cantillo ahora muestra el buyer acreditado y «0 contratos observados
+dentro de estos filtros». Fundacaribe + 2026 muestra `Periodo: 2026`. Un fallo
+mantiene `Outcome.ERROR`, conteo desconocido y explicación de fuente fallida.
+El perfil global conserva exactamente el texto anterior.
+
+El inventario completo y sus límites están en
+[ACTOR_PROFILE_V1.md](../architecture/ACTOR_PROFILE_V1.md#scope-aplicado-visible--v1-2026-09-06).
+Incluye buyer exacto, grupo y coincidencias, geografía, fechas, valor, estado,
+modalidades incluidas/excluidas, tipo contractual y objeto/exclusiones.
+
+### Ajustes sustentados por evidencia
+
+1. **Temas positivos:** `is_actor_profile_turn` los desvía a listado. La matriz
+   temática prueba el ensamblador directo sin cambiar esa política. Las
+   exclusiones temáticas solas sí pasan por la puerta actual de perfil.
+2. **Precedencias reales:** `entidad_like` gana a `entidad_resolved`; departamento
+   resuelto gana a región; estado específico gana a legacy. La metadata aplica
+   las mismas precedencias y omite los valores que SQL no usa.
+3. **Labels acreditados:** el grupo solo transporta id/versión; modalidad solo
+   IDs canónicos. `scope_context.py` reutiliza los catálogos ya cargados por las
+   consultas y los inyecta a la función pura. No confía en labels arbitrarios
+   del payload ni consulta índices de identidad. Un test bloquea lectura de
+   archivos, SQLite, EntityResolver y ActorNameResolver durante esa derivación.
+4. **Proyección de modalidad:** las 17 clasificaciones se prueban en inclusión
+   y exclusión (34 combinaciones). Exclusión sin raw no se anuncia; inclusión
+   sin raw explica el predicado `1=0`. No se presenta un filtro inexistente.
+5. **Dinero:** se conserva el formateador existente (`$2.0 mil millones`), sin
+   introducir otra convención monetaria ni cambiar la interpretación de montos.
+
+### Equivalencia y regresiones
+
+`tests/fixtures/actor_profile_scope_before.json` fue congelado contra `f6fa849`:
+23 perfiles × 8 aspectos = **184 consultas**, con SQL completa, transporte y
+dataset. Comparación byte por byte por aspecto y de las llamadas ejecutadas:
+`SQL_DELTA = 0`, `SOURCE_CALL_DELTA = 0`. La identidad y todas las métricas se
+comparan con el ensamblador original, ejecutado desde su blob Git con fuente
+determinista. El cambio agrega solo metadata y render.
+
+Pruebas rojas antes del runtime: `46 failed, 12 passed in 3.87s`. Dos fallos
+reproducen las omisiones de buyer y periodo a través del workflow Burr completo;
+las pruebas nuevas del modelo fallan por ausencia de la capacidad.
+
+- `JOSE_CANTILLO_BUYER`: selección explícita, identidad y buyer preservados,
+  buyer en 8/8 consultas, label visible y cero calificado.
+- `FUNDACARIBE_2026`: actor retenido, fechas en 8/8 consultas, periodo visible.
+- `GLOBAL_PROFILE`: salida idéntica byte por byte, sin bloque vacío.
+- `ARCON_FULL_NAME = ALREADY_PASSING`: reset → nombre completo →
+  `exact_unique_alias` → `actor_profile`. Sin cambio de runtime B.
+- `PENDING_NEW_ACTOR = ALREADY_FIXED`: Franklin `CANDIDATES` → Fundacaribe
+  `SET_ACTOR` → `RESOLVED`, sin pending anterior. Sin cambio de runtime D.
+- Mantenimiento, alimentación, adulto mayor, software, vigilancia y aseo
+  conservan ruta temática; TRANSPORTE con alias exacto sigue en
+  `actor_or_topic_ambiguous`.
+
+Los oráculos conversacionales usan nombres del dogfood con identidades
+sintéticas, índice temporal y fuente EMPTY con sockets bloqueados. Acreditan
+flujo, SQL y presentación; no certifican conteos actuales ni identidad real del
+dogfood original. No se reabrió investigación B/D ni se reescribió el índice
+productivo.
+
+### Puertas de esta implementación
+
+Salidas íntegras y manifest en
+`artifacts/audits/actor_profile_scope_visibility_v1/`.
+`red.json` y `semgrep.json` conservan la salida literal como string JSON,
+incluidos espacios finales de las herramientas, sin violar `git diff --check`.
+
+Instrumentación: Ruff 0.16.4, Semgrep 1.176.0, Hypothesis 6.165.10, Codegraph
+0.9.6. MCP Codegraph cargado; `status/context/explore/impact` sobre el índice de
+`main` (813 archivos, `Index is up to date`), tras comprobar que `app/` y tests
+coincidían al iniciar. El worktree de este carril no tenía índice. Lectura directa
+complementó ramas de SQL y límites del grafo; no se presentó el índice de main
+como un índice actualizado del runtime modificado.
+
+Ruff, salida literal:
+
+```text
+All checks passed!
+```
+
+Semgrep, resumen literal:
+
+```text
+Ran 3 rules on 268 files: 10 findings.
+```
+
+Baseline global rojo: 10. Mismos archivos de `f6fa849`, sin cambios en ellos;
+ningún hallazgo en `actor_profile/`, delta del carril cero. Exit code 0 de
+Semgrep no convierte el baseline global en verde.
+
+Corrí la tanda focal de 17 archivos (perfil, conversación, corpus natural,
+orquestación, candidatos, proyección tipada, builder, frases, exclusiones,
+modalidad, grupos, tipo contractual y tamaño de módulos), no la suite en esa
+tanda. Salida literal:
+
+```text
+441 passed in 70.90s (0:01:10)
+```
+
+Después se endureció el caso de parámetros contractuales inválidos para
+conservar ERROR sin fallback; la tanda final específica ejecutó:
+
+```text
+86 passed in 2.51s
+```
+
+Incluye dos propiedades Hypothesis deterministas con presupuestos de 35 y 25
+ejemplos, sin red. Verifican inmutabilidad de SQL/params/métricas, scope vacío al
+retirar filtros y distinción EMPTY/ERROR. No se modifican parsers ni resolvers.
+
+Corpus focal de Actor Profile, salida literal:
+
+```text
+Summary: 41/41 PASS, 0 FAIL (mode=all, severity=any, limit=none)
+```
+
+El corpus natural se ejecutó en la tanda focal (`test_actor_conversation_corpus.py`).
+No se ejecutó una nueva adquisición ni campaña adversarial de red.
+
+`make lint-core`, salida literal:
+
+```text
+app/core/ limpio
+```
+
+Suite completa ejecutada una vez en serie, por autorización expresa de la
+orden de implementación. `full_suite_preflight.json` acredita ausencia de otro
+pytest al iniciarla. Salida literal final:
+
+```text
+11672 passed, 11 skipped, 14 xfailed in 530.72s (0:08:50)
+```
+
+`git diff --check` y `git diff f6fa849..HEAD --check`: salida vacía, código 0.
+La suite incluye los 86 tests finales del nuevo frente; los 11 skips no se
+presentan como pruebas ejecutadas ni como cobertura del índice productivo.
+
+**ACTOR_PROFILE_APPLIED_SCOPE_VISIBILITY_V1 = CLOSED. VERDICT = GO** para la
+visibilidad del scope en esta rama. SQL, SourceCalls, métricas e identidad sin
+delta; global sin cambio, ceros calificados y errores conservados. Este cierre
+no integra la rama ni decide el challenger.
+
+### Fuera del carril y pendientes
+
+Los diez hallazgos Semgrep preexistentes no se tocaron. Permanecen pendientes
+la procedencia del dogfood original y su oráculo de identidad/conteos reales.
+**Cantillo Exact Prefix Challenger: PENDIENTE DE DECISIÓN.** Resolver, índice,
+ActorResolutionStatus, política exact-prefix, turn/aspects y SoQLBuilder tienen
+blobs sin cambios respecto de `f6fa849`, verificados en `manifest.json`.
+No se creó ADR ni se modificaron otros productos. Sin merge ni push.

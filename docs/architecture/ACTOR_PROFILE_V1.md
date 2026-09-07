@@ -380,6 +380,63 @@ lee la respuesta y con qué método de transporte se pide. Añadir un aspecto es
 
 ---
 
+### Scope aplicado visible — V1 (2026-09-06)
+
+**ACTOR_PROFILE_APPLIED_SCOPE_VISIBILITY_V1 = CLOSED; GO en esta rama.**
+Suite final: 11.672 passed, 11 skipped, 14 xfailed; sin merge ni push.
+
+`ActorProfileResult.applied_scope` transporta un `ActorProfileAppliedScope`
+inmutable. El ensamblador lo añade después del fan-out usando los mismos params
+resueltos. No entra en las consultas, no almacena identidad, SQL, params completos
+ni trazas. `scope.py` es una proyección pura; `scope_context.py` le entrega el grupo
+y catálogo de modalidades ya cargados por las consultas. No llama al resolver de
+actores, EntityResolver, índices ni bases de datos. El catálogo inyectado evita
+convertir un label aportado por el usuario en autoridad.
+
+`scope_render.py` produce un bloque cerca del conteo. Buyer + año ocupan tres
+líneas, incluido el título. El perfil global conserva el texto anterior byte por
+byte. Un cero confirmado y filtrado dice «0 contratos observados dentro de estos
+filtros»; un fallo conserva `Outcome.ERROR`, conteo desconocido y su explicación.
+El scope no transforma un fallo en vacío ni provoca una consulta global adicional.
+
+| Dimensión / params efectivos | Alcance actual y presentación |
+|---|---|
+| `entidad_resolved` / `entidad_like` | Llegan en `resolved_params`. Se muestra el label acreditado; si hay `entidad_like`, prevalece como en SQL y se declara coincidencia. `exact` describe autoridad del label, no promete igualdad SQL si no existe binding físico. |
+| `buyer_group` | Referencia id/versión validada por el registro existente. Label oficial; nunca label o miembros del payload. Buyer explícito prevalece sobre grupo. |
+| `entidad_ecosystem`, `entidad_in_candidates`, `entidad_contains_all` | Planning puede aportar conjuntos y coincidencias institucionales. Se declaran alternativas o coincidencias conjuntas; ecosystem/candidates se omiten si SQL los suprime por buyer explícito. No se convierten en un BuyerGroup. |
+| `departamento_resolved`, `departamentos_in`, `ciudad` | Departamento resuelto prevalece sobre región. Se muestran valores efectivos, sin volver a resolver spans; ciudad distingue igualdad municipal resuelta de coincidencia. |
+| `fecha_desde`, `fecha_hasta` | Llegan desde parser/QueryFrame y selección pendiente. Año completo se resume como periodo; límites parciales se conservan. |
+| `valor_min`, `valor_max` | Límites inclusivos efectivos, incluido cero; formateador monetario existente. No modifica interpretación ni aritmética monetaria. |
+| `estado`, `estado_contrato`, `estado_contrato_adicional` | Los campos específicos suprimen el estado legacy, igual que `_build_where`; valores de cada familia son alternativas, familias distintas se conservan separadas. |
+| `modalidad_include_procedure_ids`, `modalidad_exclude_procedure_ids` | Única modalidad ejecutable actual. Usa labels canónicos y proyección a contratos: exclusión sin raw no se muestra; inclusión sin raw explica el predicado `1=0`. `modalidad` legacy se rechaza en el builder existente. |
+| `contract_type_include` | Llegan clases canónicas; labels de tipos físicos existentes y etiquetas de presentación para familias/composites. No se confunden con modalidad. |
+| `objeto_exclude` | Puede entrar al perfil por sí solo: la puerta de listado no lo excluye. Se muestran las exclusiones realmente enviadas a SQL. |
+| `objeto`, `objeto_or`, `objeto_phrases` | El builder/ensamblador los admiten, pero `is_actor_profile_turn` desvía temas positivos a listado. Se prueban por invocación directa, sin cambiar routing. Frases desconocidas no generan predicado ni label. Los términos se describen como búsqueda ampliada, sin afirmar una conjunción que el builder pueda relajar. |
+
+La ejecución entrega `resolved_params` al perfil sin una lista nueva de filtros.
+La puerta existente exige actor autoritativo, contratista y dataset compatible
+(`jbjy-vk9h`), y excluye orden explícito y temas positivos. Analítica puntual y
+Entity Profile tienen precedencia. Los estados de proceso y la política temporal
+de oportunidades pertenecen a procesos: no se presentan como una capacidad nueva
+del perfil de actor. Inyectarlos en el builder directo no acredita reachability
+conversacional. Los tests del constructor tampoco acreditan cobertura universal de
+lenguaje natural; sí acreditan los predicados de los params ya resueltos.
+
+Evidencia: `tests/fixtures/actor_profile_scope_before.json` conserva SQL de
+`f6fa8499e060294e47df25ea2c7ba3355c7a3638`: 23 casos × 8 aspectos, transporte y dataset.
+El test compara consultas ejecutadas, no solo su cantidad. Las métricas se
+congelaron ejecutando el ensamblador de ese commit con el doble determinista.
+Las propiedades Hypothesis verifican inmutabilidad de params/SQL/métricas,
+eliminación de filtros y separación EMPTY/ERROR. El catálogo completo de
+modalidades se cruza con inclusión/exclusión y disponibilidad en contratos.
+
+`ARCON_FULL_NAME = ALREADY_PASSING`; `PENDING_NEW_ACTOR = ALREADY_FIXED`.
+Regresiones Burr con nombres del dogfood, identidades sintéticas y fuente vacía;
+no afirman conteos actuales del índice productivo. TRANSPORTE conserva su colisión
+exacta actor/tema. Cantillo Exact Prefix Challenger: **PENDIENTE DE DECISIÓN**.
+
+---
+
 ## 12. Flag y despliegue
 
 ```bash

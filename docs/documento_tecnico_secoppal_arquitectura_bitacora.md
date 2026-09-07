@@ -5,6 +5,28 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
+## Actor Profile Applied Scope Visibility V1 — 2026-09-06
+
+**CLOSED · GO en la rama.** Suite final: 11.672 passed, 11 skipped, 14 xfailed.
+
+Implementado en `fix/actor-cantillo-scope-pending-v1`, sobre `f6fa849`, sin merge ni
+push. La huella de actor ahora declara filtros cerca del encabezado y califica
+los ceros filtrados; conserva el texto global y los fallos de fuente. El defecto
+era la ausencia de metadata de presentación entre los params resueltos, el modelo
+y el render: buyer y año sí estaban en las ocho consultas.
+
+El cambio se limita a `actor_profile/` y sus pruebas/documentación. SQL congelada:
+23 casos × 8 aspectos; delta de SQL y SourceCalls cero, métricas e identidad
+conservadas. Constructor puro con catálogos de ejecución inyectados; ninguna
+resolución de identidad adicional. Inventario de filtros y límites de routing en
+[ACTOR_PROFILE_V1.md](architecture/ACTOR_PROFILE_V1.md#scope-aplicado-visible--v1-2026-09-06).
+
+ARCON completo sigue pasando; Franklin → Fundacaribe ya estaba corregido. Se
+conservan como regresiones, al igual que los seis temas y la ambigüedad exacta de
+TRANSPORTE. Cantillo Exact Prefix Challenger queda **PENDIENTE DE DECISIÓN**.
+Puertas y evidencia de cierre en
+[la revisión del dogfood](audits/ACTOR_DOGFOOD_BUG_BATCH_V2_REVIEW.md).
+
 ## Estado canónico actual — 2026-08-31
 
 ### SECOP Access V2 — navegación segura y separada de semántica

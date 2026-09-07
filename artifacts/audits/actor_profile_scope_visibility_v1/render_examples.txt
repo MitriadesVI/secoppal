@@ -1,0 +1,29 @@
+EMPTY (identidad sintética)
+
+CC 10000001
+
+*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 12:00 (hora de Colombia)
+
+*Filtros aplicados*
+- Entidad: DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+- Periodo: 2026
+
+- 0 contratos observados dentro de estos filtros
+
+Esta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.
+
+ERROR (identidad sintética)
+
+CC 10000001
+
+*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 12:00 (hora de Colombia)
+
+*Filtros aplicados*
+- Entidad: DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+- Periodo: 2026
+
+No pude obtener el total de contratos ni su valor: la fuente no respondió a esa consulta.
+
+⚠️ No pude consultar el total de contratos y su valor: la fuente no respondió. Eso no significa que no exista — significa que no lo sé.
+
+Esta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.

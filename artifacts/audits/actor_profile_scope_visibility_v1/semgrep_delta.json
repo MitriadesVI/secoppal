@@ -1,0 +1,17 @@
+{
+  "baseline": 10,
+  "current": 10,
+  "delta": 0,
+  "owned_findings": 0,
+  "baseline_files_unchanged": [
+    "app/core/formatter.py",
+    "app/core/response_policy.py",
+    "app/core/workflow/actions/execution.py",
+    "app/core/workflow/handlers/direct_lookup.py",
+    "app/core/workflow/handlers/normal_flow.py",
+    "app/core/workflow/handlers/pagination.py",
+    "app/core/workflow/handlers/radar.py",
+    "app/core/workflow/handlers/refinement.py"
+  ],
+  "literal_summary": "Ran 3 rules on 268 files: 10 findings."
+}
