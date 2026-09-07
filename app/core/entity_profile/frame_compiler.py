@@ -207,6 +207,9 @@ class ProfilePlan:
     limitations: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, "frame_ref", tuple(self.frame_ref))
+        object.__setattr__(self, "jobs", tuple(self.jobs))
+        object.__setattr__(self, "limitations", tuple(self.limitations))
         source_plans = deep_freeze(self.source_plans)
         for source, source_plan in source_plans.items():
             if source_plan.source is not source:

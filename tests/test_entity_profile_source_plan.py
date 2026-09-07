@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from app.core.entity_profile.aspects.common import build_where
+from app.core.entity_profile.immutability import mutable_copy
 from app.core.entity_profile.models import CONTRACT_DATASET, PROCESS_DATASET
 from app.core.entity_profile.scope import resolve_profile_scope
 from app.core.entity_profile.semantic_request import build_semantic_request
@@ -45,7 +46,9 @@ def _plans(router: QueryRouter, text: str, focus: str = "overview"):
 
 
 def _where(plan) -> str:
-    _, where = build_where(SoQLBuilder(), plan.dataset_id, plan.params)
+    _, where = build_where(
+        SoQLBuilder(), plan.dataset_id, mutable_copy(plan.params),
+    )
     return where
 
 

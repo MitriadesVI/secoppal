@@ -24,9 +24,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-import re
 
-from app.core.entity_profile.clauses import split_clauses
 from app.core.query_text_consumption import mask_consumed_spans
 from app.utils.money import normalize_text
 
@@ -43,15 +41,6 @@ class SourceProvenance(str, Enum):
     EXPLICIT = "EXPLICIT"
     INHERITED = "INHERITED"
     DEFAULT = "DEFAULT"
-
-
-_PROCESS_WORDS = re.compile(
-    r"\b(?:procesos?|licitaciones?|convocatorias?|procedimientos?)\b"
-)
-_CONTRACT_WORDS = re.compile(r"\b(?:contratos?)\b")
-_ANY_SOURCE_WORD = re.compile(
-    r"\b(?:procesos?|licitaciones?|convocatorias?|procedimientos?|contratos?)\b"
-)
 
 
 @dataclass(frozen=True, slots=True)
@@ -123,16 +112,15 @@ def _clause_head_sources(text: str) -> tuple[bool, bool]:
     señal que hay que leer. Es estructura posicional, no un catálogo nuevo ni
     inferencia probabilística.
     """
-    processes = contracts = False
-    for clause in split_clauses(text):
-        head = _ANY_SOURCE_WORD.search(clause.text)
-        if head is None:
-            continue
-        if _PROCESS_WORDS.fullmatch(head.group(0)):
-            processes = True
-        else:
-            contracts = True
-    return processes, contracts
+    # Local import avoids the package ``__init__`` cycle while keeping this
+    # adapter on the shared occurrence authority.
+    from app.core.source_occurrence import source_head_occurrences
+
+    occurrences = source_head_occurrences(text)
+    return (
+        any(occurrence.is_process for occurrence in occurrences),
+        any(not occurrence.is_process for occurrence in occurrences),
+    )
 
 
 def resolve_requested_sources(user_query: str, params: dict) -> SourceRequest:

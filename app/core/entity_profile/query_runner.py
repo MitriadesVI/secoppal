@@ -15,6 +15,7 @@ from app.core.entity_profile.aspects import (
     build_temporal_query,
 )
 from app.core.entity_profile.models import CONTRACT_DATASET, PROCESS_DATASET, SourceCall
+from app.core.entity_profile.immutability import mutable_copy
 
 
 ENTITY_PROFILE_QUERY_BUDGET = 6
@@ -147,7 +148,12 @@ def execute_jobs(
         if job.params is None:
             raise ValueError(f"unbound Entity Profile job: {job.call_id}")
         try:
-            built[job.call_id] = job.build(soql_builder, job.params)
+            # The plan keeps an immutable authorization snapshot.  Builders
+            # historically require concrete dict/list containers, so give
+            # each one a fresh materialization that cannot mutate the plan.
+            built[job.call_id] = job.build(
+                soql_builder, mutable_copy(job.params),
+            )
         except Exception as exc:
             calls[job.call_id] = SourceCall(
                 call_id=job.call_id,

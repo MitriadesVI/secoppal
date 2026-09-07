@@ -71,6 +71,9 @@ class SourcePlan:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "params", deep_freeze(self.params))
+        object.__setattr__(
+            self, "unsupported_dimensions", tuple(self.unsupported_dimensions),
+        )
 
     @property
     def dataset_name(self) -> str:

@@ -66,7 +66,11 @@ from app.core.negation_binding import (
 from app.core.negation_policy import apply_negation_policy
 from app.core.modality_parser_integration import resolve_parser_modality
 from app.core.query_text_consumption import mask_consumed_spans
-from app.core.source_occurrence import is_source_word, mask_source_heads
+from app.core.source_occurrence import (
+    is_source_word,
+    mask_source_heads,
+    source_head_occurrences,
+)
 from app.utils.money import (
     SMMLV_UNIT_PATTERN,
     is_smmlv_expression,
@@ -107,8 +111,6 @@ DATASET_CONTRATOS = "contratos"
 # Conjunción explícita ("contratos o procesos", "procesos y contratos") o un
 # marcador de cobertura total ("ambos", "todo lo relacionado con").
 _DUAL_DATASET_PATTERNS = (
-    r"\bcontratos?\s+(?:o|y|e)\s+procesos?\b",
-    r"\bprocesos?\s+(?:o|y|e)\s+contratos?\b",
     r"\bambos\b",
     r"\btodo lo relacionado\b",
 )
@@ -269,6 +271,7 @@ class QueryRouter:
                 *protected_money_spans(normalized),
             ),
         )
+        source_occurrences = source_head_occurrences(normalized)
         params: dict[str, object] = {}
         actor_conversation = ActorConversationInstruction()
         actor_relation_spans: tuple[str, ...] = ()
@@ -357,7 +360,10 @@ class QueryRouter:
         # procesos, el universo más amplio) por compatibilidad; el ejecutor (Commit 2)
         # corre cada hijo con su propio {"dataset": ...} y agrupa. dataset_scope NO
         # debe llegar al SoQLBuilder: es señal de orquestación, no de filtro.
-        if any(re.search(p, normalized) for p in _DUAL_DATASET_PATTERNS):
+        source_kinds = {occurrence.is_process for occurrence in source_occurrences}
+        if len(source_kinds) == 2 or any(
+            re.search(pattern, normalized) for pattern in _DUAL_DATASET_PATTERNS
+        ):
             params["dataset_scope"] = ["procesos", "contratos"]
             params["dataset"] = "procesos"
             params["dataset_explicit"] = True

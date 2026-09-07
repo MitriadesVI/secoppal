@@ -4,8 +4,17 @@ from __future__ import annotations
 from dataclasses import dataclass
 import re
 
-from app.core.entity_profile.clauses import split_clauses
+from app.data.stopwords import STOPWORDS
+from app.core.entity_profile.clauses import Clause, split_clauses
+from app.core.entity_profile.temporal_event import (
+    _CURRENT_MARKER,
+    _PUBLICATION,
+    _SIGNATURE,
+    _UNSUPPORTED_EVENTS,
+)
+from app.core.estado_families import detect_estado_family
 from app.core.query_text_consumption import mask_consumed_spans
+from app.core.temporal_semantics import resolve_temporal_scope
 
 
 PROCESS_SOURCE_WORDS = re.compile(
@@ -38,18 +47,31 @@ class SourceOccurrence:
 
 def source_head_occurrences(text: str) -> tuple[SourceOccurrence, ...]:
     """Return only source-word occurrences accredited as clause heads."""
-    found: list[SourceOccurrence] = []
-    for index, clause in enumerate(split_clauses(text)):
+    clauses = split_clauses(text)
+    candidates: list[SourceOccurrence] = []
+    for index, clause in enumerate(clauses):
         owned: list[tuple[int, int]] = []
         for match in ANY_SOURCE_WORD.finditer(clause.text):
             prefix = mask_consumed_spans(
                 clause.text[:match.start()],
                 tuple(span for span in owned if span[1] <= match.start()),
-            ).split()
-            if not all(token in _HEAD_FILLERS for token in prefix):
+            )
+            if not _is_request_framing(prefix):
                 continue
-            found.append(_occurrence(clause.start, match, index))
+            candidates.append(_occurrence(clause.start, match, index))
             owned.append(match.span())
+
+    found: list[SourceOccurrence] = []
+    for candidate in candidates:
+        previous = found[-1] if found else None
+        if (
+            previous is not None
+            and previous.clause_index != candidate.clause_index
+            and _opens_thematic_complement(clauses[previous.clause_index], previous)
+            and not _has_source_qualifier(clauses[candidate.clause_index], candidate)
+        ):
+            continue
+        found.append(candidate)
     return tuple(found)
 
 
@@ -61,6 +83,45 @@ def mask_source_heads(text: str) -> str:
 
 def is_source_word(token: str) -> bool:
     return ANY_SOURCE_WORD.fullmatch(token) is not None
+
+
+def _is_request_framing(prefix: str) -> bool:
+    """The existing functional-word authority may precede a source head."""
+    tokens = re.findall(r"\b\w+\b", prefix)
+    return all(token in STOPWORDS or token in _HEAD_FILLERS for token in tokens)
+
+
+def _opens_thematic_complement(
+    clause: Clause,
+    occurrence: SourceOccurrence,
+) -> bool:
+    """Whether the first head already introduced material topic language."""
+    if _has_source_qualifier(clause, occurrence):
+        return False
+    relative_end = occurrence.span[1] - clause.start
+    tail = clause.text[relative_end:]
+    return any(
+        token not in STOPWORDS and token not in _HEAD_FILLERS
+        for token in re.findall(r"\b\w+\b", tail)
+    )
+
+
+def _has_source_qualifier(
+    clause: Clause,
+    occurrence: SourceOccurrence,
+) -> bool:
+    """Reuse temporal/state authorities to distinguish a new source clause."""
+    relative_end = occurrence.span[1] - clause.start
+    tail = clause.text[relative_end:]
+    if any(
+        pattern.search(tail)
+        for pattern in (_PUBLICATION, _SIGNATURE, _UNSUPPORTED_EVENTS, _CURRENT_MARKER)
+    ):
+        return True
+    if resolve_temporal_scope(tail).matched:
+        return True
+    dataset = "procesos" if occurrence.is_process else "contratos"
+    return detect_estado_family(tail, dataset) is not None
 
 
 def _occurrence(offset: int, match: re.Match[str], clause_index: int):

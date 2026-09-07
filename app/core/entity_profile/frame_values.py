@@ -209,6 +209,7 @@ class TopicAll(TopicNode):
     children: tuple[TopicNode, ...]
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, "children", tuple(self.children))
         if not self.children:
             raise ValueError("ALL requires children")
 
@@ -224,6 +225,7 @@ class TopicAny(TopicNode):
     children: tuple[TopicNode, ...]
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, "children", tuple(self.children))
         if not self.children:
             raise ValueError("ANY requires children")
 
@@ -250,12 +252,18 @@ class StatePredicate:
     field: str
     values: tuple[str, ...]
 
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "values", tuple(self.values))
+
 
 @dataclass(frozen=True, slots=True)
 class StateExpression:
     """El estado ACTUAL de una fuente. Vacío es TRUE, no "sin definir"."""
 
     predicates: tuple[StatePredicate, ...] = ()
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "predicates", tuple(self.predicates))
 
     @property
     def is_true(self) -> bool:
@@ -297,6 +305,10 @@ class Selection:
 
     include: tuple[str, ...] = ()
     exclude: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "include", tuple(self.include))
+        object.__setattr__(self, "exclude", tuple(self.exclude))
 
     @property
     def is_empty(self) -> bool:

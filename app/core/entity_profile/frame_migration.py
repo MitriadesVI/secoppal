@@ -49,6 +49,7 @@ from app.core.entity_profile.legacy_equivalence import (
     legacy_topic,
     material_conflict,
 )
+from app.core.estado_families import ESTADO_FAMILIES
 
 
 _NAMESPACE = uuid.UUID("9a1d2f60-77c1-4a5f-8b6a-2c1d3e4f5a6b")
@@ -64,6 +65,12 @@ _STATE_FIELDS = {
         {"estado_del_procedimiento", "estado_de_apertura_del_proceso"},
     ),
     SourceKind.CONTRACTS: frozenset({"estado_contrato", "estado_contrato_adicional"}),
+}
+_ALL_STATE_FIELDS = frozenset().union(*_STATE_FIELDS.values())
+_STATE_OWNER = {
+    field: source
+    for source, fields in _STATE_FIELDS.items()
+    for field in fields
 }
 
 
@@ -231,36 +238,86 @@ def _buyer(params: dict) -> BuyerScope | None:
 
 
 def _state(params: dict, sources: frozenset[SourceKind]):
-    """El estado legacy se proyecta sólo si su esquema es inequívoco."""
+    """Validate every supplied state before projecting any selected source."""
     states: dict[SourceKind, StateExpression] = {}
-    for source in sources:
-        predicates = [
-            StatePredicate(field, tuple(_values(params[field])))
-            for field in sorted(_STATE_FIELDS[source])
-            if params.get(field)
-        ]
+    predicates_by_source: dict[SourceKind, list[StatePredicate]] = {
+        source: [] for source in sources
+    }
+    for field in sorted(_ALL_STATE_FIELDS):
+        if field not in params:
+            continue
+        values = _state_values(params[field])
+        if values is None:
+            return "EMPTY_STATE_VALUES"
+        owner = _STATE_OWNER[field]
+        if owner not in sources:
+            return "STATE_FIELD_FOREIGN_TO_SOURCE"
+        predicates_by_source[owner].append(StatePredicate(field, values))
+
+    for source, predicates in predicates_by_source.items():
         if predicates:
             states[source] = StateExpression(tuple(predicates))
-    if not params.get("estado"):
-        return states
+
+    has_legacy_state = "estado" in params
+    has_legacy_field = "estado_field" in params
+    if not has_legacy_state:
+        if has_legacy_field:
+            field = params.get("estado_field")
+            if not isinstance(field, str) or field not in _ALL_STATE_FIELDS:
+                return "UNKNOWN_STATE_FIELD"
+            if not any(
+                predicate.field == field
+                for state in states.values()
+                for predicate in state.predicates
+            ):
+                return "STATE_FIELD_WITHOUT_VALUES"
+        return _validate_state_family(params, sources, states)
+
+    legacy_values = _state_values(params.get("estado"))
+    if legacy_values is None:
+        return "EMPTY_STATE_VALUES"
     field = params.get("estado_field")
     if not isinstance(field, str) or not field:
         return "AMBIGUOUS_STATE_FIELD"
-    owners = [source for source in sources if field in _STATE_FIELDS[source]]
-    if len(owners) != 1:
-        return "AMBIGUOUS_STATE_FIELD"
-    legacy = StatePredicate(field, tuple(_values(params["estado"])))
-    existing = states.get(owners[0], StateExpression())
+    if field not in _ALL_STATE_FIELDS:
+        return "UNKNOWN_STATE_FIELD"
+    owner = _STATE_OWNER[field]
+    if owner not in sources:
+        return "STATE_FIELD_FOREIGN_TO_SOURCE"
+    legacy = StatePredicate(field, legacy_values)
+    existing = states.get(owner, StateExpression())
     same_field = tuple(
         predicate for predicate in existing.predicates if predicate.field == field
     )
     if same_field:
         if any(predicate.values != legacy.values for predicate in same_field):
             return "STATE_CONFLICT"
-        return states
-    states[owners[0]] = StateExpression(
+        return _validate_state_family(params, sources, states)
+    states[owner] = StateExpression(
         existing.predicates + (legacy,),
     )
+    return _validate_state_family(params, sources, states)
+
+
+def _validate_state_family(params, sources, states):
+    if "estado_family" not in params:
+        return states
+    family = params.get("estado_family")
+    if not isinstance(family, str) or not family:
+        return "EMPTY_STATE_FAMILY"
+    family_catalog = ESTADO_FAMILIES.get(family)
+    if family_catalog is None:
+        return "UNKNOWN_STATE_FAMILY"
+    if not states:
+        return "STATE_FAMILY_WITHOUT_VALUES"
+    for source, state in states.items():
+        if source not in sources:
+            return "STATE_FIELD_FOREIGN_TO_SOURCE"
+        allowed = family_catalog.get(source.noun, {})
+        for predicate in state.predicates:
+            family_values = allowed.get(predicate.field)
+            if not family_values or not set(predicate.values) <= set(family_values):
+                return "STATE_FAMILY_CONFLICT"
     return states
 
 
@@ -272,7 +329,8 @@ def _value(request: dict, source: SourceKind) -> ValueConstraint:
     return ValueConstraint(lower=lower, upper=upper, magnitude=VALUE_MAGNITUDE[source])
 
 
-def _values(raw: object) -> list[str]:
-    if isinstance(raw, (list, tuple)):
-        return [str(v) for v in raw]
-    return [str(raw)]
+def _state_values(raw: object) -> tuple[str, ...] | None:
+    values = raw if isinstance(raw, (list, tuple)) else (raw,)
+    if not values or any(not isinstance(value, str) or not value.strip() for value in values):
+        return None
+    return tuple(sorted({value.strip() for value in values}))

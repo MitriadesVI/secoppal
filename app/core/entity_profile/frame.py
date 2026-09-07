@@ -68,6 +68,7 @@ class BuyerScope:
     group_id: str | None = None
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, "canonical_buyers", tuple(self.canonical_buyers))
         if not self.canonical_buyers:
             raise ValueError("a buyer scope needs at least one canonical buyer")
         if self.kind is BuyerScopeKind.BUYER_GROUP and not self.group_id:
@@ -185,6 +186,7 @@ class SourceSelection:
     origin: SourceOrigin
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, "requested", frozenset(self.requested))
         if not self.requested:
             raise ValueError("a frame always requests at least one source")
 
@@ -215,6 +217,13 @@ class FrameProvenance:
     claim_ids: tuple[str, ...] = ()
     turn_ids: tuple[str, ...] = ()
     authorities: tuple[tuple[str, str], ...] = ()
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "claim_ids", tuple(self.claim_ids))
+        object.__setattr__(self, "turn_ids", tuple(self.turn_ids))
+        object.__setattr__(
+            self, "authorities", tuple(tuple(item) for item in self.authorities),
+        )
 
     def to_dict(self) -> dict:
         return {
