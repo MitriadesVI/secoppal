@@ -107,6 +107,19 @@ def test_r2_both_sources_keep_their_own_current_state():
     assert process_state != contract_state
 
 
+def test_conflicting_material_and_physical_legacy_state_never_executes():
+    out = observe(
+        f"analiza contratos de {BUYER}",
+        overrides={
+            "estado": ["Suspendido"],
+            "estado_field": "estado_contrato",
+            "estado_contrato": ["terminado"],
+        },
+    )
+    assert out.clarifies and not out.jobs
+    assert "LEGACY_STATE_INVALID_CONTEXT" in out.issues
+
+
 # ---------------------------------------------------------------- R3
 # Una palabra de fuente dentro del tema no vuelve a elegir fuente.
 

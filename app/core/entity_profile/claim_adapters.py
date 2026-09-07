@@ -70,6 +70,16 @@ EVENT_AUTHORITY = ("entity_profile.temporal_event", "2")
 PERIOD_AUTHORITY = ("temporal_semantics", "1")
 STATE_AUTHORITY = ("estado_families", "1")
 BUYER_AUTHORITY = ("entity_profile.scope", "1")
+LEGACY_STATE_AUTHORITY = ("entity_profile.legacy_state", "1")
+
+_STATE_FIELDS = {
+    SourceKind.PROCESSES: frozenset(
+        {"estado_del_procedimiento", "estado_de_apertura_del_proceso"},
+    ),
+    SourceKind.CONTRACTS: frozenset(
+        {"estado_contrato", "estado_contrato_adicional"},
+    ),
+}
 
 # Una elección entre fuentes ("procesos o contratos") no es una coordinación:
 # la persona pide una de las dos y el sistema no puede escoger por ella.
@@ -154,7 +164,13 @@ def collect_claims(
     claims.extend(period_claims)
     issues.extend(period_issues)
 
-    claims.extend(_state_claims(normalized, clauses, sources, turn_id, next_id))
+    state_claims = _state_claims(normalized, clauses, sources, turn_id, next_id)
+    claims.extend(state_claims)
+    legacy_states, legacy_issues = _legacy_state_claims(
+        normalized, params, sources, state_claims, turn_id, next_id,
+    )
+    claims.extend(legacy_states)
+    issues.extend(legacy_issues)
 
     whole = normalized.to_original((0, max(1, len(normalized.text)))) or (
         0, len(user_query)
@@ -408,6 +424,70 @@ def _state_claims(normalized, clauses, sources, turn_id, next_id):
                 relations=(ClaimRelation(RelationKind.MODIFIES, source.id),),
             ))
     return claims
+
+
+def _legacy_state_claims(
+    normalized, params, sources, text_claims, turn_id, next_id,
+):
+    """Accredit an unambiguous material state that has no textual claim.
+
+    Old callers can still supply ``estado``/``estado_field``.  Accepting those
+    params and then dropping them widens the universe, while blindly copying
+    them can attach a contracts field to processes.  The physical field is the
+    ownership proof and every duplicate representation must agree.
+    """
+    raw_values = params.get("estado")
+    if raw_values in (None, "", (), []):
+        return [], []
+    field = params.get("estado_field")
+    values = _state_values(raw_values)
+    owner_kinds = {
+        claim.canonical_value
+        for claim in sources.values()
+        if isinstance(field, str) and field in _STATE_FIELDS[claim.canonical_value]
+    }
+    if not values or len(owner_kinds) != 1:
+        return [], [UnresolvedIssue(
+            "LEGACY_STATE_INVALID_CONTEXT",
+            "el estado legacy no acredita un campo y una fuente únicos",
+        )]
+    owner_kind = next(iter(owner_kinds))
+    physical = _state_values(params.get(field))
+    if physical and physical != values:
+        return [], [UnresolvedIssue(
+            "LEGACY_STATE_INVALID_CONTEXT",
+            "estado y filtro físico legacy se contradicen",
+        )]
+    existing = [
+        claim for claim in text_claims
+        if claim.canonical_value.field == field
+    ]
+    if existing:
+        if any(claim.canonical_value.values != values for claim in existing):
+            return [], [UnresolvedIssue(
+                "LEGACY_STATE_INVALID_CONTEXT",
+                "el estado material contradice la ocurrencia textual",
+            )]
+        return [], []
+    owner = next(
+        claim for claim in sources.values() if claim.canonical_value is owner_kind
+    )
+    return [SemanticClaim(
+        id=next_id("state"), turn_id=turn_id,
+        span=(0, len(normalized.original)),
+        dimension=ClaimDimension.CURRENT_STATE,
+        canonical_value=StatePredicate(str(field), values),
+        authority=LEGACY_STATE_AUTHORITY[0],
+        authority_version=LEGACY_STATE_AUTHORITY[1],
+        relations=(ClaimRelation(RelationKind.MODIFIES, owner.id),),
+    )], []
+
+
+def _state_values(raw: object) -> tuple[str, ...]:
+    if raw in (None, "", (), []):
+        return ()
+    values = raw if isinstance(raw, (list, tuple)) else (raw,)
+    return tuple(dict.fromkeys(str(value) for value in values if value not in (None, "")))
 
 
 def _value_claims(params, sources, turn_id, span, next_id):
