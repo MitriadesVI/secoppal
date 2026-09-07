@@ -2431,3 +2431,55 @@ documentos enmascarados. Rama sin merge y sin push.
 
 Detalle: [ACTOR_DOGFOOD_HARDENING_V2](audits/ACTOR_DOGFOOD_HARDENING_V2.md)
 § `INDEPENDENT_REVIEW_REMEDIATION_V2_1`.
+
+## ENTITY_PROFILE_SEMANTIC_PLAN_V1 — 2026-09-07
+
+El incidente P1 de dogfood —`"analizame que contratos firmo alcaldia de baranoa
+en agosto"` respondiendo `0 procesos · 0 contratos · $0`— tenía tres causas
+independientes, y ninguna era específica de esa consulta. El contraste en vivo
+del mismo día daba **47** contratos firmados: el cero era del filtro.
+
+`firmar` faltaba en `PROCUREMENT_ACTION_VERB_FORMS` mientras `celebrar`,
+`suscribir`, `comprar`, `adquirir` y `gastar` ya estaban; la familia nació
+incompleta y el verbo conjugado terminaba consultado como `LIKE '%firmo%'` sobre
+el objeto contractual. El overview ejecutaba seis llamadas fijas sin mirar qué
+fuente había nombrado la persona. Y el evento temporal se confundía con el
+estado actual: sobre Baranoa, `"publicados en agosto"` pasaba de **48** procesos
+a los **2** que hoy siguen en estado `Publicado`.
+
+La auditoría encontró además que el perfil pasaba el MISMO dict de params a los
+dos constructores, con fuga bidireccional —`estado_del_procedimiento` viajando a
+contratos y `estado_contrato` a procesos— que nadie detectaba porque el
+transporte puede responder igual.
+
+El perfil pasa a ejecutar un plan semántico validado
+(petición → plan de ejecución → planes por fuente → evidencia → alcance
+efectivo → render). La capa integra las autoridades existentes y adjudica sólo
+dos nuevas: **qué fuente nombró la persona** y **a qué hecho ancla su periodo**.
+`params["dataset"]` deja de leerse como autoridad de fuente, con evidencia: una
+consulta que dice `procesos` produce `dataset=contratos, dataset_explicit=True`
+porque `_select_dataset` decide por sopa de señales sin orden.
+
+Contratos nuevos: fuente solicitada ≠ efectiva y el foco nunca reescribe la
+solicitada; evento ≠ estado actual, y un hecho sin fecha productiva acreditada
+pide aclaración con cero llamadas; proyección segura por esquema con anclas y
+magnitudes declaradas por dataset; conteo y valor como métricas independientes
+del mismo agregado; y `INV-RENDERED-SCOPE-EQUALS-EXECUTED-SCOPE`.
+
+La frontera del último día se auditó en vivo y NO es un problema: ambas fechas
+se almacenan a `T00:00:00.000` y la diferencia entre `<=` y `<` es 0 sobre
+miles de filas. La semántica global de fechas no se toca.
+
+Dos fugas globales quedan declaradas como deuda por condición de STOP:
+`PUBLICATION_EVENT_VS_STATE_GLOBAL_DEBT` —fuera del perfil, `publicados` sigue
+activando estado actual— y `SCALAR_DATASET_SIGNAL_SOUP_DEBT`.
+
+Validación: suite completa una sola vez, **12310 passed, 11 skipped, 16 xfailed,
+0 failed (10:26)**. Freeze del incidente 22/22; corpus sistémico de 74 casos por
+4 ejes; propiedades P1–P12. Ruff, `make lint-core` y `git diff --check` limpios;
+Semgrep 10 en `app/` con delta 0. Dogfood en vivo: `0 contratos · $0` →
+`47 contratos · $911.5 millones`, cero llamadas a procesos. Rama sin merge y sin
+push.
+
+Detalle: [ENTITY_PROFILE_SEMANTIC_PLAN_V1](audits/ENTITY_PROFILE_SEMANTIC_PLAN_V1.md)
+y [ADR-095](decisions/2026-09-07_ADR-095_entity-profile-semantic-plan-v1.md).

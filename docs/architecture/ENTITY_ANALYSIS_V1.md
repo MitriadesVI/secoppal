@@ -67,7 +67,13 @@ Los dos marcadores del perfil se retiran al abandonar esa ruta.
 | `scope.py` | aceptar BuyerUnit/BuyerGroup productivo y anexar metadata territorial |
 | `turn.py` | intención, foco, aclaración Territory-vs-Buyer y follow-up seguro |
 | `followup.py` | gramática acotada de preguntas contextuales de proveedores |
-| `query_runner.py` | plan fijo, presupuesto, concurrencia acotada y deadline |
+| `source_request.py` | qué FUENTE nombró la persona, y con qué procedencia |
+| `temporal_event.py` | a qué HECHO ancla su periodo, y si ese hecho tiene fecha |
+| `semantic_request.py` | la petición completa, JSON-safe, integrando autoridades |
+| `source_plan.py` | proyectar la petición a params válidos para CADA esquema |
+| `execution_plan.py` | fuentes efectivas, jobs, secciones y aclaración, en una pasada |
+| `effective_scope.py` | lo EJECUTADO, en la forma en que el render puede decirlo |
+| `query_runner.py` | presupuesto, concurrencia acotada y deadline |
 | `aspects/` | construir y leer agregaciones por aspecto |
 | `sections.py` | estado `SUPPORTED/PARTIAL/UNAVAILABLE` independiente |
 | `evidence.py` | rechazar agregados inválidos o contradictorios para construir hechos |
@@ -92,6 +98,85 @@ PROCUREMENT_LAYERS_RUNTIME_DEPENDENCY = NONE
 GRAPH_DATABASE = NONE
 ```
 
+## Plan semántico V1 (ADR-095)
+
+El perfil no opera sobre un diccionario de params compartido: ejecuta **un plan
+semántico validado**.
+
+```text
+autoridades existentes
+  → EntityProfileSemanticRequest      (qué pidió la persona)
+  → EntityProfileExecutionPlan        (qué se ejecuta, y qué se pregunta)
+      ├─ ProcessSourcePlan
+      └─ ContractSourcePlan
+  → evidencia validada POR MÉTRICA
+  → EffectiveScopeSnapshot            (qué se ejecutó)
+  → render
+```
+
+La capa **integra** autoridades y no vuelve a resolver texto, salvo las dos
+decisiones que no tenían dueño: **fuente solicitada** y **evento temporal**.
+
+`params["dataset"]` no es autoridad de fuente. `_select_dataset` responde otra
+pregunta —qué dataset escalar ejecuta la ruta tabular— y decide por sopa de
+señales sin orden, así que `"analiza procesos de X con proveedores"` produce
+`dataset=contratos, dataset_explicit=True`. La fuente se lee de las palabras de
+la persona, con el nombre del comprador enmascarado; su ausencia significa que
+no eligió, y una radiografía sin fuente elegida cubre las dos.
+
+### Fuente solicitada ≠ fuente efectiva
+
+`effective = requested ∩ capacidad(foco)`. El foco **nunca** reescribe la
+solicitada; si la intersección es vacía se pregunta y se envían cero llamadas.
+
+| foco | capacidad |
+|---|---|
+| overview, recent, temporal | ambas |
+| suppliers, values | contratos |
+| modalities | procesos |
+
+`values` sobre procesos y `modalities` sobre contratos se adjudican como
+aclaración: soportarlos exige capacidades acreditadas, no reinterpretar campos.
+
+### Evento temporal ≠ estado actual
+
+Un evento sólo existe cuando hay un periodo que anclar. Reclamar un tramo como
+evento impide que ese MISMO tramo filtre el estado actual
+(`INV-STRUCTURED-DIMENSION-NOT-TOPIC` extendida al estado); la comprobación
+relee `estado_families` con el tramo enmascarado, así que
+`"publicados en agosto y todavía abiertos"` conserva ambas dimensiones.
+
+Un hecho sin fecha productiva acreditada —`terminados`, `liquidados`,
+`iniciados`, `adjudicados`, `cedidos`— NO se traduce a firma ni a publicación:
+pide aclaración con cero llamadas.
+
+### Proyección segura por fuente
+
+| | procesos | contratos |
+|---|---|---|
+| ancla temporal | `fecha_de_publicacion_del` | `fecha_de_firma` |
+| campo de valor | `precio_base` | `valor_del_contrato` |
+| estado prohibido | `estado_contrato*` | `estado_del_procedimiento`, `estado_de_apertura_del_proceso` |
+
+`QueryJob` transporta sus propios params ya proyectados: es lo que hace
+estructuralmente imposible volver a pasar un mismo dict a los dos esquemas.
+
+### Verdad por métrica
+
+`count(*)` no depende de la columna de valor. Un valor ausente deja esa métrica
+no disponible y **no** invalida el conteo. Siguen siendo inservibles el agregado
+malformado y el cero desmentido por su propia suma. Una fuente no solicitada no
+es cero, no falló y no vuelve el perfil `partial`.
+
+### Alcance renderizado == alcance ejecutado
+
+`INV-RENDERED-SCOPE-EQUALS-EXECUTED-SCOPE`. El bloque "qué analizamos" se deriva
+del plan ejecutado y es su única fuente. Un mes no se reduce a su año; un perfil
+de contratos no menciona procesos ni ofrece profundizar en ellos.
+
+Evidencia, corpus, dogfood y deuda declarada:
+[`ENTITY_PROFILE_SEMANTIC_PLAN_V1.md`](../audits/ENTITY_PROFILE_SEMANTIC_PLAN_V1.md).
+
 ## Aspectos y denominadores
 
 | Aspecto | Fuente | Semántica V1 |
@@ -111,7 +196,7 @@ no se presenta como valor contratado.
 
 ## Presupuesto y honestidad parcial
 
-El overview tiene un plan invariable de seis llamadas:
+El overview con ambas fuentes tiene un plan de seis llamadas:
 
 1. actividad + modalidades de procesos;
 2. actividad + valores de contratos;
@@ -120,6 +205,8 @@ El overview tiene un plan invariable de seis llamadas:
 5. procesos recientes;
 6. contratos recientes.
 
+Cuando la persona nombra UNA fuente, el plan ejecuta sólo las llamadas de esa
+fuente y las demás secciones quedan `NOT_REQUESTED` —que no es cero ni fallo.
 Los focos individuales usan entre una y dos llamadas. Antes de enviar una
 llamada se comprueba el deadline total del turno; sin un segundo útil queda
 registrada como `BUDGET_EXHAUSTED` y no se intenta. Cada llamada registra

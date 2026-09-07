@@ -4470,3 +4470,48 @@ sola suite en serie sobre `ddcc6b8`: **11738 passed, 11 skipped, 14 xfailed in
 controles de personas hasta pedir proveedor explícito. Ruff y corpus verdes;
 Semgrep conserva 10 hallazgos de baseline, delta cero. **NO_GO** del benchmark
 primario permanece vigente; el pase funcional no autoriza promoción.
+
+
+## ADR-095: Entity Profile Semantic Plan V1
+
+**Fecha:** 2026-09-07. **Estado:** implementado en rama, sin merge ni push.
+**Rama:** `fix/entity-profile-semantic-plan-v1`. **Base:** `main` 7868664.
+
+`"analizame que contratos firmo alcaldia de baranoa en agosto"` devolvía 0
+procesos, 0 contratos y $0 habiendo 47 contratos firmados. El cero era del
+filtro: `firmo` sobrevivía como tema y se proyectaba como `LIKE '%firmo%'` sobre
+el objeto contractual.
+
+El perfil pasa a ejecutar UN plan semántico validado. La capa nueva integra las
+autoridades existentes y adjudica sólo las dos que no tenían dueño: **qué fuente
+nombró la persona** —que no es `params["dataset"]`, demostrado con una consulta
+que dice `procesos` y produce `dataset=contratos, dataset_explicit=True`— y **a
+qué hecho ancla su periodo**. Un hecho sin fecha productiva acreditada pide
+aclaración con cero llamadas en vez de contestarse con la de firma en silencio.
+
+Reclamar un tramo como evento impide que ese mismo tramo filtre el estado
+actual: "publicados en agosto" no es "sigue publicado hoy". Sobre Baranoa esa
+confusión reducía el universo de procesos de agosto de **48 a 2**.
+
+`effective_sources = requested ∩ capacidad(foco)`; el foco nunca reescribe la
+fuente pedida y una intersección vacía pregunta en vez de ampliar. Conteo y
+valor son métricas independientes del mismo agregado. El alcance renderizado se
+deriva del plan ejecutado (`INV-RENDERED-SCOPE-EQUALS-EXECUTED-SCOPE`).
+
+Se corrigió además una fuga BIDIRECCIONAL de predicados entre esquemas que nadie
+detectaba, y se auditó en vivo la frontera del último día: ambas fechas se
+almacenan a `T00:00:00.000` y la diferencia entre `<=` y `<` es 0, así que la
+semántica global de fechas NO se toca.
+
+Fuera de alcance por condición de STOP, declaradas como deuda:
+`PUBLICATION_EVENT_VS_STATE_GLOBAL_DEBT` y `SCALAR_DATASET_SIGNAL_SOUP_DEBT`.
+
+[Decisión completa](decisions/2026-09-07_ADR-095_entity-profile-semantic-plan-v1.md).
+[Informe y evidencia](audits/ENTITY_PROFILE_SEMANTIC_PLAN_V1.md).
+
+Cierre de validación ADR-095 (rama, sin merge/push): suite completa una sola vez,
+**12310 passed, 11 skipped, 16 xfailed, 0 failed (10:26)**. Freeze del incidente
+22/22; corpus sistémico 74 casos × 4 ejes; propiedades P1–P12 verdes. Ruff,
+`make lint-core` y `git diff --check` limpios; Semgrep 10 en `app/` con delta 0.
+Dogfood en vivo: `0 contratos · $0` → `47 contratos · $911.5 millones`, con cero
+llamadas al dataset de procesos.
