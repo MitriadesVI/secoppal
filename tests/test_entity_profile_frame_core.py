@@ -10,12 +10,14 @@ from __future__ import annotations
 
 import socket
 
+from hypothesis import given, settings, strategies as st
 import pytest
 
 from app.core.entity_profile.claims import ClaimDimension, RelationKind
 from app.core.entity_profile.frame_values import (
     SourceKind,
     SourceOrigin,
+    TemporalEventKind,
     TopicAll,
     TopicAny,
 )
@@ -196,3 +198,45 @@ def test_clearing_the_period_is_not_silently_restored():
     assert turns[-1].ready, turns[-1].issues
     assert turns[-1].predicates(SourceKind.CONTRACTS).temporal.period.is_unbounded
     assert not any("2026-08-01" in sql for sql in turns[-1].sql)
+
+
+def test_switching_source_does_not_inherit_an_incompatible_event():
+    """La fuente que entra no hereda el hecho de la que sale.
+
+    La fecha de firma de un contrato no describe la publicación de un proceso;
+    adivinarlo contestaría una pregunta distinta de la que se hizo.
+    """
+    turns = conversation((
+        f"analiza contratos firmados de {BUYER} en agosto", "ahora procesos",
+    ))
+    last = turns[-1]
+    if last.clarifies:
+        assert not last.jobs
+        return
+    assert last.sources == frozenset({SourceKind.PROCESSES})
+    temporal = last.predicates(SourceKind.PROCESSES).temporal
+    assert temporal.event is not TemporalEventKind.CONTRACT_SIGNATURE
+    assert {job.source for job in last.jobs} == {SourceKind.PROCESSES}
+
+
+def test_contract_type_exclusion_is_declared_unsupported_not_turned_into_topic():
+    """El tipo negativo está modelado, pero la base no acredita su proyección."""
+    out = observe(
+        f"analiza contratos de {BUYER}",
+        overrides={"contract_type_exclude": ["Obra"]},
+    )
+    assert out.clarifies and not out.jobs
+    assert "CONTRACT_TYPE_EXCLUDE_UNSUPPORTED" in out.issues
+
+
+@settings(max_examples=8, derandomize=True, deadline=None)
+@given(connective=st.sampled_from(["pero", "que", "aunque"]),
+       term=st.sampled_from(["terminados", "liquidados"]))
+def test_property_current_marker_does_not_erase_a_historical_event(connective, term):
+    """Un marcador de actualidad no borra el hecho fechado que lo acompaña."""
+    out = observe(
+        f"analiza contratos {term} en agosto {connective} actualmente activos "
+        f"de {BUYER}",
+    )
+    assert out.clarifies and not out.jobs
+    assert term in out.blocked_terms
