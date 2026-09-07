@@ -1370,5 +1370,211 @@
       }
     }
   ],
-  "global_render": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS · NIT 860002400\n\n*Huella contractual observada* — SECOP II contratos, consultado el 18/08/2026 14:32 (hora de Colombia)\n\n- 4.230 contratos\n- $1.4 billones en valor contractual reportado\n- actividad observada entre 2016 y 2026\n\n*Principales compradores*\n- Universidad del Atlántico: 36\n- MUNICIPIO DE MONTERIA: 35\n- GOBERNACION DEL CASANARE: 28\n\n*Actividad por año*\n- 2026: 511\n- 2025: 844\n\n*Modalidades*\n- Mínima cuantía: 2.115\n- Selección Abreviada de Menor Cuantía: 1.049\n- Contratación régimen especial: 375\n\n*Territorios*\n- Distrito Capital de Bogotá: 959\n- Boyacá: 396\n- Valle del Cauca: 293\n\n*Nombres con que aparece en SECOP*\n- LA PREVISORA S.A. COMPAÑÍA DE SEGUROS (4.211)\n- UNIÓN TEMPORAL LA PREVISORA S.A. COMPAÑÍA DE SEGUROS -  POSITIVA COMPAÑÍA DE SEGUROS S.A. (7)\n- UNION TEMPORAL LA PREVISORA - AXA COLPATRIA - ALLIANZ SEGUROS - HDI - 26001053 H3 DE 2026 - AEROCIVIL (3)\n- UT PREVISORA-SOLIDARIA DEQUIN LP 003 2025 (1)\n_Son los nombres que las entidades escribieron en cada contrato, no una razón social registrada. Algunos pueden ser uniones temporales o consorcios publicados bajo este mismo documento: el conteo los incluye tal como la fuente los reporta._\n\n*Contratos recientes*\n- DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN: Adquirir pólizas de seguros del Distrito y conglomerado (grupo 5 SOAT)\n  https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.8772995&isFromPublicArea=True&isModal=true&asPopupView=true\n- PERSONERIA MUNICIPAL  DE SAN PEDRO  SUCRE: No definido\n  https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.342256&isFromPublicArea=True&isModal=true&asPopupView=true\n\nEl rango de actividad se calcula sobre los contratos que publican fecha de firma; cerca del 7% no la reporta.\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales."
+  "global_render": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS · NIT 860002400\n\n*Huella contractual observada* — SECOP II contratos, consultado el 18/08/2026 14:32 (hora de Colombia)\n\n- 4.230 contratos\n- $1.4 billones en valor contractual reportado\n- actividad observada entre 2016 y 2026\n\n*Principales compradores*\n- Universidad del Atlántico: 36\n- MUNICIPIO DE MONTERIA: 35\n- GOBERNACION DEL CASANARE: 28\n\n*Actividad por año*\n- 2026: 511\n- 2025: 844\n\n*Modalidades*\n- Mínima cuantía: 2.115\n- Selección Abreviada de Menor Cuantía: 1.049\n- Contratación régimen especial: 375\n\n*Territorios*\n- Distrito Capital de Bogotá: 959\n- Boyacá: 396\n- Valle del Cauca: 293\n\n*Nombres con que aparece en SECOP*\n- LA PREVISORA S.A. COMPAÑÍA DE SEGUROS (4.211)\n- UNIÓN TEMPORAL LA PREVISORA S.A. COMPAÑÍA DE SEGUROS -  POSITIVA COMPAÑÍA DE SEGUROS S.A. (7)\n- UNION TEMPORAL LA PREVISORA - AXA COLPATRIA - ALLIANZ SEGUROS - HDI - 26001053 H3 DE 2026 - AEROCIVIL (3)\n- UT PREVISORA-SOLIDARIA DEQUIN LP 003 2025 (1)\n_Son los nombres que las entidades escribieron en cada contrato, no una razón social registrada. Algunos pueden ser uniones temporales o consorcios publicados bajo este mismo documento: el conteo los incluye tal como la fuente los reporta._\n\n*Contratos recientes*\n- DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN: Adquirir pólizas de seguros del Distrito y conglomerado (grupo 5 SOAT)\n  https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.8772995&isFromPublicArea=True&isModal=true&asPopupView=true\n- PERSONERIA MUNICIPAL  DE SAN PEDRO  SUCRE: No definido\n  https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.342256&isFromPublicArea=True&isModal=true&asPopupView=true\n\nEl rango de actividad se calcula sobre los contratos que publican fecha de firma; cerca del 7% no la reporta.\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+  "baseline_metrics": {
+    "identity": {
+      "document_type": "CC",
+      "base_number": "10000001",
+      "resolution_method": "explicit_document"
+    },
+    "dataset_id": "jbjy-vk9h",
+    "contract_count": 4230,
+    "total_reported_value": 1396701750307.83,
+    "first_observed_date": "2016-12-06",
+    "last_observed_date": "2026-08-14",
+    "buyers": [
+      [
+        "Universidad del Atlántico",
+        36
+      ],
+      [
+        "MUNICIPIO DE MONTERIA",
+        35
+      ],
+      [
+        "GOBERNACION DEL CASANARE",
+        28
+      ]
+    ],
+    "years": [
+      [
+        "2026",
+        511
+      ],
+      [
+        "2025",
+        844
+      ],
+      [
+        "2024",
+        801
+      ],
+      [
+        "2023",
+        500
+      ],
+      [
+        "2022",
+        344
+      ],
+      [
+        "2021",
+        267
+      ],
+      [
+        "2020",
+        251
+      ],
+      [
+        "2019",
+        208
+      ],
+      [
+        "2018",
+        81
+      ],
+      [
+        "2017",
+        17
+      ],
+      [
+        "2016",
+        1
+      ]
+    ],
+    "modalities": [
+      [
+        "Mínima cuantía",
+        2115
+      ],
+      [
+        "Selección Abreviada de Menor Cuantía",
+        1049
+      ],
+      [
+        "Contratación régimen especial",
+        375
+      ]
+    ],
+    "territories": [
+      [
+        "Distrito Capital de Bogotá",
+        959
+      ],
+      [
+        "Boyacá",
+        396
+      ],
+      [
+        "Valle del Cauca",
+        293
+      ]
+    ],
+    "observed_names": [
+      {
+        "name": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+        "document": "860002400",
+        "document_type": "NIT",
+        "contract_count": 4211
+      },
+      {
+        "name": "UNIÓN TEMPORAL LA PREVISORA S.A. COMPAÑÍA DE SEGUROS -  POSITIVA COMPAÑÍA DE SEGUROS S.A.",
+        "document": "860002400",
+        "document_type": "NIT",
+        "contract_count": 7
+      },
+      {
+        "name": "UNION TEMPORAL LA PREVISORA - AXA COLPATRIA - ALLIANZ SEGUROS - HDI - 26001053 H3 DE 2026 - AEROCIVIL",
+        "document": "860002400",
+        "document_type": "NIT",
+        "contract_count": 3
+      },
+      {
+        "name": "UT PREVISORA-SOLIDARIA DEQUIN LP 003 2025",
+        "document": "860002400",
+        "document_type": "NIT",
+        "contract_count": 1
+      }
+    ],
+    "recent_contracts": [
+      {
+        "id_contrato": "CO1.PCCNTR.8521233",
+        "referencia_del_contrato": "4600106154",
+        "nombre_entidad": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+        "departamento": "Antioquia",
+        "ciudad": "Medellín",
+        "objeto_del_contrato": "Adquirir pólizas de seguros del Distrito y conglomerado (grupo 5 SOAT)",
+        "modalidad_de_contratacion": "Licitación pública",
+        "valor_del_contrato": "621602149",
+        "estado_contrato": "Cancelado",
+        "proveedor_adjudicado": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+        "documento_proveedor": "860002400",
+        "tipodocproveedor": "NIT",
+        "es_grupo": "No",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.8772995&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      },
+      {
+        "id_contrato": "CO1.PCCNTR.352410",
+        "referencia_del_contrato": "CO1.PCCNTR.352410",
+        "nombre_entidad": "PERSONERIA MUNICIPAL  DE SAN PEDRO  SUCRE",
+        "departamento": "Sucre",
+        "ciudad": "San Pedro",
+        "objeto_del_contrato": "No definido",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "valor_del_contrato": "238000",
+        "estado_contrato": "Borrador",
+        "proveedor_adjudicado": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+        "documento_proveedor": "860002400",
+        "tipodocproveedor": "NIT",
+        "es_grupo": "No",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.342256&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      }
+    ],
+    "aspects": [
+      {
+        "name": "buyers",
+        "outcome": "success",
+        "reason": "results_found"
+      },
+      {
+        "name": "core",
+        "outcome": "success",
+        "reason": "results_found"
+      },
+      {
+        "name": "date_range",
+        "outcome": "success",
+        "reason": "results_found"
+      },
+      {
+        "name": "modalities",
+        "outcome": "success",
+        "reason": "results_found"
+      },
+      {
+        "name": "observed_names",
+        "outcome": "success",
+        "reason": "results_found"
+      },
+      {
+        "name": "recent_contracts",
+        "outcome": "success",
+        "reason": "results_found"
+      },
+      {
+        "name": "territories",
+        "outcome": "success",
+        "reason": "results_found"
+      },
+      {
+        "name": "years",
+        "outcome": "success",
+        "reason": "results_found"
+      }
+    ]
+  }
 }

@@ -88,7 +88,7 @@ def test_global_profile_keeps_frozen_output_byte_for_byte():
     ('buyer', ['Entidad: DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA']),
     ('year', ['Periodo: 2026']),
     ('buyer_year', ['Entidad:', 'Periodo: 2026']),
-    ('value', ['$0', '$2.000.000.000']),
+    ('value', ['$0', '$2.0 mil millones']),
     ('state', ['En ejecución', 'Modificado', 'Prorrogado']),
     ('modality', ['Modalidad:', 'Contratación directa']),
     ('contract_type', ['Prestación de servicios', 'Convenio solidario']),
@@ -201,3 +201,73 @@ def test_property_empty_and_error_never_collapse(filters, failed):
         params.pop(key)
     assert build_actor_profile_scope(params).is_empty()
     assert scope.is_empty() == (not filters)
+
+
+def test_modality_labels_follow_dataset_projection_including_unsatisfiable():
+    from app.core.actor_profile.scope import build_actor_profile_scope
+    from app.core.modality_models import load_catalog
+    catalog = load_catalog()
+    for procedure in catalog.procedures:
+        for direction in ('include', 'exclude'):
+            params = CASES['global']['params'] | {
+                f'modalidad_{direction}_procedure_ids': [procedure.procedure_id],
+            }
+            scope = build_actor_profile_scope(params, modality_catalog=catalog)
+            sql = ASPECTS[0].build(SoQLBuilder(), DATASET, params)
+            if procedure.applies_to('contratos'):
+                assert procedure.display_name in str(scope)
+            elif direction == 'include':
+                assert '1=0' in sql
+                assert 'sin valores compatibles' in str(scope)
+            else:
+                assert scope.is_empty()
+                assert sql == CASES['global']['queries']['core']['soql']
+
+
+def test_catalog_context_reuses_execution_cache_without_io_or_resolver_calls(monkeypatch):
+    from app.core.actor_profile.scope_context import scope_from_resolved_params
+    from app.core.entity_resolver import EntityResolver
+    from app.data.actor_alias_resolver import ActorNameResolver
+    params = CASES['group']['params'] | {
+        'modalidad_include_procedure_ids': ['contratacion_directa'],
+    }
+    ASPECTS[0].build(SoQLBuilder(), DATASET, params)
+    def blocked(*args, **kwargs):
+        raise AssertionError('additional I/O or identity resolution during display')
+    monkeypatch.setattr(Path, 'read_text', blocked)
+    monkeypatch.setattr('builtins.open', blocked)
+    monkeypatch.setattr('sqlite3.connect', blocked)
+    monkeypatch.setattr(ActorNameResolver, 'resolve', blocked)
+    monkeypatch.setattr(EntityResolver, 'resolve_entidad', blocked)
+    monkeypatch.setattr(EntityResolver, 'resolve_departamento', blocked)
+    scope = scope_from_resolved_params(params)
+    assert scope.buyer_label == 'Administración central de Bogotá'
+    assert scope.modality_labels == ('Contratación directa',)
+
+
+@pytest.mark.parametrize('invalid', [
+    {'modalidad_include_procedure_ids': ['not_a_procedure']},
+    {'contract_type_include': ['not_a_type']},
+])
+def test_invalid_executable_filter_preserves_error_not_tabular_fallback(invalid):
+    profile = build_actor_profile(
+        CASES['global']['params'] | invalid,
+        DATASET, RecordingClient(), SoQLBuilder(),
+    )
+    assert profile.contract_count is None
+    assert all(a.outcome == Outcome.ERROR for a in profile.aspects)
+    assert '0 contratos' not in render_actor_profile(profile)
+
+
+def test_buyer_and_period_are_three_visible_lines():
+    from app.core.actor_profile.scope_render import render_actor_profile_scope
+    assert len(render_actor_profile_scope(scope_for('buyer_year')).splitlines()) == 3
+
+
+@pytest.mark.parametrize('name', CASES)
+def test_every_metric_matches_the_original_assembler(name):
+    profile = build_actor_profile(CASES[name]['params'], DATASET, FakeSecopClient(), SoQLBuilder())
+    metrics = asdict(profile)
+    metrics.pop('queried_at')
+    metrics.pop('applied_scope')
+    assert json.loads(json.dumps(metrics)) == FROZEN['baseline_metrics']

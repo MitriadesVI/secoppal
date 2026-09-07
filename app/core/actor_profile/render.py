@@ -35,6 +35,7 @@ from app.core.actor_identity import IdentityKey
 from app.core.actor_name import format_actor_identity_for_user, normalize_actor_name
 from app.core.actor_profile.models import ActorProfileResult
 from app.core.analytics.base import format_currency
+from app.core.actor_profile.scope_render import render_actor_profile_scope
 
 __all__ = ["mask_document", "render_actor_profile"]
 
@@ -238,9 +239,16 @@ def render_actor_profile(profile: ActorProfileResult) -> str:
         f"consultado el {stamp} (hora de Colombia)"
     )
 
+    scope_block = render_actor_profile_scope(profile.applied_scope)
+    if scope_block:
+        blocks.append(scope_block)
+
     headline: list[str] = []
     if profile.contract_count is not None:
-        headline.append(f"- {profile.contract_count:,} contratos".replace(",", "."))
+        count_line = f"- {profile.contract_count:,} contratos".replace(",", ".")
+        if profile.contract_count == 0 and scope_block:
+            count_line += " observados dentro de estos filtros"
+        headline.append(count_line)
     if profile.total_reported_value:
         headline.append(
             f"- ${format_currency(profile.total_reported_value)} "

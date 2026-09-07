@@ -28,6 +28,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 from app.core.actor_profile.aspects import ASPECTS, ProfileAspect
+from app.core.actor_profile.scope_context import scope_from_resolved_params
 from app.core.actor_profile.models import ActorProfileResult, AspectStatus
 from app.core.deadline import current_deadline
 from app.core.outcome import Outcome, OutcomeReason
@@ -152,6 +153,7 @@ def build_actor_profile(
         queried_at=queried_at,
         identity=dict(params.get("actor_scope") or {}),
         dataset_id=dataset_id,
+        applied_scope=scope_from_resolved_params(params),
         contract_count=payload.get("contract_count"),
         total_reported_value=payload.get("total_reported_value"),
         first_observed_date=payload.get("first_observed_date"),

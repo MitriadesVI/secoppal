@@ -36,6 +36,7 @@ from datetime import datetime
 from typing import Any
 
 from app.core.outcome import Outcome, OutcomeReason
+from app.core.actor_profile.scope_models import ActorProfileAppliedScope
 
 __all__ = [
     "ActorProfileResult",
@@ -100,6 +101,7 @@ class ActorProfileResult:
     observed_names: tuple[ObservedName, ...] = ()
     recent_contracts: tuple[dict, ...] = ()
     aspects: tuple[AspectStatus, ...] = ()
+    applied_scope: ActorProfileAppliedScope = field(default_factory=ActorProfileAppliedScope)
 
     def __post_init__(self) -> None:
         # INV-CUTOFF. Un datetime naive no dice cuándo se consultó: dice una
