@@ -42,6 +42,31 @@ ACTOR_IDENTITY_SPLIT_BRAIN_QUESTION = (
 _TYPED_DOCUMENTS = frozenset({"CC", "NIT"})
 
 
+def _projected_documents(value: object) -> tuple[str, ...]:
+    """Every document ``contratista`` filters by, whatever shape it arrives in.
+
+    The first version of this guard only inspected ``list``/``tuple``, which
+    made its promise false: ``SoQLBuilder._build_where`` also accepts a scalar
+    and turns a digit string into an equality on ``documento_proveedor``. A
+    contradictory scalar therefore passed both doors and executed.
+
+    A string is one value, not an iterable of characters. Anything else that
+    iterates is read as a container of values — deliberately wider than the
+    builder's own ``isinstance(..., list)`` test, so a shape the builder starts
+    accepting tomorrow is checked today rather than silently exempted.
+    """
+    if value is None or isinstance(value, bool):
+        return ()
+    if isinstance(value, str):
+        return (value,) if value.strip() else ()
+    if isinstance(value, (bytes, bytearray)):
+        return ()
+    try:
+        return tuple(str(item) for item in value)
+    except TypeError:
+        return (str(value),)
+
+
 def actor_identity_split_brain(params: dict) -> bool:
     """True when ``contratista`` projects an identity ``actor_scope`` denies.
 
@@ -49,6 +74,15 @@ def actor_identity_split_brain(params: dict) -> bool:
     document to project, and a legacy frame without a scope has nothing to
     contradict.  A ``contratista`` narrower than the full variant set is not a
     divergence — the AP2 door emits only the forms the user actually declared.
+
+    A textual, non-documentary ``contratista`` beside a typed scope blocks too.
+    That is not an oversight: the only writer of a textual ``contratista``
+    (``query_router._extract_contractor``) runs exclusively when Actor Profile
+    is disabled, and that path never writes ``actor_scope`` at all. The two
+    cannot legitimately co-occur, so there is no route to exempt — and a name
+    ``LIKE`` beside a typed identity is exactly the actor-merging filter
+    INV-NAME-NO-GUESS exists to forbid. If a legitimate route ever appears,
+    it must be adjudicated before an exception is added here.
     """
     scope = params.get("actor_scope")
     if not isinstance(scope, dict):
@@ -57,8 +91,8 @@ def actor_identity_split_brain(params: dict) -> bool:
     base_number = scope.get("base_number")
     if document_type not in _TYPED_DOCUMENTS or not base_number:
         return False
-    projected = params.get("contratista")
-    if not isinstance(projected, (list, tuple)) or not projected:
+    projected = _projected_documents(params.get("contratista"))
+    if not projected:
         return False
     try:
         identity = IdentityKey(
@@ -68,4 +102,4 @@ def actor_identity_split_brain(params: dict) -> bool:
     except (TypeError, ValueError):
         return False
     accepted = set(document_variants(identity))
-    return any(str(value) not in accepted for value in projected)
+    return any(value not in accepted for value in projected)

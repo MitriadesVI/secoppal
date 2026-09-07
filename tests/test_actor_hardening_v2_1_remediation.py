@@ -77,7 +77,6 @@ def _doors(params):
     return plan, direct, builder.build.call_count, client.query.call_count
 
 
-@pytest.mark.xfail(strict=True, reason="P1-A — scalar contratista bypasses both guards")
 def test_scalar_contradiction_reaches_no_source_call():
     params = _contradictory_frame(str)
     assert actor_identity_split_brain(params)
