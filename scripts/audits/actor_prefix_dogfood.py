@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from app.config import Settings, actor_profile_enabled, get_settings
+from app.core.actor_candidate_ui import actor_candidate_options
 from app.core.actor_identity import IdentityKey
 from app.core.actor_name import mask_identity_key
 from app.core.actor_resolution_trace import actor_resolution_trace
@@ -80,6 +81,9 @@ def main():
                            "identity_masked": mask_identity_key(IdentityKey(c["document_type"], c["base_number"]))} for c in candidates]
             evidence.append({"query": query, "reset_previous": True, "route_reason": result.get("route_reason"),
                              "needs_clarification": result.get("needs_clarification"),
+                             "clarification_reason": result.get("clarification_reason"),
+                             "candidate_controls": len(actor_candidate_options(params)),
+                             "pending": bool(params.get("actor_pending")),
                              "trace": actor_resolution_trace(params), "candidates": candidates,
                              "source_double_calls": len(calls),
                              "response_redacted": re.sub(r"\d{5,}", lambda match: "*" * (len(match[0]) - 4) + match[0][-4:], str(result.get("response")))})

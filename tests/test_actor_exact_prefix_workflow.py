@@ -189,3 +189,38 @@ def test_bare_number_does_not_replace_inconclusive_authority(tmp_path, monkeypat
     assert result["resolved_params"]["actor_resolution_status"] == "INCONCLUSIVE"
     assert result["needs_clarification"]
     assert calls == []
+
+
+def test_prefix_topic_conflict_has_no_rank_selection_until_actor_intent_is_explicit(tmp_path, monkeypatch):
+    workflow, calls = _workflow(tmp_path, monkeypatch)
+    resolver = resolver_for(tmp_path / "topics.sqlite", [
+        ("CC", "76000001", "transporte"), ("CC", "76000002", "transporte escolar"),
+    ])
+    monkeypatch.setattr(workflow, "actor_name_resolver", resolver)
+    first = workflow.run_query("contratos de transporte", chat_id="topic-prefix")
+    params = first["resolved_params"]
+    assert evaluate_actor_scope(params).reason == "actor_or_topic_ambiguous"
+    assert calls == []
+    assert "actor_pending" not in params
+    assert actor_candidate_options(params) == ()
+    assert actor_resolution_trace(params)["candidates_count"] == 0
+    selected = workflow.run_query("2", chat_id="topic-prefix")
+    assert selected.get("route_reason") != "actor_profile"
+    assert calls == []
+    strong = workflow.run_query("contratos del proveedor transporte", chat_id="topic-prefix")
+    params = strong["resolved_params"]
+    assert params["actor_resolution_method"] == "exact_prefix_ambiguous"
+    assert not params.get("actor_intent_conflict")
+    assert len(actor_candidate_options(params)) == 2
+    assert calls == []
+
+
+def test_existing_exact_ambiguity_topic_pending_is_not_changed(tmp_path):
+    resolver = resolver_for(tmp_path / "topics.sqlite", [
+        ("CC", "76000001", "transporte"), ("CC", "76000002", "transporte"),
+    ])
+    query = "contratos de transporte"
+    params = resolve_actor_name(State({"raw_query": query, "parsed_params": dict(QueryRouter().parse(query).params)}), resolver)["parsed_params"]
+    assert evaluate_actor_scope(params).reason == "actor_or_topic_ambiguous"
+    assert params["actor_resolution_method"] == "exact_ambiguous_alias"
+    assert len(actor_candidate_options(params)) == 2

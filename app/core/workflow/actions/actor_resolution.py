@@ -344,4 +344,9 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
             "actor_name": actor_name,
             "resolution_status": result.status,
         }
+        if result.method == "exact_prefix_ambiguous":
+            # This newly challenged unique alias previously offered only the
+            # actor/topic question. Do not expose ranks before that arbitration.
+            # Existing exact_ambiguous_alias UI retains its baseline behavior.
+            projected.pop("actor_pending", None)
     return state.update(parsed_params=projected)
