@@ -86,7 +86,6 @@ def _soql_for(client: FakeClient, dataset_id: str) -> list[str]:
 
 # ── Fuga semántica: la acción contractual no es tema ────────────────────────
 
-@pytest.mark.xfail(strict=True, reason="P1: 'firmo' sobrevive como objeto")
 def test_contract_action_verb_is_not_a_topic(router):
     turn = _turn(router, INCIDENT)
     assert turn.scope is not None
@@ -94,7 +93,6 @@ def test_contract_action_verb_is_not_a_topic(router):
     assert turn.params.get("objeto") in (None, [], ())
 
 
-@pytest.mark.xfail(strict=True, reason="P1: LIKE '%firmo%' sobre el objeto")
 def test_incident_query_does_not_filter_by_the_action_verb(router):
     _, client, _ = _run(router, INCIDENT)
     assert not any("firmo" in soql.lower() for _, _, soql in client.calls)

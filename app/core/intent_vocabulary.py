@@ -73,6 +73,18 @@ PROCUREMENT_ACTION_VERB_FORMS: frozenset[str] = frozenset({
     "suscribio", "suscribió", "suscribieron", "suscribe", "suscriben",
     # gastar
     "gasto", "gastó", "gastaron", "gasta", "gastan",
+    # firmar  (P1 Baranoa: "qué contratos firmó X en agosto")
+    #
+    # La familia estaba incompleta: sus hermanos semánticos —celebrar,
+    # suscribir— ya estaban aquí y ``firmar`` no, así que "qué contratos firmó
+    # la alcaldía" consultaba ``LIKE '%firmo%'`` sobre el objeto contractual y
+    # devolvía cero por el filtro, no por la fuente.
+    #
+    # Deliberadamente FUERA "firma" y "firmadas/firmados": la primera colisiona
+    # con el sustantivo ("firma digital", "firma electrónica", "la firma
+    # contratista") por la misma razón documentada para "contrató", y los
+    # participios ya los reclama INTENT_PATTERNS como señal de dataset.
+    "firmo", "firmó", "firmaron", "firman", "firmaba", "firmaban",
 })
 
 # Compatibilidad: los consumidores que solo preguntan "¿es acción de compra?".
