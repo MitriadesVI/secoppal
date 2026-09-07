@@ -15,6 +15,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from app.core.entity_profile.material_filters import MaterialFilters, filters_for
 from app.core.entity_profile.models import CONTRACT_DATASET, PROCESS_DATASET
 from app.core.entity_profile.source_request import RequestedSources
 
@@ -28,6 +29,11 @@ _SOURCE_TITLE = {
     RequestedSources.PROCESSES: "SECOP II Procesos",
     RequestedSources.CONTRACTS: "SECOP II Contratos",
     RequestedSources.BOTH: "actividad contractual",
+}
+
+_SOURCE_NOUN = {
+    PROCESS_DATASET: "procesos",
+    CONTRACT_DATASET: "contratos",
 }
 
 _EVENT_VERB = {
@@ -46,10 +52,22 @@ class EffectiveScopeSnapshot:
     effective_sources: RequestedSources | None
     period: str
     basis_lines: tuple[str, ...] = ()
-    topic: tuple[str, ...] = ()
-    modality: tuple[str, ...] = ()
-    value_min: float | None = None
-    value_max: float | None = None
+    # Los filtros EJECUTADOS por cada fuente, leídos de los params que el
+    # builder convirtió en WHERE. No se copian de la petición: copiarla fue
+    # exactamente lo que dejó fuera estado, exclusiones, modalidad, tipo y
+    # valor, y lo que hizo indistinguibles AND y OR.
+    filters: tuple[MaterialFilters, ...] = ()
+
+    @property
+    def topic(self) -> tuple[str, ...]:
+        """Compatibilidad: vista plana del tema de la primera fuente."""
+        return self.filters[0].topic.flat_terms if self.filters else ()
+
+    @property
+    def declares_two_magnitudes(self) -> bool:
+        """Dos fuentes con filtro de valor miden cosas distintas."""
+        with_value = [f for f in self.filters if f.has_value_filter]
+        return len(with_value) > 1
 
     @property
     def title(self) -> str:
@@ -124,6 +142,12 @@ def build_effective_scope(profile: object) -> EffectiveScopeSnapshot | None:
         return None
     request = plan.request
     period = humanize_period(request.time_from, request.time_to)
+    executed = plan.executed_datasets
+    filters = tuple(
+        filters_for(plan.plan_for(dataset_id))
+        for dataset_id in (PROCESS_DATASET, CONTRACT_DATASET)
+        if dataset_id in executed
+    )
     return EffectiveScopeSnapshot(
         buyer=profile.identity.display_name,
         requested_sources=request.sources,
@@ -132,8 +156,32 @@ def build_effective_scope(profile: object) -> EffectiveScopeSnapshot | None:
         basis_lines=_basis_lines(
             plan.effective_sources, period, request.has_period,
         ),
-        topic=request.topic,
-        modality=request.modality,
-        value_min=request.value_min,
-        value_max=request.value_max,
+        filters=filters,
     )
+
+
+def scope_filter_lines(snapshot: EffectiveScopeSnapshot) -> tuple[str, ...]:
+    """Cada filtro material declarado una vez, nombrando su fuente si difiere.
+
+    Con dos fuentes, un filtro idéntico se declara una sola vez; uno que difiere
+    —el valor, que mide presupuesto en procesos y valor pactado en contratos—
+    se declara por fuente para no presentar dos magnitudes bajo una etiqueta.
+    """
+    if not snapshot.filters:
+        return ()
+    name_magnitude = snapshot.declares_two_magnitudes
+    described = [
+        (filters.dataset_id, filters.describe(name_magnitude=name_magnitude))
+        for filters in snapshot.filters
+    ]
+    if len(described) == 1:
+        return described[0][1]
+    shared = [line for line in described[0][1] if all(
+        line in lines for _, lines in described[1:]
+    )]
+    lines = list(shared)
+    for dataset_id, source_lines in described:
+        for line in source_lines:
+            if line not in shared:
+                lines.append(f"{_SOURCE_NOUN[dataset_id].capitalize()} — {line}")
+    return tuple(lines)

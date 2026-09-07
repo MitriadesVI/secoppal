@@ -109,14 +109,8 @@ def project_source(
     if not request.keeps_current_state:
         for key in (*PROCESS_STATE_KEYS, *CONTRACT_STATE_KEYS, *SHARED_STATE_KEYS):
             projected.pop(key, None)
-    elif not any(projected.get(key) for key in (
-        *PROCESS_STATE_KEYS, *CONTRACT_STATE_KEYS,
-    )):
-        # El estado del OTRO esquema acaba de purgarse: su metadata compartida
-        # ya no describe ningún filtro de esta fuente y dejarla afirmaría un
-        # estado que este plan no aplica.
-        for key in SHARED_STATE_KEYS:
-            projected.pop(key, None)
+    else:
+        _purge_orphan_state_metadata(projected, dataset_id)
 
     should_execute = wanted and not unsupported
     return SourcePlan(
@@ -129,6 +123,31 @@ def project_source(
         unsupported_dimensions=tuple(unsupported),
         provenance=request.sources_provenance.value,
     )
+
+
+def _purge_orphan_state_metadata(projected: dict, dataset_id: str) -> None:
+    """La tupla de estado se proyecta ENTERA o no se proyecta (P2-1).
+
+    Purgar sólo las claves físicas dejaba metadata que describe el otro
+    esquema: el plan de contratos quitaba ``estado_del_procedimiento`` y
+    conservaba ``estado_field`` apuntando a ese mismo campo, más
+    ``estado_family``/``intent_type`` de procesos. Ningún predicado salía mal
+    en la inyección observada, pero la metadata afirmaba un estado que este
+    plan no aplica, y eso alimenta auditorías y render.
+    """
+    own_keys = (
+        PROCESS_STATE_KEYS if dataset_id == PROCESS_DATASET else CONTRACT_STATE_KEYS
+    )
+    if any(projected.get(key) for key in own_keys):
+        field = projected.get("estado_field")
+        if isinstance(field, str) and field not in own_keys:
+            # La metadata describe el esquema que acaba de purgarse.
+            for key in SHARED_STATE_KEYS:
+                projected.pop(key, None)
+        return
+    # Sin filtro físico propio, ninguna metadata de estado tiene referente.
+    for key in SHARED_STATE_KEYS:
+        projected.pop(key, None)
 
 
 def project_sources(

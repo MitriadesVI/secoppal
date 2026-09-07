@@ -2,7 +2,10 @@
 from __future__ import annotations
 
 from app.core.analytics.base import format_currency
-from app.core.entity_profile.effective_scope import build_effective_scope
+from app.core.entity_profile.effective_scope import (
+    build_effective_scope,
+    scope_filter_lines,
+)
 from app.core.entity_profile.models import EntityProfile, RecentRecord, SupplierMetric
 from app.core.entity_profile.source_request import RequestedSources
 
@@ -220,8 +223,9 @@ def _scope_lines(scope) -> list[str]:
     lines = list(scope.basis_lines)
     if not lines and scope.period != "todo el histórico disponible":
         lines.append(f"Periodo: {scope.period}.")
-    if scope.topic:
-        lines.append(f"Tema: {', '.join(scope.topic)}.")
+    # INV-FILTER-IN-SQL-IMPLIES-FILTER-DECLARED: todo filtro material que el
+    # plan ejecutó se declara aquí, con su forma.
+    lines.extend(scope_filter_lines(scope))
     if scope.narrowed:
         lines.append(
             "Esta vista sólo se puede responder sobre "
