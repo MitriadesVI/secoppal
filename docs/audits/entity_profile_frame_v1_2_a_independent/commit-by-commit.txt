@@ -1,0 +1,352 @@
+commit f5a68b2ea58aaeaba84b4cdbb792a049d4b752ec
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 14:35:36 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 14:48:17 2026 -0500
+
+    docs(entity-profile): freeze frame and continuation architecture
+
+ .../ENTITY_PROFILE_FRAME_ARCHITECTURE_V1.md        | 807 +++++++++++++++++++++
+ 1 file changed, 807 insertions(+)
+
+commit 0c9954f5bd419f27fa84d83b9559d3cc65491a73
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 14:54:09 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 14:54:09 2026 -0500
+
+    test(entity-profile): freeze frame core adversarials
+
+    Los contraejemplos de la revisión independiente e024753 se portan al contrato
+    del diseño congelado 02d65dd, no a la API de V1.1. La traducción vive en un
+    adapter de observación de tests: copiar `_entity_profile_request` o
+    `classify_entity_profile_turn` habría convertido en contrato justo las piezas
+    que el diseño retira.
+
+    Este commit es ROJO a propósito. Ninguno de los módulos que importa existe
+    todavía; los siguientes commits los construyen. Se separan tres archivos
+    porque responden tres preguntas distintas: qué significa la frase (core), qué
+    puede leerse de un contexto viejo (migration) y qué acredita una cifra
+    (evidence). El cuarto declara, sin fingir verdes, los ocho casos que sólo
+    V1.2-B puede cerrar.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ tests/entity_profile_frame_harness.py              | 146 ++++++++++++++++
+ tests/test_entity_profile_frame_core.py            | 191 +++++++++++++++++++++
+ tests/test_entity_profile_frame_evidence.py        |  58 +++++++
+ ...st_entity_profile_frame_integration_contract.py |  77 +++++++++
+ tests/test_entity_profile_frame_migration.py       | 100 +++++++++++
+ 5 files changed, 572 insertions(+)
+
+commit 34fe4d46e818f7b4a972ba6ab3601bb9e46eb753
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 15:11:20 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 15:11:20 2026 -0500
+
+    feat(entity-profile): add linked semantic claims
+
+    Un claim es una ocurrencia con su tramo y con la relación que la gobierna.
+    Eso es lo único que le faltaba a V1.1: sus listas paralelas de fuentes y
+    eventos obligaban a quien las consumía a volver a adivinar el vínculo, y con
+    un escalar por dimensión «contratos publicados y procesos firmados» y
+    «procesos publicados y contratos firmados» producían el mismo estado.
+
+    No hay parser nuevo. El vocabulario de fuente, el de eventos, el de
+    marcadores de actualidad, la autoridad temporal y la de estados son las
+    mismas. Cambian dos cosas concretas:
+
+    * `resolve_temporal_events` deduplica por tipo; aquí no. Dos ocurrencias de
+      «firmados» son dos claims.
+    * `resolve_temporal_scope` se invoca POR CLÁUSULA. Es lo que permite que
+      «procesos publicados en julio y contratos firmados en agosto» tenga dos
+      periodos, y es la misma autoridad aplicada al tramo que la gobierna.
+
+    `text_offsets.py` existe porque los spans de esas autoridades son offsets del
+    texto normalizado, no del original, y casi siempre coinciden —basta un acento
+    ya descompuesto para que no—. El mapa se construye al normalizar; si no
+    pudiera reproducir la normalización de la autoridad, se declara no fiel y no
+    se publica ningún tramo.
+
+    La cabeza de cláusula se endurece: `source_request` leía la primera aparición,
+    que basta para «procesos y contratos» pero no para «gestión de procesos
+    industriales», donde ya está dentro del complemento. Ahora exige que todo lo
+    anterior sea lenguaje de petición, reutilizando `_PROFILE_NOISE`.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ app/core/entity_profile/claim_adapters.py | 457 ++++++++++++++++++++++++++++++
+ app/core/entity_profile/claim_filters.py  | 143 ++++++++++
+ app/core/entity_profile/claims.py         | 229 +++++++++++++++
+ app/core/entity_profile/frame_values.py   | 373 ++++++++++++++++++++++++
+ app/core/entity_profile/text_offsets.py   |  81 ++++++
+ 5 files changed, 1283 insertions(+)
+
+commit 225734b47c26aa8cad35acbbffdc1d953e5e3aa9
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 15:11:20 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 15:11:20 2026 -0500
+
+    feat(entity-profile): add immutable frame and typed patches
+
+    El Frame es la única autoridad del significado confirmado: contiene todo lo
+    necesario para volver a compilar sin releer raw_query, params ni un plan
+    anterior. Lo que su forma hace imposible por construcción es una fecha global,
+    un estado global con dos fuentes, un tema plano y una fuente sin predicados
+    —`source_predicates` tiene exactamente una entrada por fuente solicitada—.
+
+    El parche sustituye el merge de diccionarios. KEEP, SET y CLEAR; la ausencia
+    de operación es KEEP. En V1.1 «no lo mencionó» y «lo quitó» eran
+    indistinguibles, y por eso «proveedores» borraba el periodo y «en 2025»
+    borraba el evento sin que nadie lo hubiera pedido.
+
+    Dos SET contradictorios sobre el mismo destino producen un parche inválido.
+    No gana el último: que una escritura silencie a otra es justo lo que hace que
+    un universo cambie sin que nadie lo note. CLEAR sólo alcanza filtros
+    opcionales; el comprador no es un target, así que no existe operación capaz de
+    borrarlo.
+
+    La composición toma el sujeto de la relación acreditada, no de la tabla de
+    compatibilidad física. Si el sujeto expresado y el hecho son incompatibles, se
+    conserva lo que la persona dijo y bloquea el compilador.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ app/core/entity_profile/claim_composition.py | 307 ++++++++++++++++++++++++
+ app/core/entity_profile/frame.py             | 335 +++++++++++++++++++++++++++
+ app/core/entity_profile/patch.py             | 248 ++++++++++++++++++++
+ 3 files changed, 890 insertions(+)
+
+commit 4b67e582700eb6d5f8b05e68645638301256f98d
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 15:11:20 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 15:11:20 2026 -0500
+
+    feat(entity-profile): add strict frame migration
+
+    Un turno viejo guardaba el significado dos veces: en el request serializado y
+    en los params materiales. Cuando discrepan no hay forma de saber cuál describe
+    lo que la persona aceptó, y V1 elegía una. El defecto es la elección, no la
+    discrepancia: el lector no puede hacerla.
+
+    Aquí una discrepancia invalida el contexto. Perder el hilo de una conversación
+    vieja es recuperable; contestar con un universo que nadie pidió no lo es.
+
+    Un `unsupported_event` legacy conserva su bloqueo en vez de descartarse. Un
+    span malformado invalida sin reventar. Un estado legacy sólo se proyecta si su
+    campo identifica un esquema inequívoco; si no, se pregunta, y en ningún caso
+    se purga en silencio.
+
+    El migrador es puro: lee y devuelve. No escribe histórico, no toca
+    ConversationStore y ningún lector productivo lo llama todavía.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ app/core/entity_profile/frame_migration.py | 276 +++++++++++++++++++++++++++++
+ 1 file changed, 276 insertions(+)
+
+commit ef52d969946829931360fed92046aba0fc6457e1
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 15:11:47 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 15:11:47 2026 -0500
+
+    refactor(entity-profile): compile accredited predicates for profile SQL
+
+    `_build_where(params)` no sirve para un agregado institucional, y no es un
+    defecto suyo: es una ruta de RECUPERACIÓN. Degrada AND a OR cuando los
+    términos son raros, aplica la política de oportunidad, añade estados por
+    defecto y reinterpreta claves legacy. Todo eso es correcto para traer
+    candidatos que después se rerankean, y es lo contrario de lo que necesita un
+    universo que ES la respuesta, sin ranking posterior que lo corrija.
+
+    Se reutilizan sus EMISORES —comprador, término, frase, estado, modalidad,
+    tipo, fecha, valor— sin su capa de decisiones. No hay segundo catálogo de
+    modalidades, ni vocabulario de estados propio, ni otra resolución de
+    comprador: son las mismas funciones con una entrada ya decidida.
+
+    ALL emite AND y ANY emite OR; ninguno se convierte en el otro. Una forma sin
+    emisor seguro se declara no soportada y el compilador aclara: no se aproxima
+    aplanando ni cambiando conectores.
+
+    Los límites monetarios salen exactos. `int()` truncaba decimales que la
+    persona había escrito.
+
+    Este commit va antes que el compilador para que el árbol importe en cada paso;
+    el orden del encargo los nombra al revés.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ app/core/entity_profile/frame_predicates.py | 185 ++++++++++++++++++++++++++++
+ 1 file changed, 185 insertions(+)
+
+commit e0e7bb049ec75771d163b537336106615954b394
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 15:11:47 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 15:11:47 2026 -0500
+
+    feat(entity-profile): compile frames into source plans
+
+    `build_execution_plan(request, params)` recibía dos entradas que podían
+    describir filtros distintos, y ninguna regla decía cuál mandaba. Aquí sólo
+    entra el Frame y los catálogos declarados.
+
+    Una decisión es READY, NEEDS_CLARIFICATION o INVALID_CONTEXT, y nunca dos a la
+    vez: «aclaración con jobs ejecutables» no existe como estado, porque preguntar
+    y consultar al mismo tiempo es contestar una pregunta que no se hizo. El
+    dataclass lo impone —sólo READY lleva plan—, así que no depende de que cada
+    rama se acuerde.
+
+    Los SQL se construyen ANTES de declarar READY. Un plan que no puede emitir una
+    de sus consultas no está listo aunque las demás sí lo estén.
+
+    Completitud por origen: una fuente que la persona NOMBRÓ no desaparece en
+    silencio; una que entró por defecto puede acotarse al foco declarando la
+    limitación. Esa es toda la diferencia entre «analiza X» + proveedores, que
+    responde contratos, y «analiza proveedores de procesos y contratos de X», que
+    pregunta.
+
+    `_FrozenWhereBuilder` es un adaptador de emisión, no un builder nuevo: delega
+    todo en el real y sólo intercepta el punto donde los aspectos preguntarían por
+    el WHERE, que aquí ya está decidido. Sin él habría que reescribir la forma de
+    cada SELECT, y dos copias de la misma consulta divergen.
+
+    `planned_jobs` no es `attempted_calls`: el plan no acredita que una llamada
+    haya ocurrido.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ app/core/entity_profile/frame_compiler.py | 424 ++++++++++++++++++++++++++++++
+ 1 file changed, 424 insertions(+)
+
+commit a77485089d4056308ca730c34c7407ced11d20c5
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 15:11:47 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 15:11:47 2026 -0500
+
+    feat(entity-profile): bind evidence to compiled plans
+
+    No se crea una clase Evidence genérica que compita con Truth Layer: se extiende
+    el contrato existente con lo que faltaba, que es la atadura al plan y el estado
+    de cada métrica por separado.
+
+    Un transporte SUCCESS no acredita un agregado. Cero filas no es cero contratos:
+    es una respuesta sin la cifra pedida, y por eso queda MISSING y no VALID.
+
+    Una suma ilegible no invalida su conteo. `count(*)` no depende de la columna de
+    valor, así que un universo con montos nulos tiene un conteo cierto y una suma
+    que no existe; invalidar el conteo perdía un hecho y convertir la suma en 0
+    inventaba otro. NaN, +Infinity y -Infinity nunca acreditan un monto y no
+    llegan al render, donde desbordarían al formatear.
+
+    NOT_REQUESTED se mantiene separado de todo fallo: una sección que nadie pidió
+    no es una sección que falló.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ app/core/entity_profile/frame_evidence.py | 119 ++++++++++++++++++++++++++++++
+ 1 file changed, 119 insertions(+)
+
+commit 44866e3c4b31da12d0700bfb82b6e96303961569
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 15:11:47 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 15:11:47 2026 -0500
+
+    feat(entity-profile): render compiled scope and evidence
+
+    El alcance visible se deriva del plan compilado, de los mismos SourcePredicates
+    de los que salió el WHERE. INV-RENDERED-SCOPE-EQUALS-EXECUTED-SCOPE deja de ser
+    una afirmación y pasa a ser una consecuencia: un filtro no puede estar en el SQL
+    y faltar en el alcance.
+
+    Con eso, «mantenimiento y vías» y «mantenimiento o vías» dejan de declararse
+    igual, una exclusión de modalidad aparece como exclusión, y dos fuentes con
+    periodos distintos se rotulan por separado en vez de bajo un encabezado común
+    que sugiere una ventana compartida que no existe.
+
+    El harness de observación queda cerrado sobre este contrato, y los 23
+    contraejemplos CORE pasan. Los códigos de cuestión de R2 se ajustan a lo que la
+    revisión exige de verdad —que el hecho histórico se conserve y no se ejecute—
+    en vez de a un código concreto que yo había supuesto.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ app/core/entity_profile/frame_render.py | 260 ++++++++++++++++++++++++++++++++
+ tests/entity_profile_frame_harness.py   |  24 ++-
+ tests/test_entity_profile_frame_core.py |   4 +-
+ 3 files changed, 284 insertions(+), 4 deletions(-)
+
+commit 216174bcc621e5ce8c1d4eb9e406a1bc185f99b2
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 15:14:58 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 15:14:58 2026 -0500
+
+    test(entity-profile): harden frame core properties and mutations
+
+    Catorce propiedades Hypothesis y diez mutaciones. Cada mutación mata una
+    aserción CONDUCTUAL —el core cambia lo que responde—, no un import: un test
+    que sólo revienta cuando el módulo desaparece no prueba nada sobre el contrato.
+
+    Dos hallazgos del propio ejercicio, ambos arreglados aquí:
+
+    * La aserción de exclusión de modalidad miraba «NOT IN» a secas, que también
+      emite el filtro de documentos de proveedor. Pasaba por la razón equivocada;
+      ahora comprueba `modalidad_de_contratacion NOT IN`, y por eso la mutación
+      que omite la exclusión ya la mata.
+    * El compilador capturaba `ValueError` al construir los SQL, pero
+      `UnsafeGlobalQueryError` y `BuyerCandidateSetExceedsSafeLimitError` son
+      `RuntimeError`. Un SQL imposible de construir reventaba la llamada en vez de
+      bloquear el plan, que es lo que el diseño exige.
+
+    El guard de paridad de catálogos existe sólo durante la convivencia: el core
+    declara sus tablas porque no puede leer `execution_plan` como coautoridad,
+    pero dos tablas del mismo hecho divergen sin que nada falle. Desaparece con el
+    lector de V1.1 en el cutover.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ app/core/entity_profile/frame_compiler.py         |   5 +-
+ tests/test_entity_profile_frame_catalog_parity.py |  51 +++
+ tests/test_entity_profile_frame_core.py           |   7 +-
+ tests/test_entity_profile_frame_mutations.py      | 303 ++++++++++++++++++
+ tests/test_entity_profile_frame_properties.py     | 363 ++++++++++++++++++++++
+ 5 files changed, 727 insertions(+), 2 deletions(-)
+
+commit 9da35b527e88b6d8612e94a5c5828f854d53a138
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Mon Sep 7 15:19:58 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Mon Sep 7 15:19:58 2026 -0500
+
+    docs(entity-profile): close v1.2-a core implementation
+
+    Registra qué quedó implementado, qué lectores de V1.1 siguen activos y cuáles
+    no deben sobrevivir al cutover, la clasificación de los 35 adversariales en 28
+    CORE y 7 INTEGRATION_B, y las puertas ejecutadas con su alcance real.
+
+    Deja dichos dos matices que no se pueden presentar como verdes limpios: R2
+    «hoy los contratos terminados en agosto» bloquea por AMBIGUOUS_PERIOD_ANCHOR y
+    no por UNSUPPORTED_EVENT —el marcador de actualidad deja el periodo sin
+    referente—, y R3 preserva la fuente pero no el complemento temático completo,
+    porque el parser existente ya descarta esas palabras antes del core.
+
+    No se numera ADR: los tres cambios no planeados —la cabeza de cláusula, la
+    captura de RuntimeError al construir SQL y la aserción de exclusión sobre su
+    propia columna— no alteran la arquitectura congelada en 02d65dd.
+
+    Se añaden los tres casos CORE que faltaban tras clasificar los 35: cambio de
+    fuente sin heredar el evento incompatible, exclusión de tipo de contrato
+    declarada no soportada, y la propiedad del marcador de actualidad.
+
+    Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+ docs/audits/ENTITY_PROFILE_FRAME_V1_2_A_CORE.md | 209 ++++++++++++++++++++++++
+ tests/test_entity_profile_frame_core.py         |  44 +++++
+ 2 files changed, 253 insertions(+)

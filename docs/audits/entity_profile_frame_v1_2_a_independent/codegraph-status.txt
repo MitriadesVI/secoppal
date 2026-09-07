@@ -1,0 +1,30 @@
+
+CodeGraph Status
+
+Project: /Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-a-independent
+
+Index Statistics:
+  Files:     888
+  Nodes:     20,966
+  Edges:     51,103
+  DB Size:   38.61 MB
+  Backend:   node:sqlite — built-in (full WAL)
+  Journal:   wal
+
+Nodes by Kind:
+  function        8,500
+  import          5,317
+  variable        3,316
+  method          2,109
+  file            866
+  class           849
+  route           9
+
+Files by Language:
+  python          866
+  yaml            22
+
+✓ Index is up to date
+
+(node:21114) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

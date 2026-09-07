@@ -1,0 +1,449 @@
+{
+  "candidate": "9da35b527e88b6d8612e94a5c5828f854d53a138",
+  "base": "62ec330a04f054cbd8ff6028bda3a67d08ce3a28",
+  "immediate_parent": "216174bcc621e5ce8c1d4eb9e406a1bc185f99b2",
+  "design": "02d65ddfdc221f74a8fac75352931dcf6673a171",
+  "audit_reference": "e024753a7a3e26a80aa0c07359078544f45f4ee5",
+  "commit_count": 11,
+  "app_diff": "A\tapp/core/entity_profile/claim_adapters.py\nA\tapp/core/entity_profile/claim_composition.py\nA\tapp/core/entity_profile/claim_filters.py\nA\tapp/core/entity_profile/claims.py\nA\tapp/core/entity_profile/frame.py\nA\tapp/core/entity_profile/frame_compiler.py\nA\tapp/core/entity_profile/frame_evidence.py\nA\tapp/core/entity_profile/frame_migration.py\nA\tapp/core/entity_profile/frame_predicates.py\nA\tapp/core/entity_profile/frame_render.py\nA\tapp/core/entity_profile/frame_values.py\nA\tapp/core/entity_profile/patch.py\nA\tapp/core/entity_profile/text_offsets.py",
+  "runtime_consumers_outside_new_core": [],
+  "all_consumers": [
+    {
+      "file": "app/core/entity_profile/patch.py",
+      "line": 29,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "app/core/entity_profile/patch.py",
+      "line": 36,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/frame_migration.py",
+      "line": 22,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "app/core/entity_profile/frame_migration.py",
+      "line": 31,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/claim_filters.py",
+      "line": 15,
+      "module": "app.core.entity_profile.claims"
+    },
+    {
+      "file": "app/core/entity_profile/claim_filters.py",
+      "line": 20,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/claim_adapters.py",
+      "line": 28,
+      "module": "app.core.entity_profile.claim_filters"
+    },
+    {
+      "file": "app/core/entity_profile/claim_adapters.py",
+      "line": 35,
+      "module": "app.core.entity_profile.claims"
+    },
+    {
+      "file": "app/core/entity_profile/claim_adapters.py",
+      "line": 44,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/claim_adapters.py",
+      "line": 61,
+      "module": "app.core.entity_profile.text_offsets"
+    },
+    {
+      "file": "app/core/entity_profile/claims.py",
+      "line": 24,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/frame.py",
+      "line": 27,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/frame_compiler.py",
+      "line": 33,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "app/core/entity_profile/frame_compiler.py",
+      "line": 34,
+      "module": "app.core.entity_profile.frame_predicates"
+    },
+    {
+      "file": "app/core/entity_profile/frame_compiler.py",
+      "line": 38,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/frame_predicates.py",
+      "line": 26,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "app/core/entity_profile/frame_predicates.py",
+      "line": 27,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/frame_render.py",
+      "line": 22,
+      "module": "app.core.entity_profile.frame_compiler"
+    },
+    {
+      "file": "app/core/entity_profile/frame_render.py",
+      "line": 23,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/claim_composition.py",
+      "line": 22,
+      "module": "app.core.entity_profile.claims"
+    },
+    {
+      "file": "app/core/entity_profile/claim_composition.py",
+      "line": 29,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "app/core/entity_profile/claim_composition.py",
+      "line": 37,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "app/core/entity_profile/claim_composition.py",
+      "line": 51,
+      "module": "app.core.entity_profile.patch"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_catalog_parity.py",
+      "line": 14,
+      "module": "app.core.entity_profile.frame_compiler"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_catalog_parity.py",
+      "line": 20,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_properties.py",
+      "line": 15,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_properties.py",
+      "line": 23,
+      "module": "app.core.entity_profile.frame_compiler"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_properties.py",
+      "line": 24,
+      "module": "app.core.entity_profile.frame_evidence"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_properties.py",
+      "line": 25,
+      "module": "app.core.entity_profile.frame_migration"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_properties.py",
+      "line": 26,
+      "module": "app.core.entity_profile.frame_predicates"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_properties.py",
+      "line": 30,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_properties.py",
+      "line": 45,
+      "module": "app.core.entity_profile.patch"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_properties.py",
+      "line": 285,
+      "module": "app.core.entity_profile.frame_compiler"
+    },
+    {
+      "file": "tests/entity_profile_frame_harness.py",
+      "line": 21,
+      "module": "app.core.entity_profile.claim_adapters"
+    },
+    {
+      "file": "tests/entity_profile_frame_harness.py",
+      "line": 22,
+      "module": "app.core.entity_profile.claim_composition"
+    },
+    {
+      "file": "tests/entity_profile_frame_harness.py",
+      "line": 23,
+      "module": "app.core.entity_profile.claims"
+    },
+    {
+      "file": "tests/entity_profile_frame_harness.py",
+      "line": 24,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/entity_profile_frame_harness.py",
+      "line": 25,
+      "module": "app.core.entity_profile.frame_compiler"
+    },
+    {
+      "file": "tests/entity_profile_frame_harness.py",
+      "line": 30,
+      "module": "app.core.entity_profile.frame_render"
+    },
+    {
+      "file": "tests/entity_profile_frame_harness.py",
+      "line": 34,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/entity_profile_frame_harness.py",
+      "line": 35,
+      "module": "app.core.entity_profile.patch"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_migration.py",
+      "line": 6,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_migration.py",
+      "line": 7,
+      "module": "app.core.entity_profile.frame_migration"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_migration.py",
+      "line": 8,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 12,
+      "module": "app.core.entity_profile.claim_composition"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 12,
+      "module": "app.core.entity_profile.frame_compiler"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 12,
+      "module": "app.core.entity_profile.frame_predicates"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 13,
+      "module": "app.core.entity_profile.claims"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 14,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 15,
+      "module": "app.core.entity_profile.frame_compiler"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 16,
+      "module": "app.core.entity_profile.frame_evidence"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 17,
+      "module": "app.core.entity_profile.frame_migration"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 18,
+      "module": "app.core.entity_profile.frame_render"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_review.py",
+      "line": 19,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_evidence.py",
+      "line": 6,
+      "module": "app.core.entity_profile.frame_evidence"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_core.py",
+      "line": 16,
+      "module": "app.core.entity_profile.claims"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_core.py",
+      "line": 17,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 16,
+      "module": "app.core.entity_profile.claim_composition"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 16,
+      "module": "app.core.entity_profile.frame_compiler"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 16,
+      "module": "app.core.entity_profile.frame_evidence"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 16,
+      "module": "app.core.entity_profile.frame_migration"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 16,
+      "module": "app.core.entity_profile.frame_predicates"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 23,
+      "module": "app.core.entity_profile.frame_evidence"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 24,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 210,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 268,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 55,
+      "module": "app.core.entity_profile.claims"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 56,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 88,
+      "module": "app.core.entity_profile.claims"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 89,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 134,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 157,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 187,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_mutations.py",
+      "line": 116,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_integration_contract.py",
+      "line": 17,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_integration_contract.py",
+      "line": 18,
+      "module": "app.core.entity_profile.frame_compiler"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_integration_contract.py",
+      "line": 19,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_contracts.py",
+      "line": 12,
+      "module": "app.core.entity_profile.frame"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_contracts.py",
+      "line": 13,
+      "module": "app.core.entity_profile.frame_evidence"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_contracts.py",
+      "line": 14,
+      "module": "app.core.entity_profile.frame_migration"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_contracts.py",
+      "line": 15,
+      "module": "app.core.entity_profile.frame_values"
+    },
+    {
+      "file": "tests/test_entity_profile_frame_independent_contracts.py",
+      "line": 16,
+      "module": "app.core.entity_profile.patch"
+    }
+  ],
+  "data_empty": false,
+  "data_tracked_count": 20,
+  "data_file_count": 20,
+  "data_unchanged_from_base": true,
+  "tracked_data_hashes": {
+    "data/conversations/probe_state_only.jsonl": "146982fa9476bc162ff259533d9eab8f6dece1b95bddb00595ddb3beb814a1fc",
+    "data/conversations/st_anon_0e9b8942d3be.jsonl": "296a633241d3b7e90a52724d4527611215ef2094c527bdc5f9d28320fe80b240",
+    "data/conversations/st_anon_13e87eed548a.jsonl": "c6b746334c62d86361ca17ef2bc9e2c02db33923c89c26c33c3559457ff4fc9e",
+    "data/conversations/st_anon_1df02423cd0a.jsonl": "44f3a81e954c96f957d91a79558ae90ce4476d1b4dbf0402208ea28d6d11496a",
+    "data/conversations/st_anon_1f9df67dbd97.jsonl": "18984435d1555773d93d7b7750ff68f3382b1375367079c8c9ae1dd3aff7c00b",
+    "data/conversations/st_anon_21cf3523841e.jsonl": "0750c40a0c3104918a4918fef08f07710e06fede004246b172e841a8ecafbb4a",
+    "data/conversations/st_anon_3027f1fdbbca.jsonl": "866a0f5c24f1d76599847691545a2dc555bdc3a3a71d072d2cf3564a9710418d",
+    "data/conversations/st_anon_3d866be331ef.jsonl": "477025588868a252040804a9496fad8cde747aa3f3d6981940d0f00be58e1f0f",
+    "data/conversations/st_anon_49e772243bc7.jsonl": "1f9cb26325a27e9e79f52bf6c2ce1148747f72bcbe1356e593cc53abf363dfef",
+    "data/conversations/st_anon_4bbff20b7f50.jsonl": "0cfb02b90b701d8c6de1194d4df07ccdea7e99bea8aadc5c0a6c6a0fe887f6f9",
+    "data/conversations/st_anon_5a3c90007aa7.jsonl": "0852b5f913e96563c2e3c03cf12adf43ff3fc958930482f8174d6a012a774014",
+    "data/conversations/st_anon_622bdce62512.jsonl": "6923be082f0a1b17acec91044ad3a463601f0fd1bfd56ed703ca62ad9cf9e633",
+    "data/conversations/st_anon_8f8a5ce573ad.jsonl": "bd26b3155c26c5e66c5b5683326a073d86b6dc76e46b9cc5b32aa350e8daf8b5",
+    "data/conversations/st_anon_932829c52e49.jsonl": "3f4541e3a583f2e1df07b370d9103601fab718a1e5eddae55f0facdd45eb0a10",
+    "data/conversations/st_anon_b38b0dfde1c0.jsonl": "77aebe28e91314cb990c58be5af091eb344177b8df4e2b25817995fef5c87d15",
+    "data/conversations/st_anon_b8949e814798.jsonl": "aa2c630b0b0f369fe0f2e22658211cb3f9ed45456cf30bf429823814e8cb3761",
+    "data/conversations/st_anon_bac3804f0291.jsonl": "4d0d74e9c4b68b74d4dafe57e4ae9f6a4e6d1e332d56b23c44e2bb3e905b0e41",
+    "data/conversations/st_anon_bf4e0f74f3b9.jsonl": "5f433dd35efe6b0316853334793ce674e85df6057a618f2e217802986e37bf1f",
+    "data/conversations/st_anon_de90b427469e.jsonl": "e320787b7188bf01928bc0ed09f172270a14c22b8a9d8fc534bf3fc1729b3cd4",
+    "data/conversations/st_default.jsonl": "1c340f4039a95e7dbd8ea40bf7c2a1fe9aca6ee8d1f06b9c5c2ea39e200535c0"
+  },
+  "design_blob_matches": true
+}

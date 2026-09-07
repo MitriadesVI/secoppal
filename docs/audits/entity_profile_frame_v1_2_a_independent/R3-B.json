@@ -1,0 +1,188 @@
+{
+  "query": "analiza contratos de software, gestion de procesos industriales de alcaldia de baranoa",
+  "params": {
+    "dataset": "contratos",
+    "dataset_explicit": true,
+    "entidad": "Municipio de baranoa",
+    "entidad_resolved": "ALCALDIA MUNICIPAL DE BARANOA",
+    "entidad_resolution": {
+      "value": "ALCALDIA MUNICIPAL DE BARANOA",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de baranoa",
+        "resolution_method": "exact"
+      }
+    },
+    "objeto": [
+      "analiza",
+      "software",
+      "gestion",
+      "industriales"
+    ]
+  },
+  "claims": [
+    {
+      "id": "buyer-1",
+      "turn_id": "t1",
+      "span": [
+        67,
+        86
+      ],
+      "dimension": "BUYER",
+      "canonical_value": "ALCALDIA MUNICIPAL DE BARANOA",
+      "authority": "entity_profile.scope",
+      "authority_version": "1",
+      "relations": []
+    },
+    {
+      "id": "source-1",
+      "turn_id": "t1",
+      "span": [
+        8,
+        17
+      ],
+      "dimension": "SOURCE",
+      "canonical_value": "CONTRACTS",
+      "authority": "entity_profile.source_request",
+      "authority_version": "2",
+      "relations": []
+    },
+    {
+      "id": "topic-1",
+      "turn_id": "t1",
+      "span": [
+        0,
+        86
+      ],
+      "dimension": "TOPIC",
+      "canonical_value": {
+        "children": [
+          {
+            "term": "software"
+          },
+          {
+            "term": "gestion"
+          },
+          {
+            "term": "industriales"
+          }
+        ]
+      },
+      "authority": "query_router.objeto",
+      "authority_version": "1",
+      "relations": []
+    }
+  ],
+  "frame": {
+    "schema_version": 1,
+    "frame_id": "2ae745f3-6e48-56e3-8b1d-5774a1d53f9c",
+    "revision": 1,
+    "buyer_scope": {
+      "kind": "BUYER_UNIT",
+      "display_name": "ALCALDIA MUNICIPAL DE BARANOA",
+      "canonical_buyers": [
+        "ALCALDIA MUNICIPAL DE BARANOA"
+      ],
+      "authority": "PRODUCT_BUYER_UNIT_RESOLUTION",
+      "authority_version": "1",
+      "group_id": null
+    },
+    "focus": "overview",
+    "source_selection": {
+      "requested": [
+        "CONTRACTS"
+      ],
+      "origin": "EXPLICIT"
+    },
+    "source_predicates": {
+      "CONTRACTS": {
+        "source": "CONTRACTS",
+        "temporal": {
+          "event": "NONE",
+          "period": {
+            "lower": null,
+            "upper": null,
+            "lower_inclusive": true,
+            "upper_inclusive": true,
+            "civil_reference": null,
+            "expression": null
+          },
+          "event_origin": "DEFAULT",
+          "period_origin": "DEFAULT"
+        },
+        "current_state": {
+          "predicates": []
+        },
+        "topic": {
+          "kind": "ALL",
+          "children": [
+            {
+              "kind": "TERM",
+              "term": "software"
+            },
+            {
+              "kind": "TERM",
+              "term": "gestion"
+            },
+            {
+              "kind": "TERM",
+              "term": "industriales"
+            }
+          ]
+        },
+        "modality": {
+          "include": [],
+          "exclude": []
+        },
+        "contract_type": {
+          "include": [],
+          "exclude": []
+        },
+        "value": {
+          "lower": null,
+          "upper": null,
+          "magnitude": "",
+          "currency": "COP"
+        }
+      }
+    },
+    "provenance": {
+      "claim_ids": [
+        "source-1",
+        "topic-1"
+      ],
+      "turn_ids": [
+        "t1"
+      ],
+      "authorities": []
+    }
+  },
+  "status": "READY",
+  "issues": [],
+  "jobs": [
+    {
+      "source": "CONTRACTS",
+      "sql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%gestion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%gestion%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%industriales%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%industriales%'))))"
+    },
+    {
+      "source": "CONTRACTS",
+      "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%gestion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%gestion%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%industriales%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%industriales%')))) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+    },
+    {
+      "source": "CONTRACTS",
+      "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%gestion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%gestion%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%industriales%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%industriales%')))) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+    },
+    {
+      "source": "CONTRACTS",
+      "sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%gestion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%gestion%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%industriales%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%industriales%')))) ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3"
+    }
+  ],
+  "scope": [
+    "Fuentes: contratos.",
+    "Todo el histórico disponible, según fecha de firma.",
+    "Tema: software y gestion y industriales."
+  ]
+}

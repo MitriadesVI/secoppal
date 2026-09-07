@@ -1,0 +1,14 @@
+
+Callers of "_extract_object_terms" (3):
+
+method      parse
+  archive/cleanup_2026-05-15-audit/backup_20260514_173654/query_router v2.py:210
+
+method      parse
+  app/core/query_router.py:260
+
+method      parse
+  archive/cleanup_2026-05-16/query_router v2.py:253
+
+(node:20557) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

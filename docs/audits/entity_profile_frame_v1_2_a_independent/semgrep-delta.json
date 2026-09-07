@@ -1,0 +1,68 @@
+{
+  "count": 10,
+  "new_core_findings": 0,
+  "baseline_findings_in_identical_files": 10,
+  "findings": [
+    {
+      "path": "app/core/formatter.py",
+      "line": 171,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    },
+    {
+      "path": "app/core/formatter.py",
+      "line": 699,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    },
+    {
+      "path": "app/core/response_policy.py",
+      "line": 508,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    },
+    {
+      "path": "app/core/response_policy.py",
+      "line": 577,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    },
+    {
+      "path": "app/core/workflow/actions/execution.py",
+      "line": 365,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    },
+    {
+      "path": "app/core/workflow/handlers/direct_lookup.py",
+      "line": 366,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    },
+    {
+      "path": "app/core/workflow/handlers/normal_flow.py",
+      "line": 171,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    },
+    {
+      "path": "app/core/workflow/handlers/pagination.py",
+      "line": 177,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    },
+    {
+      "path": "app/core/workflow/handlers/radar.py",
+      "line": 109,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    },
+    {
+      "path": "app/core/workflow/handlers/refinement.py",
+      "line": 93,
+      "rule": "semgrep.except-exception-que-silencia",
+      "entire_file_identical_to_base": true
+    }
+  ],
+  "errors": []
+}

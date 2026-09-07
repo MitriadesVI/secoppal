@@ -1,0 +1,26 @@
+┌  Syncing CodeGraph
+│
+
+│  · Scanning files...(node:21076) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+│  ◆ Scanning files
+
+│  · Parsing code  █████████████░░░░░░░░░░░░  50%
+│  · Parsing code  █████████████░░░░░░░░░░░░  50%
+│  · Parsing code  █████████████████████████  100%
+│  ◆ Parsing code — done
+
+│  · Resolving refs  ░░░░░░░░░░░░░░░░░░░░░░░░░  0%
+│  · Resolving refs  ░░░░░░░░░░░░░░░░░░░░░░░░░  0%
+│  · Resolving refs  █░░░░░░░░░░░░░░░░░░░░░░░░  2%
+│  · Resolving refs  ████░░░░░░░░░░░░░░░░░░░░░  14%
+│  ✢ Resolving refs  █████████████████████████  100%
+│  ✢ Resolving refs  █████████████████████████  100%
+│  ◆ Resolving refs — done
+│
+◆  Synced 2 changed files
+│
+●  Added: 2 — 62 nodes in 265ms
+│
+└  Done

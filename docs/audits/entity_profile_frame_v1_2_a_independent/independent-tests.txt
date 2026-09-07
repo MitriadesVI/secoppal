@@ -1,0 +1,128 @@
+FFFFF....FFFF.....F.FFFFF....                                            [100%]
+=================================== FAILURES ===================================
+_ test_r3_full_topic_survives_every_layer[R3-A-contratos de software y gestion de procesos industriales-CONTRACTS-terms0] _
+tests/test_entity_profile_frame_independent_review.py:75: in test_r3_full_topic_survives_every_layer
+    assert not any(lost.values()), lost
+E   AssertionError: {'claim': ['procesos'], 'frame': ['procesos'], 'parser': ['procesos'], 'sql': ['procesos'], ...}
+E   assert not True
+E    +  where True = any(dict_values([['procesos'], ['procesos'], ['procesos'], ['procesos'], ['procesos']]))
+E    +    where dict_values([['procesos'], ['procesos'], ['procesos'], ['procesos'], ['procesos']]) = <built-in method values of dict object at 0x10cefcd80>()
+E    +      where <built-in method values of dict object at 0x10cefcd80> = {'claim': ['procesos'], 'frame': ['procesos'], 'parser': ['procesos'], 'sql': ['procesos'], ...}.values
+_ test_r3_full_topic_survives_every_layer[R3-B-contratos de software, gestion de procesos industriales-CONTRACTS-terms1] _
+tests/test_entity_profile_frame_independent_review.py:75: in test_r3_full_topic_survives_every_layer
+    assert not any(lost.values()), lost
+E   AssertionError: {'claim': ['procesos'], 'frame': ['procesos'], 'parser': ['procesos'], 'sql': ['procesos'], ...}
+E   assert not True
+E    +  where True = any(dict_values([['procesos'], ['procesos'], ['procesos'], ['procesos'], ['procesos']]))
+E    +    where dict_values([['procesos'], ['procesos'], ['procesos'], ['procesos'], ['procesos']]) = <built-in method values of dict object at 0x10d65ba40>()
+E    +      where <built-in method values of dict object at 0x10d65ba40> = {'claim': ['procesos'], 'frame': ['procesos'], 'parser': ['procesos'], 'sql': ['procesos'], ...}.values
+_ test_r3_full_topic_survives_every_layer[R3-C-procesos de software y administracion de contratos-PROCESSES-terms2] _
+tests/test_entity_profile_frame_independent_review.py:75: in test_r3_full_topic_survives_every_layer
+    assert not any(lost.values()), lost
+E   AssertionError: {'claim': ['contratos'], 'frame': ['contratos'], 'parser': ['contratos'], 'sql': ['contratos'], ...}
+E   assert not True
+E    +  where True = any(dict_values([['contratos'], ['contratos'], ['contratos'], ['contratos'], ['contratos']]))
+E    +    where dict_values([['contratos'], ['contratos'], ['contratos'], ['contratos'], ['contratos']]) = <built-in method values of dict object at 0x10d658680>()
+E    +      where <built-in method values of dict object at 0x10d658680> = {'claim': ['contratos'], 'frame': ['contratos'], 'parser': ['contratos'], 'sql': ['contratos'], ...}.values
+_ test_supported_event_and_current_state_both_survive[procesos publicados en julio actualmente abiertos-PROCESSES-07-PROCESS_PUBLICATION-estado_del_procedimiento] _
+tests/test_entity_profile_frame_independent_review.py:87: in test_supported_event_and_current_state_both_survive
+    assert out.ready, out.issues
+E   AssertionError: ('AMBIGUOUS_PERIOD_ANCHOR',)
+E   assert False
+E    +  where False = Observation(query='analiza procesos publicados en julio actualmente abiertos de alcaldia de baranoa', params={'dataset...o o el hecho por defecto', sources=(), terms=('publicados',)),), limitations=(), alternatives=()), invalid_reason=None).ready
+_ test_supported_event_and_current_state_both_survive[contratos firmados en agosto actualmente terminados-CONTRACTS-08-CONTRACT_SIGNATURE-estado_contrato] _
+tests/test_entity_profile_frame_independent_review.py:87: in test_supported_event_and_current_state_both_survive
+    assert out.ready, out.issues
+E   AssertionError: ('AMBIGUOUS_PERIOD_ANCHOR',)
+E   assert False
+E    +  where False = Observation(query='analiza contratos firmados en agosto actualmente terminados de alcaldia de baranoa', params={'datas...o o el hecho por defecto', sources=(), terms=('terminados',)),), limitations=(), alternatives=()), invalid_reason=None).ready
+_ test_migration_never_prefers_a_conflicting_material_copy[request_delta0-params_delta0] _
+tests/test_entity_profile_frame_independent_review.py:116: in test_migration_never_prefers_a_conflicting_material_copy
+    assert outcome.status is MigrationStatus.INVALID_CONTEXT, (
+E   AssertionError: (<MigrationStatus.MIGRATED: 'MIGRATED'>, {'buyer_scope': {'authority': 'legacy_params', 'authority_version': '1', 'can...-90a9-210e2d0acc2a', 'provenance': {'authorities': [['legacy_migration', '1']], 'claim_ids': [], 'turn_ids': []}, ...})
+E   assert <MigrationStatus.MIGRATED: 'MIGRATED'> is <MigrationStatus.INVALID_CONTEXT: 'INVALID_CONTEXT'>
+E    +  where <MigrationStatus.MIGRATED: 'MIGRATED'> = MigrationOutcome(status=<MigrationStatus.MIGRATED: 'MIGRATED'>, frame=EntityProfileFrame(frame_id='fc8d6c4f-48dd-5e98-...laim_ids=(), turn_ids=(), authorities=(('legacy_migration', '1'),)), schema_version=1), reason=None, blocked_events=()).status
+E    +  and   <MigrationStatus.INVALID_CONTEXT: 'INVALID_CONTEXT'> = MigrationStatus.INVALID_CONTEXT
+_ test_migration_never_prefers_a_conflicting_material_copy[request_delta1-params_delta1] _
+tests/test_entity_profile_frame_independent_review.py:116: in test_migration_never_prefers_a_conflicting_material_copy
+    assert outcome.status is MigrationStatus.INVALID_CONTEXT, (
+E   AssertionError: (<MigrationStatus.MIGRATED: 'MIGRATED'>, {'buyer_scope': {'authority': 'legacy_params', 'authority_version': '1', 'can...-9053-5d6a3f048d97', 'provenance': {'authorities': [['legacy_migration', '1']], 'claim_ids': [], 'turn_ids': []}, ...})
+E   assert <MigrationStatus.MIGRATED: 'MIGRATED'> is <MigrationStatus.INVALID_CONTEXT: 'INVALID_CONTEXT'>
+E    +  where <MigrationStatus.MIGRATED: 'MIGRATED'> = MigrationOutcome(status=<MigrationStatus.MIGRATED: 'MIGRATED'>, frame=EntityProfileFrame(frame_id='b31e44cb-d154-5673-...laim_ids=(), turn_ids=(), authorities=(('legacy_migration', '1'),)), schema_version=1), reason=None, blocked_events=()).status
+E    +  and   <MigrationStatus.INVALID_CONTEXT: 'INVALID_CONTEXT'> = MigrationStatus.INVALID_CONTEXT
+_ test_migration_never_prefers_a_conflicting_material_copy[request_delta2-params_delta2] _
+tests/test_entity_profile_frame_independent_review.py:116: in test_migration_never_prefers_a_conflicting_material_copy
+    assert outcome.status is MigrationStatus.INVALID_CONTEXT, (
+E   AssertionError: (<MigrationStatus.MIGRATED: 'MIGRATED'>, {'buyer_scope': {'authority': 'legacy_params', 'authority_version': '1', 'can...-9114-bad8c26ae857', 'provenance': {'authorities': [['legacy_migration', '1']], 'claim_ids': [], 'turn_ids': []}, ...})
+E   assert <MigrationStatus.MIGRATED: 'MIGRATED'> is <MigrationStatus.INVALID_CONTEXT: 'INVALID_CONTEXT'>
+E    +  where <MigrationStatus.MIGRATED: 'MIGRATED'> = MigrationOutcome(status=<MigrationStatus.MIGRATED: 'MIGRATED'>, frame=EntityProfileFrame(frame_id='546afd52-15d0-5b66-...laim_ids=(), turn_ids=(), authorities=(('legacy_migration', '1'),)), schema_version=1), reason=None, blocked_events=()).status
+E    +  and   <MigrationStatus.INVALID_CONTEXT: 'INVALID_CONTEXT'> = MigrationStatus.INVALID_CONTEXT
+_ test_migration_never_prefers_a_conflicting_material_copy[request_delta3-params_delta3] _
+tests/test_entity_profile_frame_independent_review.py:116: in test_migration_never_prefers_a_conflicting_material_copy
+    assert outcome.status is MigrationStatus.INVALID_CONTEXT, (
+E   AssertionError: (<MigrationStatus.MIGRATED: 'MIGRATED'>, {'buyer_scope': {'authority': 'legacy_params', 'authority_version': '1', 'can...-8e62-7a3b26d3ad45', 'provenance': {'authorities': [['legacy_migration', '1']], 'claim_ids': [], 'turn_ids': []}, ...})
+E   assert <MigrationStatus.MIGRATED: 'MIGRATED'> is <MigrationStatus.INVALID_CONTEXT: 'INVALID_CONTEXT'>
+E    +  where <MigrationStatus.MIGRATED: 'MIGRATED'> = MigrationOutcome(status=<MigrationStatus.MIGRATED: 'MIGRATED'>, frame=EntityProfileFrame(frame_id='61b25e85-9343-5186-...laim_ids=(), turn_ids=(), authorities=(('legacy_migration', '1'),)), schema_version=1), reason=None, blocked_events=()).status
+E    +  and   <MigrationStatus.INVALID_CONTEXT: 'INVALID_CONTEXT'> = MigrationStatus.INVALID_CONTEXT
+___________ test_original_legacy_state_port_is_not_silently_dropped ____________
+tests/test_entity_profile_frame_independent_review.py:139: in test_original_legacy_state_port_is_not_silently_dropped
+    assert all("estado_contrato" in sql and "Suspendido" in sql for sql in out.sql)
+E   assert False
+E    +  where False = all(<generator object test_original_legacy_state_port_is_not_silently_dropped.<locals>.<genexpr> at 0x10d660d40>)
+______ test_compiled_plan_does_not_allow_scope_to_diverge_from_frozen_sql ______
+tests/test_entity_profile_frame_independent_review.py:174: in test_compiled_plan_does_not_allow_scope_to_diverge_from_frozen_sql
+    assert after == before, "unchanged plan/jobs now render a different month"
+E   AssertionError: unchanged plan/jobs now render a different month
+E   assert ('Fuentes: co...ha de firma.') == ('Fuentes: co...ha de firma.')
+E
+E     At index 1 diff: 'Agosto de 2026, según fecha de firma.' != 'Julio de 2026, según fecha de firma.'
+E     Use -v to get more diff
+__________ test_evidence_cannot_accredit_foreign_job_metadata[job_id] __________
+tests/test_entity_profile_frame_independent_review.py:189: in test_evidence_cannot_accredit_foreign_job_metadata
+    assert call.metric_status("contract_count") is not MetricStatus.VALID, (
+E   AssertionError: ('no plan/job correspondence check exists', 'job_id')
+E   assert <MetricStatus.VALID: 'VALID'> is not <MetricStatus.VALID: 'VALID'>
+E    +  where <MetricStatus.VALID: 'VALID'> = metric_status('contract_count')
+E    +    where metric_status = ObservedCall(plan_id='fe76c7cd-6613-4bca-93a1-f14ac54e81be', job_id='foreign-to-authorizing-plan', predicate_fingerpri...SS', attempted=True, metrics=(AccreditedMetric(name='contract_count', value=4, status=<MetricStatus.VALID: 'VALID'>),)).metric_status
+E    +  and   <MetricStatus.VALID: 'VALID'> = MetricStatus.VALID
+_______ test_evidence_cannot_accredit_foreign_job_metadata[fingerprint] ________
+tests/test_entity_profile_frame_independent_review.py:189: in test_evidence_cannot_accredit_foreign_job_metadata
+    assert call.metric_status("contract_count") is not MetricStatus.VALID, (
+E   AssertionError: ('no plan/job correspondence check exists', 'fingerprint')
+E   assert <MetricStatus.VALID: 'VALID'> is not <MetricStatus.VALID: 'VALID'>
+E    +  where <MetricStatus.VALID: 'VALID'> = metric_status('contract_count')
+E    +    where metric_status = ObservedCall(plan_id='9f5a938b-8061-4268-b510-e3e44191476e', job_id='contract_values@source:CONTR', predicate_fingerpr...SS', attempted=True, metrics=(AccreditedMetric(name='contract_count', value=4, status=<MetricStatus.VALID: 'VALID'>),)).metric_status
+E    +  and   <MetricStatus.VALID: 'VALID'> = MetricStatus.VALID
+________ test_evidence_cannot_accredit_foreign_job_metadata[dataset_id] ________
+tests/test_entity_profile_frame_independent_review.py:189: in test_evidence_cannot_accredit_foreign_job_metadata
+    assert call.metric_status("contract_count") is not MetricStatus.VALID, (
+E   AssertionError: ('no plan/job correspondence check exists', 'dataset_id')
+E   assert <MetricStatus.VALID: 'VALID'> is not <MetricStatus.VALID: 'VALID'>
+E    +  where <MetricStatus.VALID: 'VALID'> = metric_status('contract_count')
+E    +    where metric_status = ObservedCall(plan_id='f05097c5-055e-4c1f-87c7-7e35a45399dd', job_id='contract_values@source:CONTR', predicate_fingerpr...SS', attempted=True, metrics=(AccreditedMetric(name='contract_count', value=4, status=<MetricStatus.VALID: 'VALID'>),)).metric_status
+E    +  and   <MetricStatus.VALID: 'VALID'> = MetricStatus.VALID
+___________ test_evidence_cannot_accredit_foreign_job_metadata[sql] ____________
+tests/test_entity_profile_frame_independent_review.py:189: in test_evidence_cannot_accredit_foreign_job_metadata
+    assert call.metric_status("contract_count") is not MetricStatus.VALID, (
+E   AssertionError: ('no plan/job correspondence check exists', 'sql')
+E   assert <MetricStatus.VALID: 'VALID'> is not <MetricStatus.VALID: 'VALID'>
+E    +  where <MetricStatus.VALID: 'VALID'> = metric_status('contract_count')
+E    +    where metric_status = ObservedCall(plan_id='e18ed36f-c2a5-4b7b-b661-3bf84a2d45e9', job_id='contract_values@source:CONTR', predicate_fingerpr...SS', attempted=True, metrics=(AccreditedMetric(name='contract_count', value=4, status=<MetricStatus.VALID: 'VALID'>),)).metric_status
+E    +  and   <MetricStatus.VALID: 'VALID'> = MetricStatus.VALID
+=========================== short test summary info ============================
+FAILED tests/test_entity_profile_frame_independent_review.py::test_r3_full_topic_survives_every_layer[R3-A-contratos de software y gestion de procesos industriales-CONTRACTS-terms0]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_r3_full_topic_survives_every_layer[R3-B-contratos de software, gestion de procesos industriales-CONTRACTS-terms1]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_r3_full_topic_survives_every_layer[R3-C-procesos de software y administracion de contratos-PROCESSES-terms2]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_supported_event_and_current_state_both_survive[procesos publicados en julio actualmente abiertos-PROCESSES-07-PROCESS_PUBLICATION-estado_del_procedimiento]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_supported_event_and_current_state_both_survive[contratos firmados en agosto actualmente terminados-CONTRACTS-08-CONTRACT_SIGNATURE-estado_contrato]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_migration_never_prefers_a_conflicting_material_copy[request_delta0-params_delta0]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_migration_never_prefers_a_conflicting_material_copy[request_delta1-params_delta1]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_migration_never_prefers_a_conflicting_material_copy[request_delta2-params_delta2]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_migration_never_prefers_a_conflicting_material_copy[request_delta3-params_delta3]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_original_legacy_state_port_is_not_silently_dropped
+FAILED tests/test_entity_profile_frame_independent_review.py::test_compiled_plan_does_not_allow_scope_to_diverge_from_frozen_sql
+FAILED tests/test_entity_profile_frame_independent_review.py::test_evidence_cannot_accredit_foreign_job_metadata[job_id]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_evidence_cannot_accredit_foreign_job_metadata[fingerprint]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_evidence_cannot_accredit_foreign_job_metadata[dataset_id]
+FAILED tests/test_entity_profile_frame_independent_review.py::test_evidence_cannot_accredit_foreign_job_metadata[sql]
+15 failed, 14 passed in 0.46s

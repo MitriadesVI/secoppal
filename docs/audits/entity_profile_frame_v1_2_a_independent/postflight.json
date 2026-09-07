@@ -1,0 +1,73 @@
+{
+  "candidate_range_diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "62ec330..9da35b5"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "runtime_diff_from_candidate": {
+    "command": [
+      "git",
+      "diff",
+      "9da35b5",
+      "--",
+      "app/"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "tracked_data_unchanged": true,
+  "data_file_count": 20,
+  "author_tracked_status": {
+    "command": [
+      "git",
+      "-C",
+      "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-a",
+      "status",
+      "--porcelain",
+      "-uno"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "head_before_audit_commit": {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %s"
+    ],
+    "exit_code": 0,
+    "stdout": "9da35b527e88b6d8612e94a5c5828f854d53a138 docs(entity-profile): close v1.2-a core implementation\n",
+    "stderr": ""
+  },
+  "scope": "No runtime mutation, no full suite, no SECOP requests, no merge or push",
+  "audit_staged_diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "audit_worktree_diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

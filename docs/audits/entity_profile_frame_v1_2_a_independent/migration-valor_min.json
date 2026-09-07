@@ -1,0 +1,111 @@
+{
+  "request": {
+    "focus": "overview",
+    "sources": "CONTRACTS",
+    "sources_provenance": "EXPLICIT",
+    "sources_origin": "EXPLICIT",
+    "time_from": "2026-08-01",
+    "time_to": "2026-08-31",
+    "event": "CONTRACT_SIGNATURE",
+    "temporal_claims": [
+      {
+        "event": "CONTRACT_SIGNATURE",
+        "span": [
+          9,
+          17
+        ],
+        "term": "firmados"
+      }
+    ],
+    "unsupported_events": [],
+    "keeps_current_state": true,
+    "topic": [],
+    "modality": [],
+    "value_min": 100,
+    "value_max": null
+  },
+  "params": {
+    "entidad_resolved": "ALCALDIA DE BARANOA",
+    "fecha_desde": "2026-08-01",
+    "fecha_hasta": "2026-08-31",
+    "valor_min": 200
+  },
+  "migration": "MIGRATED",
+  "frame": {
+    "schema_version": 1,
+    "frame_id": "546afd52-15d0-5b66-9114-bad8c26ae857",
+    "revision": 1,
+    "buyer_scope": {
+      "kind": "BUYER_UNIT",
+      "display_name": "ALCALDIA DE BARANOA",
+      "canonical_buyers": [
+        "ALCALDIA DE BARANOA"
+      ],
+      "authority": "legacy_params",
+      "authority_version": "1",
+      "group_id": null
+    },
+    "focus": "overview",
+    "source_selection": {
+      "requested": [
+        "CONTRACTS"
+      ],
+      "origin": "EXPLICIT"
+    },
+    "source_predicates": {
+      "CONTRACTS": {
+        "source": "CONTRACTS",
+        "temporal": {
+          "event": "CONTRACT_SIGNATURE",
+          "period": {
+            "lower": "2026-08-01",
+            "upper": "2026-08-31",
+            "lower_inclusive": true,
+            "upper_inclusive": true,
+            "civil_reference": null,
+            "expression": null
+          },
+          "event_origin": "EXPLICIT",
+          "period_origin": "EXPLICIT"
+        },
+        "current_state": {
+          "predicates": []
+        },
+        "topic": {
+          "kind": "TRUE"
+        },
+        "modality": {
+          "include": [],
+          "exclude": []
+        },
+        "contract_type": {
+          "include": [],
+          "exclude": []
+        },
+        "value": {
+          "lower": "100",
+          "upper": null,
+          "magnitude": "valor del contrato",
+          "currency": "COP"
+        }
+      }
+    },
+    "provenance": {
+      "claim_ids": [],
+      "turn_ids": [],
+      "authorities": [
+        [
+          "legacy_migration",
+          "1"
+        ]
+      ]
+    }
+  },
+  "compile": "READY",
+  "sql": [
+    "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDIA DE BARANOA%')) AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND valor_del_contrato >= 100",
+    "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDIA DE BARANOA%')) AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND valor_del_contrato >= 100 AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDIA DE BARANOA%')) AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND valor_del_contrato >= 100 AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDIA DE BARANOA%')) AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND valor_del_contrato >= 100 ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3"
+  ]
+}

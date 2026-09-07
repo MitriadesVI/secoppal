@@ -1,0 +1,17 @@
+
+Callees of "compile_profile" (4):
+
+function    _validate_predicates
+  app/core/entity_profile/frame_compiler.py:339
+
+function    clarification
+  app/core/entity_profile/frame_compiler.py:241
+
+function    _compile_source
+  app/core/entity_profile/frame_compiler.py:369
+
+function    _build_jobs
+  app/core/entity_profile/frame_compiler.py:383
+
+(node:20553) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,19 @@
+[
+  {
+    "extractor_input": "analiza contratos de software y gestion de procesos industriales de",
+    "extractor_output": [
+      "analiza",
+      "software",
+      "gestion",
+      "industriales"
+    ]
+  },
+  {
+    "extractor_input": "analiza procesos de software y administracion de contratos de",
+    "extractor_output": [
+      "analiza",
+      "software",
+      "administracion"
+    ]
+  }
+]

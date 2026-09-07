@@ -1,0 +1,8 @@
+{
+  "changedFiles": [
+    "app/core/entity_profile/frame_compiler.py",
+    "app/core/entity_profile/claim_adapters.py"
+  ],
+  "affectedTests": [],
+  "totalDependentsTraversed": 0
+}
