@@ -7,7 +7,27 @@ from app.core.entity_profile.frame_evidence import (
     MetricStatus,
     accredit_metric,
     bind_observation,
+    observe_call,
 )
+from entity_profile_frame_harness import BUYER, observe
+
+
+def _plan():
+    result = observe(f"analiza contratos de {BUYER}")
+    assert result.ready
+    return result.decision.plan
+
+
+def _metadata(plan):
+    job = plan.jobs[0]
+    return {
+        "plan": plan,
+        "plan_id": plan.plan_id,
+        "job_id": job.job_id,
+        "fingerprint": plan.source_plans[job.source].fingerprint,
+        "dataset_id": job.dataset_id,
+        "sql": job.sql,
+    }
 
 
 @pytest.mark.parametrize("raw", ["NaN", "Infinity", "-Infinity", None])
@@ -32,27 +52,50 @@ def test_explicit_zero_is_a_fact():
 
 
 def test_transport_success_without_rows_is_not_a_zero():
+    plan = _plan()
     observation = bind_observation(
-        plan_id="p1", job_id="j1", fingerprint="fp", dataset_id="jbjy-vk9h",
-        sql="SELECT count(*) WHERE 1=2", status="SUCCESS", rows=(),
+        **_metadata(plan), status="SUCCESS", rows=(),
     )
     assert observation.metric_status("contract_count") is MetricStatus.MISSING
 
 
 def test_a_not_requested_section_is_not_a_failure():
+    plan = _plan()
     observation = bind_observation(
-        plan_id="p1", job_id="j1", fingerprint="fp", dataset_id="jbjy-vk9h",
-        sql="", status="NOT_REQUESTED", rows=(), attempted=False,
+        **_metadata(plan), status="NOT_REQUESTED", rows=(), attempted=False,
     )
     assert observation.metric_status("contract_count") is MetricStatus.NOT_REQUESTED
 
 
 def test_every_observation_names_the_plan_that_authorized_it():
+    plan = _plan()
+    metadata = _metadata(plan)
     observation = bind_observation(
-        plan_id="p1", job_id="j1", fingerprint="fp", dataset_id="jbjy-vk9h",
-        sql="SELECT count(*) AS contract_count WHERE x", status="SUCCESS",
-        rows=({"contract_count": "4"},),
+        **metadata, status="SUCCESS", rows=({"contract_count": "4"},),
     )
-    assert observation.plan_id == "p1" and observation.job_id == "j1"
-    assert observation.predicate_fingerprint == "fp"
+    assert observation.plan_id == plan.plan_id
+    assert observation.job_id == metadata["job_id"]
+    assert observation.predicate_fingerprint == metadata["fingerprint"]
+    assert observation.metric_status("contract_count") is MetricStatus.VALID
+
+
+@pytest.mark.parametrize("field", ["plan_id", "job_id", "fingerprint", "dataset_id", "sql"])
+def test_forged_metadata_is_rejected_against_the_plan(field):
+    metadata = _metadata(_plan())
+    metadata[field] = "foreign"
+    with pytest.raises(ValueError):
+        bind_observation(
+            **metadata, status="SUCCESS", rows=({"contract_count": "4"},),
+        )
+
+
+def test_observe_call_derives_identity_from_the_authorized_job():
+    plan = _plan()
+    job = plan.jobs[0]
+    observation = observe_call(
+        plan, job.job_id, job.sql,
+        status="SUCCESS", rows=({"contract_count": "4"},),
+    )
+    assert observation.plan_id == plan.plan_id
+    assert observation.dataset_id == job.dataset_id
     assert observation.metric_status("contract_count") is MetricStatus.VALID

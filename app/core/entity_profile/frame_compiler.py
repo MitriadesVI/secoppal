@@ -207,7 +207,21 @@ class ProfilePlan:
     limitations: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
-        object.__setattr__(self, "source_plans", deep_freeze(self.source_plans))
+        source_plans = deep_freeze(self.source_plans)
+        for source, source_plan in source_plans.items():
+            if source_plan.source is not source:
+                raise ValueError("source plan is stored under a foreign source")
+            if source_plan.dataset_id != source.dataset_id:
+                raise ValueError("source plan names a foreign dataset")
+        seen_jobs: set[str] = set()
+        for job in self.jobs:
+            if job.job_id in seen_jobs:
+                raise ValueError("job ids must be unique within a plan")
+            seen_jobs.add(job.job_id)
+            source_plan = source_plans.get(job.source)
+            if source_plan is None or job.dataset_id != source_plan.dataset_id:
+                raise ValueError("compiled job is not owned by its source plan")
+        object.__setattr__(self, "source_plans", source_plans)
 
     @property
     def planned_sources(self) -> frozenset[SourceKind]:

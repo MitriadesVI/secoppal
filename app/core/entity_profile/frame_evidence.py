@@ -18,8 +18,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from enum import Enum
+from typing import TYPE_CHECKING
 
 from app.core.entity_profile.aspects.common import as_optional_int
+
+if TYPE_CHECKING:
+    from app.core.entity_profile.frame_compiler import CompiledJob, ProfilePlan
 
 
 _COUNT_METRICS = ("count", "row_count")
@@ -93,6 +97,7 @@ class ObservedCall:
 
 def bind_observation(
     *,
+    plan: ProfilePlan | None = None,
     plan_id: str,
     job_id: str,
     fingerprint: str,
@@ -102,17 +107,76 @@ def bind_observation(
     rows: tuple[dict, ...],
     attempted: bool = True,
 ) -> ObservedCall:
-    """Ata lo observado al job que lo pidió; sin esa atadura no es evidencia."""
+    """Validate legacy call metadata against the authorizing plan.
+
+    Metadata alone is only a claim.  A caller that cannot supply the plan does
+    not have enough authority to create accredited evidence.
+    """
+    if plan is None:
+        raise ValueError("the authorizing plan is required")
+    job = _authorized_job(plan, job_id)
+    source_plan = plan.source_plans.get(job.source)
+    if source_plan is None:
+        raise ValueError("job source is absent from the authorizing plan")
+    expected = {
+        "plan_id": plan.plan_id,
+        "fingerprint": source_plan.fingerprint,
+        "dataset_id": job.dataset_id,
+        "sql": job.sql,
+    }
+    supplied = {
+        "plan_id": plan_id,
+        "fingerprint": fingerprint,
+        "dataset_id": dataset_id,
+        "sql": sql,
+    }
+    mismatches = tuple(
+        name for name, value in supplied.items() if value != expected[name]
+    )
+    if mismatches:
+        raise ValueError(
+            "observation is foreign to the authorizing plan: "
+            + ", ".join(mismatches),
+        )
+    return observe_call(
+        plan, job_id, sql, status=status, rows=rows, attempted=attempted,
+    )
+
+
+def observe_call(
+    plan: ProfilePlan,
+    job_id: str,
+    actual_sql: str,
+    *,
+    status: str,
+    rows: tuple[dict, ...],
+    attempted: bool = True,
+) -> ObservedCall:
+    """Create evidence from one real job and the exact SQL that was sent."""
+    job = _authorized_job(plan, job_id)
+    source_plan = plan.source_plans.get(job.source)
+    if source_plan is None or job.dataset_id != source_plan.dataset_id:
+        raise ValueError("job is not owned by the named source plan")
+    if actual_sql != job.sql:
+        raise ValueError("actual SQL differs from the authorized SQL")
     metrics: list[AccreditedMetric] = []
     if attempted and status == "SUCCESS":
         for row in rows:
             for name, raw in row.items():
                 metrics.append(accredit_metric(name, raw))
     return ObservedCall(
-        plan_id=plan_id, job_id=job_id, predicate_fingerprint=fingerprint,
-        dataset_id=dataset_id, sql=sql, status=status, attempted=attempted,
+        plan_id=plan.plan_id, job_id=job.job_id,
+        predicate_fingerprint=source_plan.fingerprint,
+        dataset_id=job.dataset_id, sql=actual_sql, status=status, attempted=attempted,
         metrics=tuple(metrics),
     )
+
+
+def _authorized_job(plan: ProfilePlan, job_id: str) -> CompiledJob:
+    jobs = tuple(job for job in plan.jobs if job.job_id == job_id)
+    if len(jobs) != 1:
+        raise ValueError("job_id does not identify one job in the authorizing plan")
+    return jobs[0]
 
 
 def _is_count(name: str) -> bool:
