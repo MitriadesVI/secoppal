@@ -88,11 +88,23 @@ def test_legacy_state_migrates_only_with_an_unambiguous_field():
     assert state.values == ("Suspendido",) and state.field == "estado_contrato"
 
 
-def test_legacy_state_without_a_field_is_not_purged_in_silence():
+def test_legacy_state_without_a_field_is_invalid_not_purged():
     params = {**BUYER_PARAMS, "estado": ["Suspendido"]}
     outcome = migrate_legacy_context(LEGACY_BASE, params)
-    assert outcome.status is MigrationStatus.NEEDS_CLARIFICATION
+    assert outcome.status is MigrationStatus.INVALID_CONTEXT
     assert outcome.reason == "AMBIGUOUS_STATE_FIELD"
+
+
+def test_conflicting_legacy_state_representations_are_invalid():
+    params = {
+        **BUYER_PARAMS,
+        "estado": ["Suspendido"],
+        "estado_field": "estado_contrato",
+        "estado_contrato": ["terminado"],
+    }
+    outcome = migrate_legacy_context(LEGACY_BASE, params)
+    assert outcome.status is MigrationStatus.INVALID_CONTEXT
+    assert outcome.reason == "STATE_CONFLICT" and outcome.frame is None
 
 
 def test_unknown_schema_version_is_invalid_not_best_effort():

@@ -124,7 +124,7 @@ def migrate_legacy_context(request: Any, params: dict) -> MigrationOutcome:
 
     state = _state(params, sources)
     if isinstance(state, str):
-        return MigrationOutcome(MigrationStatus.NEEDS_CLARIFICATION, reason=state)
+        return MigrationOutcome(MigrationStatus.INVALID_CONTEXT, reason=state)
 
     topic = legacy_topic(request)
     events = _events(request)
@@ -249,9 +249,17 @@ def _state(params: dict, sources: frozenset[SourceKind]):
     owners = [source for source in sources if field in _STATE_FIELDS[source]]
     if len(owners) != 1:
         return "AMBIGUOUS_STATE_FIELD"
+    legacy = StatePredicate(field, tuple(_values(params["estado"])))
     existing = states.get(owners[0], StateExpression())
+    same_field = tuple(
+        predicate for predicate in existing.predicates if predicate.field == field
+    )
+    if same_field:
+        if any(predicate.values != legacy.values for predicate in same_field):
+            return "STATE_CONFLICT"
+        return states
     states[owners[0]] = StateExpression(
-        existing.predicates + (StatePredicate(field, tuple(_values(params["estado"]))),),
+        existing.predicates + (legacy,),
     )
     return states
 
