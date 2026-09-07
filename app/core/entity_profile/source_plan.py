@@ -19,7 +19,9 @@ sino no contestar esa mitad.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Mapping
 
+from app.core.entity_profile.immutability import deep_freeze
 from app.core.entity_profile.models import CONTRACT_DATASET, PROCESS_DATASET
 from app.core.entity_profile.semantic_request import (
     CONTRACT_STATE_KEYS,
@@ -60,12 +62,15 @@ _ORCHESTRATION_KEYS = ("dataset_scope", "dataset_explicit", "offset", "limit")
 class SourcePlan:
     dataset_id: str
     should_execute: bool
-    params: dict = field(default_factory=dict)
+    params: Mapping[str, object] = field(default_factory=dict)
     event: TemporalEvent = TemporalEvent.NONE
     date_field: str = ""
     value_field: str = ""
     unsupported_dimensions: tuple[str, ...] = ()
     provenance: str = ""
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "params", deep_freeze(self.params))
 
     @property
     def dataset_name(self) -> str:

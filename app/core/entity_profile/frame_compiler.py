@@ -41,6 +41,7 @@ from app.core.entity_profile.frame_values import (
     SourceKind,
     SourceOrigin,
 )
+from app.core.entity_profile.immutability import deep_freeze
 
 CATALOG_VERSION = "entity-profile-frame-1"
 
@@ -204,6 +205,9 @@ class ProfilePlan:
     source_plans: Mapping[SourceKind, CompiledSourcePlan]
     jobs: tuple[CompiledJob, ...]
     limitations: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "source_plans", deep_freeze(self.source_plans))
 
     @property
     def planned_sources(self) -> frozenset[SourceKind]:

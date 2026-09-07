@@ -42,6 +42,9 @@ from app.core.entity_profile.frame_values import (
     TopicTrue,
     ValueConstraint,
 )
+from app.core.entity_profile.semantic_request import EntityProfileSemanticRequest
+from app.core.entity_profile.source_plan import project_source
+from app.core.entity_profile.source_request import RequestedSources, SourceProvenance
 from app.core.entity_profile.patch import (
     EntityProfilePatch,
     PatchOp,
@@ -327,6 +330,56 @@ def test_an_invalid_migration_never_yields_an_executable_frame(
     else:
         assert outcome.status is MigrationStatus.INVALID_CONTEXT
         assert outcome.frame is None
+
+
+@SETTINGS
+@given(period=periods)
+def test_compiled_plan_is_unchanged_when_caller_inputs_are_mutated(period):
+    source = SourceKind.CONTRACTS
+    predicates_by_source = {
+        source: SourcePredicates(source, TemporalPredicate(period=period)),
+    }
+    frame = EntityProfileFrame(
+        frame_id="immutable", revision=1, buyer_scope=BUYER, focus="overview",
+        source_selection=SourceSelection(frozenset({source}), SourceOrigin.EXPLICIT),
+        source_predicates=predicates_by_source,
+    )
+    plan = compile_profile(frame, soql_builder=SoQLBuilder()).plan
+    before = (
+        plan.source_plans[source].predicates.fingerprint(),
+        plan.source_plans[source].where,
+        tuple(job.sql for job in plan.jobs),
+    )
+
+    predicates_by_source.clear()
+
+    assert (
+        plan.source_plans[source].predicates.fingerprint(),
+        plan.source_plans[source].where,
+        tuple(job.sql for job in plan.jobs),
+    ) == before
+    with pytest.raises(TypeError):
+        plan.source_plans[source] = plan.source_plans[source]
+
+
+@SETTINGS
+@given(term=terms)
+def test_source_plan_takes_a_deeply_immutable_snapshot(term):
+    params = {"objeto": [term], "nested": {"items": [term]}}
+    request = EntityProfileSemanticRequest(
+        focus="overview",
+        sources=RequestedSources.CONTRACTS,
+        sources_provenance=SourceProvenance.EXPLICIT,
+    )
+    plan = project_source(request, params, SourceKind.CONTRACTS.dataset_id)
+    before = (plan.params["objeto"], plan.params["nested"]["items"])
+
+    params["objeto"].append("mutated")
+    params["nested"]["items"].clear()
+
+    assert (plan.params["objeto"], plan.params["nested"]["items"]) == before
+    with pytest.raises(TypeError):
+        plan.params["nested"]["items"] = ("mutated",)
 
 
 def test_a_conflicting_patch_has_no_candidate():
