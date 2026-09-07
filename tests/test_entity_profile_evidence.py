@@ -1,5 +1,7 @@
 """Evidence invariants: failed, malformed or contradictory calls are not zero."""
 
+from types import SimpleNamespace
+
 import pytest
 from hypothesis import given, settings, strategies as st
 
@@ -95,7 +97,11 @@ def test_failed_call_never_contributes_facts_even_with_residual_rows(status, cou
     call = SourceCall("contract_values", "activity_values", "jbjy-vk9h",
                       "aggregate", status, 0, 0, "SELECT scoped")
     rows = {"contract_values": [{"contract_count": str(count), "total_contract_value": "0"}]}
-    sections = build_sections("overview", scope, rows, {"contract_values": call}, SoQLBuilder())
+    # El plan es ahora la autoridad de qué se ejecutó: se declara que la llamada
+    # de valores SÍ se envió, para que el test siga midiendo lo suyo —que una
+    # llamada fallida no aporta hechos— y no la ausencia de plan.
+    plan = SimpleNamespace(focus="overview", executed_call_ids=frozenset({"contract_values"}))
+    sections = build_sections(plan, scope, rows, {"contract_values": call}, SoQLBuilder())
     assert sections[0].fact("contract_count") is None
     assert sections[1].fact("total_contract_value") is None
     assert sections[4].fact("contract_value") is None

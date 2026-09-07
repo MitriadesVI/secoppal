@@ -84,6 +84,12 @@ def _soql_for(client: FakeClient, dataset_id: str) -> list[str]:
     return [soql for _, dataset, soql in client.calls if dataset == dataset_id]
 
 
+def _where_for(client: FakeClient, dataset_id: str) -> list[str]:
+    """Sólo el WHERE: la consulta de recientes PROYECTA columnas de estado, y
+    verlas en el SELECT no dice nada sobre qué se filtró."""
+    return [soql.split(" WHERE ", 1)[1] for soql in _soql_for(client, dataset_id)]
+
+
 # ── Fuga semántica: la acción contractual no es tema ────────────────────────
 
 def test_contract_action_verb_is_not_a_topic(router):
@@ -100,23 +106,18 @@ def test_incident_query_does_not_filter_by_the_action_verb(router):
 
 # ── Fuente solicitada vs fuente ejecutada ───────────────────────────────────
 
-@pytest.mark.xfail(strict=True, reason="P1: overview consulta procesos sin pedirlos")
 def test_contracts_request_issues_no_process_calls(router):
     _, client, _ = _run(router, INCIDENT)
     assert PROCESS_DATASET not in _datasets(client)
     assert CONTRACT_DATASET in _datasets(client)
 
 
-@pytest.mark.xfail(strict=True, reason="P1: overview consulta contratos sin pedirlos")
 def test_processes_request_issues_no_contract_calls(router):
     _, client, _ = _run(router, PROCESS_TOPIC_EVENT)
     assert CONTRACT_DATASET not in _datasets(client)
     assert PROCESS_DATASET in _datasets(client)
 
 
-@pytest.mark.xfail(
-    strict=True, reason="P1: 'proveedores' cambia la fuente en silencio",
-)
 def test_explicit_process_source_is_not_widened_by_a_supplier_question(router):
     turn = _turn(router, SOURCE_CONTRADICTION)
     assert turn.clarification is not None
@@ -138,48 +139,38 @@ def test_default_overview_executes_both_datasets(router):
 
 # ── Predicados incompatibles entre datasets ─────────────────────────────────
 
-@pytest.mark.xfail(
-    strict=True, reason="P1: estado_del_procedimiento viaja al dataset de contratos",
-)
 def test_contract_queries_carry_no_process_only_predicate(router):
     _, client, _ = _run(router, PROCESS_TOPIC_EVENT)
-    for soql in _soql_for(client, CONTRACT_DATASET):
-        assert "estado_del_procedimiento" not in soql
-        assert "estado_de_apertura_del_proceso" not in soql
+    for where in _where_for(client, CONTRACT_DATASET):
+        assert "estado_del_procedimiento" not in where
+        assert "estado_de_apertura_del_proceso" not in where
 
 
-@pytest.mark.xfail(
-    strict=True, reason="P1: estado_contrato viaja al dataset de procesos",
-)
 def test_process_queries_carry_no_contract_only_predicate(router):
     _, client, _ = _run(router, EVENT_AND_STATE)
-    for soql in _soql_for(client, PROCESS_DATASET):
-        assert "estado_contrato" not in soql
+    for where in _where_for(client, PROCESS_DATASET):
+        assert "estado_contrato" not in where
 
 
 # ── Evento temporal ≠ estado actual ─────────────────────────────────────────
 
-@pytest.mark.xfail(
-    strict=True, reason="P1: 'publicados en agosto' añade filtro de estado actual",
-)
 def test_publication_event_does_not_imply_a_current_state_filter(router):
     _, client, _ = _run(router, PROCESS_TOPIC_EVENT)
-    for soql in _soql_for(client, PROCESS_DATASET):
-        assert "estado_del_procedimiento" not in soql
-        assert "estado_de_apertura_del_proceso =" not in soql
-        assert "fecha_de_publicacion_del >=" in soql
+    where_clauses = _where_for(client, PROCESS_DATASET)
+    assert where_clauses
+    for where in where_clauses:
+        assert "estado_del_procedimiento" not in where
+        assert "estado_de_apertura_del_proceso" not in where
+        assert "fecha_de_publicacion_del >=" in where
 
 
 def test_current_state_request_keeps_its_state_filter(router):
     _, client, _ = _run(router, CURRENT_STATE)
-    process_soql = _soql_for(client, PROCESS_DATASET)
-    assert process_soql
-    assert all("estado_del_procedimiento" in soql for soql in process_soql)
+    where_clauses = _where_for(client, PROCESS_DATASET)
+    assert where_clauses
+    assert all("estado_del_procedimiento" in where for where in where_clauses)
 
 
-@pytest.mark.xfail(
-    strict=True, reason="P1: 'terminados en agosto' se ejecuta como firma en agosto",
-)
 def test_unsupported_historical_event_clarifies_without_calling_the_source(router):
     turn = _turn(router, UNSUPPORTED_EVENT)
     assert turn.clarification is not None
@@ -189,10 +180,10 @@ def test_unsupported_historical_event_clarifies_without_calling_the_source(route
 
 def test_signature_event_with_current_state_executes_both_dimensions(router):
     _, client, _ = _run(router, EVENT_AND_STATE)
-    contract_soql = _soql_for(client, CONTRACT_DATASET)
-    assert contract_soql
-    assert all("fecha_de_firma >=" in soql for soql in contract_soql)
-    assert all("estado_contrato" in soql for soql in contract_soql)
+    where_clauses = _where_for(client, CONTRACT_DATASET)
+    assert where_clauses
+    assert all("fecha_de_firma >=" in where for where in where_clauses)
+    assert all("estado_contrato" in where for where in where_clauses)
 
 
 # ── Tema legítimo sobrevive ─────────────────────────────────────────────────
@@ -208,8 +199,8 @@ def test_signature_noun_is_a_topic_and_not_a_temporal_event(router):
     assert turn.scope is not None
     assert turn.scope.topic == ("firma", "digital")
     _, client, _ = _run(router, TOPIC_WITH_SOURCE_WORD)
-    for soql in _soql_for(client, CONTRACT_DATASET):
-        assert "fecha_de_firma >=" not in soql
+    for where in _where_for(client, CONTRACT_DATASET):
+        assert "fecha_de_firma >=" not in where
 
 
 def test_topic_survives_on_a_process_source(router):
@@ -297,7 +288,6 @@ def test_temporal_period_without_value_is_not_zero_pesos(router):
 
 # ── Coherencia del render con lo ejecutado ──────────────────────────────────
 
-@pytest.mark.xfail(strict=True, reason="P1: un perfil de contratos habla de procesos")
 def test_contract_only_profile_does_not_report_processes(router):
     _, _, rendered = _run(router, INCIDENT)
     assert "procesos" not in rendered.lower()

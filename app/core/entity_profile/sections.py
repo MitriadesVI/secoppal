@@ -25,6 +25,32 @@ from app.core.entity_profile.models import (
 )
 
 
+_DATASET_BY_CALL = {
+    "process_activity": PROCESS_DATASET,
+    "recent_processes": PROCESS_DATASET,
+    "temporal_processes": PROCESS_DATASET,
+    "contract_values": CONTRACT_DATASET,
+    "supplier_count": CONTRACT_DATASET,
+    "supplier_value": CONTRACT_DATASET,
+    "recent_contracts": CONTRACT_DATASET,
+    "temporal_contracts": CONTRACT_DATASET,
+}
+
+
+def _executed(ids: tuple[str, ...], executed: frozenset[str]) -> tuple[str, ...]:
+    """Sólo las llamadas del plan cuentan para el estado de una sección.
+
+    Una llamada que el plan no envió no falló: no se pidió. Contarla como
+    ausencia convertiría una fuente no solicitada en un cero.
+    """
+    return tuple(call_id for call_id in ids if call_id in executed)
+
+
+def _sources_for(ids: tuple[str, ...]) -> tuple[str, ...]:
+    """Una sección declara las fuentes que realmente la sostienen."""
+    return tuple(dict.fromkeys(_DATASET_BY_CALL[call_id] for call_id in ids))
+
+
 def _status(ids: tuple[str, ...], calls: dict[str, SourceCall]) -> SectionStatus:
     successes = sum(
         calls.get(call_id) is not None and calls[call_id].status == "SUCCESS"
@@ -75,8 +101,12 @@ def _period(scope: EntityProfileScope) -> str:
     return "todo el histórico disponible"
 
 
-def _values(rows: dict[str, list[dict]], calls: dict[str, SourceCall]) -> EntityProfileSection:
-    ids = ("contract_values",)
+def _values(
+    rows: dict[str, list[dict]], calls: dict[str, SourceCall], executed: frozenset[str],
+) -> EntityProfileSection:
+    ids = _executed(("contract_values",), executed)
+    if not ids:
+        return unavailable_section()
     parsed = parse_contract_values(rows.get("contract_values", []))
     success = _status(ids, calls) is SectionStatus.SUPPORTED
     facts = () if not success else (
@@ -92,8 +122,12 @@ def _values(rows: dict[str, list[dict]], calls: dict[str, SourceCall]) -> Entity
     )
 
 
-def _modalities(rows: dict[str, list[dict]], calls: dict[str, SourceCall]) -> EntityProfileSection:
-    ids = ("process_activity",)
+def _modalities(
+    rows: dict[str, list[dict]], calls: dict[str, SourceCall], executed: frozenset[str],
+) -> EntityProfileSection:
+    ids = _executed(("process_activity",), executed)
+    if not ids:
+        return unavailable_section()
     process = parse_process_activity(rows.get("process_activity", []))
     status = _status(ids, calls)
     warnings = list(_warnings("las modalidades", ids, calls))
@@ -112,8 +146,12 @@ def _modalities(rows: dict[str, list[dict]], calls: dict[str, SourceCall]) -> En
     )
 
 
-def _suppliers(rows: dict[str, list[dict]], calls: dict[str, SourceCall]) -> EntityProfileSection:
-    ids = ("supplier_count", "supplier_value")
+def _suppliers(
+    rows: dict[str, list[dict]], calls: dict[str, SourceCall], executed: frozenset[str],
+) -> EntityProfileSection:
+    ids = _executed(("supplier_count", "supplier_value"), executed)
+    if not ids:
+        return unavailable_section()
     facts: list[EntityProfileFact] = []
     if calls.get("supplier_count") and calls["supplier_count"].status == "SUCCESS":
         facts.append(_fact(
@@ -138,14 +176,17 @@ def _suppliers(rows: dict[str, list[dict]], calls: dict[str, SourceCall]) -> Ent
 
 def _recent(
     rows: dict[str, list[dict]], calls: dict[str, SourceCall], soql_builder: Any,
+    executed: frozenset[str],
 ) -> EntityProfileSection:
-    ids = ("recent_processes", "recent_contracts")
+    ids = _executed(("recent_processes", "recent_contracts"), executed)
+    if not ids:
+        return unavailable_section()
     facts: list[EntityProfileFact] = []
     for call_id, dataset_id, key in (
         ("recent_processes", PROCESS_DATASET, "processes"),
         ("recent_contracts", CONTRACT_DATASET, "contracts"),
     ):
-        if calls.get(call_id) and calls[call_id].status == "SUCCESS":
+        if call_id in ids and calls.get(call_id) and calls[call_id].status == "SUCCESS":
             facts.append(_fact(
                 key,
                 parse_recent(
@@ -156,15 +197,19 @@ def _recent(
             ))
     return EntityProfileSection(
         _status(ids, calls),
-        (PROCESS_DATASET, CONTRACT_DATASET),
+        _sources_for(ids),
         (("limit_each", 3), ("ordering", "date_desc_identity_asc")),
         tuple(facts),
         _warnings("la actividad reciente", ids, calls),
     )
 
 
-def _temporal(rows: dict[str, list[dict]], calls: dict[str, SourceCall]) -> EntityProfileSection:
-    ids = ("temporal_processes", "temporal_contracts")
+def _temporal(
+    rows: dict[str, list[dict]], calls: dict[str, SourceCall], executed: frozenset[str],
+) -> EntityProfileSection:
+    ids = _executed(("temporal_processes", "temporal_contracts"), executed)
+    if not ids:
+        return unavailable_section()
     status = _status(ids, calls)
     warnings = list(_warnings("la evolución temporal", ids, calls))
     if any(len(rows.get(call_id, [])) >= YEAR_LIMIT for call_id in ids):
@@ -178,7 +223,7 @@ def _temporal(rows: dict[str, list[dict]], calls: dict[str, SourceCall]) -> Enti
     )
     return EntityProfileSection(
         status,
-        (PROCESS_DATASET, CONTRACT_DATASET),
+        _sources_for(ids),
         (("year_limit", YEAR_LIMIT),),
         facts,
         tuple(warnings),
@@ -186,33 +231,40 @@ def _temporal(rows: dict[str, list[dict]], calls: dict[str, SourceCall]) -> Enti
 
 
 def build_sections(
-    focus: str,
+    plan: Any,
     scope: EntityProfileScope,
     rows: dict[str, list[dict]],
     calls: dict[str, SourceCall],
     soql_builder: Any,
 ) -> tuple[EntityProfileSection, ...]:
+    """Arma sólo las secciones que el plan ejecutó; el resto queda NO SOLICITADA."""
     calls = section_evidence_calls(rows, calls)
+    executed = plan.executed_call_ids
+    focus = plan.focus
     activity = values = modalities = suppliers = temporal = recent = unavailable_section()
     if focus == "overview":
         process = parse_process_activity(rows.get("process_activity", []))
         contracts = parse_contract_values(rows.get("contract_values", []))
-        ids = ("process_activity", "contract_values")
+        ids = _executed(("process_activity", "contract_values"), executed)
         facts = []
-        if calls.get("process_activity") and calls["process_activity"].status == "SUCCESS":
+        if "process_activity" in ids and calls.get("process_activity") and (
+            calls["process_activity"].status == "SUCCESS"
+        ):
             facts.append(_fact("process_count", process.process_count, PROCESS_DATASET, "processes"))
-        if calls.get("contract_values") and calls["contract_values"].status == "SUCCESS":
+        if "contract_values" in ids and calls.get("contract_values") and (
+            calls["contract_values"].status == "SUCCESS"
+        ):
             facts.append(_fact("contract_count", contracts.contract_count, CONTRACT_DATASET, "contracts"))
         activity = EntityProfileSection(
             _status(ids, calls),
-            (PROCESS_DATASET, CONTRACT_DATASET),
+            _sources_for(ids),
             (("period", _period(scope)),),
             tuple(facts),
             _warnings("la actividad", ids, calls),
-        )
-        values = _values(rows, calls)
-        modalities = _modalities(rows, calls)
-        suppliers = _suppliers(rows, calls)
+        ) if ids else unavailable_section()
+        values = _values(rows, calls, executed)
+        modalities = _modalities(rows, calls, executed)
+        suppliers = _suppliers(rows, calls, executed)
         temporal = EntityProfileSection(
             activity.status,
             activity.source,
@@ -227,16 +279,17 @@ def build_sections(
                 if values.fact("total_contract_value") is not None else None,
             ) if fact is not None),
             activity.warnings,
-        )
-        recent = _recent(rows, calls, soql_builder)
+            attempted=activity.attempted,
+        ) if ids else unavailable_section()
+        recent = _recent(rows, calls, soql_builder, executed)
     elif focus == "suppliers":
-        suppliers = _suppliers(rows, calls)
+        suppliers = _suppliers(rows, calls, executed)
     elif focus == "modalities":
-        modalities = _modalities(rows, calls)
+        modalities = _modalities(rows, calls, executed)
     elif focus == "values":
-        values = _values(rows, calls)
+        values = _values(rows, calls, executed)
     elif focus == "recent":
-        recent = _recent(rows, calls, soql_builder)
+        recent = _recent(rows, calls, soql_builder, executed)
     elif focus == "temporal":
-        temporal = _temporal(rows, calls)
+        temporal = _temporal(rows, calls, executed)
     return activity, values, modalities, suppliers, temporal, recent

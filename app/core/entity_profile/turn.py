@@ -5,13 +5,26 @@ from dataclasses import dataclass
 import re
 import unicodedata
 
+from app.core.entity_profile.execution_plan import (
+    EntityProfileExecutionPlan,
+    build_execution_plan,
+)
 from app.core.entity_profile.models import EntityProfileIdentity, EntityProfileScope
 from app.core.entity_profile.followup import PROFILE_FOCUS_PARAM, is_supplier_followup
 from app.core.entity_profile.scope import resolve_profile_scope
+from app.core.entity_profile.semantic_request import (
+    EntityProfileSemanticRequest,
+    build_semantic_request,
+    inherit_request,
+    request_context,
+)
+from app.core.entity_profile.source_request import SourceProvenance
 from app.core.municipal_territory import get_municipal_territories
 
 
 PROFILE_ACTIVE_PARAM = "_entity_profile_active"
+PROFILE_REQUEST_PARAM = "_entity_profile_request"
+PROFILE_REQUEST_PARAMS = (PROFILE_REQUEST_PARAM, "_entity_profile_sources")
 
 _OVERVIEW = re.compile(
     r"\b(?:analiza(?:me)?|como\s+(?:ha\s+)?contrata(?:do)?|que\s+sabes\s+de|"
@@ -55,6 +68,8 @@ class EntityProfileTurn:
     scope: EntityProfileScope | None
     identity: EntityProfileIdentity | None
     clarification: str | None = None
+    request: EntityProfileSemanticRequest | None = None
+    plan: EntityProfileExecutionPlan | None = None
 
 
 def _fold(text: str) -> str:
@@ -99,7 +114,8 @@ def profile_query_params(params: dict) -> dict:
     clean = {
         key: value
         for key, value in params.items()
-        if key not in _GEOGRAPHY_PARAM_KEYS and key != PROFILE_ACTIVE_PARAM
+        if key not in _GEOGRAPHY_PARAM_KEYS
+        and key not in {PROFILE_ACTIVE_PARAM, *PROFILE_REQUEST_PARAMS}
     }
     for key in ("objeto", "objeto_or", "objeto_phrases"):
         if key not in clean:
@@ -151,8 +167,8 @@ def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfile
     detected, focus = detect_entity_profile_turn(user_query, params)
     if not detected:
         clean = dict(params)
-        clean.pop(PROFILE_ACTIVE_PARAM, None)
-        clean.pop(PROFILE_FOCUS_PARAM, None)
+        for marker in (PROFILE_ACTIVE_PARAM, PROFILE_FOCUS_PARAM, *PROFILE_REQUEST_PARAMS):
+            clean.pop(marker, None)
         return EntityProfileTurn(False, None, clean, None, None)
 
     clean = profile_query_params(params)
@@ -189,14 +205,50 @@ def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfile
             }
             else _territory_clarification(user_query),
         )
+    request = _composed_request(user_query, clean, resolution.scope, focus, params)
+    plan = build_execution_plan(request, clean)
     clean[PROFILE_ACTIVE_PARAM] = True
     clean[PROFILE_FOCUS_PARAM] = focus
+    clean.update(request_context(request))
+    if plan.clarification:
+        # Con una aclaración pendiente la petición anterior queda intacta: no se
+        # muta fuente, tema ni evento hasta que la persona confirme.
+        return EntityProfileTurn(
+            True, focus, clean, resolution.scope, resolution.identity,
+            plan.clarification, request, plan,
+        )
     return EntityProfileTurn(
         True,
         focus,
         clean,
         resolution.scope,
         resolution.identity,
+        None,
+        request,
+        plan,
+    )
+
+
+def _composed_request(
+    user_query: str,
+    clean: dict,
+    scope: EntityProfileScope,
+    focus: str,
+    original_params: dict,
+) -> EntityProfileSemanticRequest:
+    """Compone el turno sobre la petición anterior sin ensanchar dimensiones."""
+    current = build_semantic_request(
+        user_query=user_query, params=clean, scope=scope, focus=focus,
+    )
+    previous = EntityProfileSemanticRequest.from_dict(
+        original_params.get(PROFILE_REQUEST_PARAM),
+    )
+    if previous is None:
+        return current
+    return inherit_request(
+        previous,
+        current,
+        source_is_explicit=current.sources_provenance is SourceProvenance.EXPLICIT,
     )
 
 

@@ -39,6 +39,7 @@ def run_entity_profile_turn(
             focus=turn.focus,
             secop_client=secop_client,
             soql_builder=soql_builder,
+            plan=turn.plan,
         )
     except Exception:
         return {

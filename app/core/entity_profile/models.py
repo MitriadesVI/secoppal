@@ -183,6 +183,10 @@ class EntityProfile:
     source_calls: SourceCalls
     warnings: tuple[str, ...] = ()
     focus: str = "overview"
+    # El plan que produjo este perfil. Es lo que permite que el render hable de
+    # lo EJECUTADO y no de lo que el foco sugiere; se declara ``Any`` para no
+    # invertir la dependencia (``execution_plan`` importa estos modelos).
+    plan: Any = None
 
     @property
     def partial(self) -> bool:

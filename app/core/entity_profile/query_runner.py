@@ -24,11 +24,19 @@ ENTITY_PROFILE_TIMEOUT_GLOBAL = 9
 
 @dataclass(frozen=True, slots=True)
 class QueryJob:
+    """Un job del catálogo no tiene params; los recibe al vincularse a un plan.
+
+    ``params`` es el frame YA proyectado para ``dataset_id``. Que viaje con el
+    job y no como argumento común de la ejecución es lo que impide volver a
+    pasar un mismo diccionario a los dos esquemas.
+    """
+
     call_id: str
     aspect: str
     dataset_id: str
     operation: str
     build: Callable[[Any, dict], str]
+    params: dict | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -130,14 +138,16 @@ def _run_job(
 
 
 def execute_jobs(
-    jobs: tuple[QueryJob, ...], params: dict, secop_client: Any, soql_builder: Any,
+    jobs: tuple[QueryJob, ...], secop_client: Any, soql_builder: Any,
 ) -> tuple[dict[str, list[dict]], dict[str, SourceCall]]:
     """Execute only successfully built calls; every submitted call is recorded."""
     built: dict[str, str] = {}
     calls: dict[str, SourceCall] = {}
     for job in jobs:
+        if job.params is None:
+            raise ValueError(f"unbound Entity Profile job: {job.call_id}")
         try:
-            built[job.call_id] = job.build(soql_builder, params)
+            built[job.call_id] = job.build(soql_builder, job.params)
         except Exception as exc:
             calls[job.call_id] = SourceCall(
                 call_id=job.call_id,
