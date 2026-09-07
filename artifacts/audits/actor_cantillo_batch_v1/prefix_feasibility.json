@@ -1,0 +1,296 @@
+{
+  "sampling": "20 deterministic exact CC names >=3 tokens from first 500 CC index entries, plus Cantillo short/full; nonrepresentative warm-cache feasibility sample",
+  "iterations_per_name": 30,
+  "query": "SELECT normalized_alias,document_type,base_number FROM actor_aliases WHERE normalized_alias>=? AND normalized_alias<? ORDER BY normalized_alias,document_type,base_number LIMIT 101",
+  "measurements": [
+    {
+      "query": "jose david cantillo",
+      "range_rows": 2,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.09264549999999999,
+        "p95_ms": 0.11
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.002209,
+        "p95_ms": 0.002917
+      }
+    },
+    {
+      "query": "jose david cantillo arcon",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.091562,
+        "p95_ms": 0.100625
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001417,
+        "p95_ms": 0.001541
+      }
+    },
+    {
+      "query": "pre icfes jovenes bogota",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.091146,
+        "p95_ms": 0.100209
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001375,
+        "p95_ms": 0.001708
+      }
+    },
+    {
+      "query": "edgar steven ballesteros sanabria",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0908745,
+        "p95_ms": 0.098667
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001375,
+        "p95_ms": 0.00175
+      }
+    },
+    {
+      "query": "consorcio predios cordoba",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0926045,
+        "p95_ms": 0.100417
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001375,
+        "p95_ms": 0.001708
+      }
+    },
+    {
+      "query": "mesa de huerteras y huerteros de fontibon",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.109167,
+        "p95_ms": 0.126833
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001666,
+        "p95_ms": 0.002417
+      }
+    },
+    {
+      "query": "hernando bulla orjuela y o almacen y talleres el norte",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.1002915,
+        "p95_ms": 0.114709
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001417,
+        "p95_ms": 0.002167
+      }
+    },
+    {
+      "query": "carlos guillermo labarrera arguello",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0949995,
+        "p95_ms": 0.192042
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001417,
+        "p95_ms": 0.00175
+      }
+    },
+    {
+      "query": "luis eduardo medina giraldo",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.09775,
+        "p95_ms": 0.1095
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.0015205000000000002,
+        "p95_ms": 0.002
+      }
+    },
+    {
+      "query": "ludys vanessa rodriguez rodriguez",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0923545,
+        "p95_ms": 0.105916
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001416,
+        "p95_ms": 0.002041
+      }
+    },
+    {
+      "query": "yeisson steven becerra suarez",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.09125,
+        "p95_ms": 0.101666
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.0013335,
+        "p95_ms": 0.0055
+      }
+    },
+    {
+      "query": "angelo alvaro muriel velez",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0938125,
+        "p95_ms": 0.100041
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.0014375,
+        "p95_ms": 0.001625
+      }
+    },
+    {
+      "query": "katy milena monslave gonzalez",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0922915,
+        "p95_ms": 0.100459
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001375,
+        "p95_ms": 0.002125
+      }
+    },
+    {
+      "query": "james duberney pardo lopez",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.090667,
+        "p95_ms": 0.101625
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001417,
+        "p95_ms": 0.002833
+      }
+    },
+    {
+      "query": "angela cristina buitrago aristizabal",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0921665,
+        "p95_ms": 0.101208
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001417,
+        "p95_ms": 0.001875
+      }
+    },
+    {
+      "query": "wilder alfonso berrio perez",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0897915,
+        "p95_ms": 0.104542
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001334,
+        "p95_ms": 0.001625
+      }
+    },
+    {
+      "query": "edgar leonardo preciado morales",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0941255,
+        "p95_ms": 0.103916
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001458,
+        "p95_ms": 0.001792
+      }
+    },
+    {
+      "query": "lina marcela medina yara",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0909375,
+        "p95_ms": 0.100041
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001416,
+        "p95_ms": 0.001666
+      }
+    },
+    {
+      "query": "karol jisseth sanchez herman",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0892915,
+        "p95_ms": 0.099042
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001333,
+        "p95_ms": 0.001625
+      }
+    },
+    {
+      "query": "janson arias ibarguen",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0923335,
+        "p95_ms": 0.100542
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001417,
+        "p95_ms": 0.001708
+      }
+    },
+    {
+      "query": "yurledy romana catano",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.090083,
+        "p95_ms": 0.098375
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001333,
+        "p95_ms": 0.001459
+      }
+    },
+    {
+      "query": "daimer dayan fonseca cortina",
+      "range_rows": 0,
+      "range_capped": false,
+      "current_exact": {
+        "p50_ms": 0.0912915,
+        "p95_ms": 0.107
+      },
+      "extra_range_same_open_connection": {
+        "p50_ms": 0.001417,
+        "p95_ms": 0.001542
+      }
+    }
+  ],
+  "before_after_runtime": "NOT_RUN: no runtime change",
+  "same_identity_only_category": "NOT_ESTABLISHED: requires dedicated synthetic fixtures",
+  "current_policy_changed": false
+}

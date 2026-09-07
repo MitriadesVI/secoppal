@@ -1,0 +1,5 @@
+{
+  "command": "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff check app/ tests/ scripts/",
+  "returncode": 0,
+  "stdout": "All checks passed!\n"
+}

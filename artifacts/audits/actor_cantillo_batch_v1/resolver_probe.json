@@ -1,0 +1,70 @@
+[
+  {
+    "query": "jose david cantillo",
+    "entrypoint": "resolve_exact",
+    "elapsed_ms": 0.3621659707278013,
+    "result": {
+      "status": "RESOLVED",
+      "normalized_query": "jose david cantillo",
+      "identity": {
+        "document_type": "CC",
+        "base_number": "******3153",
+        "identity_digest": "97cad9c0331c33e7f20284b50eb1993bcabc7ca0a3209ba7516ca188b0685b12"
+      },
+      "candidates": [],
+      "method": "exact_unique_alias",
+      "reason": null
+    }
+  },
+  {
+    "query": "jose david cantillo",
+    "entrypoint": "resolve",
+    "elapsed_ms": 0.18649996491149068,
+    "result": {
+      "status": "RESOLVED",
+      "normalized_query": "jose david cantillo",
+      "identity": {
+        "document_type": "CC",
+        "base_number": "******3153",
+        "identity_digest": "97cad9c0331c33e7f20284b50eb1993bcabc7ca0a3209ba7516ca188b0685b12"
+      },
+      "candidates": [],
+      "method": "exact_unique_alias",
+      "reason": null
+    }
+  },
+  {
+    "query": "jose david cantillo arcon",
+    "entrypoint": "resolve_exact",
+    "elapsed_ms": 0.7634999928995967,
+    "result": {
+      "status": "RESOLVED",
+      "normalized_query": "jose david cantillo arcon",
+      "identity": {
+        "document_type": "CC",
+        "base_number": "******2711",
+        "identity_digest": "652976c0c42e4e55c9a6b8226cba8e4c968861031308e000f49e167395195c7e"
+      },
+      "candidates": [],
+      "method": "exact_unique_alias",
+      "reason": null
+    }
+  },
+  {
+    "query": "jose david cantillo arcon",
+    "entrypoint": "resolve",
+    "elapsed_ms": 0.1395419822074473,
+    "result": {
+      "status": "RESOLVED",
+      "normalized_query": "jose david cantillo arcon",
+      "identity": {
+        "document_type": "CC",
+        "base_number": "******2711",
+        "identity_digest": "652976c0c42e4e55c9a6b8226cba8e4c968861031308e000f49e167395195c7e"
+      },
+      "candidates": [],
+      "method": "exact_unique_alias",
+      "reason": null
+    }
+  }
+]

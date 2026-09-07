@@ -1,0 +1,76 @@
+{
+  "base": "76b78c35e8505a092bcd5b3e82d88c8ab15992d2",
+  "index_path": "/Users/rodrigoortiz/Documents/secoppal/data/actor_alias_index.sqlite",
+  "size": 662409216,
+  "mtime_ns": 1787249492985828920,
+  "index_unchanged_stat": true,
+  "metadata": {
+    "singleton": 1,
+    "schema_version": "1",
+    "normalization_version": "N2",
+    "built_at": "2026-08-20T18:10:58+00:00",
+    "source_dataset": "jbjy-vk9h",
+    "source_max_date": "2026-08-18",
+    "source_row_count": 1235591,
+    "identity_count": 1214351,
+    "alias_count": 1217203,
+    "ambiguous_alias_count": 14305,
+    "excluded_dirty_count": 15936,
+    "build_parameters": {
+      "acquisition": {
+        "complete": true,
+        "duplicate_group_keys": 0,
+        "expected_contract_rows": 5784468,
+        "global_group_scan": true,
+        "groups_received": 1235591,
+        "observed_contract_rows": 5784468,
+        "order_by": "documento_proveedor,tipodocproveedor,proveedor_adjudicado",
+        "page_size": 50000,
+        "pages": 25,
+        "policy": "FULL_SERVER_SIDE_GROUP_TRAVERSAL",
+        "raw_contract_download": false,
+        "reconciled": true,
+        "unique_group_keys": 1235591
+      },
+      "build_policy": {
+        "exclude_cross_document_type_collisions": true,
+        "exclude_secondary_group_aliases": true,
+        "exclude_unbridged_document_form_collapses": true,
+        "maximum_distinct_observed_names": 25,
+        "minimum_dominant_name_share": 0.5,
+        "minimum_total_occurrences": 1
+      },
+      "dataset_id": "jbjy-vk9h"
+    },
+    "source_quality": {
+      "accepted_aggregated_rows": 1229684,
+      "dirty_buckets_excluded": 6963,
+      "dirty_reason_counts": {
+        "CROSS_TYPE_COLLISION": 4968,
+        "EXTREME_ALIAS_CARDINALITY": 4,
+        "LOW_DOMINANT_NAME_SHARE": 60,
+        "SECONDARY_GROUP_ALIAS": 415,
+        "UNBRIDGED_DOCUMENT_FORM_COLLAPSE": 1964
+      },
+      "disposition_counts": {
+        "EXCLUDED_DIRTY": 15936,
+        "INDEXED_AMBIGUOUS": 44385,
+        "INDEXED_STABLE": 1175270
+      },
+      "empty_or_sentinel_name": 243,
+      "known_document_types_only": [
+        "NIT",
+        "CC"
+      ],
+      "rejected_aggregated_rows": 5907,
+      "secondary_group_aliases_excluded": 415,
+      "unbridged_document_form_collapse_buckets_excluded": 1964,
+      "unknown_document_type": 5354,
+      "unusable_document": 310
+    }
+  },
+  "privacy": "CC identities masked in resolver/alias probes; routing/workflow diagnostic digit sequences masked; no page-boundary raw documents retained",
+  "external_calls": 0,
+  "readonly": true,
+  "sha256": "464add1dbb479e616ee80a079b11c256db0d67dc6b979e4f285612233bdb8690"
+}

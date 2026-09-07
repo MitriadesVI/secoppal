@@ -1,0 +1,2363 @@
+{
+  "kind": "REAL_PARSER_BURR_CONVERSATION_LOCAL_EMPTY_SOURCE_DOUBLE",
+  "source_results": "Synthetic empty responses; not evidence of real contract counts",
+  "external_network_calls": 0,
+  "network": "socket connections forbidden",
+  "records": [
+    {
+      "query": "reset",
+      "chat": "bare",
+      "result": {
+        "response": "Conversacion reiniciada. Olvide el contexto anterior.\n\nSobre que quieres buscar ahora? Puedo ayudarte con:\n1. Contratos firmados de una entidad o tema.\n2. Procesos abiertos para licitar.\n3. Analisis de contratistas o concentracion por sector.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "",
+        "soql_query": "",
+        "parsed_params": {},
+        "resolved_params": {},
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "reset",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [],
+        "timeout_suggestions": [],
+        "intent_type": "",
+        "followup": false,
+        "trace_id": "",
+        "narrated": false,
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 0.2
+      },
+      "emitted_source_queries": []
+    },
+    {
+      "query": "contratos de jose david cantillo arcon",
+      "chat": "bare",
+      "result": {
+        "response": "CC ******2711\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "jbjy-vk9h",
+        "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (documento_proveedor = '******2711') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "parsed_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "actor_resolution": "exact_unique_alias",
+          "contratista": [
+            "******2711"
+          ],
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "CC",
+            "base_number": "******2711",
+            "observed_name": "jose david cantillo arcon"
+          }
+        },
+        "resolved_params": {
+          "dataset": "contratos",
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "actor_resolution": "exact_unique_alias",
+          "contratista": [
+            "******2711"
+          ],
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "CC",
+            "base_number": "******2711",
+            "observed_name": "jose david cantillo arcon"
+          },
+          "limit": 50
+        },
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "actor_profile",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [
+          {
+            "label": "Ver contratos activos (en ejecución)",
+            "modified_params": {
+              "dataset": "contratos",
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "actor_resolution": "exact_unique_alias",
+              "contratista": [
+                "******2711"
+              ],
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "CC",
+                "base_number": "******2711",
+                "observed_name": "jose david cantillo arcon"
+              },
+              "limit": 50,
+              "estado": [
+                "En ejecución",
+                "Modificado",
+                "Prorrogado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos actualmente activos"
+          },
+          {
+            "label": "Ver contratos cerrados",
+            "modified_params": {
+              "dataset": "contratos",
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "actor_resolution": "exact_unique_alias",
+              "contratista": [
+                "******2711"
+              ],
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "CC",
+                "base_number": "******2711",
+                "observed_name": "jose david cantillo arcon"
+              },
+              "limit": 50,
+              "estado": [
+                "Cerrado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos con gestión cerrada"
+          },
+          {
+            "label": "Ver suspendidos",
+            "modified_params": {
+              "dataset": "contratos",
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "actor_resolution": "exact_unique_alias",
+              "contratista": [
+                "******2711"
+              ],
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "CC",
+                "base_number": "******2711",
+                "observed_name": "jose david cantillo arcon"
+              },
+              "limit": 50,
+              "estado": [
+                "Suspendido"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos suspendidos"
+          }
+        ],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "",
+        "followup_intent_type": "",
+        "followup_mutation": {},
+        "analytical_intent": "actor_profile",
+        "analytical_response": "CC ******2711\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "clarification_reason": "",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": true,
+          "params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "actor_resolution_status": "RESOLVED",
+            "actor_resolution_method": "exact_unique_alias",
+            "actor_resolution": "exact_unique_alias",
+            "contratista": [
+              "******2711"
+            ],
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "exact_unique_alias",
+              "requires_resolution": false,
+              "document_type": "CC",
+              "base_number": "******2711",
+              "observed_name": "jose david cantillo arcon"
+            }
+          },
+          "missing_slots": [],
+          "risk_flags": [],
+          "clarification_question": null,
+          "reason": "valid_query",
+          "signals": []
+        },
+        "followup": false,
+        "timings_ms": {
+          "parse_ms": 36.02,
+          "resolve_ms": 2.52,
+          "build_soql_ms": 0.05,
+          "execute_total_ms": 0.65,
+          "degrade_ms": 0.0,
+          "observe_ms": 0.0,
+          "suggest_ms": 0.01,
+          "rank_ms": 0.01,
+          "format_ms": 0.0,
+          "advisor_response_ms": 0.01,
+          "total_ms": 45.96
+        },
+        "contextual_filters": {},
+        "should_execute_decision": true,
+        "source_candidate_total": 0,
+        "validated_total_known": 0,
+        "displayed_so_far": 0,
+        "source_total_approximate": false,
+        "outcome": "success",
+        "outcome_reason": "results_found",
+        "query_fingerprint": "bcd296e489bf720d2f0f79d437dbb8b7d81345bec37a*****5841a080b73304a",
+        "trace_id": "57639e618689",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 48.3
+      },
+      "emitted_source_queries": [
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (documento_proveedor = '******2711') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT nombre_entidad, count(*) AS cnt WHERE (documento_proveedor = '******2711') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (documento_proveedor = '******2711') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT departamento, count(*) AS cnt WHERE (documento_proveedor = '******2711') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (documento_proveedor = '******2711') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (documento_proveedor = '******2711') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (documento_proveedor = '******2711') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        ],
+        [
+          "query",
+          "jbjy-vk9h",
+          "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (documento_proveedor = '******2711') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        ]
+      ]
+    },
+    {
+      "query": "reset",
+      "chat": "replace",
+      "result": {
+        "response": "Conversacion reiniciada. Olvide el contexto anterior.\n\nSobre que quieres buscar ahora? Puedo ayudarte con:\n1. Contratos firmados de una entidad o tema.\n2. Procesos abiertos para licitar.\n3. Analisis de contratistas o concentracion por sector.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "",
+        "soql_query": "",
+        "parsed_params": {},
+        "resolved_params": {},
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "reset",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [],
+        "timeout_suggestions": [],
+        "intent_type": "",
+        "followup": false,
+        "trace_id": "",
+        "narrated": false,
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 0.0
+      },
+      "emitted_source_queries": []
+    },
+    {
+      "query": "contratos del proveedor franklin quinto",
+      "chat": "replace",
+      "result": {
+        "response": "No encontré una coincidencia exacta para FRANKLIN QUINTO; sí nombres similares.\n\n1. FRANKLIN QUINTO MORENO — CC ****2255\n2. AMANDA QUINTO QUINTO — CC ******5679\n3. ARGIRO QUINTO QUINTO — CC ******4034\n4. NATALIA QUINTO QUINTO — CC ******4940\n5. VICENTE QUINTO QUINTO — CC ****0992\n6. JESUS ARIEL QUINTO QUINTO — CC ******4033\n7. JUAN CARLOS QUINTO QUINTO — CC ****7100\n8. ANDRES FELIPE QUINTO QUINTO — CC ******9837\n9. LAIS QUINTO — CC ****1368\n10. FRANKLIN — CC ******7948\n\nResponde con el número correcto o comparte el NIT/cédula.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "",
+        "soql_query": "",
+        "parsed_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "fts5_trigram_bm25",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "franklin quinto",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "actor_resolution_status": "CANDIDATES",
+          "actor_resolution_method": "fts5_trigram_bm25",
+          "actor_pending": {
+            "version": 1,
+            "origin": "strong_actor_syntax",
+            "original_query": "contratos del proveedor franklin quinto",
+            "original_params": {
+              "dataset": "contratos",
+              "dataset_explicit": true,
+              "actor_resolution": "name_unresolved",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "name_unresolved",
+                "requires_resolution": true,
+                "observed_name": "franklin quinto",
+                "reason_codes": [
+                  "ACTOR_ROLE_MARKER",
+                  "ACTOR_NAME_NEEDS_RESOLUTION"
+                ]
+              }
+            },
+            "actor_name": "franklin quinto",
+            "resolution_status": "CANDIDATES",
+            "candidates": [
+              {
+                "document_type": "CC",
+                "base_number": "****2255",
+                "matched_alias": "franklin quinto moreno",
+                "observed_name": "FRANKLIN QUINTO MORENO",
+                "rank": 1,
+                "occurrences": 9
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******5679",
+                "matched_alias": "amanda quinto quinto",
+                "observed_name": "AMANDA QUINTO QUINTO",
+                "rank": 2,
+                "occurrences": 1
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4034",
+                "matched_alias": "argiro quinto quinto",
+                "observed_name": "ARGIRO QUINTO QUINTO",
+                "rank": 3,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4940",
+                "matched_alias": "natalia quinto quinto",
+                "observed_name": "Natalia Quinto Quinto",
+                "rank": 4,
+                "occurrences": 4
+              },
+              {
+                "document_type": "CC",
+                "base_number": "****0992",
+                "matched_alias": "vicente quinto quinto",
+                "observed_name": "VICENTE QUINTO QUINTO",
+                "rank": 5,
+                "occurrences": 6
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4033",
+                "matched_alias": "jesus ariel quinto quinto",
+                "observed_name": "jesus ariel quinto quinto",
+                "rank": 6,
+                "occurrences": 1
+              },
+              {
+                "document_type": "CC",
+                "base_number": "****7100",
+                "matched_alias": "juan carlos quinto quinto",
+                "observed_name": "JUAN CARLOS QUINTO QUINTO",
+                "rank": 7,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******9837",
+                "matched_alias": "andres felipe quinto quinto",
+                "observed_name": "ANDRES FELIPE QUINTO QUINTO",
+                "rank": 8,
+                "occurrences": 1
+              },
+              {
+                "document_type": "CC",
+                "base_number": "****1368",
+                "matched_alias": "lais quinto",
+                "observed_name": "LAIS QUINTO",
+                "rank": 9,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******7948",
+                "matched_alias": "franklin",
+                "observed_name": "Franklin",
+                "rank": 10,
+                "occurrences": 7
+              }
+            ],
+            "selection_token": "ePGOBGKF_zLuahqTLs5k_eD3GW8Rq1RY"
+          }
+        },
+        "resolved_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "fts5_trigram_bm25",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "franklin quinto",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "actor_resolution_status": "CANDIDATES",
+          "actor_resolution_method": "fts5_trigram_bm25",
+          "actor_pending": {
+            "version": 1,
+            "origin": "strong_actor_syntax",
+            "original_query": "contratos del proveedor franklin quinto",
+            "original_params": {
+              "dataset": "contratos",
+              "dataset_explicit": true,
+              "actor_resolution": "name_unresolved",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "name_unresolved",
+                "requires_resolution": true,
+                "observed_name": "franklin quinto",
+                "reason_codes": [
+                  "ACTOR_ROLE_MARKER",
+                  "ACTOR_NAME_NEEDS_RESOLUTION"
+                ]
+              }
+            },
+            "actor_name": "franklin quinto",
+            "resolution_status": "CANDIDATES",
+            "candidates": [
+              {
+                "document_type": "CC",
+                "base_number": "****2255",
+                "matched_alias": "franklin quinto moreno",
+                "observed_name": "FRANKLIN QUINTO MORENO",
+                "rank": 1,
+                "occurrences": 9
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******5679",
+                "matched_alias": "amanda quinto quinto",
+                "observed_name": "AMANDA QUINTO QUINTO",
+                "rank": 2,
+                "occurrences": 1
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4034",
+                "matched_alias": "argiro quinto quinto",
+                "observed_name": "ARGIRO QUINTO QUINTO",
+                "rank": 3,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4940",
+                "matched_alias": "natalia quinto quinto",
+                "observed_name": "Natalia Quinto Quinto",
+                "rank": 4,
+                "occurrences": 4
+              },
+              {
+                "document_type": "CC",
+                "base_number": "****0992",
+                "matched_alias": "vicente quinto quinto",
+                "observed_name": "VICENTE QUINTO QUINTO",
+                "rank": 5,
+                "occurrences": 6
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4033",
+                "matched_alias": "jesus ariel quinto quinto",
+                "observed_name": "jesus ariel quinto quinto",
+                "rank": 6,
+                "occurrences": 1
+              },
+              {
+                "document_type": "CC",
+                "base_number": "****7100",
+                "matched_alias": "juan carlos quinto quinto",
+                "observed_name": "JUAN CARLOS QUINTO QUINTO",
+                "rank": 7,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******9837",
+                "matched_alias": "andres felipe quinto quinto",
+                "observed_name": "ANDRES FELIPE QUINTO QUINTO",
+                "rank": 8,
+                "occurrences": 1
+              },
+              {
+                "document_type": "CC",
+                "base_number": "****1368",
+                "matched_alias": "lais quinto",
+                "observed_name": "LAIS QUINTO",
+                "rank": 9,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******7948",
+                "matched_alias": "franklin",
+                "observed_name": "Franklin",
+                "rank": 10,
+                "occurrences": 7
+              }
+            ],
+            "selection_token": "ePGOBGKF_zLuahqTLs5k_eD3GW8Rq1RY"
+          }
+        },
+        "needs_llm": false,
+        "needs_clarification": true,
+        "route_reason": "heuristic_only",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "",
+        "followup_intent_type": "",
+        "followup_mutation": {},
+        "analytical_intent": "",
+        "analytical_response": "",
+        "clarification_reason": "actor_name_candidates",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": false,
+          "params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "actor_resolution": "fts5_trigram_bm25",
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "strong_actor_syntax",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "name_unresolved",
+              "requires_resolution": true,
+              "observed_name": "franklin quinto",
+              "reason_codes": [
+                "ACTOR_ROLE_MARKER",
+                "ACTOR_NAME_NEEDS_RESOLUTION"
+              ]
+            },
+            "actor_resolution_status": "CANDIDATES",
+            "actor_resolution_method": "fts5_trigram_bm25",
+            "actor_pending": {
+              "version": 1,
+              "origin": "strong_actor_syntax",
+              "original_query": "contratos del proveedor franklin quinto",
+              "original_params": {
+                "dataset": "contratos",
+                "dataset_explicit": true,
+                "actor_resolution": "name_unresolved",
+                "actor_conversation_operation": "SET_ACTOR",
+                "actor_conversation_construction": "strong_actor_syntax",
+                "actor_scope": {
+                  "role": "contractor",
+                  "resolution_method": "name_unresolved",
+                  "requires_resolution": true,
+                  "observed_name": "franklin quinto",
+                  "reason_codes": [
+                    "ACTOR_ROLE_MARKER",
+                    "ACTOR_NAME_NEEDS_RESOLUTION"
+                  ]
+                }
+              },
+              "actor_name": "franklin quinto",
+              "resolution_status": "CANDIDATES",
+              "candidates": [
+                {
+                  "document_type": "CC",
+                  "base_number": "****2255",
+                  "matched_alias": "franklin quinto moreno",
+                  "observed_name": "FRANKLIN QUINTO MORENO",
+                  "rank": 1,
+                  "occurrences": 9
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "******5679",
+                  "matched_alias": "amanda quinto quinto",
+                  "observed_name": "AMANDA QUINTO QUINTO",
+                  "rank": 2,
+                  "occurrences": 1
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "******4034",
+                  "matched_alias": "argiro quinto quinto",
+                  "observed_name": "ARGIRO QUINTO QUINTO",
+                  "rank": 3,
+                  "occurrences": 3
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "******4940",
+                  "matched_alias": "natalia quinto quinto",
+                  "observed_name": "Natalia Quinto Quinto",
+                  "rank": 4,
+                  "occurrences": 4
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "****0992",
+                  "matched_alias": "vicente quinto quinto",
+                  "observed_name": "VICENTE QUINTO QUINTO",
+                  "rank": 5,
+                  "occurrences": 6
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "******4033",
+                  "matched_alias": "jesus ariel quinto quinto",
+                  "observed_name": "jesus ariel quinto quinto",
+                  "rank": 6,
+                  "occurrences": 1
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "****7100",
+                  "matched_alias": "juan carlos quinto quinto",
+                  "observed_name": "JUAN CARLOS QUINTO QUINTO",
+                  "rank": 7,
+                  "occurrences": 3
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "******9837",
+                  "matched_alias": "andres felipe quinto quinto",
+                  "observed_name": "ANDRES FELIPE QUINTO QUINTO",
+                  "rank": 8,
+                  "occurrences": 1
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "****1368",
+                  "matched_alias": "lais quinto",
+                  "observed_name": "LAIS QUINTO",
+                  "rank": 9,
+                  "occurrences": 3
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "******7948",
+                  "matched_alias": "franklin",
+                  "observed_name": "Franklin",
+                  "rank": 10,
+                  "occurrences": 7
+                }
+              ],
+              "selection_token": "ePGOBGKF_zLuahqTLs5k_eD3GW8Rq1RY"
+            }
+          },
+          "missing_slots": [
+            "actor_selection"
+          ],
+          "risk_flags": [
+            "actor_requires_selection"
+          ],
+          "clarification_question": "No encontré una coincidencia exacta para FRANKLIN QUINTO; sí nombres similares.\n\n1. FRANKLIN QUINTO MORENO — CC ****2255\n2. AMANDA QUINTO QUINTO — CC ******5679\n3. ARGIRO QUINTO QUINTO — CC ******4034\n4. NATALIA QUINTO QUINTO — CC ******4940\n5. VICENTE QUINTO QUINTO — CC ****0992\n6. JESUS ARIEL QUINTO QUINTO — CC ******4033\n7. JUAN CARLOS QUINTO QUINTO — CC ****7100\n8. ANDRES FELIPE QUINTO QUINTO — CC ******9837\n9. LAIS QUINTO — CC ****1368\n10. FRANKLIN — CC ******7948\n\nResponde con el número correcto o comparte el NIT/cédula.",
+          "reason": "actor_name_candidates",
+          "signals": []
+        },
+        "followup": false,
+        "timings_ms": {
+          "parse_ms": 1.47,
+          "clarify_ms": 0.01,
+          "advisor_response_ms": 0.02,
+          "total_ms": 479.1
+        },
+        "contextual_filters": {},
+        "should_execute_decision": false,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "query_fingerprint": "da8cee097d2b9a1a4b1c462028c798cb39595fa8daca9d0c367cc0e0be3c7330",
+        "trace_id": "bb85e5499d80",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 479.9
+      },
+      "emitted_source_queries": []
+    },
+    {
+      "query": "contratos del proveedor fundacaribe",
+      "chat": "replace",
+      "result": {
+        "response": "NIT *****9803\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "jbjy-vk9h",
+        "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "parsed_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "exact_unique_alias",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "NIT",
+            "base_number": "*****9803",
+            "observed_name": "fundacaribe"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "contratista": [
+            "*****9803",
+            "******8035",
+            "*****9803-5"
+          ]
+        },
+        "resolved_params": {
+          "dataset": "contratos",
+          "actor_resolution": "exact_unique_alias",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "NIT",
+            "base_number": "*****9803",
+            "observed_name": "fundacaribe"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "contratista": [
+            "*****9803",
+            "******8035",
+            "*****9803-5"
+          ],
+          "limit": 50
+        },
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "actor_profile",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [
+          {
+            "label": "Ver contratos activos (en ejecución)",
+            "modified_params": {
+              "dataset": "contratos",
+              "actor_resolution": "exact_unique_alias",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "NIT",
+                "base_number": "*****9803",
+                "observed_name": "fundacaribe"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "contratista": [
+                "*****9803",
+                "******8035",
+                "*****9803-5"
+              ],
+              "limit": 50,
+              "estado": [
+                "En ejecución",
+                "Modificado",
+                "Prorrogado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos actualmente activos"
+          },
+          {
+            "label": "Ver contratos cerrados",
+            "modified_params": {
+              "dataset": "contratos",
+              "actor_resolution": "exact_unique_alias",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "NIT",
+                "base_number": "*****9803",
+                "observed_name": "fundacaribe"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "contratista": [
+                "*****9803",
+                "******8035",
+                "*****9803-5"
+              ],
+              "limit": 50,
+              "estado": [
+                "Cerrado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos con gestión cerrada"
+          },
+          {
+            "label": "Ver suspendidos",
+            "modified_params": {
+              "dataset": "contratos",
+              "actor_resolution": "exact_unique_alias",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "NIT",
+                "base_number": "*****9803",
+                "observed_name": "fundacaribe"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "contratista": [
+                "*****9803",
+                "******8035",
+                "*****9803-5"
+              ],
+              "limit": 50,
+              "estado": [
+                "Suspendido"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos suspendidos"
+          }
+        ],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "set_actor",
+        "followup_intent_type": "set_actor",
+        "followup_mutation": {
+          "intent": "set_actor",
+          "requested_fields": [
+            "actor_conversation_construction",
+            "actor_conversation_operation",
+            "actor_resolution",
+            "actor_scope",
+            "dataset",
+            "dataset_explicit"
+          ],
+          "accepted_fields": [
+            "actor_conversation_construction",
+            "actor_conversation_operation",
+            "actor_resolution",
+            "actor_scope",
+            "dataset",
+            "dataset_explicit"
+          ],
+          "transition_cleared_fields": [
+            "actor_pending",
+            "actor_resolution_method",
+            "actor_resolution_status"
+          ],
+          "rejected_fields": [],
+          "rejection_reasons": {}
+        },
+        "analytical_intent": "actor_profile",
+        "analytical_response": "NIT *****9803\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "clarification_reason": "",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": true,
+          "params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "actor_resolution": "exact_unique_alias",
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "strong_actor_syntax",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "exact_unique_alias",
+              "requires_resolution": false,
+              "document_type": "NIT",
+              "base_number": "*****9803",
+              "observed_name": "fundacaribe"
+            },
+            "actor_resolution_status": "RESOLVED",
+            "actor_resolution_method": "exact_unique_alias",
+            "contratista": [
+              "*****9803",
+              "******8035",
+              "*****9803-5"
+            ]
+          },
+          "missing_slots": [],
+          "risk_flags": [],
+          "clarification_question": null,
+          "reason": "valid_query",
+          "signals": []
+        },
+        "followup": true,
+        "timings_ms": {
+          "parse_ms": 0.91,
+          "apply_context_ms": 0.09,
+          "resolve_ms": 0.02,
+          "build_soql_ms": 0.04,
+          "execute_total_ms": 0.6,
+          "degrade_ms": 0.0,
+          "observe_ms": 0.0,
+          "suggest_ms": 0.01,
+          "rank_ms": 0.01,
+          "format_ms": 0.0,
+          "advisor_response_ms": 0.01,
+          "total_ms": 5.3
+        },
+        "contextual_filters": {},
+        "should_execute_decision": true,
+        "source_candidate_total": 0,
+        "validated_total_known": 0,
+        "displayed_so_far": 0,
+        "source_total_approximate": false,
+        "outcome": "success",
+        "outcome_reason": "results_found",
+        "query_fingerprint": "442dab472cd5608a4983cc8c9d59daee70ab5feca012e8869a697e2e9d60f244",
+        "trace_id": "20144d7edb9e",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 6.0
+      },
+      "emitted_source_queries": [
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia'))"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT nombre_entidad, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) AND fecha_de_firma IS NOT NULL"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT departamento, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        ],
+        [
+          "query",
+          "jbjy-vk9h",
+          "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        ]
+      ]
+    },
+    {
+      "query": "reset",
+      "chat": "scope",
+      "result": {
+        "response": "Conversacion reiniciada. Olvide el contexto anterior.\n\nSobre que quieres buscar ahora? Puedo ayudarte con:\n1. Contratos firmados de una entidad o tema.\n2. Procesos abiertos para licitar.\n3. Analisis de contratistas o concentracion por sector.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "",
+        "soql_query": "",
+        "parsed_params": {},
+        "resolved_params": {},
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "reset",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [],
+        "timeout_suggestions": [],
+        "intent_type": "",
+        "followup": false,
+        "trace_id": "",
+        "narrated": false,
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 0.0
+      },
+      "emitted_source_queries": []
+    },
+    {
+      "query": "contratos del proveedor jose cantillo con alcaldia de barranquilla",
+      "chat": "scope",
+      "result": {
+        "response": "El nombre JOSE CANTILLO corresponde a más de un actor observado en SECOP.\n\n1. JOSE CANTILLO — CC ******7432\n2. JOSE CANTILLO — CC ***5467\n3. JOSE CANTILLO — CC ******4265\n\nResponde con el número correcto o comparte el NIT/cédula.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "",
+        "soql_query": "",
+        "parsed_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "alcaldia de barranquilla",
+          "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "entidad_resolution": {
+            "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "method": "actor_relation_scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "buyer_mention": "alcaldia de barranquilla"
+            }
+          },
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "role_contracts_of_x_with_y",
+          "actor_resolution": "exact_ambiguous_alias",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "jose cantillo",
+            "reason_codes": [
+              "ACTOR_CONVERSATION_OPERATION",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "actor_resolution_status": "AMBIGUOUS",
+          "actor_resolution_method": "exact_ambiguous_alias",
+          "actor_pending": {
+            "version": 1,
+            "origin": "strong_actor_syntax",
+            "original_query": "contratos del proveedor jose cantillo con alcaldia de barranquilla",
+            "original_params": {
+              "dataset": "contratos",
+              "dataset_explicit": true,
+              "entidad": "alcaldia de barranquilla",
+              "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "entidad_resolution": {
+                "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+                "method": "actor_relation_scan_exact",
+                "kind": "buyer_entity",
+                "confidence": "high",
+                "like_value": null,
+                "metadata": {
+                  "buyer_mention": "alcaldia de barranquilla"
+                }
+              },
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "role_contracts_of_x_with_y",
+              "actor_resolution": "name_unresolved",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "name_unresolved",
+                "requires_resolution": true,
+                "observed_name": "jose cantillo",
+                "reason_codes": [
+                  "ACTOR_CONVERSATION_OPERATION",
+                  "ACTOR_NAME_NEEDS_RESOLUTION"
+                ]
+              }
+            },
+            "actor_name": "jose cantillo",
+            "resolution_status": "AMBIGUOUS",
+            "candidates": [
+              {
+                "document_type": "CC",
+                "base_number": "******7432",
+                "matched_alias": "jose cantillo",
+                "observed_name": "Jose Cantillo",
+                "rank": 1,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "***5467",
+                "matched_alias": "jose cantillo",
+                "observed_name": "JOSE CANTILLO",
+                "rank": 2,
+                "occurrences": 2
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4265",
+                "matched_alias": "jose cantillo",
+                "observed_name": "JOSE CANTILLO",
+                "rank": 3,
+                "occurrences": 1
+              }
+            ],
+            "selection_token": "RshZytQNMauLSmUJ9cBF03w9DLSAfTy6"
+          }
+        },
+        "resolved_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "alcaldia de barranquilla",
+          "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "entidad_resolution": {
+            "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "method": "actor_relation_scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "buyer_mention": "alcaldia de barranquilla"
+            }
+          },
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "role_contracts_of_x_with_y",
+          "actor_resolution": "exact_ambiguous_alias",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "jose cantillo",
+            "reason_codes": [
+              "ACTOR_CONVERSATION_OPERATION",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "actor_resolution_status": "AMBIGUOUS",
+          "actor_resolution_method": "exact_ambiguous_alias",
+          "actor_pending": {
+            "version": 1,
+            "origin": "strong_actor_syntax",
+            "original_query": "contratos del proveedor jose cantillo con alcaldia de barranquilla",
+            "original_params": {
+              "dataset": "contratos",
+              "dataset_explicit": true,
+              "entidad": "alcaldia de barranquilla",
+              "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "entidad_resolution": {
+                "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+                "method": "actor_relation_scan_exact",
+                "kind": "buyer_entity",
+                "confidence": "high",
+                "like_value": null,
+                "metadata": {
+                  "buyer_mention": "alcaldia de barranquilla"
+                }
+              },
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "role_contracts_of_x_with_y",
+              "actor_resolution": "name_unresolved",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "name_unresolved",
+                "requires_resolution": true,
+                "observed_name": "jose cantillo",
+                "reason_codes": [
+                  "ACTOR_CONVERSATION_OPERATION",
+                  "ACTOR_NAME_NEEDS_RESOLUTION"
+                ]
+              }
+            },
+            "actor_name": "jose cantillo",
+            "resolution_status": "AMBIGUOUS",
+            "candidates": [
+              {
+                "document_type": "CC",
+                "base_number": "******7432",
+                "matched_alias": "jose cantillo",
+                "observed_name": "Jose Cantillo",
+                "rank": 1,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "***5467",
+                "matched_alias": "jose cantillo",
+                "observed_name": "JOSE CANTILLO",
+                "rank": 2,
+                "occurrences": 2
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4265",
+                "matched_alias": "jose cantillo",
+                "observed_name": "JOSE CANTILLO",
+                "rank": 3,
+                "occurrences": 1
+              }
+            ],
+            "selection_token": "RshZytQNMauLSmUJ9cBF03w9DLSAfTy6"
+          }
+        },
+        "needs_llm": false,
+        "needs_clarification": true,
+        "route_reason": "heuristic_only",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "",
+        "followup_intent_type": "",
+        "followup_mutation": {},
+        "analytical_intent": "",
+        "analytical_response": "",
+        "clarification_reason": "actor_name_ambiguous",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": false,
+          "params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "entidad": "alcaldia de barranquilla",
+            "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "entidad_resolution": {
+              "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "method": "actor_relation_scan_exact",
+              "kind": "buyer_entity",
+              "confidence": "high",
+              "like_value": null,
+              "metadata": {
+                "buyer_mention": "alcaldia de barranquilla"
+              }
+            },
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "role_contracts_of_x_with_y",
+            "actor_resolution": "exact_ambiguous_alias",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "name_unresolved",
+              "requires_resolution": true,
+              "observed_name": "jose cantillo",
+              "reason_codes": [
+                "ACTOR_CONVERSATION_OPERATION",
+                "ACTOR_NAME_NEEDS_RESOLUTION"
+              ]
+            },
+            "actor_resolution_status": "AMBIGUOUS",
+            "actor_resolution_method": "exact_ambiguous_alias",
+            "actor_pending": {
+              "version": 1,
+              "origin": "strong_actor_syntax",
+              "original_query": "contratos del proveedor jose cantillo con alcaldia de barranquilla",
+              "original_params": {
+                "dataset": "contratos",
+                "dataset_explicit": true,
+                "entidad": "alcaldia de barranquilla",
+                "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+                "entidad_resolution": {
+                  "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+                  "method": "actor_relation_scan_exact",
+                  "kind": "buyer_entity",
+                  "confidence": "high",
+                  "like_value": null,
+                  "metadata": {
+                    "buyer_mention": "alcaldia de barranquilla"
+                  }
+                },
+                "actor_conversation_operation": "SET_ACTOR",
+                "actor_conversation_construction": "role_contracts_of_x_with_y",
+                "actor_resolution": "name_unresolved",
+                "actor_scope": {
+                  "role": "contractor",
+                  "resolution_method": "name_unresolved",
+                  "requires_resolution": true,
+                  "observed_name": "jose cantillo",
+                  "reason_codes": [
+                    "ACTOR_CONVERSATION_OPERATION",
+                    "ACTOR_NAME_NEEDS_RESOLUTION"
+                  ]
+                }
+              },
+              "actor_name": "jose cantillo",
+              "resolution_status": "AMBIGUOUS",
+              "candidates": [
+                {
+                  "document_type": "CC",
+                  "base_number": "******7432",
+                  "matched_alias": "jose cantillo",
+                  "observed_name": "Jose Cantillo",
+                  "rank": 1,
+                  "occurrences": 3
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "***5467",
+                  "matched_alias": "jose cantillo",
+                  "observed_name": "JOSE CANTILLO",
+                  "rank": 2,
+                  "occurrences": 2
+                },
+                {
+                  "document_type": "CC",
+                  "base_number": "******4265",
+                  "matched_alias": "jose cantillo",
+                  "observed_name": "JOSE CANTILLO",
+                  "rank": 3,
+                  "occurrences": 1
+                }
+              ],
+              "selection_token": "RshZytQNMauLSmUJ9cBF03w9DLSAfTy6"
+            }
+          },
+          "missing_slots": [
+            "actor_selection"
+          ],
+          "risk_flags": [
+            "actor_requires_selection"
+          ],
+          "clarification_question": "El nombre JOSE CANTILLO corresponde a más de un actor observado en SECOP.\n\n1. JOSE CANTILLO — CC ******7432\n2. JOSE CANTILLO — CC ***5467\n3. JOSE CANTILLO — CC ******4265\n\nResponde con el número correcto o comparte el NIT/cédula.",
+          "reason": "actor_name_ambiguous",
+          "signals": []
+        },
+        "followup": false,
+        "timings_ms": {
+          "parse_ms": 27.23,
+          "clarify_ms": 0.0,
+          "advisor_response_ms": 0.02,
+          "total_ms": 153.66
+        },
+        "contextual_filters": {},
+        "should_execute_decision": false,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "query_fingerprint": "11ce1e3aa263bf0bbb00c9e10e9c27c099f8a4c3b46bcf78564e1b541b21be96",
+        "trace_id": "*****2149f47",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 154.1
+      },
+      "emitted_source_queries": []
+    },
+    {
+      "query": "2",
+      "chat": "scope",
+      "result": {
+        "response": "CC ***5467\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "jbjy-vk9h",
+        "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '***5467') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "parsed_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "alcaldia de barranquilla",
+          "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "entidad_resolution": {
+            "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "method": "actor_relation_scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "buyer_mention": "alcaldia de barranquilla"
+            }
+          },
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "role_contracts_of_x_with_y",
+          "actor_resolution": "user_selected_candidate",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "user_selected_candidate",
+            "requires_resolution": false,
+            "document_type": "CC",
+            "base_number": "***5467",
+            "observed_name": "JOSE CANTILLO"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "user_selected_candidate",
+          "contratista": [
+            "***5467"
+          ],
+          "actor_selection_rank": 2
+        },
+        "resolved_params": {
+          "dataset": "contratos",
+          "entidad": "alcaldia de barranquilla",
+          "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "entidad_resolution": {
+            "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "method": "actor_relation_scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "buyer_mention": "alcaldia de barranquilla"
+            }
+          },
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "role_contracts_of_x_with_y",
+          "actor_resolution": "user_selected_candidate",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "user_selected_candidate",
+            "requires_resolution": false,
+            "document_type": "CC",
+            "base_number": "***5467",
+            "observed_name": "JOSE CANTILLO"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "user_selected_candidate",
+          "contratista": [
+            "***5467"
+          ],
+          "actor_selection_rank": 2,
+          "limit": 50
+        },
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "actor_profile",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [
+          {
+            "label": "Ver contratos activos (en ejecución)",
+            "modified_params": {
+              "dataset": "contratos",
+              "entidad": "alcaldia de barranquilla",
+              "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "entidad_resolution": {
+                "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+                "method": "actor_relation_scan_exact",
+                "kind": "buyer_entity",
+                "confidence": "high",
+                "like_value": null,
+                "metadata": {
+                  "buyer_mention": "alcaldia de barranquilla"
+                }
+              },
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "role_contracts_of_x_with_y",
+              "actor_resolution": "user_selected_candidate",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "user_selected_candidate",
+                "requires_resolution": false,
+                "document_type": "CC",
+                "base_number": "***5467",
+                "observed_name": "JOSE CANTILLO"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "user_selected_candidate",
+              "contratista": [
+                "***5467"
+              ],
+              "actor_selection_rank": 2,
+              "limit": 50,
+              "estado": [
+                "En ejecución",
+                "Modificado",
+                "Prorrogado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos actualmente activos"
+          },
+          {
+            "label": "Ver contratos cerrados",
+            "modified_params": {
+              "dataset": "contratos",
+              "entidad": "alcaldia de barranquilla",
+              "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "entidad_resolution": {
+                "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+                "method": "actor_relation_scan_exact",
+                "kind": "buyer_entity",
+                "confidence": "high",
+                "like_value": null,
+                "metadata": {
+                  "buyer_mention": "alcaldia de barranquilla"
+                }
+              },
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "role_contracts_of_x_with_y",
+              "actor_resolution": "user_selected_candidate",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "user_selected_candidate",
+                "requires_resolution": false,
+                "document_type": "CC",
+                "base_number": "***5467",
+                "observed_name": "JOSE CANTILLO"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "user_selected_candidate",
+              "contratista": [
+                "***5467"
+              ],
+              "actor_selection_rank": 2,
+              "limit": 50,
+              "estado": [
+                "Cerrado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos con gestión cerrada"
+          },
+          {
+            "label": "Ver suspendidos",
+            "modified_params": {
+              "dataset": "contratos",
+              "entidad": "alcaldia de barranquilla",
+              "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "entidad_resolution": {
+                "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+                "method": "actor_relation_scan_exact",
+                "kind": "buyer_entity",
+                "confidence": "high",
+                "like_value": null,
+                "metadata": {
+                  "buyer_mention": "alcaldia de barranquilla"
+                }
+              },
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "role_contracts_of_x_with_y",
+              "actor_resolution": "user_selected_candidate",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "user_selected_candidate",
+                "requires_resolution": false,
+                "document_type": "CC",
+                "base_number": "***5467",
+                "observed_name": "JOSE CANTILLO"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "user_selected_candidate",
+              "contratista": [
+                "***5467"
+              ],
+              "actor_selection_rank": 2,
+              "limit": 50,
+              "estado": [
+                "Suspendido"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos suspendidos"
+          }
+        ],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "",
+        "followup_intent_type": "",
+        "followup_mutation": {},
+        "analytical_intent": "actor_profile",
+        "analytical_response": "CC ***5467\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "clarification_reason": "",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": true,
+          "params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "entidad": "alcaldia de barranquilla",
+            "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "entidad_resolution": {
+              "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "method": "actor_relation_scan_exact",
+              "kind": "buyer_entity",
+              "confidence": "high",
+              "like_value": null,
+              "metadata": {
+                "buyer_mention": "alcaldia de barranquilla"
+              }
+            },
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "role_contracts_of_x_with_y",
+            "actor_resolution": "user_selected_candidate",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "user_selected_candidate",
+              "requires_resolution": false,
+              "document_type": "CC",
+              "base_number": "***5467",
+              "observed_name": "JOSE CANTILLO"
+            },
+            "actor_resolution_status": "RESOLVED",
+            "actor_resolution_method": "user_selected_candidate",
+            "contratista": [
+              "***5467"
+            ],
+            "actor_selection_rank": 2
+          },
+          "missing_slots": [],
+          "risk_flags": [],
+          "clarification_question": null,
+          "reason": "valid_query",
+          "signals": []
+        },
+        "followup": true,
+        "timings_ms": {
+          "parse_ms": 24.84,
+          "resolve_ms": 0.04,
+          "build_soql_ms": 5.02,
+          "execute_total_ms": 0.72,
+          "degrade_ms": 0.0,
+          "observe_ms": 0.0,
+          "suggest_ms": 0.01,
+          "rank_ms": 0.01,
+          "format_ms": 0.0,
+          "advisor_response_ms": 0.01,
+          "total_ms": 34.2
+        },
+        "contextual_filters": {},
+        "should_execute_decision": true,
+        "source_candidate_total": 0,
+        "validated_total_known": 0,
+        "displayed_so_far": 0,
+        "source_total_approximate": false,
+        "outcome": "success",
+        "outcome_reason": "results_found",
+        "query_fingerprint": "1a438ccdd6090b5a8f490a5b29c6e0ba4bff7ca78cebf98ef575e0d074865c01",
+        "trace_id": "59c983def141",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 35.1
+      },
+      "emitted_source_queries": [
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '***5467') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '***5467') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '***5467') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '***5467') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '***5467') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '***5467') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '***5467') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        ],
+        [
+          "query",
+          "jbjy-vk9h",
+          "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '***5467') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        ]
+      ]
+    },
+    {
+      "query": "contratos del proveedor fundacaribe",
+      "chat": "year",
+      "result": {
+        "response": "NIT *****9803\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "jbjy-vk9h",
+        "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "parsed_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "exact_unique_alias",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "NIT",
+            "base_number": "*****9803",
+            "observed_name": "fundacaribe"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "contratista": [
+            "*****9803",
+            "******8035",
+            "*****9803-5"
+          ]
+        },
+        "resolved_params": {
+          "dataset": "contratos",
+          "actor_resolution": "exact_unique_alias",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "NIT",
+            "base_number": "*****9803",
+            "observed_name": "fundacaribe"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "contratista": [
+            "*****9803",
+            "******8035",
+            "*****9803-5"
+          ],
+          "limit": 50
+        },
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "actor_profile",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [
+          {
+            "label": "Ver contratos activos (en ejecución)",
+            "modified_params": {
+              "dataset": "contratos",
+              "actor_resolution": "exact_unique_alias",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "NIT",
+                "base_number": "*****9803",
+                "observed_name": "fundacaribe"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "contratista": [
+                "*****9803",
+                "******8035",
+                "*****9803-5"
+              ],
+              "limit": 50,
+              "estado": [
+                "En ejecución",
+                "Modificado",
+                "Prorrogado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos actualmente activos"
+          },
+          {
+            "label": "Ver contratos cerrados",
+            "modified_params": {
+              "dataset": "contratos",
+              "actor_resolution": "exact_unique_alias",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "NIT",
+                "base_number": "*****9803",
+                "observed_name": "fundacaribe"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "contratista": [
+                "*****9803",
+                "******8035",
+                "*****9803-5"
+              ],
+              "limit": 50,
+              "estado": [
+                "Cerrado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos con gestión cerrada"
+          },
+          {
+            "label": "Ver suspendidos",
+            "modified_params": {
+              "dataset": "contratos",
+              "actor_resolution": "exact_unique_alias",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "NIT",
+                "base_number": "*****9803",
+                "observed_name": "fundacaribe"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "contratista": [
+                "*****9803",
+                "******8035",
+                "*****9803-5"
+              ],
+              "limit": 50,
+              "estado": [
+                "Suspendido"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos suspendidos"
+          }
+        ],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "",
+        "followup_intent_type": "",
+        "followup_mutation": {},
+        "analytical_intent": "actor_profile",
+        "analytical_response": "NIT *****9803\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "clarification_reason": "",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": true,
+          "params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "actor_resolution": "exact_unique_alias",
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "strong_actor_syntax",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "exact_unique_alias",
+              "requires_resolution": false,
+              "document_type": "NIT",
+              "base_number": "*****9803",
+              "observed_name": "fundacaribe"
+            },
+            "actor_resolution_status": "RESOLVED",
+            "actor_resolution_method": "exact_unique_alias",
+            "contratista": [
+              "*****9803",
+              "******8035",
+              "*****9803-5"
+            ]
+          },
+          "missing_slots": [],
+          "risk_flags": [],
+          "clarification_question": null,
+          "reason": "valid_query",
+          "signals": []
+        },
+        "followup": false,
+        "timings_ms": {
+          "parse_ms": 1.3,
+          "resolve_ms": 0.01,
+          "build_soql_ms": 0.03,
+          "execute_total_ms": 0.57,
+          "degrade_ms": 0.0,
+          "observe_ms": 0.0,
+          "suggest_ms": 0.0,
+          "rank_ms": 0.0,
+          "format_ms": 0.0,
+          "advisor_response_ms": 0.01,
+          "total_ms": 3.72
+        },
+        "contextual_filters": {},
+        "should_execute_decision": true,
+        "source_candidate_total": 0,
+        "validated_total_known": 0,
+        "displayed_so_far": 0,
+        "source_total_approximate": false,
+        "outcome": "success",
+        "outcome_reason": "results_found",
+        "query_fingerprint": "442dab472cd5608a4983cc8c9d59daee70ab5feca012e8869a697e2e9d60f244",
+        "trace_id": "c4a319d4a99b",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 4.2
+      },
+      "emitted_source_queries": [
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia'))"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) AND fecha_de_firma IS NOT NULL"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT nombre_entidad, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT departamento, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        ],
+        [
+          "query",
+          "jbjy-vk9h",
+          "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        ]
+      ]
+    },
+    {
+      "query": "ahora muestrame 2026",
+      "chat": "year",
+      "result": {
+        "response": "NIT *****9803\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "rows": [],
+        "results": [],
+        "dataset_id": "jbjy-vk9h",
+        "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "parsed_params": {
+          "dataset": "contratos",
+          "contratista": [
+            "*****9803",
+            "******8035",
+            "*****9803-5"
+          ],
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": "2026-12-31",
+          "actor_resolution": "exact_unique_alias",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "NIT",
+            "base_number": "*****9803",
+            "observed_name": "fundacaribe"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "limit": 50,
+          "objeto": []
+        },
+        "resolved_params": {
+          "dataset": "contratos",
+          "contratista": [
+            "*****9803",
+            "******8035",
+            "*****9803-5"
+          ],
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": "2026-12-31",
+          "actor_resolution": "exact_unique_alias",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "NIT",
+            "base_number": "*****9803",
+            "observed_name": "fundacaribe"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "limit": 50,
+          "objeto": []
+        },
+        "needs_llm": false,
+        "needs_clarification": false,
+        "route_reason": "actor_profile",
+        "degraded": false,
+        "degraded_hint": "",
+        "total_count": 0,
+        "universe_insights": null,
+        "suggestions": [
+          {
+            "label": "Ver contratos activos (en ejecución)",
+            "modified_params": {
+              "dataset": "contratos",
+              "contratista": [
+                "*****9803",
+                "******8035",
+                "*****9803-5"
+              ],
+              "fecha_desde": "2026-01-01",
+              "fecha_hasta": "2026-12-31",
+              "actor_resolution": "exact_unique_alias",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "NIT",
+                "base_number": "*****9803",
+                "observed_name": "fundacaribe"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "limit": 50,
+              "objeto": [],
+              "estado": [
+                "En ejecución",
+                "Modificado",
+                "Prorrogado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos actualmente activos"
+          },
+          {
+            "label": "Ver contratos cerrados",
+            "modified_params": {
+              "dataset": "contratos",
+              "contratista": [
+                "*****9803",
+                "******8035",
+                "*****9803-5"
+              ],
+              "fecha_desde": "2026-01-01",
+              "fecha_hasta": "2026-12-31",
+              "actor_resolution": "exact_unique_alias",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "NIT",
+                "base_number": "*****9803",
+                "observed_name": "fundacaribe"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "limit": 50,
+              "objeto": [],
+              "estado": [
+                "Cerrado"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos con gestión cerrada"
+          },
+          {
+            "label": "Ver suspendidos",
+            "modified_params": {
+              "dataset": "contratos",
+              "contratista": [
+                "*****9803",
+                "******8035",
+                "*****9803-5"
+              ],
+              "fecha_desde": "2026-01-01",
+              "fecha_hasta": "2026-12-31",
+              "actor_resolution": "exact_unique_alias",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "exact_unique_alias",
+                "requires_resolution": false,
+                "document_type": "NIT",
+                "base_number": "*****9803",
+                "observed_name": "fundacaribe"
+              },
+              "actor_resolution_status": "RESOLVED",
+              "actor_resolution_method": "exact_unique_alias",
+              "limit": 50,
+              "objeto": [],
+              "estado": [
+                "Suspendido"
+              ]
+            },
+            "expected_count": null,
+            "reason": "Contratos suspendidos"
+          }
+        ],
+        "timeout_suggestions": [],
+        "risk_flag_timeout": false,
+        "query_error": "",
+        "intent_type": "change_year",
+        "followup_intent_type": "change_year",
+        "followup_mutation": {
+          "intent": "change_year",
+          "requested_fields": [
+            "_temporal_replace_scope",
+            "fecha_desde",
+            "fecha_hasta"
+          ],
+          "accepted_fields": [
+            "_temporal_replace_scope",
+            "fecha_desde",
+            "fecha_hasta"
+          ],
+          "transition_cleared_fields": [],
+          "rejected_fields": [],
+          "rejection_reasons": {}
+        },
+        "analytical_intent": "actor_profile",
+        "analytical_response": "NIT *****9803\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 20:10 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+        "clarification_reason": "",
+        "total_count_approximate": false,
+        "result_order_guarantee": "exact_order",
+        "fallback_attempted": false,
+        "fallback_used": false,
+        "fallback_strategy": "",
+        "fallback_query_status": "not_attempted",
+        "primary_query_status": "",
+        "transformations_applied": [],
+        "substantive_filters_preserved": true,
+        "query_plan": {
+          "should_execute": true,
+          "params": {
+            "dataset": "contratos",
+            "contratista": [
+              "*****9803",
+              "******8035",
+              "*****9803-5"
+            ],
+            "fecha_desde": "2026-01-01",
+            "fecha_hasta": "2026-12-31",
+            "actor_resolution": "exact_unique_alias",
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "strong_actor_syntax",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "exact_unique_alias",
+              "requires_resolution": false,
+              "document_type": "NIT",
+              "base_number": "*****9803",
+              "observed_name": "fundacaribe"
+            },
+            "actor_resolution_status": "RESOLVED",
+            "actor_resolution_method": "exact_unique_alias",
+            "limit": 50,
+            "objeto": []
+          },
+          "missing_slots": [],
+          "risk_flags": [
+            "temporal_conflict"
+          ],
+          "clarification_question": null,
+          "reason": "valid_query",
+          "signals": [
+            {
+              "kind": "temporal_range",
+              "payload": {
+                "desde": "2026-01-01",
+                "hasta": "2026-12-31",
+                "phrase": "2026",
+                "precision": "year"
+              },
+              "confidence": "high",
+              "source_tokens": [
+                "2026"
+              ]
+            }
+          ]
+        },
+        "followup": true,
+        "timings_ms": {
+          "parse_ms": 0.9,
+          "apply_context_ms": 0.16,
+          "resolve_ms": 0.01,
+          "build_soql_ms": 0.02,
+          "execute_total_ms": 0.47,
+          "degrade_ms": 0.0,
+          "observe_ms": 0.0,
+          "suggest_ms": 0.0,
+          "rank_ms": 0.0,
+          "format_ms": 0.0,
+          "advisor_response_ms": 0.01,
+          "total_ms": 2.95
+        },
+        "contextual_filters": {},
+        "should_execute_decision": true,
+        "source_candidate_total": 0,
+        "validated_total_known": 0,
+        "displayed_so_far": 0,
+        "source_total_approximate": false,
+        "outcome": "success",
+        "outcome_reason": "results_found",
+        "query_fingerprint": "cb1870bae15465c463d1374ae09708ba61e****6358c057d5ca01b06e73f3427",
+        "trace_id": "0a3d034d4b40",
+        "turn_deadline_ms": 15000.0,
+        "turn_elapsed_ms": 3.3
+      },
+      "emitted_source_queries": [
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia'))"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) AND fecha_de_firma IS NOT NULL"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+        ],
+        [
+          "aggregate",
+          "jbjy-vk9h",
+          "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+        ],
+        [
+          "query",
+          "jbjy-vk9h",
+          "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND (documento_proveedor = '*****9803' OR documento_proveedor = '******8035' OR documento_proveedor = '*****9803-5') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+        ]
+      ]
+    }
+  ]
+}

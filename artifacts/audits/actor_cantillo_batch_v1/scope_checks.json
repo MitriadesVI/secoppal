@@ -1,0 +1,19 @@
+[
+  {
+    "case": "selected_actor_buyer_scope",
+    "buyer_in_params": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+    "calls": 8,
+    "calls_containing_buyer": 8,
+    "buyer_visible_in_response": false
+  },
+  {
+    "case": "year_followup",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "calls": 8,
+    "calls_containing_from": 8,
+    "calls_containing_to": 8,
+    "applied_scope_visible": false,
+    "note": "2026 appears in queried_at; this is not the applied time filter"
+  }
+]

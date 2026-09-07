@@ -1,0 +1,1102 @@
+{
+  "kind": "LOCAL_PARSER_RESOLUTION_PLAN_PROBE_NOT_FULL_WORKFLOW",
+  "network": "socket connection blocked",
+  "queries": [
+    {
+      "query": "contratos de jose david cantillo",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "jose",
+          "david",
+          "cantillo"
+        ]
+      },
+      "bare_probe": {
+        "actor_name": "jose david cantillo",
+        "unbounded_name": "jose david cantillo",
+        "surface_name": "jose david cantillo",
+        "name_only": false
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "exact_unique_alias",
+        "actor_resolution": "exact_unique_alias",
+        "contratista": [
+          "******3153"
+        ],
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "exact_unique_alias",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "******3153",
+          "observed_name": "jose david cantillo"
+        }
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "actor_resolution": "exact_unique_alias",
+          "contratista": [
+            "******3153"
+          ],
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "CC",
+            "base_number": "******3153",
+            "observed_name": "jose david cantillo"
+          }
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos de jose david cantillo arcon",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "jose",
+          "david",
+          "cantillo",
+          "arcon"
+        ]
+      },
+      "bare_probe": {
+        "actor_name": "jose david cantillo arcon",
+        "unbounded_name": "jose david cantillo arcon",
+        "surface_name": "jose david cantillo arcon",
+        "name_only": false
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "exact_unique_alias",
+        "actor_resolution": "exact_unique_alias",
+        "contratista": [
+          "******2711"
+        ],
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "exact_unique_alias",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "******2711",
+          "observed_name": "jose david cantillo arcon"
+        }
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "actor_resolution": "exact_unique_alias",
+          "contratista": [
+            "******2711"
+          ],
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "CC",
+            "base_number": "******2711",
+            "observed_name": "jose david cantillo arcon"
+          }
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos del proveedor jose david cantillo arcon",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution": "name_unresolved",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "name_unresolved",
+          "requires_resolution": true,
+          "observed_name": "jose david cantillo arcon",
+          "reason_codes": [
+            "ACTOR_ROLE_MARKER",
+            "ACTOR_NAME_NEEDS_RESOLUTION"
+          ]
+        }
+      },
+      "bare_probe": null,
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution": "exact_unique_alias",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "exact_unique_alias",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "******2711",
+          "observed_name": "jose david cantillo arcon"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "exact_unique_alias",
+        "contratista": [
+          "******2711"
+        ]
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "exact_unique_alias",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "CC",
+            "base_number": "******2711",
+            "observed_name": "jose david cantillo arcon"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "contratista": [
+            "******2711"
+          ]
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos del proveedor jose cantillo con alcaldia de barranquilla",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "alcaldia de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "actor_relation_scan_exact",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "buyer_mention": "alcaldia de barranquilla"
+          }
+        },
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "role_contracts_of_x_with_y",
+        "actor_resolution": "name_unresolved",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "name_unresolved",
+          "requires_resolution": true,
+          "observed_name": "jose cantillo",
+          "reason_codes": [
+            "ACTOR_CONVERSATION_OPERATION",
+            "ACTOR_NAME_NEEDS_RESOLUTION"
+          ]
+        },
+        "objeto": [
+          "jose",
+          "cantillo"
+        ]
+      },
+      "bare_probe": null,
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "alcaldia de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "actor_relation_scan_exact",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "buyer_mention": "alcaldia de barranquilla"
+          }
+        },
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "role_contracts_of_x_with_y",
+        "actor_resolution": "exact_ambiguous_alias",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "name_unresolved",
+          "requires_resolution": true,
+          "observed_name": "jose cantillo",
+          "reason_codes": [
+            "ACTOR_CONVERSATION_OPERATION",
+            "ACTOR_NAME_NEEDS_RESOLUTION"
+          ]
+        },
+        "actor_resolution_status": "AMBIGUOUS",
+        "actor_resolution_method": "exact_ambiguous_alias",
+        "actor_pending": {
+          "version": 1,
+          "origin": "strong_actor_syntax",
+          "original_query": "contratos del proveedor jose cantillo con alcaldia de barranquilla",
+          "original_params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "entidad": "alcaldia de barranquilla",
+            "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "entidad_resolution": {
+              "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "method": "actor_relation_scan_exact",
+              "kind": "buyer_entity",
+              "confidence": "high",
+              "like_value": null,
+              "metadata": {
+                "buyer_mention": "alcaldia de barranquilla"
+              }
+            },
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "role_contracts_of_x_with_y",
+            "actor_resolution": "name_unresolved",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "name_unresolved",
+              "requires_resolution": true,
+              "observed_name": "jose cantillo",
+              "reason_codes": [
+                "ACTOR_CONVERSATION_OPERATION",
+                "ACTOR_NAME_NEEDS_RESOLUTION"
+              ]
+            }
+          },
+          "actor_name": "jose cantillo",
+          "resolution_status": "AMBIGUOUS",
+          "candidates": [
+            {
+              "document_type": "CC",
+              "base_number": "******7432",
+              "matched_alias": "jose cantillo",
+              "observed_name": "Jose Cantillo",
+              "rank": 1,
+              "occurrences": 3
+            },
+            {
+              "document_type": "CC",
+              "base_number": "***5467",
+              "matched_alias": "jose cantillo",
+              "observed_name": "JOSE CANTILLO",
+              "rank": 2,
+              "occurrences": 2
+            },
+            {
+              "document_type": "CC",
+              "base_number": "******4265",
+              "matched_alias": "jose cantillo",
+              "observed_name": "JOSE CANTILLO",
+              "rank": 3,
+              "occurrences": 1
+            }
+          ],
+          "selection_token": "NY31ubffUR2X0M9DQhVd2ZF04KIj71NY"
+        }
+      },
+      "query_plan": {
+        "should_execute": false,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "alcaldia de barranquilla",
+          "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "entidad_resolution": {
+            "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "method": "actor_relation_scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "buyer_mention": "alcaldia de barranquilla"
+            }
+          },
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "role_contracts_of_x_with_y",
+          "actor_resolution": "exact_ambiguous_alias",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "jose cantillo",
+            "reason_codes": [
+              "ACTOR_CONVERSATION_OPERATION",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "actor_resolution_status": "AMBIGUOUS",
+          "actor_resolution_method": "exact_ambiguous_alias",
+          "actor_pending": {
+            "version": 1,
+            "origin": "strong_actor_syntax",
+            "original_query": "contratos del proveedor jose cantillo con alcaldia de barranquilla",
+            "original_params": {
+              "dataset": "contratos",
+              "dataset_explicit": true,
+              "entidad": "alcaldia de barranquilla",
+              "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "entidad_resolution": {
+                "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+                "method": "actor_relation_scan_exact",
+                "kind": "buyer_entity",
+                "confidence": "high",
+                "like_value": null,
+                "metadata": {
+                  "buyer_mention": "alcaldia de barranquilla"
+                }
+              },
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "role_contracts_of_x_with_y",
+              "actor_resolution": "name_unresolved",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "name_unresolved",
+                "requires_resolution": true,
+                "observed_name": "jose cantillo",
+                "reason_codes": [
+                  "ACTOR_CONVERSATION_OPERATION",
+                  "ACTOR_NAME_NEEDS_RESOLUTION"
+                ]
+              }
+            },
+            "actor_name": "jose cantillo",
+            "resolution_status": "AMBIGUOUS",
+            "candidates": [
+              {
+                "document_type": "CC",
+                "base_number": "******7432",
+                "matched_alias": "jose cantillo",
+                "observed_name": "Jose Cantillo",
+                "rank": 1,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "***5467",
+                "matched_alias": "jose cantillo",
+                "observed_name": "JOSE CANTILLO",
+                "rank": 2,
+                "occurrences": 2
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4265",
+                "matched_alias": "jose cantillo",
+                "observed_name": "JOSE CANTILLO",
+                "rank": 3,
+                "occurrences": 1
+              }
+            ],
+            "selection_token": "NY31ubffUR2X0M9DQhVd2ZF04KIj71NY"
+          }
+        },
+        "missing_slots": [
+          "actor_selection"
+        ],
+        "risk_flags": [
+          "actor_requires_selection"
+        ],
+        "clarification_question": "El nombre JOSE CANTILLO corresponde a más de un actor observado en SECOP.\n\n1. JOSE CANTILLO — CC ******7432\n2. JOSE CANTILLO — CC ***5467\n3. JOSE CANTILLO — CC ******4265\n\nResponde con el número correcto o comparte el NIT/cédula.",
+        "reason": "actor_name_ambiguous",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos del proveedor franklin quinto",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution": "name_unresolved",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "name_unresolved",
+          "requires_resolution": true,
+          "observed_name": "franklin quinto",
+          "reason_codes": [
+            "ACTOR_ROLE_MARKER",
+            "ACTOR_NAME_NEEDS_RESOLUTION"
+          ]
+        }
+      },
+      "bare_probe": null,
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution": "fts5_trigram_bm25",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "name_unresolved",
+          "requires_resolution": true,
+          "observed_name": "franklin quinto",
+          "reason_codes": [
+            "ACTOR_ROLE_MARKER",
+            "ACTOR_NAME_NEEDS_RESOLUTION"
+          ]
+        },
+        "actor_resolution_status": "CANDIDATES",
+        "actor_resolution_method": "fts5_trigram_bm25",
+        "actor_pending": {
+          "version": 1,
+          "origin": "strong_actor_syntax",
+          "original_query": "contratos del proveedor franklin quinto",
+          "original_params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "actor_resolution": "name_unresolved",
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "strong_actor_syntax",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "name_unresolved",
+              "requires_resolution": true,
+              "observed_name": "franklin quinto",
+              "reason_codes": [
+                "ACTOR_ROLE_MARKER",
+                "ACTOR_NAME_NEEDS_RESOLUTION"
+              ]
+            }
+          },
+          "actor_name": "franklin quinto",
+          "resolution_status": "CANDIDATES",
+          "candidates": [
+            {
+              "document_type": "CC",
+              "base_number": "****2255",
+              "matched_alias": "franklin quinto moreno",
+              "observed_name": "FRANKLIN QUINTO MORENO",
+              "rank": 1,
+              "occurrences": 9
+            },
+            {
+              "document_type": "CC",
+              "base_number": "******5679",
+              "matched_alias": "amanda quinto quinto",
+              "observed_name": "AMANDA QUINTO QUINTO",
+              "rank": 2,
+              "occurrences": 1
+            },
+            {
+              "document_type": "CC",
+              "base_number": "******4034",
+              "matched_alias": "argiro quinto quinto",
+              "observed_name": "ARGIRO QUINTO QUINTO",
+              "rank": 3,
+              "occurrences": 3
+            },
+            {
+              "document_type": "CC",
+              "base_number": "******4940",
+              "matched_alias": "natalia quinto quinto",
+              "observed_name": "Natalia Quinto Quinto",
+              "rank": 4,
+              "occurrences": 4
+            },
+            {
+              "document_type": "CC",
+              "base_number": "****0992",
+              "matched_alias": "vicente quinto quinto",
+              "observed_name": "VICENTE QUINTO QUINTO",
+              "rank": 5,
+              "occurrences": 6
+            },
+            {
+              "document_type": "CC",
+              "base_number": "******4033",
+              "matched_alias": "jesus ariel quinto quinto",
+              "observed_name": "jesus ariel quinto quinto",
+              "rank": 6,
+              "occurrences": 1
+            },
+            {
+              "document_type": "CC",
+              "base_number": "****7100",
+              "matched_alias": "juan carlos quinto quinto",
+              "observed_name": "JUAN CARLOS QUINTO QUINTO",
+              "rank": 7,
+              "occurrences": 3
+            },
+            {
+              "document_type": "CC",
+              "base_number": "******9837",
+              "matched_alias": "andres felipe quinto quinto",
+              "observed_name": "ANDRES FELIPE QUINTO QUINTO",
+              "rank": 8,
+              "occurrences": 1
+            },
+            {
+              "document_type": "CC",
+              "base_number": "****1368",
+              "matched_alias": "lais quinto",
+              "observed_name": "LAIS QUINTO",
+              "rank": 9,
+              "occurrences": 3
+            },
+            {
+              "document_type": "CC",
+              "base_number": "******7948",
+              "matched_alias": "franklin",
+              "observed_name": "Franklin",
+              "rank": 10,
+              "occurrences": 7
+            }
+          ],
+          "selection_token": "wdcdEvVj8u8z5YEf1DoNJMcoJzXXbYG5"
+        }
+      },
+      "query_plan": {
+        "should_execute": false,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "fts5_trigram_bm25",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "franklin quinto",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          },
+          "actor_resolution_status": "CANDIDATES",
+          "actor_resolution_method": "fts5_trigram_bm25",
+          "actor_pending": {
+            "version": 1,
+            "origin": "strong_actor_syntax",
+            "original_query": "contratos del proveedor franklin quinto",
+            "original_params": {
+              "dataset": "contratos",
+              "dataset_explicit": true,
+              "actor_resolution": "name_unresolved",
+              "actor_conversation_operation": "SET_ACTOR",
+              "actor_conversation_construction": "strong_actor_syntax",
+              "actor_scope": {
+                "role": "contractor",
+                "resolution_method": "name_unresolved",
+                "requires_resolution": true,
+                "observed_name": "franklin quinto",
+                "reason_codes": [
+                  "ACTOR_ROLE_MARKER",
+                  "ACTOR_NAME_NEEDS_RESOLUTION"
+                ]
+              }
+            },
+            "actor_name": "franklin quinto",
+            "resolution_status": "CANDIDATES",
+            "candidates": [
+              {
+                "document_type": "CC",
+                "base_number": "****2255",
+                "matched_alias": "franklin quinto moreno",
+                "observed_name": "FRANKLIN QUINTO MORENO",
+                "rank": 1,
+                "occurrences": 9
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******5679",
+                "matched_alias": "amanda quinto quinto",
+                "observed_name": "AMANDA QUINTO QUINTO",
+                "rank": 2,
+                "occurrences": 1
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4034",
+                "matched_alias": "argiro quinto quinto",
+                "observed_name": "ARGIRO QUINTO QUINTO",
+                "rank": 3,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4940",
+                "matched_alias": "natalia quinto quinto",
+                "observed_name": "Natalia Quinto Quinto",
+                "rank": 4,
+                "occurrences": 4
+              },
+              {
+                "document_type": "CC",
+                "base_number": "****0992",
+                "matched_alias": "vicente quinto quinto",
+                "observed_name": "VICENTE QUINTO QUINTO",
+                "rank": 5,
+                "occurrences": 6
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******4033",
+                "matched_alias": "jesus ariel quinto quinto",
+                "observed_name": "jesus ariel quinto quinto",
+                "rank": 6,
+                "occurrences": 1
+              },
+              {
+                "document_type": "CC",
+                "base_number": "****7100",
+                "matched_alias": "juan carlos quinto quinto",
+                "observed_name": "JUAN CARLOS QUINTO QUINTO",
+                "rank": 7,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******9837",
+                "matched_alias": "andres felipe quinto quinto",
+                "observed_name": "ANDRES FELIPE QUINTO QUINTO",
+                "rank": 8,
+                "occurrences": 1
+              },
+              {
+                "document_type": "CC",
+                "base_number": "****1368",
+                "matched_alias": "lais quinto",
+                "observed_name": "LAIS QUINTO",
+                "rank": 9,
+                "occurrences": 3
+              },
+              {
+                "document_type": "CC",
+                "base_number": "******7948",
+                "matched_alias": "franklin",
+                "observed_name": "Franklin",
+                "rank": 10,
+                "occurrences": 7
+              }
+            ],
+            "selection_token": "wdcdEvVj8u8z5YEf1DoNJMcoJzXXbYG5"
+          }
+        },
+        "missing_slots": [
+          "actor_selection"
+        ],
+        "risk_flags": [
+          "actor_requires_selection"
+        ],
+        "clarification_question": "No encontré una coincidencia exacta para FRANKLIN QUINTO; sí nombres similares.\n\n1. FRANKLIN QUINTO MORENO — CC ****2255\n2. AMANDA QUINTO QUINTO — CC ******5679\n3. ARGIRO QUINTO QUINTO — CC ******4034\n4. NATALIA QUINTO QUINTO — CC ******4940\n5. VICENTE QUINTO QUINTO — CC ****0992\n6. JESUS ARIEL QUINTO QUINTO — CC ******4033\n7. JUAN CARLOS QUINTO QUINTO — CC ****7100\n8. ANDRES FELIPE QUINTO QUINTO — CC ******9837\n9. LAIS QUINTO — CC ****1368\n10. FRANKLIN — CC ******7948\n\nResponde con el número correcto o comparte el NIT/cédula.",
+        "reason": "actor_name_candidates",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos del proveedor fundacaribe",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution": "name_unresolved",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "name_unresolved",
+          "requires_resolution": true,
+          "observed_name": "fundacaribe",
+          "reason_codes": [
+            "ACTOR_ROLE_MARKER",
+            "ACTOR_NAME_NEEDS_RESOLUTION"
+          ]
+        }
+      },
+      "bare_probe": null,
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution": "exact_unique_alias",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "exact_unique_alias",
+          "requires_resolution": false,
+          "document_type": "NIT",
+          "base_number": "*****9803",
+          "observed_name": "fundacaribe"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "exact_unique_alias",
+        "contratista": [
+          "*****9803",
+          "******8035",
+          "*****9803-5"
+        ]
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "exact_unique_alias",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "NIT",
+            "base_number": "*****9803",
+            "observed_name": "fundacaribe"
+          },
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "contratista": [
+            "*****9803",
+            "******8035",
+            "*****9803-5"
+          ]
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos de mantenimiento",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "mantenimiento"
+        ]
+      },
+      "bare_probe": {
+        "actor_name": "mantenimiento",
+        "unbounded_name": "mantenimiento",
+        "surface_name": "mantenimiento",
+        "name_only": false
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "mantenimiento"
+        ]
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "mantenimiento"
+          ]
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos de alimentacion",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "alimentacion"
+        ]
+      },
+      "bare_probe": {
+        "actor_name": "alimentacion",
+        "unbounded_name": "alimentacion",
+        "surface_name": "alimentacion",
+        "name_only": false
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "alimentacion"
+        ]
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "alimentacion"
+          ]
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos de adulto mayor",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "adulto_mayor"
+        ]
+      },
+      "bare_probe": {
+        "actor_name": "adulto mayor",
+        "unbounded_name": "adulto mayor",
+        "surface_name": "adulto mayor",
+        "name_only": false
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "adulto_mayor"
+        ]
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "adulto_mayor"
+          ]
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos de software",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "software"
+        ]
+      },
+      "bare_probe": {
+        "actor_name": "software",
+        "unbounded_name": "software",
+        "surface_name": "software",
+        "name_only": false
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "software"
+        ]
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "software"
+          ]
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos de vigilancia",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "vigilancia"
+        ]
+      },
+      "bare_probe": {
+        "actor_name": "vigilancia",
+        "unbounded_name": "vigilancia",
+        "surface_name": "vigilancia",
+        "name_only": false
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "vigilancia"
+        ]
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "vigilancia"
+          ]
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos de aseo",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ]
+      },
+      "bare_probe": {
+        "actor_name": "aseo",
+        "unbounded_name": "aseo",
+        "surface_name": "aseo",
+        "name_only": false
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ]
+      },
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "aseo"
+          ]
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": []
+      }
+    },
+    {
+      "query": "contratos de transporte",
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "transporte"
+        ]
+      },
+      "bare_probe": {
+        "actor_name": "transporte",
+        "unbounded_name": "transporte",
+        "surface_name": "transporte",
+        "name_only": false
+      },
+      "resolved_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "exact_unique_alias",
+        "actor_resolution": "exact_unique_alias",
+        "contratista": [
+          "******7806"
+        ],
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "exact_unique_alias",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "******7806",
+          "observed_name": "transporte"
+        },
+        "objeto": [
+          "transporte"
+        ],
+        "actor_intent_conflict": {
+          "actor_name": "transporte",
+          "resolution_status": "RESOLVED"
+        }
+      },
+      "query_plan": {
+        "should_execute": false,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution_status": "RESOLVED",
+          "actor_resolution_method": "exact_unique_alias",
+          "actor_resolution": "exact_unique_alias",
+          "contratista": [
+            "******7806"
+          ],
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "exact_unique_alias",
+            "requires_resolution": false,
+            "document_type": "CC",
+            "base_number": "******7806",
+            "observed_name": "transporte"
+          },
+          "objeto": [
+            "transporte"
+          ],
+          "actor_intent_conflict": {
+            "actor_name": "transporte",
+            "resolution_status": "RESOLVED"
+          }
+        },
+        "missing_slots": [
+          "actor_or_topic"
+        ],
+        "risk_flags": [
+          "actor_topic_conflict"
+        ],
+        "clarification_question": "¿Te refieres a contratos sobre TRANSPORTE como tema, o al proveedor observado como ‘TRANSPORTE’? No voy a elegir una interpretación silenciosamente.",
+        "reason": "actor_or_topic_ambiguous",
+        "signals": []
+      }
+    }
+  ],
+  "pending_replacement_classification": "NEW_SEARCH"
+}

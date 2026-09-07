@@ -1,0 +1,54 @@
+{
+  "exact": [
+    {
+      "document_type": "CC",
+      "base_number": "******3153",
+      "normalized_alias": "jose david cantillo",
+      "raw_alias": "Jose David Cantillo",
+      "occurrences": 3,
+      "identity_digest": "97cad9c0331c33e7f20284b50eb1993bcabc7ca0a3209ba7516ca188b0685b12"
+    }
+  ],
+  "prefix_extensions": [
+    {
+      "document_type": "CC",
+      "base_number": "******2711",
+      "normalized_alias": "jose david cantillo arcon",
+      "raw_alias": "JOSE DAVID CANTILLO ARCON",
+      "occurrences": 8,
+      "identity_digest": "652976c0c42e4e55c9a6b8226cba8e4c968861031308e000f49e167395195c7e"
+    },
+    {
+      "document_type": "CC",
+      "base_number": "******5396",
+      "normalized_alias": "jose david cantillo solano",
+      "raw_alias": "JOSE DAVID CANTILLO SOLANO",
+      "occurrences": 3,
+      "identity_digest": "32fadf966c1d1211260721eebd434c328458d37b549159dfa8b502a70feb5c0f"
+    }
+  ],
+  "range_sql": "SELECT document_type,base_number,normalized_alias,raw_alias,occurrences FROM actor_aliases WHERE normalized_alias>=? AND normalized_alias<? ORDER BY normalized_alias,document_type,base_number LIMIT 101",
+  "range_args": [
+    "jose david cantillo ",
+    "jose david cantillo!"
+  ],
+  "query_plans": {
+    "like": [
+      [
+        3,
+        0,
+        210,
+        "SCAN actor_aliases USING COVERING INDEX actor_aliases_exact_idx"
+      ]
+    ],
+    "range": [
+      [
+        5,
+        0,
+        165,
+        "SEARCH actor_aliases USING INDEX sqlite_autoindex_actor_aliases_1 (normalized_alias>? AND normalized_alias<?)"
+      ]
+    ]
+  },
+  "extensions_capped": false
+}
