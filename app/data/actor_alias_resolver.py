@@ -356,26 +356,15 @@ class ActorNameResolver:
 
 
 def _anchored_name_distance(tokens: tuple[str, ...], alias: str) -> int:
-    """Rank evidence only: full token coverage, a literal anchor, bounded typos.
+    """Rank evidence only: full token coverage, one literal anchor, <=1 typo.
 
-    No approximate matching of short tokens. One imperfect token admits two
-    edits when long (including the historical ``ingieneria`` rotation) and one
-    at 5–6 letters. A *second* imperfect token is admitted only for a 3+ token
-    query that still keeps a literal anchor, and only at one edit each — total
-    budget two. A partial hit keeps its BM25 order.
-
-    This score NEVER resolves identity. It orders ``ACTOR_CANDIDATE_POOL`` rows
-    that retrieval already produced, and the result is still ``CANDIDATES``.
-
-    The two-token door came from an audit
-    (``docs/audits/ACTOR_DOGFOOD_HARDENING_V2.md``) whose measured ceiling is
-    the honest limit of this function: with two misspelled tokens only the
-    intact one enters the FTS expression, so the target reaches the pool 20% of
-    the time. Ranking recovers all of that 20% and cannot recover the rest —
-    that part is a retrieval question and is not decided here.
+    No approximate matching of short tokens. A long token admits two edits
+    (including the historical ``ingieneria`` rotation); 5–6 letters admit one.
+    A partial hit keeps its BM25 order. This score NEVER resolves identity.
     """
-    remaining = alias.split()
-    missing: list[str] = []
+    words = alias.split()
+    remaining = list(words)
+    missing = []
     anchors = 0
     for token in tokens:
         if token in remaining:
@@ -385,42 +374,12 @@ def _anchored_name_distance(tokens: tuple[str, ...], alias: str) -> int:
             missing.append(token)
     if not missing:
         return 0
-    if not anchors:
+    if not anchors or len(missing) != 1 or len(missing[0]) < 5:
         return 3
-    if len(missing) == 1:
-        token = missing[0]
-        if len(token) < 5:
-            return 3
-        limit = 2 if len(token) >= 7 else 1
-        distance = min(
-            (_bounded_edit_distance(token, word, limit) for word in remaining),
-            default=3,
-        )
-        return distance if distance <= limit else 3
-    if len(missing) != 2:
-        # Three imperfect tokens are not a spelling mistake. The 3+ token floor
-        # needs no separate test: two missing tokens plus at least one anchor
-        # already means the query had three.
-        return 3
-    pool = list(remaining)
-    total = 0
-    for token in missing:
-        if len(token) < 5:
-            return 3
-        best = 3
-        best_word = None
-        for word in pool:
-            distance = _bounded_edit_distance(token, word, 1)
-            if distance < best:
-                best, best_word = distance, word
-        if best > 1:
-            return 3
-        total += best
-        if best_word is not None:
-            # One alias word answers one query token: without this, a single
-            # word would absorb both typos and manufacture coverage.
-            pool.remove(best_word)
-    return total
+    token = missing[0]
+    limit = 2 if len(token) >= 7 else 1
+    distance = min((_bounded_edit_distance(token, word, limit) for word in remaining), default=3)
+    return distance if distance <= limit else 3
 
 
 def _bounded_edit_distance(left: str, right: str, limit: int) -> int:
