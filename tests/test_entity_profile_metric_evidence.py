@@ -103,7 +103,10 @@ def test_an_illegible_process_aggregate_says_so_instead_of_reporting_zero(turn):
     rendered = render_entity_profile(profile)
     assert profile.activity.fact("process_count") is None
     assert "Publicó 0 procesos" not in rendered
-    assert any("ilegible" in warning for warning in profile.warnings)
+    # El agregado ilegible ahora lo rechaza la capa de evidencia, igual que en
+    # contratos, así que el aviso es el unificado de agregado inválido y no uno
+    # propio de procesos. La asimetría entre las dos fuentes era el defecto F7.
+    assert any("inválido" in warning for warning in profile.warnings)
 
 
 # ── Series temporales ───────────────────────────────────────────────────────
