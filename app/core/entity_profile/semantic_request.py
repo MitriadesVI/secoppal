@@ -27,9 +27,10 @@ from app.core.entity_profile.source_request import (
 )
 from app.core.entity_profile.temporal_event import (
     TemporalEvent,
-    TemporalEventResolution,
-    current_state_survives_event,
-    resolve_temporal_event,
+    TemporalEventClaim,
+    TemporalResolution,
+    current_state_survives_events,
+    resolve_temporal_events,
 )
 
 
@@ -49,8 +50,11 @@ class EntityProfileSemanticRequest:
     sources_provenance: SourceProvenance
     time_from: str | None = None
     time_to: str | None = None
-    event: TemporalEvent = TemporalEvent.NONE
-    unsupported_event: str | None = None
+    # Un escalar no puede representar "procesos publicados y contratos firmados
+    # en agosto": V1 perdía uno de los dos porque la firma ganaba por prioridad
+    # fija en AMBOS órdenes. Las reclamaciones se conservan todas.
+    temporal_claims: tuple[TemporalEventClaim, ...] = ()
+    unsupported_events: tuple[str, ...] = ()
     keeps_current_state: bool = True
     topic: tuple[str, ...] = ()
     modality: tuple[str, ...] = ()
@@ -69,6 +73,30 @@ class EntityProfileSemanticRequest:
     def has_period(self) -> bool:
         return bool(self.time_from or self.time_to)
 
+    @property
+    def event(self) -> TemporalEvent:
+        """Compatibilidad: el hecho único, cuando la petición nombró uno solo."""
+        if len(self.temporal_claims) == 1:
+            return self.temporal_claims[0].event
+        return TemporalEvent.NONE
+
+    @property
+    def unsupported_event(self) -> str | None:
+        return self.unsupported_events[0] if self.unsupported_events else None
+
+    @property
+    def claimed_events(self) -> frozenset[TemporalEvent]:
+        return frozenset(claim.event for claim in self.temporal_claims)
+
+    def event_for(self, dataset_id: str) -> TemporalEvent:
+        """El hecho que ESTA fuente debe honrar; NONE si no se le pidió ninguno."""
+        from app.core.entity_profile.source_plan import EVENT_DATASET
+
+        for claim in self.temporal_claims:
+            if EVENT_DATASET.get(claim.event) == dataset_id:
+                return claim.event
+        return TemporalEvent.NONE
+
     def to_dict(self) -> dict:
         """Sólo tipos JSON: la conversación guarda datos, nunca objetos vivos."""
         return {
@@ -78,7 +106,9 @@ class EntityProfileSemanticRequest:
             "time_from": self.time_from,
             "time_to": self.time_to,
             "event": self.event.value,
+            "temporal_claims": [claim.to_dict() for claim in self.temporal_claims],
             "unsupported_event": self.unsupported_event,
+            "unsupported_events": list(self.unsupported_events),
             "keeps_current_state": self.keeps_current_state,
             "topic": list(self.topic),
             "modality": list(self.modality),
@@ -98,8 +128,10 @@ class EntityProfileSemanticRequest:
                 sources_provenance=SourceProvenance(raw["sources_provenance"]),
                 time_from=_text_or_none(raw.get("time_from")),
                 time_to=_text_or_none(raw.get("time_to")),
-                event=TemporalEvent(raw.get("event", TemporalEvent.NONE.value)),
-                unsupported_event=_text_or_none(raw.get("unsupported_event")),
+                temporal_claims=_claims_from(raw),
+                unsupported_events=tuple(
+                    str(term) for term in raw.get("unsupported_events") or ()
+                ),
                 keeps_current_state=bool(raw.get("keeps_current_state", True)),
                 topic=tuple(str(item) for item in raw.get("topic") or ()),
                 modality=tuple(str(item) for item in raw.get("modality") or ()),
@@ -108,6 +140,27 @@ class EntityProfileSemanticRequest:
             )
         except (KeyError, TypeError, ValueError):
             return None
+
+
+def _claims_from(raw: dict) -> tuple[TemporalEventClaim, ...]:
+    """Reconstruye las reclamaciones; una carga vieja sólo trae el escalar."""
+    stored = raw.get("temporal_claims")
+    if isinstance(stored, list):
+        claims: list[TemporalEventClaim] = []
+        for item in stored:
+            if not isinstance(item, dict):
+                continue
+            span = item.get("span") or (0, 0)
+            claims.append(TemporalEventClaim(
+                event=TemporalEvent(item["event"]),
+                span=(int(span[0]), int(span[1])),
+                term=str(item.get("term", "")),
+            ))
+        return tuple(claims)
+    event = TemporalEvent(raw.get("event", TemporalEvent.NONE.value))
+    if event is TemporalEvent.NONE:
+        return ()
+    return (TemporalEventClaim(event, (0, 0), ""),)
 
 
 def _text_or_none(value: object) -> str | None:
@@ -129,7 +182,7 @@ def build_semantic_request(
 ) -> EntityProfileSemanticRequest:
     """Integra las autoridades existentes y adjudica fuente y evento."""
     source = resolve_requested_sources(user_query, params)
-    resolution = resolve_temporal_event(user_query, params)
+    resolution = resolve_temporal_events(user_query, params)
     keeps_state = _keeps_current_state(user_query, params, resolution)
     return EntityProfileSemanticRequest(
         focus=focus,
@@ -137,8 +190,8 @@ def build_semantic_request(
         sources_provenance=source.provenance,
         time_from=scope.time_from,
         time_to=scope.time_to,
-        event=resolution.event,
-        unsupported_event=resolution.unsupported_term,
+        temporal_claims=resolution.claims,
+        unsupported_events=resolution.unsupported_terms,
         keeps_current_state=keeps_state,
         topic=scope.topic,
         modality=scope.modality,
@@ -148,15 +201,15 @@ def build_semantic_request(
 
 
 def _keeps_current_state(
-    user_query: str, params: dict, resolution: TemporalEventResolution,
+    user_query: str, params: dict, resolution: TemporalResolution,
 ) -> bool:
     """Un tramo consumido como evento no filtra además el estado de hoy."""
-    if resolution.event is TemporalEvent.NONE:
+    if not resolution.claims:
         return True
     if not _has_current_state(params):
         return True
     dataset = params.get("dataset")
-    return current_state_survives_event(
+    return current_state_survives_events(
         user_query, resolution, dataset if isinstance(dataset, str) else "procesos",
     )
 

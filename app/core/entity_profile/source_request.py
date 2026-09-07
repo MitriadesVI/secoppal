@@ -26,6 +26,7 @@ from dataclasses import dataclass
 from enum import Enum
 import re
 
+from app.core.entity_profile.clauses import split_clauses
 from app.core.query_text_consumption import mask_consumed_spans
 from app.utils.money import normalize_text
 
@@ -48,6 +49,9 @@ _PROCESS_WORDS = re.compile(
     r"\b(?:procesos?|licitaciones?|convocatorias?|procedimientos?)\b"
 )
 _CONTRACT_WORDS = re.compile(r"\b(?:contratos?)\b")
+_ANY_SOURCE_WORD = re.compile(
+    r"\b(?:procesos?|licitaciones?|convocatorias?|procedimientos?|contratos?)\b"
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -103,11 +107,38 @@ def _buyer_free_text(user_query: str, params: dict) -> str:
     return mask_consumed_spans(text, spans) if spans else text
 
 
+def _clause_head_sources(text: str) -> tuple[bool, bool]:
+    """La PRIMERA palabra de fuente de cada cláusula, y sólo ésa.
+
+    F3: buscar la palabra en toda la frase hacía que el TEMA eligiera fuente.
+
+        "contratos de gestion de procesos industriales"  -> BOTH (mal)
+        "procesos de administracion de contratos"        -> BOTH (mal)
+        "contratos de publicacion de convocatorias"      -> BOTH (mal)
+
+    En las tres, la segunda aparición está dentro de un complemento del tema y
+    no es una elección de fuente. Una coordinación REAL —"procesos y contratos",
+    "procesos publicados y contratos firmados"— sí pone una palabra de fuente al
+    frente de cada cláusula, y por eso el núcleo de cada una es exactamente la
+    señal que hay que leer. Es estructura posicional, no un catálogo nuevo ni
+    inferencia probabilística.
+    """
+    processes = contracts = False
+    for clause in split_clauses(text):
+        head = _ANY_SOURCE_WORD.search(clause.text)
+        if head is None:
+            continue
+        if _PROCESS_WORDS.fullmatch(head.group(0)):
+            processes = True
+        else:
+            contracts = True
+    return processes, contracts
+
+
 def resolve_requested_sources(user_query: str, params: dict) -> SourceRequest:
     """Lee la fuente de las palabras del usuario; sólo si calla mira el frame."""
     text = _buyer_free_text(user_query, params)
-    asked_processes = bool(_PROCESS_WORDS.search(text))
-    asked_contracts = bool(_CONTRACT_WORDS.search(text))
+    asked_processes, asked_contracts = _clause_head_sources(text)
     if asked_processes and asked_contracts:
         return SourceRequest(RequestedSources.BOTH, SourceProvenance.EXPLICIT)
     if asked_processes:

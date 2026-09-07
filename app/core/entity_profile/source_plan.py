@@ -90,12 +90,15 @@ def project_source(
     unsupported: list[str] = []
 
     # Un evento nombrado pertenece a un solo esquema. Contestar "firmados en
-    # agosto" con fechas de publicación sería responder otra pregunta.
-    if request.event is not TemporalEvent.NONE:
-        if EVENT_DATASET[request.event] != dataset_id:
-            unsupported.append(request.event.value)
-    if request.unsupported_event is not None:
-        unsupported.append(f"UNSUPPORTED_EVENT:{request.unsupported_event}")
+    # agosto" con fechas de publicación sería responder otra pregunta. Con dos
+    # reclamaciones —"procesos publicados y contratos firmados"— cada esquema
+    # honra la suya y ninguna se pierde.
+    own_event = request.event_for(dataset_id)
+    for claim in request.temporal_claims:
+        if EVENT_DATASET[claim.event] != dataset_id and own_event is TemporalEvent.NONE:
+            unsupported.append(claim.event.value)
+    for term in request.unsupported_events:
+        unsupported.append(f"UNSUPPORTED_EVENT:{term}")
 
     projected = dict(params)
     projected["dataset"] = DATASET_NAME[dataset_id]
@@ -120,8 +123,7 @@ def project_source(
         dataset_id=dataset_id,
         should_execute=should_execute,
         params=projected,
-        event=request.event if EVENT_DATASET.get(request.event) == dataset_id
-        else TemporalEvent.NONE,
+        event=own_event,
         date_field=DATE_FIELD[dataset_id],
         value_field=VALUE_FIELD[dataset_id],
         unsupported_dimensions=tuple(unsupported),
