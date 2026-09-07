@@ -126,6 +126,19 @@ def evaluate_actor_scope(params: dict) -> ActorScopeDecision:
     if not has_actor_scope(params):
         return ActorScopeDecision(should_execute=True)
 
+    if actor_resolution_status(params) == ActorResolutionStatus.INCONCLUSIVE:
+        return ActorScopeDecision(
+            should_execute=False,
+            missing_slots=("actor_document",),
+            risk_flags=("actor_prefix_check_inconclusive",),
+            clarification_question=(
+                "Encontré una coincidencia exacta, pero no pude comprobar si hay "
+                "otras cédulas con nombres que la prolongan. Escribe un nombre "
+                "más completo o comparte la cédula para continuar."
+            ),
+            reason="actor_prefix_check_inconclusive",
+        )
+
     conflict = params.get("actor_intent_conflict")
     if isinstance(conflict, dict):
         name = str(conflict.get("actor_name") or "ese término").upper()
@@ -160,6 +173,12 @@ def evaluate_actor_scope(params: dict) -> ActorScopeDecision:
         choices = _candidate_choices(params)
         if status == ActorResolutionStatus.AMBIGUOUS:
             intro = f"El nombre {name} corresponde a más de un actor observado en SECOP."
+            if actor_resolution_method(params) == "exact_prefix_ambiguous":
+                intro = (
+                    f"Encontré una coincidencia exacta para {name}, pero también nombres "
+                    "observados más largos que comienzan exactamente por ese nombre "
+                    "y corresponden a otras cédulas."
+                )
             reason = REASON_NAME_AMBIGUOUS
         else:
             intro = f"No encontré una coincidencia exacta para {name}; sí nombres similares."
@@ -170,6 +189,11 @@ def evaluate_actor_scope(params: dict) -> ActorScopeDecision:
             question += "\n\nResponde con el número correcto o comparte el NIT/cédula."
         else:
             question += " Necesito el NIT o la cédula para continuar."
+        pending = params.get("actor_pending") or {}
+        if pending.get("candidates_has_more") is True:
+            question += "\n\nHay más opciones compatibles; escribe un nombre más completo o comparte la cédula."
+        elif pending.get("candidates_has_more") is None and pending.get("enumeration_incomplete"):
+            question += "\n\nNo pude completar la lista de opciones; escribe un nombre más completo o comparte la cédula."
         return ActorScopeDecision(
             should_execute=False,
             missing_slots=("actor_selection",),

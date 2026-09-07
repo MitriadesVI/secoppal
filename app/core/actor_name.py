@@ -68,6 +68,7 @@ class ActorResolutionStatus:
     CANDIDATES = "CANDIDATES"
     UNRESOLVED = "UNRESOLVED"
     INDEX_UNAVAILABLE = "INDEX_UNAVAILABLE"
+    INCONCLUSIVE = "INCONCLUSIVE"
 
 
 def mask_identity_key(identity: IdentityKey) -> str:
@@ -140,6 +141,8 @@ class ActorResolutionResult:
     candidates: tuple[ActorResolutionCandidate, ...] = ()
     method: str | None = None
     reason: str | None = None
+    candidates_has_more: bool | None = None
+    enumeration_incomplete: bool = False
 
     def __post_init__(self) -> None:
         allowed = {
@@ -148,6 +151,7 @@ class ActorResolutionResult:
             ActorResolutionStatus.CANDIDATES,
             ActorResolutionStatus.UNRESOLVED,
             ActorResolutionStatus.INDEX_UNAVAILABLE,
+            ActorResolutionStatus.INCONCLUSIVE,
         }
         if self.status not in allowed:
             raise ValueError(f"invalid actor resolution status: {self.status!r}")
@@ -166,8 +170,44 @@ class ActorResolutionResult:
         if self.status in {
             ActorResolutionStatus.UNRESOLVED,
             ActorResolutionStatus.INDEX_UNAVAILABLE,
+            ActorResolutionStatus.INCONCLUSIVE,
         } and self.candidates:
             raise ValueError(f"{self.status} must not expose candidates")
+
+        if self.status == ActorResolutionStatus.INCONCLUSIVE and (
+            self.method != "exact_prefix_check_inconclusive" or not self.reason
+        ):
+            raise ValueError("INCONCLUSIVE requires prefix-check method and reason")
+        if self.method == "exact_prefix_ambiguous":
+            self._validate_prefix_candidates()
+
+    def _validate_prefix_candidates(self):
+        if self.status != ActorResolutionStatus.AMBIGUOUS or not 2 <= len(self.candidates) <= 10:
+            raise ValueError("prefix ambiguity requires 2-10 visible candidates")
+        if self.candidates_has_more is not None and type(self.candidates_has_more) is not bool:
+            raise ValueError("has_more must be boolean or unknown")
+        if type(self.enumeration_incomplete) is not bool:
+            raise ValueError("enumeration_incomplete must be boolean")
+        if self.candidates_has_more is True and len(self.candidates) != 10:
+            raise ValueError("has_more requires all ten visible positions")
+        if self.enumeration_incomplete and len(self.candidates) != 2:
+            raise ValueError("incomplete enumeration preserves exact plus witness")
+        if self.enumeration_incomplete != (self.candidates_has_more is None):
+            raise ValueError("incomplete enumeration must have unknown has_more")
+        if len({c.identity for c in self.candidates}) != len(self.candidates):
+            raise ValueError("prefix candidates must have distinct identities")
+        if self.candidates[0].matched_alias != self.normalized_query:
+            raise ValueError("original exact alias must be first")
+        for rank, candidate in enumerate(self.candidates, 1):
+            if candidate.identity.document_type != "CC" or candidate.rank != rank:
+                raise ValueError("prefix candidates require ordered CC ranks")
+            if rank > 1 and not candidate.matched_alias.startswith(self.normalized_query + " "):
+                raise ValueError("challenger must extend exact N2 prefix")
+        ordered = sorted(self.candidates[1:], key=lambda c: (
+            c.matched_alias, c.identity.document_type, c.identity.base_number,
+        ))
+        if list(self.candidates[1:]) != ordered:
+            raise ValueError("challengers require deterministic representative order")
 
     def __repr__(self) -> str:
         identity = mask_identity_key(self.identity) if self.identity else None

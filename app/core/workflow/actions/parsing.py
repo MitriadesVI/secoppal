@@ -29,7 +29,11 @@ from app.core.actor_conversation import (
     classify_actor_pending_turn,
     purge_actor_state,
 )
-from app.core.actor_resolution import is_authoritative_actor_resolution
+from app.core.actor_resolution import (
+    METHOD_EXPLICIT_DOCUMENT, actor_resolution_method, actor_resolution_status,
+    is_authoritative_actor_resolution,
+)
+from app.core.actor_name import ActorResolutionStatus
 from app.core.actor_resolution_admission import can_resolve_new_actor
 from app.core.followup_engine import FollowupGuards, detect_and_merge
 from app.core.llm_handler import LLMHandler
@@ -496,6 +500,17 @@ def apply_context(state: State) -> State:
     # AP3-F precedence: explicit actor operations and contextual buyer
     # relations mutate the conversational frame before the generic classifier
     # can reinterpret their words as topic/geography.
+    # A document answering a failed exact check replaces that pending authority.
+    # Reuse the existing actor replacement merge to preserve non-actor filters.
+    if (
+        actor_resolution_status(context_params) == ActorResolutionStatus.INCONCLUSIVE
+        and actor_resolution_method(context_params) == "exact_prefix_check_inconclusive"
+        and actor_resolution_method(parsed_params) == METHOD_EXPLICIT_DOCUMENT
+        and is_authoritative_actor_resolution(parsed_params)
+        and (parsed_params.get("actor_scope") or {}).get("document_type") in {"CC", "NIT"}
+        and (parsed_params.get("actor_scope") or {}).get("identity_confidence") == "declared"
+    ):
+        parsed_params = {**parsed_params, "actor_conversation_operation": ActorConversationOperation.REPLACE_ACTOR}
     operation = parsed_params.get("actor_conversation_operation")
     if operation in {
         ActorConversationOperation.SET_ACTOR,

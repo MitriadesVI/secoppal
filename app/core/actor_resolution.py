@@ -248,6 +248,9 @@ def project_actor_resolution(
             "resolution_status": result.status,
             "candidates": [candidate_to_payload(candidate) for candidate in result.candidates],
         }
+        if result.method == "exact_prefix_ambiguous":
+            pending["candidates_has_more"] = result.candidates_has_more
+            pending["enumeration_incomplete"] = result.enumeration_incomplete
         # A fresh nonce distinguishes even two identical consecutive actor
         # queries, so a delayed callback from the first list cannot authorize a
         # rank in the second one.

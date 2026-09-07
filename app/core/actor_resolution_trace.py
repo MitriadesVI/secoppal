@@ -9,8 +9,12 @@ def actor_resolution_trace(params: dict) -> dict:
         return {}
     pending = params.get("actor_pending")
     candidates = pending.get("candidates", []) if isinstance(pending, dict) else []
-    return {
+    trace = {
         "actor_resolution_status": status,
         "actor_resolution_method": method,
         "candidates_count": len(candidates) if isinstance(candidates, list) else 0,
     }
+    if isinstance(pending, dict) and "candidates_has_more" in pending:
+        trace["candidates_has_more"] = pending["candidates_has_more"]
+        trace["enumeration_incomplete"] = pending.get("enumeration_incomplete", False)
+    return trace

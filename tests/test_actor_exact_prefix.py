@@ -165,3 +165,93 @@ def test_successor_and_sql_boundary_unicode(tmp_path):
         with sqlite3.connect(":memory:") as connection:
             selected = [v for v in values if connection.execute("SELECT ? >= ? AND ? < ?", (v, low, v, high)).fetchone()[0]]
         assert selected == [v for v in values if v.startswith(q + " ")]
+
+
+def test_sqlite_vm_deadline_interrupts_and_progress_handler_is_removed(tmp_path, monkeypatch):
+    from app.data import actor_exact_prefix as prefix
+    clock = [0.0]
+    monkeypatch.setattr(prefix, "perf_counter", lambda: clock[0])
+    real = sqlite3.connect(":memory:")
+    calls = []
+    class Connection:
+        def set_progress_handler(self, callback, steps):
+            calls.append(callback is not None)
+            if callback is None:
+                real.set_progress_handler(None, 0)
+            else:
+                def advance():
+                    clock[0] += 0.001
+                    return callback()
+                real.set_progress_handler(advance, steps)
+    try:
+        with pytest.raises(TimeoutError, match="VM budget exhausted"):
+            with prefix._ReadDeadline(Connection(), 5):
+                real.execute("WITH RECURSIVE n(x) AS (VALUES(1) UNION ALL SELECT x+1 FROM n WHERE x<100000) SELECT sum(x) FROM n").fetchone()
+        assert calls == [True, False]
+        assert real.execute("SELECT 1").fetchone() == (1,)
+    finally:
+        real.close()
+
+
+def test_python_iteration_deadline_after_found_preserves_witness(tmp_path, monkeypatch):
+    from app.data import actor_exact_prefix as prefix
+    resolver = resolver_for(tmp_path / "actors.sqlite", [EXACT, *CHALLENGERS])
+    with resolver._connect_readonly() as setup:
+        original = resolver._collapse_exact(setup.execute(
+            "SELECT * FROM actor_aliases WHERE normalized_alias=?", (NAME,),
+        ).fetchall())[0]
+    clock = [0.0]
+    monkeypatch.setattr(prefix, "perf_counter", lambda: clock[0])
+    connection = resolver._connect_readonly()
+    handlers = []
+    class Cursor:
+        def __init__(self, cursor):
+            self.cursor = cursor
+        def __iter__(self):
+            for row in self.cursor:
+                clock[0] += 0.011
+                yield row
+        def close(self):
+            self.cursor.close()
+    class Connection:
+        def execute(self, sql, args):
+            cursor = connection.execute(sql, args)
+            return Cursor(cursor) if sql == prefix.ENUMERATION_SQL else cursor
+        def set_progress_handler(self, callback, steps):
+            handlers.append(callback is not None)
+            connection.set_progress_handler(callback, steps)
+    try:
+        result = prefix.resolve_exact_personal_prefix(Connection(), NAME, original, resolver._candidate)
+        assert result.status == "AMBIGUOUS"
+        assert result.enumeration_incomplete is True and result.candidates_has_more is None
+        assert [c.matched_alias for c in result.candidates] == [NAME, NAME + " diaz"]
+        assert handlers == [True, False, True, False]
+    finally:
+        connection.close()
+
+
+def test_successful_but_empty_enumeration_cannot_erase_found_witness(tmp_path, monkeypatch):
+    from app.data import actor_exact_prefix as prefix
+    resolver = resolver_for(tmp_path / "actors.sqlite", [EXACT, *CHALLENGERS])
+    monkeypatch.setattr(prefix, "enumerate_prefix_challengers", lambda *args: ())
+    result = resolver.resolve(NAME)
+    assert result.status == "AMBIGUOUS"
+    assert len(result.candidates) == 2
+    assert result.enumeration_incomplete is True and result.candidates_has_more is None
+
+
+def test_impact_oracle_uses_exact_unique_across_all_document_types(tmp_path):
+    from scripts.audits.actor_prefix_validation import audit
+    import json
+    rows = [EXACT, *CHALLENGERS,
+            ("CC", "74000001", "nombre mixto"), ("NIT", "94000001", "nombre mixto"),
+            ("CC", "74000002", "nombre mixto extra"),
+            ("NIT", "94000002", "empresa"), ("NIT", "94000003", "empresa extra")]
+    resolver = resolver_for(tmp_path / "actors.sqlite", rows)
+    assert audit(resolver, tmp_path) == 0
+    evidence = json.loads((tmp_path / "impact_runtime.json").read_text())
+    assert evidence["eligible_exact_unique_cc_aliases"] == 4
+    assert evidence["affected_found"] == 1
+    assert evidence["unaffected_absent_confirmed"] == 3
+    assert evidence["inconclusive_checks"] == 0
+    assert evidence["runtime_vs_oracle_mismatch_query_sha256"] == []

@@ -135,3 +135,57 @@ def test_topic_baseline_is_preserved_with_synthetic_directory(tmp_path, topic):
         assert evaluate_actor_scope(params).reason == "actor_or_topic_ambiguous"
     else:
         assert dict(params) == baseline
+
+
+@pytest.mark.parametrize("initial", ["AMBIGUOUS", "INCONCLUSIVE"])
+@pytest.mark.parametrize("document", ["CC 70000003", "NIT 900111222"])
+def test_document_followup_exits_clarification_without_another_challenger(tmp_path, monkeypatch, initial, document):
+    from app.data import actor_exact_prefix as prefix
+    if initial == "INCONCLUSIVE":
+        monkeypatch.setattr(prefix, "EXISTENCE_BUDGET_MS", 0)
+    workflow, _ = _workflow(tmp_path, monkeypatch)
+    first = workflow.run_query("contratos del proveedor " + NAME + " en 2025", chat_id="document")
+    assert first["resolved_params"]["actor_resolution_status"] == initial
+    def forbidden(*args, **kwargs):
+        raise AssertionError("explicit document reopened name resolver")
+    monkeypatch.setattr(workflow.actor_name_resolver, "resolve_exact", forbidden)
+    monkeypatch.setattr(workflow.actor_name_resolver, "resolve", forbidden)
+    selected = workflow.run_query(document, chat_id="document")
+    assert selected["route_reason"] == "actor_profile", repr(selected["resolved_params"])
+    params = selected["resolved_params"]
+    assert params["actor_resolution_method"] == "explicit_document"
+    assert params["actor_scope"]["base_number"] == document.split()[1]
+    if initial == "INCONCLUSIVE":
+        assert params["fecha_desde"] == "2025-01-01"
+    assert params.get("actor_pending") is None
+    assert "candidates_has_more" not in actor_resolution_trace(params)
+    assert "enumeration_incomplete" not in actor_resolution_trace(params)
+
+
+def test_full_name_followup_after_inconclusive_resolves_when_check_completes(tmp_path, monkeypatch):
+    from app.data import actor_exact_prefix as prefix
+    budget = prefix.EXISTENCE_BUDGET_MS
+    monkeypatch.setattr(prefix, "EXISTENCE_BUDGET_MS", 0)
+    workflow, _ = _workflow(tmp_path, monkeypatch)
+    first = workflow.run_query("contratos del proveedor " + NAME, chat_id="fuller")
+    assert first["resolved_params"]["actor_resolution_status"] == "INCONCLUSIVE"
+    monkeypatch.setattr(prefix, "EXISTENCE_BUDGET_MS", budget)
+    selected = workflow.run_query("contratos del proveedor " + NAME + " diaz", chat_id="fuller")
+    assert selected["route_reason"] == "actor_profile"
+    assert selected["resolved_params"]["actor_resolution_method"] == "exact_unique_alias"
+    assert selected["resolved_params"]["actor_scope"]["base_number"] == "70000003"
+
+
+def test_non_actor_trace_remains_empty():
+    assert actor_resolution_trace({}) == {}
+
+
+def test_bare_number_does_not_replace_inconclusive_authority(tmp_path, monkeypatch):
+    from app.data import actor_exact_prefix as prefix
+    monkeypatch.setattr(prefix, "EXISTENCE_BUDGET_MS", 0)
+    workflow, calls = _workflow(tmp_path, monkeypatch)
+    workflow.run_query("contratos del proveedor " + NAME, chat_id="number")
+    result = workflow.run_query("70000003", chat_id="number")
+    assert result["resolved_params"]["actor_resolution_status"] == "INCONCLUSIVE"
+    assert result["needs_clarification"]
+    assert calls == []

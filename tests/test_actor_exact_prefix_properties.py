@@ -15,7 +15,7 @@ WORDS = st.text(alphabet="abcxyz012éñ李", min_size=1, max_size=10).map(normal
 
 
 def _resolve(rows, query=NAME):
-    with TemporaryDirectory() as directory, patch.object(socket.socket, "connect", side_effect=AssertionError("network")):
+    with TemporaryDirectory() as directory, patch.object(socket.socket, "connect", side_effect=AssertionError("network")), patch("app.data.actor_exact_prefix.perf_counter", return_value=0.0):
         return resolver_for(Path(directory) / "actors.sqlite", rows).resolve(query)
 
 

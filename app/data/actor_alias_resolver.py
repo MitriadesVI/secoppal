@@ -2,7 +2,8 @@
 
 Orden de autoridad:
 
-1. alias N2 exacto asociado a una sola IdentityKey -> ``RESOLVED``;
+1. alias N2 exacto único CC requiere comprobar extensiones de otra CC;
+   ausencia confirmada (o exacto único NIT) -> ``RESOLVED``;
 2. alias N2 exacto asociado a varias IdentityKeys -> ``AMBIGUOUS``;
 3. sin exacto, FTS5 trigram/BM25 -> ``CANDIDATES`` solamente.
 
@@ -26,6 +27,7 @@ from app.core.actor_name import (
     ActorResolutionStatus,
     normalize_actor_name,
 )
+from app.data.actor_exact_prefix import resolve_exact_personal_prefix
 from app.data.actor_alias_index import (
     ACTOR_ALIAS_INDEX_APPLICATION_ID,
     ACTOR_ALIAS_INDEX_SCHEMA_VERSION,
@@ -115,6 +117,10 @@ class ActorNameResolver:
             ).fetchall()
             exact = self._collapse_exact(exact_rows)
             if len(exact) == 1:
+                if exact[0].identity.document_type == "CC":
+                    return resolve_exact_personal_prefix(
+                        connection, normalized_query, exact[0], self._candidate,
+                    )
                 return ActorResolutionResult(
                     status=ActorResolutionStatus.RESOLVED,
                     normalized_query=normalized_query,

@@ -11,7 +11,9 @@ from dataclasses import asdict, dataclass
 from app.core.actor_identity import IdentityKey
 from app.core.actor_name import ActorResolutionStatus, format_actor_identity_for_user
 
-__all__ = ["ActorCandidateOption", "actor_candidate_options"]
+__all__ = ["MAX_VISIBLE", "ActorCandidateOption", "actor_candidate_options"]
+
+MAX_VISIBLE = 10
 
 
 @dataclass(frozen=True, slots=True)
@@ -41,7 +43,7 @@ def actor_candidate_options(params: dict) -> tuple[ActorCandidateOption, ...]:
         return ()
 
     options: list[ActorCandidateOption] = []
-    for candidate in candidates[:10]:
+    for candidate in candidates[:MAX_VISIBLE]:
         if not isinstance(candidate, dict):
             continue
         try:

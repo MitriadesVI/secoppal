@@ -152,7 +152,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
                 result = exact
                 recovered_modifiers = suffix_modifiers
                 break
-            if exact.status == ActorResolutionStatus.INDEX_UNAVAILABLE:
+            if exact.status in {ActorResolutionStatus.INDEX_UNAVAILABLE, ActorResolutionStatus.INCONCLUSIVE}:
                 result = exact
                 break
 
@@ -195,6 +195,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
             if result.status in {
                 ActorResolutionStatus.RESOLVED,
                 ActorResolutionStatus.AMBIGUOUS,
+                ActorResolutionStatus.INCONCLUSIVE,
             }:
                 projected = scrub_strong_actor_leaks(params, probe_name)
                 projected.pop("objeto", None)
@@ -330,7 +331,8 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
         origin="bare_exact_probe",
     )
     if (
-        has_strong_topic_evidence(probe.actor_name, baseline_params)
+        result.status != ActorResolutionStatus.INCONCLUSIVE
+        and has_strong_topic_evidence(probe.actor_name, baseline_params)
         and not has_entity_like_name_evidence(probe)
     ):
         # Restore baseline topic fields: neither interpretation won.  P17 will
