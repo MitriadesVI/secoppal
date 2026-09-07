@@ -24,6 +24,7 @@ from typing import TYPE_CHECKING
 from burr.core import State
 
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
+from app.core.actor_identity_coherence import actor_identity_split_brain
 from app.core.secop_client import SecopClient
 from app.core.socrata_transport import Soda3OrderingSpecifier
 from app.core.soql_builder import SoQLBuilder
@@ -81,6 +82,13 @@ def execute_resolved_params(
     # offset/limit deben empezar de cero: es una búsqueda nueva, no paginación.
     params.pop("offset", None)
     params.setdefault("limit", 50)
+
+    # INV-ACTOR-SINGLE-IDENTITY: un frame que filtra por un documento y dice
+    # ser de otro no se ejecuta por ninguna puerta. El planner lo bloquea con
+    # aclaración; esta puerta —refinement bar, Radar— no pasa por el planner,
+    # así que devuelve None y el caller cae al flujo que sí sabe preguntar.
+    if actor_identity_split_brain(params):
+        return None
 
     # Guard anti-WHERE 1=1: sin scope ni topic no se ejecuta.
     has_scope_or_topic = any(

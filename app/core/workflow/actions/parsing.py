@@ -511,6 +511,24 @@ def apply_context(state: State) -> State:
         and (parsed_params.get("actor_scope") or {}).get("identity_confidence") == "declared"
     ):
         parsed_params = {**parsed_params, "actor_conversation_operation": ActorConversationOperation.REPLACE_ACTOR}
+    # INV-ACTOR-SINGLE-IDENTITY. A typed document declared over an already
+    # established actor is a replacement, not a second identity. Without this
+    # the turn had no actor operation at all and fell through to the generic
+    # merge, which takes ``contratista`` from the new turn (a modifier) while
+    # ``actor_scope`` stays with the old one (raw frame state) — a frame that
+    # filters by one person and reports another.
+    #
+    # Only an *established* previous actor is replaced this way. A previous
+    # frame still holding a pending candidate list is not authoritative, so a
+    # document that names nobody on that list keeps its own meaning: an
+    # explicit search that inherits nothing.
+    elif (
+        is_authoritative_actor_resolution(context_params)
+        and actor_resolution_method(parsed_params) == METHOD_EXPLICIT_DOCUMENT
+        and is_authoritative_actor_resolution(parsed_params)
+        and (parsed_params.get("actor_scope") or {}).get("document_type") in {"CC", "NIT"}
+    ):
+        parsed_params = {**parsed_params, "actor_conversation_operation": ActorConversationOperation.REPLACE_ACTOR}
     operation = parsed_params.get("actor_conversation_operation")
     if operation in {
         ActorConversationOperation.SET_ACTOR,

@@ -37,6 +37,7 @@ __all__ = [
     "apply_actor_identity",
     "candidate_from_payload",
     "candidate_to_payload",
+    "document_variants",
     "is_authoritative_actor_resolution",
     "pending_selection_token",
     "project_actor_resolution",
@@ -139,7 +140,13 @@ def is_authoritative_actor_resolution(params: dict) -> bool:
     )
 
 
-def _document_variants(identity: IdentityKey) -> list[str]:
+def document_variants(identity: IdentityKey) -> list[str]:
+    """Every published form of one identity's document.
+
+    The single authority on how an ``IdentityKey`` projects into the
+    ``contratista`` filter, so a coherence check cannot drift from the
+    projection it is checking.
+    """
     if identity.document_type == "CC":
         return [identity.base_number]
     if identity.document_type != "NIT":
@@ -161,7 +168,7 @@ def apply_actor_identity(
     """Return a new frame with an authoritative actor scope and provenance."""
     if method not in AUTHORITATIVE_ACTOR_METHODS:
         raise ValueError(f"non-authoritative actor method: {method!r}")
-    variants = _document_variants(identity)
+    variants = document_variants(identity)
     if not variants:
         raise ValueError("only typed NIT/CC identities can become actor scope")
 

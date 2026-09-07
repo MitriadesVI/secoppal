@@ -1,4 +1,9 @@
 """Unconditional semantic gates that precede optional query derivation rules."""
+from app.core.actor_identity_coherence import (
+    ACTOR_IDENTITY_SPLIT_BRAIN,
+    ACTOR_IDENTITY_SPLIT_BRAIN_QUESTION,
+    actor_identity_split_brain,
+)
 from app.core.compound_identity_guard import compound_identity_clarification
 from app.core.municipal_territory import municipal_clarification
 from app.core.object_negation_policy import (
@@ -9,6 +14,13 @@ from app.core.temporal_gate import temporal_plan_block
 
 
 def semantic_preflight(params: dict, signals: list) -> QueryPlan | None:
+    if actor_identity_split_brain(params):
+        return QueryPlan(
+            should_execute=False, params=params, signals=signals,
+            risk_flags=[ACTOR_IDENTITY_SPLIT_BRAIN],
+            clarification_question=ACTOR_IDENTITY_SPLIT_BRAIN_QUESTION,
+            reason='actor_identity_split_brain',
+        )
     if question := municipal_clarification(params):
         return QueryPlan(
             should_execute=False, params=params, signals=signals,
