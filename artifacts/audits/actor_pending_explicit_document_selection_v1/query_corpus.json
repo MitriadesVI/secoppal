@@ -1,0 +1,16 @@
+{
+  "corpus": "tests/fixtures/audits/conversation_holistic_v1.yaml",
+  "corpus_sha256": "a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e",
+  "base_head": "17e01ef",
+  "base": {
+    "pass": 171,
+    "fail": 24
+  },
+  "after": {
+    "pass": 171,
+    "fail": 24
+  },
+  "statuses_identical": true,
+  "status_diff": {},
+  "note": "24 fallos idénticos a BASE (deuda de oráculo HCA registrada); delta 0."
+}

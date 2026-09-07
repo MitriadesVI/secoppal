@@ -43,6 +43,53 @@ una sonda diagnóstica que no reproduce el pico no reemplaza esa puerta. Orácul
 No se reconstruye índice ni se integra esta rama. Informe y puertas:
 [ACTOR_EXACT_PERSONAL_PREFIX_COLLISION_V1](audits/ACTOR_EXACT_PERSONAL_PREFIX_COLLISION_V1.md).
 
+## Actor Pending Explicit Document Selection V1 — 2026-09-06
+
+**CLOSED.** Corrige deuda **anterior a ADR-094**, congelada durante aquella
+entrega: una lista pendiente de candidatos de actor, respondida con el documento
+de uno de esos candidatos, resolvía la identidad y perdía todos los filtros de la
+consulta original. Implementado en `fix/actor-pending-explicit-document-v1` sobre
+`17e01ef`, sin merge ni push.
+
+**Causa raíz:** un documento explícito siempre escribe `actor_scope`/`contratista`,
+y `classify_actor_pending_turn` clasifica como `NEW_SEARCH` todo turno con esas
+claves. Toda respuesta documental era una búsqueda nueva por construcción; la
+lista nunca llegaba a preguntarse si el documento era el de uno de sus candidatos.
+
+**Regla:** el documento que identifica exactamente un candidato es una
+*selección* y hereda `pending.original_params` completo; el que no identifica a
+nadie es una *búsqueda nueva* y no hereda nada. Adivinar entre las dos está
+prohibido.
+
+No se abre una segunda ruta de replay: la respuesta documental entra por
+`handle_actor_selection` resolviendo un rango, así que rango y documento son el
+mismo código y producen la misma identidad, el mismo frame y el mismo universo
+SoQL —difieren solo en procedencia (`explicit_document_pending_selection`)—. La
+decisión vive en el módulo puro `app/core/actor_pending_document.py`, que compara
+`IdentityKey` canónicas y nada más: ni nombre, ni rango, ni crudo, ni similitud.
+Token y TTL del pendiente no se debilitan; con el pendiente vencido el frame no
+se hereda y el documento sigue como búsqueda explícita.
+
+**No requiere ADR nuevo:** alinea la selección por documento con la semántica de
+selección de candidato ya vigente; lo único que se incorpora es un nombre de
+procedencia.
+
+Un oráculo previo de `test_actor_exact_prefix_workflow.py` afirmaba el defecto en
+la parametrización donde el documento pertenecía a la lista; ahora separa
+selección de búsqueda independiente y afirma el frame en ambas direcciones.
+
+Validación: 27 focales verdes con tres propiedades Hypothesis; 1.055 focales de
+actor/conversación/orquestación verdes; corpus de actor 35/36 y corpus holístico
+171/195, ambos con estados **idénticos a BASE `17e01ef`** medidos desde un
+worktree separado. Ruff y `make lint-core` verdes; Semgrep conserva 10 hallazgos
+de baseline con delta cero. Suite completa en serie sobre `cf75cd6`: **11.791
+passed, 2 skipped, 14 xfailed, 0 failed**.
+
+Informe, casos y puertas en
+[ACTOR_PENDING_EXPLICIT_DOCUMENT_SELECTION_V1](audits/ACTOR_PENDING_EXPLICIT_DOCUMENT_SELECTION_V1.md).
+Contrato conversacional en
+[ACTOR_PROFILE_V1.md](architecture/ACTOR_PROFILE_V1.md#selección-por-documento-explícito).
+
 ## Estado canónico actual — 2026-08-31
 
 ### SECOP Access V2 — navegación segura y separada de semántica

@@ -294,6 +294,7 @@ Método resultante: `exact_legal_form_variant`.
 | Método | Autoritativo |
 |---|---|
 | `explicit_document` | sí |
+| `explicit_document_pending_selection` | sí |
 | `exact_unique_alias` | sí |
 | `exact_legal_form_variant` | sí |
 | `user_selected_candidate` | sí |
@@ -376,6 +377,45 @@ rango después de otra consulta de actor. Procedencia resultante:
 La operación es **independiente del transporte** y por eso sirve tal cual para un
 futuro callback de Telegram. **Los botones de candidato en Telegram no están
 entregados todavía.**
+
+### Selección por documento explícito
+
+Una lista pendiente admite una tercera forma de respuesta: el **documento** de
+uno de los candidatos, tal como la propia lista lo muestra (`CC 1020727022`).
+No es un rango disfrazado. Un rango no dice a quién señala —solo la lista puede
+traducirlo—, mientras que un documento es autoritativo por sí mismo, así que la
+misma frase puede significar dos cosas incompatibles:
+
+| El documento | Qué es | Qué hereda |
+|---|---|---|
+| identifica exactamente un candidato de la lista | **selección** | todo el frame original |
+| no identifica a nadie de la lista | **búsqueda nueva** | nada |
+
+Adivinar entre las dos está prohibido. `actor_pending_document.py` decide
+comparando `IdentityKey` canónicas —`document_type` + `base_number`— y nada
+más: nunca el nombre, el rango, el crudo del documento ni similitud alguna. Por
+eso la selección **no depende del orden** en que la lista se hubiera producido,
+y las tres escrituras de un NIT (`900429803`, `9004298035`, `900429803-5`)
+llegan a la misma identidad por la autoridad documental que ya existía. Un
+número sin marcador de tipo queda `UNKNOWN` y **no** reclama un candidato
+tipado (`INV-ID-TYPE`): sigue como búsqueda explícita.
+
+Una respuesta que además pide otra cosa —otro año, otro dataset— tampoco es una
+selección: seleccionarla obligaría a descartar en silencio lo que el usuario
+acaba de pedir.
+
+La selección reusa `handle_actor_selection` sin abrir una segunda ruta de
+replay, de modo que rango y documento producen **la misma identidad, el mismo
+frame resuelto y el mismo universo SoQL**; difieren solo en procedencia
+(`explicit_document_pending_selection` frente a `user_selected_candidate`).
+Dos candidatos con la misma `IdentityKey` fallan cerrado en vez de elegir el
+primero.
+
+La seguridad del pendiente no se debilita: la selección por rango/clic conserva
+su token y su TTL, y un texto documental solo lee el `actor_pending` vigente.
+Con el pendiente vencido o de versión incompatible el frame no se hereda —el
+documento continúa como la búsqueda explícita que también es, sin revivir un
+frame muerto—.
 
 ---
 

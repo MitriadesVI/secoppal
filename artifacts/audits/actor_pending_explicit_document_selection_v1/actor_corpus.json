@@ -1,0 +1,23 @@
+{
+  "corpus": "tests/fixtures/audits/actor_hygiene_v1.yaml",
+  "corpus_sha256": "217df608a9a5dfb0abd1c89cda27d1c79f04a3000d9086457eb54dc916418698",
+  "base_head": "17e01ef",
+  "base": {
+    "pass": 35,
+    "fail": 1
+  },
+  "after": {
+    "pass": 35,
+    "fail": 1
+  },
+  "statuses_identical": true,
+  "preexisting_fail": [
+    {
+      "id": "AH-17-PENDING-PROCESSES",
+      "fails": [
+        "turn 2 'procesos de vías en bolívar': expected execution, got clarification"
+      ]
+    }
+  ],
+  "note": "AH-17 falla igual en BASE 17e01ef y en la rama; no toca respuestas documentales."
+}

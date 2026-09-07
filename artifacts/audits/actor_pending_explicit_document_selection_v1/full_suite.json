@@ -1,0 +1,11 @@
+{
+  "command": ".venv/bin/python -m pytest tests/ -q -p no:randomly",
+  "head": "cf75cd6",
+  "serial": true,
+  "summary": "11791 passed, 2 skipped, 14 xfailed in 604.04s (0:10:04)",
+  "passed": 11791,
+  "skipped": 2,
+  "xfailed": 14,
+  "failed": 0,
+  "exit_code": 0
+}
