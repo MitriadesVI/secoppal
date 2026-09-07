@@ -140,3 +140,54 @@ def test_an_alias_absent_from_the_span_always_survives(alias, words):
     query = f"contratos del proveedor {actor} en {alias}"
     clean = scrub_strong_actor_leaks(_region_frame(alias), actor, raw_query=query)
     assert clean.get("region") == REGION_ALIASES[alias]
+
+
+# ── The asserted-name door never spends a span another authority owns ─────
+
+from app.core.asserted_actor_name import detect_bare_asserted_actor_name  # noqa: E402
+from app.data.morphological_variants import MORPHOLOGICAL_VARIANTS  # noqa: E402
+
+from app.core.actor_arbitration import has_strong_topic_evidence  # noqa: E402
+
+# Only terms the topic authority itself recognizes inside a phrase. Hypothesis
+# found the boundary: that authority indexes phrase tokens of four characters
+# or more, so a three-letter term like "sat" is not recognized as topic
+# evidence when it appears beside other words. That is the topic vocabulary's
+# own policy, not this door's — asserting otherwise here would test the wrong
+# module. Recorded so the limit is visible rather than silently excluded.
+TOPIC_TERM = st.sampled_from(sorted(
+    term for term in {
+        normalize_actor_name(v) for v in MORPHOLOGICAL_VARIANTS if normalize_actor_name(v)
+    }
+    if has_strong_topic_evidence(f"{term} referencia xyz", {})
+))
+ACRONYM = st.sampled_from(["xyz", "lmp", "zxc", "brt", "kgb"])
+
+
+@RULE
+@given(TOPIC_TERM, ACRONYM, DOCUMENT)
+def test_a_topic_is_never_consumed_however_name_like_the_rest_looks(topic, acronym, number):
+    """The acronym branch of the shape evidence must not outrank the topic."""
+    query = f"busca {topic} referencia {acronym} cc {number}"
+    assert detect_bare_asserted_actor_name(query, query.rindex(number)) is None
+
+
+@RULE
+@given(TOPIC_TERM, DOCUMENT)
+def test_a_bare_topic_beside_a_document_is_never_a_name(topic, number):
+    query = f"busca {topic} cc {number}"
+    assert detect_bare_asserted_actor_name(query, query.rindex(number)) is None
+
+
+@RULE
+@given(st.lists(NAME_WORD, min_size=2, max_size=4), DOCUMENT)
+def test_a_buyer_claim_always_vetoes_the_name_door(words, number):
+    """Whatever the caller's buyer authority claims is not this door's to spend."""
+    query = f"busca {' '.join(words)} cc {number}"
+    start = query.rindex(number)
+    assert detect_bare_asserted_actor_name(
+        query, start, claims_buyer=lambda span: True,
+    ) is None
+    without = detect_bare_asserted_actor_name(query, start, claims_buyer=lambda span: False)
+    with_none = detect_bare_asserted_actor_name(query, start)
+    assert (without is None) == (with_none is None)

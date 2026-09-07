@@ -1587,7 +1587,7 @@ class QueryRouter:
             # CC X" says exactly what "busca proveedor NOMBRE — CC X" says.
             # Without this door the name survived as contract object.
             asserted_actor = detect_bare_asserted_actor_name(
-                normalized, match.start(),
+                normalized, match.start(), claims_buyer=self._span_claims_buyer,
             )
         params["contratista"] = variants
         params.pop("actor_conversation_probe", None)
@@ -1624,6 +1624,46 @@ class QueryRouter:
                 rf"\b{re.escape(span)}\b", " ", scrubbed, flags=re.IGNORECASE,
             )
         return scrubbed
+
+    def _span_claims_buyer(self, span: str) -> bool:
+        """Whether the buyer authority already recognizes this span.
+
+        Asked by the asserted-name door before it consumes a span beside a
+        typed document. Without it, ``busca LA PREVISORA S.A. — NIT X`` lost a
+        buyer this parser resolves on its own: a recognized dimension deleted
+        in silence, which is exactly what the actor fixes exist to prevent.
+
+        A resemblance counts as a claim here, deliberately. Excluding fuzzy
+        matches would have been the sharper rule — ``universidad solano``
+        resolving fuzzy(85) to UNIVERSIDAD NACIONAL DE COLOMBIA is a poor
+        answer — but this door is not the place to overturn it: the buyer
+        authority already answers that way on its own, and silently deleting
+        what it recognized is the failure mode being remediated. Whether a
+        fuzzy buyer should accredit anything at all is its own question, for
+        the buyer authority to settle.
+
+        The cost is bounded: only a span the rewrite grammar or the gazetteer
+        recognizes can be vetoed, and a personal name produces neither.
+
+        The acceptance rule mirrors step 4.6 exactly, ``fallback_like``
+        excluded, so the door asks the buyer authority the same question that
+        authority asks itself. No span in the corpus actually reaches that
+        exclusion — every rewrite candidate here either matches or returns
+        nothing — so it is stated for agreement with 4.6, not because a test
+        exercises it.
+        """
+        from app.core.entity_types import rewrite_entity
+
+        if not self.entity_resolver or not span.strip():
+            return False
+        if self.entity_resolver.scan_entity(span) is not None:
+            return True
+        return any(
+            (match := self.entity_resolver.resolve_entidad(candidate.canonical))
+            and match.value
+            and match.method != "fallback_like"
+            for candidate in rewrite_entity(span)
+        )
 
     @staticmethod
     def _scrub_identifier_spans(scrubbed: str) -> str:

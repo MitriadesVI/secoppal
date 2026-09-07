@@ -221,7 +221,6 @@ def test_positive_surfaces_still_consume_the_name(surface):
     assert not params.get("objeto")
 
 
-@pytest.mark.xfail(strict=True, reason="P1-C — an acronym lets a topic be swallowed")
 def test_a_topic_beside_a_document_is_never_consumed_as_a_name():
     params = QueryRouter().parse(f"busca mantenimiento referencia XYZ — CC {CC_A}").params
     assert params["contratista"] == [CC_A]
@@ -229,7 +228,6 @@ def test_a_topic_beside_a_document_is_never_consumed_as_a_name():
     assert not _asserted(params)
 
 
-@pytest.mark.xfail(strict=True, reason="P1-C — a resolved buyer is erased by the name door")
 def test_a_resolved_buyer_beside_a_document_is_never_consumed_as_a_name():
     """BASE resolves this buyer; V2 replaced it with an asserted name."""
     params = QueryRouter().parse(f"busca LA PREVISORA S.A. — NIT {NIT_A}").params
@@ -292,3 +290,45 @@ def test_every_territorial_cluster_inventory_carries_its_provenance():
     }.items():
         assert "region" in inventory, name
         assert "region_resolution" in inventory, f"{name} drops region provenance"
+
+
+@pytest.mark.parametrize("surface,key", [
+    # A real contractual reference carries a typed prefix and digits, and the
+    # digit rule already refuses the span.
+    (f"busca referencia SAMC-006-2025 — CC {CC_A}", "objeto"),
+    (f"busca CD-08-2026 — CC {CC_A}", "objeto"),
+])
+def test_a_typed_contractual_reference_is_never_consumed_as_a_name(surface, key):
+    params = QueryRouter().parse(surface).params
+    assert not _asserted(params)
+
+
+def test_an_unaccredited_word_beside_a_document_is_adjudicated_not_forgotten():
+    """``busca referencia XYZ — CC A`` IS consumed as a name, deliberately.
+
+    BASE emitted ``objeto=['referencia']``, but that is the fallback topic
+    tokenizer keeping a leftover word, not an accredited dimension: no
+    reference grammar matches it (they require a typed prefix and digits), the
+    topic vocabulary does not contain it, and the buyer authority does not
+    claim it. Blocking it would need a hardcoded word list, which is what this
+    door exists to avoid. Recorded so the next reader knows it was examined.
+    """
+    params = QueryRouter().parse(f"busca referencia XYZ — CC {CC_A}").params
+    assert params["contratista"] == [CC_A]
+    assert _asserted(params) == "referencia xyz"
+
+
+@pytest.mark.parametrize("name", ["UNIVERSIDAD SOLANO", "HOSPITAL SOLANO"])
+def test_a_buyer_the_parser_resolves_is_never_replaced_by_a_name(name):
+    """Parity with BASE for every buyer-shaped span, resemblance included.
+
+    BASE resolves both of these as buyers — by resemblance, which is a poor
+    answer. This door is not where that gets overturned: deleting what the
+    buyer authority recognized is the failure mode being remediated, and
+    whether a fuzzy buyer should accredit anything is that authority's own
+    question.
+    """
+    params = QueryRouter().parse(f"busca {name} — NIT {NIT_A}").params
+    assert params["contratista"][0] == NIT_A
+    assert params.get("entidad_resolved")
+    assert not _asserted(params)

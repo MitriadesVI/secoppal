@@ -31,8 +31,13 @@ extractor may spend them again.
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 
-from app.core.actor_arbitration import BareActorProbe, has_entity_like_name_evidence
+from app.core.actor_arbitration import (
+    BareActorProbe,
+    has_entity_like_name_evidence,
+    has_strong_topic_evidence,
+)
 from app.core.actor_intent import (
     REASON_NAME_NEEDS_RESOLUTION,
     ActorReference,
@@ -57,7 +62,10 @@ _LEADING_FRAMING_RE = re.compile(
     r"(?:(?:busca(?:me|te)?|mira(?:me)?|muestra(?:me)?|dime|dame|averigua|"
     r"consulta|revisa|quiero|necesito)"
     r"(?:\s+(?:informacion|informacion\s+de|datos|datos\s+de))?"
-    r"(?:\s+(?:a|al|el|la|los|las|este|esta))?"
+    # Only the personal-object marker is framing. An article is name material:
+    # LA PREVISORA S.A. is registered with it, and stripping it handed the
+    # buyer authority a name it could not recognize.
+    r"(?:\s+(?:a|al))?"
     r"\s+)?",
     re.IGNORECASE,
 )
@@ -68,8 +76,15 @@ _DIGIT_RE = re.compile(r"\d")
 def detect_bare_asserted_actor_name(
     normalized_query: str,
     document_start: int,
+    *,
+    claims_buyer: Callable[[str], bool] | None = None,
 ) -> ActorReference | None:
-    """Return the contextual name a typed document was introduced with."""
+    """Return the contextual name a typed document was introduced with.
+
+    ``claims_buyer`` is the caller's own buyer authority, asked whether the
+    span is already a recognized purchasing entity.  It is injected rather
+    than imported so this module keeps no gazetteer of its own.
+    """
     actor_context = strip_document_type_marker(normalized_query[:document_start])
     if actor_context is None:
         return None
@@ -92,6 +107,22 @@ def detect_bare_asserted_actor_name(
         name_only=True,
     )
     if not has_entity_like_name_evidence(probe):
+        return None
+    # Name *shape* is not permission to consume. ``has_entity_like_name_evidence``
+    # only ever offered shape evidence, and its acronym branch returns True on
+    # a consonant cluster before any thematic control runs — which is how
+    # "mantenimiento referencia XYZ" became a name and a real topic filter
+    # disappeared.
+    #
+    # A span that an independent authority already reads as something else is
+    # not this door's to spend. Those authorities answer here, in the order
+    # they own the question: the topic vocabulary, and the caller's buyer
+    # resolver. Dates, amounts and numeric references are already excluded by
+    # the digit rule above, and a dataset word is refused by the name-shape
+    # evidence itself.
+    if has_strong_topic_evidence(name, {}):
+        return None
+    if claims_buyer is not None and claims_buyer(span):
         return None
     return ActorReference(
         resolution_method="name_unresolved",
