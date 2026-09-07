@@ -1,0 +1,79 @@
+[
+  {
+    "mutation": "collapse_temporal_claims",
+    "reintroduces": "F1",
+    "target": "test_p14_two_temporal_claims_never_collapse_silently",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "global_current_marker",
+    "reintroduces": "F2",
+    "target": "test_p15_a_current_marker_cannot_erase_another_clauses_event",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "source_word_anywhere",
+    "reintroduces": "F3",
+    "target": "test_p16_a_source_word_inside_the_topic_creates_no_source",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "hide_material_filters",
+    "reintroduces": "F4",
+    "target": "test_p17_every_material_filter_in_sql_is_declared_in_the_scope",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "flatten_topic_operators",
+    "reintroduces": "F4",
+    "target": "test_p18_conjunction_and_disjunction_never_share_a_declaration",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "drop_execution_ownership",
+    "reintroduces": "F5",
+    "target": "test_p19_observed_calls_exactly_equal_planned_calls",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "clarification_overwrites_confirmed",
+    "reintroduces": "F6",
+    "target": "test_p20_a_pending_clarification_cannot_mutate_the_confirmed_frame",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "temporal_followup_resets_focus",
+    "reintroduces": "F6",
+    "target": "test_p21_a_temporal_followup_preserves_focus_event_and_topic",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "truncating_count_parser",
+    "reintroduces": "F7",
+    "target": "test_p22_an_invalid_count_never_becomes_an_integer_fact",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "asymmetric_contradiction",
+    "reintroduces": "F7",
+    "target": "test_p23_a_zero_denied_by_same_scope_evidence_is_inconsistent",
+    "killed": true,
+    "control_green": true
+  },
+  {
+    "mutation": "partial_explicit_execution",
+    "reintroduces": "F1",
+    "target": "test_p13_an_explicit_source_is_answered_or_asked_about",
+    "killed": true,
+    "control_green": true
+  }
+]
