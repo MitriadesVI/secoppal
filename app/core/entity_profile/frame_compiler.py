@@ -310,7 +310,10 @@ def compile_profile(
 
     try:
         jobs = _build_jobs(soql_builder, frame.focus, source_plans)
-    except (UnsupportedPredicateError, ValueError) as exc:
+    except (UnsupportedPredicateError, ValueError, RuntimeError) as exc:
+        # `UnsafeGlobalQueryError` y `BuyerCandidateSetExceedsSafeLimitError`
+        # son RuntimeError. Un SQL que no se puede construir bloquea el plan
+        # entero; dejarlo escapar reventaría la llamada en vez de decidir.
         return PlanDecision(
             PlanStatus.INVALID_CONTEXT,
             issues=(PlanIssue("SQL_BUILD_FAILED", str(exc)),),

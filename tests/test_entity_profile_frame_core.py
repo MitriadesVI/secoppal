@@ -141,7 +141,12 @@ def test_r4_parser_or_compiles_differently_from_and():
 def test_r4_negative_modality_is_executed_and_declared():
     out = observe(f"analiza contratos excepto contratacion directa de {BUYER}")
     assert out.ready, out.issues
-    assert any("NOT IN" in sql for sql in out.sql_for(SourceKind.CONTRACTS))
+    # "NOT IN" a secas también lo emite el filtro de documentos de
+    # proveedor: la exclusión se comprueba sobre SU propia columna.
+    assert any(
+        "modalidad_de_contratacion NOT IN" in sql
+        for sql in out.sql_for(SourceKind.CONTRACTS)
+    )
     assert any("excepto" in line.lower() for line in out.scope_lines)
 
 
