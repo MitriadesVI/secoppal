@@ -294,7 +294,6 @@ def test_role_marker_surface_already_consumes_the_asserted_name():
     "ahora BEATRIZ SOLANO — CC 70000011",
     "muestrame BEATRIZ SOLANO con CC 70000011",
 ])
-@pytest.mark.xfail(strict=True, reason="ACTOR-ASSERTED-NAME-DOCUMENT-LEAK-001 — frozen before slice C")
 def test_asserted_name_beside_document_never_becomes_topic(surface):
     params = _params(surface)
     assert params["contratista"] == [SOLANO[1]]
@@ -369,7 +368,6 @@ def test_buyer_punctuation_followup_keeps_actor_and_year(workflow):
 # Cross-slice matrix
 # ══════════════════════════════════════════════════════════════════════════
 
-@pytest.mark.xfail(strict=True, reason="split brain + asserted-name leak — frozen before slices A and C")
 def test_cross_slice_document_replacement_keeps_buyer_and_drops_name_topic(workflow):
     workflow.run_query(
         f"contratos de ana maria llanos con {BUYER_QUERY}", chat_id="cross",

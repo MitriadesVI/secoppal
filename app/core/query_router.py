@@ -27,6 +27,7 @@ from app.core.actor_intent import (
     recognized_actor_modifier_tails,
     reference_from_document,
 )
+from app.core.asserted_actor_name import detect_bare_asserted_actor_name
 from app.core.contract_invariants import contains_signed_token
 from app.core.temporal_semantics import (
     TemporalResolution,
@@ -1580,6 +1581,14 @@ class QueryRouter:
         asserted_actor = detect_asserted_actor_name_before_document(
             normalized, match.start(),
         )
+        if asserted_actor is None:
+            # ACTOR-ASSERTED-NAME-DOCUMENT-LEAK-001. The role marker is one
+            # surface of the speech act, not the act itself: "busca NOMBRE —
+            # CC X" says exactly what "busca proveedor NOMBRE — CC X" says.
+            # Without this door the name survived as contract object.
+            asserted_actor = detect_bare_asserted_actor_name(
+                normalized, match.start(),
+            )
         params["contratista"] = variants
         params.pop("actor_conversation_probe", None)
         params["actor_resolution"] = reference.resolution_method

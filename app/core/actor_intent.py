@@ -72,6 +72,7 @@ __all__ = [
     "document_type_hint",
     "recognized_actor_modifier_tails",
     "reference_from_document",
+    "strip_document_type_marker",
     "strip_recognized_actor_modifier_tail",
     "strong_actor_modifier_suffix",
     "strong_actor_name_prefixes",
@@ -527,6 +528,19 @@ def _name_after_verb_marker(
     return None
 
 
+def strip_document_type_marker(prefix: str) -> str | None:
+    """The text before a document, minus the words that declared its type.
+
+    ``None`` when no type marker precedes the number.  An untyped digit run is
+    not a document the user declared, so whatever precedes it is not actor
+    context either — that reading belongs to the amount and date grammars.
+    """
+    stripped = _DOCUMENT_MARKER_SUFFIX_RE.sub("", prefix).strip()
+    if not stripped or stripped == prefix.strip():
+        return None
+    return stripped
+
+
 def detect_asserted_actor_name_before_document(
     normalized_query: str,
     document_start: int,
@@ -539,9 +553,8 @@ def detect_asserted_actor_name_before_document(
     contract filters.  The document provides a hard right boundary, so this
     path intentionally has no historical eight-word limit.
     """
-    prefix = normalized_query[:document_start]
-    actor_context = _DOCUMENT_MARKER_SUFFIX_RE.sub("", prefix).strip()
-    if not actor_context or actor_context == prefix.strip():
+    actor_context = strip_document_type_marker(normalized_query[:document_start])
+    if actor_context is None:
         return None
 
     name: str | None = None
