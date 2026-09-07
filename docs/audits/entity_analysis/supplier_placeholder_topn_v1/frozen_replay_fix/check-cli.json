@@ -1,0 +1,10 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "scripts/audits/audit_relationship_foundation_v0.py",
+    "--check"
+  ],
+  "returncode": 0,
+  "stdout": "{\"byte_exact\": true, \"graph_database\": \"NONE\", \"runtime_effect\": \"ZERO\", \"verdict\": \"PASS\"}\n",
+  "stderr": ""
+}

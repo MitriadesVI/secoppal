@@ -1,0 +1,43 @@
+{
+  "head_before": "5b5aef187b2c9e379e69b2d2be0df15542008dd6",
+  "main_at_check": "911683b504baacc24feabc2c7302adf3a2ef5d1c",
+  "frozen_files_checked": 107,
+  "frozen_files_changed": [],
+  "full_suite": "11586 passed, 11 skipped, 14 xfailed in 524.62s (0:08:44)",
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "911683b504baacc24feabc2c7302adf3a2ef5d1c..HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "main",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "verdict": "GO"
+}

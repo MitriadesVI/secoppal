@@ -4,13 +4,8 @@ from __future__ import annotations
 import hashlib
 
 from app.core.procurement_relationships import DERIVED, EDGE_ENDPOINTS, NODE_FORMATS
-from scripts.audits.relationship_foundation.edge_evidence import OUT, ROOT
-
-LOCAL_SOURCES = (
-    "app/core/result_identity.py", "app/core/actor_identity.py", "app/core/territorial_knowledge.py",
-    "app/data/territorial_knowledge_v0.json", "app/data/buyer_groups.json",
-    "app/data/buyer_source_names.json", "app/data/aliases_db.json",
-)
+from scripts.audits.relationship_foundation.edge_evidence import OUT
+from scripts.audits.relationship_foundation.frozen_delivery import LOCAL_SOURCES, read_source_blob
 
 
 def nodes():
@@ -106,7 +101,7 @@ def sources():
         "future_identity": {"authority": "SUPPLIER_TO_ACTOR_IDENTITY_AUTHORITY_REQUIRED"},
         "future_paa": {"authority": "DEFERRED_TO_PAA_AUDIT"},
     }
-    result["local_digests"] = {path: hashlib.sha256((ROOT / path).read_bytes()).hexdigest() for path in LOCAL_SOURCES}
+    result["local_digests"] = {path: hashlib.sha256(read_source_blob(path)).hexdigest() for path in LOCAL_SOURCES}
     for dataset in ("p6dx-8zbt", "jbjy-vk9h", "hgi6-6wh3", "ceth-n4bn"):
         path = OUT / "observations" / f"schema_{dataset}.json"
         result[dataset] = {"url": f"https://www.datos.gov.co/api/views/{dataset}.json",

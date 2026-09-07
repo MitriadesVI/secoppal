@@ -1,0 +1,87 @@
+{
+  "mcp_loaded": true,
+  "mcp_status_files": 808,
+  "scope": "CLI initialized and synced in this worktree; MCP status was the main index, not used as branch coverage",
+  "manual_verification": "rg and direct inspection confirm build -> sources, run -> build, replay and runtime isolation tests; affected test traversal is incomplete",
+  "runs": [
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "ruff 0.16.4\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/semgrep",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "1.176.0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-c",
+        "import hypothesis; print(hypothesis.__version__)"
+      ],
+      "returncode": 0,
+      "stdout": "6.165.10\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "codegraph",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "0.9.6\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "codegraph",
+        "sync"
+      ],
+      "returncode": 0,
+      "stdout": "\u250c  Syncing CodeGraph\n\u001b[2m\u2502\u001b[0m\n\n\u001b[K\u001b[2m\u2502\u001b[0m  \u001b[38;2;206;146;23m\u001b[1m\u00b7\u001b[0m Scanning files...\n\u001b[K\u001b[2m\u2502\u001b[0m  \u001b[32m\u25c6\u001b[0m Scanning files\n\n\u001b[K\u001b[2m\u2502\u001b[0m  \u001b[38;2;206;146;23m\u001b[1m\u00b7\u001b[0m Parsing code  \u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[0m\u001b[2m\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u001b[0m  20%\n\u001b[K\u001b[2m\u2502\u001b[0m  \u001b[38;2;227;167;29m\u001b[1m\u00b7\u001b[0m Parsing code  \u001b[38;2;187;127;17m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[0m\u001b[2m\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u001b[0m  60%\n\u001b[K\u001b[2m\u2502\u001b[0m  \u001b[38;2;227;167;29m\u001b[1m\u00b7\u001b[0m Parsing code  \u001b[38;2;199;139;21m\u001b[1m\u2588\u001b[38;2;169;109;12m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[0m\u001b[2m\u001b[0m  100%\n\u001b[K\u001b[2m\u2502\u001b[0m  \u001b[32m\u25c6\u001b[0m Parsing code \u2014 done\n\n\u001b[K\u001b[2m\u2502\u001b[0m  \u001b[38;2;227;167;29m\u001b[1m\u00b7\u001b[0m Resolving refs  \u001b[38;2;180;120;15m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[38;2;160;100;9m\u001b[1m\u2588\u001b[0m\u001b[2m\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u001b[0m  39%\n\u001b[K\u001b[2m\u2502\u001b[0m  \u001b[32m\u25c6\u001b[0m Resolving refs \u2014 done\n\u2502\n\u25c6  Synced 5 changed files\n\u2502\n\u25cf  Added: 2, Modified: 3 \u2014 83 nodes in 230ms\n\u2502\n\u2514  Done\n\n",
+      "stderr": "(node:47116) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": [
+        "codegraph",
+        "status"
+      ],
+      "returncode": 0,
+      "stdout": "\u001b[1m\nCodeGraph Status\n\u001b[0m\n\u001b[36mProject:\u001b[0m /Users/rodrigoortiz/Documents/secoppal-supplier-placeholder-topn-v1\n\n\u001b[1mIndex Statistics:\u001b[0m\n  Files:     813\n  Nodes:     18,921\n  Edges:     46,227\n  DB Size:   34.98 MB\n  Backend:   \u001b[32mnode:sqlite \u2014 built-in (full WAL)\u001b[0m\n  Journal:   \u001b[32mwal\u001b[0m\n\n\u001b[1mNodes by Kind:\u001b[0m\n  function        7,753\n  import          4,672\n  variable        3,026\n  method          1,924\n  file            791\n  class           746\n  route           9\n\n\u001b[1mFiles by Language:\u001b[0m\n  python          791\n  yaml            22\n\n\u001b[32m\u2713\u001b[0m Index is up to date\n\n",
+      "stderr": "(node:47148) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": [
+        "codegraph",
+        "impact",
+        "read_source_blob",
+        "--json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"symbol\": \"read_source_blob\",\n  \"depth\": 2,\n  \"nodeCount\": 5,\n  \"edgeCount\": 4,\n  \"affected\": [\n    {\n      \"name\": \"read_source_blob\",\n      \"kind\": \"function\",\n      \"filePath\": \"scripts/audits/relationship_foundation/frozen_delivery.py\",\n      \"startLine\": 17\n    },\n    {\n      \"name\": \"sources\",\n      \"kind\": \"function\",\n      \"filePath\": \"scripts/audits/relationship_foundation/build_registry.py\",\n      \"startLine\": 96\n    },\n    {\n      \"name\": \"build\",\n      \"kind\": \"function\",\n      \"filePath\": \"scripts/audits/relationship_foundation/build_registry.py\",\n      \"startLine\": 112\n    },\n    {\n      \"name\": \"build_registry.py\",\n      \"kind\": \"file\",\n      \"filePath\": \"scripts/audits/relationship_foundation/build_registry.py\",\n      \"startLine\": 1\n    },\n    {\n      \"name\": \"frozen_delivery.py\",\n      \"kind\": \"file\",\n      \"filePath\": \"scripts/audits/relationship_foundation/frozen_delivery.py\",\n      \"startLine\": 1\n    }\n  ]\n}\n",
+      "stderr": "(node:47160) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": [
+        "codegraph",
+        "affected",
+        "scripts/audits/relationship_foundation/build_registry.py",
+        "scripts/audits/relationship_foundation/gates.py",
+        "scripts/audits/relationship_foundation/frozen_delivery.py",
+        "--json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"changedFiles\": [\n    \"scripts/audits/relationship_foundation/build_registry.py\",\n    \"scripts/audits/relationship_foundation/gates.py\",\n    \"scripts/audits/relationship_foundation/frozen_delivery.py\"\n  ],\n  \"affectedTests\": [],\n  \"totalDependentsTraversed\": 0\n}\n",
+      "stderr": "(node:47162) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    }
+  ]
+}

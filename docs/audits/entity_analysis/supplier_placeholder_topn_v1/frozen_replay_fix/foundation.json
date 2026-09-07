@@ -1,0 +1,13 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_procurement_relationships.py",
+    "tests/test_procurement_foundation_frozen_delivery.py"
+  ],
+  "returncode": 0,
+  "stdout": "................................................                         [100%]\n48 passed in 2.99s\n",
+  "stderr": ""
+}

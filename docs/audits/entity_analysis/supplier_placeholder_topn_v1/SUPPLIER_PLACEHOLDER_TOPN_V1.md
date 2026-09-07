@@ -1,5 +1,9 @@
 # SUPPLIER_PLACEHOLDER_TOPN_V1
 
+Actualización posterior: véase «Procurement Foundation frozen replay fix» al final.
+El diagnóstico y veredicto PARTIAL del cierre supplier original se conservan
+como evidencia histórica; la nueva validación se registra por separado.
+
 ## Cambio y base
 
 Se restaura una invariante existente: placeholder no es actor. El filtro se
@@ -233,3 +237,142 @@ del entorno del proyecto. El probe `before` corresponde a la base anterior al
 fix: usar ese código/base para reproducirlo; ejecutarlo sobre el fix generaría
 queries corregidas. No sobrescribir los recibos históricos. El dogfood puede
 escribir nuevos recibos en un directorio separado, manteniendo Settings aislado.
+
+
+## Procurement Foundation frozen replay fix
+
+Continuación autorizada en la misma rama desde
+`5b5aef187b2c9e379e69b2d2be0df15542008dd6`. Se restaura la intención de ADR-092,
+sin crear ADR, repinear el registro ni cambiar los tres commits supplier.
+
+La causa se acreditó **antes de editar** para las siete fuentes locales:
+[frozen_replay_fix/provenance_before.json](frozen_replay_fix/provenance_before.json).
+Los siete digests del registro coinciden con los blobs Git de
+`FOUNDATION_HEAD = d608336a32553ac11a69924d663491ce852e1446`.
+Sólo Actor Identity difiere en el checkout posterior:
+
+```text
+FROZEN_REGISTRY_DIGEST: ca0c436eecea67fbbb30d5397249b193112cc15f0bf9f50444ae3ef35ae9b725
+FOUNDATION_BLOB_DIGEST: ca0c436eecea67fbbb30d5397249b193112cc15f0bf9f50444ae3ef35ae9b725
+CURRENT_CHECKOUT_DIGEST: f23d9c6a3f15fdbfcee788a567260463a484777687cda3bddfda544acaf7bbaf
+```
+
+`build_registry.sources()` ahora calcula exclusivamente `local_digests` desde
+los blobs congelados. `frozen_delivery.py` centraliza BASE, FOUNDATION_HEAD y
+LOCAL_SOURCES; su helper admite sólo esas rutas y usa `git show` con argumentos,
+sin shell ni ref configurable por el usuario. Los errores Git se propagan:
+no existe fallback al archivo actual. Los hashes de recibos/schema conservan
+su procedencia anterior. Nodos, edges, cardinalidades, estados y límites de
+cobertura permanecen intactos.
+
+Historical replay describe los bytes usados por la entrega congelada. Current
+compatibility/isolation sigue inspeccionando el checkout actual y atribuyendo
+los efectos históricos a `git diff BASE FOUNDATION_HEAD`. La prueba que inserta
+un import runtime prohibido en un árbol temporal conserva la detección y el
+rechazo; sólo su spy de Git admite ahora las siete lecturas históricas exactas.
+
+Red first, sin cambiar implementación: [red.json](frozen_replay_fix/red.json)
+conserva salida literal y [red.txt](frozen_replay_fix/red.txt) su copia legible:
+
+```text
+6 failed, 39 passed in 1.77s
+```
+
+Las nuevas regresiones comprueban las siete procedencias, lectura de la ref
+exacta, independencia ante bytes arbitrarios posteriores, ausencia de fallback
+ante errores Git y rutas no acreditadas. Dos pruebas con Git real demuestran
+rechazo de ref inexistente y de un archivo que existe actualmente pero no en la
+entrega histórica. Hypothesis usa doce ejemplos deterministas de bytes; modifica
+sólo la lectura simulada de archivos actuales, sin red ni escritura de fuentes.
+
+Comandos ejecutados después del fix, en este orden:
+
+```sh
+.venv/bin/python -m pytest -q tests/test_procurement_relationships.py tests/test_procurement_foundation_frozen_delivery.py
+.venv/bin/python -m pytest -q tests/test_actor_identity.py tests/test_actor_identity_sentinels.py tests/test_entity_profile_supplier_placeholders.py
+.venv/bin/ruff check app/ tests/ scripts/
+make lint-core
+.venv/bin/semgrep --config .semgrep/secoppal-laws.yml app/ --metrics=off
+git diff --check
+.venv/bin/python scripts/audits/audit_relationship_foundation_v0.py --check
+```
+
+Salidas literales resumidas (stdout/stderr íntegros en los JSON del subdirectorio):
+
+```text
+48 passed in 2.99s
+175 passed in 0.64s
+All checks passed!
+app/core/ limpio
+Ran 3 rules on 264 files: 10 findings.
+{"byte_exact": true, "graph_database": "NONE", "runtime_effect": "ZERO", "verdict": "PASS"}
+```
+
+Diff-check: sin salida, exit 0. Semgrep conserva exactamente los mismos diez
+hallazgos baseline, comparados por regla, archivo y rango; nuevos 0, removidos 0,
+errores de análisis 0. Ver [semgrep_delta.json](frozen_replay_fix/semgrep_delta.json).
+Corrí los 48 tests Foundation y los 175 focales supplier, no la suite en esa etapa.
+
+El manifiesto previo incluye 107 archivos del registro, Foundation y Layers.
+[replay_verification.json](frozen_replay_fix/replay_verification.json) comprueba
+cero cambios en esos archivos, diez artefactos reconstruidos byte-exactos,
+registro byte-exacto, todas las guardas de identidad/efectos en cero y ninguna
+modificación adicional en `app/`. REPLAY_TEST, EXACT_DELIVERY_TEST y TAMPER_TEST
+pasan; no se desactiva ni debilita la comparación byte por byte.
+
+La revalidación supplier usa el código actual contra los recibos live preservados;
+**no es un dogfood nuevo contra SECOP**. Compara el SQL actual completo con el
+SQL capturado, vuelve a parsear las filas, comprueba métricas/orden del prefijo
+válido y las dos consultas por follow-up. Evidencia:
+[supplier_receipt_recheck.json](frozen_replay_fix/supplier_receipt_recheck.json).
+
+| Buyer | Cantidad antes → después | Valor antes → después |
+|---|---|---|
+| Barranquilla | 4 → 5 | 4 → 5 |
+| Bucaramanga | 4 → 5 | 4 → 5 |
+| Galapa | 4 → 5 | 5 → 5 |
+
+GROUP_BY_CHANGED: NO. LIMIT_CHANGED: NO. CALL_BUDGET_CHANGED: NO.
+NAME_FALLBACK: NO. VALID_RANKING_CHANGED: NO.
+
+Instrumentación: Ruff 0.16.4, Semgrep 1.176.0, Hypothesis 6.165.10 y Codegraph
+0.9.6. MCP cargado y consultado para status; su índice correspondía a main.
+Se inicializó y sincronizó un índice propio del worktree (813 archivos,
+18.921 nodos, estado actualizado). CLI query/impact acreditó la cadena
+read_source_blob → sources → build. `affected` no recorrió dependientes ni
+identificó tests; se completó con `rg` e inspección manual de `run()` y sus tests.
+No se interpreta esa limitación como ausencia de consumidores. Salidas:
+[tooling.json](frozen_replay_fix/tooling.json).
+
+Los diez hallazgos Semgrep ajenos al fix no se modificaron. Los límites supplier
+originales sobre caps/timeouts, documentos no-sentinel y whitespace continúan.
+El replay necesita acceso local a los objetos Git históricos; sin ellos falla
+explícitamente. No se ejecutaron captura nueva, arranque de app, merge ni push.
+
+
+Suite completa posterior al fix: ejecutada una sola vez en background con
+`.venv/bin/python -m pytest -q`, después de las puertas y de comprobar que no
+existía otro pytest (`full-suite-preflight.json`). La orden específica autoriza
+esta ejecución. Salida literal final:
+
+```text
+11586 passed, 11 skipped, 14 xfailed in 524.62s (0:08:44)
+```
+
+Exit 0; **cero failures**, incluidos replay histórico, aislamiento y supplier.
+[full-suite.json](frozen_replay_fix/full-suite.json) conserva el output literal;
+[full-suite.txt](frozen_replay_fix/full-suite.txt) es la copia legible.
+Por tanto ahora sí corrí la suite completa, además de los focales citados.
+
+La verificación final conserva los 107 digests previos; registry repinned: NO;
+frozen artifacts changed: NO; current checkout used for frozen digest: NO.
+La rama conserva los tres commits supplier y añade uno separado:
+`fix(audit): replay procurement foundation from frozen source blobs`.
+HEAD_BEFORE: `5b5aef187b2c9e379e69b2d2be0df15542008dd6`;
+HEAD_AFTER corresponde a este commit de cierre y se entrega con su SHA en el
+reporte final y `git log`. Sin squash, merge ni push.
+
+FINAL_BRANCH_VERDICT: **GO**. El fallo de replay que bloqueaba el cierre
+supplier queda resuelto. Rama validada para fast-forward a main, cuya relación
+de ancestro se comprobó al cierre; la integración no se ejecuta en esta tarea.
+No queda trabajo pendiente dentro del alcance solicitado.

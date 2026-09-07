@@ -1,0 +1,41 @@
+{
+  "head_before": "5b5aef187b2c9e379e69b2d2be0df15542008dd6",
+  "foundation_head": "d608336a32553ac11a69924d663491ce852e1446",
+  "local_sources": {
+    "app/core/result_identity.py": {
+      "frozen_registry_digest": "74639814a9da404b209dea5f331d02de54b519f3527a2c2a52f3bd1515e624f6",
+      "foundation_blob_digest": "74639814a9da404b209dea5f331d02de54b519f3527a2c2a52f3bd1515e624f6",
+      "current_checkout_digest": "74639814a9da404b209dea5f331d02de54b519f3527a2c2a52f3bd1515e624f6"
+    },
+    "app/core/actor_identity.py": {
+      "frozen_registry_digest": "ca0c436eecea67fbbb30d5397249b193112cc15f0bf9f50444ae3ef35ae9b725",
+      "foundation_blob_digest": "ca0c436eecea67fbbb30d5397249b193112cc15f0bf9f50444ae3ef35ae9b725",
+      "current_checkout_digest": "f23d9c6a3f15fdbfcee788a567260463a484777687cda3bddfda544acaf7bbaf"
+    },
+    "app/core/territorial_knowledge.py": {
+      "frozen_registry_digest": "ef9f75915f47a7765d8f5f61efe94885f2914b7cf1b99b7c74204eea10cae959",
+      "foundation_blob_digest": "ef9f75915f47a7765d8f5f61efe94885f2914b7cf1b99b7c74204eea10cae959",
+      "current_checkout_digest": "ef9f75915f47a7765d8f5f61efe94885f2914b7cf1b99b7c74204eea10cae959"
+    },
+    "app/data/territorial_knowledge_v0.json": {
+      "frozen_registry_digest": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+      "foundation_blob_digest": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63",
+      "current_checkout_digest": "c0d6933182a7ccbdecaf465b6380ecca9507c816719607d3d64fe630ddbc9c63"
+    },
+    "app/data/buyer_groups.json": {
+      "frozen_registry_digest": "627ad644e96e1967261bae926c4f6180af39c5ca0ebcc2e8114167be8cedeade",
+      "foundation_blob_digest": "627ad644e96e1967261bae926c4f6180af39c5ca0ebcc2e8114167be8cedeade",
+      "current_checkout_digest": "627ad644e96e1967261bae926c4f6180af39c5ca0ebcc2e8114167be8cedeade"
+    },
+    "app/data/buyer_source_names.json": {
+      "frozen_registry_digest": "98148e1c5676b90a9c1cde4f43f89c165550cef02db55dfca615c16916d275c2",
+      "foundation_blob_digest": "98148e1c5676b90a9c1cde4f43f89c165550cef02db55dfca615c16916d275c2",
+      "current_checkout_digest": "98148e1c5676b90a9c1cde4f43f89c165550cef02db55dfca615c16916d275c2"
+    },
+    "app/data/aliases_db.json": {
+      "frozen_registry_digest": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
+      "foundation_blob_digest": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
+      "current_checkout_digest": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378"
+    }
+  }
+}

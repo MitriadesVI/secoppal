@@ -5,10 +5,7 @@ import subprocess
 from app.core.procurement_relationships import IDENTITY_GATES, PRODUCT_GATES
 from scripts.audits.relationship_foundation.edge_evidence import ROOT
 from scripts.audits.relationship_foundation.identity_spine import platform_code, transaction_id
-
-BASE = "c79f8460c84ab26631c2534af106405cb16803f2"
-# Frozen Foundation delivery: later features are not Foundation product effects.
-FOUNDATION_HEAD = "d608336a32553ac11a69924d663491ce852e1446"
+from scripts.audits.relationship_foundation.frozen_delivery import BASE, FOUNDATION_HEAD
 
 
 def isolation(root=ROOT):

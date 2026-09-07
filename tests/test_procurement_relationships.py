@@ -14,7 +14,7 @@ from app.core.procurement_relationships import (
 )
 from app.core.result_identity import result_identity
 from scripts.audits.audit_relationship_foundation_v0 import run
-from scripts.audits.relationship_foundation import gates
+from scripts.audits.relationship_foundation import build_registry, gates
 from scripts.audits.relationship_foundation.edge_evidence import OUT, Probe, render
 from scripts.audits.relationship_foundation.group_membership import membership
 from scripts.audits.relationship_foundation.identity_spine import actor_id, platform_code, transaction_id
@@ -236,7 +236,10 @@ def test_frozen_history_does_not_hide_a_current_runtime_consumer(tmp_path, monke
     git_output = gates.subprocess.check_output
 
     def read_history(command, **kwargs):
-        assert command == ["git", "diff", gates.BASE, gates.FOUNDATION_HEAD, "--name-only"]
+        allowed = [["git", "diff", gates.BASE, gates.FOUNDATION_HEAD, "--name-only"]]
+        allowed += [["git", "show", f"{gates.FOUNDATION_HEAD}:{path}"]
+                    for path in build_registry.LOCAL_SOURCES]
+        assert command in allowed
         return git_output(command, **{**kwargs, "cwd": gates.ROOT})
 
     monkeypatch.setattr(gates.subprocess, "check_output", read_history)

@@ -185,6 +185,14 @@ La evidencia anterior de refutación se conserva aunque deje de ser necesaria pa
 el join final. El manifiesto congela todos los recibos; replay reconstruye los
 artefactos y el registro byte por byte sin red.
 
+Los `source_authorities.local_digests` describen los blobs Git de
+`FOUNDATION_HEAD = d608336a32553ac11a69924d663491ce852e1446`, no los bytes de
+un checkout futuro. Las referencias y fuentes permitidas viven en
+`scripts/audits/relationship_foundation/frozen_delivery.py`; si falta Git, el
+commit o un blob, el replay falla cerrado sin recurrir al archivo actual.
+El aislamiento sigue inspeccionando los imports del checkout actual y los
+efectos de la entrega en `git diff BASE FOUNDATION_HEAD`. Son contratos distintos.
+
 Ruff, Semgrep y pytest tienen logs literales en validation.json y archivos anexos.
 Semgrep debe separar sus diez hallazgos baseline del delta propio. No se ejecuta la
 suite completa: el módulo es nuevo y shadow; no se alteró código productivo existente.

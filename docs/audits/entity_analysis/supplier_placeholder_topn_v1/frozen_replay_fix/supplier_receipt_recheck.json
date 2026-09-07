@@ -1,0 +1,62 @@
+{
+  "barranquilla": {
+    "mode": "offline revalidation of preserved live receipts; no new source requests",
+    "calls": 2,
+    "rankings": {
+      "count": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "current_sql_matches_receipt": true,
+        "group_order_limit_unchanged": true
+      },
+      "value": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "current_sql_matches_receipt": true,
+        "group_order_limit_unchanged": true
+      }
+    }
+  },
+  "bucaramanga": {
+    "mode": "offline revalidation of preserved live receipts; no new source requests",
+    "calls": 2,
+    "rankings": {
+      "count": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "current_sql_matches_receipt": true,
+        "group_order_limit_unchanged": true
+      },
+      "value": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "current_sql_matches_receipt": true,
+        "group_order_limit_unchanged": true
+      }
+    }
+  },
+  "galapa": {
+    "mode": "offline revalidation of preserved live receipts; no new source requests",
+    "calls": 2,
+    "rankings": {
+      "count": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "current_sql_matches_receipt": true,
+        "group_order_limit_unchanged": true
+      },
+      "value": {
+        "before": 5,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "current_sql_matches_receipt": true,
+        "group_order_limit_unchanged": true
+      }
+    }
+  }
+}

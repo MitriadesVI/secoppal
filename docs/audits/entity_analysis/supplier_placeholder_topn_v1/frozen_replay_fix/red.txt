@@ -1,0 +1,150 @@
+..............................F....F.....FFFF                            [100%]
+=================================== FAILURES ===================================
+_________ test_complete_offline_replay_canaries_and_runtime_isolation __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b6a0b40>
+
+    def test_complete_offline_replay_canaries_and_runtime_isolation(monkeypatch):
+        def no_network(*args, **kwargs):
+            raise AssertionError("offline replay attempted network")
+        monkeypatch.setattr("requests.get", no_network)
+        artifacts, registry = run()
+>       assert render(registry) == DATA_PATH.read_bytes()
+E       assert b'{\n  "data_...NDATION"\n}\n' == b'{\n  "data_...NDATION"\n}\n'
+E
+E         At index 16135 diff: b'f' != b'c'
+E         Use -v to get more diff
+
+tests/test_procurement_relationships.py:186: AssertionError
+_ test_local_digest_matches_frozen_git_blob_and_registry[app/core/actor_identity.py] _
+
+path = 'app/core/actor_identity.py'
+
+    @pytest.mark.parametrize("path", build_registry.LOCAL_SOURCES)
+    def test_local_digest_matches_frozen_git_blob_and_registry(path):
+        blob = subprocess.check_output(
+            ["git", "show", f"{gates.FOUNDATION_HEAD}:{path}"], cwd=gates.ROOT,
+        )
+        expected = load()["source_authorities"]["local_digests"][path]
+        assert hashlib.sha256(blob).hexdigest() == expected
+>       assert build_registry.sources()["local_digests"][path] == expected
+E       AssertionError: assert 'f23d9c6a3f15...a544acaf7bbaf' == 'ca0c436eecea...e3ef35ae9b725'
+E
+E         - ca0c436eecea67fbbb30d5397249b193112cc15f0bf9f50444ae3ef35ae9b725
+E         + f23d9c6a3f15fdbfcee788a567260463a484777687cda3bddfda544acaf7bbaf
+
+tests/test_procurement_foundation_frozen_delivery.py:20: AssertionError
+_________ test_later_source_bytes_cannot_change_historical_provenance __________
+
+    @settings(max_examples=12, derandomize=True, deadline=None)
+>   @given(later_bytes=st.binary(max_size=256))
+                   ^^^
+
+tests/test_procurement_foundation_frozen_delivery.py:24:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+later_bytes = b''
+
+    @settings(max_examples=12, derandomize=True, deadline=None)
+    @given(later_bytes=st.binary(max_size=256))
+    def test_later_source_bytes_cannot_change_historical_provenance(later_bytes):
+        expected = load()["source_authorities"]
+        current_sources = {gates.ROOT / p for p in build_registry.LOCAL_SOURCES}
+        read_bytes = Path.read_bytes
+        current_reads = []
+
+        def later_checkout(path):
+            if path in current_sources:
+                current_reads.append(path)
+                return later_bytes
+            return read_bytes(path)
+
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setattr(Path, "read_bytes", later_checkout)
+            actual = build_registry.sources()
+>       assert actual == expected
+E       AssertionError: assert {'buyer_bindi...QUIRED'}, ...} == {'buyer_bindi...QUIRED'}, ...}
+E
+E         Omitting 9 identical items, use -vv to show
+E         Differing items:
+E         {'local_digests': {'app/core/actor_identity.py': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', '...495991b7852b855', 'app/data/aliases_db.json': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', ...}} != {'local_digests': {'app/core/actor_identity.py': 'ca0c436eecea67fbbb30d5397249b193112cc15f0bf9f50444ae3ef35ae9b725', '...4204eea10cae959', 'app/data/aliases_db.json': '777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378', ...}}
+E         Use -v to get more diff
+E       Failing test case: test_later_source_bytes_cannot_change_historical_provenance(
+E           later_bytes=b'',  # or any other generated value
+E       )
+
+tests/test_procurement_foundation_frozen_delivery.py:40: AssertionError
+_______________ test_source_reads_use_only_exact_foundation_ref ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10d7bde10>
+
+    def test_source_reads_use_only_exact_foundation_ref(monkeypatch):
+        check_output = subprocess.check_output
+        commands = []
+
+        def record(command, **kwargs):
+            commands.append((command, kwargs))
+            return check_output(command, **kwargs)
+
+        monkeypatch.setattr(subprocess, "check_output", record)
+        build_registry.sources()
+>       assert commands == [
+            (["git", "show", f"{gates.FOUNDATION_HEAD}:{path}"], {"cwd": gates.ROOT})
+            for path in build_registry.LOCAL_SOURCES
+        ]
+E       AssertionError: assert [] == [(['git', 'sh...n-v1')}), ...]
+E
+E         Right contains 7 more items, first extra item: (['git', 'show', 'd608336a32553ac11a69924d663491ce852e1446:app/core/result_identity.py'], {'cwd': PosixPath('/Users/rodrigoortiz/Documents/secoppal-supplier-placeholder-topn-v1')})
+E         Use -v to get more diff
+
+tests/test_procurement_foundation_frozen_delivery.py:54: AssertionError
+_______ test_historical_git_failure_never_falls_back_to_checkout[False] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10d7be3c0>
+missing_git = False
+
+    @pytest.mark.parametrize("missing_git", [False, True])
+    def test_historical_git_failure_never_falls_back_to_checkout(monkeypatch, missing_git):
+        commands = []
+
+        def fail(command, **kwargs):
+            commands.append(command)
+            if missing_git:
+                raise FileNotFoundError("git unavailable")
+            raise subprocess.CalledProcessError(128, command, stderr=b"missing historical blob")
+
+        monkeypatch.setattr(subprocess, "check_output", fail)
+>       with pytest.raises(FileNotFoundError if missing_git else subprocess.CalledProcessError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'subprocess.CalledProcessError'>
+
+tests/test_procurement_foundation_frozen_delivery.py:71: Failed
+________ test_historical_git_failure_never_falls_back_to_checkout[True] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10d7beac0>
+missing_git = True
+
+    @pytest.mark.parametrize("missing_git", [False, True])
+    def test_historical_git_failure_never_falls_back_to_checkout(monkeypatch, missing_git):
+        commands = []
+
+        def fail(command, **kwargs):
+            commands.append(command)
+            if missing_git:
+                raise FileNotFoundError("git unavailable")
+            raise subprocess.CalledProcessError(128, command, stderr=b"missing historical blob")
+
+        monkeypatch.setattr(subprocess, "check_output", fail)
+>       with pytest.raises(FileNotFoundError if missing_git else subprocess.CalledProcessError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'FileNotFoundError'>
+
+tests/test_procurement_foundation_frozen_delivery.py:71: Failed
+=========================== short test summary info ============================
+FAILED tests/test_procurement_relationships.py::test_complete_offline_replay_canaries_and_runtime_isolation
+FAILED tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/actor_identity.py]
+FAILED tests/test_procurement_foundation_frozen_delivery.py::test_later_source_bytes_cannot_change_historical_provenance
+FAILED tests/test_procurement_foundation_frozen_delivery.py::test_source_reads_use_only_exact_foundation_ref
+FAILED tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[False]
+FAILED tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[True]
+6 failed, 39 passed in 1.77s
