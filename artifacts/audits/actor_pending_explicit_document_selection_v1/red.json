@@ -1,0 +1,24 @@
+{
+  "base_head": "17e01ef31bb55a186effb22ee4bf7541288d09ec",
+  "branch": "fix/actor-pending-explicit-document-v1",
+  "fixture": "synthetic actor alias index (tests/actor_prefix_fixtures), sockets blocked, tmp feedback/conversations",
+  "focal_file": "tests/test_actor_pending_document_selection.py",
+  "failed": 24,
+  "passed": 3,
+  "passing_before_the_fix_are_regression_guards": [
+    "test_unrelated_document_starts_a_fresh_search",
+    "test_expired_pending_does_not_revive_the_original_frame",
+    "test_inconclusive_explicit_document_keeps_its_adr_094_behavior"
+  ],
+  "behavioural_red": {
+    "test_year_survives_explicit_document_selection": "KeyError: 'fecha_desde'",
+    "test_rank_and_document_selection_agree_on_params_and_soql": "resolved_params differ: rank replays pending.original_params, document restarts"
+  },
+  "probe_baseline": {
+    "first_method": "exact_prefix_ambiguous",
+    "first_fecha_desde": "2025-01-01",
+    "rank_reply": {"method": "user_selected_candidate", "base_number": "70000003", "fecha_desde": "2025-01-01"},
+    "document_reply": {"method": "explicit_document", "base_number": "70000003", "fecha_desde": null}
+  },
+  "conclusion": "A document naming a pending candidate resolves identity and drops the whole original frame."
+}
