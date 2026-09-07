@@ -23,6 +23,28 @@ class FrozenDict(dict):
     __ior__ = _immutable
 
 
+class FrozenList(list):
+    """A ``list``-compatible sequence that rejects every mutation API."""
+
+    @staticmethod
+    def _immutable(*args, **kwargs):
+        del args, kwargs
+        raise TypeError("frozen plan lists cannot be mutated")
+
+    __setitem__ = _immutable
+    __delitem__ = _immutable
+    append = _immutable
+    clear = _immutable
+    extend = _immutable
+    insert = _immutable
+    pop = _immutable
+    remove = _immutable
+    reverse = _immutable
+    sort = _immutable
+    __iadd__ = _immutable
+    __imul__ = _immutable
+
+
 def deep_freeze(value: Any) -> Any:
     """Return an immutable snapshot of JSON-like plan data.
 
@@ -33,7 +55,9 @@ def deep_freeze(value: Any) -> Any:
         return FrozenDict({
             deep_freeze(key): deep_freeze(item) for key, item in value.items()
         })
-    if isinstance(value, (list, tuple)):
+    if isinstance(value, list):
+        return FrozenList(deep_freeze(item) for item in value)
+    if isinstance(value, tuple):
         return tuple(deep_freeze(item) for item in value)
     if isinstance(value, (set, frozenset)):
         return frozenset(deep_freeze(item) for item in value)

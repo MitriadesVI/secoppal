@@ -379,6 +379,8 @@ def test_source_plan_takes_a_deeply_immutable_snapshot(term):
 
     assert (plan.params["objeto"], plan.params["nested"]["items"]) == before
     with pytest.raises(TypeError):
+        plan.params["objeto"].append("mutated")
+    with pytest.raises(TypeError):
         plan.params["nested"]["items"] = ("mutated",)
 
 
