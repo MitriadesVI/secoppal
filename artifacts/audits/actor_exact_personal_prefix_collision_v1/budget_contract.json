@@ -1,0 +1,28 @@
+{
+  "recorded_at_utc": "2026-09-07T02:21:04.287373+00:00",
+  "fixed_before_runtime_evaluation": true,
+  "existence_budget_ms": 5.0,
+  "enumeration_budget_ms": 20.0,
+  "justification": {
+    "production_sample_queries": 160,
+    "repetitions_each": 50,
+    "warmups_each": 5,
+    "largest_production_existence_p95_ms": 0.009167,
+    "largest_production_enumeration_p95_ms": 0.0235,
+    "largest_production_baseline_resolver_p95_ms": 0.131792,
+    "dense_10000_same_alias_identities_existence_p95_ms": 1.927083,
+    "dense_10000_same_alias_identities_enumeration_p95_ms": 2.035167,
+    "dense_10000_same_challenger_aliases_enumeration_p95_ms": 9.79625,
+    "rationale": "5/20 ms permit roughly 2x measured adverse dense p95 plus scheduling margin; bounded phase exhaustion preserves semantic uncertainty. Dense fixtures intentionally exceed ordinary builder alias caps."
+  },
+  "acceptance_thresholds": {
+    "each_warm_production_query_resolver_p95_delta_max_ms": 0.5,
+    "each_warm_production_query_existence_p95_max_ms": 0.5,
+    "each_warm_production_query_enumeration_p95_max_ms": 1.0,
+    "same_reproducible_sample_required": true,
+    "adverse_synthetic_budget_exhaustion_semantics_required": true,
+    "after_threshold_failure_verdict": "NO_GO"
+  },
+  "limits": "Warm cache after oracle traversal. This is local evidence, not a cold-cache latency SLA. Deadlines bound SQLite VM and Python iteration using a monotonic clock; OS descheduling is not hard real-time preemption.",
+  "impact_assessment": "20,788/1,066,953 (1.948%) eligible aliases affected; concentrated in short names as intended. Continue implementation; report cohort rates prominently. No schema/index change or promotion authorized."
+}
