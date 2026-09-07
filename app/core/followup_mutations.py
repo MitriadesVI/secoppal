@@ -29,7 +29,8 @@ CONTRACT_TYPE_FIELDS = frozenset({
 SCOPE_FIELDS = frozenset({
     "entidad", "entidad_resolved", "entidad_resolution", "entidad_like",
     "departamento", "departamento_resolved", "departamento_resolution",
-    "departamentos_in", "ciudad", "ciudad_resolved", "region", "municipal_territory",
+    "departamentos_in", "ciudad", "ciudad_resolved", "region", "region_resolution",
+    "municipal_territory",
 })
 FILTER_FIELDS = frozenset({
     *MONEY_FIELDS, "fecha_desde", "fecha_hasta", "_temporal_replace_scope",

@@ -88,7 +88,7 @@ def _remove_contradictory_positive(
     elif request.dimension is NegationDimension.DEPARTMENT:
         for key in (
             "departamento", "departamento_resolved", "departamento_resolution",
-            "departamentos_in", "region",
+            "departamentos_in", "region", "region_resolution",
         ):
             params.pop(key, None)
         if params.get("actor_conversation_operation") == "SET_TERRITORY":

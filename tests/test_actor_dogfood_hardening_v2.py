@@ -218,7 +218,6 @@ def test_split_brain_frame_reaches_no_source_call(workflow):
 # B — ACTOR-GEO-SPAN-OWNERSHIP-001
 # ══════════════════════════════════════════════════════════════════════════
 
-@pytest.mark.xfail(strict=True, reason="ACTOR-GEO-SPAN-OWNERSHIP-001 — frozen before slice B")
 def test_region_alias_inside_actor_span_is_not_a_filter(workflow):
     params = workflow.run_query(
         "contratos de ana maria llanos", chat_id="geo1",
@@ -383,7 +382,6 @@ def test_cross_slice_document_replacement_keeps_buyer_and_drops_name_topic(workf
     assert not _topic_tokens(params) & {"beatriz", "solano"}
 
 
-@pytest.mark.xfail(strict=True, reason="span ownership + buyer punctuation — frozen before slices B and D")
 def test_cross_slice_actor_span_and_explicit_buyer_coexist(workflow):
     params = workflow.run_query(
         f"contratos de ana maria llanos con {BUYER_QUERY}?", chat_id="cross2",

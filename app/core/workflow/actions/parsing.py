@@ -608,7 +608,7 @@ def apply_context(state: State) -> State:
         territory_cluster = {
             "ciudad", "ciudad_resolved", "departamento",
             "departamento_resolved", "departamento_resolution", "region",
-            "departamentos_in",
+            "region_resolution", "departamentos_in",
         }
         for key in territory_cluster:
             merged.pop(key, None)

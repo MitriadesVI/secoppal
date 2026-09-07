@@ -278,9 +278,22 @@ def scrub_strong_actor_leaks(params: dict, actor_name: str) -> dict:
         else:
             clean.pop("objeto", None)
 
-    if _value_is_part_of_name(clean.get("region"), name, name_tokens):
+    # INV-ACTOR-SPAN-OWNERSHIP. A region is the only geography whose stored
+    # value is not the words that produced it — "llanos" is stored as
+    # "Orinoquia" — so comparing the value against the name never matched and
+    # a surname inside the accredited span kept filtering four departments.
+    # What decides ownership is the matched alias: the text the scan consumed.
+    region_evidence = clean.get("region_resolution")
+    region_alias = (
+        region_evidence.get("matched_alias")
+        if isinstance(region_evidence, dict) else None
+    )
+    if _value_is_part_of_name(clean.get("region"), name, name_tokens) or (
+        _value_is_part_of_name(region_alias, name, name_tokens)
+    ):
         clean.pop("region", None)
         clean.pop("departamentos_in", None)
+        clean.pop("region_resolution", None)
     for key, companions in {
         "ciudad": ("ciudad_resolved",),
         "departamento": ("departamento_resolved", "departamento_resolution"),

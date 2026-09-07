@@ -35,7 +35,7 @@ _BOUNDARY_MODIFIER_KEYS = frozenset({
     "valor_min", "valor_max", "money_metadata",
     "ciudad", "ciudad_resolved",
     "departamento", "departamento_resolved", "departamento_resolution",
-    "region", "departamentos_in",
+    "region", "region_resolution", "departamentos_in",
     "estado", "estado_field", "estado_family",
     "estado_contrato", "estado_del_procedimiento",
     "estado_de_apertura_del_proceso",

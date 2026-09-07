@@ -767,6 +767,19 @@ class QueryRouter:
                 if depts:
                     params["region"] = zone
                     params["departamentos_in"] = depts
+                    # ACTOR-GEO-SPAN-OWNERSHIP-001. The canonical zone name is
+                    # not the word the user typed: "llanos" becomes
+                    # "Orinoquia". Without the alias, a later owner —the actor
+                    # span, a negation, an audit— can only compare the
+                    # canonical value against the text and concludes the
+                    # filter came from nowhere. Every other geography key
+                    # already carries its provenance; region did not.
+                    params["region_resolution"] = {
+                        "value": zone,
+                        "method": region_scan.method,
+                        "kind": "territorial_region",
+                        "matched_alias": region_scan.matched_alias,
+                    }
                     scrubbed = region_scan.remaining_text
 
         # ── 6.2 GAZETTEER SCAN: Department (on remaining text) ──────────
@@ -802,6 +815,7 @@ class QueryRouter:
                 scrubbed = dept_scan.remaining_text
                 params.pop("region", None)
                 params.pop("departamentos_in", None)
+                params.pop("region_resolution", None)
 
         # ── 6.5 MULTI-REGIONAL ENTITY RESOLUTION (ENTITY-MULTI-REGIONAL-001) ──
         # Si la entidad resuelta es multi-regional (SENA, ICBF, etc.) y hay
