@@ -153,10 +153,19 @@ def test_document_followup_exits_clarification_without_another_challenger(tmp_pa
     selected = workflow.run_query(document, chat_id="document")
     assert selected["route_reason"] == "actor_profile", repr(selected["resolved_params"])
     params = selected["resolved_params"]
-    assert params["actor_resolution_method"] == "explicit_document"
+    # A document that names one of the offered candidates is an answer to the
+    # pending question and keeps that question's frame; one that names nobody
+    # on the list is an independent search and inherits nothing.
+    selects_pending = initial == "AMBIGUOUS" and document == "CC 70000003"
+    assert params["actor_resolution_method"] == (
+        "explicit_document_pending_selection" if selects_pending
+        else "explicit_document"
+    )
     assert params["actor_scope"]["base_number"] == document.split()[1]
-    if initial == "INCONCLUSIVE":
+    if initial == "INCONCLUSIVE" or selects_pending:
         assert params["fecha_desde"] == "2025-01-01"
+    else:
+        assert params.get("fecha_desde") is None
     assert params.get("actor_pending") is None
     assert "candidates_has_more" not in actor_resolution_trace(params)
     assert "enumeration_incomplete" not in actor_resolution_trace(params)

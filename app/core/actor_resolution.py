@@ -29,6 +29,7 @@ __all__ = [
     "METHOD_EXACT_UNIQUE_ALIAS",
     "METHOD_EXACT_LEGAL_FORM_VARIANT",
     "METHOD_EXPLICIT_DOCUMENT",
+    "METHOD_EXPLICIT_DOCUMENT_PENDING_SELECTION",
     "METHOD_NAME_UNRESOLVED",
     "METHOD_USER_SELECTED_CANDIDATE",
     "actor_resolution_method",
@@ -43,6 +44,11 @@ __all__ = [
 
 
 METHOD_EXPLICIT_DOCUMENT = "explicit_document"
+# A document that named exactly one candidate of a pending list.  It is the
+# same authority as ``user_selected_candidate`` — the user chose from the
+# options offered — and differs only in how the choice was expressed, which
+# is why the two must never diverge in anything but provenance.
+METHOD_EXPLICIT_DOCUMENT_PENDING_SELECTION = "explicit_document_pending_selection"
 METHOD_EXACT_UNIQUE_ALIAS = "exact_unique_alias"
 METHOD_EXACT_LEGAL_FORM_VARIANT = "exact_legal_form_variant"
 METHOD_USER_SELECTED_CANDIDATE = "user_selected_candidate"
@@ -50,6 +56,7 @@ METHOD_NAME_UNRESOLVED = "name_unresolved"
 
 AUTHORITATIVE_ACTOR_METHODS = frozenset({
     METHOD_EXPLICIT_DOCUMENT,
+    METHOD_EXPLICIT_DOCUMENT_PENDING_SELECTION,
     METHOD_EXACT_UNIQUE_ALIAS,
     METHOD_EXACT_LEGAL_FORM_VARIANT,
     METHOD_USER_SELECTED_CANDIDATE,

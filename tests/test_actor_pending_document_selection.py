@@ -75,6 +75,23 @@ def _reply_params(text):
     return dict(QueryRouter().parse(text).params)
 
 
+def _without_provenance(params):
+    """Everything but *how* the selection was expressed.
+
+    ``actor_scope`` mirrors the method, so the nested copy is provenance too.
+    """
+    stripped = {
+        key: value for key, value in params.items()
+        if key not in {"actor_resolution", "actor_resolution_method"}
+    }
+    scope = stripped.get("actor_scope")
+    if isinstance(scope, dict):
+        stripped["actor_scope"] = {
+            key: value for key, value in scope.items() if key != "resolution_method"
+        }
+    return stripped
+
+
 def _match(reply_text, candidates):
     """Import late so the workflow oracles fail on behavior, not on collection."""
     from app.core.actor_pending_document import match_pending_document
@@ -168,6 +185,14 @@ def test_year_survives_explicit_document_selection(tmp_path, monkeypatch):
     assert params["fecha_hasta"] == "2025-12-31"
     assert params["actor_resolution_method"] == "explicit_document_pending_selection"
     assert "actor_pending" not in params
+    # Trace distinguishes how the candidate was named without inventing a
+    # second candidate count.
+    from app.core.actor_resolution_trace import actor_resolution_trace
+    assert actor_resolution_trace(params) == {
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "explicit_document_pending_selection",
+        "candidates_count": 0,
+    }
     assert calls and all(
         "documento_proveedor = '70000003'" in soql and "2025-01-01" in soql
         for soql in calls
@@ -238,7 +263,6 @@ def test_unrelated_document_starts_a_fresh_search(tmp_path, monkeypatch):
 
 def test_rank_and_document_selection_agree_on_params_and_soql(tmp_path, monkeypatch):
     """The central oracle: two ways of naming the same candidate, one universe."""
-    provenance = {"actor_resolution", "actor_resolution_method"}
     frames = {}
     universes = {}
     for label, reply in (("rank", "2"), ("document", CANDIDATE_2_DOCUMENT)):
@@ -249,11 +273,10 @@ def test_rank_and_document_selection_agree_on_params_and_soql(tmp_path, monkeypa
         )
         calls.clear()
         result = workflow.run_query(reply, chat_id=label)
-        frames[label] = {
-            key: value for key, value in result["resolved_params"].items()
-            if key not in provenance
-        }
-        universes[label] = list(calls)
+        frames[label] = _without_provenance(result["resolved_params"])
+        # Aspects run concurrently, so arrival order is not the invariant.
+        # The universe each selection asks for is.
+        universes[label] = sorted(calls)
     assert frames["rank"] == frames["document"]
     assert universes["rank"] == universes["document"]
     assert universes["document"]
@@ -353,10 +376,7 @@ def test_rank_and_document_selection_preserve_the_same_filters(frame):
         pending["original_params"], identity,
         method="explicit_document_pending_selection", observed_name=observed,
     )
-    provenance = {"actor_resolution", "actor_resolution_method"}
-    assert {k: v for k, v in from_rank.items() if k not in provenance} == {
-        k: v for k, v in from_document.items() if k not in provenance
-    }
+    assert _without_provenance(from_rank) == _without_provenance(from_document)
     for key, value in frame.items():
         assert from_document[key] == value
 

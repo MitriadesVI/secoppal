@@ -1,0 +1,212 @@
+{
+  "head_loaded": "46a5cfd7e4c1e06475af00ceea567649d5b16ea9",
+  "worktree": "/Users/rodrigoortiz/Documents/secoppal",
+  "runtime_diff_sha256": "e6cd3a7a036b7e05ff9f5cce812c111752b7ec45c55b006eec6da670ce26bcfa",
+  "actor_profile_flag_effective": true,
+  "fixture": "synthetic alias index built per case; sockets blocked; SECOP EMPTY double",
+  "external_calls": 0,
+  "sockets_blocked": true,
+  "cases": [
+    {
+      "case": "ambiguity_year",
+      "first_query": "contratos del proveedor ana maria lopez en 2025",
+      "first_method": "exact_prefix_ambiguous",
+      "first_frame": {
+        "fecha_desde": "2025-01-01",
+        "fecha_hasta": "2025-12-31"
+      },
+      "pending_candidates": 3,
+      "reply": "CC ****0003",
+      "document_belongs_to_pending": true,
+      "answer_route": "actor_profile",
+      "answer_method": "explicit_document_pending_selection",
+      "answer_base_number_masked": "****0003",
+      "answer_frame": {
+        "fecha_desde": "2025-01-01",
+        "fecha_hasta": "2025-12-31"
+      },
+      "frame_preserved": true,
+      "document_soql": [
+        "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))",
+        "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC",
+        "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5",
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5",
+        "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL",
+        "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5",
+        "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+        "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+      ],
+      "rank_soql": [
+        "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))",
+        "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC",
+        "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5",
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5",
+        "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL",
+        "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5",
+        "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+        "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+      ],
+      "soql_parity": true,
+      "response_redacted": "CC ****0003\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 22:44 (hora de Colombia)\n\n*Filtros aplicados*\n- Periodo: 2025\n\n- 0 contratos observados dentro de estos filtros\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales."
+    },
+    {
+      "case": "ambiguity_buyer",
+      "first_query": "contratos del proveedor ana maria lopez con alcaldia de barranquilla",
+      "first_method": "exact_prefix_ambiguous",
+      "first_frame": {
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+      },
+      "pending_candidates": 3,
+      "reply": "CC ****0003",
+      "document_belongs_to_pending": true,
+      "answer_route": "actor_profile",
+      "answer_method": "explicit_document_pending_selection",
+      "answer_base_number_masked": "****0003",
+      "answer_frame": {
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+      },
+      "frame_preserved": true,
+      "document_soql": [
+        "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))",
+        "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC",
+        "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5",
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5",
+        "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL",
+        "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5",
+        "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+        "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+      ],
+      "rank_soql": [
+        "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))",
+        "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC",
+        "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5",
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5",
+        "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL",
+        "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5",
+        "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+        "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (documento_proveedor = '****0003') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+      ],
+      "soql_parity": true,
+      "response_redacted": "CC ****0003\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 22:44 (hora de Colombia)\n\n*Filtros aplicados*\n- Entidad: DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA\n\n- 0 contratos observados dentro de estos filtros\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales."
+    },
+    {
+      "case": "prefix_ambiguity",
+      "first_query": "contratos del proveedor ana maria lopez en 2025",
+      "first_method": "exact_prefix_ambiguous",
+      "first_frame": {
+        "fecha_desde": "2025-01-01",
+        "fecha_hasta": "2025-12-31"
+      },
+      "pending_candidates": 3,
+      "reply": "CC ****0002",
+      "document_belongs_to_pending": true,
+      "answer_route": "actor_profile",
+      "answer_method": "explicit_document_pending_selection",
+      "answer_base_number_masked": "****0002",
+      "answer_frame": {
+        "fecha_desde": "2025-01-01",
+        "fecha_hasta": "2025-12-31"
+      },
+      "frame_preserved": true,
+      "document_soql": [
+        "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))",
+        "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC",
+        "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5",
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5",
+        "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL",
+        "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5",
+        "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+        "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+      ],
+      "rank_soql": [
+        "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))",
+        "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC",
+        "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5",
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5",
+        "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL",
+        "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5",
+        "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+        "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+      ],
+      "soql_parity": true,
+      "response_redacted": "CC ****0002\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 22:44 (hora de Colombia)\n\n*Filtros aplicados*\n- Periodo: 2025\n\n- 0 contratos observados dentro de estos filtros\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales."
+    },
+    {
+      "case": "same_alias_ambiguity",
+      "first_query": "contratos del proveedor ana maria lopez en 2025",
+      "first_method": "exact_ambiguous_alias",
+      "first_frame": {
+        "fecha_desde": "2025-01-01",
+        "fecha_hasta": "2025-12-31"
+      },
+      "pending_candidates": 2,
+      "reply": "CC ****0002",
+      "document_belongs_to_pending": true,
+      "answer_route": "actor_profile",
+      "answer_method": "explicit_document_pending_selection",
+      "answer_base_number_masked": "****0002",
+      "answer_frame": {
+        "fecha_desde": "2025-01-01",
+        "fecha_hasta": "2025-12-31"
+      },
+      "frame_preserved": true,
+      "document_soql": [
+        "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))",
+        "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC",
+        "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5",
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5",
+        "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL",
+        "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5",
+        "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+        "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+      ],
+      "rank_soql": [
+        "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))",
+        "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC",
+        "SELECT departamento, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5",
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5",
+        "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL",
+        "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5",
+        "SELECT nombre_entidad, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+        "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' AND (documento_proveedor = '****0002') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+      ],
+      "soql_parity": true,
+      "response_redacted": "CC ****0002\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 22:44 (hora de Colombia)\n\n*Filtros aplicados*\n- Periodo: 2025\n\n- 0 contratos observados dentro de estos filtros\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales."
+    },
+    {
+      "case": "unrelated_document",
+      "first_query": "contratos del proveedor ana maria lopez con alcaldia de barranquilla en 2025",
+      "first_method": "exact_prefix_ambiguous",
+      "first_frame": {
+        "fecha_desde": "2025-01-01",
+        "fecha_hasta": "2025-12-31",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "objeto": [
+          "alcaldia"
+        ]
+      },
+      "pending_candidates": 3,
+      "reply": "CC ****2763",
+      "document_belongs_to_pending": false,
+      "answer_route": "actor_profile",
+      "answer_method": "explicit_document",
+      "answer_base_number_masked": "****2763",
+      "answer_frame": {},
+      "frame_preserved": false,
+      "document_soql": [
+        "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (documento_proveedor = '****2763') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))",
+        "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE (documento_proveedor = '****2763') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC",
+        "SELECT departamento, count(*) AS cnt WHERE (documento_proveedor = '****2763') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5",
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (documento_proveedor = '****2763') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5",
+        "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE (documento_proveedor = '****2763') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL",
+        "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE (documento_proveedor = '****2763') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5",
+        "SELECT nombre_entidad, count(*) AS cnt WHERE (documento_proveedor = '****2763') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+        "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (documento_proveedor = '****2763') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+      ],
+      "rank_soql": null,
+      "soql_parity": true,
+      "response_redacted": "CC ****2763\n\n*Huella contractual observada* — SECOP II contratos, consultado el 06/09/2026 22:44 (hora de Colombia)\n\n- 0 contratos\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales."
+    }
+  ],
+  "limitation": "Routing, frame preservation and SoQL shape only; an EMPTY double never accredits counts nor identity by activity."
+}

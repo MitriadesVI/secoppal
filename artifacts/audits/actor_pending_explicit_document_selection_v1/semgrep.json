@@ -1,0 +1,56 @@
+{
+  "scope": "app/",
+  "findings": 10,
+  "results": [
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/formatter.py",
+      "line": 171
+    },
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/formatter.py",
+      "line": 699
+    },
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/response_policy.py",
+      "line": 508
+    },
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/response_policy.py",
+      "line": 577
+    },
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/workflow/actions/execution.py",
+      "line": 365
+    },
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/workflow/handlers/direct_lookup.py",
+      "line": 366
+    },
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/workflow/handlers/normal_flow.py",
+      "line": 170
+    },
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/workflow/handlers/pagination.py",
+      "line": 177
+    },
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/workflow/handlers/radar.py",
+      "line": 109
+    },
+    {
+      "rule": "except-exception-que-silencia",
+      "path": "app/core/workflow/handlers/refinement.py",
+      "line": 93
+    }
+  ]
+}

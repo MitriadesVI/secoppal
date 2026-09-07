@@ -6,14 +6,22 @@ from dataclasses import replace
 from typing import TYPE_CHECKING
 
 from app.config import actor_profile_enabled
+from app.core._followup_constants import NEW_SEARCH_VERBS
 from app.core.actor_conversation import (
     ActorConversationOperation,
     ActorPendingTurn,
     classify_actor_pending_turn,
     parse_actor_candidate_selection,
 )
+from app.core.actor_identity import has_plausible_actor_document_digits
+from app.core.actor_pending_document import (
+    DOCUMENT_PENDING_INCOMPATIBLE,
+    DOCUMENT_PENDING_MATCH,
+    match_pending_document,
+)
 from app.core.actor_resolution import (
     ACTOR_PENDING_VERSION,
+    METHOD_EXPLICIT_DOCUMENT_PENDING_SELECTION,
     METHOD_USER_SELECTED_CANDIDATE,
     apply_actor_identity,
     candidate_from_payload,
@@ -107,6 +115,7 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
     pending = last_turn.parsed_params.get("actor_pending")
     if not isinstance(pending, dict):
         return _stale_selection_result() if structured is not None else None
+    by_document = False
     if structured is None:
         selected_rank = parse_actor_candidate_selection(ctx.user_query)
         if selected_rank is None:
@@ -120,14 +129,26 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
                 ) == ActorPendingTurn.NEW_SEARCH:
                     return None
         if selected_rank is None:
-            return None
+            document = _document_selection(deps, ctx, pending)
+            if document is None:
+                return None
+            if document.outcome == DOCUMENT_PENDING_INCOMPATIBLE:
+                return _incompatible_selection_result()
+            selected_rank = document.rank
+            by_document = True
     if structured is not None:
         current_token = pending.get("selection_token")
         if not isinstance(current_token, str):
             current_token = pending_selection_token(pending)
         if submitted_token != current_token:
             return _stale_selection_result()
+    # A rank carries no identity, so an unusable pending leaves nothing to do
+    # but ask again.  A document is authoritative on its own: an expired or
+    # incompatible pending only means it cannot inherit that frame, so it
+    # continues as the fresh explicit search it also is.
     if last_turn.age_minutes() > ACTOR_SELECTION_TTL_MINUTES:
+        if by_document:
+            return None
         return empty_result(
             response=(
                 "Esa selección de actor ya venció. Repite la consulta por nombre "
@@ -137,11 +158,9 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
             needs_clarification=True,
         )
     if pending.get("version") != ACTOR_PENDING_VERSION:
-        return empty_result(
-            response="No puedo reutilizar esas opciones; repite la consulta por nombre.",
-            route_reason="actor_selection_incompatible",
-            needs_clarification=True,
-        )
+        if by_document:
+            return None
+        return _incompatible_selection_result()
 
     candidates = pending.get("candidates")
     if not isinstance(candidates, list):
@@ -172,7 +191,10 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
         selected_params = apply_actor_identity(
             original_params,
             identity,
-            method=METHOD_USER_SELECTED_CANDIDATE,
+            method=(
+                METHOD_EXPLICIT_DOCUMENT_PENDING_SELECTION if by_document
+                else METHOD_USER_SELECTED_CANDIDATE
+            ),
             observed_name=observed_name,
         )
     except (KeyError, TypeError, ValueError):
@@ -200,6 +222,37 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
     result = handle_normal_flow(selected_deps, selection_ctx)
     result["followup"] = True
     return result
+
+
+def _document_selection(
+    deps: "WorkflowDeps", ctx: "HandlerContext", pending: dict,
+):
+    """Recognize a reply that names one pending candidate by its own document.
+
+    Only a document-shaped reply is parsed at all, and only the existing
+    document grammar decides what it says.  A miss returns ``None`` so the
+    reply keeps its established meaning: an explicit search for whoever that
+    document identifies, inheriting nothing from the pending frame.
+    """
+    if not has_plausible_actor_document_digits(ctx.user_query):
+        return None
+    normalized = ctx.user_query.strip().lower()
+    if any(normalized.startswith(verb) for verb in NEW_SEARCH_VERBS):
+        # An explicit search verb is the user saying so; the list is dropped.
+        return None
+    parsed = deps.query_router.parse(ctx.user_query, today=ctx.today)
+    selection = match_pending_document(dict(parsed.params), pending.get("candidates"))
+    return selection if selection.outcome in {
+        DOCUMENT_PENDING_MATCH, DOCUMENT_PENDING_INCOMPATIBLE,
+    } else None
+
+
+def _incompatible_selection_result() -> dict:
+    return empty_result(
+        response="No puedo reutilizar esas opciones; repite la consulta por nombre.",
+        route_reason="actor_selection_incompatible",
+        needs_clarification=True,
+    )
 
 
 def _stale_selection_result() -> dict:
