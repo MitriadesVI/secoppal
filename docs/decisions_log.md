@@ -4515,3 +4515,46 @@ Cierre de validación ADR-095 (rama, sin merge/push): suite completa una sola ve
 `make lint-core` y `git diff --check` limpios; Semgrep 10 en `app/` con delta 0.
 Dogfood en vivo: `0 contratos · $0` → `47 contratos · $911.5 millones`, con cero
 llamadas al dataset de procesos.
+
+
+### ADR-095 — enmienda V1.1 (revisión independiente)
+
+**Fecha:** 2026-09-07. **Estado del cierre V1: REFUTADO.**
+
+La revisión independiente sobre `991a02f` declaró **NO_GO / MERGE_RECOMMENDED:
+NO** con siete P1 y dos P2. Su diagnóstico fue correcto en los nueve casos: al
+portar sus contraejemplos se reprodujo **34 failed, 18 passed**, su mismo
+recuento. Dos afirmaciones del cierre V1 quedan retiradas:
+
+- «autoridad única de ejecución» era falsa. `dual_dataset.build_dataset_groups`
+  se ejecutaba DESPUÉS del plan del perfil, añadía SourceCalls y reemplazaba la
+  respuesta, llegando a afirmar «Procesos: No encontré coincidencias» sin conteo
+  que lo sostuviera. La verifiqué sobre el assembler y nunca sobre el workflow.
+- «RenderedScope == ExecutedScope» era falsa. El alcance omitía estado,
+  exclusiones, modalidad, tipo y valor, y declaraba igual AND y OR.
+
+La decisión de fondo de ADR-095 —un plan semántico validado, con fuente y evento
+adjudicados— se conserva; lo que cambia es que sus capas estaban incompletas.
+V1.1 cierra cuatro contratos en vez de siete parches: **un dueño de ejecución**,
+**representación semántica completa** (reclamaciones por ocurrencia y filtros
+tipados), **conversación transaccional** (confirmada ≠ pendiente) y **verdad de
+evidencia estricta** (conteos exactos, contradicción simétrica).
+
+Se añade `EXPLICIT REQUEST COMPLETENESS`: una fuente que la persona NOMBRÓ se
+contesta entera o se pregunta; una que entró por DEFAULT o herencia sí puede
+acotarse. Y `INV-FILTER-IN-SQL-IMPLIES-FILTER-DECLARED`.
+
+`dual_dataset.py` y `normal_flow.py` se re-pinean en el guard de paridad por SHA
+con el ritual que el propio módulo exige: divergencia **acotada** por dos tests
+estructurales, no re-pin en silencio.
+
+Cierre de validación V1.1 (rama, sin merge/push): 53/53 contraejemplos de la
+auditoría; 11 propiedades nuevas con **11/11 mutaciones detectadas**, una por
+P1; corpus de consultas 89/89; suite completa **12411 passed, 11 skipped, 16
+xfailed, 0 failed**. Ruff, `lint-core` y `diff --check` limpios; Semgrep 10 en
+`app/` con delta 0. LAST_DAY_GATE queda **PARTIAL** con procedencia (tipo de
+columna `calendar_date`, tres scopes, delta 0): sostiene «no se observó
+componente horario», no una afirmación universal, y la semántica global de
+fechas no se toca.
+
+[Informe y evidencia](audits/entity_profile_semantic_v1_1/INDEPENDENT_REVIEW_REMEDIATION_V1_1.md).

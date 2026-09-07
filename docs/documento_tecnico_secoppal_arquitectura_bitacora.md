@@ -2483,3 +2483,53 @@ push.
 
 Detalle: [ENTITY_PROFILE_SEMANTIC_PLAN_V1](audits/ENTITY_PROFILE_SEMANTIC_PLAN_V1.md)
 y [ADR-095](decisions/2026-09-07_ADR-095_entity-profile-semantic-plan-v1.md).
+
+## ENTITY_PROFILE_SEMANTIC_PLAN_V1_1 — remediación independiente — 2026-09-07
+
+El cierre V1 fue **refutado**. La revisión independiente encontró siete P1, y su
+diagnóstico era correcto en todos: al portar sus contraejemplos se reprodujo su
+mismo recuento, 34 failed / 18 passed.
+
+El error de fondo se nombra en una línea: **verifiqué la autoridad única sobre
+el assembler y nunca sobre el workflow completo**. Una capa más afuera,
+`handle_normal_flow` llamaba incondicionalmente a `build_dataset_groups`
+después del plan del perfil, añadía consultas que el plan no autorizó y
+reemplazaba la respuesta por una tabular que llegaba a afirmar «Procesos: No
+encontré coincidencias» sin conteo que lo sostuviera. El falso cero volvía por
+la ruta que el sprint no había mirado.
+
+F1, F2 y F3 resultaron ser el mismo defecto: buscar una palabra en toda la frase
+y atribuirle un significado que pertenece a una cláusula concreta. Un escalar
+temporal perdía uno de dos hechos —la firma ganaba por prioridad fija, no por
+orden—; un `actualmente` de la segunda cláusula desactivaba el `terminados` de
+la primera; y `procesos` dentro de un tema elegía fuente. `clauses.py` parte la
+petición y las dos autoridades consumen ESA partición, de modo que no quedan dos
+escáneres reclamando la misma ocurrencia.
+
+F4 era de dónde salía el alcance: se copiaba de la petición, cuya tupla de tema
+ya había aplanado los operadores, así que AND y OR se declaraban igual pese a
+generar SQL distinto. Ahora se deriva de los params ya proyectados por cada
+SourcePlan, y `RenderedScope == ExecutedScope` pasa de afirmación a consecuencia
+estructural.
+
+F6 se prueba con disco real y un workflow nuevo por turno: confirmada y
+pendiente son cosas distintas, y una aclaración retiene sin sustituir. F7 cierra
+la asimetría heredada de BASE por la que procesos recibía menos rigor que
+contratos.
+
+Se añaden `EXPLICIT REQUEST COMPLETENESS` —una fuente nombrada se contesta
+entera o se pregunta— e `INV-FILTER-IN-SQL-IMPLIES-FILTER-DECLARED`.
+
+La suite completa reveló además que los dos archivos tocados para cerrar F5
+están bajo contrato de paridad por SHA, uno de ellos byte-idéntico a main pre-M1.
+Se re-pinean con el ritual que el propio módulo exige: divergencia acotada por
+dos tests estructurales que prueban que la condición nueva es inerte para todo
+turno tabular.
+
+Validación: 53/53 contraejemplos; 11 propiedades nuevas con 11/11 mutaciones
+detectadas, una por P1; corpus de consultas 89/89; suite completa **12411
+passed, 11 skipped, 16 xfailed, 0 failed**. Ruff, `lint-core` y `diff --check`
+limpios; Semgrep 10 en `app/`, delta 0. LAST_DAY_GATE queda PARTIAL con
+procedencia; la semántica global de fechas no se toca. Rama sin merge y sin push.
+
+Detalle: [INDEPENDENT_REVIEW_REMEDIATION_V1_1](audits/entity_profile_semantic_v1_1/INDEPENDENT_REVIEW_REMEDIATION_V1_1.md).

@@ -98,7 +98,19 @@ PROCUREMENT_LAYERS_RUNTIME_DEPENDENCY = NONE
 GRAPH_DATABASE = NONE
 ```
 
-## Plan semántico V1 (ADR-095)
+## Plan semántico V1 → V1.1 (ADR-095 y su enmienda)
+
+> El cierre V1 fue refutado por revisión independiente. Lo que sigue describe el
+> estado **V1.1**, con los siete P1 cerrados:
+> [INDEPENDENT_REVIEW_REMEDIATION_V1_1](../audits/entity_profile_semantic_v1_1/INDEPENDENT_REVIEW_REMEDIATION_V1_1.md).
+>
+> Cambios de contrato respecto de V1: la ejecución y la presentación del perfil
+> son **terminales** en el workflow; los hechos temporales son reclamaciones
+> **por ocurrencia** y no un escalar; la fuente se lee del **núcleo de cada
+> cláusula**; todo filtro material del WHERE se **declara** en el alcance
+> (`INV-FILTER-IN-SQL-IMPLIES-FILTER-DECLARED`); una fuente **nombrada** se
+> contesta entera o se pregunta (`EXPLICIT REQUEST COMPLETENESS`); y la
+> conversación separa petición **confirmada** de **pendiente**.
 
 El perfil no opera sobre un diccionario de params compartido: ejecuta **un plan
 semántico validado**.

@@ -4,6 +4,15 @@
 **Rama:** `fix/entity-profile-semantic-plan-v1` (sin merge, sin push).
 **Decisión:** [ADR-095](../decisions/2026-09-07_ADR-095_entity-profile-semantic-plan-v1.md).
 
+> **Este cierre fue REFUTADO por revisión independiente (2026-09-07).** Siete
+> hallazgos P1: entre ellos, la «autoridad única de ejecución» y
+> `RenderedScope == ExecutedScope` que este informe afirmaba eran ambas falsas
+> —la primera porque `dual_dataset` seguía ejecutando después del plan, y la
+> segunda porque el alcance omitía estado, exclusiones, modalidad, tipo y valor.
+> El incidente Baranoa sí estaba corregido. La remediación está en
+> [INDEPENDENT_REVIEW_REMEDIATION_V1_1](entity_profile_semantic_v1_1/INDEPENDENT_REVIEW_REMEDIATION_V1_1.md);
+> lo que sigue se conserva como historia, no como estado vigente.
+
 ---
 
 ## 1. El incidente
