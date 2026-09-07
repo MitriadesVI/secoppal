@@ -1,0 +1,82 @@
+{
+  "corpus_size": 120,
+  "families": {
+    "clean": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 0.3,
+      "latency_p95_ms": 0.4,
+      "mrr": 1.0,
+      "n": 120,
+      "recall_at_1": 1.0,
+      "recall_at_10": 1.0,
+      "recall_at_3": 1.0
+    },
+    "deletion": {
+      "in_pool_rate": 0.9917,
+      "latency_p50_ms": 60.9,
+      "latency_p95_ms": 173.9,
+      "mrr": 0.8931,
+      "n": 120,
+      "recall_at_1": 0.8583,
+      "recall_at_10": 0.9417,
+      "recall_at_3": 0.925
+    },
+    "insertion": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 59.6,
+      "latency_p95_ms": 175.0,
+      "mrr": 0.9917,
+      "n": 120,
+      "recall_at_1": 0.9833,
+      "recall_at_10": 1.0,
+      "recall_at_3": 1.0
+    },
+    "one_typo": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 55.8,
+      "latency_p95_ms": 169.7,
+      "mrr": 0.9917,
+      "n": 120,
+      "recall_at_1": 0.9833,
+      "recall_at_10": 1.0,
+      "recall_at_3": 1.0
+    },
+    "transposition": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 56.2,
+      "latency_p95_ms": 175.0,
+      "mrr": 0.8391,
+      "n": 120,
+      "recall_at_1": 0.8,
+      "recall_at_10": 0.9333,
+      "recall_at_3": 0.8667
+    },
+    "two_token_typo": {
+      "in_pool_rate": 0.2,
+      "latency_p50_ms": 24.7,
+      "latency_p95_ms": 131.4,
+      "mrr": 0.0357,
+      "n": 120,
+      "recall_at_1": 0.025,
+      "recall_at_10": 0.0583,
+      "recall_at_3": 0.0417
+    },
+    "typo_plus_noise": {
+      "in_pool_rate": 1.0,
+      "latency_p50_ms": 56.0,
+      "latency_p95_ms": 170.4,
+      "mrr": 0.9917,
+      "n": 120,
+      "recall_at_1": 0.9833,
+      "recall_at_10": 1.0,
+      "recall_at_3": 1.0
+    }
+  },
+  "hard_negatives": {
+    "contaminated": 5,
+    "contamination_rate": 0.0417,
+    "total": 120
+  },
+  "index_sha_prefix": "337f1168515070bc",
+  "stage": "baseline"
+}

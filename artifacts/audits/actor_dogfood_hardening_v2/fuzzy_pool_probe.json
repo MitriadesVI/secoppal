@@ -1,0 +1,12 @@
+{
+  "candidate_pool_size": 100,
+  "fts_expression": "\"wikson\" OR \"herrera\" OR \"llanaos\"",
+  "index_sha_prefix": "337f1168515070bc",
+  "query": "wikson herrera llanaos",
+  "retrieved_identities_total": 10747,
+  "stage": "pool",
+  "target_bm25_rank_over_all_matches": 1050,
+  "target_in_candidate_pool": false,
+  "target_masked_document": "cb90d0ba65c4",
+  "target_present_in_index": true
+}
