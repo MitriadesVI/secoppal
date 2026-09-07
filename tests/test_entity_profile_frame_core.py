@@ -86,7 +86,9 @@ def test_r1_clause_order_does_not_change_the_compiled_predicates():
 def test_r2_unsupported_history_beside_current_state_blocks(phrase):
     out = observe(f"analiza {phrase} de {BUYER}")
     assert out.clarifies and not out.jobs
-    assert "UNSUPPORTED_EVENT" in out.issues
+    # El hecho histórico se conserva en la cuestión: no se sustituye por la
+    # firma, ni por hoy, ni por el estado terminado.
+    assert "terminados" in out.blocked_terms
 
 
 def test_r2_both_sources_keep_their_own_current_state():

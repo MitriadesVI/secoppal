@@ -19,10 +19,14 @@ from pathlib import Path
 from typing import Any
 
 from app.core.entity_profile.claim_adapters import collect_claims
-from app.core.entity_profile.claim_composition import compose_patch
+from app.core.entity_profile.claim_composition import buyer_scope_from, compose_patch
 from app.core.entity_profile.claims import ClaimSet
 from app.core.entity_profile.frame import EntityProfileFrame
-from app.core.entity_profile.frame_compiler import PlanStatus, compile_profile
+from app.core.entity_profile.frame_compiler import (
+    PlanStatus,
+    clarification,
+    compile_profile,
+)
 from app.core.entity_profile.frame_render import (
     build_compiled_scope,
     render_compiled_scope,
@@ -98,6 +102,12 @@ class Observation:
         return render_compiled_scope(build_compiled_scope(plan))
 
     @property
+    def blocked_terms(self) -> tuple[str, ...]:
+        return tuple(
+            term for issue in self.claims.unresolved for term in issue.terms
+        )
+
+    @property
     def issues(self) -> tuple[str, ...]:
         if self.decision is None:
             return (self.invalid_reason or "INVALID_CONTEXT",)
@@ -124,8 +134,16 @@ def observe(
     claims = collect_claims(
         query, clean, turn_id=turn_id, buyer_resolution=resolution,
     )
-    proposal = compose_patch(claims, base_frame=base)
+    proposal = compose_patch(
+        claims, base_frame=base, buyer_scope=buyer_scope_from(resolution),
+    )
     if proposal.patch is None:
+        if proposal.issues:
+            # Una cuestión de composición es una aclaración, igual que una del
+            # compilador: cero jobs y ninguna consulta.
+            return Observation(
+                query, params, claims, None, clarification(proposal.issues),
+            )
         return Observation(query, params, claims, None, None, proposal.reason)
     outcome = apply_patch(base, proposal.patch)
     if outcome.frame is None:
