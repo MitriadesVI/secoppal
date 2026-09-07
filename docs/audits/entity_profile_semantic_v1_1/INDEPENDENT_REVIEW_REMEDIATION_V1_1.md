@@ -204,12 +204,17 @@ toca**, que era y sigue siendo la decisión operativa.
 | Propiedades V1 P1–P12 | conservadas, verdes |
 | Corpus Entity Profile | **588** |
 | Corpus de consultas | **89/89 PASS** |
-| Suite completa | **12411 passed, 11 skipped, 16 xfailed, 0 failed** |
+| Suite completa | **12413 passed, 11 skipped, 16 xfailed, 0 failed (9:10)** |
 | Ruff | verde |
 | `make lint-core` | `app/core/ limpio` |
 | Semgrep | 10 en `app/`, **delta 0** |
 | Topes de LoC | 2/2 |
 | `git diff --check` | limpio |
+
+La suite completa se corrió UNA vez, en serie, sobre el SHA de cierre de la
+documentación. La revisión independiente observó con razón que el total de V1
+quedaba «reportado por el autor, no acreditado independientemente»; el log de
+esta corrida queda para que el auditor lo repita sobre el HEAD final.
 
 ### Dogfood en vivo (2026-09-07)
 
