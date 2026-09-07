@@ -388,6 +388,30 @@ def recognized_actor_modifier_tails(
     ):
         if params.get(key):
             geography_values.append(params[key])
+    # ACTOR-GEO-SPAN-OWNERSHIP. The canonical zone is not the words the user
+    # typed: the scan reads "los llanos" and stores "Orinoquia". Matching only
+    # the canonical form meant "… en los llanos" was never recognized as a
+    # modifier tail, so the actor mention swallowed the territory the user had
+    # asked for and the scrub then deleted it as span material. Every other
+    # geography key already stores its observed alias; region carries it in
+    # its provenance instead.
+    #
+    # The observed alias is introduced by EN or PARA only, never by DE. Zone
+    # aliases are ordinary words — "la costa", "los llanos" — and DE is the
+    # connector of half the registered names in the country: CORPORACIÓN DE LA
+    # COSTA is one organization, not a corporation plus the Caribbean.
+    # INV-ACTOR-RESOLUTION-REQUIRES-COMPLETE-MENTION already froze that reading.
+    region_evidence = params.get("region_resolution")
+    region_alias = _boundary_normalize(
+        region_evidence.get("matched_alias")
+        if isinstance(region_evidence, dict) else ""
+    )
+    if region_alias:
+        alias_pattern = re.compile(
+            rf"\b(?:en|para)\s+(?:(?:el|la|los|las)\s+)?{re.escape(region_alias)}\b",
+            re.IGNORECASE,
+        )
+        spans.extend(match.span() for match in alias_pattern.finditer(query))
     for value in geography_values:
         geography = _boundary_normalize(value)
         if not geography:

@@ -247,7 +247,12 @@ def has_strong_topic_evidence(actor_name: str, params: dict) -> bool:
     return any(normalize_actor_name(value) in _KNOWN_TOPIC_TERMS for value in values)
 
 
-def scrub_strong_actor_leaks(params: dict, actor_name: str) -> dict:
+def scrub_strong_actor_leaks(
+    params: dict,
+    actor_name: str,
+    *,
+    raw_query: str = "",
+) -> dict:
     """Remove actor-name fragments consumed too late by baseline extractors.
 
     QueryRouter detects geography before the AP2 name marker and may therefore
@@ -255,6 +260,14 @@ def scrub_strong_actor_leaks(params: dict, actor_name: str) -> dict:
     ``fundación`` as topic.  This projection uses the already-detected mention
     boundary: only values contained in the actor name are removed, so an
     explicit tail such as ``proveedor X en Bolívar`` remains intact.
+
+    Ownership belongs to the **occurrence**, not to the word.  Asking whether
+    the matched alias appears lexically inside the actor name cannot tell two
+    appearances of the same text apart, and ``proveedor Ana Llanos en llanos``
+    names the surname once and the territory once.  When ``raw_query`` is
+    supplied, an alias appearing more often in the turn than inside the actor
+    name has at least one occurrence outside the accredited span, and that
+    occurrence is an independent filter the user asked for.
     """
     clean = dict(params)
     name = normalize_actor_name(actor_name)
@@ -282,15 +295,19 @@ def scrub_strong_actor_leaks(params: dict, actor_name: str) -> dict:
     # value is not the words that produced it — "llanos" is stored as
     # "Orinoquia" — so comparing the value against the name never matched and
     # a surname inside the accredited span kept filtering four departments.
-    # What decides ownership is the matched alias: the text the scan consumed.
+    # What decides ownership is the matched alias: the text the scan consumed,
+    # and *which occurrence* of it the actor span actually covers.
     region_evidence = clean.get("region_resolution")
     region_alias = (
         region_evidence.get("matched_alias")
         if isinstance(region_evidence, dict) else None
     )
-    if _value_is_part_of_name(clean.get("region"), name, name_tokens) or (
-        _value_is_part_of_name(region_alias, name, name_tokens)
-    ):
+    owned_by_span = _value_is_part_of_name(
+        clean.get("region"), name, name_tokens,
+    ) or _value_is_part_of_name(region_alias, name, name_tokens)
+    if owned_by_span and _occurs_outside_name(region_alias, name, raw_query):
+        owned_by_span = False
+    if owned_by_span:
         clean.pop("region", None)
         clean.pop("departamentos_in", None)
         clean.pop("region_resolution", None)
@@ -306,6 +323,27 @@ def scrub_strong_actor_leaks(params: dict, actor_name: str) -> dict:
             for companion in companions:
                 clean.pop(companion, None)
     return clean
+
+
+def _occurrences(needle: str, haystack: str) -> int:
+    if not needle or not haystack:
+        return 0
+    return len(re.findall(rf"(?<!\w){re.escape(needle)}(?!\w)", haystack))
+
+
+def _occurs_outside_name(alias: object, name: str, raw_query: str) -> bool:
+    """Whether the turn used ``alias`` somewhere the actor span does not cover.
+
+    Counting is the cheapest faithful test: the accredited span is a substring
+    of the turn, so any surplus appearance lies outside it.  Without the turn
+    text the question cannot be asked and the caller keeps its lexical answer.
+    """
+    if not raw_query or not isinstance(alias, str):
+        return False
+    needle = normalize_actor_name(alias)
+    if not needle:
+        return False
+    return _occurrences(needle, normalize_actor_name(raw_query)) > _occurrences(needle, name)
 
 
 def _value_is_part_of_name(value: object, name: str, name_tokens: set[str]) -> bool:

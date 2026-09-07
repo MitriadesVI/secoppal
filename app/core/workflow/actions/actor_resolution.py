@@ -156,7 +156,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
                 result = exact
                 break
 
-        params = scrub_strong_actor_leaks(params, actor_name)
+        params = scrub_strong_actor_leaks(params, actor_name, raw_query=raw_query)
         params.update(recovered_modifiers)
         scope = params.get("actor_scope")
         if isinstance(scope, dict):
@@ -197,7 +197,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
                 ActorResolutionStatus.AMBIGUOUS,
                 ActorResolutionStatus.INCONCLUSIVE,
             }:
-                projected = scrub_strong_actor_leaks(params, probe_name)
+                projected = scrub_strong_actor_leaks(params, probe_name, raw_query=raw_query)
                 projected.pop("objeto", None)
                 projected.pop("objeto_phrases", None)
                 projected = project_actor_resolution(
@@ -284,7 +284,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
                 ActorResolutionStatus.CANDIDATES,
                 ActorResolutionStatus.AMBIGUOUS,
             }:
-                projected = scrub_strong_actor_leaks(params, actor_name)
+                projected = scrub_strong_actor_leaks(params, actor_name, raw_query=raw_query)
                 projected.pop("objeto", None)
                 projected.pop("objeto_phrases", None)
                 projected["actor_conversation_operation"] = "SET_ACTOR"
@@ -297,7 +297,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
                     origin="bare_actor_like",
                 )
                 return state.update(parsed_params=projected)
-        projected = scrub_strong_actor_leaks(params, actor_name)
+        projected = scrub_strong_actor_leaks(params, actor_name, raw_query=raw_query)
         projected.pop("objeto", None)
         projected.pop("objeto_phrases", None)
         projected["actor_resolution_status"] = result.status
@@ -318,7 +318,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
         return state.update(parsed_params=projected)
 
     baseline_params = params
-    params = scrub_strong_actor_leaks(params, actor_name)
+    params = scrub_strong_actor_leaks(params, actor_name, raw_query=raw_query)
     if not params.get("dataset_explicit"):
         params["dataset"] = "contratos"
     params.pop("objeto", None)

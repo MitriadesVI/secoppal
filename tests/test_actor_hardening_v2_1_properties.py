@@ -81,3 +81,62 @@ def test_an_absent_or_empty_projection_is_never_a_split_brain(kind, number):
     frame = _framed(kind, number)
     for empty in (None, "", "   ", [], (), set()):
         assert not actor_identity_split_brain({**frame, "contratista": empty})
+
+
+# ── Ownership belongs to the occurrence, not to the word ──────────────────
+
+from app.core.actor_arbitration import scrub_strong_actor_leaks  # noqa: E402
+from app.core.actor_name import normalize_actor_name  # noqa: E402
+from app.data.colombia_geography import REGION_ALIASES, ZONES_BY_NAME  # noqa: E402
+
+NAME_WORD = (
+    st.text(alphabet="abcdefghijlmnopqrstuvxyz", min_size=3, max_size=8)
+    .map(normalize_actor_name)
+    .filter(lambda word: bool(word) and word.isalpha())
+)
+REGION_ALIAS = st.sampled_from(sorted(REGION_ALIASES))
+
+
+def _region_frame(alias):
+    zone = REGION_ALIASES[alias]
+    return {
+        "region": zone,
+        "departamentos_in": list(ZONES_BY_NAME.get(zone, [])),
+        "region_resolution": {
+            "value": zone, "method": "scan_exact",
+            "kind": "territorial_region", "matched_alias": alias,
+        },
+    }
+
+
+@RULE
+@given(REGION_ALIAS, st.lists(NAME_WORD, min_size=1, max_size=3))
+def test_an_alias_used_only_inside_the_span_is_span_material(alias, extra):
+    actor = normalize_actor_name(" ".join([*extra, alias]))
+    query = f"contratos del proveedor {actor}"
+    clean = scrub_strong_actor_leaks(_region_frame(alias), actor, raw_query=query)
+    assert "region" not in clean
+    assert "departamentos_in" not in clean
+    assert "region_resolution" not in clean
+
+
+@RULE
+@given(REGION_ALIAS, st.lists(NAME_WORD, min_size=1, max_size=3))
+def test_the_same_alias_used_twice_keeps_its_outside_occurrence(alias, extra):
+    """The surname is one occurrence; the territory asked for is another."""
+    actor = normalize_actor_name(" ".join([*extra, alias]))
+    query = f"contratos del proveedor {actor} en {alias}"
+    clean = scrub_strong_actor_leaks(_region_frame(alias), actor, raw_query=query)
+    assert clean.get("region") == REGION_ALIASES[alias]
+    assert clean.get("departamentos_in")
+    assert clean.get("region_resolution")
+
+
+@RULE
+@given(REGION_ALIAS, st.lists(NAME_WORD, min_size=1, max_size=4))
+def test_an_alias_absent_from_the_span_always_survives(alias, words):
+    actor = normalize_actor_name(" ".join(words))
+    assume(actor and not set(alias.split()) & set(actor.split()))
+    query = f"contratos del proveedor {actor} en {alias}"
+    clean = scrub_strong_actor_leaks(_region_frame(alias), actor, raw_query=query)
+    assert clean.get("region") == REGION_ALIASES[alias]

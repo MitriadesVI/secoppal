@@ -141,7 +141,6 @@ def test_exact_actor_owns_only_its_own_occurrence(workflow, query, expected):
         assert "region_resolution" not in params
 
 
-@pytest.mark.xfail(strict=True, reason="P1-B — the region is scrubbed before candidates are projected")
 def test_repeated_region_survives_a_fuzzy_candidate_selection(workflow):
     pending = workflow.run_query(
         "contratos del proveedor ana mariia llanos en los llanos", chat_id="fz",
@@ -250,3 +249,25 @@ def test_recognized_dimensions_beside_a_document_already_survive(surface, key):
     """The V2 controls that must not regress."""
     params = QueryRouter().parse(surface).params
     assert params.get(key), params
+
+
+@pytest.mark.parametrize("text,expected_name", [
+    # INV-ACTOR-RESOLUTION-REQUIRES-COMPLETE-MENTION. A zone alias is an
+    # ordinary phrase, and DE is the connector of half the registered names in
+    # the country. Introducing the observed alias with DE truncated this one.
+    ("contratos del proveedor CORPORACION DE LA COSTA", "corporacion de la costa"),
+    ("contratos del proveedor FUNDACION DE LOS LLANOS", "fundacion de los llanos"),
+])
+def test_a_zone_alias_after_de_stays_inside_the_name(text, expected_name):
+    params = QueryRouter().parse(text).params
+    assert params["actor_scope"]["observed_name"] == expected_name
+
+
+@pytest.mark.parametrize("text", [
+    "contratos del proveedor ana maria llanos en los llanos",
+    "contratos del proveedor ana maria llanos para los llanos",
+])
+def test_a_zone_alias_after_en_or_para_is_an_external_modifier(text):
+    params = QueryRouter().parse(text).params
+    assert params["actor_scope"]["observed_name"] == "ana maria llanos"
+    assert params.get("region") == "Orinoquia"
