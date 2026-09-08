@@ -30,6 +30,8 @@ def snapshot_digest(value):
 def validate_frame_plan(frame, plan):
     if plan.frame_ref != (frame.frame_id, frame.revision):
         raise ValueError('Frame is not the authorized revision')
+    if plan.buyer_scope != frame.buyer_scope:
+        raise ValueError('Frame buyer differs from the authorized plan')
     for source, compiled in plan.source_plans.items():
         if frame.source_predicates.get(source) != compiled.predicates:
             raise ValueError('Frame predicates differ from the authorized plan')
@@ -52,6 +54,8 @@ def validate_record(frame, reference, record):
     if (plan['plan_id'] != record.plan_id or plan['frame_ref'] != list(record.frame_ref)
             or plan['catalog_version'] != record.catalog_version or plan['focus'] != record.focus):
         raise ValueError('foreign plan snapshot')
+    if plan.get('buyer_scope') != frame.buyer_scope.to_dict():
+        raise ValueError('foreign authorized buyer snapshot')
     if record.confirmed_frame != frame.to_dict():
         raise ValueError('foreign confirmed Frame snapshot')
     expected = set(record.expected_sections)
@@ -64,7 +68,8 @@ def validate_record(frame, reference, record):
         if source['predicates'] != snapshot(predicates) or source['fingerprint'] != predicates.fingerprint():
             raise ValueError('foreign source predicates')
     jobs = {job['job_id']: job for job in plan['jobs']}
-    if len(jobs) != len(plan['jobs']) or set(jobs) != {call.job_id for call in record.calls}:
+    if (len(jobs) != len(plan['jobs']) or len(record.calls) != len(jobs)
+            or set(jobs) != {call.job_id for call in record.calls}):
         raise ValueError('incomplete execution job membership')
     for call in record.calls:
         for metric in call.metrics:

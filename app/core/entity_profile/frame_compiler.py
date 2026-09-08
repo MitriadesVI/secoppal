@@ -31,7 +31,7 @@ from app.core.entity_profile.aspects import (
     build_temporal_query,
 )
 from app.core.entity_profile.focus_labels import focus_label
-from app.core.entity_profile.frame import EntityProfileFrame, SourcePredicates
+from app.core.entity_profile.frame import BuyerScope, EntityProfileFrame, SourcePredicates
 from app.core.entity_profile.frame_predicates import (
     UnsupportedPredicateError,
     compile_predicates,
@@ -206,6 +206,7 @@ class ProfilePlan:
     source_plans: Mapping[SourceKind, CompiledSourcePlan]
     jobs: tuple[CompiledJob, ...]
     limitations: tuple[str, ...] = ()
+    buyer_scope: BuyerScope | None = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "frame_ref", tuple(self.frame_ref))
@@ -348,6 +349,7 @@ def compile_profile(
         plan=ProfilePlan(
             plan_id=str(uuid.uuid4()),
             frame_ref=(frame.frame_id, frame.revision),
+            buyer_scope=frame.buyer_scope,
             catalog_version=CATALOG_VERSION,
             focus=frame.focus,
             source_plans=source_plans,
