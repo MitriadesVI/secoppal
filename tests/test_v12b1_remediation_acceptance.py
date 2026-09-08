@@ -212,14 +212,10 @@ def test_seed_foreign_reference_property(field, value):
 def test_nonfinite_metric_remains_an_honest_response(frame_v12):
     from app.core.entity_profile.execution_record import ExecutionRecordError
 
-    class Nonfinite(WorkflowClient):
-        def aggregate(self, dataset, sql):
-            rows = super().aggregate(dataset, sql)
-            return [{**row, 'total_contract_value': 'Infinity'} if 'total_contract_value' in row else row
-                    for row in rows]
+    from entity_profile_frame_b_harness import UnreadableValueClient
 
     failure = None
-    chat = Conversation('b1-nonfinite', client_factory=Nonfinite)
+    chat = Conversation('b1-nonfinite', client_factory=UnreadableValueClient)
     try:
         turn = chat.say(f'analiza contratos de {BUYER} en agosto')
     except ExecutionRecordError as exc:
