@@ -1,0 +1,180 @@
+{
+  "query": "analiza procesos de software y administracion de contratos de alcaldia de baranoa",
+  "params": {
+    "dataset": "contratos",
+    "dataset_explicit": true,
+    "entidad": "Municipio de baranoa",
+    "entidad_resolved": "ALCALDIA MUNICIPAL DE BARANOA",
+    "entidad_resolution": {
+      "value": "ALCALDIA MUNICIPAL DE BARANOA",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de baranoa",
+        "resolution_method": "exact"
+      }
+    },
+    "objeto": [
+      "analiza",
+      "software",
+      "administracion",
+      "contratos"
+    ]
+  },
+  "claims": [
+    {
+      "id": "buyer-1",
+      "turn_id": "t1",
+      "span": [
+        62,
+        81
+      ],
+      "dimension": "BUYER",
+      "canonical_value": "ALCALDIA MUNICIPAL DE BARANOA",
+      "authority": "entity_profile.scope",
+      "authority_version": "1",
+      "relations": []
+    },
+    {
+      "id": "source-1",
+      "turn_id": "t1",
+      "span": [
+        8,
+        16
+      ],
+      "dimension": "SOURCE",
+      "canonical_value": "PROCESSES",
+      "authority": "entity_profile.source_request",
+      "authority_version": "2",
+      "relations": []
+    },
+    {
+      "id": "topic-1",
+      "turn_id": "t1",
+      "span": [
+        0,
+        81
+      ],
+      "dimension": "TOPIC",
+      "canonical_value": {
+        "children": [
+          {
+            "term": "software"
+          },
+          {
+            "term": "administracion"
+          },
+          {
+            "term": "contratos"
+          }
+        ]
+      },
+      "authority": "query_router.objeto",
+      "authority_version": "1",
+      "relations": []
+    }
+  ],
+  "frame": {
+    "schema_version": 1,
+    "frame_id": "0276458f-4533-52a9-8a2a-31db95cd1593",
+    "revision": 1,
+    "buyer_scope": {
+      "kind": "BUYER_UNIT",
+      "display_name": "ALCALDIA MUNICIPAL DE BARANOA",
+      "canonical_buyers": [
+        "ALCALDIA MUNICIPAL DE BARANOA"
+      ],
+      "authority": "PRODUCT_BUYER_UNIT_RESOLUTION",
+      "authority_version": "1",
+      "group_id": null
+    },
+    "focus": "overview",
+    "source_selection": {
+      "requested": [
+        "PROCESSES"
+      ],
+      "origin": "EXPLICIT"
+    },
+    "source_predicates": {
+      "PROCESSES": {
+        "source": "PROCESSES",
+        "temporal": {
+          "event": "NONE",
+          "period": {
+            "lower": null,
+            "upper": null,
+            "lower_inclusive": true,
+            "upper_inclusive": true,
+            "civil_reference": null,
+            "expression": null
+          },
+          "event_origin": "DEFAULT",
+          "period_origin": "DEFAULT"
+        },
+        "current_state": {
+          "predicates": []
+        },
+        "topic": {
+          "kind": "ALL",
+          "children": [
+            {
+              "kind": "TERM",
+              "term": "software"
+            },
+            {
+              "kind": "TERM",
+              "term": "administracion"
+            },
+            {
+              "kind": "TERM",
+              "term": "contratos"
+            }
+          ]
+        },
+        "modality": {
+          "include": [],
+          "exclude": []
+        },
+        "contract_type": {
+          "include": [],
+          "exclude": []
+        },
+        "value": {
+          "lower": null,
+          "upper": null,
+          "magnitude": "",
+          "currency": "COP"
+        }
+      }
+    },
+    "provenance": {
+      "claim_ids": [
+        "source-1",
+        "topic-1"
+      ],
+      "turn_ids": [
+        "t1"
+      ],
+      "authorities": []
+    }
+  },
+  "status": "READY",
+  "issues": [],
+  "jobs": [
+    {
+      "source": "PROCESSES",
+      "sql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND ((unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%administracion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%administracion%'))) AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%contratos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%contratos%')))) GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100"
+    },
+    {
+      "source": "PROCESSES",
+      "sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND ((unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%software%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%software%'))) AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%administracion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%administracion%'))) AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%contratos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%contratos%')))) ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3"
+    }
+  ],
+  "scope": [
+    "Fuentes: procesos.",
+    "Todo el histórico disponible, según fecha de publicación.",
+    "Tema: software y administracion y contratos."
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "collection": [
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.04340358299668878,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "call",
+      "outcome": "failed",
+      "duration": 0.0008265000069513917,
+      "xfail": null,
+      "detail": "tests/test_truth_layer_public_parity.py:439: in test_control_language_repinned_files_match_their_pinned_state\n    assert actual == CONTROL_LANGUAGE_REPINNED_SHA256\nE   AssertionError: assert {'app/core/wo...af781ae4d4a3'} == {'app/core/wo...7db62ae86b7d'}\nE     \nE     Differing items:\nE     {'app/core/workflow/handlers/pagination.py': 'af41276b320a872d7a9df71f2023c794ce8078be5ec7ca1f5f02af781ae4d4a3'} != {'app/core/workflow/handlers/pagination.py': '9d93cc16d8354bbf302ef0ea87acaf78e017309326f4ea717ee47db62ae86b7d'}\nE     Use -v to get more diff"
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016466599481645972,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000578582999878563,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "call",
+      "outcome": "failed",
+      "duration": 0.0007150830060709268,
+      "xfail": null,
+      "detail": "tests/test_truth_layer_public_parity.py:463: in test_m2_1_modified_consumers_match_their_pinned_state\n    assert actual == M2_1_MODIFIED_FILE_SHA256\nE   AssertionError: assert {'app/core/wo...6f131076b9a2'} == {'app/core/wo...376a41a30880'}\nE     \nE     Omitting 1 identical items, use -vv to show\nE     Differing items:\nE     {'streamlit_app.py': '97c33b7e964e8c8abf8e3d33a3261170d6942419a3a035d432c96f131076b9a2'} != {'streamlit_app.py': 'fff6ba33d084ed981c81c718f9854ee7135d62966035730b556f376a41a30880'}\nE     Use -v to get more diff"
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.000140791991725564,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/coordinator-parity-baselines-r_gk7mg2/audited_runtime/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/coordinator-parity-baselines-r_gk7mg2/audited_runtime/tests/test_truth_layer_public_parity.py"
+  },
+  "exitstatus": 1
+}

@@ -1,0 +1,393 @@
+{
+  "collection": [
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.04228349999175407,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "call",
+      "outcome": "failed",
+      "duration": 0.000948667002376169,
+      "xfail": null,
+      "detail": "tests/test_truth_layer_public_parity.py:439: in test_control_language_repinned_files_match_their_pinned_state\n    assert actual == CONTROL_LANGUAGE_REPINNED_SHA256\nE   AssertionError: assert {'app/core/wo...af781ae4d4a3'} == {'app/core/wo...7db62ae86b7d'}\nE     \nE     Differing items:\nE     {'app/core/workflow/handlers/pagination.py': 'af41276b320a872d7a9df71f2023c794ce8078be5ec7ca1f5f02af781ae4d4a3'} != {'app/core/workflow/handlers/pagination.py': '9d93cc16d8354bbf302ef0ea87acaf78e017309326f4ea717ee47db62ae86b7d'}\nE     Use -v to get more diff"
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00020287500228732824,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004125419945921749,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0007230000046547502,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00012850000348407775,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005373329913709313,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00060450000455603,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00011166700278408825,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003496669960441068,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "call",
+      "outcome": "failed",
+      "duration": 0.0006364579894579947,
+      "xfail": null,
+      "detail": "tests/test_truth_layer_public_parity.py:463: in test_m2_1_modified_consumers_match_their_pinned_state\n    assert actual == M2_1_MODIFIED_FILE_SHA256\nE   AssertionError: assert {'app/core/wo...6f131076b9a2'} == {'app/core/wo...376a41a30880'}\nE     \nE     Omitting 1 identical items, use -vv to show\nE     Differing items:\nE     {'streamlit_app.py': '97c33b7e964e8c8abf8e3d33a3261170d6942419a3a035d432c96f131076b9a2'} != {'streamlit_app.py': 'fff6ba33d084ed981c81c718f9854ee7135d62966035730b556f376a41a30880'}\nE     Use -v to get more diff"
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013737499830313027,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00041074999899137765,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.000509833000251092,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.412500367034227e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003292079927632585,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00044299999717622995,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.091600077226758e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00031254100031219423,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.04647558399301488,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001569580053910613,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004322500026319176,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0009148750104941428,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.820799121167511e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00034324999433010817,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0008542909927200526,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00011720800830516964,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00038958300137892365,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00093495799228549,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017216699779964983,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003872499946737662,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0007924170058686286,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.783300290815532e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00032720899616833776,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 1.2087481670023408,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00043533300049602985,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000550000011571683,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.28578029198979493,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00019745799363590777,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005170420045033097,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.002123458994901739,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0003027079947059974,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py"
+  },
+  "exitstatus": 1
+}

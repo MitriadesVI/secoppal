@@ -1,0 +1,58 @@
+[
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/diagnostic_audited_runtime.log",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/diagnostic_audited_runtime.log.gz",
+    "uncompressed_sha256": "673e77f2c030b4e467bfdc7cf30457ae5a268dfe4b805ac90a031e9ed0639127",
+    "compressed_sha256": "5ba9abbaee7b3f571119f6d874d47142d48d92ecf7579424cc7e3059a5e57b38",
+    "reason": "Preserve literal terminal/XML whitespace without introducing committed whitespace errors."
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/focal_parity_diagnosis_focused.log",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/focal_parity_diagnosis_focused.log.gz",
+    "uncompressed_sha256": "df936c2875a38b399f250fda05b83948ccd43ad1152e365f5d74d2227c1df264",
+    "compressed_sha256": "860feb5053c6660943ccad103a2e0d2c3bdf954ab132aa7fb7625d2239bd9d6f",
+    "reason": "Preserve literal terminal/XML whitespace without introducing committed whitespace errors."
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/full_semgrep_base.log",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/full_semgrep_base.log.gz",
+    "uncompressed_sha256": "ccad088702e5c8e7d9cc62f119dd1bdf91de997e7d4d366bead78c0074d38146",
+    "compressed_sha256": "0a7f8bcf6eef1e43ce3c9f9808684d455c490e7da0ad7b761cd2cf125ef51a92",
+    "reason": "Preserve literal terminal/XML whitespace without introducing committed whitespace errors."
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/full_global.log",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/full_global.log.gz",
+    "uncompressed_sha256": "4797f2a797dc304698cee64a7b7a012dc913bd2964c51959b421390914ff58db",
+    "compressed_sha256": "df87b6c1cffe98b80188d46270c9315c1cb0f34223a98a7d29f76d0fd453cb6d",
+    "reason": "Preserve literal terminal/XML whitespace without introducing committed whitespace errors."
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/full_semgrep_candidate.log",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/full_semgrep_candidate.log.gz",
+    "uncompressed_sha256": "b4a4255355e57a3c33190f83e5b2ed960eb1a7e382d819334f41ebc213e8ce7b",
+    "compressed_sha256": "250a0566191bc091a021e3fefb8f1fcf2efd43b634c835f15dfdf859cae7ba52",
+    "reason": "Preserve literal terminal/XML whitespace without introducing committed whitespace errors."
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/full_global.xml",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/full_global.xml.gz",
+    "uncompressed_sha256": "45558308affab0c85003c9fe82d8d8a7084f3a36114af979e5cc35e5a2fdd7dc",
+    "compressed_sha256": "4357580484c0b616bd9748a30055301e41558337fbd58f8eeb688e2e16dec386",
+    "reason": "Preserve literal terminal/XML whitespace without introducing committed whitespace errors."
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/diagnostic_audited_runtime.xml",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/diagnostic_audited_runtime.xml.gz",
+    "uncompressed_sha256": "d35be876e5f3ff3e835ef8539cb8373ceffa27ed78db54d80f92a87930706961",
+    "compressed_sha256": "7ea2a0983ce9ac695133e4c0e1a74db1135b88ec945ea2e46e05ba1e9142a416",
+    "reason": "Preserve literal terminal/XML whitespace without introducing committed whitespace errors."
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/focal_parity_diagnosis_focused.xml",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/focal_parity_diagnosis_focused.xml.gz",
+    "uncompressed_sha256": "ba779bc2d3f88cfa7c78efa49f1fb527ba5358e37479bd3609a2e7d089ffc7fb",
+    "compressed_sha256": "5d6097b01bacc89e47c340a3b2ce14e557fac12fb749c7b0b180988722d37be2",
+    "reason": "Preserve literal terminal/XML whitespace without introducing committed whitespace errors."
+  }
+]

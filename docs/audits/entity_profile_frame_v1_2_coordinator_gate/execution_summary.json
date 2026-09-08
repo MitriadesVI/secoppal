@@ -1,0 +1,56 @@
+{
+  "global": {
+    "collection": 13084,
+    "counts": {
+      "passed": 13055,
+      "skipped": 11,
+      "xfailed": 16,
+      "failed": 2
+    },
+    "effective_frame_after_fixtures": {
+      "False": 12824,
+      "True": 257
+    },
+    "network_attempts": 917,
+    "network_denied": 0,
+    "deselected": 0
+  },
+  "b2_independent": {
+    "collection": 47,
+    "counts": {
+      "passed": 47
+    },
+    "effective_frame_after_fixtures": {
+      "True": 47
+    },
+    "network_attempts": 0,
+    "network_denied": 0,
+    "deselected": 0
+  },
+  "b3_remediation": {
+    "collection": 303,
+    "counts": {
+      "passed": 303
+    },
+    "effective_frame_after_fixtures": {
+      "True": 83,
+      "False": 220
+    },
+    "network_attempts": 0,
+    "network_denied": 0,
+    "deselected": 0
+  },
+  "b3_independent": {
+    "collection": 115,
+    "counts": {
+      "passed": 115
+    },
+    "effective_frame_after_fixtures": {
+      "False": 11,
+      "True": 104
+    },
+    "network_attempts": 0,
+    "network_denied": 0,
+    "deselected": 0
+  }
+}

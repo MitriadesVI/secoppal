@@ -1,0 +1,7 @@
+SOURCE_SHA=7868664757b28bed16c583ea50327d669f1501e3
+git archive 7868664757b28bed16c583ea50327d669f1501e3 app streamlit_app.py tests/conftest.py tests/test_truth_layer_public_parity.py pytest.ini
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest -p offline_guard -q --tb=short -o cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/coordinator-main-parity-yjjgmb5l/cache tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state --junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/diagnostic_main_compatible.xml
+..                                                                       [100%]
+2 passed in 0.18s
+
+EXIT_CODE=0

@@ -1,0 +1,44 @@
+{
+  "global": {
+    "expected": 13084,
+    "observed": 13084,
+    "identical": true
+  },
+  "b3_remediation": {
+    "expected": 303,
+    "observed": 303,
+    "identical": true
+  },
+  "b2_independent": {
+    "expected": 47,
+    "observed": 47,
+    "identical": true
+  },
+  "b3_independent": {
+    "expected": 115,
+    "observed": 115,
+    "identical": true
+  },
+  "design_controls_in_global": {
+    "tests/test_module_size_limits.py": {
+      "executed": 2,
+      "passed": true
+    },
+    "tests/test_entity_profile_semantic_corpus.py": {
+      "executed": 276,
+      "passed": true
+    },
+    "tests/test_entity_profile_frame_b_utility.py": {
+      "executed": 15,
+      "passed": true
+    },
+    "tests/test_entity_profile_frame_properties.py": {
+      "executed": 16,
+      "passed": true
+    },
+    "tests/test_entity_profile_frame_coordinator_clock.py": {
+      "executed": 2,
+      "passed": true
+    }
+  }
+}

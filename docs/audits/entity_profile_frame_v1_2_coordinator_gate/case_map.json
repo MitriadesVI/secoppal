@@ -2285,7 +2285,8 @@
     "active": [
       "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_property.py::test_no_failure_chain_ever_admits_an_unpublished_record"
     ],
-    "classification": "current_unchanged"
+    "classification": "diagnostic_not_guarantee",
+    "reason": "Inherited advance_epoch reset admits its observed readable result into confirmed; circular reset oracle. Not credited as reset safety. Actual /reset contract is tested separately, and B3 remediation has its independent no_promotion_property."
   },
   {
     "active": [

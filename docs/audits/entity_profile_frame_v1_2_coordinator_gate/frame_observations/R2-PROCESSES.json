@@ -1,0 +1,223 @@
+{
+  "query": "analiza procesos publicados en julio actualmente abiertos de alcaldia de baranoa",
+  "params": {
+    "dataset": "procesos",
+    "dataset_explicit": true,
+    "fecha_desde": "2026-07-01",
+    "fecha_hasta": "2026-07-31",
+    "_temporal_replace_scope": true,
+    "entidad": "Municipio de baranoa",
+    "entidad_resolved": "ALCALDIA MUNICIPAL DE BARANOA",
+    "entidad_resolution": {
+      "value": "ALCALDIA MUNICIPAL DE BARANOA",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de baranoa",
+        "resolution_method": "exact"
+      }
+    },
+    "estado_del_procedimiento": [
+      "Publicado"
+    ],
+    "estado_family": "oferta_abierta",
+    "estado": "Publicado",
+    "estado_field": "estado_del_procedimiento",
+    "intent_type": "opportunity_search",
+    "objeto": [
+      "analiza"
+    ]
+  },
+  "claims": [
+    {
+      "id": "buyer-1",
+      "turn_id": "t1",
+      "span": [
+        61,
+        80
+      ],
+      "dimension": "BUYER",
+      "canonical_value": "ALCALDIA MUNICIPAL DE BARANOA",
+      "authority": "entity_profile.scope",
+      "authority_version": "1",
+      "relations": []
+    },
+    {
+      "id": "source-1",
+      "turn_id": "t1",
+      "span": [
+        8,
+        16
+      ],
+      "dimension": "SOURCE",
+      "canonical_value": "PROCESSES",
+      "authority": "entity_profile.source_request",
+      "authority_version": "2",
+      "relations": []
+    },
+    {
+      "id": "event-1",
+      "turn_id": "t1",
+      "span": [
+        17,
+        27
+      ],
+      "dimension": "EVENT",
+      "canonical_value": "PROCESS_PUBLICATION",
+      "authority": "entity_profile.temporal_event",
+      "authority_version": "2",
+      "relations": [
+        {
+          "kind": "HAS_SUBJECT",
+          "target_claim_id": "source-1"
+        }
+      ]
+    },
+    {
+      "id": "period-1",
+      "turn_id": "t1",
+      "span": [
+        28,
+        36
+      ],
+      "dimension": "PERIOD",
+      "canonical_value": {
+        "lower": "2026-07-01",
+        "upper": "2026-07-31",
+        "lower_inclusive": true,
+        "upper_inclusive": true,
+        "civil_reference": "2026-09-07",
+        "expression": "en julio"
+      },
+      "authority": "temporal_semantics",
+      "authority_version": "1",
+      "relations": [
+        {
+          "kind": "PERIOD_OF",
+          "target_claim_id": "event-1"
+        }
+      ]
+    },
+    {
+      "id": "state-1",
+      "turn_id": "t1",
+      "span": [
+        17,
+        27
+      ],
+      "dimension": "CURRENT_STATE",
+      "canonical_value": {
+        "field": "estado_del_procedimiento",
+        "values": [
+          "Publicado"
+        ]
+      },
+      "authority": "estado_families",
+      "authority_version": "1",
+      "relations": [
+        {
+          "kind": "MODIFIES",
+          "target_claim_id": "source-1"
+        }
+      ]
+    }
+  ],
+  "frame": {
+    "schema_version": 1,
+    "frame_id": "84b7b6cb-b080-572f-92be-db6e1f067966",
+    "revision": 1,
+    "buyer_scope": {
+      "kind": "BUYER_UNIT",
+      "display_name": "ALCALDIA MUNICIPAL DE BARANOA",
+      "canonical_buyers": [
+        "ALCALDIA MUNICIPAL DE BARANOA"
+      ],
+      "authority": "PRODUCT_BUYER_UNIT_RESOLUTION",
+      "authority_version": "1",
+      "group_id": null
+    },
+    "focus": "overview",
+    "source_selection": {
+      "requested": [
+        "PROCESSES"
+      ],
+      "origin": "EXPLICIT"
+    },
+    "source_predicates": {
+      "PROCESSES": {
+        "source": "PROCESSES",
+        "temporal": {
+          "event": "PROCESS_PUBLICATION",
+          "period": {
+            "lower": "2026-07-01",
+            "upper": "2026-07-31",
+            "lower_inclusive": true,
+            "upper_inclusive": true,
+            "civil_reference": "2026-09-07",
+            "expression": "en julio"
+          },
+          "event_origin": "EXPLICIT",
+          "period_origin": "EXPLICIT"
+        },
+        "current_state": {
+          "predicates": [
+            {
+              "field": "estado_del_procedimiento",
+              "values": [
+                "Publicado"
+              ]
+            }
+          ]
+        },
+        "topic": {
+          "kind": "TRUE"
+        },
+        "modality": {
+          "include": [],
+          "exclude": []
+        },
+        "contract_type": {
+          "include": [],
+          "exclude": []
+        },
+        "value": {
+          "lower": null,
+          "upper": null,
+          "magnitude": "",
+          "currency": "COP"
+        }
+      }
+    },
+    "provenance": {
+      "claim_ids": [
+        "source-1",
+        "event-1",
+        "period-1",
+        "state-1"
+      ],
+      "turn_ids": [
+        "t1"
+      ],
+      "authorities": []
+    }
+  },
+  "status": "READY",
+  "issues": [],
+  "jobs": [
+    {
+      "source": "PROCESSES",
+      "sql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND estado_del_procedimiento = 'Publicado' AND fecha_de_publicacion_del >= '2026-07-01' AND fecha_de_publicacion_del <= '2026-07-31' GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100"
+    },
+    {
+      "source": "PROCESSES",
+      "sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND estado_del_procedimiento = 'Publicado' AND fecha_de_publicacion_del >= '2026-07-01' AND fecha_de_publicacion_del <= '2026-07-31' ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3"
+    }
+  ],
+  "scope": [
+    "Fuentes: procesos.",
+    "Julio de 2026, según fecha de publicación.",
+    "Estado actual: estado_del_procedimiento: Publicado."
+  ]
+}

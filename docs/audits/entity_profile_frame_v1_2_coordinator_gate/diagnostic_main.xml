@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="0.132" timestamp="2026-09-08T11:03:45.877706-05:00" hostname="Rodrigos-MacBook-Pro.local"><testcase time="0.041" /><testcase classname="pytest" name="internal" time="0.000"><error message="internal error">Traceback (most recent call last):
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/main.py", line 318, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+                         ~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/main.py", line 372, in _main
+    config.hook.pytest_runtestloop(session=session)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/logging.py", line 801, in pytest_runtestloop
+    return (yield)  # Run all the tests.
+            ^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/terminal.py", line 707, in pytest_runtestloop
+    result = yield
+             ^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/main.py", line 396, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/warnings.py", line 89, in pytest_runtest_protocol
+    return (yield)
+            ^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/assertion/__init__.py", line 192, in pytest_runtest_protocol
+    return (yield)
+            ^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/unittest.py", line 587, in pytest_runtest_protocol
+    return (yield)
+            ^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/faulthandler.py", line 102, in pytest_runtest_protocol
+    return (yield)
+            ^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/runner.py", line 118, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/runner.py", line 137, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/runner.py", line 249, in call_and_report
+    report: TestReport = ihook.pytest_runtest_makereport(item=item, call=call)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_pytest/tmpdir.py", line 311, in pytest_runtest_makereport
+    rep = yield
+          ^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+    teardown.send(result)
+    ~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/_hypothesis_pytestplugin.py", line 341, in pytest_runtest_makereport
+    report = (yield).get_result()
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_result.py", line 103, in get_result
+    raise exc.with_traceback(tb)
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 38, in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 152, in _multicall
+    teardown.send(result)
+    ~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal/.venv/lib/python3.14/site-packages/pluggy/_callers.py", line 43, in run_old_style_hookwrapper
+    teardown.send(result)
+    ~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/gate_plugin.py", line 71, in pytest_runtest_makereport
+    from app.config import entity_profile_frame_enabled
+ImportError: cannot import name 'entity_profile_frame_enabled' from 'app.config' (/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/coordinator-parity-baselines-r_gk7mg2/main/app/config.py)</error></testcase></testsuite></testsuites>

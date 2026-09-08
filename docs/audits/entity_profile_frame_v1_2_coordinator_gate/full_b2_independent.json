@@ -1,0 +1,1282 @@
+{
+  "collection": [
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-False]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-True]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[ok]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[open_failure]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-False]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-True]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-False]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-True]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[exact_copy]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[changed_same_job]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[replace_with_duplicate]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[absent]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[foreign]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[duplicate_jobs]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-analiza contratos de alcaldia de baranoa en agosto]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-analiza contratos de alcaldia de baranoa en agosto]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-analiza contratos de alcaldia de baranoa en agosto]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-analiza contratos de alcaldia de baranoa en agosto]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-analiza contratos de alcaldia de baranoa en agosto]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-analiza contratos de alcaldia de baranoa en agosto]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-analiza contratos de alcaldia de baranoa en agosto]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_kind_is_authority_in_both_consumers_with_equivalent_clone_control",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-overview]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-suppliers]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-overview]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-suppliers]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-overview]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-suppliers]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-0]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--0]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1234.56]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--1234.56]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e100]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e308]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-0]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--0]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1234.56]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--1234.56]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e100]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e308]"
+  ],
+  "results": [
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0043992499995511025,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.7369585420092335,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0017340830090688542,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006586249946849421,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.6142767090059351,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.001957917003892362,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[ok]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005417499924078584,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[ok]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.41824112500762567,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[ok]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0015138749877223745,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[open_failure]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005718750035157427,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[open_failure]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.37996970799576957,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[open_failure]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00012925000919494778,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006226249970495701,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 1.0220895420061424,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0028699169924948364,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005904170102439821,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.9821008750004694,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0029064160044072196,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005984580056974664,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 1.1701639580132905,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.002297290993737988,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005422920075943694,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.9595305000111694,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0027552500105230138,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[exact_copy]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005993330123601481,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[exact_copy]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.21392862500215415,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[exact_copy]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.00839950190857e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[changed_same_job]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004312499950174242,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[changed_same_job]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.25686687500274274,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[changed_same_job]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.662499021738768e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[replace_with_duplicate]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00042129200301133096,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[replace_with_duplicate]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.22219158300140407,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[replace_with_duplicate]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.208300278056413e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[absent]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003970419929828495,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[absent]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2196784590050811,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[absent]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.841700037010014e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[foreign]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005173750105313957,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[foreign]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.21091608300048392,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[foreign]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 7.941700459923595e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[duplicate_jobs]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003935409913538024,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[duplicate_jobs]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.25485404099163134,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[duplicate_jobs]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.004100866150111e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00046308299351949245,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2113269579858752,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 7.916599861346185e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00041924999095499516,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.26376166701084003,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010687499889172614,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005097909888718277,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.21929470800387207,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.804199751466513e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043391699728090316,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.30533529199601617,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.137499728240073e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00048808299470692873,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.214367124994169,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.437500218860805e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00039066700264811516,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2611837090080371,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010375000420026481,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004897080070804805,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2543567500106292,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.325000817421824e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004283330054022372,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2605026669916697,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.962499850895256e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00046208398998714983,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.21407108400308061,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.608399366494268e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043637499038595706,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.26877549999335315,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.82080091489479e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005107499891892076,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2514737919991603,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.22080037323758e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004248329933034256,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2538027920090826,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.241700172424316e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004776249988935888,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.20652337500359863,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-analiza contratos de alcaldia de baranoa en agosto]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.654099656268954e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043829101196024567,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2541262500017183,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.704100036993623e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_kind_is_authority_in_both_consumers_with_equivalent_clone_control",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00038770900573581457,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_kind_is_authority_in_both_consumers_with_equivalent_clone_control",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1912557920004474,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_kind_is_authority_in_both_consumers_with_equivalent_clone_control",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.079200051724911e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-overview]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00044424999214243144,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-overview]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3100398749957094,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-overview]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.766699465923011e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-suppliers]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00042795800254680216,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-suppliers]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3188177919946611,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-suppliers]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.141700527630746e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-overview]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00047783298941794783,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-overview]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3610932079900522,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-overview]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.104200242087245e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-suppliers]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043683400144800544,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-suppliers]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3180220409994945,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-suppliers]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.949999755714089e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-overview]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00044620900007430464,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-overview]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.36025666599744,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-overview]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.804099343251437e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-suppliers]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004364159976830706,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-suppliers]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3217137079918757,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-suppliers]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.81669984664768e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-0]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00040179200004786253,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-0]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3203577919921372,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-0]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.079200051724911e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--0]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00044408399844542146,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--0]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.36433020800177474,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--0]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 7.99590052338317e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1234.56]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00044070801232010126,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1234.56]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3204107089986792,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1234.56]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.05000017862767e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--1234.56]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00042995798867195845,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--1234.56]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3482911250030156,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--1234.56]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.083299664780498e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e100]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004930419963784516,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e100]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3273597080114996,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e100]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001374160056002438,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e308]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006918750004842877,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e308]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.35808816699136514,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e308]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.370900806970894e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-0]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004656249948311597,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-0]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3723813750111731,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-0]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.487500599585474e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--0]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005111670034239069,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--0]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.31993012499879114,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--0]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.225000055972487e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1234.56]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005397499917307869,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1234.56]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3484937089961022,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1234.56]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 7.854199793655425e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--1234.56]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004244169977027923,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--1234.56]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.30577683298906777,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--1234.56]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 7.587499567307532e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e100]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004420000041136518,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e100]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3266868750069989,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e100]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.566700853407383e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e308]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004440420016180724,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e308]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3432996670017019,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e308]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00021675000607501715,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-False]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-True]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[ok]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[open_failure]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-False]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-True]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-False]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-True]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[exact_copy]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[changed_same_job]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[replace_with_duplicate]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[absent]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[foreign]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[duplicate_jobs]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-analiza contratos de alcaldia de baranoa en agosto]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-analiza contratos de alcaldia de baranoa en agosto]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-analiza contratos de alcaldia de baranoa en agosto]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-analiza contratos de alcaldia de baranoa en agosto]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-analiza contratos de alcaldia de baranoa en agosto]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-analiza contratos de alcaldia de baranoa en agosto]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-analiza contratos de alcaldia de baranoa en agosto]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_kind_is_authority_in_both_consumers_with_equivalent_clone_control": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-overview]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-suppliers]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-overview]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-suppliers]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-overview]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-suppliers]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-0]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--0]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1234.56]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--1234.56]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e100]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e308]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-0]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--0]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1234.56]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--1234.56]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e100]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e308]": {
+      "before_call": true,
+      "after_call": true
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-False]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-True]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[ok]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[open_failure]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-False]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[before_barrier_visible-True]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-False]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py::test_explicit_valid_retry_and_reset_never_copy_failed_history[complete_envelope-True]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[exact_copy]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[changed_same_job]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[replace_with_duplicate]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[absent]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[foreign]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_observations_reject_multiplicity_and_membership_on_reload[duplicate_jobs]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-analiza contratos de alcaldia de baranoa en agosto]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[kind-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-analiza contratos de alcaldia de baranoa en agosto]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[display_name-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-analiza contratos de alcaldia de baranoa en agosto]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[canonical_buyers-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-analiza contratos de alcaldia de baranoa en agosto]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-analiza contratos de alcaldia de baranoa en agosto]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[authority_version-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-analiza contratos de alcaldia de baranoa en agosto]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[group_id-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-analiza contratos de alcaldia de baranoa en agosto]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_each_authorized_buyer_field_rejected_after_digest_recalculation[absent_link-perfil de la alcald\\xeda mayor de Bogot\\xe1 en 2026]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py::test_kind_is_authority_in_both_consumers_with_equivalent_clone_control": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-overview]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[None-suppliers]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-overview]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[value-suppliers]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-overview]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[both-suppliers]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-0]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--0]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1234.56]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview--1234.56]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e100]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[overview-1e308]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-0]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--0]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1234.56]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers--1234.56]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e100]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py::test_supported_finite_amounts_keep_response_record_and_universe[suppliers-1e308]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py"
+  },
+  "exitstatus": 0
+}

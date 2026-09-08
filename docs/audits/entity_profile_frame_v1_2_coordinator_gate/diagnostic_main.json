@@ -1,0 +1,31 @@
+{
+  "collection": [
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.04074954100360628,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "call",
+      "outcome": "failed",
+      "duration": 5.904100544285029e-05,
+      "xfail": null,
+      "detail": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/gate_plugin.py:57: in pytest_runtest_call\n    from app.config import entity_profile_frame_enabled\nE   ImportError: cannot import name 'entity_profile_frame_enabled' from 'app.config' (/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/coordinator-parity-baselines-r_gk7mg2/main/app/config.py)"
+    }
+  ],
+  "flags": {},
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/coordinator-parity-baselines-r_gk7mg2/main/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/coordinator-parity-baselines-r_gk7mg2/main/tests/test_truth_layer_public_parity.py"
+  },
+  "exitstatus": 3
+}

@@ -1,0 +1,7 @@
+{
+  "GATE_CODE_HEAD": "db9b39195d144fd4fe1c8c80f085597fd7a94402",
+  "MAIN_FINAL": "7868664757b28bed16c583ea50327d669f1501e3",
+  "HEAD_FINAL_command": "git log -1 --format=%H -- docs/audits/entity_profile_frame_v1_2_coordinator_gate/gate_verdict.json",
+  "tested_to_final_code_diff_empty": true,
+  "no_self_referential_sha": "literal HEAD_FINAL is in the final task response"
+}

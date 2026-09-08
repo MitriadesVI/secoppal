@@ -1,0 +1,88 @@
+{
+  "verdict": "GATE_INCONCLUSIVE",
+  "runner_exit": 1,
+  "execution_complete": true,
+  "all_required_components_pass": false,
+  "GATE_CODE_HEAD": "db9b39195d144fd4fe1c8c80f085597fd7a94402",
+  "MAIN_BEFORE": "7868664757b28bed16c583ea50327d669f1501e3",
+  "MAIN_AFTER": "7868664757b28bed16c583ea50327d669f1501e3",
+  "runtime_audited": "4edc248e60610efdbeebb3cb8010bc7b59445cad",
+  "runtime_delta": [],
+  "functional_failure_demonstrated": false,
+  "blockers": [
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "file": "app/core/workflow/handlers/pagination.py"
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "file": "streamlit_app.py"
+    }
+  ],
+  "classification": "Unadjudicated parity-pin divergence already present on audited runtime; both checks pass on main. No authority to repin in this lane. Green behavioral controls do not override the integrity guard.",
+  "results": {
+    "global": {
+      "collection": 13084,
+      "counts": {
+        "passed": 13055,
+        "skipped": 11,
+        "xfailed": 16,
+        "failed": 2
+      },
+      "effective_frame_after_fixtures": {
+        "False": 12824,
+        "True": 257
+      },
+      "network_attempts": 917,
+      "network_denied": 0,
+      "deselected": 0
+    },
+    "b2_independent": {
+      "collection": 47,
+      "counts": {
+        "passed": 47
+      },
+      "effective_frame_after_fixtures": {
+        "True": 47
+      },
+      "network_attempts": 0,
+      "network_denied": 0,
+      "deselected": 0
+    },
+    "b3_remediation": {
+      "collection": 303,
+      "counts": {
+        "passed": 303
+      },
+      "effective_frame_after_fixtures": {
+        "True": 83,
+        "False": 220
+      },
+      "network_attempts": 0,
+      "network_denied": 0,
+      "deselected": 0
+    },
+    "b3_independent": {
+      "collection": 115,
+      "counts": {
+        "passed": 115
+      },
+      "effective_frame_after_fixtures": {
+        "False": 11,
+        "True": 104
+      },
+      "network_attempts": 0,
+      "network_denied": 0,
+      "deselected": 0
+    }
+  },
+  "query_corpus": "89/89 PASS",
+  "semgrep": "10 baseline, 10 candidate, 0 new, 0 scanner errors",
+  "historical_and_runtime_hashes_preserved": true,
+  "merge_permitted": false,
+  "production_go": false,
+  "frame_initial_configuration": false,
+  "new_skip_or_xfail_marks": false,
+  "full_suite_runs": 1,
+  "HEAD_FINAL": "Resolve the final evidence commit from this branch; literal SHA delivered in the final task response to avoid self-reference."
+}

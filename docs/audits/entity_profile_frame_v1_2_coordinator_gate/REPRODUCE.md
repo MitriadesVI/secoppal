@@ -55,3 +55,31 @@ residuales, Actor/Radar/lookup/paginación y regresiones B están en tests/;
 es el componente adicional E; las mutaciones históricas permanecen como
 evidencia independiente congelada B.3, no se modifican ni se atribuyen nuevas
 corridas de mutaciones a este gate de reconciliación.
+
+
+## Diagnóstico de las guardas (sin repetir la suite)
+
+```sh
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python docs/audits/entity_profile_frame_v1_2_coordinator_gate/run_gate.py focal tests/test_truth_layer_public_parity.py --run-id parity_diagnosis
+```
+
+Los diagnósticos comparativos exportan con git archive app/, streamlit_app.py,
+pytest.ini y los tests/conftest.py + test_truth_layer_public_parity.py intactos
+de cada SHA. Ejecutan sólo los dos node IDs fallidos en cwd de la exportación,
+con el intérprete canónico, persistencia temporal y offline_guard. El comando
+literal y SHA de origen están al principio de diagnostic_*.log. Para main se
+omite gate_plugin porque su API de flags todavía no existe. La salida de ese
+intento incompatible se conserva por separado; no se presenta como test fallido.
+
+HEAD_FINAL se obtiene del último commit de gate_verdict.json en la rama
+indicada. Su SHA literal se entrega fuera de los documentos que contiene para
+no inventar una referencia autorreferente. El diff GATE_CODE_HEAD→HEAD_FINAL
+sólo añade evidencia y ajusta documentación; no cambia tests/helpers/runtime.
+
+
+Almacenamiento de salidas literales: algunos logs y XML contienen espacios
+finales emitidos por pytest/Semgrep. Se conservan byte a byte comprimidos con
+gzip, sin limpiar ni reescribir la salida. artifact_storage.json mapea los
+nombres lógicos de los comandos/resultados a .gz y registra ambos SHA256.
+La descompresión reproduce exactamente la salida original. Esto permite
+verificar diff-check también sobre el commit documental final.

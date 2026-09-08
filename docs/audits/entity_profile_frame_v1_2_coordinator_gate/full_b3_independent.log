@@ -1,0 +1,6 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest -p gate_plugin -q -o cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-wkz7eorq/pytest_cache docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_limits.py docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_property.py docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py -p offline_guard --tb=short --junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/full_b3_independent.xml
+........................................................................ [ 62%]
+...........................................                              [100%]
+115 passed in 35.75s
+
+EXIT_CODE=0
