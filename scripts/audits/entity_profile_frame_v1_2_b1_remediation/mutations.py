@@ -101,6 +101,11 @@ def main():
             item = replace(item, kills=(*item.kills, A + 'test_nonfinite_metric_remains_an_honest_response'))
         mutations.append(item)
     mutations.extend(ADDITIONS)
+    only = os.getenv("B1_MUTATION_ONLY")
+    if only:
+        mutations = [item for item in mutations if item.mutation_id == only]
+        if not mutations:
+            raise ValueError("unknown mutation")
     with tempfile.TemporaryDirectory(prefix='secoppal-b1-mutations-') as temp:
         root = Path(temp)
         archive = root / 'source.tar'
@@ -141,7 +146,7 @@ def main():
         report['runtime_restored'] = before == hashes(root)
         report['summary'] = {value: sum(m['verdict'] == value for m in report['mutations'])
                              for value in sorted({m['verdict'] for m in report['mutations']})}
-        (OUT / 'mutations.json').write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n')
+        (OUT / ('mutations_m9.json' if only else 'mutations.json')).write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n')
         print(report['summary'], 'restored', report['runtime_restored'], flush=True)
 
 
