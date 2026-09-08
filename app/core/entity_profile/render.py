@@ -81,7 +81,7 @@ def _overview(profile: EntityProfile) -> list[str]:
 
     by_value = profile.suppliers.fact("top_by_contract_value") or ()
     by_count = profile.suppliers.fact("top_by_contract_count") or ()
-    if by_value:
+    if by_value and all(item.total_contract_value is not None for item in by_value):
         supplier = by_value[0]
         lines.append(
             f"• Principal contratista por valor: {supplier.observed_name} "
@@ -114,12 +114,15 @@ def _overview(profile: EntityProfile) -> list[str]:
 def _supplier_lines(title: str, suppliers: tuple[SupplierMetric, ...], metric: str) -> list[str]:
     if not suppliers:
         return []
+    if metric == "value" and any(item.total_contract_value is None for item in suppliers):
+        title = "Proveedores observados; ranking por valor no acreditado"
     lines = [title]
     for supplier in suppliers:
         value = (
             _count(supplier.contract_count, "contratos")
             if metric == "count"
-            else _money(supplier.total_contract_value)
+            else (_money(supplier.total_contract_value) if supplier.total_contract_value is not None
+                  else "monto no acreditable")
         )
         lines.append(f"• {supplier.observed_name}: {value}")
     return lines

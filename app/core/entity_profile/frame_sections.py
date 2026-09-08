@@ -274,18 +274,25 @@ def _suppliers(rows, calls) -> EntityProfileSection:
     if not ids:
         return unavailable_section(attempted=True)
     facts: list[EntityProfileFact] = []
+    warnings = list(_warnings("los proveedores", ids, calls))
+    status = _status(ids, calls)
     for call_id, key in (
         ("supplier_count", "top_by_contract_count"),
         ("supplier_value", "top_by_contract_value"),
     ):
         if call_id in ids and calls[call_id].status == "SUCCESS":
-            facts.append(_fact(
-                key, parse_suppliers(rows.get(call_id, [])), CONTRACT_DATASET,
-            ))
+            suppliers = parse_suppliers(rows.get(call_id, []))
+            if any(item.total_contract_value is None for item in suppliers):
+                status = SectionStatus.PARTIAL
+                warnings.append(
+                    "Hay montos de proveedores no acreditables; el ranking por valor "
+                    "no está acreditado. Se conservan las identidades y los conteos válidos.",
+                )
+            facts.append(_fact(key, suppliers, CONTRACT_DATASET))
     return EntityProfileSection(
-        _status(ids, calls), (CONTRACT_DATASET,),
+        status, (CONTRACT_DATASET,),
         (("identity", "typed_supplier_document"),), tuple(facts),
-        _warnings("los proveedores", ids, calls),
+        tuple(dict.fromkeys(warnings)),
     )
 
 

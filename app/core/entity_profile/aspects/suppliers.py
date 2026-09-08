@@ -7,11 +7,11 @@ from app.core.actor_document_types import is_personal_source_type
 from app.core.actor_identity import normalize_identity
 from app.core.actor_identity_soql import exclude_actor_document_sentinels
 from app.core.entity_profile.aspects.common import (
-    as_float,
     as_optional_int,
     build_where,
 )
 from app.core.entity_profile.models import CONTRACT_DATASET, SupplierMetric
+from app.core.entity_profile.supplier_numbers import supplier_amount
 
 
 SUPPLIER_LIMIT = 5
@@ -60,12 +60,14 @@ def parse_suppliers(rows: list[dict]) -> tuple[SupplierMetric, ...]:
         if match.key is None:
             continue
         key = match.key
+        amount = supplier_amount(row.get("total_contract_value"))
         parsed.append(SupplierMetric(
             actor_identity=f"{key.document_type}:{key.base_number}",
             document_type=key.document_type,
             document=key.base_number,
             observed_name=str(row.get("supplier_name") or "Proveedor sin nombre"),
             contract_count=as_optional_int(row.get("contract_count")),
-            total_contract_value=as_float(row.get("total_contract_value")),
+            total_contract_value=amount.value,
+            total_contract_value_status=amount.status,
         ))
     return tuple(parsed)

@@ -194,8 +194,9 @@ def build_execution_record(
             sql=observed.sql, status=observed.status, attempted=observed.attempted,
             metrics=tuple(
                 RecordedMetric(
-                    name=metric.name, value=_serialize(metric.value),
-                    status=metric.status.value,
+                    name=metric.name, value=_serialize(metric.value)
+                    if _recorded_status(job, metric) == 'VALID' else None,
+                    status=_recorded_status(job, metric),
                 )
                 for metric in observed.metrics
             ),
@@ -211,6 +212,15 @@ def build_execution_record(
         not_requested_sections=tuple(sorted(plan.not_requested_sections)),
         limitations=plan.limitations, calls=tuple(calls),
     )
+
+
+def _recorded_status(job, metric) -> str:
+    if (job.call_id in ('supplier_count', 'supplier_value')
+            and metric.name == 'total_contract_value' and metric.status is MetricStatus.VALID):
+        from app.core.entity_profile.supplier_numbers import supplier_amount
+        if supplier_amount(metric.value).status != 'VALID':
+            return MetricStatus.INVALID.value
+    return metric.status.value
 
 
 def _serialize(value: Any) -> str | None:

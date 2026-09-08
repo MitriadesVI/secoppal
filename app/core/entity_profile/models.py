@@ -91,6 +91,7 @@ class SupplierMetric:
     observed_name: str
     contract_count: int | None
     total_contract_value: float | None
+    total_contract_value_status: str = "VALID"
 
 
 @dataclass(frozen=True, slots=True)
