@@ -36,8 +36,16 @@ from app.core._followup_constants import (
     NOISE_PREFIXES,
     RESET_COMMANDS,
 )
+from app.core.conversation_envelope import (
+    ConversationEnvelope,
+    EnvelopeError,
+    EnvelopeRead,
+    EnvelopeStatus,
+    now_iso,
+)
 from app.core.derived_execution_state import strip_derived_execution_state
 from app.core.pagination_buffer import PaginationBuffer, pagination_fingerprint
+from app.core.store_lock import conversation_lock
 
 
 # ---------------------------------------------------------------------------
@@ -138,6 +146,34 @@ class Turn:
 
 
 DEFAULT_CONVERSATION_PATH = Path("data/conversations")
+
+# El sobre publicado vive en su propio JSONL append-only, junto al historial.
+# No sustituye a `append_turn`: la ruta V1.1 sigue escribiendo su turno, y la
+# V1.2 publica ADEMÁS un registro versionado completo. Mezclarlos habría
+# obligado a que un lector viejo entendiera el sobre nuevo, que es justo lo que
+# la prueba de rollback debe poder rechazar.
+ENVELOPE_SUFFIX = ".envelopes.jsonl"
+
+
+class StaleRevisionError(RuntimeError):
+    """Otro escritor publicó primero. No se pisa: se falla y se informa."""
+
+
+@dataclass(frozen=True)
+class TurnReservation:
+    """El turno reservado ANTES de ejecutar: sus IDs y la revisión que vio."""
+
+    chat_id: str
+    turn_id: str
+    result_id: str
+    expected_revision: int
+    previous: EnvelopeRead
+
+    @property
+    def revision(self) -> int:
+        """La revisión que este turno va a publicar si nadie se adelanta."""
+        return self.expected_revision + 1
+
 
 
 class ConversationStore:
@@ -246,6 +282,13 @@ class ConversationStore:
             path = self._path_for(chat_id)
             if path.exists():
                 path.unlink()
+        # Un reset explícito invalida también la continuidad publicada: dejar
+        # el sobre vivo mantendría un contrato que referencia un historial que
+        # ya no existe.
+        envelope_path = self._envelope_path_for(chat_id)
+        with conversation_lock(envelope_path):
+            if envelope_path.exists():
+                envelope_path.unlink()
 
     def save_pagination_buffer(self, chat_id: str, buffer: PaginationBuffer) -> None:
         """Persiste atomicamente un snapshot por grupo, conservando sus hermanos."""
@@ -304,6 +347,107 @@ class ConversationStore:
             path = self._pagination_path_for(chat_id)
             if path.exists():
                 path.unlink()
+
+    # ------------------------------------------------------------------
+    # Publicación versionada (V1.2)
+    # ------------------------------------------------------------------
+
+    def reserve_turn(self, chat_id: str) -> TurnReservation:
+        """Lee la revisión vigente y reserva serialmente el turno del chat.
+
+        Los IDs se asignan AQUÍ, antes de ejecutar, porque el contrato de
+        continuación tiene que referenciarlos y una referencia no puede
+        apuntar a algo que todavía no tiene nombre.
+        """
+        path = self._envelope_path_for(chat_id)
+        with conversation_lock(path):
+            read = self._read_envelope(path)
+        return TurnReservation(
+            chat_id=chat_id,
+            turn_id=uuid.uuid4().hex[:12],
+            result_id=uuid.uuid4().hex[:12],
+            expected_revision=read.revision,
+            previous=read,
+        )
+
+    def publish_turn(
+        self,
+        reservation: TurnReservation,
+        *,
+        user_query: str,
+        response: str,
+        profile_state: dict | None = None,
+        continuation: dict | None = None,
+        execution_record: dict | None = None,
+    ) -> ConversationEnvelope:
+        """Publica respuesta, estado, contrato y ejecución como UN registro.
+
+        `expected_revision` se comprueba BAJO la exclusión, no antes de pedirla:
+        comprobarla fuera deja la ventana en la que otro escritor publica entre
+        la lectura y la escritura.
+        """
+        envelope = ConversationEnvelope(
+            revision=reservation.revision,
+            turn_id=reservation.turn_id,
+            result_id=reservation.result_id,
+            chat_id=reservation.chat_id,
+            user_query=user_query,
+            response=response,
+            timestamp=now_iso(),
+            profile_state=profile_state,
+            continuation=continuation,
+            execution_record=execution_record,
+        )
+        line = envelope.to_json()
+        path = self._envelope_path_for(reservation.chat_id)
+        with conversation_lock(path):
+            current = self._read_envelope(path).revision
+            if current != reservation.expected_revision:
+                raise StaleRevisionError(
+                    f"expected revision {reservation.expected_revision}, "
+                    f"found {current}",
+                )
+            with path.open("a", encoding="utf-8") as handle:
+                handle.write(line + "\n")
+                handle.flush()
+                os.fsync(handle.fileno())
+        return envelope
+
+    def load_envelope(self, chat_id: str) -> EnvelopeRead:
+        """El último sobre publicado, o por qué no hay continuidad válida."""
+        path = self._envelope_path_for(chat_id)
+        with conversation_lock(path):
+            return self._read_envelope(path)
+
+    def _envelope_path_for(self, chat_id: str) -> Path:
+        safe = _sanitize_chat_id(chat_id)
+        return self.base_path / f"{safe}{ENVELOPE_SUFFIX}"
+
+    @staticmethod
+    def _read_envelope(path: Path) -> EnvelopeRead:
+        if not path.exists():
+            return EnvelopeRead(EnvelopeStatus.EMPTY)
+        lines = [
+            line for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        if not lines:
+            return EnvelopeRead(EnvelopeStatus.EMPTY)
+        try:
+            envelope = ConversationEnvelope.from_json(lines[-1])
+        except EnvelopeError as exc:
+            # Una cola corrupta invalida la continuidad. NO se retrocede a una
+            # línea anterior: esa línea describía otro resultado, y reactivar su
+            # cursor mostraría filas de un universo que ya no está en pantalla.
+            return EnvelopeRead(
+                EnvelopeStatus.CORRUPT, None, len(lines), str(exc),
+            )
+        if envelope.revision != len(lines):
+            return EnvelopeRead(
+                EnvelopeStatus.CORRUPT, None, len(lines),
+                "revision does not match the published sequence",
+            )
+        return EnvelopeRead(EnvelopeStatus.OK, envelope, envelope.revision)
 
     # ------------------------------------------------------------------
     # Internos

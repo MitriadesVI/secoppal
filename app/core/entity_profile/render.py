@@ -185,6 +185,18 @@ def _focused(profile: EntityProfile) -> list[str]:
     return _overview(profile)
 
 
+def profile_fact_lines(profile: EntityProfile) -> list[str]:
+    """Los HECHOS de un perfil, sin encabezado ni alcance.
+
+    V1.2-B compone su respuesta desde el plan compilado y no desde el scope
+    legacy, pero los hechos se dicen igual: la forma de una línea de proveedor,
+    de modalidad o de monto es la misma decisión de producto, y duplicarla
+    sería tener dos maneras de contar lo mismo. Esto es exactamente lo que
+    `render_entity_profile` ya usaba; sólo deja de ser privado.
+    """
+    return _overview(profile) if profile.focus == "overview" else _focused(profile)
+
+
 def _short(text: str, limit: int = 90) -> str:
     text = " ".join(text.split())
     return text if len(text) <= limit else f"{text[:limit - 3]}..."
