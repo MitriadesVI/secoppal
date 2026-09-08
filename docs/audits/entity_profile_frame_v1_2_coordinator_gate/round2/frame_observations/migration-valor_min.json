@@ -1,0 +1,37 @@
+{
+  "request": {
+    "focus": "overview",
+    "sources": "CONTRACTS",
+    "sources_provenance": "EXPLICIT",
+    "sources_origin": "EXPLICIT",
+    "time_from": "2026-08-01",
+    "time_to": "2026-08-31",
+    "event": "CONTRACT_SIGNATURE",
+    "temporal_claims": [
+      {
+        "event": "CONTRACT_SIGNATURE",
+        "span": [
+          9,
+          17
+        ],
+        "term": "firmados"
+      }
+    ],
+    "unsupported_events": [],
+    "keeps_current_state": true,
+    "topic": [],
+    "modality": [],
+    "value_min": 100,
+    "value_max": null
+  },
+  "params": {
+    "entidad_resolved": "ALCALDIA DE BARANOA",
+    "fecha_desde": "2026-08-01",
+    "fecha_hasta": "2026-08-31",
+    "valor_min": 200
+  },
+  "migration": "INVALID_CONTEXT",
+  "frame": null,
+  "compile": null,
+  "sql": []
+}

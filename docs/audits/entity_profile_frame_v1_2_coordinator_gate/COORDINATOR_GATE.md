@@ -226,3 +226,29 @@ El nuevo SHA congelado y los resultados de la segunda corrida se consignarán
 en round2/full_refs.json, round2/full_results.json y round2/CLOSEOUT.md. Los
 límites P2, las observaciones de reset y los baselines siguen vigentes. Este
 cierre no autoriza merge, push, despliegue, dogfood ni activación.
+
+### Resultado de la segunda corrida
+
+**V1_2_FRAME_GO_FOR_MERGE_OFF** sobre
+`24d67fcb9195e5d79b9dca59efa38f42e0973195`.
+MAIN_BEFORE = MAIN_AFTER = `7868664757b28bed16c583ea50327d669f1501e3`,
+ancestro del candidato. La primera corrida GATE_INCONCLUSIVE permanece arriba
+sin sustituir su evidencia. Detalle actual: [round2/CLOSEOUT.md](round2/CLOSEOUT.md).
+
+```text
+All checks passed!
+Ran 3 rules on 326 files: 10 findings.
+13071 passed, 11 skipped, 16 xfailed in 1009.65s (0:16:49)
+47 passed in 16.96s
+303 passed in 40.56s
+115 passed in 33.42s
+Summary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)
+```
+
+Todos los componentes del runner pasaron; Semgrep mantiene baseline rojo 10,
+cero nuevos. La colección sólo añadió los 14 controles autorizados; no retiró
+casos y conservó idénticos skips/xfails. Runtime intacto, código congelado y
+128 archivos de la primera evidencia preservados byte a byte. El P2 y demás
+límites permanecen. Sin merge, push, despliegue ni activación. El HEAD final
+se resuelve en el último commit de round2/gate_verdict.json y se entrega
+literalmente fuera del propio commit para evitar autorreferencia.

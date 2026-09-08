@@ -1,0 +1,230 @@
+{
+  "query": "analiza contratos firmados en agosto actualmente terminados de alcaldia de baranoa",
+  "params": {
+    "dataset": "contratos",
+    "dataset_explicit": true,
+    "fecha_desde": "2026-08-01",
+    "fecha_hasta": "2026-08-31",
+    "_temporal_replace_scope": true,
+    "entidad": "Municipio de baranoa",
+    "entidad_resolved": "ALCALDIA MUNICIPAL DE BARANOA",
+    "entidad_resolution": {
+      "value": "ALCALDIA MUNICIPAL DE BARANOA",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de baranoa",
+        "resolution_method": "exact"
+      }
+    },
+    "estado_contrato": [
+      "terminado"
+    ],
+    "estado_family": "contrato_terminado",
+    "estado": "terminado",
+    "estado_field": "estado_contrato",
+    "objeto": [
+      "analiza"
+    ]
+  },
+  "claims": [
+    {
+      "id": "buyer-1",
+      "turn_id": "t1",
+      "span": [
+        63,
+        82
+      ],
+      "dimension": "BUYER",
+      "canonical_value": "ALCALDIA MUNICIPAL DE BARANOA",
+      "authority": "entity_profile.scope",
+      "authority_version": "1",
+      "relations": []
+    },
+    {
+      "id": "source-1",
+      "turn_id": "t1",
+      "span": [
+        8,
+        17
+      ],
+      "dimension": "SOURCE",
+      "canonical_value": "CONTRACTS",
+      "authority": "entity_profile.source_request",
+      "authority_version": "2",
+      "relations": []
+    },
+    {
+      "id": "event-1",
+      "turn_id": "t1",
+      "span": [
+        18,
+        26
+      ],
+      "dimension": "EVENT",
+      "canonical_value": "CONTRACT_SIGNATURE",
+      "authority": "entity_profile.temporal_event",
+      "authority_version": "2",
+      "relations": [
+        {
+          "kind": "HAS_SUBJECT",
+          "target_claim_id": "source-1"
+        }
+      ]
+    },
+    {
+      "id": "period-1",
+      "turn_id": "t1",
+      "span": [
+        27,
+        36
+      ],
+      "dimension": "PERIOD",
+      "canonical_value": {
+        "lower": "2026-08-01",
+        "upper": "2026-08-31",
+        "lower_inclusive": true,
+        "upper_inclusive": true,
+        "civil_reference": "2026-09-07",
+        "expression": "en agosto"
+      },
+      "authority": "temporal_semantics",
+      "authority_version": "1",
+      "relations": [
+        {
+          "kind": "PERIOD_OF",
+          "target_claim_id": "event-1"
+        }
+      ]
+    },
+    {
+      "id": "state-1",
+      "turn_id": "t1",
+      "span": [
+        49,
+        59
+      ],
+      "dimension": "CURRENT_STATE",
+      "canonical_value": {
+        "field": "estado_contrato",
+        "values": [
+          "terminado"
+        ]
+      },
+      "authority": "estado_families",
+      "authority_version": "1",
+      "relations": [
+        {
+          "kind": "MODIFIES",
+          "target_claim_id": "source-1"
+        }
+      ]
+    }
+  ],
+  "frame": {
+    "schema_version": 1,
+    "frame_id": "be9b4507-96d9-547b-b159-7c118221a356",
+    "revision": 1,
+    "buyer_scope": {
+      "kind": "BUYER_UNIT",
+      "display_name": "ALCALDIA MUNICIPAL DE BARANOA",
+      "canonical_buyers": [
+        "ALCALDIA MUNICIPAL DE BARANOA"
+      ],
+      "authority": "PRODUCT_BUYER_UNIT_RESOLUTION",
+      "authority_version": "1",
+      "group_id": null
+    },
+    "focus": "overview",
+    "source_selection": {
+      "requested": [
+        "CONTRACTS"
+      ],
+      "origin": "EXPLICIT"
+    },
+    "source_predicates": {
+      "CONTRACTS": {
+        "source": "CONTRACTS",
+        "temporal": {
+          "event": "CONTRACT_SIGNATURE",
+          "period": {
+            "lower": "2026-08-01",
+            "upper": "2026-08-31",
+            "lower_inclusive": true,
+            "upper_inclusive": true,
+            "civil_reference": "2026-09-07",
+            "expression": "en agosto"
+          },
+          "event_origin": "EXPLICIT",
+          "period_origin": "EXPLICIT"
+        },
+        "current_state": {
+          "predicates": [
+            {
+              "field": "estado_contrato",
+              "values": [
+                "terminado"
+              ]
+            }
+          ]
+        },
+        "topic": {
+          "kind": "TRUE"
+        },
+        "modality": {
+          "include": [],
+          "exclude": []
+        },
+        "contract_type": {
+          "include": [],
+          "exclude": []
+        },
+        "value": {
+          "lower": null,
+          "upper": null,
+          "magnitude": "",
+          "currency": "COP"
+        }
+      }
+    },
+    "provenance": {
+      "claim_ids": [
+        "source-1",
+        "event-1",
+        "period-1",
+        "state-1"
+      ],
+      "turn_ids": [
+        "t1"
+      ],
+      "authorities": []
+    }
+  },
+  "status": "READY",
+  "issues": [],
+  "jobs": [
+    {
+      "source": "CONTRACTS",
+      "sql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND estado_contrato = 'terminado' AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31'"
+    },
+    {
+      "source": "CONTRACTS",
+      "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND estado_contrato = 'terminado' AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+    },
+    {
+      "source": "CONTRACTS",
+      "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND estado_contrato = 'terminado' AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+    },
+    {
+      "source": "CONTRACTS",
+      "sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND estado_contrato = 'terminado' AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3"
+    }
+  ],
+  "scope": [
+    "Fuentes: contratos.",
+    "Agosto de 2026, según fecha de firma.",
+    "Estado actual: estado_contrato: terminado."
+  ]
+}

@@ -1,0 +1,240 @@
+[
+  {
+    "component": "full_ruff",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "app/",
+      "tests/",
+      "scripts/"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 0.05218508400139399,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_ruff.log"
+  },
+  {
+    "component": "full_ruff_complement",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 0.008996250006021,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_ruff_complement.log"
+  },
+  {
+    "component": "full_semgrep_base",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+      "--config",
+      ".semgrep/secoppal-laws.yml",
+      "app/",
+      "--metrics=off",
+      "--json",
+      "--output",
+      "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/semgrep_base.json"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 1.5783600419963477,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_semgrep_base.log"
+  },
+  {
+    "component": "full_semgrep_candidate",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+      "--config",
+      ".semgrep/secoppal-laws.yml",
+      "app/",
+      "--metrics=off",
+      "--json",
+      "--output",
+      "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/semgrep_candidate.json"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 1.1913994170026854,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_semgrep_candidate.log"
+  },
+  {
+    "component": "semgrep_evaluation",
+    "pass": true
+  },
+  {
+    "component": "full_global",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "gate_plugin",
+      "-q",
+      "-o",
+      "cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-dxjdhdet/pytest_cache",
+      "tests",
+      "--tb=short",
+      "--junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_global.xml"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 1011.8951312919962,
+    "exit": 0,
+    "pass": true,
+    "network": "secop_reads",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_global.log"
+  },
+  {
+    "component": "full_b2_independent",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "gate_plugin",
+      "-q",
+      "-o",
+      "cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-dxjdhdet/pytest_cache",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+      "-p",
+      "offline_guard",
+      "--tb=short",
+      "--junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b2_independent.xml"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 17.48554441599117,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b2_independent.log"
+  },
+  {
+    "component": "full_b3_remediation",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "gate_plugin",
+      "-q",
+      "-o",
+      "cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-dxjdhdet/pytest_cache",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_ports.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_supplier_ports.py",
+      "-p",
+      "offline_guard",
+      "--tb=short",
+      "--junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_remediation.xml"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 41.010589332989184,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_remediation.log"
+  },
+  {
+    "component": "full_b3_independent",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "gate_plugin",
+      "-q",
+      "-o",
+      "cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-dxjdhdet/pytest_cache",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_limits.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_property.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py",
+      "-p",
+      "offline_guard",
+      "--tb=short",
+      "--junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_independent.xml"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 36.25439308400382,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_independent.log"
+  },
+  {
+    "component": "full_query_corpus",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "scripts/run_query_corpus.py",
+      "--mode",
+      "all",
+      "--show-pass"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 0.7610825410083635,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_query_corpus.log"
+  },
+  {
+    "component": "full_lint_core",
+    "command": [
+      "make",
+      "lint-core"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 0.022920417002751492,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_lint_core.log"
+  },
+  {
+    "component": "full_diff_check",
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "616826231d5d2bf25c47640e5dcf4f1bbc491326..HEAD"
+    ],
+    "sha": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+    "duration": 0.12238400000205729,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_diff_check.log"
+  },
+  {
+    "component": "preservation",
+    "pass": true
+  },
+  {
+    "component": "code_frozen",
+    "pass": true
+  }
+]

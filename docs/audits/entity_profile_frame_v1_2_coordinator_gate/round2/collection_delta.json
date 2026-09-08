@@ -1,0 +1,24 @@
+{
+  "old_collection": 13084,
+  "new_collection": 13098,
+  "added": [
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]"
+  ],
+  "removed": [],
+  "skips_xfails_identical_by_nodeid": true,
+  "new_failures": [],
+  "new_controls_network_attempts": []
+}

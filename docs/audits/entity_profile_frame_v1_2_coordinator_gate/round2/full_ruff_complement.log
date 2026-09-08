@@ -1,0 +1,4 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff check docs/audits/entity_profile_frame_v1_2_coordinator_gate
+All checks passed!
+
+EXIT_CODE=0

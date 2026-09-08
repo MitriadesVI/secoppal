@@ -1,0 +1,218 @@
+[
+  {
+    "nodeid": "tests/test_actor_conversation_dogfood.py::test_d1_con_means_buyer_and_preserves_actor_and_year",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.002049665999948047,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+  },
+  {
+    "nodeid": "tests/test_actor_conversation_dogfood.py::test_d2_candidate_two_has_selection_precedence_and_no_framing_leak",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.0009196659957524389,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+  },
+  {
+    "nodeid": "tests/test_actor_conversation_dogfood.py::test_d3_actor_and_buyer_are_separate_roles_and_not_topic",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.12980575000983663,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+  },
+  {
+    "nodeid": "tests/test_actor_conversation_dogfood.py::test_d4_distinctive_actor_token_cannot_degrade_to_topic",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.09270191699033603,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+  },
+  {
+    "nodeid": "tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority[ingenieria]",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.09250104200327769,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+  },
+  {
+    "nodeid": "tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority[ingieneria]",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.25426874999538995,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+  },
+  {
+    "nodeid": "tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority[ingeneria]",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.09151345799909905,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+  },
+  {
+    "nodeid": "tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority[ingeniera]",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.09268287499435246,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+  },
+  {
+    "nodeid": "tests/test_actor_hardening_v2_1_remediation.py::test_actor_region_and_buyer_together_still_resolve[contratos del proveedor ana maria llanos en los llanos con alcaldia de barranquilla-Orinoquia]",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.12341275000653695,
+    "xfail": "Pre-existing in BASE f9cb8c9, not a V2 regression: actor + explicit region + explicit buyer ends CANDIDATES instead of resolving. Verified on BASE directly; out of scope for this remediation.",
+    "detail": "tests/test_actor_hardening_v2_1_remediation.py:354: in test_actor_region_and_buyer_together_still_resolve\n    assert params.get(\"actor_resolution_status\") == \"RESOLVED\"\nE   AssertionError: assert 'CANDIDATES' == 'RESOLVED'\nE     \nE     - RESOLVED\nE     + CANDIDATES"
+  },
+  {
+    "nodeid": "tests/test_actor_hardening_v2_1_remediation.py::test_actor_region_and_buyer_together_still_resolve[contratos del proveedor carlos rueda caribe en Caribe con alcaldia de barranquilla-Caribe]",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.12206716698710807,
+    "xfail": "Pre-existing in BASE f9cb8c9, not a V2 regression: actor + explicit region + explicit buyer ends CANDIDATES instead of resolving. Verified on BASE directly; out of scope for this remediation.",
+    "detail": "tests/test_actor_hardening_v2_1_remediation.py:354: in test_actor_region_and_buyer_together_still_resolve\n    assert params.get(\"actor_resolution_status\") == \"RESOLVED\"\nE   AssertionError: assert 'CANDIDATES' == 'RESOLVED'\nE     \nE     - RESOLVED\nE     + CANDIDATES"
+  },
+  {
+    "nodeid": "tests/test_actor_index_isolation.py::test_the_production_index_does_not_leak_into_the_default_resolver",
+    "when": "setup",
+    "outcome": "skipped",
+    "duration": 0.00010341699817217886,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_actor_index_isolation.py', 37, 'Skipped: sin directorio local no hay nada que aislar')"
+  },
+  {
+    "nodeid": "tests/test_control_language.py::test_scope_change_carrying_a_new_topic_keeps_that_topic",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.0017149999912362546,
+    "xfail": "Pre-existing, unrelated to control language: a follow-up classified as change_scope carries a genuinely new topic, but change_scope's mutation policy does not allow topic fields, so the gate drops it and the merger inherits the previous topic. Verified identical on main b661a09. Belongs to follow-up topic hygiene, not R6 \u2014 see DEFERRED_FOLLOWUP_SCOPE_TOPIC.",
+    "detail": "tests/test_control_language.py:410: in test_scope_change_carrying_a_new_topic_keeps_that_topic\n    assert \"software\" in _objeto(merged)\nE   AssertionError: assert 'software' in ['mantenimiento']\nE    +  where ['mantenimiento'] = _objeto({'dataset': 'contratos', 'departamento': 'en bogota', 'departamento_resolution': {'confidence': 'high', 'kind': 'territorial_department', 'like_value': None, 'metadata': {}, ...}, 'departamento_resolved': 'Distrito Capital de Bogot\u00e1', ...})"
+  },
+  {
+    "nodeid": "tests/test_demo_alcalde.py::test_turno2_contiene_insights_entity_concentration",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.00743362499633804,
+    "xfail": "Observer 2.0 signals requieren mock de aggregate() adicional",
+    "detail": "tests/test_demo_alcalde.py:134: in test_turno2_contiene_insights_entity_concentration\n    assert \"concentra\" in r2[\"response\"]\nE   AssertionError: assert 'concentra' in '\ud83d\udccb Procesos de vial en Atl\u00e1ntico\\nEncontre 15 resultados m\u00e1s recientes:\\n\\nEl 100% son de ALCALDIA DE BARRANQUILLA.\\nL...rta apertura: Abierto\\n   https://example.com/14\\n\\n\ud83d\udca1 Sugerencias:\\n1. Ordenar por mayor valor\\n2. Buscar en contratos'"
+  },
+  {
+    "nodeid": "tests/test_demo_alcalde.py::test_turno2_contiene_insights_modality_dominance",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.007918417002656497,
+    "xfail": "Observer 2.0 signals requieren mock de aggregate() adicional",
+    "detail": "tests/test_demo_alcalde.py:141: in test_turno2_contiene_insights_modality_dominance\n    assert \"Licitacion Publica\" in r2[\"response\"] or \"domina\" in r2[\"response\"]\nE   AssertionError: assert ('Licitacion Publica' in '\ud83d\udccb Procesos de vial en Atl\u00e1ntico\\nEncontre 15 resultados m\u00e1s recientes:\\n\\nEl 100% son de ALCALDIA DE BARRANQUILLA.\\nL...rta apertura: Abierto\\n   https://example.com/14\\n\\n\ud83d\udca1 Sugerencias:\\n1. Ordenar por mayor valor\\n2. Buscar en contratos' or 'domina' in '\ud83d\udccb Procesos de vial en Atl\u00e1ntico\\nEncontre 15 resultados m\u00e1s recientes:\\n\\nEl 100% son de ALCALDIA DE BARRANQUILLA.\\nL...rta apertura: Abierto\\n   https://example.com/14\\n\\n\ud83d\udca1 Sugerencias:\\n1. Ordenar por mayor valor\\n2. Buscar en contratos')"
+  },
+  {
+    "nodeid": "tests/test_demo_proponente.py::test_turno1_insights_modality_dominance",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.005128042001160793,
+    "xfail": "Observer 2.0 signals requieren mock de aggregate() adicional",
+    "detail": "tests/test_demo_proponente.py:75: in test_turno1_insights_modality_dominance\n    assert \"domina\" in resp or \"Licitacion Publica\" in resp\nE   AssertionError: assert ('domina' in '\ud83d\udccb Procesos de obra en Atl\u00e1ntico\\nEncontre 12 resultados m\u00e1s recientes:\\n\\nEl 100% son de DEPARTAMENTO DEL ATLANTICO.\\...orta apertura: Abierto\\n   https://example.com/3\\n\\n\ud83d\udca1 Sugerencias:\\n1. Ordenar por mayor valor\\n2. Buscar en contratos' or 'Licitacion Publica' in '\ud83d\udccb Procesos de obra en Atl\u00e1ntico\\nEncontre 12 resultados m\u00e1s recientes:\\n\\nEl 100% son de DEPARTAMENTO DEL ATLANTICO.\\...orta apertura: Abierto\\n   https://example.com/3\\n\\n\ud83d\udca1 Sugerencias:\\n1. Ordenar por mayor valor\\n2. Buscar en contratos')"
+  },
+  {
+    "nodeid": "tests/test_demo_proponente.py::test_turno1_insights_entity_concentration",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.005125584008055739,
+    "xfail": "Observer 2.0 signals requieren mock de aggregate() adicional",
+    "detail": "tests/test_demo_proponente.py:82: in test_turno1_insights_entity_concentration\n    assert \"concentra\" in resp\nE   AssertionError: assert 'concentra' in '\ud83d\udccb Procesos de obra en Atl\u00e1ntico\\nEncontre 12 resultados m\u00e1s recientes:\\n\\nEl 100% son de DEPARTAMENTO DEL ATLANTICO.\\...orta apertura: Abierto\\n   https://example.com/3\\n\\n\ud83d\udca1 Sugerencias:\\n1. Ordenar por mayor valor\\n2. Buscar en contratos'"
+  },
+  {
+    "nodeid": "tests/test_demo_veedor.py::test_turno1_insights_entity_concentration",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.003884791993186809,
+    "xfail": "Observer 2.0 signals requieren mock de aggregate() adicional",
+    "detail": "tests/test_demo_veedor.py:76: in test_turno1_insights_entity_concentration\n    assert \"concentra\" in resp\nE   AssertionError: assert 'concentra' in '\ud83d\udccb Contratos de INVIAS\\nEncontre 10 resultados m\u00e1s recientes:\\n\\nEl 100% son de INVIAS.\\nLa mayoria son de 2026.\\n\\n1....le.com/9\\n\\n\ud83d\udca1 Sugerencias:\\n1. Ver contratos activos (en ejecuci\u00f3n)\\n2. Ordenar por mayor valor\\n3. Buscar en procesos'"
+  },
+  {
+    "nodeid": "tests/test_demo_veedor.py::test_turno1_insights_modality_dominance",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.00381504200049676,
+    "xfail": "Observer 2.0 signals requieren mock de aggregate() adicional",
+    "detail": "tests/test_demo_veedor.py:83: in test_turno1_insights_modality_dominance\n    assert \"Contratacion Directa\" in resp or \"domina\" in resp\nE   AssertionError: assert ('Contratacion Directa' in '\ud83d\udccb Contratos de INVIAS\\nEncontre 10 resultados m\u00e1s recientes:\\n\\nEl 100% son de INVIAS.\\nLa mayoria son de 2026.\\n\\n1....le.com/9\\n\\n\ud83d\udca1 Sugerencias:\\n1. Ver contratos activos (en ejecuci\u00f3n)\\n2. Ordenar por mayor valor\\n3. Buscar en procesos' or 'domina' in '\ud83d\udccb Contratos de INVIAS\\nEncontre 10 resultados m\u00e1s recientes:\\n\\nEl 100% son de INVIAS.\\nLa mayoria son de 2026.\\n\\n1....le.com/9\\n\\n\ud83d\udca1 Sugerencias:\\n1. Ver contratos activos (en ejecuci\u00f3n)\\n2. Ordenar por mayor valor\\n3. Buscar en procesos')"
+  },
+  {
+    "nodeid": "tests/test_dogfood_regressions.py::test_dogfood_regression[live_recall_solo_medellin]",
+    "when": "setup",
+    "outcome": "skipped",
+    "duration": 4.187499871477485e-05,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_dogfood_regressions.py', 111, 'Skipped: Recall vivo (Etapa 5): no asertable sin red; los params ya son correctos.')"
+  },
+  {
+    "nodeid": "tests/test_dogfood_regressions.py::test_dogfood_regression[live_recall_entre_100_150_millones]",
+    "when": "setup",
+    "outcome": "skipped",
+    "duration": 3.012499655596912e-05,
+    "xfail": null,
+    "detail": "('/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_dogfood_regressions.py', 111, 'Skipped: Recall vivo (Etapa 5): no asertable sin red; los params ya son correctos.')"
+  },
+  {
+    "nodeid": "tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves[hospital municipal de acacias-ACACIAS]",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.023821750000934117,
+    "xfail": "'hospital municipal' alias on existing entity steals resolution",
+    "detail": "tests/test_gazetteer_lote_01.py:190: in test_entity_resolves\n    assert expected_substring.upper() in result.official_name.upper(), (\nE   AssertionError: 'hospital municipal de acacias' resolvio a 'ESE MUNICIPAL DE SOACHA JULIO CESAR PE\u00d1ALOZA*', se esperaba entidad conteniendo 'ACACIAS'\nE   assert 'ACACIAS' in 'ESE MUNICIPAL DE SOACHA JULIO CESAR PE\u00d1ALOZA*'\nE    +  where 'ACACIAS' = <built-in method upper of str object at 0x11d4ac060>()\nE    +    where <built-in method upper of str object at 0x11d4ac060> = 'ACACIAS'.upper\nE    +  and   'ESE MUNICIPAL DE SOACHA JULIO CESAR PE\u00d1ALOZA*' = <built-in method upper of str object at 0x1248fa950>()\nE    +    where <built-in method upper of str object at 0x1248fa950> = 'ESE MUNICIPAL DE SOACHA JULIO CESAR PE\u00d1ALOZA*'.upper\nE    +      where 'ESE MUNICIPAL DE SOACHA JULIO CESAR PE\u00d1ALOZA*' = ScanResult(official_name='ESE MUNICIPAL DE SOACHA JULIO CESAR PE\u00d1ALOZA*', matched_alias='hospital municipal', remaining_text='de acacias', method='scan_exact').official_name"
+  },
+  {
+    "nodeid": "tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves[sena choco-SENA REGIONAL CHOCO]",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.0009554589923936874,
+    "xfail": "'sena' resolves to SENA SECRETARIA GENERAL first",
+    "detail": "tests/test_gazetteer_lote_01.py:190: in test_entity_resolves\n    assert expected_substring.upper() in result.official_name.upper(), (\nE   AssertionError: 'sena choco' resolvio a 'SENA SECRETARIA GENERAL', se esperaba entidad conteniendo 'SENA REGIONAL CHOCO'\nE   assert 'SENA REGIONAL CHOCO' in 'SENA SECRETARIA GENERAL'\nE    +  where 'SENA REGIONAL CHOCO' = <built-in method upper of str object at 0x11d67f8b0>()\nE    +    where <built-in method upper of str object at 0x11d67f8b0> = 'SENA REGIONAL CHOCO'.upper\nE    +  and   'SENA SECRETARIA GENERAL' = <built-in method upper of str object at 0x124083f70>()\nE    +    where <built-in method upper of str object at 0x124083f70> = 'SENA SECRETARIA GENERAL'.upper\nE    +      where 'SENA SECRETARIA GENERAL' = ScanResult(official_name='SENA SECRETARIA GENERAL', matched_alias='sena', remaining_text='choco', method='scan_exact').official_name"
+  },
+  {
+    "nodeid": "tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves[sena casanare-SENA REGIONAL CASANARE]",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.0009544999920763075,
+    "xfail": "'sena' resolves to SENA SECRETARIA GENERAL first",
+    "detail": "tests/test_gazetteer_lote_01.py:190: in test_entity_resolves\n    assert expected_substring.upper() in result.official_name.upper(), (\nE   AssertionError: 'sena casanare' resolvio a 'SENA SECRETARIA GENERAL', se esperaba entidad conteniendo 'SENA REGIONAL CASANARE'\nE   assert 'SENA REGIONAL CASANARE' in 'SENA SECRETARIA GENERAL'\nE    +  where 'SENA REGIONAL CASANARE' = <built-in method upper of str object at 0x11d67ebb0>()\nE    +    where <built-in method upper of str object at 0x11d67ebb0> = 'SENA REGIONAL CASANARE'.upper\nE    +  and   'SENA SECRETARIA GENERAL' = <built-in method upper of str object at 0x124083f70>()\nE    +    where <built-in method upper of str object at 0x124083f70> = 'SENA SECRETARIA GENERAL'.upper\nE    +      where 'SENA SECRETARIA GENERAL' = ScanResult(official_name='SENA SECRETARIA GENERAL', matched_alias='sena', remaining_text='casanare', method='scan_exact').official_name"
+  },
+  {
+    "nodeid": "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.10701795799832325,
+    "xfail": "Etapa 2 (mutaciones): un cambio de tema/scope no limpia ordering_signal heredado. Fuga SEGURA (pierde recall, no miente). Al arreglarse, este xfail pasa a XPASS.",
+    "detail": "tests/test_h4_fallback.py:376: in test_new_topic_should_clear_inherited_ordering_signal\n    assert r2.get(\"resolved_params\", {}).get(\"ordering_signal\") is None\nE   AssertionError: assert 'valor_desc' is None\nE    +  where 'valor_desc' = <built-in method get of dict object at 0x1259a6a00>('ordering_signal')\nE    +    where <built-in method get of dict object at 0x1259a6a00> = {'ciudad': 'Cali', 'dataset': 'contratos', 'limit': 50, 'objeto': ['adulto_mayor'], ...}.get\nE    +      where {'ciudad': 'Cali', 'dataset': 'contratos', 'limit': 50, 'objeto': ['adulto_mayor'], ...} = <built-in method get of dict object at 0x1248d05c0>('resolved_params', {})\nE    +        where <built-in method get of dict object at 0x1248d05c0> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get"
+  },
+  {
+    "nodeid": "tests/test_opportunity_queries.py::test_opportunity_followup_alguno_en_atlantico_inherits_topic",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 9.561409208006808,
+    "xfail": "OPP-003 pendiente: intent_type expl\u00edcito para opportunity_search",
+    "detail": "tests/test_opportunity_queries.py:105: in test_opportunity_followup_alguno_en_atlantico_inherits_topic\n    assert \"pintura\" in str(r2.get(\"resolved_params\", {}))\nE   assert 'pintura' in \"{'dataset': 'procesos', 'departamento': 'en atlantico', 'departamento_resolved': 'Atl\u00e1ntico', 'departamento_resolutio...scan_exact', 'kind': 'territorial_department', 'confidence': 'high', 'like_value': None, 'metadata': {}}, 'limit': 50}\"\nE    +  where \"{'dataset': 'procesos', 'departamento': 'en atlantico', 'departamento_resolved': 'Atl\u00e1ntico', 'departamento_resolutio...scan_exact', 'kind': 'territorial_department', 'confidence': 'high', 'like_value': None, 'metadata': {}}, 'limit': 50}\" = str({'dataset': 'procesos', 'departamento': 'en atlantico', 'departamento_resolution': {'confidence': 'high', 'kind': 'territorial_department', 'like_value': None, 'metadata': {}, ...}, 'departamento_resolved': 'Atl\u00e1ntico', ...})\nE    +    where {'dataset': 'procesos', 'departamento': 'en atlantico', 'departamento_resolution': {'confidence': 'high', 'kind': 'territorial_department', 'like_value': None, 'metadata': {}, ...}, 'departamento_resolved': 'Atl\u00e1ntico', ...} = <built-in method get of dict object at 0x12c889ac0>('resolved_params', {})\nE    +      where <built-in method get of dict object at 0x12c889ac0> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get"
+  },
+  {
+    "nodeid": "tests/test_opportunity_queries.py::test_opportunity_followup_soql",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.09080412499315571,
+    "xfail": "requiere contexto de followup \u2014 pintura no puede aparecer parseando 'alguno en atlantico' aislado",
+    "detail": "tests/test_opportunity_queries.py:129: in test_opportunity_followup_soql\n    assert \"pintura\" in soql.lower() or \"LIKE\" in soql\nE   assert ('pintura' in \"select id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimient...artamento_entidad = 'atl\u00e1ntico' order by fecha_de_publicacion_del desc, precio_base desc, id_del_proceso desc limit 50\" or 'LIKE' in \"SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimient...artamento_entidad = 'Atl\u00e1ntico' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50\")\nE    +  where \"select id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimient...artamento_entidad = 'atl\u00e1ntico' order by fecha_de_publicacion_del desc, precio_base desc, id_del_proceso desc limit 50\" = <built-in method lower of str object at 0xbfbdc3200>()\nE    +    where <built-in method lower of str object at 0xbfbdc3200> = \"SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimient...artamento_entidad = 'Atl\u00e1ntico' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50\".lower"
+  },
+  {
+    "nodeid": "tests/test_opportunity_queries.py::test_dicar_reference_query",
+    "when": "call",
+    "outcome": "skipped",
+    "duration": 0.09142766700824723,
+    "xfail": "REFERENCE-001 pendiente: b\u00fasqueda exacta por referencia de proceso",
+    "detail": "tests/test_opportunity_queries.py:208: in test_dicar_reference_query\n    assert \"dicar\" not in [o.lower() for o in obj]\nE   AssertionError: assert 'dicar' not in ['dicar']"
+  }
+]

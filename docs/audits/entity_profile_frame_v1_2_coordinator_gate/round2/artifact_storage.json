@@ -8,5 +8,15 @@
     "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/guard_update.diff",
     "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/guard_update.diff.gz",
     "uncompressed_sha256": "8ee38b8b9d7e3505a1c0523a2a92e6ad4673f94755fde39703a54f43d4c707a3"
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_semgrep_base.log",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_semgrep_base.log.gz",
+    "uncompressed_sha256": "1331a9eb820321a6a41d415c21930f2197c2cd6024efe5c85775def728b61673"
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_semgrep_candidate.log",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_semgrep_candidate.log.gz",
+    "uncompressed_sha256": "f7fda67a751d227a5a4bac222d103a4817ab74856c2a42ffcdc7c7511efecfda"
   }
 ]

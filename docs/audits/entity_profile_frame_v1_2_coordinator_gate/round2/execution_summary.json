@@ -1,0 +1,55 @@
+{
+  "global": {
+    "collection": 13098,
+    "counts": {
+      "passed": 13071,
+      "skipped": 11,
+      "xfailed": 16
+    },
+    "flags_after_fixtures": {
+      "False": 12830,
+      "True": 265
+    },
+    "network_attempts": 911,
+    "denied": 0,
+    "deselected": 0
+  },
+  "b2_independent": {
+    "collection": 47,
+    "counts": {
+      "passed": 47
+    },
+    "flags_after_fixtures": {
+      "True": 47
+    },
+    "network_attempts": 0,
+    "denied": 0,
+    "deselected": 0
+  },
+  "b3_remediation": {
+    "collection": 303,
+    "counts": {
+      "passed": 303
+    },
+    "flags_after_fixtures": {
+      "True": 83,
+      "False": 220
+    },
+    "network_attempts": 0,
+    "denied": 0,
+    "deselected": 0
+  },
+  "b3_independent": {
+    "collection": 115,
+    "counts": {
+      "passed": 115
+    },
+    "flags_after_fixtures": {
+      "False": 11,
+      "True": 104
+    },
+    "network_attempts": 0,
+    "denied": 0,
+    "deselected": 0
+  }
+}
