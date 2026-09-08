@@ -307,121 +307,16 @@ class SecopalWorkflow:
     def _admit_and_dispatch(
         self, ctx: HandlerContext, seed_resolved_params: dict | None,
     ) -> dict:
-        """Admisión superior antes de la cadena, y publicación después.
+        from app.core.workflow.turn_coordination import coordinate_turn
 
-        Apagado el flag, el turno va por el camino de siempre y no se escribe
-        ningún sobre: un binario anterior no tiene que entender nada nuevo.
-        Encendido, entran a la vez los lectores y los escritores del trayecto
-        nuevo — no hay modo híbrido que escriba Frame y siga heredando params.
-        """
-        from app.config import entity_profile_frame_enabled
-
-        if not entity_profile_frame_enabled():
-            return self._dispatch(ctx, seed_resolved_params)
-
-        from app.core.workflow.admission import admit
-        from app.core.workflow.admission_rules import (
-            CONTINUATION_REF_KEY,
-            AdmissionRoute,
-        )
-        from app.core.workflow.profile_route import run_profile_route
-        from app.core.workflow.results import empty_result
-        from app.core.workflow.turn_publication import (
-            delegated_contract,
-            profile_contract,
-            publish,
-        )
-
-        deps = self.deps
-        # Paso 1 del diseño: reservar serialmente el turno ANTES de ejecutar.
-        # La misma revisión que se lee aquí es la que se comprueba al publicar.
-        reservation = deps.conv_store.reserve_turn(ctx.chat_id) if ctx.chat_id else None
-        admitted = admit(
-            deps,
-            user_query=ctx.user_query,
-            chat_id=ctx.chat_id,
-            seed_resolved_params=seed_resolved_params,
-            today=ctx.today,
-            read=reservation.previous if reservation else None,
-        )
-
-        # La referencia de continuación es de la ADMISIÓN: ya cumplió su
-        # función y no puede seguir viaje hacia el builder como si fuera un
-        # filtro material.
-        dispatch_seed = (
-            {k: v for k, v in seed_resolved_params.items() if k != CONTINUATION_REF_KEY}
-            if seed_resolved_params else seed_resolved_params
-        )
-
-        outcome = None
-        if admitted.route is AdmissionRoute.CLARIFY:
-            # Una continuación inválida termina aquí: cero consultas, ningún
-            # offset inventado y ninguna caída por defecto al parser tabular.
-            result = empty_result(
-                response=admitted.decision.response,
-                route_reason=f"admission_{admitted.decision.reason}",
-                needs_clarification=True,
-            )
-        elif admitted.route is AdmissionRoute.PROFILE:
-            routed = run_profile_route(
-                deps, ctx,
-                params=admitted.params,
-                state=admitted.profile_state,
-                turn_id=reservation.turn_id if reservation else "anonymous",
-            )
-            if routed is None:
-                result = self._dispatch(ctx, dispatch_seed)
-            else:
-                result, outcome = routed.result, routed.outcome
-        else:
-            result = self._dispatch(ctx, dispatch_seed)
-
-        if admitted.route is not AdmissionRoute.DELEGATED:
-            # Las rutas que la admisión atiende por su cuenta no pasan por
-            # ningún handler, así que su traza se registra aquí. NO se añade un
-            # turno legacy: el sobre es la autoridad del contexto, y escribir
-            # además en el historial dejaría params heredables de un turno cuyo
-            # significado ya vive en el Frame.
-            result["trace_id"] = deps.feedback.log_trace(
-                ctx.user_query, ctx.channel, result,
-                user_identity=ctx.user_identity,
-            )
-
-        if result.get("route_reason") == "reset":
-            # `handle_reset` ya invalidó la continuidad borrando el sobre;
-            # publicar encima recrearía un contrato que el reset acaba de negar.
-            return result
-
-        if outcome is not None:
-            publish(
-                deps, reservation, result,
-                user_query=ctx.user_query,
-                profile_state=outcome.state,
-                contract=profile_contract(reservation, outcome) if reservation else None,
-                execution_record=(
-                    outcome.record.to_dict() if outcome.record else None
-                ),
-            )
-            return result
-
-        from app.core.entity_profile.profile_state import ProfileConversationState
-
-        # Un turno que no es del perfil deja de tener un perfil activo: el
-        # universo visible es otro, y conservar el Frame confirmado haría que
-        # un «proveedores» posterior profundizara en algo que ya no se ve.
-        publish(
-            deps, reservation, result,
-            user_query=ctx.user_query,
-            profile_state=ProfileConversationState(),
-            contract=delegated_contract(reservation, result) if reservation else None,
-        )
-        return result
+        return coordinate_turn(self, ctx, seed_resolved_params)
 
     def _dispatch(self, ctx: HandlerContext, seed_resolved_params: dict | None) -> dict:
         """Chain of responsibility — first non-None handler result wins."""
         if seed_resolved_params:
             res = handle_refinement(self.deps, ctx, seed_resolved_params)
             if res is not None:
+                res["_continuation_owner"] = "TABULAR"
                 return res
             # If the refinement guard failed (no scope/topic), fall through.
 
@@ -435,9 +330,16 @@ class SecopalWorkflow:
         ):
             res = handler(self.deps, ctx)
             if res is not None:
+                res["_continuation_owner"] = {
+                    handle_actor_selection: "ACTOR", handle_radar_command: "RADAR",
+                    handle_pagination: "TABULAR", handle_suggestion_selection: "TABULAR",
+                }.get(handler, "NONE")
                 return res
 
-        return handle_normal_flow(self.deps, ctx)
+        result = handle_normal_flow(self.deps, ctx)
+        params = result.get("resolved_params") or {}
+        result["_continuation_owner"] = "ACTOR" if params.get("actor_scope") or params.get("actor_pending") else "TABULAR"
+        return result
 
     def rate_query(self, trace_id: str, rating: int, comment: str | None = None) -> bool:
         return self.feedback.rate(trace_id, rating, comment)

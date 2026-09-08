@@ -28,7 +28,7 @@ from app.core.workflow.continuation import (
     ContinuationOwner,
     PendingProfileRef,
     ResultKind,
-    TabularGroup,
+    DelegatedRef,
 )
 
 if TYPE_CHECKING:
@@ -68,12 +68,17 @@ def profile_contract(
             ),
         )
     pending = outcome.state.pending
+    previous = reservation.previous.envelope if reservation.previous.usable else None
+    confirmed = None
+    if outcome.state.confirmed_frame and previous and previous.continuation:
+        confirmed = ContinuationContract.from_dict(previous.continuation).confirmed_profile
     return ContinuationContract(
         conversation_revision=reservation.revision,
         visible_turn_id=reservation.turn_id,
         result_id=reservation.result_id,
         result_kind=ResultKind.CLARIFICATION,
         owner=ContinuationOwner.ENTITY_PROFILE,
+        confirmed_profile=confirmed,
         pending_profile=(
             PendingProfileRef(
                 pending_ref=pending.pending_id,
@@ -83,62 +88,27 @@ def profile_contract(
     )
 
 
-def delegated_contract(
-    reservation: TurnReservation, result: dict,
-) -> ContinuationContract:
-    """El contrato de un turno que NO es del perfil, leído de su resultado.
-
-    No se inventa un cursor: los grupos declaran de quién es el resultado y con
-    qué huella se mostró. La mecánica de paginación sigue siendo del handler,
-    que valida cursor, generación y vigencia en su propio sidecar.
-    """
-    if result.get("needs_clarification"):
-        return ContinuationContract(
-            conversation_revision=reservation.revision,
-            visible_turn_id=reservation.turn_id,
-            result_id=reservation.result_id,
-            result_kind=ResultKind.CLARIFICATION,
-            owner=ContinuationOwner.NONE,
-        )
-    groups = _tabular_groups(reservation, result)
-    if not groups:
-        return ContinuationContract(
-            conversation_revision=reservation.revision,
-            visible_turn_id=reservation.turn_id,
-            result_id=reservation.result_id,
-            result_kind=ResultKind.OTHER,
-            owner=ContinuationOwner.NONE,
-        )
+def delegated_contract(reservation: TurnReservation, result: dict, store=None) -> ContinuationContract:
+    """The producing handler declares ownership; rows never grant capabilities."""
+    owner = ContinuationOwner(result.get("_continuation_owner", "NONE"))
+    kinds = {ContinuationOwner.ACTOR: ResultKind.ACTOR_PROFILE,
+             ContinuationOwner.RADAR: ResultKind.RADAR,
+             ContinuationOwner.TABULAR: ResultKind.TABULAR_SEARCH}
+    groups, export_ref = None, None
+    if owner is ContinuationOwner.TABULAR and store and not result.get("needs_clarification"):
+        from app.core.workflow.tabular_capability import published_groups
+        groups = published_groups(store, reservation)
+        history = store.get_history(reservation.chat_id, last_n=1)
+        if history and history[0].trace_id == result.get("trace_id"):
+            export_ref = history[0].turn_id
     return ContinuationContract(
         conversation_revision=reservation.revision,
-        visible_turn_id=reservation.turn_id,
-        result_id=reservation.result_id,
-        result_kind=ResultKind.TABULAR_SEARCH,
-        owner=ContinuationOwner.TABULAR,
-        tabular_groups=groups,
+        visible_turn_id=reservation.turn_id, result_id=reservation.result_id,
+        result_kind=ResultKind.CLARIFICATION if result.get("needs_clarification") else kinds.get(owner, ResultKind.OTHER),
+        owner=owner, tabular_groups=groups, export_ref=export_ref,
+        delegated=DelegatedRef(str(result.get("trace_id") or reservation.turn_id))
+        if owner in (ContinuationOwner.ACTOR, ContinuationOwner.RADAR) else None,
     )
-
-
-def _tabular_groups(
-    reservation: TurnReservation, result: dict,
-) -> dict[str, TabularGroup]:
-    fingerprint = str(result.get("query_fingerprint") or "")
-    order = str(result.get("result_order_guarantee") or "exact_order")
-    names = list((result.get("dataset_groups") or {}).keys())
-    if not names and result.get("rows"):
-        dataset_id = str(result.get("dataset_id") or "")
-        if dataset_id:
-            names = ["contratos" if dataset_id == "jbjy-vk9h" else "procesos"]
-    return {
-        name: TabularGroup(
-            group=name,
-            cursor_id=f"{reservation.turn_id}:{name}",
-            fingerprint=fingerprint,
-            order_contract=order,
-            generation=reservation.turn_id,
-        )
-        for name in names
-    }
 
 
 def publish(
@@ -150,6 +120,7 @@ def publish(
     profile_state: ProfileConversationState,
     contract: ContinuationContract | None,
     execution_record: dict | None = None,
+    preserve_generation: bool = False,
 ) -> PublishedTurn:
     """Escribe el registro completo, o informa por qué no hay continuidad nueva."""
     if reservation is None:
@@ -162,6 +133,7 @@ def publish(
             profile_state=profile_state.to_dict(),
             continuation=contract.to_dict() if contract else None,
             execution_record=execution_record,
+            preserve_generation=preserve_generation,
         )
     except (ConversationLockTimeout, OSError, StaleRevisionError, ValueError) as exc:
         # El Frame durable NO avanza y no se entrega un cursor nuevo. La
@@ -174,6 +146,7 @@ def publish(
     result["continuation_published"] = True
     result["conversation_revision"] = envelope.revision
     result["result_id"] = envelope.result_id
+    result["chat_id"] = envelope.chat_id
     result["continuation"] = contract.to_dict() if contract else None
     return PublishedTurn(True, envelope.revision)
 
@@ -185,3 +158,11 @@ __all__ = [
     "profile_contract",
     "publish",
 ]
+
+
+def preserved_contract(reservation, contract):
+    from dataclasses import replace
+
+    return replace(contract, conversation_revision=reservation.revision,
+                   visible_turn_id=reservation.turn_id, result_id=reservation.result_id,
+                   result_kind=ResultKind.CLARIFICATION)

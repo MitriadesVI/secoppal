@@ -71,7 +71,8 @@ def _last_search_params(deps: "WorkflowDeps", chat_id: str) -> dict | None:
 # ---------------------------------------------------------------------------
 
 def _do_save(deps, ctx, store, owner, name) -> dict:
-    params = _last_search_params(deps, ctx.chat_id)
+    params = (ctx.export_search_params if ctx.publication_required
+              else _last_search_params(deps, ctx.chat_id))
     if params is None:
         return _resp(
             "No encontré una búsqueda reciente para guardar como radar. "

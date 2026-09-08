@@ -43,5 +43,8 @@ class HandlerContext:
     user_identity: dict[str, Any] | None = None
     seed_resolved_params: dict | None = None
     actor_candidate_selection: dict[str, Any] | None = None
+    tabular_referent: Any = None
+    export_search_params: dict | None = None
+    publication_required: bool = False
     today: Date = field(default_factory=civil_today)
     run_started_at: float = field(default_factory=time.perf_counter)

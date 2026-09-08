@@ -166,6 +166,7 @@ class ContinuationContract:
     confirmed_profile: ConfirmedProfileRef | None = None
     pending_profile: PendingProfileRef | None = None
     delegated: DelegatedRef | None = None
+    export_ref: str | None = None
     schema_version: int = CONTINUATION_SCHEMA_VERSION
 
     def __post_init__(self) -> None:
@@ -179,7 +180,10 @@ class ContinuationContract:
                 self.pending_profile, self.delegated,
             ) if item
         )
-        if len(targets) > 1:
+        profile_pair = (self.owner is ContinuationOwner.ENTITY_PROFILE
+                        and self.confirmed_profile and self.pending_profile
+                        and not self.tabular_groups and not self.delegated)
+        if len(targets) > 1 and not profile_pair:
             raise ContinuationError("a contract names exactly one target")
         object.__setattr__(
             self, "tabular_groups",
@@ -196,6 +200,7 @@ class ContinuationContract:
 
     def to_dict(self) -> dict:
         return {
+            "export_ref": self.export_ref,
             "schema_version": self.schema_version,
             "conversation_revision": self.conversation_revision,
             "visible_turn_id": self.visible_turn_id,
@@ -228,6 +233,7 @@ class ContinuationContract:
             pending_raw = raw.get("pending_profile")
             delegated_raw = raw.get("delegated")
             return cls(
+                export_ref=raw.get("export_ref"),
                 conversation_revision=int(raw["conversation_revision"]),
                 visible_turn_id=str(raw["visible_turn_id"]),
                 result_id=str(raw["result_id"]),

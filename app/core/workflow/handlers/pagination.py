@@ -149,12 +149,14 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
     sobre las 50.
     """
     requested_group = _requested_group(ctx.user_query)
-    if not ctx.chat_id or not (is_pagination_phrase(ctx.user_query) or requested_group):
+    admitted_buffer = ctx.tabular_referent.buffer if ctx.tabular_referent else None
+    if not ctx.chat_id or not (is_pagination_phrase(ctx.user_query) or requested_group or admitted_buffer is not None):
         return None
 
-    history = deps.conv_store.get_history(ctx.chat_id, last_n=1)
-    if history:
-        prev_params = dict(history[-1].parsed_params)
+    history = [] if ctx.tabular_referent else deps.conv_store.get_history(ctx.chat_id, last_n=1)
+    if ctx.tabular_referent or history:
+        prev_params = (dict(ctx.tabular_referent.params) if ctx.tabular_referent
+                       else dict(history[-1].parsed_params))
 
         # Dual-dataset: "más" tras una búsqueda dual es ambiguo. No paginar uno solo
         # en silencio: preguntar cuál (primera versión; "más procesos"/"más contratos"
@@ -176,7 +178,12 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
 
         try:
             display_count = max(1, int(deps.formatter.max_results or 25))
-            if requested_group:
+            if admitted_buffer is not None:
+                buffer = admitted_buffer
+                group = buffer.group
+                fetch_params = dict(buffer.query_params)
+                current_fp = buffer.query_fingerprint
+            elif requested_group:
                 group = requested_group
                 buffer = deps.conv_store.get_pagination_buffer(ctx.chat_id, group, None)
                 if buffer is not None:

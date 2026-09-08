@@ -176,6 +176,9 @@ def classify(
         )
 
     if shape in (InputShape.ORDINAL, InputShape.AFFIRMATIVE):
+        if owner is ContinuationOwner.NONE and envelope_status is EnvelopeStatus.OK:
+            return AdmissionDecision(AdmissionRoute.CLARIFY, "no_current_selection", shape, owner,
+                                     _NO_REFERENT)
         if owner is ContinuationOwner.ENTITY_PROFILE:
             if profile_has_options:
                 return AdmissionDecision(
@@ -215,7 +218,7 @@ def _seed(
             _SEED_OVER_PROFILE,
         )
     reference = (seed or {}).get(CONTINUATION_REF_KEY)
-    if reference is not None and not _matches(reference, contract, conversation_revision):
+    if owner is not ContinuationOwner.TABULAR or not _matches(reference, contract, conversation_revision):
         return AdmissionDecision(
             AdmissionRoute.CLARIFY, "stale_seed_reference", shape, owner,
             _STALE_SEED,

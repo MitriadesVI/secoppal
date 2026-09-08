@@ -436,7 +436,10 @@ def _continuation_ref(result: dict) -> dict | None:
     revision = result.get("conversation_revision")
     if not result_id or revision is None:
         return None
-    return {"result_id": result_id, "conversation_revision": revision}
+    reference = {"result_id": result_id, "conversation_revision": revision}
+    if result.get("chat_id"):
+        reference["chat_id"] = result["chat_id"]
+    return reference
 
 
 def _assistant_history_item(result: dict, *, query: str = "") -> dict:

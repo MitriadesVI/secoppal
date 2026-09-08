@@ -119,6 +119,7 @@ def admit(
     seed_resolved_params: dict | None,
     today: Date | None = None,
     read: EnvelopeRead | None = None,
+    actor_candidate_selection: dict | None = None,
 ) -> AdmittedTurn:
     """Carga el contrato publicado, clasifica y devuelve UNA decisión.
 
@@ -128,7 +129,19 @@ def admit(
     """
     read = read if read is not None else _load(deps, chat_id)
     profile_state, contract, status = _restore(read)
+    if read.usable and read.envelope.chat_id != chat_id:
+        profile_state, contract, status = ProfileConversationState(), None, EnvelopeStatus.CORRUPT
     params = deps.query_router.parse(user_query, today=today).params
+    from app.core.workflow.external_admission import external_owner
+    external = external_owner(user_query, params, actor_candidate_selection)
+    if status is EnvelopeStatus.EMPTY and external is None and not is_profile_turn(
+            user_query, params, ProfileConversationState())[0]:
+        from app.core.workflow.profile_migration import migrate_current_legacy
+        migrated = migrate_current_legacy(deps.conv_store, chat_id)
+        if migrated:
+            profile_state, error = migrated
+            if error:
+                status = EnvelopeStatus.CORRUPT
     owns_text = False
     if _text_shaped(user_query, seed_resolved_params):
         owns_text = is_profile_turn(user_query, params, profile_state)[0]
@@ -143,6 +156,20 @@ def admit(
             profile_state.pending and profile_state.pending.alternatives,
         ),
     )
+    if external is not None and not seed_resolved_params:
+        decision = AdmissionDecision(AdmissionRoute.DELEGATED, "explicit_external_operation",
+                                     InputShape.TEXT, ContinuationOwner(external))
+    elif status is EnvelopeStatus.CORRUPT:
+        fresh, _ = is_profile_turn(user_query, params, ProfileConversationState())
+        if not fresh and not decision.clarifies:
+            decision = AdmissionDecision(AdmissionRoute.CLARIFY, "invalid_current_publication",
+                                         InputShape.TEXT, ContinuationOwner.NONE,
+                                         "No puedo acreditar el contexto actual. Repite la consulta completa.")
+    reference = (seed_resolved_params or {}).get("_continuation_ref")
+    if isinstance(reference, dict) and reference.get("chat_id", chat_id) != chat_id:
+        decision = AdmissionDecision(AdmissionRoute.CLARIFY, "foreign_chat_reference",
+                                     InputShape.SEED_REFINEMENT, ContinuationOwner.NONE,
+                                     "Ese filtro pertenece a otra conversación.")
     application = build_admission(decision)
     *_, final = application.run(halt_after=list(_TERMINALS))
     if final["route"] != decision.route.value:
@@ -182,6 +209,12 @@ def _restore(
             if envelope.continuation else None
         )
     except ContinuationError:
+        return ProfileConversationState(), None, EnvelopeStatus.CORRUPT
+    from app.core.workflow.envelope_validation import validate_envelope
+
+    try:
+        validate_envelope(envelope, state, contract)
+    except (ValueError, KeyError, TypeError, IndexError):
         return ProfileConversationState(), None, EnvelopeStatus.CORRUPT
     return state, contract, EnvelopeStatus.OK
 
