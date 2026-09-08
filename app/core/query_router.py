@@ -24,6 +24,7 @@ from app.core.actor_identity import has_plausible_actor_document_digits
 from app.core.actor_intent import (
     detect_asserted_actor_name_before_document,
     detect_actor_name,
+    buyer_contract_request_spans,
     recognized_actor_modifier_tails,
     reference_from_document,
 )
@@ -1706,6 +1707,16 @@ class QueryRouter:
         "CORPORACIÓN FUNDACARIBE DEL NORTE"— y presentaría la suma como la
         huella de uno solo.
         """
+        buyer_spans = buyer_contract_request_spans(
+            normalized, params, recognized_modifier_tails,
+        )
+        if buyer_spans:
+            if not params.get("dataset_explicit"):
+                params["dataset"] = "contratos"
+            for span in buyer_spans:
+                scrubbed = scrubbed.replace(span, " ", 1)
+            return scrubbed
+
         reference = detect_actor_name(
             normalized,
             recognized_modifier_tails=recognized_modifier_tails,

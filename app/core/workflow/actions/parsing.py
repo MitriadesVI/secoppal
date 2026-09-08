@@ -35,6 +35,7 @@ from app.core.actor_resolution import (
 )
 from app.core.actor_name import ActorResolutionStatus
 from app.core.actor_resolution_admission import can_resolve_new_actor
+from app.core.actor_arbitration import is_complete_buyer_search
 from app.core.followup_engine import FollowupGuards, detect_and_merge
 from app.core.llm_handler import LLMHandler
 from app.core.negation_binding import (
@@ -480,6 +481,18 @@ def apply_context(state: State) -> State:
             },
             query_plan=blocked_plan,
         )
+
+    if is_complete_buyer_search(user_query, parsed_params):
+        # The current complete buyer mention owns this search. Prior Actor
+        # identity/pending is context, not a role requested by the new turn.
+        return _finish_apply_context(state, start, dict(parsed_params), "new_search", {
+            "intent": "new_search",
+            "requested_fields": sorted(parsed_params),
+            "accepted_fields": sorted(parsed_params),
+            "transition_cleared_fields": sorted(set(context_params) - set(parsed_params)),
+            "rejected_fields": [],
+            "rejection_reasons": {},
+        })
 
     pending = context_params.get("actor_pending")
     if isinstance(pending, dict) and classify_actor_pending_turn(

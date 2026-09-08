@@ -5,6 +5,8 @@ All provider identities and source contracts below are synthetic fixtures.
 import json
 import os
 import socket
+import re
+from datetime import date
 import sqlite3
 from pathlib import Path
 
@@ -13,8 +15,8 @@ import pytest
 from app.config import Settings, get_settings
 from app.core.orchestrator import SecopalWorkflow
 from app.core.query_router import QueryRouter
+from app.core.buyer_source_names import project_buyer_names
 from app.data.actor_alias_index import build_actor_alias_index
-from app.data.actor_alias_resolver import ActorNameResolver
 
 CARTAGENA = "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
 BARRANQUILLA = "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
@@ -77,18 +79,50 @@ def flow_for(tmp_path, monkeypatch, index, frame, trace):
 
 
 def source_for(flow, monkeypatch, trace, buyer, amount):
+    # SQL is actually evaluated, including pagination predicates. Decoy rows
+    # would appear if either the buyer or the monetary predicate disappeared.
+    columns = ("id_contrato", "referencia_del_contrato", "nombre_entidad", "departamento",
+               "ciudad", "objeto_del_contrato", "descripcion_del_proceso", "tipo_de_contrato",
+               "modalidad_de_contratacion", "valor_del_contrato", "valor_facturado", "estado_contrato",
+               "fecha_de_firma", "proveedor_adjudicado", "documento_proveedor", "urlproceso")
+    conn = sqlite3.connect(":memory:")
+    conn.row_factory = sqlite3.Row
+    conn.create_function("unaccent", 1, lambda value: value)
+    conn.execute("CREATE TABLE contracts (" + ",".join(
+        f"{name} {'INTEGER' if name.startswith('valor_') else 'TEXT'}" for name in columns) + ")")
+    physical_buyer = (project_buyer_names(buyer, "jbjy-vk9h") or (buyer,))[0]
+    rows = []
+    for n in range(62):
+        rows.append((f"SYNTH-{n:03d}", f"FIXTURE-{n}", physical_buyer if n < 61 else "DECOY BUYER",
+                     "Atlantico", "Fixture City", "software fixture", "software fixture", "Prestacion de servicios",
+                     "Contratacion directa", amount + 1000 if n != 60 else 1, 0, "Firmado",
+                     "2026-06-01T00:00:00.000", "SYNTHETIC SUPPLIER", "70000999", "https://example.invalid/fixture"))
+    conn.executemany("INSERT INTO contracts VALUES (" + ",".join("?" for _ in columns) + ")", rows)
+
     def query(dataset, soql, *args, **kwargs):
         trace.setdefault("sql", []).append({"dataset": dataset, "soql": soql})
         where = soql.upper().split(" WHERE ", 1)[-1].split(" ORDER BY ", 1)[0]
-        assert dataset in {"jbjy-vk9h", "contratos"}
-        assert buyer.upper() in where
-        assert "DOCUMENTO_PROVEEDOR" not in where
-        assert "VALOR_DEL_CONTRATO" in where and str(amount) in where
-        assert "DESCRIPCION_DEL_PROCESO LIKE" not in where
-        return []
+        violations = []
+        if dataset not in {"jbjy-vk9h", "contratos"}:
+            violations.append("wrong dataset")
+        if physical_buyer.upper() not in where:
+            violations.append("wrong buyer")
+        if "DOCUMENTO_PROVEEDOR" in where:
+            violations.append("unexpected contractor")
+        if "VALOR_DEL_CONTRATO" not in where or str(amount) not in where:
+            violations.append("missing amount")
+        if "CONTRATADO" in where or "ALCALDIA" in where.split("AND", 1)[-1]:
+            violations.append("request language as topic")
+        if violations:
+            trace.setdefault("violations", []).extend(violations)
+            raise AssertionError(violations)
+        sql = re.sub(r"\bWHERE\b", "FROM contracts WHERE", soql, count=1, flags=re.I)
+        result = [dict(r) for r in conn.execute(sql)]
+        trace.setdefault("source_rows", []).append([r.get("id_contrato") for r in result])
+        return result
     monkeypatch.setattr(flow.secop_client, "query", query)
     monkeypatch.setattr(flow.secop_client, "aggregate", query)
-    monkeypatch.setattr(flow.secop_client, "count", lambda *a, **kw: 0)
+    monkeypatch.setattr(flow.secop_client, "count", lambda *a, **kw: 60)
 
 
 def write_trace(trace, name):
@@ -109,11 +143,13 @@ def test_seeds(tmp_path, monkeypatch, frame, cardinality, query, mention, buyer,
     flow = flow_for(tmp_path, monkeypatch, index, frame, trace)
     source_for(flow, monkeypatch, trace, buyer, amount)
     try:
-        result = flow.run_query(query, chat_id="fresh")
+        result = flow.run_query(query, chat_id="fresh", today=date(2026, 9, 8))
         trace["result"] = result
         trace["published"] = [p.read_text() for p in (tmp_path / "conversations").glob("*") if p.is_file()]
         params = result["resolved_params"]
+        assert not trace.get("violations"), trace
         assert trace.get("sql"), result
+        assert trace.get("source_rows"), result
         assert params["dataset"] == "contratos"
         assert params["entidad_resolved"] == buyer
         assert params["valor_min"] == amount

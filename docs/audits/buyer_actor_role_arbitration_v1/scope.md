@@ -24,3 +24,10 @@ No se prevé reparseo posterior al Frame ni nueva autoridad paralela.
 Preflight: ruff 0.16.4; Semgrep 1.176.0; Hypothesis 6.165.10.
 Codegraph launcher del PATH rechaza Node 26.8.1; ejecutable probado con Node 22.
 Fallback declarado a rg/Git/manual por índice ausente en worktree.
+
+Ampliación acotada tras controles rojos (anunciada antes de editar):
+- app/core/actor_conversation.py: el marcador explícito proveedor conserva evidencia fuerte en relación X con comprador Y.
+- app/core/workflow/actions/parsing.py: admisión de petición completa de comprador antes de heredar Actor anterior.
+- app/core/workflow/external_admission.py: misma decisión para propietario TABULAR con Frame ON.
+- app/core/actor_arbitration.py: scrub de la superficie rewritten_from poseída por Actor, conservando ocurrencias externas.
+Los módulos de admisión están expresamente autorizados por el prompt cuando el mapa demuestra necesidad.

@@ -26,7 +26,8 @@ alimentación"). Sin un índice de actores no hay forma honesta de
 separarlos, así que **este módulo no lo intenta**. Solo clasifica como
 actor cuando el texto trae evidencia lingüística fuerte —un marcador de
 rol (``proveedor``/``contratista``/``la empresa``) o una construcción
-verbal inequívoca (``qué ha contratado X``)—.
+verbal contractual (``qué ha contratado X``). El comprador completo acreditado
+tiene precedencia sobre esta última hipótesis, antes de resolver proveedores.
 
 El costo de equivocarse es asimétrico y eso fija la política: un tema mal
 clasificado como actor rompe una búsqueda que hoy funciona, mientras que
@@ -57,6 +58,7 @@ from dataclasses import dataclass
 from typing import Iterable, Literal, Mapping
 
 from app.core.actor_identity import IdentityMatch, normalize_identity
+from app.core.buyer_actor_role import buyer_owns_complete_mention
 
 __all__ = [
     "REASON_DOCUMENT_TYPE_AMBIGUOUS",
@@ -69,6 +71,7 @@ __all__ = [
     "ActorResolution",
     "detect_asserted_actor_name_before_document",
     "detect_actor_name",
+    "buyer_contract_request_spans",
     "document_type_hint",
     "recognized_actor_modifier_tails",
     "reference_from_document",
@@ -119,11 +122,13 @@ _DETERMINED_ROLE_MARKERS = (
     "empresa", "firma", "persona", "sociedad", "corporacion", "fundacion",
 )
 
-# Construcciones VERBALES inequívocas: el sujeto de la acción de contratar
-# es el actor. Cubren la lista de D.1 del encargo.
+# Construcciones contractuales: generan una hipótesis de Actor, sujeta al
+# arbitraje previo del comprador completo. El verbo no acredita el rol.
+_CONTRACTED_SUBJECT_RE = re.compile(r"\bqu[eé]\s+ha\s+contratado\b", re.IGNORECASE)
 _VERB_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"\bqu[eé]\s+contratos?\s+(?:tiene|ha\s+tenido|posee)\b", re.IGNORECASE),
-    re.compile(r"\bqu[eé]\s+ha\s+(?:hecho|contratado|celebrado|suscrito|ejecutado)\b", re.IGNORECASE),
+    _CONTRACTED_SUBJECT_RE,
+    re.compile(r"\bqu[eé]\s+ha\s+(?:hecho|celebrado|suscrito|ejecutado)\b", re.IGNORECASE),
     re.compile(r"\bhistorial\s+contractual\s+(?:de|del)\b", re.IGNORECASE),
     re.compile(r"\bcontrataci[oó]n\s+d[eu][el]?\s+l[ao]s?\s+(?:empresa|persona|firma)\b", re.IGNORECASE),
     re.compile(r"\bcontratos?\s+adjudicados?\s+a\b", re.IGNORECASE),
@@ -631,6 +636,24 @@ def detect_asserted_actor_name_before_document(
         consumed_spans=(span,),
         reason_codes=(marker_reason, REASON_NAME_NEEDS_RESOLUTION),
     )
+
+
+def buyer_contract_request_spans(
+    normalized_query: str,
+    params: Mapping[str, object],
+    recognized_modifier_tails: Iterable[str] = (),
+) -> tuple[str, ...]:
+    """Consume existing verbal grammar only for its accredited buyer subject."""
+    if _name_after_role_marker(normalized_query, recognized_modifier_tails):
+        return ()
+    match = _CONTRACTED_SUBJECT_RE.search(normalized_query)
+    if match is not None:
+        mention = strip_recognized_actor_modifier_tail(
+            normalized_query[match.end():].strip(), recognized_modifier_tails,
+        )
+        if buyer_owns_complete_mention(mention, params):
+            return match.group(0), mention
+    return ()
 
 
 def detect_actor_name(

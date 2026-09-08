@@ -5,10 +5,12 @@ import re
 from dataclasses import dataclass
 
 from app.core.actor_intent import (
+    buyer_contract_request_spans,
     recognized_actor_modifier_tails,
     strip_recognized_actor_modifier_tail,
 )
 from app.core.actor_name import normalize_actor_name
+from app.core.buyer_actor_role import buyer_owns_complete_mention
 from app.core.control_language import is_pure_control_turn
 from app.core.followup_control_tokens import classify_control_intent, requested_clear_fields
 from app.core.intent_vocabulary import COMMON_TOKENS
@@ -74,6 +76,22 @@ _SEARCH_FILTER_KEYS = (
 )
 
 
+def is_complete_buyer_search(raw_query: str, params: dict) -> bool:
+    """A complete buyer request replaces context; a buyer delta does not."""
+    if any(params.get(key) for key in (
+        "actor_scope", "actor_pending", "contratista", "actor_conversation_probe",
+    )):
+        return False
+    normalized = normalize_actor_name(raw_query)
+    tails = recognized_actor_modifier_tails(normalized, params)
+    if buyer_contract_request_spans(normalized, params, tails):
+        return True
+    match = _BARE_ACTOR_RE.search(normalized)
+    return bool(match and buyer_owns_complete_mention(
+        strip_recognized_actor_modifier_tail(match.group(1), tails), params,
+    ))
+
+
 def has_strong_search_intent(raw_query: str, params: dict) -> bool:
     """Dataset language + independently parsed content/filter, never casing.
 
@@ -85,7 +103,7 @@ def has_strong_search_intent(raw_query: str, params: dict) -> bool:
         "pagination_more", "change_order", "change_dataset", "remove_filter", "refine_filter",
     }:
         return False
-    return bool(
+    return is_complete_buyer_search(raw_query, params) or bool(
         _SEARCH_DATASET_RE.search(normalize_actor_name(raw_query))
         and (params.get("objeto") or any(params.get(k) for k in _SEARCH_FILTER_KEYS))
     )
@@ -120,6 +138,8 @@ def detect_bare_actor_probe(raw_query: str, params: dict) -> BareActorProbe | No
         unbounded,
         recognized_actor_modifier_tails(normalized, params),
     ).strip()
+    if buyer_owns_complete_mention(candidate, params):
+        return None
     words = candidate.split()
     if not words or words[0] in _REJECTED_LEADS:
         return None
@@ -311,6 +331,17 @@ def scrub_strong_actor_leaks(
         clean.pop("region", None)
         clean.pop("departamentos_in", None)
         clean.pop("region_resolution", None)
+    # Entity rewrites keep a canonical expression in entidad, not the
+    # surface the actor owns ("Municipio" versus "alcaldia"). Consume that
+    # occurrence through its provenance, retaining a separate buyer mention.
+    buyer_resolution = clean.get("entidad_resolution") or {}
+    buyer_surface = (buyer_resolution.get("metadata") or {}).get("rewritten_from")
+    if (
+        _value_is_part_of_name(buyer_surface, name, name_tokens)
+        and not _occurs_outside_name(buyer_surface, name, raw_query)
+    ):
+        for key in ("entidad", "entidad_resolved", "entidad_resolution", "entidad_like"):
+            clean.pop(key, None)
     for key, companions in {
         "ciudad": ("ciudad_resolved",),
         "departamento": ("departamento_resolved", "departamento_resolution"),

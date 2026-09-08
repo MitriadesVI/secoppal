@@ -1,5 +1,6 @@
 """Reuse existing command and profile detectors; pending does not own commands."""
 from app.core.direct_lookup import detect_direct_lookup
+from app.core.actor_arbitration import is_complete_buyer_search
 from app.core.radar.commands import parse_radar_command
 from app.core.entity_profile.turn import detect_entity_profile_turn
 
@@ -21,6 +22,8 @@ def external_owner(query, params, actor_selection=None):
     normalized = TextNormalizer.strip_noise(query)
     explicit_search = any(normalized.startswith(verb) and normalized[len(verb):].strip()
                           for verb in NEW_SEARCH_VERBS)
+    if not profile and is_complete_buyer_search(query, params):
+        return 'TABULAR'
     if not profile and (is_complete_new_search(frame_from_params(params)) or explicit_search):
         return 'TABULAR'
     return None

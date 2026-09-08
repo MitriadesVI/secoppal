@@ -93,6 +93,17 @@ def test_all_expanded_strong_families_produce_clean_actor_frames(tmp_path):
             parsed = dict(router.parse(query).params)
             state = State({"parsed_params": parsed, "raw_query": query})
             params = dict(resolve_actor_name(state, resolver)["parsed_params"])
+            # Buyer-Actor V1 explicitly replaces the old universal verb-role
+            # premise for this complete accredited buyer. Identity rows stay
+            # frozen; explicit proveedor families above still exercise UIS.
+            if query == "que ha contratado UNIVERSIDAD INDUSTRIAL DE SANTANDER":
+                assert params["dataset"] == "contratos"
+                assert params["entidad_resolved"] == "UNIVERSIDAD INDUSTRIAL DE SANTANDER"
+                assert not any(params.get(k) for k in (
+                    "actor_scope", "actor_pending", "contratista", "actor_conversation_operation",
+                ))
+                assert not params.get("objeto")
+                continue
             scope = params.get("actor_scope", {})
             pending = params.get("actor_pending", {})
             mention = pending.get("actor_name") or scope.get("observed_name")

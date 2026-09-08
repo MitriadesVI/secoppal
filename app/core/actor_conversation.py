@@ -379,7 +379,7 @@ def interpret_actor_conversation(query: str) -> ActorConversationInstruction:
             operation=ActorConversationOperation.SET_ACTOR,
             actor_mention=actor,
             buyer_mention=buyer,
-            actor_evidence=actor_likeness(actor, strong_syntax=strong),
+            actor_evidence=actor_likeness(actor, strong_syntax=strong or actor_had_role),
             relation_buyer_span=f"con {relation.group('buyer')}",
             fallback_actor_mention=fallback,
             fallback_actor_evidence=actor_likeness(fallback),

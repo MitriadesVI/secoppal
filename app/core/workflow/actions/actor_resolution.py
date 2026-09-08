@@ -246,22 +246,6 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
             return state
         if has_strong_topic_evidence(probe.actor_name, params) and not entity_like:
             return state
-        article_led_buyer = bool(re.match(
-            r"^(?:el|la|los|las|un|una)\s+(?:alcaldia|gobernacion|"
-            r"secretaria|municipio|departamento|distrito|entidad)\b",
-            probe.unbounded_name,
-            re.IGNORECASE,
-        ))
-        if article_led_buyer and (
-            params.get("entidad") or params.get("entidad_resolved")
-        ):
-            # ``contratos de la alcaldía de X`` already has independent buyer
-            # evidence.  After an exact actor miss, preserve that established
-            # reading instead of replacing it with a bare-name clarification.
-            # The article alone is not buyer evidence: real actors such as
-            # ``LA PREVISORA S.A. COMPAÑÍA DE SEGUROS`` must fail closed when
-            # an entity scan recognizes only a prefix of their complete name.
-            return state
         if not entity_like:
             return state
         if person_shape_only and result.status == ActorResolutionStatus.INDEX_UNAVAILABLE:
