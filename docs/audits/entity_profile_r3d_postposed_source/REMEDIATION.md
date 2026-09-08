@@ -116,8 +116,12 @@ SQL y al alcance visible.
 - No se corrio la suite global.
 - No se hizo merge ni push.
 
-El HEAD de codigo probado es
-`57ea478031ed16f9b1df4c9f92754edd2038de9b`. El commit posterior a ese SHA
+La politica escalar historica de `procesos de administracion de contratos`
+queda registrada como deuda heredada: no se usa como autoridad del Frame y no
+se intenta redefinir en R3d.
+
+El HEAD de codigo y pruebas probado es
+`e4b85db855d50f7e5671a515bfe1b26c882c2867`. El commit posterior a ese SHA
 contiene exclusivamente esta evidencia documental; el `FINAL_HEAD` se registra
 en la entrega, porque un commit no puede contener de forma no autorreferencial
 su propio SHA.

@@ -4,13 +4,14 @@
 
 ```text
 BASE_A2=a952805de050ec28d571b7a637e9240f88c71a45
-BASE_A2_PARENT_TESTED_CODE=2ec5033
-TESTED_CODE_HEAD=57ea478031ed16f9b1df4c9f92754edd2038de9b
+BASE_A2_PARENT_TESTED_CODE=2ec5033edb5bea1a1394df427a9cdf966155da25
+TESTED_CODE_HEAD=e4b85db855d50f7e5671a515bfe1b26c882c2867
 BRANCH=fix/entity-profile-r3d-postposed-source
 WORKTREE=/Users/rodrigoortiz/Documents/secoppal-entity-profile-r3d-postposed-source
 ```
 
-`2ec5033` es padre directo de `BASE_A2`; `BASE_A2` agrega la evidencia
+`2ec5033edb5bea1a1394df427a9cdf966155da25` es padre directo de `BASE_A2`;
+`BASE_A2` agrega la evidencia
 documental A2. El worktree de referencia A2 no fue modificado.
 
 ## Matriz antes/despues
@@ -70,7 +71,8 @@ Modalidad: Contratación directa, Contratación Directa (con ofertas).
 
 Los cinco negativos exigidos mantienen las ocurrencias interiores disponibles
 para tema. Una propiedad Hypothesis los prueba con y sin `en 2026`, de modo que
-el periodo no cambia su clasificacion. Tambien se cubren:
+el periodo no cambia su clasificacion. La propiedad positiva genera cortesia,
+articulos, tildes, espacios, mayusculas y Title Case. Tambien se cubren:
 
 - `excepto`, `sin` y `excluyendo`, sin fuente positiva secundaria;
 - comprador acreditado cuyo nombre contiene `contratos`;
@@ -162,6 +164,10 @@ app/core/entity_profile/claim_adapters.py:238
 Los wrappers de compatibilidad estan en `source_occurrence.py`; los usos
 restantes son tests. Todos los consumidores runtime enumerados quedaron
 cubiertos por el target A2 de 1.709 pruebas y por los tests end-to-end R3d.
+
+La politica escalar historica de `procesos de administracion de contratos`
+permanece como deuda A2. No se promueve a autoridad del Frame y no se modifica
+en este micro-lote.
 
 ## Frame productivo y limites
 

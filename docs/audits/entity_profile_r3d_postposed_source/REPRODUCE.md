@@ -85,6 +85,16 @@ R3d nuevo, con dos propiedades Hypothesis deterministas de 36 ejemplos maximos:
 16 passed in 5.11s
 ```
 
+La propiedad de framing se amplio despues para generar tambien mayusculas y
+Title Case; su corrida focal fue:
+
+```text
+.                                                                        [100%]
+1 passed in 4.37s
+```
+
+El target final de 1.709 pruebas que sigue incluye el archivo R3d ya ampliado.
+
 Reproduccion exacta ya verde:
 
 ```text
@@ -142,8 +152,12 @@ Target A2 obligatorio, sin excluir rollback ni R3d:
 ........................................................................ [ 92%]
 ........................................................................ [ 96%]
 .............................................................            [100%]
-1709 passed in 118.17s (0:01:58)
+1709 passed in 119.54s (0:01:59)
 ```
+
+Conteo final del target: `selected=1709`, `passed=1709`, `failed=0`,
+`skipped=0`, `deselected=0`, `xfailed=0`. No hubo motivos que registrar para
+categorias no verdes.
 
 ## Tres puertas en el HEAD de codigo probado
 
