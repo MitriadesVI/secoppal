@@ -121,8 +121,7 @@ def _supplier_lines(title: str, suppliers: tuple[SupplierMetric, ...], metric: s
         value = (
             _count(supplier.contract_count, "contratos")
             if metric == "count"
-            else (_money(supplier.total_contract_value) if supplier.total_contract_value is not None
-                  else "monto no acreditable")
+            else _money(supplier.total_contract_value)
         )
         lines.append(f"• {supplier.observed_name}: {value}")
     return lines

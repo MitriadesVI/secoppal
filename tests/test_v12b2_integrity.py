@@ -75,3 +75,35 @@ def test_duplicate_observation_invalid_even_if_not_attempted(attempts):
     record.calls = (*calls, calls[-1])
     with pytest.raises(ValueError, match='membership'):
         validate_record(frame, ref, record)
+
+
+def test_buyer_snapshot_rejected_even_with_recomputed_digest(frame_v12):
+    from app.core.conversation_store import ConversationStore
+    from app.core.entity_profile.record_validation import snapshot_digest
+
+    chat = Conversation('b2-buyer-snapshot')
+    chat.say('analiza contratos de alcaldia de baranoa en agosto')
+    path = ConversationStore()._envelope_path_for(chat.chat_id)
+    lines = path.read_text().splitlines()
+    raw = json.loads(lines[-1])
+    record = raw['execution_record']
+    record['authorized_plan']['buyer_scope']['authority_version'] = 'foreign'
+    record['plan_digest'] = snapshot_digest(record['authorized_plan'])
+    path.write_text('\n'.join([*lines[:-1], json.dumps(raw)]) + '\n')
+    later = chat.say('proveedores')
+    assert later.clarifies and not later.calls
+
+
+def test_real_unattempted_execution_is_valid_on_reload(frame_v12, monkeypatch):
+    from app.core.entity_profile import frame_runner
+
+    chat = Conversation('b2-unattempted')
+    with monkeypatch.context() as patch:
+        patch.setattr(frame_runner, '_fetch_budget', lambda: None)
+        result = chat.say('analiza contratos de alcaldia de baranoa en agosto')
+    assert result.result['continuation_published'] and not result.calls
+    record = chat.execution_record()
+    assert len(record['calls']) == 4 and not any(call['attempted'] for call in record['calls'])
+    assert all(call['status'] == 'BUDGET_EXHAUSTED' for call in record['calls'])
+    later = chat.say('proveedores')
+    assert later.calls and not later.clarifies

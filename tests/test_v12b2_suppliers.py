@@ -70,7 +70,7 @@ def test_mixed_supplier_amounts_survive_reload_and_followup(frame_v12, raw, stat
         assert 'Principal contratista por valor:' not in result.response
         assert 'PROVEEDOR A' in result.response and '3 contratos' in result.response
         if focus == 'suppliers':
-            assert 'PROVEEDOR B' in result.response and 'monto no acreditable' in result.response
+            assert 'PROVEEDOR B' in result.response and 'valor no disponible' in result.response
         amounts = [m for c in chat.execution_record()['calls'] if c['call_id'].startswith('supplier_')
                    for m in c['metrics'] if m['name'] == 'total_contract_value']
         assert sum(m['status'] == 'VALID' for m in amounts) == 2
