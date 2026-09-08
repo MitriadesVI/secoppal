@@ -1,0 +1,39 @@
+tests/test_v12b_independent_publication.py:39:    original_publish = ConversationStore.publish_turn
+tests/test_v12b_independent_publication.py:58:    monkeypatch.setattr(ConversationStore, 'publish_turn', publish)
+tests/test_v12b_independent_publication.py:120:    monkeypatch.setattr(workflow.conv_store, 'publish_turn', fail)
+app/core/workflow/continuity_staging.py:39:def stage_continuity(store, reservation):
+app/core/workflow/continuity_staging.py:59:def prepare_generation(store, reservation):
+tests/test_entity_profile_frame_b_properties.py:245:        envelope = store.publish_turn(
+tests/test_entity_profile_frame_b_properties.py:263:        store.publish_turn(
+tests/test_entity_profile_frame_b_properties.py:267:        store.publish_turn(stale, user_query="stale", response="STALE")
+tests/test_v12b1_independent_controls.py:22:    original = continuity_staging.prepare_generation
+tests/test_v12b1_independent_controls.py:34:        patch.setattr(continuity_staging, 'prepare_generation', observe)
+app/core/conversation_store.py:372:    def publish_turn(
+app/core/conversation_store.py:389:        from app.core.workflow.continuity_staging import prepare_generation
+app/core/conversation_store.py:394:                      else prepare_generation(self, reservation))
+app/core/workflow/turn_coordination.py:8:from app.core.workflow.continuity_staging import stage_continuity
+app/core/workflow/turn_coordination.py:11:def coordinate_turn(workflow, ctx, seed):
+app/core/workflow/turn_coordination.py:31:        with stage_continuity(store, reservation):
+app/core/workflow/turn_coordination.py:72:    from app.core.workflow.tabular_capability import validate_tabular, export_params
+app/core/workflow/turn_coordination.py:79:        params = export_params(deps.conv_store, admitted.contract, ctx.chat_id) if admitted.contract else None
+app/core/workflow/turn_coordination.py:91:            referent = validate_tabular(deps.conv_store, reservation, admitted.contract, ctx.user_query)
+app/core/entity_profile/frame_response.py:69:    from app.core.entity_profile.record_validation import validate_frame_plan
+app/core/entity_profile/frame_response.py:71:    validate_frame_plan(frame, plan)
+app/core/workflow/envelope_validation.py:3:from app.core.entity_profile.record_validation import validate_record
+app/core/workflow/envelope_validation.py:27:        validate_record(frame, contract.confirmed_profile, record)
+app/core/workflow/tabular_capability.py:37:def validate_tabular(store, reservation, contract, query):
+app/core/workflow/tabular_capability.py:59:def export_params(store, contract, chat):
+app/core/orchestrator.py:310:        from app.core.workflow.turn_coordination import coordinate_turn
+app/core/orchestrator.py:312:        return coordinate_turn(self, ctx, seed_resolved_params)
+app/core/workflow/turn_publication.py:129:        envelope = deps.conv_store.publish_turn(
+app/core/entity_profile/record_validation.py:30:def validate_frame_plan(frame, plan):
+app/core/entity_profile/record_validation.py:38:def validate_record(frame, reference, record):
+tests/test_entity_profile_frame_b_publication.py:72:    store.publish_turn(first, user_query="a", response="A")
+tests/test_entity_profile_frame_b_publication.py:74:        store.publish_turn(second, user_query="b", response="B")
+tests/test_entity_profile_frame_b_publication.py:90:            envelope = store.publish_turn(
+tests/test_entity_profile_frame_b_publication.py:113:    store.publish_turn(
+tests/test_entity_profile_frame_b_publication.py:149:    monkeypatch.setattr(workflow.conv_store, "publish_turn", refuse)
+tests/test_entity_profile_frame_b_publication.py:318:    envelope = store.publish_turn(
+tests/test_v12b1_independent_records.py:120:    from app.core.entity_profile.record_validation import snapshot_digest, validate_record
+tests/test_v12b1_independent_records.py:141:    validate_record(frame, reference, record)
+tests/test_v12b1_independent_records.py:144:        validate_record(frame, reference, record)

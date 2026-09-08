@@ -1,0 +1,14 @@
+{
+  "candidate": "af8f0a3407102dcb807089e87e470d754b835d61",
+  "tested": "64f9836edf96a89051ffc4eb21b0b3397091228c",
+  "base": "708ea3b3f609af4d9d3abe471f6963ee23513d7a",
+  "runtime_b": "1b2a85f89e5d556f1de392e11b9da437da6540d1",
+  "ancestry": true,
+  "tested_runtime_and_tests_identical": true,
+  "all_candidate_files": 2410,
+  "changed": [],
+  "original_bytes_match_base": true,
+  "protected_authorities_unchanged": true,
+  "author_originals_verified": 485,
+  "literal_archives_verified": 35
+}

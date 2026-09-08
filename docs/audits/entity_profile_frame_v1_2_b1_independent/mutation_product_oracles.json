@@ -1,0 +1,21 @@
+{
+  "sha": "af8f0a3407102dcb807089e87e470d754b835d61",
+  "entries": [
+    {
+      "id": "M2-old-cursor-after-corruption",
+      "baseline_exit": 0,
+      "mutant_exit": 0,
+      "baseline": "PRODUCT_ORACLE corrupt_queue admission_unreadable_continuation No pude recuperar el contexto de esta conversación, así que no voy a continuar un resultado que no puedo acreditar. Repíteme la consulta y la hago de nuevo. 0\n.\n1 passed, 1 deselected in 1.50s\n",
+      "mutant": "PRODUCT_ORACLE corrupt_queue admission_invalid_current_publication No puedo acreditar el contexto actual. Repite la consulta completa. 0\n.\n1 passed, 1 deselected in 1.23s\n",
+      "restored": true
+    },
+    {
+      "id": "M3-seed-bypasses-admission",
+      "baseline_exit": 0,
+      "mutant_exit": 0,
+      "baseline": "PRODUCT_ORACLE profile_seed admission_seed_over_profile Ese filtro venía de una búsqueda en tabla y este resultado es un análisis institucional; aplicarlo cambiaría el universo sin que lo pidieras. Dime qué quieres ajustar del análisis y lo hago sobre él. 0\n.\n1 passed, 1 deselected in 1.21s\n",
+      "mutant": "PRODUCT_ORACLE profile_seed admission_stale_seed_reference Ese filtro apunta a un resultado que ya no está en pantalla. Vuelve a aplicarlo sobre el resultado actual. 0\n.\n1 passed, 1 deselected in 1.25s\n",
+      "restored": true
+    }
+  ]
+}

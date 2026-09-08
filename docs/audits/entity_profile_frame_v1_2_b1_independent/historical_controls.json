@@ -1,0 +1,20 @@
+[
+  {
+    "name": "runtime_b",
+    "sha": "1b2a85f89e5d556f1de392e11b9da437da6540d1",
+    "exit": 1,
+    "runtime_unchanged": true,
+    "outcome": [
+      "4 failed, 2 passed in 2.76s"
+    ]
+  },
+  {
+    "name": "before_b",
+    "sha": "4c86d5bafaa3296b73c6523465b33efa4311910a",
+    "exit": 1,
+    "runtime_unchanged": true,
+    "outcome": [
+      "4 failed, 2 passed in 2.58s"
+    ]
+  }
+]
