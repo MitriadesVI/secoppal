@@ -4558,3 +4558,28 @@ componente horario», no una afirmación universal, y la semántica global de
 fechas no se toca.
 
 [Informe y evidencia](audits/entity_profile_semantic_v1_1/INDEPENDENT_REVIEW_REMEDIATION_V1_1.md).
+
+
+### Entity Profile Frame V1.2 — integración efectiva con Frame OFF
+
+**Fecha: 2026-09-08. Estado: INTEGRADO EN MAIN, NO ACTIVADO.** Tras la aceptación
+explícita del cierre `V1_2_FRAME_GO_FOR_MERGE_OFF`, se ejecutó
+`git merge --ff-only 32d7c39e54c10f2e97075d53f0ee0e06e7abbbad` (exit 0).
+Main avanzó desde `7868664757b28bed16c583ea50327d669f1501e3` hasta ese HEAD,
+con ascendencia y limpieza recomprobadas, sin divergencia. Se preservaron por
+hash los 244 archivos locales no versionados y `.env`.
+
+El código equivale al gate probado en
+`24d67fcb9195e5d79b9dca59efa38f42e0973195`: los cambios posteriores del candidato
+son sólo documentación/evidencia. No se repitió pytest. El gate previo conserva
+**13071 passed, 11 skipped, 16 xfailed**, complementarios 47/303/115 y corpus
+89/89. Postflight: Ruff `All checks passed!`, Semgrep 10 heredados/0 nuevos,
+`lint-core` limpio y Frame efectivo `False`. El baseline Semgrep sigue rojo.
+
+La primera corrida sigue registrada como GATE_INCONCLUSIVE; la adjudicación de
+las dos guardas y la segunda corrida no se reescriben. El P2 de recuperación
+permanece sin corregir ni aceptarse como riesgo productivo. Integración no es
+activación: no hubo push, despliegue ni reinicio; dogfood ON queda para otra
+instancia y persistencia de pruebas, en un encargo posterior.
+
+[Integración efectuada, SHAs y salidas](audits/entity_profile_frame_v1_2_coordinator_gate/integration/INTEGRATION.md).

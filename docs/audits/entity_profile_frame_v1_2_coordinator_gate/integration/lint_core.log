@@ -1,0 +1,4 @@
+make lint-core
+app/core/ limpio
+
+EXIT_CODE=0

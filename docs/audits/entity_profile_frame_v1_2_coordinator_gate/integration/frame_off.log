@@ -1,0 +1,4 @@
+.venv/bin/python -c 'from app.config import entity_profile_frame_enabled; print("FRAME_ENABLED=" + str(entity_profile_frame_enabled()))'
+FRAME_ENABLED=False
+
+EXIT_CODE=0

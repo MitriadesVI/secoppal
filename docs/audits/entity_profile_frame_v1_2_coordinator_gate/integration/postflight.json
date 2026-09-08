@@ -1,0 +1,49 @@
+[
+  {
+    "component": "ruff",
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "app/",
+      "tests/",
+      "scripts/"
+    ],
+    "exit": 0,
+    "duration": 0.07508412501192652
+  },
+  {
+    "component": "semgrep",
+    "command": [
+      ".venv/bin/semgrep",
+      "--config",
+      ".semgrep/secoppal-laws.yml",
+      "app/",
+      "--metrics=off",
+      "--json",
+      "--output",
+      "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-frame-ff-78t_6irr/semgrep.json"
+    ],
+    "exit": 0,
+    "duration": 2.461038874986116
+  },
+  {
+    "component": "lint_core",
+    "command": [
+      "make",
+      "lint-core"
+    ],
+    "exit": 0,
+    "duration": 0.02780545900168363
+  },
+  {
+    "component": "frame_off",
+    "command": [
+      ".venv/bin/python",
+      "-c",
+      "from app.config import entity_profile_frame_enabled; print(\"FRAME_ENABLED=\" + str(entity_profile_frame_enabled()))"
+    ],
+    "exit": 0,
+    "result": "FRAME_ENABLED=False",
+    "persistence": "temporary before config construction; real Frame override not replaced"
+  }
+]

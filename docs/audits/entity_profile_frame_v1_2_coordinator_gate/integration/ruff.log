@@ -1,0 +1,4 @@
+.venv/bin/ruff check app/ tests/ scripts/
+All checks passed!
+
+EXIT_CODE=0

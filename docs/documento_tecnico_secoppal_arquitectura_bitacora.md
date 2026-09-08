@@ -2533,3 +2533,39 @@ limpios; Semgrep 10 en `app/`, delta 0. LAST_DAY_GATE queda PARTIAL con
 procedencia; la semántica global de fechas no se toca. Rama sin merge y sin push.
 
 Detalle: [INDEPENDENT_REVIEW_REMEDIATION_V1_1](audits/entity_profile_semantic_v1_1/INDEPENDENT_REVIEW_REMEDIATION_V1_1.md).
+
+
+## Entity Profile Frame V1.2 — integrado con Frame OFF — 2026-09-08
+
+La reconciliación y el cierre de las dos guardas llegaron a main mediante
+fast-forward desde `7868664757b28bed16c583ea50327d669f1501e3` a
+`32d7c39e54c10f2e97075d53f0ee0e06e7abbbad`. Es la integración efectuada tras
+la aceptación del usuario; los estados «rama sin merge» de las entradas
+anteriores se conservan como historia de aquellos cierres.
+
+El runtime incorporado es el auditado en
+`4edc248e60610efdbeebb3cb8010bc7b59445cad`; el candidato reconciliado se probó en
+`24d67fcb9195e5d79b9dca59efa38f42e0973195`. Entre ese SHA y el HEAD integrado
+sólo hay documentación/evidencia del gate. Su segunda corrida completa cerró
+con 13071 passed, 11 skipped y 16 xfailed; aceptación complementaria
+47/303/115 y corpus 89/89. No se repitió la suite para el mismo código.
+Ruff volvió a pasar y Semgrep mantuvo 10 heredados, cero nuevos.
+
+**Estado operativo: integrado, no activado.**
+`SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED` conserva default false y la lectura
+fresca dio `FRAME_ENABLED=False`, sin override del proceso o `.env`.
+La comprobación usó persistencia temporal. Los archivos locales y `.env` se
+preservaron; no se arrancó ni reinició la app y no hubo push ni despliegue.
+
+El P2 de recuperación descrito en el cierre continúa sin reparar: la secuencia
+unlink visible / rearme fallido / fallo de marca posterior a truncate puede
+admitir un registro anterior no publicado. PublicationRecoveryError no es
+prueba de bloqueo; el reset se validó sobre almacenamiento recuperado. No es
+PRODUCTION_GO ni aceptación de riesgo para terceros.
+
+El siguiente dogfood con Frame ON corresponde a una instancia y persistencia
+de pruebas separadas, con alcance autorizado por separado; no se ejecutó en
+esta integración. La evidencia previa y sus límites permanecen vigentes.
+
+[Recibo de integración y comprobaciones](audits/entity_profile_frame_v1_2_coordinator_gate/integration/INTEGRATION.md).
+[Gate, adjudicación y límites](audits/entity_profile_frame_v1_2_coordinator_gate/round2/CLOSEOUT.md).

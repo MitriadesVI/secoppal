@@ -1,0 +1,11 @@
+git diff --check
+EXIT_CODE=0
+
+git diff --cached --check
+EXIT_CODE=0
+
+Only documentation/evidence staged: PASS
+Canonical document original prefixes preserved: PASS
+Original gate evidence unchanged: PASS
+Source worktree clean at integrated target: PASS
+244 original local files and .env hashes preserved: PASS

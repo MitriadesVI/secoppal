@@ -1,0 +1,132 @@
+{
+  "main_before": "7868664757b28bed16c583ea50327d669f1501e3",
+  "target": "32d7c39e54c10f2e97075d53f0ee0e06e7abbbad",
+  "tested_code": "24d67fcb9195e5d79b9dca59efa38f42e0973195",
+  "initial_tracked_clean": true,
+  "collision_count": 0,
+  "tested_to_target_documentation_files": [
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/COORDINATOR_GATE.md",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/CLOSEOUT.md",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/artifact_storage.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/collection_delta.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/exceptions.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/execution_summary.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/frame_observations/R2-CONTRACTS.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/frame_observations/R2-PROCESSES.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/frame_observations/R3-A.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/frame_observations/R3-B.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/frame_observations/R3-C.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/frame_observations/legacy-state-port.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/frame_observations/migration-modalidad_exclude_procedure_ids.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/frame_observations/migration-objeto.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/frame_observations/migration-valor_min.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b2_independent.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b2_independent.log",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b2_independent.xml",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_independent.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_independent.log",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_independent.xml",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_remediation.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_remediation.log",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_b3_remediation.xml",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_diff_check.log",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_global.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_global.log",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_global.xml",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_hashes_after.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_hashes_before.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_lint_core.log",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_postflight.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_query_corpus.log",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_refs.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_results.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_ruff.log",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_ruff_complement.log",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_semgrep_base.log.gz",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/full_semgrep_candidate.log.gz",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/gate_verdict.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/limit_marker_flush.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/limit_marker_write.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/semgrep_base.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/semgrep_candidate.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/semgrep_delta.json",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/tested_to_final_code.diff"
+  ],
+  "frame_env_override": null,
+  "frame_dotenv_override": null,
+  "frame_default_in_target": false,
+  "tooling": [
+    {
+      "command": [
+        ".venv/bin/ruff",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "ruff 0.16.4\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/semgrep",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "1.176.0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-c",
+        "import hypothesis; print(hypothesis.__version__)"
+      ],
+      "exit": 0,
+      "stdout": "6.165.10\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "codegraph",
+        "--version"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "------------------------------------------------------------------------\n[CodeGraph] Unsupported Node.js version: 26.8.1\n------------------------------------------------------------------------\nNode.js 25.x has a V8 WASM JIT (turboshaft) Zone allocator bug that\ncrashes with `Fatal process out of memory: Zone` when CodeGraph\ncompiles tree-sitter grammars. CodeGraph WILL crash on this Node\nversion mid-indexing. See https://github.com/colbymchenry/codegraph/issues/81\n\nFix: install Node.js 22 LTS:\n  nvm install 22 && nvm use 22                          # nvm\n  brew install node@22 && brew link --overwrite --force node@22  # Homebrew\n\nTo override (NOT recommended - you will likely OOM):\n  CODEGRAPH_ALLOW_UNSAFE_NODE=1 codegraph ...\n------------------------------------------------------------------------\n"
+    },
+    {
+      "command": [
+        "codegraph",
+        "status"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "------------------------------------------------------------------------\n[CodeGraph] Unsupported Node.js version: 26.8.1\n------------------------------------------------------------------------\nNode.js 25.x has a V8 WASM JIT (turboshaft) Zone allocator bug that\ncrashes with `Fatal process out of memory: Zone` when CodeGraph\ncompiles tree-sitter grammars. CodeGraph WILL crash on this Node\nversion mid-indexing. See https://github.com/colbymchenry/codegraph/issues/81\n\nFix: install Node.js 22 LTS:\n  nvm install 22 && nvm use 22                          # nvm\n  brew install node@22 && brew link --overwrite --force node@22  # Homebrew\n\nTo override (NOT recommended - you will likely OOM):\n  CODEGRAPH_ALLOW_UNSAFE_NODE=1 codegraph ...\n------------------------------------------------------------------------\n"
+    }
+  ],
+  "MAIN_BEFORE": "7868664757b28bed16c583ea50327d669f1501e3",
+  "MAIN_AFTER_FF": "32d7c39e54c10f2e97075d53f0ee0e06e7abbbad",
+  "runtime_audited": "4edc248e60610efdbeebb3cb8010bc7b59445cad",
+  "integration_date": "2026-09-08",
+  "merge_command": "git merge --ff-only 32d7c39e54c10f2e97075d53f0ee0e06e7abbbad",
+  "merge_exit": 0,
+  "merge_executed": true,
+  "history_before": {
+    "main_only": 0,
+    "target_only": 87,
+    "merge_commits_in_range": 0
+  },
+  "source_worktree_clean": true,
+  "local_files_preserved": 244,
+  "local_bytes_preserved": 6309886,
+  "local_inventory_sha256": "6b892b25abf19ea0f916afd93ad061d6a7f3619c02eecdf165e2a6d182315360",
+  "local_inventory_names_omitted": true,
+  "dotenv_preserved": true,
+  "tracked_clean_after_ff": true,
+  "effective_frame_enabled": false,
+  "pytest_rerun": false,
+  "push_executed": false,
+  "deploy_executed": false,
+  "app_restarted": false,
+  "production_activated": false,
+  "production_go": false
+}
