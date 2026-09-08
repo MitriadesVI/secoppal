@@ -414,15 +414,8 @@ class ConversationStore:
                     f"expected revision {reservation.expected_revision}, "
                     f"found {current}",
                 )
-            with path.open("a", encoding="utf-8") as handle:
-                handle.write(line + "\n")
-                handle.flush()
-                os.fsync(handle.fileno())
-            descriptor = os.open(path.parent, os.O_RDONLY)
-            try:
-                os.fsync(descriptor)
-            finally:
-                os.close(descriptor)
+            from app.core.workflow.publication_io import append_confirmed
+            append_confirmed(path, line)
         return envelope
 
     def load_envelope(self, chat_id: str) -> EnvelopeRead:
@@ -440,12 +433,17 @@ class ConversationStore:
 
     @staticmethod
     def _read_envelope(path: Path) -> EnvelopeRead:
+        from app.core.workflow.publication_io import barrier_path
         if not path.exists():
+            if barrier_path(path).exists():
+                return EnvelopeRead(EnvelopeStatus.CORRUPT, None, 0, "unconfirmed publication")
             return EnvelopeRead(EnvelopeStatus.EMPTY)
         lines = [
             line for line in path.read_text(encoding="utf-8").splitlines()
             if line.strip()
         ]
+        if barrier_path(path).exists():
+            return EnvelopeRead(EnvelopeStatus.CORRUPT, None, len(lines), "unconfirmed publication")
         if not lines:
             return EnvelopeRead(EnvelopeStatus.EMPTY)
         try:
