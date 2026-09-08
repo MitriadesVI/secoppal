@@ -168,6 +168,7 @@ class TurnReservation:
     result_id: str
     expected_revision: int
     previous: EnvelopeRead
+    epoch: int = 0
 
     @property
     def revision(self) -> int:
@@ -274,21 +275,16 @@ class ConversationStore:
         return None
 
     def clear(self, chat_id: str) -> None:
-        """Elimina buffer primero y luego historial (orden seguro ante crash)."""
-        with self._pagination_lock:
-            pagination_path = self._pagination_path_for(chat_id)
-            if pagination_path.exists():
-                pagination_path.unlink()
-            path = self._path_for(chat_id)
-            if path.exists():
-                path.unlink()
-        # Un reset explícito invalida también la continuidad publicada: dejar
-        # el sobre vivo mantendría un contrato que referencia un historial que
-        # ya no existe.
+        """Invalidate pre-reset reservations before removing the visible pointer."""
+        from app.core.workflow.store_epoch import advance_epoch
+
         envelope_path = self._envelope_path_for(chat_id)
         with conversation_lock(envelope_path):
-            if envelope_path.exists():
-                envelope_path.unlink()
+            advance_epoch(envelope_path)
+            for path in (envelope_path,
+                         self.base_path / f"{_sanitize_chat_id(chat_id)}.jsonl",
+                         self.base_path / f"{_sanitize_chat_id(chat_id)}.pagination.json"):
+                path.unlink(missing_ok=True)
 
     def save_pagination_buffer(self, chat_id: str, buffer: PaginationBuffer) -> None:
         """Persiste atomicamente un snapshot por grupo, conservando sus hermanos."""
@@ -362,12 +358,15 @@ class ConversationStore:
         path = self._envelope_path_for(chat_id)
         with conversation_lock(path):
             read = self._read_envelope(path)
+            from app.core.workflow.store_epoch import read_epoch
+            epoch = read_epoch(path)
         return TurnReservation(
             chat_id=chat_id,
             turn_id=uuid.uuid4().hex[:12],
             result_id=uuid.uuid4().hex[:12],
             expected_revision=read.revision,
             previous=read,
+            epoch=epoch,
         )
 
     def publish_turn(
@@ -379,6 +378,7 @@ class ConversationStore:
         profile_state: dict | None = None,
         continuation: dict | None = None,
         execution_record: dict | None = None,
+        preserve_generation: bool = False,
     ) -> ConversationEnvelope:
         """Publica respuesta, estado, contrato y ejecución como UN registro.
 
@@ -386,6 +386,12 @@ class ConversationStore:
         comprobarla fuera deja la ventana en la que otro escritor publica entre
         la lectura y la escritura.
         """
+        from app.core.workflow.continuity_staging import prepare_generation
+        from app.core.workflow.store_epoch import read_epoch
+
+        generation = (reservation.previous.envelope.continuity_generation
+                      if preserve_generation and reservation.previous.usable
+                      else prepare_generation(self, reservation))
         envelope = ConversationEnvelope(
             revision=reservation.revision,
             turn_id=reservation.turn_id,
@@ -397,12 +403,13 @@ class ConversationStore:
             profile_state=profile_state,
             continuation=continuation,
             execution_record=execution_record,
+            continuity_generation=generation,
         )
         line = envelope.to_json()
         path = self._envelope_path_for(reservation.chat_id)
         with conversation_lock(path):
             current = self._read_envelope(path).revision
-            if current != reservation.expected_revision:
+            if current != reservation.expected_revision or read_epoch(path) != reservation.epoch:
                 raise StaleRevisionError(
                     f"expected revision {reservation.expected_revision}, "
                     f"found {current}",
@@ -417,7 +424,10 @@ class ConversationStore:
         """El último sobre publicado, o por qué no hay continuidad válida."""
         path = self._envelope_path_for(chat_id)
         with conversation_lock(path):
-            return self._read_envelope(path)
+            read = self._read_envelope(path)
+            if read.usable and read.envelope.chat_id != chat_id:
+                return EnvelopeRead(EnvelopeStatus.CORRUPT, None, read.revision, "foreign chat")
+            return read
 
     def _envelope_path_for(self, chat_id: str) -> Path:
         safe = _sanitize_chat_id(chat_id)
@@ -455,11 +465,13 @@ class ConversationStore:
 
     def _path_for(self, chat_id: str) -> Path:
         safe = _sanitize_chat_id(chat_id)
-        return self.base_path / f"{safe}.jsonl"
+        from app.core.workflow.continuity_staging import continuity_path
+        return continuity_path(self, chat_id, "history.jsonl", self.base_path / f"{safe}.jsonl")
 
     def _pagination_path_for(self, chat_id: str) -> Path:
         safe = _sanitize_chat_id(chat_id)
-        return self.base_path / f"{safe}.pagination.json"
+        from app.core.workflow.continuity_staging import continuity_path
+        return continuity_path(self, chat_id, "pagination.json", self.base_path / f"{safe}.pagination.json")
 
     @staticmethod
     def _read_pagination_payload(path: Path) -> dict:

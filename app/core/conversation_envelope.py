@@ -52,6 +52,7 @@ class ConversationEnvelope:
     profile_state: dict | None = None
     continuation: dict | None = None
     execution_record: dict | None = None
+    continuity_generation: str | None = None
     schema_version: int = ENVELOPE_SCHEMA_VERSION
 
     def __post_init__(self) -> None:
@@ -62,6 +63,7 @@ class ConversationEnvelope:
 
     def to_dict(self) -> dict:
         return {
+            "continuity_generation": self.continuity_generation,
             "schema_version": self.schema_version,
             "revision": self.revision,
             "turn_id": self.turn_id,
@@ -88,6 +90,7 @@ class ConversationEnvelope:
             raise EnvelopeError(f"unknown envelope schema: {version!r}")
         try:
             return cls(
+                continuity_generation=raw.get("continuity_generation"),
                 revision=int(raw["revision"]),
                 turn_id=str(raw["turn_id"]),
                 result_id=str(raw["result_id"]),

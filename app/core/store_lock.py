@@ -76,11 +76,8 @@ def conversation_lock(
 def _acquire_file_lock(handle, deadline: float, poll: float, path: Path) -> None:
     try:
         import fcntl
-    except ImportError:  # pragma: no cover - plataformas sin fcntl
-        # Sin `flock` la exclusión entre procesos NO existe. No se finge: el
-        # candado en memoria sigue puesto y quien lea este código sabe qué
-        # garantía tiene y cuál no.
-        return
+    except ImportError as exc:
+        raise RuntimeError("cross-process conversation locking requires fcntl") from exc
     while True:
         try:
             fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
