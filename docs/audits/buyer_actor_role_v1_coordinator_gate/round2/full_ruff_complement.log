@@ -1,0 +1,4 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff check docs/audits/buyer_actor_role_v1_coordinator_gate
+All checks passed!
+
+EXIT_CODE=0

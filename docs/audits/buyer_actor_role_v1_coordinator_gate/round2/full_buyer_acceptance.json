@@ -1,0 +1,2578 @@
+{
+  "collection": [
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-on]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-on]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-on]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-on]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-on]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-on]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-on]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-on]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-on]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-off]",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-on]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-True]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-False]",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-True]",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-False]",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-True]",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-False]",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-True]",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-False]",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-True]",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-False]",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-True]",
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-False]",
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-True]",
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-False]",
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_positive_buyer_index_invariance",
+    "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[True]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[True]"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0034362919977866113,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.35996216601051856,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0022779589926358312,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0007368750084424391,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.41936258399800863,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0035427080001682043,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005947089957771823,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.32274329199572094,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.003468208000413142,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006220840004971251,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.36463450000155717,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.003682624999783002,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005385419935919344,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3059642919979524,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.003516291006235406,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005572090012719855,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3209403749933699,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0033995410049101338,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00053570800810121,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3446273339941399,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.003599458999815397,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005473749915836379,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3196921250055311,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0036665829975390807,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005640419985866174,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.35655191700789146,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0033340000081807375,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005144169990671799,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3206239999999525,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0034213339968118817,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005641660100081936,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.30888616599258967,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0035955419880338013,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005716250016121194,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.36303116599447094,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0035685000038938597,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005682080081896856,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3102170420024777,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0036108339991187677,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005796249897684902,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3546870419959305,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0036601249885279685,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000567708004382439,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.31945895800890867,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0035132500051986426,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006009589997120202,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.31587366599706,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00344099999347236,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005427910073194653,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3437098330032313,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0035408749972702935,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005777920014224946,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.31774608299019746,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.003429083008086309,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-off]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006592499994440004,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-off]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3539760839921655,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-off]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.003391083999304101,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-on]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006752499903086573,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-on]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3196790000074543,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-on]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.003386958996998146,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005600419972324744,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10705258300004061,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015175000589806587,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005275830044411123,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11211858299793676,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014324999938253313,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00048158300342038274,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.13986920900060795,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015312500181607902,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005163330060895532,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1070618329977151,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016920801135711372,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000803167000412941,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10801716698915698,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001526669948361814,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005143750022398308,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10818058300355915,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015558399900328368,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000513082995894365,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1047264160006307,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016104200039990246,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005115829990245402,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1046706670022104,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014116700913291425,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005302920035319403,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10633870799210854,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014525000005960464,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004983749968232587,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10842650000995491,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001632919884286821,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005441249959403649,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1423451250011567,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015766599972266704,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006716659991070628,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10587924999708775,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016520799545105547,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000594833996728994,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11167041699809488,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016137499187607318,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00051420800446067,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11156662499706727,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015787499432917684,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005048329912824556,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10911600000690669,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015804100257810205,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006716670031892136,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11217662499984726,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016204200801439583,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005361669900594279,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2885237500013318,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017712499538902193,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005749159900005907,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.28280254200217314,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001947919954545796,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006147910025902092,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.24172995799744967,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0003962089976994321,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006590420089196414,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.281649540993385,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00019008399976883084,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005860419914824888,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1747472499992,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017275000573135912,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000505082993186079,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11238624999532476,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016370799858123064,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006927909998921677,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11114983400329947,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001568329898873344,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005288749962346628,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11112204100936651,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014054100029170513,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005769999988842756,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10685187499620952,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001543340040370822,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000520125002367422,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10880066599929705,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015920799341984093,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006772909982828423,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10566620799363591,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014612499217037112,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005095420056022704,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10611533299379516,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016233300266321748,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006004580063745379,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.23394529199867975,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00018541599274612963,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005602079909294844,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2999852920038393,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00019425000937189907,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006201250071171671,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.20678362499165814,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017649999062996358,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005651660030707717,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.294487624996691,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001557079958729446,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000480332993902266,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.4807228749996284,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.004812125000171363,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000593625009059906,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.4315677919948939,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.004856042010942474,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0010949999996228144,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.46931712501100264,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.004444584003067575,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005737499886890873,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.4497818749950966,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.004831166996154934,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006457499985117465,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.46614595800929237,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0046291250037029386,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006314999918686226,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.4446207919972949,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.004908583010546863,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006177499890327454,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.45231229200726375,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.004645708002499305,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006006250041536987,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.4268081249902025,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.004743458004668355,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005536670068977401,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.24823345799813978,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0012692500022239983,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005067919992143288,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.21087441699637566,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0013347919884836301,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005034170026192442,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.24823079199995846,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0012655830068979412,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005634590052068233,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2878087089920882,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.001285000005736947,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005428330041468143,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.14920070800872054,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017008399299811572,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005061249976279214,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11505204100103583,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001425420050509274,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004769590013893321,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11059108300833032,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001475000026402995,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005843749968335032,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11307274999853689,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001466249959776178,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004761249874718487,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11650662499596365,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017783298972062767,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005744999943999574,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.12033945899747778,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015229098789859563,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004930840077577159,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11234779200458433,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015549999079667032,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0007169580057961866,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.15015600000333507,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016674998914822936,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005624999903375283,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10965841700090095,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014975000522099435,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005101249989820644,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11256816700915806,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016083300579339266,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005325420061126351,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10790624999208376,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015433299995493144,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0007566660060547292,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11039629099832382,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014591698709409684,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004472500004339963,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.19996704200457316,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015283399261534214,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005015829956391826,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.290648209003848,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001447500108042732,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004846250085392967,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.16160041600232944,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017649999062996358,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0007142920076148584,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.14859962499758694,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015754200285300612,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005005830025766045,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10784516599960625,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001560829987283796,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000784874995588325,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10670954200031701,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015458300185855478,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005442499968921766,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10631183299119584,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015066700871102512,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005289999971864745,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10525416700693313,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014845799887552857,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005210000090301037,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10406170900387224,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00018087499483954161,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006360000115819275,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10565187499742024,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016045800293795764,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005595000111497939,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.14995300000009593,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001667500037001446,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005725000082748011,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.12860000001091976,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016362499445676804,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005427500000223517,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11262712499592453,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001596670044818893,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00048416698700748384,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11611699999775738,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016741699073463678,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_positive_buyer_index_invariance",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000493874991661869,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_positive_buyer_index_invariance",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 7.489283917006105,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_positive_buyer_index_invariance",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00018395799270365387,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006484170007752255,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2059932919946732,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015937499119900167,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00047570798778906465,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2610953330004122,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00018258299678564072,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000502583003253676,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.22751387499738485,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0013477920001605526,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005428750009741634,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.22067920900008176,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0025036670122062787,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-off]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-on]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_positive_buyer_index_invariance": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[True]": {
+      "before_call": false,
+      "after_call": true
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-0-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-1-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-4-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-absent-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[cartagena-incompatible-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-0-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-1-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-4-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-absent-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-off]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload[barranquilla-incompatible-on]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-1-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos de FUNDACARIBE-FUNDACARIBE-None-2-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-1-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE-None-2-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-1-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE-FUNDACARIBE-None-2-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-1-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor CC 71000001-FUNDACARIBE-None-2-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-1-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-2-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-1-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena-alcaldia de cartagena-None-2-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-1-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER-UNIVERSIDAD INDUSTRIAL DE SANTANDER-None-2-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-1-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_positive_actors[contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados-None-2-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-False-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[cartagena-True-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-False-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor[barranquilla-True-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[solo 2026-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_product.py::test_dependent_actor_refinement[con la alcaldia de cartagena-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_product.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por m\\xe1s de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de software de alcaldia de cartagena en 2026 por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[qu\\xe9 ha contratado alcaldia de galapa por mas de 500 millones-alcaldia de galapa-MUNICIPIO DE GALAPA.-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_variants[contratos de alcaldia de baranoa por mas de 500 millones-alcaldia de baranoa-ALCALDIA MUNICIPAL DE BARANOA-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[alcaldia de cartagena servicios integrados-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention[UNIVERSIDAD SOLANO-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de bogota-bogota-geography-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos de software-software-topic-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos no de alcaldia de cartagena-alcaldia de cartagena-negation-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_geography_topic_negation[contratos donde el proveedor no sea FUNDACARIBE-FUNDACARIBE-negation-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_positive_buyer_index_invariance": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_city_autopromotion_does_not_suppress_actor[True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py",
+    "tests/test_buyer_actor_independent_boundaries.py::test_explicit_institution_profile_preserves_owner[True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_boundaries.py"
+  },
+  "exitstatus": 0
+}

@@ -1,0 +1,340 @@
+{
+  "components": {
+    "global": {
+      "collected": 13312,
+      "exitstatus": 0,
+      "phases": {
+        "call:passed": 13278,
+        "call:skipped": 31,
+        "setup:passed": 13309,
+        "setup:skipped": 3,
+        "teardown:passed": 13312
+      },
+      "network_total": 216,
+      "network_denied": 0,
+      "deselected": 0,
+      "frame_true_before_call": 265,
+      "frame_false_before_call": 13044
+    },
+    "b2_independent": {
+      "collected": 47,
+      "exitstatus": 0,
+      "phases": {
+        "call:passed": 47,
+        "setup:passed": 47,
+        "teardown:passed": 47
+      },
+      "network_total": 0,
+      "network_denied": 0,
+      "deselected": 0,
+      "frame_true_before_call": 47,
+      "frame_false_before_call": 0
+    },
+    "b3_remediation": {
+      "collected": 303,
+      "exitstatus": 0,
+      "phases": {
+        "call:passed": 303,
+        "setup:passed": 303,
+        "teardown:passed": 303
+      },
+      "network_total": 0,
+      "network_denied": 0,
+      "deselected": 0,
+      "frame_true_before_call": 83,
+      "frame_false_before_call": 220
+    },
+    "b3_independent": {
+      "collected": 115,
+      "exitstatus": 0,
+      "phases": {
+        "call:passed": 115,
+        "setup:passed": 115,
+        "teardown:passed": 115
+      },
+      "network_total": 0,
+      "network_denied": 0,
+      "deselected": 0,
+      "frame_true_before_call": 104,
+      "frame_false_before_call": 11
+    },
+    "buyer_acceptance": {
+      "collected": 95,
+      "exitstatus": 0,
+      "phases": {
+        "call:passed": 95,
+        "setup:passed": 95,
+        "teardown:passed": 95
+      },
+      "network_total": 0,
+      "network_denied": 0,
+      "deselected": 0,
+      "frame_true_before_call": 0,
+      "frame_false_before_call": 95
+    },
+    "buyer_local": {
+      "collected": 8,
+      "exitstatus": 0,
+      "phases": {
+        "call:passed": 8,
+        "setup:passed": 8,
+        "teardown:passed": 8
+      },
+      "network_total": 0,
+      "network_denied": 0,
+      "deselected": 0,
+      "frame_true_before_call": 0,
+      "frame_false_before_call": 8
+    }
+  },
+  "skips": [
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_conversation_dogfood.py::test_d1_con_means_buyer_and_preserves_actor_and_year",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_conversation_dogfood.py::test_d2_candidate_two_has_selection_precedence_and_no_framing_leak",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_conversation_dogfood.py::test_d3_actor_and_buyer_are_separate_roles_and_not_topic",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_conversation_dogfood.py::test_d4_distinctive_actor_token_cannot_degrade_to_topic",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority[ingenieria]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority[ingieneria]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority[ingeneria]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority[ingeniera]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_dogfood.py', 30, 'Skipped: production actor index is not available')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_index_isolation.py::test_the_production_index_does_not_leak_into_the_default_resolver",
+      "when": "setup",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_index_isolation.py', 37, 'Skipped: sin directorio local no hay nada que aislar')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py', 18, 'Skipped: Opt-in requires BUYER_ACTOR_LOCAL_INDEX')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py', 18, 'Skipped: Opt-in requires BUYER_ACTOR_LOCAL_INDEX')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py', 18, 'Skipped: Opt-in requires BUYER_ACTOR_LOCAL_INDEX')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py', 18, 'Skipped: Opt-in requires BUYER_ACTOR_LOCAL_INDEX')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py', 19, 'Skipped: Local index check requires explicit BUYER_ACTOR_LOCAL_INDEX')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py', 19, 'Skipped: Local index check requires explicit BUYER_ACTOR_LOCAL_INDEX')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py', 19, 'Skipped: Local index check requires explicit BUYER_ACTOR_LOCAL_INDEX')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+      "when": "call",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py', 19, 'Skipped: Local index check requires explicit BUYER_ACTOR_LOCAL_INDEX')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_dogfood_regressions.py::test_dogfood_regression[live_recall_solo_medellin]",
+      "when": "setup",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_dogfood_regressions.py', 111, 'Skipped: Recall vivo (Etapa 5): no asertable sin red; los params ya son correctos.')"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_dogfood_regressions.py::test_dogfood_regression[live_recall_entre_100_150_millones]",
+      "when": "setup",
+      "detail": "('/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_dogfood_regressions.py', 111, 'Skipped: Recall vivo (Etapa 5): no asertable sin red; los params ya son correctos.')"
+    }
+  ],
+  "xfails": [
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_hardening_v2_1_remediation.py::test_actor_region_and_buyer_together_still_resolve[contratos del proveedor ana maria llanos en los llanos con alcaldia de barranquilla-Orinoquia]",
+      "reason": "Pre-existing in BASE f9cb8c9, not a V2 regression: actor + explicit region + explicit buyer ends CANDIDATES instead of resolving. Verified on BASE directly; out of scope for this remediation."
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_actor_hardening_v2_1_remediation.py::test_actor_region_and_buyer_together_still_resolve[contratos del proveedor carlos rueda caribe en Caribe con alcaldia de barranquilla-Caribe]",
+      "reason": "Pre-existing in BASE f9cb8c9, not a V2 regression: actor + explicit region + explicit buyer ends CANDIDATES instead of resolving. Verified on BASE directly; out of scope for this remediation."
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_control_language.py::test_scope_change_carrying_a_new_topic_keeps_that_topic",
+      "reason": "Pre-existing, unrelated to control language: a follow-up classified as change_scope carries a genuinely new topic, but change_scope's mutation policy does not allow topic fields, so the gate drops it and the merger inherits the previous topic. Verified identical on main b661a09. Belongs to follow-up topic hygiene, not R6 — see DEFERRED_FOLLOWUP_SCOPE_TOPIC."
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_demo_alcalde.py::test_turno2_contiene_insights_entity_concentration",
+      "reason": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_demo_alcalde.py::test_turno2_contiene_insights_modality_dominance",
+      "reason": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_demo_proponente.py::test_turno1_insights_modality_dominance",
+      "reason": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_demo_proponente.py::test_turno1_insights_entity_concentration",
+      "reason": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_demo_veedor.py::test_turno1_insights_entity_concentration",
+      "reason": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_demo_veedor.py::test_turno1_insights_modality_dominance",
+      "reason": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves[hospital municipal de acacias-ACACIAS]",
+      "reason": "'hospital municipal' alias on existing entity steals resolution"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves[sena choco-SENA REGIONAL CHOCO]",
+      "reason": "'sena' resolves to SENA SECRETARIA GENERAL first"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves[sena casanare-SENA REGIONAL CASANARE]",
+      "reason": "'sena' resolves to SENA SECRETARIA GENERAL first"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_opportunity_queries.py::test_opportunity_followup_alguno_en_atlantico_inherits_topic",
+      "reason": "OPP-003 pendiente: intent_type explícito para opportunity_search"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_opportunity_queries.py::test_opportunity_followup_soql",
+      "reason": "requiere contexto de followup — pintura no puede aparecer parseando 'alguno en atlantico' aislado"
+    },
+    {
+      "component": "global",
+      "nodeid": "tests/test_opportunity_queries.py::test_dicar_reference_query",
+      "reason": "REFERENCE-001 pendiente: búsqueda exacta por referencia de proceso"
+    }
+  ],
+  "deselected": [],
+  "unexpected": [],
+  "flags_summary": {
+    "b2_independent": {
+      "actor": {
+        "true": 47
+      },
+      "frame": {
+        "true": 47
+      },
+      "denied": 0
+    },
+    "b3_remediation": {
+      "actor": {
+        "true": 303
+      },
+      "frame": {
+        "true": 83,
+        "false": 220
+      },
+      "denied": 0
+    },
+    "b3_independent": {
+      "actor": {
+        "true": 115
+      },
+      "frame": {
+        "false": 11,
+        "true": 104
+      },
+      "denied": 0
+    },
+    "buyer_acceptance": {
+      "actor": {
+        "true": 95
+      },
+      "frame": {
+        "false": 95
+      },
+      "denied": 0
+    },
+    "buyer_local": {
+      "actor": {
+        "true": 8
+      },
+      "frame": {
+        "false": 8
+      },
+      "denied": 0
+    }
+  },
+  "totals": {
+    "skips": 19,
+    "xfails": 15,
+    "deselected": 0,
+    "unexpected": 0
+  }
+}

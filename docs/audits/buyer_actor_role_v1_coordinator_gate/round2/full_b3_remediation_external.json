@@ -1,0 +1,1218 @@
+{
+  "flags": {
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence0]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence1]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence2]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence3]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence4]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence5]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence6]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence7]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence8]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence9]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence10]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence11]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence12]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence13]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence14]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence15]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence16]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence17]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence18]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence19]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence20]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence21]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence22]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence23]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence24]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence25]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence26]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence27]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence28]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence29]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence30]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence31]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence32]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence33]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence34]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence35]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence36]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence37]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence38]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence39]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence40]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence41]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence42]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence43]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence44]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence45]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence46]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence47]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence48]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence49]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence50]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence51]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence52]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence53]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence54]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence55]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence56]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence57]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence58]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence59]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence60]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence61]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence62]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence63]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence64]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence65]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence66]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence67]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence68]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence69]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence70]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence71]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence72]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence73]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence74]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence75]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence76]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence77]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence78]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence79]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence80]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence81]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence82]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence83]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence84]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence85]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence86]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence87]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence88]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence89]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence90]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence91]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence92]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence93]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence94]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence95]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence96]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence97]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence98]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence99]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence100]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence101]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence102]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence103]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence104]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence105]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence106]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence107]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence108]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence109]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence110]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence111]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence112]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence113]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence114]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence115]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence116]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence117]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence118]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence119]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence120]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence121]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence122]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence123]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence124]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence125]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence126]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence127]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence128]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence129]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence130]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence131]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence132]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence133]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence134]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence135]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence136]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence137]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence138]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence139]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence140]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence141]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence142]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence143]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence144]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence145]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence146]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence147]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence148]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence149]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence150]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence151]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence152]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence153]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence154]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence155]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence156]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence157]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence158]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence159]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence160]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence161]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence162]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence163]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence164]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence165]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence166]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence167]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence168]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence169]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence170]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence171]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence172]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence173]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence174]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence175]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence176]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence177]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence178]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence179]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence180]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence181]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence182]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence183]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence184]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence185]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence186]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence187]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence188]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence189]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence190]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence191]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence192]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence193]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence194]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence195]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence196]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence197]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence198]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence199]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence200]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence201]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence202]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence203]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence204]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence205]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence206]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence207]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence208]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence209]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence210]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence211]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence212]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence213]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence214]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_three_failures_exhaustive[sequence215]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_no_promotion_property": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_integrated_three_failures_reload_capabilities_and_recovery[partial-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_integrated_three_failures_reload_capabilities_and_recovery[partial-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_integrated_three_failures_reload_capabilities_and_recovery[complete-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_integrated_three_failures_reload_capabilities_and_recovery[complete-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_integrated_three_failures_reload_capabilities_and_recovery[fsync-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_integrated_three_failures_reload_capabilities_and_recovery[fsync-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_integrated_three_failures_reload_capabilities_and_recovery[after_unlink-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_integrated_three_failures_reload_capabilities_and_recovery[after_unlink-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_new_process_at_every_critical_boundary[sequence0]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py::test_new_process_at_every_critical_boundary[sequence1]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_ports.py::test_failed_prefix_port[True-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_ports.py::test_failed_prefix_port[True-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-valid-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-valid-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-valid-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-valid-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[invalid-valid-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[invalid-valid-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[invalid-valid-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[invalid-valid-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-invalid-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-invalid-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-invalid-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-invalid-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[invalid-invalid-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[invalid-invalid-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[invalid-invalid-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[invalid-invalid-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[missing-valid-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[missing-valid-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[missing-valid-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[missing-valid-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-missing-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-missing-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-missing-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-missing-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[missing-missing-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[missing-missing-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[missing-missing-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[missing-missing-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[absent-valid-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[absent-valid-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[absent-valid-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[absent-valid-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-absent-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-absent-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-absent-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-absent-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[error-valid-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[error-valid-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[error-valid-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[error-valid-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-error-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-error-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-error-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-error-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[error-error-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[error-error-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[error-error-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[error-error-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[empty-valid-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[empty-valid-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[empty-valid-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[empty-valid-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-empty-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-empty-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-empty-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-empty-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[empty-empty-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[empty-empty-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[empty-empty-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[empty-empty-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[bad_count-valid-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[bad_count-valid-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[bad_count-valid-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[bad_count-valid-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-bad_count-disjoint-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-bad_count-disjoint-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-bad_count-overlap-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_independent_ranking_matrix[valid-bad_count-overlap-suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_render_consumes_the_assembler_decision": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py::test_amount_damage_never_invalidates_valid_count_order": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_supplier_ports.py::test_ranking_claim_and_published_warning_are_consistent[count-overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_supplier_ports.py::test_ranking_claim_and_published_warning_are_consistent[count-suppliers]": {
+      "actor": true,
+      "frame": true
+    }
+  },
+  "denied": [],
+  "exitstatus": 0
+}

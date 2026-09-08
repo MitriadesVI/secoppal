@@ -1,0 +1,82 @@
+{
+  "flags": {
+    "actor_reader": true,
+    "frame_reader": false,
+    "settings_actor": true
+  },
+  "sql": [],
+  "errors": [],
+  "resolver": [],
+  "query": "contratos donde el proveedor no sea FUNDACARIBE",
+  "result": {
+    "response": "Entendí que quieres excluir al proveedor o contratista 'fundacaribe', pero todavía no puedo ejecutar esa exclusión con precisión.",
+    "rows": [],
+    "results": [],
+    "dataset_id": "",
+    "soql_query": "",
+    "parsed_params": {
+      "dataset": "contratos",
+      "dataset_explicit": true
+    },
+    "resolved_params": {
+      "dataset": "contratos",
+      "dataset_explicit": true
+    },
+    "needs_llm": false,
+    "needs_clarification": true,
+    "route_reason": "heuristic_only",
+    "degraded": false,
+    "degraded_hint": "",
+    "total_count": 0,
+    "universe_insights": null,
+    "suggestions": [],
+    "timeout_suggestions": [],
+    "risk_flag_timeout": false,
+    "query_error": "",
+    "intent_type": "",
+    "followup_intent_type": "",
+    "followup_mutation": {},
+    "analytical_intent": "",
+    "analytical_response": "",
+    "clarification_reason": "unsupported_negation",
+    "total_count_approximate": false,
+    "result_order_guarantee": "exact_order",
+    "fallback_attempted": false,
+    "fallback_used": false,
+    "fallback_strategy": "",
+    "fallback_query_status": "not_attempted",
+    "primary_query_status": "",
+    "transformations_applied": [],
+    "substantive_filters_preserved": true,
+    "query_plan": {
+      "should_execute": false,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true
+      },
+      "missing_slots": [],
+      "risk_flags": [
+        "UNSUPPORTED_NEGATION"
+      ],
+      "clarification_question": "Entendí que quieres excluir al proveedor o contratista 'fundacaribe', pero todavía no puedo ejecutar esa exclusión con precisión.",
+      "reason": "unsupported_negation",
+      "signals": []
+    },
+    "followup": false,
+    "timings_ms": {
+      "parse_ms": 9.73,
+      "clarify_ms": 0.0,
+      "advisor_response_ms": 0.01,
+      "total_ms": 10.88
+    },
+    "contextual_filters": {},
+    "should_execute_decision": false,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "query_fingerprint": "93afb8e76183bcc17856e0941b64392b86ff7d60cd15c7047eb84ef49f6d8d14",
+    "trace_id": "cbfde8d00ef0",
+    "_continuation_owner": "TABULAR",
+    "turn_deadline_ms": 15000.0,
+    "turn_elapsed_ms": 11.3
+  }
+}

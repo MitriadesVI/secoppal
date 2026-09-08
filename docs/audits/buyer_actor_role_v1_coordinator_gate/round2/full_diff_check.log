@@ -1,0 +1,3 @@
+git diff --check 52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386..HEAD
+
+EXIT_CODE=0

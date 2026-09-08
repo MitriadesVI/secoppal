@@ -1,0 +1,466 @@
+{
+  "flags": {
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py::test_failed_retry_never_promotes_a_barrier_blocked_prefix": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py::test_a_confirmed_prefix_keeps_legitimate_continuity": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py::test_the_marker_stays_inert_across_further_failures": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py::test_a_new_legitimate_publication_recovers_without_reset": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py::test_reset_recovers_and_the_marker_does_not_survive_the_epoch": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py::test_a_partial_tail_without_barrier_or_marker_still_blocks": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py::test_the_marker_is_rejected_by_the_existing_strict_reader": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_limits.py::test_what_a_failed_marker_leaves_admitted[write]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_limits.py::test_what_a_failed_marker_leaves_admitted[flush]": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_limits.py::test_rollback_open_failure_is_an_observation_not_a_fence": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_property.py::test_no_failure_chain_ever_admits_an_unpublished_record": {
+      "actor": true,
+      "frame": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-valid-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-valid-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-valid-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-valid-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_amounts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_amounts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_amounts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_amounts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_counts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_counts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_counts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_counts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-query_failure-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-query_failure-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-query_failure-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-query_failure-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-empty-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-empty-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-empty-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-empty-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-valid-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-valid-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-valid-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-valid-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-bad_amounts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-bad_amounts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-bad_amounts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-bad_amounts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-bad_counts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-bad_counts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-bad_counts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-bad_counts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-query_failure-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-query_failure-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-query_failure-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-query_failure-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-empty-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-empty-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-empty-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-empty-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-valid-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-valid-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-valid-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-valid-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-bad_amounts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-bad_amounts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-bad_amounts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-bad_amounts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-bad_counts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-bad_counts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-bad_counts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-bad_counts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-query_failure-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-query_failure-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-query_failure-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-query_failure-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-empty-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-empty-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-empty-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_counts-empty-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-valid-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-valid-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-valid-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-valid-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-bad_amounts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-bad_amounts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-bad_amounts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-bad_amounts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-bad_counts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-bad_counts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-bad_counts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-bad_counts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-query_failure-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-query_failure-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-query_failure-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-query_failure-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-empty-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-empty-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-empty-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[query_failure-empty-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-valid-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-valid-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-valid-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-valid-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-bad_amounts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-bad_amounts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-bad_amounts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-bad_amounts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-bad_counts-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-bad_counts-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-bad_counts-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-bad_counts-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-query_failure-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-query_failure-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-query_failure-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-query_failure-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-empty-overview-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-empty-overview-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-empty-suppliers-False]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[empty-empty-suppliers-True]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_no_amount_is_borrowed_across_the_two_queries[overview]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_no_amount_is_borrowed_across_the_two_queries[suppliers]": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_the_frame_route_always_supplies_the_explicit_decision": {
+      "actor": true,
+      "frame": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py::test_an_empty_success_is_not_an_invented_ranking": {
+      "actor": true,
+      "frame": true
+    }
+  },
+  "denied": [],
+  "exitstatus": 0
+}

@@ -1,0 +1,34 @@
+{
+  "verdict": "BUYER_ACTOR_V1_GO_FOR_MERGE",
+  "go_for_merge": true,
+  "production_go": false,
+  "GATE_CODE_HEAD": "f864b3b25e46943f79a247bf3f1314db359cdd1d",
+  "MAIN_BEFORE": "52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386",
+  "runtime_audited_preserved": true,
+  "components_total": 17,
+  "components_passed": 17,
+  "full_runs": 1,
+  "full_reruns": 0,
+  "global": "13278 passed, 19 skipped, 15 xfailed in 762.72s",
+  "unexpected_failures": 0,
+  "deselected": 0,
+  "network_denied": 0,
+  "semgrep": {
+    "base_files": 326,
+    "candidate_files": 327,
+    "findings": 10,
+    "new": 0,
+    "scanner_errors": 0,
+    "baseline_is_red": true
+  },
+  "skips": 19,
+  "xfails": 15,
+  "blockers_resolved": [
+    "Disk capacity: 318 MiB of this lane's temporaries freed; user authorized one regenerable model cache; 9.88 GiB available",
+    "H4 XPASS(strict) adjudicated as correct behaviour; marker removed, case kept as regression, fails against BASE",
+    "Author opt-in isolation completed: derived clients bound to the synthetic source; 8 passed, 0 teardown errors, 0 external attempts"
+  ],
+  "runtime_modified": false,
+  "flags_activated": false,
+  "push_deployment_restart": false
+}

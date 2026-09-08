@@ -1,0 +1,44 @@
+[
+  {
+    "logical": "collect_global.json",
+    "stored": "collect_global.json.gz",
+    "bytes": 4235231,
+    "sha256_original": "d8a4dfc3394bd4241286f268bfa1adcb1f3dd62cbf5d73679bf0d7c8011e62c7",
+    "sha256_archive": "24e2e65d322ee261bb3a9452303b53e60456e4301ce0f981eb9f5d233063a79a"
+  },
+  {
+    "logical": "collect_global.log",
+    "stored": "collect_global.log.gz",
+    "bytes": 1342045,
+    "sha256_original": "f8f95818ca10bde5d5e35b186a8445ada36efcc36161a6658feb15cb74edc394",
+    "sha256_archive": "74137fee9c5bb418e098fc039b752f86877b74f7e180526f9daf8548b037b350"
+  },
+  {
+    "logical": "full_global/traces/test_all_expanded_sequences_mutate_real_query_frames.json",
+    "stored": "full_global/traces/test_all_expanded_sequences_mutate_real_query_frames.json.gz",
+    "bytes": 697054,
+    "sha256_original": "47d29b4118e280ef44b59fae4d36e7063ed372cbeb2595495c7580517fde90ce",
+    "sha256_archive": "4f05515602d8ce39834d18f3613c3194f8a3107b76524ac8142bbaf33be3049e"
+  },
+  {
+    "logical": "full_global.json",
+    "stored": "full_global.json.gz",
+    "bytes": 16335229,
+    "sha256_original": "2b1203d8b6d99e523beb90744b6d58c582b8554b4575642bbc307f4912d7b23c",
+    "sha256_archive": "ad1e9a8da71e907b2592c445b92bbc413fbf04f90b6f222db3f242a6b5440c0b"
+  },
+  {
+    "logical": "full_global.xml",
+    "stored": "full_global.xml.gz",
+    "bytes": 1957473,
+    "sha256_original": "87719b7e98840ebe4df4700effd603c548400731dec71a2ec51b4665b47d2912",
+    "sha256_archive": "6421e400df5b48be0516a80b8cb0c224960cf49ab1084ff27cccc86ea9e9ec34"
+  },
+  {
+    "logical": "full_global_external.json",
+    "stored": "full_global_external.json.gz",
+    "bytes": 2115041,
+    "sha256_original": "1cb808cb4bb72f77b08381c64b4860caf0bcaa0809bbaf1488e6fa54557e0921",
+    "sha256_archive": "9e0f43d589c883177d164d8a95585bc9151d1db36be41c7c7f30ae70127dd0c4"
+  }
+]

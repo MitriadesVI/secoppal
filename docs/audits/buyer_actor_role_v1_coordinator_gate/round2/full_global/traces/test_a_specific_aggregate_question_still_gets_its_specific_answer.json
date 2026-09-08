@@ -1,0 +1,22 @@
+{
+  "attempts": [],
+  "sources": [
+    {
+      "sql": [
+        {
+          "dataset": "jbjy-vk9h",
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE (documento_proveedor = '860002400') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia'))"
+        }
+      ],
+      "errors": [],
+      "source_rows": [
+        [
+          {
+            "total_value": 1300000000,
+            "total_count": 2
+          }
+        ]
+      ]
+    }
+  ]
+}

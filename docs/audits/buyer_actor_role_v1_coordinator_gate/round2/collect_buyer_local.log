@@ -1,0 +1,13 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest -p gate_plugin -q -o cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-vwjvq22z/pytest_cache tests/test_buyer_actor_role_local_v1.py tests/test_buyer_actor_independent_local.py -p offline_guard --collect-only
+tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]
+tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]
+tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]
+tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]
+tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]
+tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]
+tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]
+tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]
+
+8 tests collected in 0.68s
+
+EXIT_CODE=0

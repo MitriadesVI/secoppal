@@ -1,0 +1,38 @@
+{
+  "flags": {
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]": {
+      "actor": true,
+      "frame": false
+    }
+  },
+  "denied": [],
+  "exitstatus": 0
+}
