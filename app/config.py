@@ -68,6 +68,19 @@ class Settings(BaseSettings):
         default=True, alias="SECOPPAL_ACTOR_PROFILE_ENABLED",
     )
 
+    # ── Entity Profile Frame (V1.2) ──────────────────────────────────────────
+    # Enciende el trayecto nuevo COMPLETO: Frame como única autoridad del
+    # significado, admisión superior antes del dispatcher y publicación
+    # versionada por conversación. No es un modo híbrido: encendido entran a la
+    # vez los lectores y los escritores nuevos, y apagado no se escribe ningún
+    # sobre que un binario anterior tuviera que entender.
+    #
+    # Apagado POR DEFECTO. V1.2-B se entrega para revisión independiente; la
+    # activación productiva es una decisión posterior y de otro gate.
+    secoppal_entity_profile_frame_enabled: bool = Field(
+        default=False, alias="SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED",
+    )
+
     # ── Transporte Socrata (SODA3_TRANSPORT_V1) ──────────────────────────────
     # `soda3`   = transporte productivo default validado.
     # `classic` = rollback explicito sobre sodapy y GET /resource/.
@@ -91,6 +104,20 @@ class Settings(BaseSettings):
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
     return Settings()
+
+
+def entity_profile_frame_enabled() -> bool:
+    """Lectura del flag de V1.2 desde el punto más bajo que lo necesita.
+
+    Mismo mecanismo que AP2, por la misma razón: la admisión y el turno de
+    perfil son puros y no reciben ``Settings``. Una configuración ilegible cae
+    al default declarado —apagado— en vez de encender un trayecto nuevo por
+    accidente.
+    """
+    try:
+        return bool(get_settings().secoppal_entity_profile_frame_enabled)
+    except Exception:  # pragma: no cover - configuración rota
+        return False
 
 
 def actor_profile_enabled() -> bool:

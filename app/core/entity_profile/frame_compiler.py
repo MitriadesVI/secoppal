@@ -30,6 +30,7 @@ from app.core.entity_profile.aspects import (
     build_supplier_query,
     build_temporal_query,
 )
+from app.core.entity_profile.focus_labels import focus_label
 from app.core.entity_profile.frame import EntityProfileFrame, SourcePredicates
 from app.core.entity_profile.frame_predicates import (
     UnsupportedPredicateError,
@@ -302,7 +303,7 @@ def compile_profile(
             # Una fuente que la persona NOMBRÓ no desaparece en silencio.
             return clarification((PlanIssue(
                 "EXPLICIT_SOURCE_INCOMPLETE",
-                f"«{frame.focus}» no se puede responder sobre "
+                f"{focus_label(frame.focus).capitalize()} no se pueden responder sobre "
                 + ", ".join(s.noun for s in uncovered),
                 uncovered,
             ),))
@@ -315,7 +316,7 @@ def compile_profile(
         # pero se declara.
         narrowed = ", ".join(s.noun for s in frame.sources if s not in capability)
         limitations = (
-            f"«{frame.focus}» sólo se puede responder sobre "
+            f"{focus_label(frame.focus).capitalize()} sólo se pueden responder sobre "
             f"{', '.join(sorted(s.noun for s in effective))}; "
             f"se deja fuera {narrowed}.",
         )

@@ -75,11 +75,17 @@ _PROFILE_NOISE = frozenset({
 # metadata que afirma un territorio que el frame ya no filtra. No la consume el
 # builder —no es un filtro—, pero sí la leen el arbitraje de span de actor y las
 # auditorías, y ahí una evidencia huérfana miente.
-_GEOGRAPHY_PARAM_KEYS = frozenset({
+GEOGRAPHY_PARAM_KEYS = frozenset({
     "ciudad", "ciudad_resolved", "departamento", "departamento_resolved",
     "departamento_resolution", "departamentos_in", "region", "region_resolution",
     "municipal_territory",
 })
+
+
+# Alias de compatibilidad: `tests/test_actor_hardening_v2_1_remediation.py`
+# nombra esta constante por su nombre privado anterior. El contrato que ese
+# test verifica —qué claves territoriales se purgan— no cambia.
+_GEOGRAPHY_PARAM_KEYS = GEOGRAPHY_PARAM_KEYS
 
 
 @dataclass(frozen=True, slots=True)
@@ -115,7 +121,7 @@ def detect_entity_profile_turn(user_query: str, params: dict) -> tuple[bool, str
         return True, focus or "overview"
     if not params.get(PROFILE_ACTIVE_PARAM):
         return False, None
-    if state_from_params(params).has_pending and _is_bare_affirmative(user_query):
+    if state_from_params(params).has_pending and is_bare_affirmative(user_query):
         return True, _current_focus(params)
     if focus:
         return True, focus
@@ -138,7 +144,7 @@ _BARE_AFFIRMATIVE = re.compile(
 )
 
 
-def _is_bare_affirmative(user_query: str) -> bool:
+def is_bare_affirmative(user_query: str) -> bool:
     return bool(_BARE_AFFIRMATIVE.fullmatch(_cleaned(_fold(user_query))))
 
 
@@ -170,7 +176,7 @@ def profile_query_params(params: dict) -> dict:
     clean = {
         key: value
         for key, value in params.items()
-        if key not in _GEOGRAPHY_PARAM_KEYS
+        if key not in GEOGRAPHY_PARAM_KEYS
         and key not in {PROFILE_ACTIVE_PARAM, *PROFILE_REQUEST_PARAMS}
     }
     for key in ("objeto", "objeto_or", "objeto_phrases"):
@@ -186,7 +192,7 @@ def profile_query_params(params: dict) -> dict:
     return clean
 
 
-def _territory_only_name(user_query: str) -> bool:
+def territory_only_name(user_query: str) -> bool:
     """A naked municipal name stays Territory, even if a legacy alias owns it."""
     text = _fold(user_query)
     spans = get_municipal_territories().name_spans(text)
@@ -200,7 +206,7 @@ def _territory_only_name(user_query: str) -> bool:
     return not re.sub(r"[^a-z0-9]+", "", residual)
 
 
-def _territory_clarification(user_query: str) -> str:
+def territory_clarification(user_query: str) -> str:
     registry = get_municipal_territories()
     folded = _fold(user_query)
     spans = registry.name_spans(folded)
@@ -229,8 +235,8 @@ def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfile
 
     clean = profile_query_params(params)
     resolution = resolve_profile_scope(clean)
-    territory_only = _territory_only_name(user_query)
-    has_geographic_scope = any(params.get(key) for key in _GEOGRAPHY_PARAM_KEYS)
+    territory_only = territory_only_name(user_query)
+    has_geographic_scope = any(params.get(key) for key in GEOGRAPHY_PARAM_KEYS)
     if (
         resolution.scope is None
         and resolution.reason in {
@@ -259,10 +265,10 @@ def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfile
             and resolution.reason not in {
                 "BUYER_SCOPE_REQUIRED", "PRODUCTIVE_BUYER_RESOLUTION_REQUIRED",
             }
-            else _territory_clarification(user_query),
+            else territory_clarification(user_query),
         )
     previous_state = state_from_params(params)
-    if previous_state.has_pending and _is_bare_affirmative(user_query):
+    if previous_state.has_pending and is_bare_affirmative(user_query):
         # Se repite la MISMA pregunta en vez de escoger una alternativa por la
         # persona o dejar el turno caer a una búsqueda tabular heurística.
         clean[PROFILE_ACTIVE_PARAM] = True

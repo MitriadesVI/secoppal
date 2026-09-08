@@ -119,6 +119,11 @@ def render_compiled_scope(scope: CompiledScope) -> tuple[str, ...]:
     return tuple(lines)
 
 
+def event_verb(source: SourceKind) -> str:
+    """El hecho fechado que SECOP II publica para esa fuente, en palabras."""
+    return _EVENT_VERB[source]
+
+
 def humanize_period(period: Period) -> str:
     """Un mes se dice como mes; nunca se reduce a su año."""
     if period.is_unbounded:

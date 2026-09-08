@@ -235,7 +235,7 @@ class SecopalWorkflow:
         token = begin_collection()
         dl_tokens = begin_deadline(ctx.run_started_at)  # H2: deadline monotónico del turno
         try:
-            result = self._dispatch(ctx, seed_resolved_params)
+            result = self._admit_and_dispatch(ctx, seed_resolved_params)
         except BaseException:
             # El turno abortó sin result: cerramos collector + deadline y NO perdemos la
             # evidencia del error (un timeout es justo donde más importa). El attach no
@@ -303,6 +303,97 @@ class SecopalWorkflow:
                 "pending_token": pending_token,
             },
         )
+
+    def _admit_and_dispatch(
+        self, ctx: HandlerContext, seed_resolved_params: dict | None,
+    ) -> dict:
+        """Admisión superior antes de la cadena, y publicación después.
+
+        Apagado el flag, el turno va por el camino de siempre y no se escribe
+        ningún sobre: un binario anterior no tiene que entender nada nuevo.
+        Encendido, entran a la vez los lectores y los escritores del trayecto
+        nuevo — no hay modo híbrido que escriba Frame y siga heredando params.
+        """
+        from app.config import entity_profile_frame_enabled
+
+        if not entity_profile_frame_enabled():
+            return self._dispatch(ctx, seed_resolved_params)
+
+        from app.core.workflow.admission import admit
+        from app.core.workflow.admission_rules import AdmissionRoute
+        from app.core.workflow.profile_route import run_profile_route
+        from app.core.workflow.results import empty_result
+        from app.core.workflow.turn_publication import (
+            delegated_contract,
+            profile_contract,
+            publish,
+        )
+
+        deps = self.deps
+        # Paso 1 del diseño: reservar serialmente el turno ANTES de ejecutar.
+        # La misma revisión que se lee aquí es la que se comprueba al publicar.
+        reservation = deps.conv_store.reserve_turn(ctx.chat_id) if ctx.chat_id else None
+        admitted = admit(
+            deps,
+            user_query=ctx.user_query,
+            chat_id=ctx.chat_id,
+            seed_resolved_params=seed_resolved_params,
+            today=ctx.today,
+            read=reservation.previous if reservation else None,
+        )
+
+        outcome = None
+        if admitted.route is AdmissionRoute.CLARIFY:
+            # Una continuación inválida termina aquí: cero consultas, ningún
+            # offset inventado y ninguna caída por defecto al parser tabular.
+            result = empty_result(
+                response=admitted.decision.response,
+                route_reason=f"admission_{admitted.decision.reason}",
+                needs_clarification=True,
+            )
+        elif admitted.route is AdmissionRoute.PROFILE:
+            routed = run_profile_route(
+                deps, ctx,
+                params=admitted.params,
+                state=admitted.profile_state,
+                turn_id=reservation.turn_id if reservation else "anonymous",
+            )
+            if routed is None:
+                result = self._dispatch(ctx, seed_resolved_params)
+            else:
+                result, outcome = routed.result, routed.outcome
+        else:
+            result = self._dispatch(ctx, seed_resolved_params)
+
+        if result.get("route_reason") == "reset":
+            # `handle_reset` ya invalidó la continuidad borrando el sobre;
+            # publicar encima recrearía un contrato que el reset acaba de negar.
+            return result
+
+        if outcome is not None:
+            publish(
+                deps, reservation, result,
+                user_query=ctx.user_query,
+                profile_state=outcome.state,
+                contract=profile_contract(reservation, outcome) if reservation else None,
+                execution_record=(
+                    outcome.record.to_dict() if outcome.record else None
+                ),
+            )
+            return result
+
+        from app.core.entity_profile.profile_state import ProfileConversationState
+
+        # Un turno que no es del perfil deja de tener un perfil activo: el
+        # universo visible es otro, y conservar el Frame confirmado haría que
+        # un «proveedores» posterior profundizara en algo que ya no se ve.
+        publish(
+            deps, reservation, result,
+            user_query=ctx.user_query,
+            profile_state=ProfileConversationState(),
+            contract=delegated_contract(reservation, result) if reservation else None,
+        )
+        return result
 
     def _dispatch(self, ctx: HandlerContext, seed_resolved_params: dict | None) -> dict:
         """Chain of responsibility — first non-None handler result wins."""

@@ -93,6 +93,56 @@ _CLEAR_PERIOD = re.compile(
 )
 
 
+# El vocabulario que la propia frase de limpieza consume. «sin filtro de fecha»
+# lleva un «sin» que el router lee como negación temática y publica
+# `objeto_exclude=['filtro','fecha']`. Sin consumir esos términos, pedir quitar
+# la fecha AÑADE un tema negativo que nadie pidió y que además viaja al SQL.
+# Es la misma disciplina de R3d: la ocurrencia que una autoridad acredita se
+# consume una vez, y no queda disponible para una segunda lectura.
+_CLEAR_CONSUMED_TERMS = frozenset({
+    "filtro", "filtros", "fecha", "fechas", "temporal", "temporales",
+    "historico", "historicos",
+})
+
+_TOPIC_KEYS = ("objeto", "objeto_or", "objeto_phrases", "objeto_exclude")
+
+
+def consume_clear_period_terms(text: str, params: dict) -> dict:
+    """Retira del tema los términos que la frase de limpieza ya usó."""
+    if not asks_to_clear_period(text):
+        return params
+    clean = dict(params)
+    for key in _TOPIC_KEYS:
+        value = clean.get(key)
+        if value is None:
+            continue
+        pruned = _prune_terms(value)
+        if pruned in (None, "", [], ()):
+            clean.pop(key, None)
+        else:
+            clean[key] = pruned
+    return clean
+
+
+def _prune_terms(value):
+    if isinstance(value, list):
+        pruned = [_prune_terms(item) for item in value]
+        return [item for item in pruned if item not in (None, "", [], ())]
+    if not isinstance(value, str):
+        return value
+    return "" if normalize_with_offsets(value).text in _CLEAR_CONSUMED_TERMS else value
+
+
+def asks_to_clear_period(text: str) -> bool:
+    """¿El turno pide QUITAR el filtro temporal?
+
+    Es la misma autoridad que produce el claim `CLEAR_PERIOD`; se publica para
+    que la detección de turno del perfil no tenga una segunda gramática que
+    pudiera decir otra cosa.
+    """
+    return bool(_CLEAR_PERIOD.search(normalize_with_offsets(text).text))
+
+
 class _Ids:
     """Identificadores estables dentro del turno: mismo texto, mismos ids."""
 
