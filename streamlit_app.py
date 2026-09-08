@@ -430,6 +430,15 @@ def _clean_resolved(resolved: dict) -> dict:
     return clean
 
 
+def _continuation_ref(result: dict) -> dict | None:
+    """La referencia mínima al turno publicado: nada semántico viaja aquí."""
+    result_id = result.get("result_id")
+    revision = result.get("conversation_revision")
+    if not result_id or revision is None:
+        return None
+    return {"result_id": result_id, "conversation_revision": revision}
+
+
 def _assistant_history_item(result: dict, *, query: str = "") -> dict:
     """Build one rerun-stable assistant item, including safe actor controls."""
     resolved_params = result.get("resolved_params", {})
@@ -448,6 +457,10 @@ def _assistant_history_item(result: dict, *, query: str = "") -> dict:
         "query": query,
         "rows": result.get("rows", []),
         "debug": debug_payload,
+        # La REFERENCIA al resultado publicado, no una copia de sus params. Es
+        # lo que permite que un chip de refinamiento diga sobre qué resultado
+        # se aplicó, en vez de que el servidor lo adivine buscando hacia atrás.
+        "continuation_ref": _continuation_ref(result),
         "trace_id": result.get("trace_id"),
         "rating": None,
         "contextual_filters": result.get("contextual_filters", {}),
@@ -1816,17 +1829,25 @@ if hasattr(st.session_state, "_pending_refinement") and st.session_state._pendin
     filter_value = ref.get("value")
 
     from app.core.contextual_suggestions import apply_refinement
+    from app.core.workflow.admission_rules import CONTINUATION_REF_KEY
 
-    # Get last assistant resolved params from history
+    # El chip se aplica sobre el ÚLTIMO resultado publicado, y lo dice. Antes
+    # rebuscaba hacia atrás el primer turno con params: si el último resultado
+    # era un análisis institucional, ese seed entraba igual y `handle_refinement`
+    # lo convertía en una búsqueda tabular sobre un universo distinto.
     last_params = {}
+    last_ref = None
     for item in reversed(st.session_state.history):
         debug = item.get("debug", {})
         if debug:
             last_params = debug.get("resolved_params", {})
+            last_ref = item.get("continuation_ref")
             break
 
     if last_params:
         seed_resolved_params = apply_refinement(last_params, category, filter_value)
+        if last_ref:
+            seed_resolved_params[CONTINUATION_REF_KEY] = last_ref
         incoming_query = f"🎚️ {label}"
     else:
         # No hay contexto previo — degrade silenciosamente, sin enviar query

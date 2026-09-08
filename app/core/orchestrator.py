@@ -320,7 +320,10 @@ class SecopalWorkflow:
             return self._dispatch(ctx, seed_resolved_params)
 
         from app.core.workflow.admission import admit
-        from app.core.workflow.admission_rules import AdmissionRoute
+        from app.core.workflow.admission_rules import (
+            CONTINUATION_REF_KEY,
+            AdmissionRoute,
+        )
         from app.core.workflow.profile_route import run_profile_route
         from app.core.workflow.results import empty_result
         from app.core.workflow.turn_publication import (
@@ -342,6 +345,14 @@ class SecopalWorkflow:
             read=reservation.previous if reservation else None,
         )
 
+        # La referencia de continuación es de la ADMISIÓN: ya cumplió su
+        # función y no puede seguir viaje hacia el builder como si fuera un
+        # filtro material.
+        dispatch_seed = (
+            {k: v for k, v in seed_resolved_params.items() if k != CONTINUATION_REF_KEY}
+            if seed_resolved_params else seed_resolved_params
+        )
+
         outcome = None
         if admitted.route is AdmissionRoute.CLARIFY:
             # Una continuación inválida termina aquí: cero consultas, ningún
@@ -359,11 +370,22 @@ class SecopalWorkflow:
                 turn_id=reservation.turn_id if reservation else "anonymous",
             )
             if routed is None:
-                result = self._dispatch(ctx, seed_resolved_params)
+                result = self._dispatch(ctx, dispatch_seed)
             else:
                 result, outcome = routed.result, routed.outcome
         else:
-            result = self._dispatch(ctx, seed_resolved_params)
+            result = self._dispatch(ctx, dispatch_seed)
+
+        if admitted.route is not AdmissionRoute.DELEGATED:
+            # Las rutas que la admisión atiende por su cuenta no pasan por
+            # ningún handler, así que su traza se registra aquí. NO se añade un
+            # turno legacy: el sobre es la autoridad del contexto, y escribir
+            # además en el historial dejaría params heredables de un turno cuyo
+            # significado ya vive en el Frame.
+            result["trace_id"] = deps.feedback.log_trace(
+                ctx.user_query, ctx.channel, result,
+                user_identity=ctx.user_identity,
+            )
 
         if result.get("route_reason") == "reset":
             # `handle_reset` ya invalidó la continuidad borrando el sobre;
