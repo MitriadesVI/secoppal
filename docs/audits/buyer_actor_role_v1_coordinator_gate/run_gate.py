@@ -50,24 +50,38 @@ frame_runner.BLOCKS.update(
                  'tests/test_buyer_actor_independent_local.py'],
 )
 
+def destination():
+    """Where this run writes. Round 2 goes to a new directory so the aborted
+    run's evidence is preserved instead of being overwritten or deleted."""
+    if '--output-dir' in sys.argv:
+        target = Path(sys.argv[sys.argv.index('--output-dir') + 1]).resolve()
+        if not target.is_relative_to(OUT):
+            raise SystemExit('Output must remain inside the coordinator gate directory')
+        return target
+    return OUT
+
+
 def main():
     extra = []
+    out = destination()
     if len(sys.argv) > 1 and sys.argv[1] == 'full':
-        if (OUT / 'full_results.json').exists() or (OUT / 'full_ruff_active.log').exists():
+        if (out / 'full_results.json').exists() or (out / 'full_ruff_active.log').exists():
             raise SystemExit('Full gate already started; preserve its evidence')
+        out.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(prefix='buyer-gate-lint-') as temporary:
             command = [str(support.BIN / 'ruff'), 'check', str(FRAME)]
             result = subprocess.run(command, cwd=ROOT,
-                                    env=environment(Path(temporary), 'full_ruff_active', 'offline'),
+                                    env=environment(Path(temporary), 'full_ruff_active', 'offline',
+                                                    output=out),
                                     capture_output=True)
-            (OUT / 'full_ruff_active.log').write_bytes(result.stdout + result.stderr)
+            (out / 'full_ruff_active.log').write_bytes(result.stdout + result.stderr)
             extra.append({'component': 'ruff_active_frame', 'command': command,
                           'exit': result.returncode, 'pass': result.returncode == 0})
     result = frame_runner.main()
     if len(sys.argv) > 1 and sys.argv[1] == 'full':
-        rows = json.loads((OUT / 'full_results.json').read_text()) + extra
+        rows = json.loads((out / 'full_results.json').read_text()) + extra
         passed = result == 0 and all(row['pass'] for row in rows)
-        (OUT / 'execution_manifest.json').write_text(json.dumps(
+        (out / 'execution_manifest.json').write_text(json.dumps(
             {'components': rows, 'pass': passed}, indent=2) + '\n')
         return 0 if passed else 1
     return result
