@@ -50,6 +50,7 @@ def _source_claims(claims):
     source=st.sampled_from(("proceso", "procesos", "contrato", "contratos")),
     suffix=st.sampled_from(("", " en 2026", ", por favor")),
     gap=st.sampled_from((" ", "  ", "\t")),
+    letter_case=st.sampled_from(("lower", "upper", "title")),
 )
 def test_supported_postposed_framing_has_one_owner_and_one_consumption(
     courtesy,
@@ -59,11 +60,17 @@ def test_supported_postposed_framing_has_one_owner_and_one_consumption(
     source,
     suffix,
     gap,
+    letter_case,
 ):
-    query = (
+    raw_query = (
         f"{courtesy}{modality}{gap}de{gap}{topic}{gap}en{gap}"
         f"{article}{source}{suffix}"
     )
+    query = {
+        "lower": raw_query,
+        "upper": raw_query.upper(),
+        "title": raw_query.title(),
+    }[letter_case]
     normalized = normalize_text(query)
     occurrences = source_request_occurrences(normalized)
     assert len(occurrences) == 1
