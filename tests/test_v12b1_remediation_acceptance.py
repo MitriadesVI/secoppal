@@ -119,6 +119,7 @@ def test_activation_migrates_equivalent_legacy_and_roundtrips(frame_v12, monkeyp
     turn = chat.say('proveedores')
     assert turn.calls and not turn.clarifies
     frame = chat.profile_state().confirmed_frame
+    assert frame is not None, 'activation executed legacy without a migrated Frame'
     assert ('legacy_migration', '1') in frame.provenance.authorities
     assert chat.say('montos').calls
 
@@ -206,3 +207,46 @@ def test_seed_foreign_reference_property(field, value):
                         envelope_status=EnvelopeStatus.OK, contract=contract, conversation_revision=1,
                         profile_owns_text=False, profile_has_options=False)
     assert decision.route is AdmissionRoute.CLARIFY
+
+
+def test_nonfinite_metric_remains_an_honest_response(frame_v12):
+    from app.core.entity_profile.execution_record import ExecutionRecordError
+
+    class Nonfinite(WorkflowClient):
+        def aggregate(self, dataset, sql):
+            rows = super().aggregate(dataset, sql)
+            return [{**row, 'total_contract_value': 'Infinity'} if 'total_contract_value' in row else row
+                    for row in rows]
+
+    failure = None
+    chat = Conversation('b1-nonfinite', client_factory=Nonfinite)
+    try:
+        turn = chat.say(f'analiza contratos de {BUYER} en agosto')
+    except ExecutionRecordError as exc:
+        failure = str(exc)
+    assert failure is None, 'invalid metric must yield an honest response, not abort publication'
+    assert turn.result['continuation_published']
+    assert 'Infinity' not in turn.response
+
+
+@settings(max_examples=20, derandomize=True, deadline=None)
+@given(st.integers(min_value=1, max_value=10000), st.booleans())
+def test_clarification_rebinds_only_visible_ids(revision, pending):
+    from app.core.conversation_envelope import EnvelopeRead, EnvelopeStatus
+    from app.core.conversation_store import TurnReservation
+    from app.core.workflow.continuation import (ContinuationContract, ContinuationOwner, ResultKind,
+                                                 ConfirmedProfileRef, PendingProfileRef)
+    from app.core.workflow.turn_publication import preserved_contract
+    contract = ContinuationContract(revision, 'turn', 'result', ResultKind.ENTITY_PROFILE,
+                                    ContinuationOwner.ENTITY_PROFILE,
+                                    confirmed_profile=ConfirmedProfileRef(('frame', 1), 'plan', 'evidence'),
+                                    pending_profile=PendingProfileRef('pending', ('frame', 1)) if pending else None)
+    reservation = TurnReservation('chat', 'next-turn', 'next-result', revision,
+                                  EnvelopeRead(EnvelopeStatus.EMPTY))
+    result = preserved_contract(reservation, contract)
+    assert result.confirmed_profile == contract.confirmed_profile
+    assert result.pending_profile == contract.pending_profile
+    assert result.owner == contract.owner
+    assert result.conversation_revision == revision + 1
+    assert (result.visible_turn_id, result.result_id) == ('next-turn', 'next-result')
+    assert not result.can_paginate

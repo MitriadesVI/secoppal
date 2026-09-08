@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 import runpy
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -44,7 +45,7 @@ ADDITIONS = (
              ' or read_epoch(path) != reservation.epoch', '',
              I + 'publication.py::test_reset_invalidates_an_already_reserved_initial_turn'),
     mutation('B1-F4-unpublished-history', 'app/core/workflow/continuity_staging.py',
-             "    generation = active_generation(store, chat_id)\n", '    generation = None\n',
+             "    generation = active_generation(store, chat_id)\n", '    generation = None if store.load_envelope(chat_id).usable else active_generation(store, chat_id)\n',
              I + 'publication.py::test_failed_delegated_publication_cannot_replace_legacy_authority'),
     mutation('B1-F5-joint-reload', 'app/core/workflow/admission.py',
              '        validate_envelope(envelope, state, contract)', '        pass',
@@ -96,6 +97,8 @@ def main():
     for item in MUTATIONS:
         if item.mutation_id.startswith('M7-'):
             item = replace(item, path=T, old='    elif admitted.route is AdmissionRoute.PROFILE:', new='    elif False:')
+        if item.mutation_id.startswith('M9-'):
+            item = replace(item, kills=(*item.kills, A + 'test_nonfinite_metric_remains_an_honest_response'))
         mutations.append(item)
     mutations.extend(ADDITIONS)
     with tempfile.TemporaryDirectory(prefix='secoppal-b1-mutations-') as temp:
@@ -127,7 +130,7 @@ def main():
                            'handshake failed', 'BrokenBarrierError', 'TimeoutExpired')
                     entry['verdict'] = ('SURVIVED' if process.returncode == 0 else
                                         'INCONCLUSIVE' if any(word in output for word in bad) else
-                                        'DETECTED' if 'AssertionError' in output or 'DID NOT RAISE' in output else 'INCONCLUSIVE')
+                                        'DETECTED' if 'AssertionError' in output or 'DID NOT RAISE' in output or re.search(r'^E +assert ', output, re.M) else 'INCONCLUSIVE')
                 except subprocess.TimeoutExpired:
                     entry['verdict'] = 'INCONCLUSIVE_TIMEOUT'
                 finally:

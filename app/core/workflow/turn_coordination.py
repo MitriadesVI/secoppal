@@ -167,4 +167,3 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
         contract=delegated_contract(reservation, result, deps.conv_store) if reservation else None,
     )
     return result
-

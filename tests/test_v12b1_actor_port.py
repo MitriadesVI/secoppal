@@ -29,7 +29,7 @@ def test_actor_direct_control_with_own_unconsumed_token(frame_v12, workflow, pen
         'candidate_rank': 2, 'pending_token': token,
     })
     result = handle_actor_selection(workflow.deps, ctx)
-    assert result['resolved_params']['actor_resolution_status'] == 'RESOLVED'
+    assert result['resolved_params'].get('actor_resolution_status') == 'RESOLVED'
     assert result['resolved_params']['contratista'] == ['70000012']
     assert result['resolved_params']['actor_scope']['document_type'] == 'CC'
 
@@ -39,7 +39,7 @@ def test_actor_api_publishes_and_rejects_consumed_token(frame_v12, workflow, pen
     chat = 'b1-actor-api'
     token = prepare(workflow, chat, pending)
     selected = workflow.select_actor_candidate(2, token, chat_id=chat)
-    assert selected['resolved_params']['actor_resolution_status'] == 'RESOLVED'
+    assert selected['resolved_params'].get('actor_resolution_status') == 'RESOLVED'
     assert selected['resolved_params']['contratista'] == ['70000012']
     assert selected['resolved_params']['actor_scope']['document_type'] == 'CC'
     assert selected['continuation_published']
