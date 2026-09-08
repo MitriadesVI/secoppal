@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "scripts/run_query_corpus.py",
+    "--mode",
+    "all"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-arbitration-v1-independent",
+  "frame": "false",
+  "actor": true,
+  "local": false,
+  "exit": 0,
+  "persistence": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-independent-ach4zli2"
+}

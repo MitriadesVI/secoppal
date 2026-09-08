@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.buyer_actor_independent_guard",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload",
+    "-q",
+    "--tb=short",
+    "-ra"
+  ],
+  "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-history-base-w8a60r3a",
+  "exit": 1,
+  "summary": [
+    "20 failed in 4.03s"
+  ]
+}

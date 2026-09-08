@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.buyer_actor_independent_guard",
+    "tests/test_module_size_limits.py",
+    "-q"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-arbitration-v1-independent",
+  "frame": "false",
+  "actor": true,
+  "local": false,
+  "exit": 0,
+  "persistence": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-independent-p29dr3m_"
+}

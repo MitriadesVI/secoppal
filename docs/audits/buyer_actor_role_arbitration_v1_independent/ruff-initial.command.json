@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+    "check",
+    "app/",
+    "tests/",
+    "scripts/"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-arbitration-v1-independent",
+  "frame": "false",
+  "actor": true,
+  "local": false,
+  "exit": 0,
+  "persistence": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-independent-7cu9y0pn"
+}

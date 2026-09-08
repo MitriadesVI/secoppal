@@ -1,0 +1,23 @@
+[
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

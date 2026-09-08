@@ -1,0 +1,31 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.buyer_actor_offline_guard",
+    "tests/test_actor_resolution_orchestration.py",
+    "tests/test_actor_conversation.py",
+    "tests/test_actor_pending_document_selection.py",
+    "tests/test_actor_exact_prefix_workflow.py",
+    "tests/test_actor_candidate_ux.py",
+    "tests/test_actor_dogfood_hardening_v2.py",
+    "tests/test_actor_hardening_v2_1_remediation.py",
+    "tests/test_buyer_actor_role_arbitration_v1.py",
+    "tests/test_buyer_actor_role_controls_v1.py",
+    "tests/test_buyer_actor_role_properties_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_entity_profile_frame_b_admission.py",
+    "tests/test_entity_profile_frame_b_utility.py",
+    "-q",
+    "--tb=short",
+    "-ra"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-arbitration-v1-independent",
+  "frame": "true",
+  "actor": true,
+  "local": true,
+  "exit": 0,
+  "persistence": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-independent-m25xfzrh"
+}

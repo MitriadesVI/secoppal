@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.buyer_actor_independent_guard",
+    "tests/test_actor_conversation.py::test_pending_actor_selection_precedes_generic_routing_and_preserves_context",
+    "tests/test_actor_conversation.py::test_click_and_text_selection_are_metamorphically_equivalent",
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+    "-q",
+    "--tb=short",
+    "-ra"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-arbitration-v1-independent",
+  "frame": "false",
+  "actor": true,
+  "local": false,
+  "exit": 1,
+  "persistence": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-independent-8vary_gi"
+}

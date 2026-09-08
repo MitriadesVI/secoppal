@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.buyer_actor_independent_guard",
+    "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization",
+    "-q",
+    "--tb=short",
+    "-ra"
+  ],
+  "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-history-base-w8a60r3a",
+  "exit": 0,
+  "summary": [
+    "2 passed in 1.02s"
+  ]
+}

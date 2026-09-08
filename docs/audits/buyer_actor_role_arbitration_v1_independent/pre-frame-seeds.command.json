@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.buyer_actor_independent_guard",
+    "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload",
+    "-k",
+    "off",
+    "-q",
+    "--tb=short",
+    "-ra"
+  ],
+  "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-history-pre-frame-73xs85ub",
+  "exit": 1,
+  "summary": [
+    "10 failed, 10 deselected in 2.44s"
+  ]
+}

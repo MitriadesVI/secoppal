@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.buyer_actor_independent_guard",
+    "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor",
+    "-q",
+    "--tb=short",
+    "-ra"
+  ],
+  "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-context-0wgt2ltq",
+  "exit": 0,
+  "summary": [
+    "8 passed in 4.64s"
+  ]
+}

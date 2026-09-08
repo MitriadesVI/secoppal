@@ -1,0 +1,3487 @@
+{
+  "strict-four/network-attempts.txt": {
+    "sha256": "785940078e37db88aa2e813231bece2991ba23fa9c959a86c31ed8af69018f28",
+    "bytes": 2860649,
+    "archive": "traces/strict-four.tar.gz",
+    "member": "network-attempts.txt"
+  },
+  "base-strict-two/network-attempts.txt": {
+    "sha256": "365da1486b0457f0746fac1f3655d6a7c192410da729c0c201396b37e5076080",
+    "bytes": 2881727,
+    "archive": "traces/base-strict-two.tar.gz",
+    "member": "network-attempts.txt"
+  },
+  "mutation-global-veto-baseline/provenance-False-UNIVERSIDAD SOLANO.json": {
+    "sha256": "a8dccf6759a77e2f3b647d45a179ed71475e6154718f533ca0295367df4c4d42",
+    "bytes": 16292,
+    "archive": "traces/mutation-global-veto-baseline.tar.gz",
+    "member": "provenance-False-UNIVERSIDAD SOLANO.json"
+  },
+  "mutation-global-veto-baseline/provenance-False-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "3d82a2646b922491b0776d1a37f542110eea47fe704b9240d2414d46e928d53e",
+    "bytes": 4960,
+    "archive": "traces/mutation-global-veto-baseline.tar.gz",
+    "member": "provenance-False-alcaldia de cartagena servicios integrados.json"
+  },
+  "mutation-global-veto-baseline/provenance-True-UNIVERSIDAD SOLANO.json": {
+    "sha256": "7e212810e12a063b336841f073c4962f47568c931ef5daaeed1bb9b4aaf3f095",
+    "bytes": 16829,
+    "archive": "traces/mutation-global-veto-baseline.tar.gz",
+    "member": "provenance-True-UNIVERSIDAD SOLANO.json"
+  },
+  "mutation-global-veto-baseline/provenance-True-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "d0aea0f542c16feb79975d197a1f421c504a00ededef59f18b4a6c8450af63be",
+    "bytes": 5496,
+    "archive": "traces/mutation-global-veto-baseline.tar.gz",
+    "member": "provenance-True-alcaldia de cartagena servicios integrados.json"
+  },
+  "independent-local/local-flags-barranquilla-False.json": {
+    "sha256": "1d1ad107df1eeb71f8efc2e3d46a50c6960bfe838e7323fc0a2e78b228e5c107",
+    "bytes": 106408,
+    "archive": "traces/independent-local.tar.gz",
+    "member": "local-flags-barranquilla-False.json"
+  },
+  "independent-local/local-flags-barranquilla-True.json": {
+    "sha256": "0f301b786dfd9cf73c4a6a0f123cbf30266d36ba3b7ee42cc65e7b5a734864e8",
+    "bytes": 107309,
+    "archive": "traces/independent-local.tar.gz",
+    "member": "local-flags-barranquilla-True.json"
+  },
+  "independent-local/local-flags-cartagena-False.json": {
+    "sha256": "60ba2dc358b1e133d3c3a3cc562168d1b4762043a3bdd69ff392be157f1e2d09",
+    "bytes": 108076,
+    "archive": "traces/independent-local.tar.gz",
+    "member": "local-flags-cartagena-False.json"
+  },
+  "independent-local/local-flags-cartagena-True.json": {
+    "sha256": "c0fa9119bb177e90ae246a5cc418b5c80ed2c5a73a82e3a82cfaae18e22556b7",
+    "bytes": 108976,
+    "archive": "traces/independent-local.tar.gz",
+    "member": "local-flags-cartagena-True.json"
+  },
+  "mutation-bare-baseline/seed-cartagena-4-False.json": {
+    "sha256": "778317879fc4eec749b60f7de28b5adc21e93efe608221f3a657285d91bc02c6",
+    "bytes": 272858,
+    "archive": "traces/mutation-bare-baseline.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "mutation-bare-baseline/seed-cartagena-4-True.json": {
+    "sha256": "b0e99e5d7d6989553cf789a8250349ae601f81a11d43aad75919b41cc0dadd8c",
+    "bytes": 275715,
+    "archive": "traces/mutation-bare-baseline.tar.gz",
+    "member": "seed-cartagena-4-True.json"
+  },
+  "mutation-bare-mutant/seed-cartagena-4-False.json": {
+    "sha256": "9c637a752d9aecf55794204bfcb5a580b0b809a3c3f08aef88a17a4f105f1bd0",
+    "bytes": 8877,
+    "archive": "traces/mutation-bare-mutant.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "mutation-bare-mutant/seed-cartagena-4-True.json": {
+    "sha256": "d50b3065d13a9885366bc90e1f5a56c35c6bba0410009420277d0fbcd0147b43",
+    "bytes": 9451,
+    "archive": "traces/mutation-bare-mutant.tar.gz",
+    "member": "seed-cartagena-4-True.json"
+  },
+  "independent-final-candidate/actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "28aeb7dfe8328ed2360d5061498d353dd01e208fb197b04a4307a4143a0eb6c9",
+    "bytes": 16177,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-final-candidate/actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "48f88eb2cf0885c895ecc8e8f0605d95703927c9574bf1a8dbfdef1a2a9fa00b",
+    "bytes": 17114,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-final-candidate/actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "5754b131ed6300c2c22492bb6ac64770516b605d89b6ad5fd659a6636c046b0f",
+    "bytes": 21572,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-final-candidate/actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "38f64397c232c20c143043dbcdbf019306e249cd802346ed54c34a18dcbc59c1",
+    "bytes": 16843,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-final-candidate/actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "f2491efaa3b2094a117989aaced0230b3245cbbad1e15831b6537cbd8ede4d05",
+    "bytes": 17230,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-final-candidate/actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "3f9d5380f0ee8ae5f44e0bc9879b2250852e730f0669512f093dd54f3327f2da",
+    "bytes": 17345,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-final-candidate/actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "cdb2653e37705fd02732ec2776c1512c3681e8af171ce59079719909e5508666",
+    "bytes": 17005,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-final-candidate/actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "6c0c18a78528f934a682328cbbf73f3064c8bc2e3b31c51b3753eb9bbe007ba8",
+    "bytes": 5958,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-final-candidate/actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "22d474528d9d10dfc4758dc32f5b2bd6a9033f080bfa0059f453a84f2a26ae06",
+    "bytes": 17114,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-final-candidate/actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "00d26b03e9df8129b151ab8de302f5ec03f9f282910ec4ebef9f0005b8f75adc",
+    "bytes": 12707,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-final-candidate/actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "148fb8410e003da75952ef41fda4be5972912fb9038fa67a745681e11ddce435",
+    "bytes": 8792,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-final-candidate/actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "d3d5327af85a12a514f72bd4f7ffa4625f5f18840975fbad04b708dd457e91e5",
+    "bytes": 9573,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-final-candidate/actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "d651d07190f2d4261815f02f0b6e76db256489be03e67fbcd76e15e9b3e218e6",
+    "bytes": 9801,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-final-candidate/actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "5b1c9f3fa3de0e4dc379e57adc3cc3822d99907d27736fa9fb56d98f6ced5af0",
+    "bytes": 9126,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-final-candidate/actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "713a24fa909161ce8307f8b253c145a93f2527e34c595147c98a57fea513faf7",
+    "bytes": 16713,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-final-candidate/actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "fc65f7261c97417eb0ade90518ce419a735f967a0d734d61b5ca13b364956379",
+    "bytes": 17650,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-final-candidate/actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "7915507bcc20923ce62a866d220ad3420825e2f18ce6bc77a9ee9c121519b57a",
+    "bytes": 22110,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-final-candidate/actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "00305f9e9f490eb3ef996374e8ec38b44344bc08227a991ddd4139b06f92a9a0",
+    "bytes": 17380,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-final-candidate/actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "b65020219c521073d11a9b82349d5f97d9f02acb067015654ed93165698b9a38",
+    "bytes": 17765,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-final-candidate/actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "31b749ef76df898bca330c54868b239ae97115fb37a3d594d790f8154808386e",
+    "bytes": 17884,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-final-candidate/actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "f9b31aea67a0735c6cc5a1ff88a94e64d7bab8c62ca1df5cf721f5322f7a10b6",
+    "bytes": 17542,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-final-candidate/actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "a54a1188a09c53f703041cc4eb22e06209c473ccf718453621312e77508f58f1",
+    "bytes": 6494,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-final-candidate/actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "cb0378afedc4ef5b7eeeb905006a7eff3771d099a693234c008004eaddaac5b7",
+    "bytes": 17650,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-final-candidate/actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "a4e0bbbfe0f3c9f552b5e444a06da011fa862514dafaa170025feb663fe6060d",
+    "bytes": 13243,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-final-candidate/actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "6365293082dbe57f78132251a84c599be209be8b3512030aa537cf220b3124c7",
+    "bytes": 9328,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-final-candidate/actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "0681809a20be6f24097a2e7e584b61bc6739bef65cedb0a6f5bd4dc73759770b",
+    "bytes": 10111,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-final-candidate/actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "958d438cdbc2a9e38667afe575e0f8488daaa01277ababc9dcee6ae080564848",
+    "bytes": 10339,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-final-candidate/actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "807cf1e381b39d03329bc4da176f27bdc961be100ac6c279329defb90e821276",
+    "bytes": 9663,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-final-candidate/boundary-False-geography-bogota.json": {
+    "sha256": "185536f0a21ce63f913f33dd57d04aabb99dd5547cb4bb5241db023b0af73715",
+    "bytes": 6256,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "boundary-False-geography-bogota.json"
+  },
+  "independent-final-candidate/boundary-False-negation-FUNDACARIBE.json": {
+    "sha256": "dc4137de9680b5b4adc4424c2f98f2bbd23061c325edb4b3841a3a6fd9046f05",
+    "bytes": 2475,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "boundary-False-negation-FUNDACARIBE.json"
+  },
+  "independent-final-candidate/boundary-False-negation-alcaldia de cartagena.json": {
+    "sha256": "ec575b4c09c88699881063d28e2e441df8982076d8b60ddb4bbb8c7d0f04b8d6",
+    "bytes": 2472,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "boundary-False-negation-alcaldia de cartagena.json"
+  },
+  "independent-final-candidate/boundary-False-topic-software.json": {
+    "sha256": "5e6dd016c3830bb70c1ec38e30dce3028ecf055417b184c10f762463feace894",
+    "bytes": 4475,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "boundary-False-topic-software.json"
+  },
+  "independent-final-candidate/boundary-True-geography-bogota.json": {
+    "sha256": "204162b5f190096632c5596a75a825f28e3a20ed0f745c30857849c9a547b742",
+    "bytes": 7158,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "boundary-True-geography-bogota.json"
+  },
+  "independent-final-candidate/boundary-True-negation-FUNDACARIBE.json": {
+    "sha256": "54b94fa57a8307017b15941044e442994f3c9c2a7b7270c75a1a04bf03dfc949",
+    "bytes": 2973,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "boundary-True-negation-FUNDACARIBE.json"
+  },
+  "independent-final-candidate/boundary-True-negation-alcaldia de cartagena.json": {
+    "sha256": "7a7111332604599c177919127e5f9f0e3612d33081fa0de4ca29872c2a87682d",
+    "bytes": 2969,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "boundary-True-negation-alcaldia de cartagena.json"
+  },
+  "independent-final-candidate/boundary-True-topic-software.json": {
+    "sha256": "b88c1b791c571fd7d14b740aec394193a52c3b161a3a2682c417eeb0288f997d",
+    "bytes": 5012,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "boundary-True-topic-software.json"
+  },
+  "independent-final-candidate/city-autopromotion-False.json": {
+    "sha256": "73c612fb3a9059fe1fa569b2c207e1c183f8403b5fc8cbab9a5c2dec157bdb51",
+    "bytes": 16859,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "city-autopromotion-False.json"
+  },
+  "independent-final-candidate/city-autopromotion-True.json": {
+    "sha256": "e026c379a8cc3ea684299048a48cc5ef2b079e7c0e6165ae2bd555b04d41fa8b",
+    "bytes": 17395,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "city-autopromotion-True.json"
+  },
+  "independent-final-candidate/dependent-False-con la alcaldia de cartagena.json": {
+    "sha256": "b49f92efd7432b8a3ee5c5bce5145c3551b2e0f7f3863c0a5fe8a8941cabfbf0",
+    "bytes": 39738,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "dependent-False-con la alcaldia de cartagena.json"
+  },
+  "independent-final-candidate/dependent-False-solo 2026.json": {
+    "sha256": "3c87138a8c2363087b275d6a2e798a1dfcd97eeb6e85b6a89ee9f69117f639e3",
+    "bytes": 36826,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "dependent-False-solo 2026.json"
+  },
+  "independent-final-candidate/dependent-True-con la alcaldia de cartagena.json": {
+    "sha256": "82b546cf577eed5d1dc02eb89c4c840c81f9fa2dc0de392befa949e030bd9984",
+    "bytes": 40890,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "dependent-True-con la alcaldia de cartagena.json"
+  },
+  "independent-final-candidate/dependent-True-solo 2026.json": {
+    "sha256": "63f66e0b95856fc4357ad6cbf16a0a080f466b79e99995eb15a0881cb321ab60",
+    "bytes": 37976,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "dependent-True-solo 2026.json"
+  },
+  "independent-final-candidate/new-False-False-barranquilla.json": {
+    "sha256": "6c5a3ae7734ef4d0324094f728d15ddae28874c084db4277170f977085867304",
+    "bytes": 286970,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "new-False-False-barranquilla.json"
+  },
+  "independent-final-candidate/new-False-False-cartagena.json": {
+    "sha256": "56060fe0f131f7fb9884766ac672b6cab4df36704b40cb92962cb27cc34fb3c4",
+    "bytes": 291214,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "new-False-False-cartagena.json"
+  },
+  "independent-final-candidate/new-False-True-barranquilla.json": {
+    "sha256": "5dbdedf75cc485ad0ff592b9ecd97981dd639fd748afd6f9643f619c8893f5f2",
+    "bytes": 278945,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "new-False-True-barranquilla.json"
+  },
+  "independent-final-candidate/new-False-True-cartagena.json": {
+    "sha256": "75c569ed3961590a03089eec31c4925805b9249e374f3a6d1a95c1333d6c6d6e",
+    "bytes": 283026,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "new-False-True-cartagena.json"
+  },
+  "independent-final-candidate/new-True-False-barranquilla.json": {
+    "sha256": "77e1c7269daa4f4e9073ce6a9980b8eef4c735b7424cf2be80a666bb569d07de",
+    "bytes": 290409,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "new-True-False-barranquilla.json"
+  },
+  "independent-final-candidate/new-True-False-cartagena.json": {
+    "sha256": "c98b267b9d48ac458ed4d6ff751c2a00af7c0dded79cc2f5bd43cf1447044f55",
+    "bytes": 294648,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "new-True-False-cartagena.json"
+  },
+  "independent-final-candidate/new-True-True-barranquilla.json": {
+    "sha256": "3bff32dc2079954b81f470995a734e0ea9ff2a52c2fca0b5027b09231d79a057",
+    "bytes": 282374,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "new-True-True-barranquilla.json"
+  },
+  "independent-final-candidate/new-True-True-cartagena.json": {
+    "sha256": "a6169c53765f03520d60e5ae9b0108ee4fb8753b0ecfd7c78aa3f679dee8da7a",
+    "bytes": 286463,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "new-True-True-cartagena.json"
+  },
+  "independent-final-candidate/profile-after-actor-False.json": {
+    "sha256": "65b2f909c090624aeeed518688cb02b0bb4b1941b9089b322bbecc6885c9de14",
+    "bytes": 37654,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "profile-after-actor-False.json"
+  },
+  "independent-final-candidate/profile-after-actor-True.json": {
+    "sha256": "f3243d54317fec46deff1af2e3a8ebf0f40d67888fdf885f9660d932fced6b35",
+    "bytes": 28000,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "profile-after-actor-True.json"
+  },
+  "independent-final-candidate/provenance-False-UNIVERSIDAD SOLANO.json": {
+    "sha256": "7d2bb133071a259e4f356fcbe6acb07277fc30a70b3d00600a1a68788db5996f",
+    "bytes": 16292,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "provenance-False-UNIVERSIDAD SOLANO.json"
+  },
+  "independent-final-candidate/provenance-False-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "ad9cdecf1749c36754b2025d3a4355e8758671fd819148f6628a2be223b9bfb1",
+    "bytes": 4958,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "provenance-False-alcaldia de cartagena servicios integrados.json"
+  },
+  "independent-final-candidate/provenance-True-UNIVERSIDAD SOLANO.json": {
+    "sha256": "5dd6c8dc8a9b7bbcc36b94392765a15685a322f00402ea9ab699cdd22cf15fd1",
+    "bytes": 16829,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "provenance-True-UNIVERSIDAD SOLANO.json"
+  },
+  "independent-final-candidate/provenance-True-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "bbc9f2b1abbedff796a16c10c9c47b9ec80d215a75e1eaa5f8e534d653c83b98",
+    "bytes": 5497,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "provenance-True-alcaldia de cartagena servicios integrados.json"
+  },
+  "independent-final-candidate/seed-barranquilla-0-False.json": {
+    "sha256": "fce5b64a9f5f83a7603b625f3b99c9d00423b258a3bad60040f97e7a5ea5002f",
+    "bytes": 268766,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-0-False.json"
+  },
+  "independent-final-candidate/seed-barranquilla-0-True.json": {
+    "sha256": "58f30713b7c2dc30daac072d18fbe7d007bcbb4e5265a8fa0312d19ae91cdfde",
+    "bytes": 271628,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-0-True.json"
+  },
+  "independent-final-candidate/seed-barranquilla-1-False.json": {
+    "sha256": "575c4ef0164b3d88495c6d1a1709a2d76d394833ee7cf44704dda9e24dee827f",
+    "bytes": 268769,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-1-False.json"
+  },
+  "independent-final-candidate/seed-barranquilla-1-True.json": {
+    "sha256": "77d5f9aaba65df0862a633d9cff12f3853c2e1fffcf4b8fa3326de993fe1824f",
+    "bytes": 271627,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-1-True.json"
+  },
+  "independent-final-candidate/seed-barranquilla-4-False.json": {
+    "sha256": "d3f7b852eb1f0d3f9f779df403f360091d16ffd293fd33081a6490259d8cc061",
+    "bytes": 268767,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "independent-final-candidate/seed-barranquilla-4-True.json": {
+    "sha256": "bbb3826ecbb9011e61672a2eada20dc400beb0e3380584e5abeb5d152ad710d0",
+    "bytes": 271628,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-4-True.json"
+  },
+  "independent-final-candidate/seed-barranquilla-absent-False.json": {
+    "sha256": "f3641204f699337912b750c881216d4fc25caf472b89ff1acdeddd5e5e5ba0f5",
+    "bytes": 268768,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-absent-False.json"
+  },
+  "independent-final-candidate/seed-barranquilla-absent-True.json": {
+    "sha256": "85ccfa906ef7733c88ff082c5997467673039d921ad3ad142cd761548c3dd6b6",
+    "bytes": 271628,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-absent-True.json"
+  },
+  "independent-final-candidate/seed-barranquilla-incompatible-False.json": {
+    "sha256": "5bcaeace8dce251682f0e979a7cf2ad51a4287d7b542a4fb04a8185d3ba092cd",
+    "bytes": 268767,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-incompatible-False.json"
+  },
+  "independent-final-candidate/seed-barranquilla-incompatible-True.json": {
+    "sha256": "64efb2d22f5a6e1a19e098ad325f4608203c230d1966afe1807528140327bb90",
+    "bytes": 271627,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-barranquilla-incompatible-True.json"
+  },
+  "independent-final-candidate/seed-cartagena-0-False.json": {
+    "sha256": "8d421de3e98b9251c34c57ca889b1589c6bd377622f2097650baec94a8d3d7a1",
+    "bytes": 272858,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-0-False.json"
+  },
+  "independent-final-candidate/seed-cartagena-0-True.json": {
+    "sha256": "c5254a590ed8e516eac971df2d49700278a0fc2b490d2b4fa17cca8b04b1aabe",
+    "bytes": 275715,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-0-True.json"
+  },
+  "independent-final-candidate/seed-cartagena-1-False.json": {
+    "sha256": "757699ccc3aa84eca23910553ec732936dd3edad1ab13d63dd161f809609f419",
+    "bytes": 272852,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-1-False.json"
+  },
+  "independent-final-candidate/seed-cartagena-1-True.json": {
+    "sha256": "f1a73cd13e331c4566847d58db646f0e679cc6e7c6b7cd23a8fa753dfef31f3a",
+    "bytes": 275715,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-1-True.json"
+  },
+  "independent-final-candidate/seed-cartagena-4-False.json": {
+    "sha256": "9ec4ff79fb3507ba4789fd8b487c42623166b016c860221f25c9fb310281c612",
+    "bytes": 272854,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "independent-final-candidate/seed-cartagena-4-True.json": {
+    "sha256": "1b325c2a6bd39177191336a1756bafec8bcb032c06109eeac85bcd06bd8d466c",
+    "bytes": 275711,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-4-True.json"
+  },
+  "independent-final-candidate/seed-cartagena-absent-False.json": {
+    "sha256": "a2bf1b9efdd260571150700f28612f4f964fe66a4f23bc9a8c8aef03cc1809d0",
+    "bytes": 272854,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-absent-False.json"
+  },
+  "independent-final-candidate/seed-cartagena-absent-True.json": {
+    "sha256": "38c051b6e25f85d3be6da8f1a779dc7cb35018f4d4f43cbc2fe0bf4d653a4d39",
+    "bytes": 275714,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-absent-True.json"
+  },
+  "independent-final-candidate/seed-cartagena-incompatible-False.json": {
+    "sha256": "bd48a9a9d532434e88c6196169cc7dbed43cede60af5058ca3ce6b55b3a3f684",
+    "bytes": 272854,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-incompatible-False.json"
+  },
+  "independent-final-candidate/seed-cartagena-incompatible-True.json": {
+    "sha256": "916b9d5657bb0cd3808af972ce27b8429319653557453e6127ce89fea361c24e",
+    "bytes": 275713,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "seed-cartagena-incompatible-True.json"
+  },
+  "independent-final-candidate/short-negation-False.json": {
+    "sha256": "2802bd312fc98a7b70f96006fba409cdb697d800afcf27d20764f88f1adeff73",
+    "bytes": 105316,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "short-negation-False.json"
+  },
+  "independent-final-candidate/short-negation-True.json": {
+    "sha256": "93a9dcfebe90442237a5916a88178b21e0e47fd0396945afef00d0a35b26197e",
+    "bytes": 106215,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "short-negation-True.json"
+  },
+  "independent-final-candidate/variant-False-alcaldia de baranoa-contratos de alcaldia de baran.json": {
+    "sha256": "2de2eed87c3bd45abcb90aee342c9482c3df56d2e932b9f445bc1be28365e259",
+    "bytes": 100701,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-False-alcaldia de baranoa-contratos de alcaldia de baran.json"
+  },
+  "independent-final-candidate/variant-False-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json": {
+    "sha256": "bcc5e5abf3d858413215bb1023d83e5c36490110bd980cab89e4acf357a72d78",
+    "bytes": 107734,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json"
+  },
+  "independent-final-candidate/variant-False-alcaldia de cartagena-contratos de alcaldia de carta.json": {
+    "sha256": "548461a4b2dc49cd9629afe47dba0e162547f0312badb8f6f2c495060a60a61d",
+    "bytes": 108011,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-contratos de alcaldia de carta.json"
+  },
+  "independent-final-candidate/variant-False-alcaldia de cartagena-contratos de software de alcal.json": {
+    "sha256": "7088ef85c6e6ce7f92838535ad2b03371df498562db75929fdd0adc0b9e5239d",
+    "bytes": 110701,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-contratos de software de alcal.json"
+  },
+  "independent-final-candidate/variant-False-alcaldia de cartagena-qué ha contratado la alcaldía .json": {
+    "sha256": "87213b57000a03b00759be158a110c5dcf92e6aa54fbda45cc185be459772e76",
+    "bytes": 107741,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-qué ha contratado la alcaldía .json"
+  },
+  "independent-final-candidate/variant-False-alcaldia de galapa-qué ha contratado alcaldia de .json": {
+    "sha256": "53d35257dfcde81baa8efff896f871047cb8aa5460596db7ed8d6d15aebc362e",
+    "bytes": 99425,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-False-alcaldia de galapa-qué ha contratado alcaldia de .json"
+  },
+  "independent-final-candidate/variant-True-alcaldia de baranoa-contratos de alcaldia de baran.json": {
+    "sha256": "edfa06e8791bba912c96409ec108456aa13429f0d09ed1c6390a9c6869100459",
+    "bytes": 101604,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-True-alcaldia de baranoa-contratos de alcaldia de baran.json"
+  },
+  "independent-final-candidate/variant-True-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json": {
+    "sha256": "35d97eeff5ebfd4d04f6fe0f68bb2e2ee254f14290639139246c12153f375902",
+    "bytes": 108634,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json"
+  },
+  "independent-final-candidate/variant-True-alcaldia de cartagena-contratos de alcaldia de carta.json": {
+    "sha256": "99379db5ee11b4b9065dc78cef813053852618ca55b6010410bbd9593f4b8708",
+    "bytes": 108912,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-contratos de alcaldia de carta.json"
+  },
+  "independent-final-candidate/variant-True-alcaldia de cartagena-contratos de software de alcal.json": {
+    "sha256": "df030219344806795140624e4ae02cf282569a44e974b5150b58c71119be634c",
+    "bytes": 111603,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-contratos de software de alcal.json"
+  },
+  "independent-final-candidate/variant-True-alcaldia de cartagena-qué ha contratado la alcaldía .json": {
+    "sha256": "011e678a9e909eb310e95544a62c4e4d2a5bb8ff099012724c80c63eeccad132",
+    "bytes": 108642,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-qué ha contratado la alcaldía .json"
+  },
+  "independent-final-candidate/variant-True-alcaldia de galapa-qué ha contratado alcaldia de .json": {
+    "sha256": "f4bd72f9f8fd9cd0c0cde86966382c6b0f245c01f0936e75ffa53f6e8307a2b7",
+    "bytes": 100328,
+    "archive": "traces/independent-final-candidate.tar.gz",
+    "member": "variant-True-alcaldia de galapa-qué ha contratado alcaldia de .json"
+  },
+  "base-negation/short-negation-False.json": {
+    "sha256": "735d94e6520f53765a395e61075d861bfe43cdbf053e691a3a1a122b5703b318",
+    "bytes": 105317,
+    "archive": "traces/base-negation.tar.gz",
+    "member": "short-negation-False.json"
+  },
+  "base-negation/short-negation-True.json": {
+    "sha256": "0ab085d19fa096f1f77568bf696c0024a29cb3e8378382ff9b2d2cc5c4327157",
+    "bytes": 106215,
+    "archive": "traces/base-negation.tar.gz",
+    "member": "short-negation-True.json"
+  },
+  "base-seeds/seed-barranquilla-0-False.json": {
+    "sha256": "671b940ef08f28f68905a57d0f3a61d996f1e7e25ac8bc7dbb3cb1b71af747ca",
+    "bytes": 7346,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-0-False.json"
+  },
+  "base-seeds/seed-barranquilla-0-True.json": {
+    "sha256": "391d7cc162f8f4c8cbb627603fa1d0924392ffc8d387eff0465f6ac7fdb654c5",
+    "bytes": 7921,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-0-True.json"
+  },
+  "base-seeds/seed-barranquilla-1-False.json": {
+    "sha256": "8f61d2ba1bbedcea3b4a228d555a4f8681263a52f3e784858f48be46550cd7dd",
+    "bytes": 22742,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-1-False.json"
+  },
+  "base-seeds/seed-barranquilla-1-True.json": {
+    "sha256": "1bd6f3c8ddf5d4dbdfe02fc24c0368e1cc9f3a7d2af989121edd1fed713e730e",
+    "bytes": 23317,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-1-True.json"
+  },
+  "base-seeds/seed-barranquilla-4-False.json": {
+    "sha256": "cde45bf3da945cc9bcba0f9f6f12500adc7464e7c4d66714006df980836be6f8",
+    "bytes": 15916,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "base-seeds/seed-barranquilla-4-True.json": {
+    "sha256": "e5982bc48cf830b8edc69aa16ce61064bf2ec3b2e35e11dda229906bbbbe64e2",
+    "bytes": 16492,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-4-True.json"
+  },
+  "base-seeds/seed-barranquilla-absent-False.json": {
+    "sha256": "266ae305262ea5159cfdb01b1586ec9c97e61f208bf593dd1f05ff244d803848",
+    "bytes": 6360,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-absent-False.json"
+  },
+  "base-seeds/seed-barranquilla-absent-True.json": {
+    "sha256": "f731bed1a9f52820c9cd386746e8faf947d88d64e690b9791adbf7e9e2165f3c",
+    "bytes": 6933,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-absent-True.json"
+  },
+  "base-seeds/seed-barranquilla-incompatible-False.json": {
+    "sha256": "e1554ddd5df9a86f66e13394bfabda409784b351155d54b1c46ebf8439f09cce",
+    "bytes": 6360,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-incompatible-False.json"
+  },
+  "base-seeds/seed-barranquilla-incompatible-True.json": {
+    "sha256": "53028254a033bc08630a88f3c93d3b925aca6dcbaaa1b6afa60d241dbec5adb6",
+    "bytes": 6934,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-barranquilla-incompatible-True.json"
+  },
+  "base-seeds/seed-cartagena-0-False.json": {
+    "sha256": "f3915633c3514d5f9b0c5efc6a059b5bd8eead561e56a792fe0551b11aedb92d",
+    "bytes": 112642,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-0-False.json"
+  },
+  "base-seeds/seed-cartagena-0-True.json": {
+    "sha256": "6b9c7ddb3260dd02faf8f1cdd684515911186c809138a875cea9ba0fdd6acc48",
+    "bytes": 113594,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-0-True.json"
+  },
+  "base-seeds/seed-cartagena-1-False.json": {
+    "sha256": "1a2fda62eadad6779670dd9dcd27347ede799372a3377ca2cdecc8f91dd4e17d",
+    "bytes": 21982,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-1-False.json"
+  },
+  "base-seeds/seed-cartagena-1-True.json": {
+    "sha256": "b9ef2f75c5fed245741ffd47b37ded32cf32d85bccfa52bef03b237874702c8e",
+    "bytes": 22557,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-1-True.json"
+  },
+  "base-seeds/seed-cartagena-4-False.json": {
+    "sha256": "5a49a5ac0c8603f51e3e0aff10211632dbab83109aca4f8f8802d4f844194b6a",
+    "bytes": 12376,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "base-seeds/seed-cartagena-4-True.json": {
+    "sha256": "844af2013ef1ecd6a85cb6d83965a3c0a9cd1f4089f6d977efaee4e553c7787f",
+    "bytes": 12951,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-4-True.json"
+  },
+  "base-seeds/seed-cartagena-absent-False.json": {
+    "sha256": "cc61d7ef04e453cef9aa65a172bbff704546a6702ff211330b7584948bedcf66",
+    "bytes": 112552,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-absent-False.json"
+  },
+  "base-seeds/seed-cartagena-absent-True.json": {
+    "sha256": "9883f94743b24b25450de57caa1e5f85bcbbffd6cc31f390d31fdb64c1a26a78",
+    "bytes": 113507,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-absent-True.json"
+  },
+  "base-seeds/seed-cartagena-incompatible-False.json": {
+    "sha256": "49e30f7f6b3e9cf5b91fc8c1c037b849798d52d53529e94ab15d9ca0c7600922",
+    "bytes": 112555,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-incompatible-False.json"
+  },
+  "base-seeds/seed-cartagena-incompatible-True.json": {
+    "sha256": "126d72daadeb4ceef618286139d7e55d711fae466a2d342cf1f48258c69d8bae",
+    "bytes": 113508,
+    "archive": "traces/base-seeds.tar.gz",
+    "member": "seed-cartagena-incompatible-True.json"
+  },
+  "mutation-global-veto-mutant/provenance-False-UNIVERSIDAD SOLANO.json": {
+    "sha256": "b9092359d607e1284bfbd109a82d0f5c21474f65bcba2e670e89087f89958df8",
+    "bytes": 6907,
+    "archive": "traces/mutation-global-veto-mutant.tar.gz",
+    "member": "provenance-False-UNIVERSIDAD SOLANO.json"
+  },
+  "mutation-global-veto-mutant/provenance-False-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "cbeafae7f1e95491bd12c2a2c2c9353ef685c3047ee2dd69d98ec4d4b485ac97",
+    "bytes": 8523,
+    "archive": "traces/mutation-global-veto-mutant.tar.gz",
+    "member": "provenance-False-alcaldia de cartagena servicios integrados.json"
+  },
+  "mutation-global-veto-mutant/provenance-True-UNIVERSIDAD SOLANO.json": {
+    "sha256": "b22f2370b9c750c409fa916cf5131442d1f9ed1d11593f3fdf7f3b423f3a4edf",
+    "bytes": 7809,
+    "archive": "traces/mutation-global-veto-mutant.tar.gz",
+    "member": "provenance-True-UNIVERSIDAD SOLANO.json"
+  },
+  "mutation-global-veto-mutant/provenance-True-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "29dd4b3607e4a334fa660ac1e89e28ce859c1ce493fdffece2fe04071a9084c5",
+    "bytes": 9421,
+    "archive": "traces/mutation-global-veto-mutant.tar.gz",
+    "member": "provenance-True-alcaldia de cartagena servicios integrados.json"
+  },
+  "independent-final/actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "8e4d76a214a560a59765cb17b960bfe0234901fd0b8c840a76f47ac5b1531506",
+    "bytes": 16177,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-final/actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "79970d5f2c714fa22ab9dea752e75d0ba5f8622181e33048c7f9228cea95226f",
+    "bytes": 17113,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-final/actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "d1b2019465cf00e4c209e328d94f61c69589889eda5af291771664e7d8f7b7a7",
+    "bytes": 21573,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-final/actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "fb67987c5e52109081221e91765585b6ae3f337c5a151c2dd07a15d78ba6b667",
+    "bytes": 16843,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-final/actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "58811c03088468c900a7f87f0342c6feb436d48209a1f3db2928b0193eedbebc",
+    "bytes": 17229,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-final/actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "a2000ebc78ccbf2cffec10dd73a1cbb77828bc5c2096ff22330d88f1bf346d42",
+    "bytes": 17345,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-final/actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "816d231eb17a60d2c8615e8ded691f1efb12776d224b8653b9d08145f3526caa",
+    "bytes": 17006,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-final/actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "273896fa3377a83d37389dd627d1d0909f9a7f5daf8ed0345aa3b5ea2da75e0a",
+    "bytes": 5958,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-final/actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "cca3300399c117469b24824a47b0a7af533e2f24d6c8ac4dcdf3c027145fb666",
+    "bytes": 17114,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-final/actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "1f4c107041d25e5a80ac94c361917d98714ccf7812288f2e393029c574ca82c0",
+    "bytes": 12706,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-final/actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "de526f866905c1f81afbb3b2805bf0f387bce36ff4c0181a89afe0267b165c06",
+    "bytes": 8792,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-final/actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "03c870cc37c940c72246628febec1fe922090cc6456b6e58f82a757ae6173fa3",
+    "bytes": 9574,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-final/actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "972eefd0f1e0e3d2f6b67f2a8eb958d52d05affeadeaea99821cd23d6f128c15",
+    "bytes": 9801,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-final/actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "e3868755f2b8cb6fc40f5d2ef7b94018cc4989684b333b8c7e7056e64827d1cf",
+    "bytes": 9125,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-final/actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "a8527e2959c86cac1fc0c5bd9c74fe817d4147775bf1e9033a0a37c2f326b26c",
+    "bytes": 16713,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-final/actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "e085e1e4f7c297943a566a03ee4a3034bc9b50d718a6289dc4de5ffc93b823c8",
+    "bytes": 17651,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-final/actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "a8e73387840ffe675999dc4a1867b4e57c61bed9fe3b4aa1078147ffbc2b435e",
+    "bytes": 22109,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-final/actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "3dd8852e9cafcc3b7be25b7107a52478527bc83a6250df6b9d64ce7a6182604a",
+    "bytes": 17380,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-final/actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "9a3257427053d28f113863efe27fe376bb0e41eb8e464d51af3cc35d8129c6dc",
+    "bytes": 17765,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-final/actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "33e4e8fa909395b6178200450d32e329e71f37345ea82279281e80e9d9367ebb",
+    "bytes": 17884,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-final/actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "069e78f044c10908c7685f8a702e098103eb087d9dbe300cb830c975e142b8cb",
+    "bytes": 17543,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-final/actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "971a718765ef9598197183c8767f24e646ce05c60479e0da28c93b90934e236d",
+    "bytes": 6493,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-final/actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "9fb484097c1fa3cfe339f468d12d482ff0f539180ce32cf86f847fe08b8f8d44",
+    "bytes": 17651,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-final/actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "1c1314af85acaf94a3aa0e144ed489c0a9d6bba92b8d4a6bfec20835b448c625",
+    "bytes": 13244,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-final/actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "1ea4b126df2fae92dab8215476b7300508ccf335468766ebba164bf58a58a441",
+    "bytes": 9329,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-final/actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "62b7876d4d90ffdbb2867fb82e4d1adb180a3a7aec1796d0a91fdeb247527d8d",
+    "bytes": 10110,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-final/actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "b620ab8cb8b7b498c3e3674f159bc7f614e9becd8d3faece33e5eb99a72eca9b",
+    "bytes": 10340,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-final/actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "1618aed44c7ac534866fd21a79aef958736397e745b3700840f317304954304b",
+    "bytes": 9662,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-final/boundary-False-geography-bogota.json": {
+    "sha256": "fc3b6d88e34f3f854a9d42b0c8ab05995578cbd2d357d63bafffa8a7294c4bb4",
+    "bytes": 6257,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "boundary-False-geography-bogota.json"
+  },
+  "independent-final/boundary-False-negation-FUNDACARIBE.json": {
+    "sha256": "947abb6d26278bc437086c1dad67a3041d50a9a81bd6333a9be817bbb934861c",
+    "bytes": 2475,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "boundary-False-negation-FUNDACARIBE.json"
+  },
+  "independent-final/boundary-False-negation-alcaldia de cartagena.json": {
+    "sha256": "2f00b928f53cda70838424421621a844298d212adec19ba266edef8f24f5868c",
+    "bytes": 2472,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "boundary-False-negation-alcaldia de cartagena.json"
+  },
+  "independent-final/boundary-False-topic-software.json": {
+    "sha256": "db0b01cbbf06bff687312de331df65e404aa651298ec5296057aabeb7eeaca90",
+    "bytes": 4475,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "boundary-False-topic-software.json"
+  },
+  "independent-final/boundary-True-geography-bogota.json": {
+    "sha256": "810f5e4df8bd9f460438280840bf37912aff6f283bc6a506cd19c8669b29b43a",
+    "bytes": 7157,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "boundary-True-geography-bogota.json"
+  },
+  "independent-final/boundary-True-negation-FUNDACARIBE.json": {
+    "sha256": "c0d2fe74eb8407e0d62708eeb1e65f6c826ec8b6a120c67ae7b21ff65c5f4e7b",
+    "bytes": 2973,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "boundary-True-negation-FUNDACARIBE.json"
+  },
+  "independent-final/boundary-True-negation-alcaldia de cartagena.json": {
+    "sha256": "9d8cf3fb003d675f3f71eb2f20d515649afcd3714e76e86a38c19d233d579b76",
+    "bytes": 2970,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "boundary-True-negation-alcaldia de cartagena.json"
+  },
+  "independent-final/boundary-True-topic-software.json": {
+    "sha256": "f0afff033a94ce37de234a64b1c0eb7ac0c0a2c8a6a80472f5cac5502fcc6e4b",
+    "bytes": 5012,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "boundary-True-topic-software.json"
+  },
+  "independent-final/city-autopromotion-False.json": {
+    "sha256": "ed2080bf95ae7d19d51ae622643dae77c31067f278d1e57c6c19bc88c24efc07",
+    "bytes": 16867,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "city-autopromotion-False.json"
+  },
+  "independent-final/city-autopromotion-True.json": {
+    "sha256": "3fa3da39404b072904273ce2ebe107117ebd1c0f7aecc4c43f236c7c2a0563ae",
+    "bytes": 17404,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "city-autopromotion-True.json"
+  },
+  "independent-final/city-promoted-geography-False.json": {
+    "sha256": "cf513487e4510d83e991dd6ae75b2fc8dac1a22aaf1b8ae2fe486fabee961421",
+    "bytes": 4653,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "city-promoted-geography-False.json"
+  },
+  "independent-final/city-promoted-geography-True.json": {
+    "sha256": "17f0b65bbe8b3476482cf1b77fb503ddc1415b617df7178ea3b26a330590c2f6",
+    "bytes": 5557,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "city-promoted-geography-True.json"
+  },
+  "independent-final/dependent-False-con la alcaldia de cartagena.json": {
+    "sha256": "1ec986a9ae9ba318b3c4b81489496e42409216956a66bd1c7eb7158d788f9cff",
+    "bytes": 39738,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "dependent-False-con la alcaldia de cartagena.json"
+  },
+  "independent-final/dependent-False-solo 2026.json": {
+    "sha256": "77398ac88a44a1b9edf583102972cccc9451e0c41d2a3c8b6925983b31fa9157",
+    "bytes": 36826,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "dependent-False-solo 2026.json"
+  },
+  "independent-final/dependent-True-con la alcaldia de cartagena.json": {
+    "sha256": "f479afeb1967e4179f5664568e4b03f170849038568940b12a0f2c4c12100246",
+    "bytes": 40888,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "dependent-True-con la alcaldia de cartagena.json"
+  },
+  "independent-final/dependent-True-solo 2026.json": {
+    "sha256": "7afff710a990a9c974114210f9515136e3e9d005fc74fa8c442995640d91dbc2",
+    "bytes": 37973,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "dependent-True-solo 2026.json"
+  },
+  "independent-final/new-False-False-barranquilla.json": {
+    "sha256": "7d3201391fe62ec9fdf68ac8cadd6fd3929c8efe496b14ef13e368538d449a3c",
+    "bytes": 286968,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "new-False-False-barranquilla.json"
+  },
+  "independent-final/new-False-False-cartagena.json": {
+    "sha256": "6718cd230893bafcc0e00f232cad566be4c098a7a82f6fb7c4debfb37b49617c",
+    "bytes": 291213,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "new-False-False-cartagena.json"
+  },
+  "independent-final/new-False-True-barranquilla.json": {
+    "sha256": "1a3ad1a8398037e69743fbf03146aba9699f7b8b51a3eac72bebc74bae2a2165",
+    "bytes": 278943,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "new-False-True-barranquilla.json"
+  },
+  "independent-final/new-False-True-cartagena.json": {
+    "sha256": "ebef77e9ce1f6bb449515e29e85e063039c541d9dbab365a43ae49d4adb46404",
+    "bytes": 283028,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "new-False-True-cartagena.json"
+  },
+  "independent-final/new-True-False-barranquilla.json": {
+    "sha256": "8b257545ab2a8c05cb354808e52201376f40b04833f42631b313dd52d57bcc1f",
+    "bytes": 290406,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "new-True-False-barranquilla.json"
+  },
+  "independent-final/new-True-False-cartagena.json": {
+    "sha256": "90e34eaed86a75429043650c946ae414fd7e7f2e4c750346f1a6ecffa4268e6b",
+    "bytes": 294650,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "new-True-False-cartagena.json"
+  },
+  "independent-final/new-True-True-barranquilla.json": {
+    "sha256": "3965b36ae22518222006a722a0777f8cf15a64e41e9a5471c2862c1844177d1b",
+    "bytes": 282376,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "new-True-True-barranquilla.json"
+  },
+  "independent-final/new-True-True-cartagena.json": {
+    "sha256": "fc3444a4a7454a5d9991957782f986dbf54cf3da16ef12e101c1aee58117c88e",
+    "bytes": 286461,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "new-True-True-cartagena.json"
+  },
+  "independent-final/profile-after-actor-False.json": {
+    "sha256": "560bf8b2fc59f3fb0464fdd9fdf038451c0005d81090473f56c69d1f8b0c0b1f",
+    "bytes": 37656,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "profile-after-actor-False.json"
+  },
+  "independent-final/profile-after-actor-True.json": {
+    "sha256": "4644faffb3565c1e419a97d3d870069540ac827f0894da7567faf31e774ccc92",
+    "bytes": 28000,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "profile-after-actor-True.json"
+  },
+  "independent-final/provenance-False-UNIVERSIDAD SOLANO.json": {
+    "sha256": "cc1f7e926a2d8cf45520e1eaafd6d30ac03b5da8f833638f785b2a352eea6ee4",
+    "bytes": 16291,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "provenance-False-UNIVERSIDAD SOLANO.json"
+  },
+  "independent-final/provenance-False-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "8a617ce9af57d97d6c1191211079da0f2c59a3f27a542116ad4dbd2cecfa3583",
+    "bytes": 4956,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "provenance-False-alcaldia de cartagena servicios integrados.json"
+  },
+  "independent-final/provenance-True-UNIVERSIDAD SOLANO.json": {
+    "sha256": "ce41a0d75b0bcc11b45f8475b09c4a7ea52c4c7c8b4b38b9e261e6d09751707f",
+    "bytes": 16830,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "provenance-True-UNIVERSIDAD SOLANO.json"
+  },
+  "independent-final/provenance-True-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "ce92f5b412108ad4f9edc051dd651af94a8ba6c547311e38e6e7a9cdb3c242cd",
+    "bytes": 5495,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "provenance-True-alcaldia de cartagena servicios integrados.json"
+  },
+  "independent-final/seed-barranquilla-0-False.json": {
+    "sha256": "7a34db5899196ee6ff56780afc2d1ec3a63cfd7c881afa7053a9bf9db2724784",
+    "bytes": 268767,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-0-False.json"
+  },
+  "independent-final/seed-barranquilla-0-True.json": {
+    "sha256": "1282af890f1cbdd84f8e3a6b397dba7f5116bf7eb1e7dba2102716c57d740cf7",
+    "bytes": 271628,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-0-True.json"
+  },
+  "independent-final/seed-barranquilla-1-False.json": {
+    "sha256": "0cc7dea03c30c95ef6547a96e35d375e0be17b2162255b183c7d207184683d47",
+    "bytes": 268767,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-1-False.json"
+  },
+  "independent-final/seed-barranquilla-1-True.json": {
+    "sha256": "e261ab6c6c6dd66a9ba543e736fe45feb9e13d5462a863e90a564c331c27aafd",
+    "bytes": 271629,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-1-True.json"
+  },
+  "independent-final/seed-barranquilla-4-False.json": {
+    "sha256": "3d3531c545524b48e373155d46f44c00a69cef22d57fabef8d471eaef6dffb83",
+    "bytes": 268770,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "independent-final/seed-barranquilla-4-True.json": {
+    "sha256": "4a9fe6dfbaf2a2b565f750772948c3c38b78857f572b53683cfcbf5da894976e",
+    "bytes": 271628,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-4-True.json"
+  },
+  "independent-final/seed-barranquilla-absent-False.json": {
+    "sha256": "badbbb0ead5265e8b95fd0be4383e5eb642a1fe15483401db62438b0b0ce24e5",
+    "bytes": 268770,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-absent-False.json"
+  },
+  "independent-final/seed-barranquilla-absent-True.json": {
+    "sha256": "c1814f8fec398a29b592d24a9192c840a84ae87d6fd70b26a86324d97aa4cafe",
+    "bytes": 271630,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-absent-True.json"
+  },
+  "independent-final/seed-barranquilla-incompatible-False.json": {
+    "sha256": "281daf07621d36ac77903fe3e3f8c1ab75099633e79803610ab55c510890a883",
+    "bytes": 268769,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-incompatible-False.json"
+  },
+  "independent-final/seed-barranquilla-incompatible-True.json": {
+    "sha256": "e18595f46f19d341586109c0407d2e6988c035673b61e9a0b86b0cbae5b16841",
+    "bytes": 271630,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-barranquilla-incompatible-True.json"
+  },
+  "independent-final/seed-cartagena-0-False.json": {
+    "sha256": "e95aa9d58c9fef035b4e0b9351e0142c94b3f91b2fa28fe7e02c20a68b459b33",
+    "bytes": 272855,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-0-False.json"
+  },
+  "independent-final/seed-cartagena-0-True.json": {
+    "sha256": "95a2b47984b7210da90ab06fc5e4a6175eacb309b2ba76f58f5d9b61c988b102",
+    "bytes": 275711,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-0-True.json"
+  },
+  "independent-final/seed-cartagena-1-False.json": {
+    "sha256": "4ec0a83cf3e694a30aed0543ab932d9cdf4e216f3c5b4b9330cca95cd3c07531",
+    "bytes": 272852,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-1-False.json"
+  },
+  "independent-final/seed-cartagena-1-True.json": {
+    "sha256": "9c6b5e93bbd5cb6d1db02bac402d8cd8de0dc401cf6a5fb060227d9094d158bc",
+    "bytes": 275711,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-1-True.json"
+  },
+  "independent-final/seed-cartagena-4-False.json": {
+    "sha256": "0f2fc9a2fe9b871e18d93d3212a1191a2ef2051d62b63c9913e32febb7579c9a",
+    "bytes": 272853,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "independent-final/seed-cartagena-4-True.json": {
+    "sha256": "446744e10099745a76b92248a83d2985ad9993cfbe92cb00bb3253bdc0f71f9b",
+    "bytes": 275715,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-4-True.json"
+  },
+  "independent-final/seed-cartagena-absent-False.json": {
+    "sha256": "4b09f0e8e136715877e8b93c9392234fb958308ffe33351fecbd58bf55be58d4",
+    "bytes": 272852,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-absent-False.json"
+  },
+  "independent-final/seed-cartagena-absent-True.json": {
+    "sha256": "feba8e0377ca15a37add06d5d63a93a23bb8c1f564bc6dd2bb49e5f39f0f33f3",
+    "bytes": 275712,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-absent-True.json"
+  },
+  "independent-final/seed-cartagena-incompatible-False.json": {
+    "sha256": "f3d8171cb7ac711662446ebd89188879756e41da69ca5167cab08ce67a0f0d89",
+    "bytes": 272853,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-incompatible-False.json"
+  },
+  "independent-final/seed-cartagena-incompatible-True.json": {
+    "sha256": "cb4b62eda41b13ee636a0c4eda576354100fb4c9545a8947b34e663daf8bace4",
+    "bytes": 275711,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "seed-cartagena-incompatible-True.json"
+  },
+  "independent-final/short-negation-False.json": {
+    "sha256": "c37b5ef168737a1ab97aed0d3bc804b220ad026f98b94ae0a7453e792b49ce60",
+    "bytes": 105312,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "short-negation-False.json"
+  },
+  "independent-final/short-negation-True.json": {
+    "sha256": "d14d6d856fafcf417179801ab269e79826afa88a157f6553b8bcba40b2e1040b",
+    "bytes": 106215,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "short-negation-True.json"
+  },
+  "independent-final/variant-False-alcaldia de baranoa-contratos de alcaldia de baran.json": {
+    "sha256": "6aa31be6f39545c3ae999ec10f5b78927ffe44f6bd53641804869e4bfad7d9e7",
+    "bytes": 100702,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-False-alcaldia de baranoa-contratos de alcaldia de baran.json"
+  },
+  "independent-final/variant-False-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json": {
+    "sha256": "b633ca818d187ec564643314ced2ec632ce1a78cb3e152759b7b9f94d85064eb",
+    "bytes": 107732,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json"
+  },
+  "independent-final/variant-False-alcaldia de cartagena-contratos de alcaldia de carta.json": {
+    "sha256": "475fd4fac2b41cef5cfdf60b4799e9591a405acac530a67252ab6b83315c55a8",
+    "bytes": 108008,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-contratos de alcaldia de carta.json"
+  },
+  "independent-final/variant-False-alcaldia de cartagena-contratos de software de alcal.json": {
+    "sha256": "22985760084b3948795ab3ce134846cd0fe70442d3b390663cdb5d57d28c87bd",
+    "bytes": 110699,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-contratos de software de alcal.json"
+  },
+  "independent-final/variant-False-alcaldia de cartagena-qué ha contratado la alcaldía .json": {
+    "sha256": "365b066ea48cef7411c4efbf04bf61ec16012132d245451b8fbd340a33c44c32",
+    "bytes": 107740,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-qué ha contratado la alcaldía .json"
+  },
+  "independent-final/variant-False-alcaldia de galapa-qué ha contratado alcaldia de .json": {
+    "sha256": "f7db24aa3e816b2ef1a069b2b80ab44e566b8d5d8d22e712a74783c84071953d",
+    "bytes": 99423,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-False-alcaldia de galapa-qué ha contratado alcaldia de .json"
+  },
+  "independent-final/variant-True-alcaldia de baranoa-contratos de alcaldia de baran.json": {
+    "sha256": "fc0ac512ecc9204c20cf4660f38adab81f690d2308d6c6651d54edb49fbebaf9",
+    "bytes": 101602,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-True-alcaldia de baranoa-contratos de alcaldia de baran.json"
+  },
+  "independent-final/variant-True-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json": {
+    "sha256": "435a04c7706bed00e591d896f5ae1a17274411732312decb114c247eebff6e36",
+    "bytes": 108634,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json"
+  },
+  "independent-final/variant-True-alcaldia de cartagena-contratos de alcaldia de carta.json": {
+    "sha256": "f37ab52ddf319cf896b7ea3bc533a6c4d79b4a0aab00a4c2e1428a3dcb204759",
+    "bytes": 108911,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-contratos de alcaldia de carta.json"
+  },
+  "independent-final/variant-True-alcaldia de cartagena-contratos de software de alcal.json": {
+    "sha256": "c64419425f74f5bb665c25b576586ea0b2940e3acba9d9076efbf4fa730ced3d",
+    "bytes": 111602,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-contratos de software de alcal.json"
+  },
+  "independent-final/variant-True-alcaldia de cartagena-qué ha contratado la alcaldía .json": {
+    "sha256": "0c5a7f8b6f0c1331ef2841f978e72ae87b897d933ccf5aeefd2b6b0cf908d2c5",
+    "bytes": 108641,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-qué ha contratado la alcaldía .json"
+  },
+  "independent-final/variant-True-alcaldia de galapa-qué ha contratado alcaldia de .json": {
+    "sha256": "e2967f1d7ccb12e395372d3e4975d928f67fd50baf62c5decf9659d0405b6177",
+    "bytes": 100326,
+    "archive": "traces/independent-final.tar.gz",
+    "member": "variant-True-alcaldia de galapa-qué ha contratado alcaldia de .json"
+  },
+  "mutation-context-mutant/new-False-False-barranquilla.json": {
+    "sha256": "f5310641a0144bba2c8187bca1f5a5f484c6c630155b0d0bd5ca17c45397db75",
+    "bytes": 39921,
+    "archive": "traces/mutation-context-mutant.tar.gz",
+    "member": "new-False-False-barranquilla.json"
+  },
+  "mutation-context-mutant/new-False-False-cartagena.json": {
+    "sha256": "2c1aea9c9749fb5b4d43c386d0a96c09e75ac1d8b50743cdc69814091f047af6",
+    "bytes": 40688,
+    "archive": "traces/mutation-context-mutant.tar.gz",
+    "member": "new-False-False-cartagena.json"
+  },
+  "mutation-context-mutant/new-False-True-barranquilla.json": {
+    "sha256": "1dbe42761c87302d06ca553d92b3c3ac4b19a1e1734ea372a453d5a877978c51",
+    "bytes": 278672,
+    "archive": "traces/mutation-context-mutant.tar.gz",
+    "member": "new-False-True-barranquilla.json"
+  },
+  "mutation-context-mutant/new-False-True-cartagena.json": {
+    "sha256": "8f9ed65340fb256aa5c34b761053967baa0bbef015e7688b9718e307158bc179",
+    "bytes": 282815,
+    "archive": "traces/mutation-context-mutant.tar.gz",
+    "member": "new-False-True-cartagena.json"
+  },
+  "mutation-context-mutant/new-True-False-barranquilla.json": {
+    "sha256": "8c9c3f086ffdcf515c20a0283c4723682ba32d8f6374016d5412cf3869d23c28",
+    "bytes": 41071,
+    "archive": "traces/mutation-context-mutant.tar.gz",
+    "member": "new-True-False-barranquilla.json"
+  },
+  "mutation-context-mutant/new-True-False-cartagena.json": {
+    "sha256": "2990a08a4a3c79d7b30395ad15db29c14925a596c406b3d747db215634f05641",
+    "bytes": 41840,
+    "archive": "traces/mutation-context-mutant.tar.gz",
+    "member": "new-True-False-cartagena.json"
+  },
+  "mutation-context-mutant/new-True-True-barranquilla.json": {
+    "sha256": "36757a4be38c6efe86f4aecddc802f8c92906dc65861cf181d7af1c6f3d12186",
+    "bytes": 282100,
+    "archive": "traces/mutation-context-mutant.tar.gz",
+    "member": "new-True-True-barranquilla.json"
+  },
+  "mutation-context-mutant/new-True-True-cartagena.json": {
+    "sha256": "6204643f576d7aefa60d8afc7d380a6fc2aeab0a5d11cd0b51b15f78b2bf11fb",
+    "bytes": 286255,
+    "archive": "traces/mutation-context-mutant.tar.gz",
+    "member": "new-True-True-cartagena.json"
+  },
+  "mutation-context-baseline/new-False-False-barranquilla.json": {
+    "sha256": "dac7f855134695e677f05ce2af06bbe0e2c23d579303a7652b0365fe197d55bb",
+    "bytes": 286971,
+    "archive": "traces/mutation-context-baseline.tar.gz",
+    "member": "new-False-False-barranquilla.json"
+  },
+  "mutation-context-baseline/new-False-False-cartagena.json": {
+    "sha256": "63003d5fe084ad05522207bdd275b7dc78e4cd55adcf6ccd1ee03596bd7b2dbf",
+    "bytes": 291218,
+    "archive": "traces/mutation-context-baseline.tar.gz",
+    "member": "new-False-False-cartagena.json"
+  },
+  "mutation-context-baseline/new-False-True-barranquilla.json": {
+    "sha256": "3389b8e452073487466b53018ceed82939dcee57526c6453bb68693e52cdfa40",
+    "bytes": 278943,
+    "archive": "traces/mutation-context-baseline.tar.gz",
+    "member": "new-False-True-barranquilla.json"
+  },
+  "mutation-context-baseline/new-False-True-cartagena.json": {
+    "sha256": "fcf899acbf7f11ad8d1cc1cf90dc8369d39aa583f6859c867d218f56efe6a283",
+    "bytes": 283027,
+    "archive": "traces/mutation-context-baseline.tar.gz",
+    "member": "new-False-True-cartagena.json"
+  },
+  "mutation-context-baseline/new-True-False-barranquilla.json": {
+    "sha256": "d2f1acffa8629e6b75ac49c6d99a16c2f35f898b31fc88ec8d9d49b2cc0de517",
+    "bytes": 290408,
+    "archive": "traces/mutation-context-baseline.tar.gz",
+    "member": "new-True-False-barranquilla.json"
+  },
+  "mutation-context-baseline/new-True-False-cartagena.json": {
+    "sha256": "0e2eeccca3ac8575f1f74f47c7f49beba17ee08d38174357aa0490e388c385c8",
+    "bytes": 294650,
+    "archive": "traces/mutation-context-baseline.tar.gz",
+    "member": "new-True-False-cartagena.json"
+  },
+  "mutation-context-baseline/new-True-True-barranquilla.json": {
+    "sha256": "72cb7c20aec20a4f362661ec5346d8409e2d7005e9bc31cd993038854ffd6f14",
+    "bytes": 282379,
+    "archive": "traces/mutation-context-baseline.tar.gz",
+    "member": "new-True-True-barranquilla.json"
+  },
+  "mutation-context-baseline/new-True-True-cartagena.json": {
+    "sha256": "1cb457be68155130a33676b71c8dcc062f68ad3c1c0fd1a0c0a73239906a33a9",
+    "bytes": 286464,
+    "archive": "traces/mutation-context-baseline.tar.gz",
+    "member": "new-True-True-cartagena.json"
+  },
+  "pre-frame-seeds/seed-barranquilla-0-False.json": {
+    "sha256": "b333a779459eeef347d83dfdd9f2e6e2a5ae071afd412fa486a43463b9828a2e",
+    "bytes": 7308,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-barranquilla-0-False.json"
+  },
+  "pre-frame-seeds/seed-barranquilla-1-False.json": {
+    "sha256": "60e9a9b9352d93beb837c7b76a4ff95e1c2900e1086f8771011d3ce461c0a2f7",
+    "bytes": 22705,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-barranquilla-1-False.json"
+  },
+  "pre-frame-seeds/seed-barranquilla-4-False.json": {
+    "sha256": "997dd0b5950dbf5ae96fc0be06f8e85db04340439007d52f85b0d12257a06960",
+    "bytes": 15879,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "pre-frame-seeds/seed-barranquilla-absent-False.json": {
+    "sha256": "79e27f55a5ed9005d2499540b50d2700f3581862b5487bdcc667c9df1cd69fae",
+    "bytes": 6322,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-barranquilla-absent-False.json"
+  },
+  "pre-frame-seeds/seed-barranquilla-incompatible-False.json": {
+    "sha256": "aeb2cb90d4955cd35b7159bd15fb69dfb9d9197f047bde6618c4f9982288daee",
+    "bytes": 6322,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-barranquilla-incompatible-False.json"
+  },
+  "pre-frame-seeds/seed-cartagena-0-False.json": {
+    "sha256": "337042b8317f269866e3f34ee7bd59d1a7e9ad69f96b43a34dc33550cd961126",
+    "bytes": 112605,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-cartagena-0-False.json"
+  },
+  "pre-frame-seeds/seed-cartagena-1-False.json": {
+    "sha256": "531db56d8f480618431c4f1ad9535fff6b7688d7909331f9076c3251a2d802f1",
+    "bytes": 21944,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-cartagena-1-False.json"
+  },
+  "pre-frame-seeds/seed-cartagena-4-False.json": {
+    "sha256": "a5272ecdfaa43205e47677a24876d3af1649eb56b6c1f35742a8f9e40c8c2eaf",
+    "bytes": 12338,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "pre-frame-seeds/seed-cartagena-absent-False.json": {
+    "sha256": "d2b794f1b94fc1ffb02003bbb73e2019c5bc96bbdddf2f187d64a957acc1c250",
+    "bytes": 112511,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-cartagena-absent-False.json"
+  },
+  "pre-frame-seeds/seed-cartagena-incompatible-False.json": {
+    "sha256": "a5e2d5026ab3c376e7a17b7ce5310b429fbdfce549c8dd80cf2102b0ec0a4641",
+    "bytes": 112513,
+    "archive": "traces/pre-frame-seeds.tar.gz",
+    "member": "seed-cartagena-incompatible-False.json"
+  },
+  "network-diagnostic/network-attempts.txt": {
+    "sha256": "326ca42e7d43de24c24be3c7b52e1d496f483da458fa6f1714e6375c9b11d6db",
+    "bytes": 20585,
+    "archive": "traces/network-diagnostic.tar.gz",
+    "member": "network-attempts.txt"
+  },
+  "network-diagnostic/seed-cartagena-0-False.json": {
+    "sha256": "abf85c8fc503982cdb1863d393a541fb65b2c08a64e4401bfac1666a8d0de409",
+    "bytes": 272857,
+    "archive": "traces/network-diagnostic.tar.gz",
+    "member": "seed-cartagena-0-False.json"
+  },
+  "mutation-verbal-mutant/seed-barranquilla-4-False.json": {
+    "sha256": "6c44061bc694dec6481dcf40bf1ed915a0ead01e6784ce4e89fe09d4bddd0e08",
+    "bytes": 12512,
+    "archive": "traces/mutation-verbal-mutant.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "mutation-verbal-mutant/seed-barranquilla-4-True.json": {
+    "sha256": "63f6e19350f296bf4f21f1f2b5c55e43eabe9b688997b2e23d5acd7da1866120",
+    "bytes": 13086,
+    "archive": "traces/mutation-verbal-mutant.tar.gz",
+    "member": "seed-barranquilla-4-True.json"
+  },
+  "mutation-verbal-baseline/seed-barranquilla-4-False.json": {
+    "sha256": "b3d1a7d8da1aca5e04704a899f22a8021ffd1dfa157e7f68b760fca363ae9db4",
+    "bytes": 268771,
+    "archive": "traces/mutation-verbal-baseline.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "mutation-verbal-baseline/seed-barranquilla-4-True.json": {
+    "sha256": "ff64544b6d477e7a420f8d5b5fe3ae6a660adb0ef1d491d89051ceb9c1df3c77",
+    "bytes": 271630,
+    "archive": "traces/mutation-verbal-baseline.tar.gz",
+    "member": "seed-barranquilla-4-True.json"
+  },
+  "independent-boundaries-first/actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "c4aa96b771835b3ff57da55c6a0a290a9d4beb65cb21ab71a69cddbdcf617294",
+    "bytes": 16177,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-boundaries-first/actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "55ba3101aacee7e193f9817bbd8993f112bfe884ab36766bf0bdf61c191a79f1",
+    "bytes": 17113,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-boundaries-first/actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "15a730ff8ea447922760f7f3700821f5e06c59f090268537da313beef11bbec1",
+    "bytes": 21573,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-boundaries-first/actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "c371b5e2111527a53f8486879ffe5359f4e344b9fcdf1bbe3df5de58858254c5",
+    "bytes": 16843,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-boundaries-first/actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "56eca20589d70152eaad08f89859361b6707c500dcc20b4e714080cfad57f44a",
+    "bytes": 17229,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-boundaries-first/actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "ab038e2869759abcb01d78bd836eeb5884f3334a9b2038e73f2ed3879ec41fb8",
+    "bytes": 17346,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-boundaries-first/actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "db248131a09a375c2b8ce9c0f212a54960ee282d0fd5f3518171cc749aa7eccd",
+    "bytes": 17003,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-boundaries-first/actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "c7b15e8533ca41fcb1bd87179bf8acc14760a8b0c976604fbd3bcc99ee411412",
+    "bytes": 5958,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-boundaries-first/actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "5a460753b93fe7ec4c87aedad365fa57e4705116a4ce73cb46f8d6dbe0e066a5",
+    "bytes": 17113,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-boundaries-first/actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "a91707aadf78b79e249826f9715c5f06a9528c77b2bf4a4306b23097d9063390",
+    "bytes": 12707,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-boundaries-first/actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "17953e0e91208f47b881befbf6b187e985415c5d27bac23300c1d297ab59352b",
+    "bytes": 8792,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-boundaries-first/actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "e6639929ee3102eb3224e51cbcdd01447f024f87fd6c66fd3b91d70635395f60",
+    "bytes": 9574,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-boundaries-first/actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "725d1d406cc4cd33b86a028b4503effb63f5ad4b5973e00a4e40b75d40169a9e",
+    "bytes": 9801,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-boundaries-first/actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "20be899451488fcf183c1f339a8ce59ce92ca8b3e314f4df400281dd66ec29f1",
+    "bytes": 9126,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-boundaries-first/actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "2019018880f40c960dd63b8cad10878844b476c5cc618be89ae080811f0fdb74",
+    "bytes": 16714,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-boundaries-first/actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "fec5105252d0c41ffacbbff73ba4a7a06819315396dfe8aad5d28c20abf053bf",
+    "bytes": 17651,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-boundaries-first/actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "85ed7edbb210979484d823a449c00d8d848763299ce2466eda15b8d5379e3e70",
+    "bytes": 22109,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-boundaries-first/actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "d1aadf694bf6214233b41e534c8ce7ca697e76ffdd1fb1c69f4d546cbe437dbb",
+    "bytes": 17380,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-boundaries-first/actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "62c12f41618f407a75f3ea6649dcab377ae0d85704fb270d728cf17be6a57245",
+    "bytes": 17767,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-boundaries-first/actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "ae592f86ff21df5b7d8ed614a63c783f336c818d957f2f69d512307474f9c2ea",
+    "bytes": 17884,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-boundaries-first/actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "385a9b1ad0910184ae7e32e1babca7369a3da6d6115af33228ee4720f7c259bc",
+    "bytes": 17542,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-boundaries-first/actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "3270a8e6fbf53cd86c48ba3c7cac49c92cc3b6d699648dee5c08ab9bdec9dd54",
+    "bytes": 6495,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-boundaries-first/actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "d0dc19495f6f9cdb322b11d07b4666388437f01fc85c7eb41822e9d0ab102754",
+    "bytes": 17651,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-boundaries-first/actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "39aa3f2aa6ae1e019786ad26f02a769cdc01f479f74187e9678e4d9d2eafbc82",
+    "bytes": 13244,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-boundaries-first/actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "c9948d05da4dd165580b21247b52e758e85b117e777d15825e2a1e3f5fb4efc5",
+    "bytes": 9329,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-boundaries-first/actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "9a960cd55c3002f8128fbc55ff79fa5a4ada4833fc41743aa62c52bd01200261",
+    "bytes": 10111,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-boundaries-first/actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "8821848bf7e41b3d4fea53a8f417a189e755fc10a6e333d263f48eae0739b9eb",
+    "bytes": 10340,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-boundaries-first/actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "ba0fe6aa17df0a3f38e59bf2a4e7ae700bbaf81927164ff3b549617ab5d3f254",
+    "bytes": 9663,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-boundaries-first/boundary-False-geography-bogota.json": {
+    "sha256": "64ebe018c3313e6cf98ffeda20dcb96da124c724f5abe02667f9baf663e4b170",
+    "bytes": 6256,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "boundary-False-geography-bogota.json"
+  },
+  "independent-boundaries-first/boundary-False-negation-FUNDACARIBE.json": {
+    "sha256": "defab16932807ddf91d3b2486b9e89858300c0298c1300c8d13120e9e166b0c4",
+    "bytes": 2474,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "boundary-False-negation-FUNDACARIBE.json"
+  },
+  "independent-boundaries-first/boundary-False-negation-alcaldia de cartagena.json": {
+    "sha256": "241800cb8df52cb84b14c17fb896aba3f3724d03c9c76e0ef148090ff74b7da2",
+    "bytes": 2472,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "boundary-False-negation-alcaldia de cartagena.json"
+  },
+  "independent-boundaries-first/boundary-False-topic-software.json": {
+    "sha256": "95a8c31bdbc5addd5ee92d792569ebe621a278e3e31f0651a198a1b4f8695ef4",
+    "bytes": 4475,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "boundary-False-topic-software.json"
+  },
+  "independent-boundaries-first/boundary-True-geography-bogota.json": {
+    "sha256": "404e078e17fe1d45c615f5bf69cf5b9f5290901ac0db2044625e15303c02bb61",
+    "bytes": 7158,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "boundary-True-geography-bogota.json"
+  },
+  "independent-boundaries-first/boundary-True-negation-FUNDACARIBE.json": {
+    "sha256": "416579676afd4e440cfb4f8237a28c50d2d7b959a1efd7cb23d9d53cbced929a",
+    "bytes": 2972,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "boundary-True-negation-FUNDACARIBE.json"
+  },
+  "independent-boundaries-first/boundary-True-negation-alcaldia de cartagena.json": {
+    "sha256": "9c7d9a2e20290606cf50229ca816ae6c0df64581ba45e3970329b7728a1873c7",
+    "bytes": 2970,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "boundary-True-negation-alcaldia de cartagena.json"
+  },
+  "independent-boundaries-first/boundary-True-topic-software.json": {
+    "sha256": "c577f2a8f52939edb9ca7913fb4a190d8d2ee05887ae805b79bcfeccfed9880b",
+    "bytes": 5012,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "boundary-True-topic-software.json"
+  },
+  "independent-boundaries-first/dependent-False-con la alcaldia de cartagena.json": {
+    "sha256": "bae4bac76e6be88c472bb357ef4e56ace53b9b449f530dc225c08aaa0689e986",
+    "bytes": 39738,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "dependent-False-con la alcaldia de cartagena.json"
+  },
+  "independent-boundaries-first/dependent-False-solo 2026.json": {
+    "sha256": "587da4eec60a85201999dae84806e0eaaa5382e6839a3c650bc80a277d46e228",
+    "bytes": 36824,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "dependent-False-solo 2026.json"
+  },
+  "independent-boundaries-first/dependent-True-con la alcaldia de cartagena.json": {
+    "sha256": "fe379b9c7a0ac1cf1c64201affb44e7a8dec14b2995edb3c83787d416d50124d",
+    "bytes": 40887,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "dependent-True-con la alcaldia de cartagena.json"
+  },
+  "independent-boundaries-first/dependent-True-solo 2026.json": {
+    "sha256": "fd344b5bb93f6582f2d96ed149f7710d2ec37916084a2bd286b22217873d2e1e",
+    "bytes": 37977,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "dependent-True-solo 2026.json"
+  },
+  "independent-boundaries-first/new-False-False-barranquilla.json": {
+    "sha256": "a24eebc937170978cd10d559a64b23f05e7c03e5ef83f927e63b1ca73f8343f6",
+    "bytes": 286970,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "new-False-False-barranquilla.json"
+  },
+  "independent-boundaries-first/new-False-False-cartagena.json": {
+    "sha256": "3596f18b290940ecfccef4305871e9b077758b76caa47f0ebeabc5b1ed58d4ca",
+    "bytes": 291215,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "new-False-False-cartagena.json"
+  },
+  "independent-boundaries-first/new-False-True-barranquilla.json": {
+    "sha256": "902c65d4e240d28c845cfb132ebf921e964a84aa6cbbe50c91371010452f8564",
+    "bytes": 278946,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "new-False-True-barranquilla.json"
+  },
+  "independent-boundaries-first/new-False-True-cartagena.json": {
+    "sha256": "33aa6e86b9de54abdf8d97d987dd4bc74b04047bf669a65978bd2690dff6a222",
+    "bytes": 283029,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "new-False-True-cartagena.json"
+  },
+  "independent-boundaries-first/new-True-False-barranquilla.json": {
+    "sha256": "747da281a10fd3585a319d6ed20e60a93946c15428c3ff65cfc4d2a3588443a4",
+    "bytes": 290406,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "new-True-False-barranquilla.json"
+  },
+  "independent-boundaries-first/new-True-False-cartagena.json": {
+    "sha256": "d4a482aaad32580385fe3e5096ab229c7086410ba45e4c7a4ae824a4ab6776b0",
+    "bytes": 294645,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "new-True-False-cartagena.json"
+  },
+  "independent-boundaries-first/new-True-True-barranquilla.json": {
+    "sha256": "0244409d3b703bafc3ebc158a5bcdb2cae3a6bc03455bcd62cc7fe63a3e49047",
+    "bytes": 282379,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "new-True-True-barranquilla.json"
+  },
+  "independent-boundaries-first/new-True-True-cartagena.json": {
+    "sha256": "d2c0b889ccb5539381691d4fe3aa302a43c5a16d0c148937bb0759175b7c3fbd",
+    "bytes": 286462,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "new-True-True-cartagena.json"
+  },
+  "independent-boundaries-first/provenance-False-UNIVERSIDAD SOLANO.json": {
+    "sha256": "5b354a862cac721188a046e93116d8798cd8b6972fe2010155e315551cd6fc55",
+    "bytes": 16292,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "provenance-False-UNIVERSIDAD SOLANO.json"
+  },
+  "independent-boundaries-first/provenance-False-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "09a70eb0aea08a55755299da8279bb5e55d21c4734d0768325b4bc99f4fd6ba0",
+    "bytes": 4957,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "provenance-False-alcaldia de cartagena servicios integrados.json"
+  },
+  "independent-boundaries-first/provenance-True-UNIVERSIDAD SOLANO.json": {
+    "sha256": "26b87955f12e4c6146420d67d0584ba05f2704e6a4c6c91b36b9a2b36e87dde1",
+    "bytes": 16828,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "provenance-True-UNIVERSIDAD SOLANO.json"
+  },
+  "independent-boundaries-first/provenance-True-alcaldia de cartagena servicios integrados.json": {
+    "sha256": "ff557428398313f118a23e4d5c848bf4ebd3ea8de8a1d6b550ec02eb7f060303",
+    "bytes": 5496,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "provenance-True-alcaldia de cartagena servicios integrados.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-0-False.json": {
+    "sha256": "196350509c20decddb5c81b3580e41d19350b0533c38c6ffbe7a7e4c53353195",
+    "bytes": 268769,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-0-False.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-0-True.json": {
+    "sha256": "7eb71b4b1978108374cae00b9d4f6d6cbe4285dbc9c27762c667d85f5dbd471d",
+    "bytes": 271630,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-0-True.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-1-False.json": {
+    "sha256": "a0acadf6308afb5a51268b1205b7660c3187b21cbf8f363b64bcb3c69648f0fe",
+    "bytes": 268770,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-1-False.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-1-True.json": {
+    "sha256": "634c78d0cbf6b8d8ff4b7d88a52ae516097f7c5cde9c593218064a92bd8c3e7f",
+    "bytes": 271628,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-1-True.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-4-False.json": {
+    "sha256": "f5ed81fc6548aec858c9300022a027b674a9e0c862bc2f3f11a20661b58d0d1c",
+    "bytes": 268769,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-4-True.json": {
+    "sha256": "208c0559837aefc4967e51a64067e6e3b3d32ee2850e9b43f13a4358bf35b18e",
+    "bytes": 271623,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-4-True.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-absent-False.json": {
+    "sha256": "12bff726586eb1d962cada835c97453b72696858a644b9414ba4f444b3ad08eb",
+    "bytes": 268766,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-absent-False.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-absent-True.json": {
+    "sha256": "b7884b4d7cdd0d92ea99a31ef318f5378c4e1f370f8c5e60a8310129e21385cc",
+    "bytes": 271628,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-absent-True.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-incompatible-False.json": {
+    "sha256": "195e47c765e879f0f2a7710ec5f5f6973c0facbb7c4e8ac8769ff0144923be86",
+    "bytes": 268766,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-incompatible-False.json"
+  },
+  "independent-boundaries-first/seed-barranquilla-incompatible-True.json": {
+    "sha256": "6d2b610bcc2b926c39bd7c206db206e81a3a90d449bcab09096661c575e991ae",
+    "bytes": 271629,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-barranquilla-incompatible-True.json"
+  },
+  "independent-boundaries-first/seed-cartagena-0-False.json": {
+    "sha256": "325dbfab431692e6564937a918d1afad6b65c8122898f4a933b709ce600265c3",
+    "bytes": 272857,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-0-False.json"
+  },
+  "independent-boundaries-first/seed-cartagena-0-True.json": {
+    "sha256": "48fed729f1266b584e13603bfd7befdebe9636dfdd1366105a340b04741f6a31",
+    "bytes": 275717,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-0-True.json"
+  },
+  "independent-boundaries-first/seed-cartagena-1-False.json": {
+    "sha256": "bcb119b791f7482f1d6e3cd20cdfa80cf9508770412db2b88ad1ee1a9ce270f9",
+    "bytes": 272853,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-1-False.json"
+  },
+  "independent-boundaries-first/seed-cartagena-1-True.json": {
+    "sha256": "d507a9ad552ced097a9535873fdf0ea2d77844e9aedacb409777faecba580210",
+    "bytes": 275715,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-1-True.json"
+  },
+  "independent-boundaries-first/seed-cartagena-4-False.json": {
+    "sha256": "c7d81ece3df447190af6fc30674841253b6a9ec73f2d685f97e774b29433d452",
+    "bytes": 272853,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "independent-boundaries-first/seed-cartagena-4-True.json": {
+    "sha256": "c71f11644b9fdd8550d2381b801cb1a7f8ef44b166f35ff4bc7561a20a2dc5a1",
+    "bytes": 275716,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-4-True.json"
+  },
+  "independent-boundaries-first/seed-cartagena-absent-False.json": {
+    "sha256": "77d22567b07829ba80d6d9687862340e303376bd0649cc1a37b260e6d16873b2",
+    "bytes": 272854,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-absent-False.json"
+  },
+  "independent-boundaries-first/seed-cartagena-absent-True.json": {
+    "sha256": "9d81128137799dfc7ab5ec8594bb9b14997c8a3c5c4908103605f3b39829bc69",
+    "bytes": 275713,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-absent-True.json"
+  },
+  "independent-boundaries-first/seed-cartagena-incompatible-False.json": {
+    "sha256": "ecc7dc8e5241851937dc4e269e648a41583dfd5987a0ea7ad6a34c3e57bf0464",
+    "bytes": 272854,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-incompatible-False.json"
+  },
+  "independent-boundaries-first/seed-cartagena-incompatible-True.json": {
+    "sha256": "83db00fea28a252262c4372e99543bfacd1a915d0724b99865e6a00b023df744",
+    "bytes": 275711,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "seed-cartagena-incompatible-True.json"
+  },
+  "independent-boundaries-first/short-negation-False.json": {
+    "sha256": "b6a49f1b02f7bc14aff7fed41e148614dbdad9705d6041ff08be4b4896958e48",
+    "bytes": 105314,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "short-negation-False.json"
+  },
+  "independent-boundaries-first/short-negation-True.json": {
+    "sha256": "dbf4d3bd768112f65f108aad3848c62e1b46167d63984ba0eb86c92c5d2ca878",
+    "bytes": 106213,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "short-negation-True.json"
+  },
+  "independent-boundaries-first/variant-False-alcaldia de baranoa-contratos de alcaldia de baran.json": {
+    "sha256": "5d75012f22a98199f1f2449ba48ca52254abafb9d67b6497dbbc960e2ac6dfab",
+    "bytes": 100700,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-False-alcaldia de baranoa-contratos de alcaldia de baran.json"
+  },
+  "independent-boundaries-first/variant-False-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json": {
+    "sha256": "b37af70961b0ddf017e4a5a7eefb54682a59beedffddad1cb8e21a35f94577b1",
+    "bytes": 107733,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json"
+  },
+  "independent-boundaries-first/variant-False-alcaldia de cartagena-contratos de alcaldia de carta.json": {
+    "sha256": "f67d901826edd5e50b6d68ddb54ee769f71ba4c5e8cfbd017aadafd1a5d3a126",
+    "bytes": 108007,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-contratos de alcaldia de carta.json"
+  },
+  "independent-boundaries-first/variant-False-alcaldia de cartagena-contratos de software de alcal.json": {
+    "sha256": "2527a4c463188b3b4afb0852f2a8384ad5430c14808fd1ec909002081cf11de3",
+    "bytes": 110699,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-contratos de software de alcal.json"
+  },
+  "independent-boundaries-first/variant-False-alcaldia de cartagena-qué ha contratado la alcaldía .json": {
+    "sha256": "4a72dba2f38718aa2fc7a2e59573286df2c26f0fb357874ad234a8885416984e",
+    "bytes": 107740,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-False-alcaldia de cartagena-qué ha contratado la alcaldía .json"
+  },
+  "independent-boundaries-first/variant-False-alcaldia de galapa-qué ha contratado alcaldia de .json": {
+    "sha256": "47ee3a6a69e9f16b9077e551b1554ad2b1df2d7a81398e7abc668c25bd2d5b22",
+    "bytes": 99424,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-False-alcaldia de galapa-qué ha contratado alcaldia de .json"
+  },
+  "independent-boundaries-first/variant-True-alcaldia de baranoa-contratos de alcaldia de baran.json": {
+    "sha256": "211179f570775c35fa77a796749c4e8797bc8127bc1e6f3430c99bf52cba72e4",
+    "bytes": 101602,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-True-alcaldia de baranoa-contratos de alcaldia de baran.json"
+  },
+  "independent-boundaries-first/variant-True-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json": {
+    "sha256": "70e0a3772da4d6c1909e2d339cba712e3d0afe580545f0f6a38996cc1e8918e7",
+    "bytes": 108635,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-CONTRATOS DE LA ALCALDÍA DE CA.json"
+  },
+  "independent-boundaries-first/variant-True-alcaldia de cartagena-contratos de alcaldia de carta.json": {
+    "sha256": "3dd3a17c504839deff66a592be77963f9782c2752f8538ee703949299fd1f31d",
+    "bytes": 108911,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-contratos de alcaldia de carta.json"
+  },
+  "independent-boundaries-first/variant-True-alcaldia de cartagena-contratos de software de alcal.json": {
+    "sha256": "a92f29507f71d1e48f28d9a1aaf0ebab214cf4e6375d57a0b3bc50fd7047d447",
+    "bytes": 111602,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-contratos de software de alcal.json"
+  },
+  "independent-boundaries-first/variant-True-alcaldia de cartagena-qué ha contratado la alcaldía .json": {
+    "sha256": "2b8c860f408adddbc0cba63cc4b5100e49ef4e999088e97cf5e90909a5c780be",
+    "bytes": 108641,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-True-alcaldia de cartagena-qué ha contratado la alcaldía .json"
+  },
+  "independent-boundaries-first/variant-True-alcaldia de galapa-qué ha contratado alcaldia de .json": {
+    "sha256": "4b0d7bd81348be403fde1c4d902c129b52247d549809154c7e28d5683c5337ea",
+    "bytes": 100327,
+    "archive": "traces/independent-boundaries-first.tar.gz",
+    "member": "variant-True-alcaldia de galapa-qué ha contratado alcaldia de .json"
+  },
+  "city-integrated/city-autopromotion-False.json": {
+    "sha256": "5c9318aa58fdf2f5fa0fc1ec772bfe9f8de477f8c7e7fe05843802013080ba90",
+    "bytes": 16865,
+    "archive": "traces/city-integrated.tar.gz",
+    "member": "city-autopromotion-False.json"
+  },
+  "city-integrated/city-autopromotion-True.json": {
+    "sha256": "7939e82c505065202676d222799b1e21c5475eed9309726a83250cac38930d3f",
+    "bytes": 17406,
+    "archive": "traces/city-integrated.tar.gz",
+    "member": "city-autopromotion-True.json"
+  },
+  "city-integrated/city-promoted-geography-False.json": {
+    "sha256": "f50f9bf89e1f508d7f3fdb3245f734170f041b1a8009594c3dba7db98d7193c2",
+    "bytes": 4652,
+    "archive": "traces/city-integrated.tar.gz",
+    "member": "city-promoted-geography-False.json"
+  },
+  "city-integrated/city-promoted-geography-True.json": {
+    "sha256": "09d9b6e782fb30342397286da2d7400b2737b24892d1112468c586e380f9edfb",
+    "bytes": 5557,
+    "archive": "traces/city-integrated.tar.gz",
+    "member": "city-promoted-geography-True.json"
+  },
+  "independent-second/actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "5bb479bb0ec4312fc89d74e3afa1da731f27dc28959d4d58ebb37dbb3511dbad",
+    "bytes": 16177,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-second/actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "c0a3428a8c2979b8250c2a1343f55e944e15a13348b36d5b6bd64157b324961f",
+    "bytes": 17114,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-second/actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "abab913c4a2446fea8b92dc2739e8ef1ae67f096252449bee3507edbd1427a40",
+    "bytes": 21572,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-second/actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "b946889a20833a156ce67f10e0955f1638cc6f3a21fe7e20beb2a3ae30863b11",
+    "bytes": 16842,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-second/actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "854e804064c006260c3f0c08bcb838f615b688f929202dd7e6df5a3eee8c54b3",
+    "bytes": 17230,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-second/actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "4adda51f9a0ed2bfd3adff97385dcf26305fa805cbd20b9b63bbeb6ecb6d0950",
+    "bytes": 17345,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-second/actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "f3153df2e24261de48ee4128a0e5c9b8f2cf083e2c6771fad38f9307a44d95c8",
+    "bytes": 17006,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-second/actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "163acdbb12213bce65ae55fe2b055ba6eb8da18c86e84ad4ddcdb13374fcb8cd",
+    "bytes": 5958,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-second/actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "ec2dbc651fc72bbc9d0de63f5a53e392a30de5091eb3041ea4fa4f8d3ae2853f",
+    "bytes": 17114,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-second/actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "dd98103158c06bbc5ba385ff0901006f4c9c9897572e54df238437f59c983cc5",
+    "bytes": 12707,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-second/actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "c10aa44d65080938c9813d28df322aa4ff77600bfc6ee4314c55818698289160",
+    "bytes": 8792,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-second/actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "6526575904c60376053ea63bcb823b6a5eb4b8b4bb01da71c00ef51188737767",
+    "bytes": 9574,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-second/actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "06c49affce0010a266a0fdf777b98d909515b943ffff97d6b012eeb01352a9bf",
+    "bytes": 9801,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-second/actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "a982e174b99a390551174c8d167821e34d3d1a3a1cf8a013d00ab621b322e7d0",
+    "bytes": 9126,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-second/actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "3df1ea40e79f5ed2c6871eadc5fdea57fe6db504a3ad32f04899ae1ba46af211",
+    "bytes": 16714,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-second/actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "3af22934ffd8e6936135988b47bb11a6e4956eeeda2d1a7611797cc9aaf7378e",
+    "bytes": 17650,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-second/actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "0040ac7a25ff85c573fcf560f9c03fcca5b4ed64d5ead72dfa2f0612328710e6",
+    "bytes": 22110,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-second/actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "d999f00786103c3cdc1ad60189ad7bcd3ac329525aafd0d95cdef950ab04bc85",
+    "bytes": 17379,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-second/actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "60b43cc2650d34eec34245a7b1f929e9e546af9c339560a6b7d0d16f4e739f36",
+    "bytes": 17766,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-second/actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "fbe396eddce9de3841bff63301053bd5e1d01c2b799edb5cc78562908cad1f10",
+    "bytes": 17883,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-second/actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "d49d5b9ceea4913da27901c8bbb5ec26d084d7ae7e7489e3dbdd5c2167b85272",
+    "bytes": 17543,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-second/actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "a883cb25d8d69c95d89b9a9fb016280cc5a66161ba5b7f3690de8785258f70dd",
+    "bytes": 6495,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-second/actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "a3ed9defe00387e21d3feb3d3e660a39039664647a9fd4746630d93fb012bf40",
+    "bytes": 17651,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-second/actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "aa9f17715e7a5ce25ffdf534018936b6e69aba15a5f1b0078ec1729bf160e949",
+    "bytes": 13244,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-second/actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "dd615b1196ee12a44a0a5ebf69d296f41a9726d38fa109f186ecd26f810967cd",
+    "bytes": 9329,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-second/actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "8128c964bb00cc250a8e72648de78560cd20442dab1fe00ceba2d688cda7a6ca",
+    "bytes": 10111,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-second/actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "2a947d6760075c088b6129a91a03c435a88ca73f2f2ccd528ef08babd4731320",
+    "bytes": 10339,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-second/actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "6e64a537f6af57523ac045541b54246834aeca99a9dd1744a295d42a95ca5da4",
+    "bytes": 9663,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-second/dependent-False-con la alcaldia de cartagena.json": {
+    "sha256": "58dde9c94304a7b07e0943ffcfe701b9fbfbb5af2577dc42b9ac64939897e64d",
+    "bytes": 39738,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "dependent-False-con la alcaldia de cartagena.json"
+  },
+  "independent-second/dependent-False-solo 2026.json": {
+    "sha256": "4d50f5148f1cf440954c5e3336a0da89e099b870a898cf9ea8fb8b9d4f96e67e",
+    "bytes": 36825,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "dependent-False-solo 2026.json"
+  },
+  "independent-second/dependent-True-con la alcaldia de cartagena.json": {
+    "sha256": "6577dc4057a7ffbd7298b519628f418f5ab3ed9691762cc56539483a208780dd",
+    "bytes": 40886,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "dependent-True-con la alcaldia de cartagena.json"
+  },
+  "independent-second/dependent-True-solo 2026.json": {
+    "sha256": "6dc0d54cccd50c67d7a2939c9b55699dca691a366b9a535330c4b5d24a8d1602",
+    "bytes": 37975,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "dependent-True-solo 2026.json"
+  },
+  "independent-second/new-False-False-barranquilla.json": {
+    "sha256": "ff2590eb4d349422f831664656eb588845e8ded7f0a2b98f137dfa79c20e8189",
+    "bytes": 286284,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "new-False-False-barranquilla.json"
+  },
+  "independent-second/new-False-False-cartagena.json": {
+    "sha256": "670877886777275a6e17c73a94001a98efa1154819b7e1e4f418cb4b014b4cb8",
+    "bytes": 290503,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "new-False-False-cartagena.json"
+  },
+  "independent-second/new-False-True-barranquilla.json": {
+    "sha256": "22d5c9753d560b39f0059cb76b97927179ec9cdd6dfb5db16256cb2f037ef773",
+    "bytes": 278256,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "new-False-True-barranquilla.json"
+  },
+  "independent-second/new-False-True-cartagena.json": {
+    "sha256": "097fb5ddbfb3128ce3f3f039dfbe5c2c8b4af87dc946b18c0f395de04ca7a62a",
+    "bytes": 282320,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "new-False-True-cartagena.json"
+  },
+  "independent-second/new-True-False-barranquilla.json": {
+    "sha256": "0ecc6781c7aa628a624aa4432be33cf7aa9b55e8b03ea508712eed1d70b37612",
+    "bytes": 289719,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "new-True-False-barranquilla.json"
+  },
+  "independent-second/new-True-False-cartagena.json": {
+    "sha256": "e9bbfc7452bff1c55353f5fa024484bae9e5f9470b349f45ab4ad1c749c4ca60",
+    "bytes": 293938,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "new-True-False-cartagena.json"
+  },
+  "independent-second/new-True-True-barranquilla.json": {
+    "sha256": "0d88939adcb880b0f43b5f0696838d47d887342207c646ec937d9d9a7006c0ef",
+    "bytes": 281691,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "new-True-True-barranquilla.json"
+  },
+  "independent-second/new-True-True-cartagena.json": {
+    "sha256": "363599b54dfb889b4f7571b2eb76590c10314cb7077dda763ef6e9703581f12a",
+    "bytes": 285756,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "new-True-True-cartagena.json"
+  },
+  "independent-second/seed-barranquilla-0-False.json": {
+    "sha256": "f0b0c586ec81f52ccaef1f32e9d369b6994412458012b927652160026a726c8b",
+    "bytes": 268082,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-0-False.json"
+  },
+  "independent-second/seed-barranquilla-0-True.json": {
+    "sha256": "83d7e712bcd50fdbf2a098527cb8561aafd2dc8ffb7d3e1615e86c45a3de4261",
+    "bytes": 270939,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-0-True.json"
+  },
+  "independent-second/seed-barranquilla-1-False.json": {
+    "sha256": "25491447d2aa8a9d473791a278ebc168029ded573a98495e8615eb2205bfce35",
+    "bytes": 268081,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-1-False.json"
+  },
+  "independent-second/seed-barranquilla-1-True.json": {
+    "sha256": "1e4476575b63d9eaa10c3d3a6885a59570b0c1fa2fba0b79d724b53dc08bdb27",
+    "bytes": 270941,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-1-True.json"
+  },
+  "independent-second/seed-barranquilla-4-False.json": {
+    "sha256": "b88614dbf02b971b17458f3ba282076431ccd5210e206b0260ea1764484aa343",
+    "bytes": 268079,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "independent-second/seed-barranquilla-4-True.json": {
+    "sha256": "905d3cf546969b2d5b120c2e7707d3e6ed6bbdd76012f565f0aa6b89bb2a40a3",
+    "bytes": 270941,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-4-True.json"
+  },
+  "independent-second/seed-barranquilla-absent-False.json": {
+    "sha256": "8ed6e8e9ec24d3c465fbbf460f165340d9ce9b20a4b87bd4fda93b4c108ed810",
+    "bytes": 268080,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-absent-False.json"
+  },
+  "independent-second/seed-barranquilla-absent-True.json": {
+    "sha256": "0d8c4a30eccaa3039f27e355ba856976a6a545367cfa180e98f867c64b71fee3",
+    "bytes": 270940,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-absent-True.json"
+  },
+  "independent-second/seed-barranquilla-incompatible-False.json": {
+    "sha256": "6a353e49c9f965b5a7b0ac2a34e0e8fffc419bfa0c231cab2915917902e79c26",
+    "bytes": 268081,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-incompatible-False.json"
+  },
+  "independent-second/seed-barranquilla-incompatible-True.json": {
+    "sha256": "0b8328cde22c319025ab788a036945561e7573bef461e154f88e152a7533f609",
+    "bytes": 270941,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-barranquilla-incompatible-True.json"
+  },
+  "independent-second/seed-cartagena-0-False.json": {
+    "sha256": "cf1ed8840f3102f0ad6ee3a73aa8ce684780d2cc048b799b5331152c53828803",
+    "bytes": 272150,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-0-False.json"
+  },
+  "independent-second/seed-cartagena-0-True.json": {
+    "sha256": "e10d44d0e0fb5c6b3ae7d9f511c360d83ee043d4477884a1f367b14d51de9cb3",
+    "bytes": 275009,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-0-True.json"
+  },
+  "independent-second/seed-cartagena-1-False.json": {
+    "sha256": "7177615aab8688879ec31bcbc7f55725aff97f1e4095a7ceea85cf5833079b19",
+    "bytes": 272146,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-1-False.json"
+  },
+  "independent-second/seed-cartagena-1-True.json": {
+    "sha256": "99943ea50ac0383cb1659bd50e2277286339a0b3e2b27df2eba1d2fafb8bdb3f",
+    "bytes": 275004,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-1-True.json"
+  },
+  "independent-second/seed-cartagena-4-False.json": {
+    "sha256": "3148081852a2221775f8185aa8871e21ea9a6a3e04c8b02ff1eeaf8368c2b7bc",
+    "bytes": 272146,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "independent-second/seed-cartagena-4-True.json": {
+    "sha256": "21ec744b623c9545c14e911eea2207689a4274866968723df155e3fddd867652",
+    "bytes": 275005,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-4-True.json"
+  },
+  "independent-second/seed-cartagena-absent-False.json": {
+    "sha256": "03f250b2454fcc55a36eed07812097ca7a65990f080b18e2bd28f7cfd626c1a4",
+    "bytes": 272145,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-absent-False.json"
+  },
+  "independent-second/seed-cartagena-absent-True.json": {
+    "sha256": "3ae9b0d8249ee1b997435361e747b97736382e16de3209e8dfab830949757fd8",
+    "bytes": 275006,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-absent-True.json"
+  },
+  "independent-second/seed-cartagena-incompatible-False.json": {
+    "sha256": "fe21f868a2840bd85358a43a94db4c2112082fbaa928a840c0095b374547b15a",
+    "bytes": 272143,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-incompatible-False.json"
+  },
+  "independent-second/seed-cartagena-incompatible-True.json": {
+    "sha256": "5fd322e55c20ddab5038af28a970143b8cad210feb24afe1987954db3b479aa8",
+    "bytes": 275004,
+    "archive": "traces/independent-second.tar.gz",
+    "member": "seed-cartagena-incompatible-True.json"
+  },
+  "independent-third/actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "55ad09897307da08e41200d1153919b50343caf60662bb1cb320b623291eb419",
+    "bytes": 16177,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-third/actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "25b5815b84ef8cc222b04b27e1af1e37fbc76e13f337762a9d567b5cf06b9d19",
+    "bytes": 17114,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-third/actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "f43e99549fb7f3eda0caca61110f0e97f4f0137f1e40b54da8b6d7b671925a17",
+    "bytes": 21572,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-third/actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "b45417cda3bf88a8d5d689b58493596506892f269c1cba3956122584da8de290",
+    "bytes": 16843,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-third/actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "25a1c3254d83c1b891dc3ed36bfc0c8c61368ea194b02ec003108d16a0d7f359",
+    "bytes": 17230,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-third/actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "9f1013fa8310930b858c7bc849e54369b3e0c6bb35dff4620d74dd918aa73358",
+    "bytes": 17345,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-third/actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "17b9b1bdb663e60deb3dd5d299e50014fea3d4cffb1469795a1aa1989a90a820",
+    "bytes": 17006,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-third/actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "ba5fc8a67990bcde76a858fa3d3329a1eae626312b7704c91f3f940b9a2855bd",
+    "bytes": 5958,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-third/actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "ac57496c46f93aca250378b11432711877d437ba952376c27e7371c1bd0ba685",
+    "bytes": 17113,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-third/actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "8530b1344de1bc0e3a84a5e2a79bb6a3edb4c3938661e2e4de87a084124dbfe8",
+    "bytes": 12707,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-third/actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "a2b87ad08682fc2bfeed0e1343bcb3bfe7ebc42f035831164c7e2880a72daeeb",
+    "bytes": 8792,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-third/actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "8e9c327fd576ab2cb0a4d4628de95b87aec84c5c8f913d77fbc46c47f474f016",
+    "bytes": 9573,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-third/actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "a6dc0fe2327ff7a6027cc7a1249ba26f6b27742c5ca5c2028c8dcd67c3408fc4",
+    "bytes": 9801,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-third/actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "f092d0ea164365e95f62fe3bd5a55a6a753213e2c4ec800394905a84b35e4912",
+    "bytes": 9126,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-third/actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "d36b6e90bfb3484ed1a10c19595c8d4397c1ad92cd3a3248769e157472cb811f",
+    "bytes": 16713,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-third/actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "22c70bff758412734f94925f20e018a437cc7d11d4c1e30986441ec2f246f50e",
+    "bytes": 17651,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-third/actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "1eb72d32a1131ca19b56da05cbc56a86039d78dc072f68086cf47eed053dbaee",
+    "bytes": 22109,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-third/actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "19a7aedde167f5c9ae2519088fbba5313cc09dccf2852b232a7d6b2ffe10ca36",
+    "bytes": 17380,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-third/actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "7fbcc117c827d6dad169e6dfc27ce07c3702b315f18fb9e9ef2c2050ebba9c98",
+    "bytes": 17765,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-third/actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "fded5e57b5d25e624de1f15949f16a1afde615a0756effc93ba1012f97eb0194",
+    "bytes": 17884,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-third/actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "c30df5d1e7c7078eaeda550229d825acc93bbe034ccfad626528b917de2a4605",
+    "bytes": 17543,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-third/actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "ad5e60e83e7bf77acabbf8be1be467b0ec6e4e3248911095728318e91169ef95",
+    "bytes": 6495,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-third/actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "4206c352493c7238fa3e63f69418b8713dff6c5433c0df65689816cf934bf0b3",
+    "bytes": 17651,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-third/actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "2d8873f14aa98af550077a2ca7ad90da23237f9f58033bbd0c5f15db2eff3892",
+    "bytes": 13242,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-third/actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "4440c32d08d1621f7f34fb343e466747de951f97929ff370983a312138fad434",
+    "bytes": 9329,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-third/actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "f46ced5c571e0b507b290f93c7b17e71bc93592e2e71002eddb1fbe1d90d92cb",
+    "bytes": 10111,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-third/actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "a9adbdafffd332e3361c37b7429b371cc8ec1560b2031ff9949a7d5516020f14",
+    "bytes": 10340,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-third/actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "9277b93694fc02db6a9c07c857cdad42b76b22c17499d4d41e1c51072b2ce1a3",
+    "bytes": 9662,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-third/dependent-False-con la alcaldia de cartagena.json": {
+    "sha256": "e8c448eb17bbc0e32d6e22176efc87ed848c71afc2b03c04e8dd0d87d908adff",
+    "bytes": 39737,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "dependent-False-con la alcaldia de cartagena.json"
+  },
+  "independent-third/dependent-False-solo 2026.json": {
+    "sha256": "f1dfdf2c4b1c9f504441cdf59a3b215f131133b2bedbceb4eb52d1196a90332b",
+    "bytes": 36822,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "dependent-False-solo 2026.json"
+  },
+  "independent-third/dependent-True-con la alcaldia de cartagena.json": {
+    "sha256": "c575141d2fef97b370ffd0cf13ef3a25e4aafd50ed8abf5a011116b435c332e4",
+    "bytes": 40888,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "dependent-True-con la alcaldia de cartagena.json"
+  },
+  "independent-third/dependent-True-solo 2026.json": {
+    "sha256": "e9f3d8422b0b234fb832c6b953b8bb5ac6c325415099e1fbe89f096622221757",
+    "bytes": 37974,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "dependent-True-solo 2026.json"
+  },
+  "independent-third/new-False-False-barranquilla.json": {
+    "sha256": "a842c9bad753707df3cdb4da6768d5f24436ec0db75033960776e73b95c55017",
+    "bytes": 286971,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "new-False-False-barranquilla.json"
+  },
+  "independent-third/new-False-False-cartagena.json": {
+    "sha256": "010ce48f2e8fc613d8d9278a0c6ce50a784d83bf03aba433d5e7cf9419fcf878",
+    "bytes": 291214,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "new-False-False-cartagena.json"
+  },
+  "independent-third/new-False-True-barranquilla.json": {
+    "sha256": "eeb6286be2668ae75a549e9ff1a238fa630629eede8f102774a88a83f1b7be8b",
+    "bytes": 278943,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "new-False-True-barranquilla.json"
+  },
+  "independent-third/new-False-True-cartagena.json": {
+    "sha256": "ac9c8af23b973a8a9d36f69770fdc315694e70abb9f2287f7261fb93a22965ea",
+    "bytes": 283029,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "new-False-True-cartagena.json"
+  },
+  "independent-third/new-True-False-barranquilla.json": {
+    "sha256": "c87a01d337cafa5b3cf0d104fc6cbf0feba94d845ee566f11303646e8cb1fb27",
+    "bytes": 290408,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "new-True-False-barranquilla.json"
+  },
+  "independent-third/new-True-False-cartagena.json": {
+    "sha256": "97395e1baf9c9d80b177b53cf075c5c8742628352ddb981b259eeb1542e50104",
+    "bytes": 294649,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "new-True-False-cartagena.json"
+  },
+  "independent-third/new-True-True-barranquilla.json": {
+    "sha256": "7a163a5541d091467ccb9f5c3b9ef21ba096e89116475001027c7a35c099d5b6",
+    "bytes": 282380,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "new-True-True-barranquilla.json"
+  },
+  "independent-third/new-True-True-cartagena.json": {
+    "sha256": "8d5fd3d3c985cd9ab9404a0cc3c498258ce0024260d95b64d7f98f2f1426ccd2",
+    "bytes": 286463,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "new-True-True-cartagena.json"
+  },
+  "independent-third/seed-barranquilla-0-False.json": {
+    "sha256": "f5f349b22d0bccc1fc88199329b5fc5bd68e9eed6d13f3b1070e5bc8ab332d8f",
+    "bytes": 268769,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-0-False.json"
+  },
+  "independent-third/seed-barranquilla-0-True.json": {
+    "sha256": "3635e8cf261d4c4670717d3b0c8bb66ebb22f9a3a83d29abe1c71be44c750699",
+    "bytes": 271627,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-0-True.json"
+  },
+  "independent-third/seed-barranquilla-1-False.json": {
+    "sha256": "eea4d8f79e232178d2747e591fe4ab9ef1f2b50c78497247abd9d0f6b9e84ade",
+    "bytes": 268766,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-1-False.json"
+  },
+  "independent-third/seed-barranquilla-1-True.json": {
+    "sha256": "b58b9f6dfa385539060fcb1a92b291e27cd76fbde1e55acf346dd1e7da060ea6",
+    "bytes": 271627,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-1-True.json"
+  },
+  "independent-third/seed-barranquilla-4-False.json": {
+    "sha256": "05bb8e2952db6da22961481b89748333af8c12159506967ffa36cfcbc56b9e65",
+    "bytes": 268768,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "independent-third/seed-barranquilla-4-True.json": {
+    "sha256": "6ed84a4967005b288ef2fd72e6f188b495622276242b7e2f1d6cec15e28db1aa",
+    "bytes": 271626,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-4-True.json"
+  },
+  "independent-third/seed-barranquilla-absent-False.json": {
+    "sha256": "1cdf4eaa3c377528d4bbe79e153dc0779d91ec552ba01816a98095f97823301d",
+    "bytes": 268768,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-absent-False.json"
+  },
+  "independent-third/seed-barranquilla-absent-True.json": {
+    "sha256": "916d14516f1de5169ced169e9d4d6e08f16bf3e27e3c4f11a4a27987b7d85a7f",
+    "bytes": 271626,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-absent-True.json"
+  },
+  "independent-third/seed-barranquilla-incompatible-False.json": {
+    "sha256": "c0330e9ceb2868048b6634490f96a4cd572923b1716611479dfcf87e5675b6fc",
+    "bytes": 268770,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-incompatible-False.json"
+  },
+  "independent-third/seed-barranquilla-incompatible-True.json": {
+    "sha256": "867b24311c0eb2158d95f432c4a5984cd63ad65d4fea29549ae6785d6db4081c",
+    "bytes": 271629,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-barranquilla-incompatible-True.json"
+  },
+  "independent-third/seed-cartagena-0-False.json": {
+    "sha256": "3858e983d9c2f28d1cc0ee4bcfcee17b8061dde564831bb128cf9f141105acc1",
+    "bytes": 272857,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-0-False.json"
+  },
+  "independent-third/seed-cartagena-0-True.json": {
+    "sha256": "6b26eeb8170fd4327ea05044f5e6f451b132bffcdbb687a804a7f6ebe8dfe9ef",
+    "bytes": 275715,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-0-True.json"
+  },
+  "independent-third/seed-cartagena-1-False.json": {
+    "sha256": "dd891c011e125290bb01806a0041731e4d0fdc14c03fa6d832e5acc03d5bf99c",
+    "bytes": 272854,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-1-False.json"
+  },
+  "independent-third/seed-cartagena-1-True.json": {
+    "sha256": "c9761471ab9a9f0aa12175f65880726ea245ccb9fc13f1f823222c64349ae2af",
+    "bytes": 275713,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-1-True.json"
+  },
+  "independent-third/seed-cartagena-4-False.json": {
+    "sha256": "f56d5bd3a0c155556e1983c17937287c65a44d2e8f64eeb243b3b33c29dd2893",
+    "bytes": 272855,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "independent-third/seed-cartagena-4-True.json": {
+    "sha256": "6bf671acbf672568f999fbd810162dbfebe0c13188ec00eb8e46cf14671b9e11",
+    "bytes": 275715,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-4-True.json"
+  },
+  "independent-third/seed-cartagena-absent-False.json": {
+    "sha256": "0b17b92c18e2a881e320200963791146a2645168cdab0522728f570a23ad7784",
+    "bytes": 272853,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-absent-False.json"
+  },
+  "independent-third/seed-cartagena-absent-True.json": {
+    "sha256": "c3598d8e7c3cc225d954e835f80e4cc3280096c755c691b02ec98d538762f221",
+    "bytes": 275709,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-absent-True.json"
+  },
+  "independent-third/seed-cartagena-incompatible-False.json": {
+    "sha256": "ef0a62a070708fcbf6c9d372cf39d14ad4a88cfa3c9bf533e9c68100bd552bfa",
+    "bytes": 272853,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-incompatible-False.json"
+  },
+  "independent-third/seed-cartagena-incompatible-True.json": {
+    "sha256": "ab630e29e783a62fa8a43ef55d5fad10b2e76946b589ac18d3ead1e1ae791f5c",
+    "bytes": 275713,
+    "archive": "traces/independent-third.tar.gz",
+    "member": "seed-cartagena-incompatible-True.json"
+  },
+  "independent-first/actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "77519b85e4354067957ee5b63ae7c05412fef383ca4b003ce38da8ea40c42b4d",
+    "bytes": 11375,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-first/actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "de5ca001ea61e8e3c7c4b08bf19873fa542f39e31c29fe5da386d1ab0855a4bd",
+    "bytes": 12312,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-first/actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "35ccc2c3e5eab183aeabda5b084c0e03f7dfc71a79e80569371fad29988007a5",
+    "bytes": 16714,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-first/actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "717af3523e3bd420df3347a1dc6576452c1ee750eda395a067d0044e30b9ebe1",
+    "bytes": 12041,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-first/actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "761fcdc9ec70ded2263a59450c421b04f53a7d61443333167fd3840edd421582",
+    "bytes": 12236,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-first/actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "c9cd7a30ba319db0a9e2ba5add4770c6de62b42c6caf4acd4f1f59cf25f5f266",
+    "bytes": 12295,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-first/actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "ac2e9635ba9b33947ecb179a22e63e90b55ed2e193a6e8b03f869e9a25ab8d42",
+    "bytes": 12123,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-first/actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "7048d4cd7996f973859d01382d00e26e150e19ad9541e76302712e9df484379e",
+    "bytes": 5958,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-first/actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "a1efa9773306702802a35c5a4df41d87e39064c7a13e356b31a3c95d1d8a74d8",
+    "bytes": 12312,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-first/actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "be29c2074607553a134151985d7cc5b9d0bbad0e957f615b69fd3ef642c784c3",
+    "bytes": 12707,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-first/actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "193898b04ecc9119a642376b106ee67f98acd692951712d887c9a1734eef2acd",
+    "bytes": 8792,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-first/actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "055950a7edeb8b84ec1d23a5aec59593a720a24bb9d279377058815515737673",
+    "bytes": 9574,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-first/actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "53fcaae646b982fcf97e21f4d42224b97136aad0f470b5b72b1921a291ee3fa9",
+    "bytes": 9801,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-first/actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "80f23c5d2d7f673ca977662608b8cc80be439dfe7584b59dcc6e502cd4038308",
+    "bytes": 9126,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-False-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-first/actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "4a4fe8b6d2ae9dd14f1bbc9f58020b356cc5fbd92767b567a415475fab7ff047",
+    "bytes": 11910,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-first/actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "f5159c9011a7ce7fce9330ba9cfdedb9b568d6f52fec974d336757af588aed29",
+    "bytes": 12848,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-first/actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "91888b02be1656673c8f7de85479027c711ac01f29b447b5893be71b8ae4aec0",
+    "bytes": 17251,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-first/actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "b1afc528b144ecb35753b88927f3159d8fdf4ef5fb79fd6356bbb3e71c9e4ba0",
+    "bytes": 12577,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-1-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-first/actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "2105290413305cef6dc6a03b027993c58690f34e6bf2d232932c04d6d77a5351",
+    "bytes": 12773,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-1-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-first/actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "98874cf0b5d004cb56b317bc68ffde5f54623f48e1eeeea4f7496e866a14aa91",
+    "bytes": 12833,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-first/actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "b53996920730bc590ecdaea8135d37091e05d9e4aca3f72b80d5883d338eece6",
+    "bytes": 12661,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-1-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-first/actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json": {
+    "sha256": "70376591d8ca888ca2e5b49782c15b469ececc4f1f04cff63b28776c102fb526",
+    "bytes": 6495,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos de FUNDACARIBE.json"
+  },
+  "independent-first/actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json": {
+    "sha256": "e65dbfb8076b5a7908af895f511fd31a9fa6e6038a5b52ff7adb67a102d21a35",
+    "bytes": 12849,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor CC 7.json"
+  },
+  "independent-first/actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json": {
+    "sha256": "b6a14e4749bcb6314080c6c3732fd6acbf8835b2ccba73c6dc1ca5351ac04b11",
+    "bytes": 13243,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-contratos del proveedor FUND.json"
+  },
+  "independent-first/actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json": {
+    "sha256": "c1018c145f1985dbb3feb01fe0feb0e47d93a63fde79fbb65ed2c21409a06484",
+    "bytes": 9329,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-2-FUNDACARIBE-qué ha contratado FUNDACARIB.json"
+  },
+  "independent-first/actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json": {
+    "sha256": "45fd26ecbd6c5f3d2a98888f276fa39044db45ea00dd659e50a6bbe4abdb756a",
+    "bytes": 10110,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-2-UNIVERSIDAD INDUSTRIAL DE SANTANDER-contratos del proveedor UNIV.json"
+  },
+  "independent-first/actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json": {
+    "sha256": "aac3cdd135896daa2b7aa5502dd7ca874962adb0c7234fb4e127642112abaa61",
+    "bytes": 10340,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena servicios integrados-contratos del proveedor alca.json"
+  },
+  "independent-first/actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json": {
+    "sha256": "f667dbda556d524c795bd7c6dd58ca6f4fe419c3148668af7cbe3ec349cc8345",
+    "bytes": 9663,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "actor-True-2-alcaldia de cartagena-contratos del proveedor alca.json"
+  },
+  "independent-first/new-False-True-barranquilla.json": {
+    "sha256": "e9e73c72d5cf0811cd08144592169601923e38f472d1b9ff57045cb80c2c31a8",
+    "bytes": 76834,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "new-False-True-barranquilla.json"
+  },
+  "independent-first/new-False-True-cartagena.json": {
+    "sha256": "136a24cb9b62e87b108619ae3606afb7ff367ae1f4ec6ed75b368860da65c987",
+    "bytes": 77893,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "new-False-True-cartagena.json"
+  },
+  "independent-first/new-True-True-barranquilla.json": {
+    "sha256": "d022b61696e7dc7126a15e223489d64ddbfd8c7bf9a0c2ed7230727b837aa4fe",
+    "bytes": 78362,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "new-True-True-barranquilla.json"
+  },
+  "independent-first/new-True-True-cartagena.json": {
+    "sha256": "82994aee6cf84aced597a51714feabfbc6460371da25f4b9e0b34bffea1233d8",
+    "bytes": 79422,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "new-True-True-cartagena.json"
+  },
+  "independent-first/seed-barranquilla-0-False.json": {
+    "sha256": "6a000a4c53853f4d6458b86088db61005ac66af027a6d90fefdf0db7f60b46da",
+    "bytes": 66660,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-0-False.json"
+  },
+  "independent-first/seed-barranquilla-0-True.json": {
+    "sha256": "5d262af4b224ffa2e066012dd28951d83d9f9ae3c19351329eac823fabecd1ec",
+    "bytes": 67614,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-0-True.json"
+  },
+  "independent-first/seed-barranquilla-1-False.json": {
+    "sha256": "bf2fb2a69ae68452cb150c9342be70a5dfe0f4a5c40cb031a69ff51589a58100",
+    "bytes": 66660,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-1-False.json"
+  },
+  "independent-first/seed-barranquilla-1-True.json": {
+    "sha256": "0be083427b1095550f04cd5cb7d76f56dfe411af41977f7aeae57b6e3d12dd59",
+    "bytes": 67614,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-1-True.json"
+  },
+  "independent-first/seed-barranquilla-4-False.json": {
+    "sha256": "1ffa845834de7703ed8508448098d60fb30a1458633aafe5981de37833e60d99",
+    "bytes": 66660,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-4-False.json"
+  },
+  "independent-first/seed-barranquilla-4-True.json": {
+    "sha256": "f167d183cbdd9e90a716853a0b4e9b23ea98e598bc620bacb588157875545b8a",
+    "bytes": 67613,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-4-True.json"
+  },
+  "independent-first/seed-barranquilla-absent-False.json": {
+    "sha256": "7acda325a5f30ed4a47fb96ed21c5cb0a0cb7fc58348adb3a1adab82f9668fe2",
+    "bytes": 66660,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-absent-False.json"
+  },
+  "independent-first/seed-barranquilla-absent-True.json": {
+    "sha256": "d87db3a7ac3552411ce71861dfd2369309f87894e09121172aa3ba0eb1b3ec1b",
+    "bytes": 67614,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-absent-True.json"
+  },
+  "independent-first/seed-barranquilla-incompatible-False.json": {
+    "sha256": "f1daf7312e0f0b1fc13cb11c78cb6c1473bbdad64b18084356d05ce0f56951f2",
+    "bytes": 66660,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-incompatible-False.json"
+  },
+  "independent-first/seed-barranquilla-incompatible-True.json": {
+    "sha256": "33338e0e1e3c5666fa362ce942d873127d99f577b84a57e8f24bd18b60d7780a",
+    "bytes": 67614,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-barranquilla-incompatible-True.json"
+  },
+  "independent-first/seed-cartagena-0-False.json": {
+    "sha256": "62b708e8e5a0471179f6ef33a3e33192327ba4f6321d3603636631d56cd19b76",
+    "bytes": 67721,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-0-False.json"
+  },
+  "independent-first/seed-cartagena-0-True.json": {
+    "sha256": "794728053634aa201891500ffaef4ddff60cc4fbcd434fc0fb8373ddfb1dce7a",
+    "bytes": 68672,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-0-True.json"
+  },
+  "independent-first/seed-cartagena-1-False.json": {
+    "sha256": "a812456e8794799ac5413ba20a12e6f0e246eff0b758fcc0dbf07010f8565168",
+    "bytes": 67719,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-1-False.json"
+  },
+  "independent-first/seed-cartagena-1-True.json": {
+    "sha256": "70009e134bca188c5cd175625adab8e38ca6d702a3535dfa7109ba8790cd67bc",
+    "bytes": 68672,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-1-True.json"
+  },
+  "independent-first/seed-cartagena-4-False.json": {
+    "sha256": "f7188be0322b83d7ce4cf9e8ec7161e6419239fa1b4d96785fa8aa897835ac20",
+    "bytes": 67715,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-4-False.json"
+  },
+  "independent-first/seed-cartagena-4-True.json": {
+    "sha256": "bce1485ff8d1b0926fb86876d2ff067ff6debd866b8cbee9e190e6e7ac1fc22a",
+    "bytes": 68670,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-4-True.json"
+  },
+  "independent-first/seed-cartagena-absent-False.json": {
+    "sha256": "04e89d37a247fbb289a1604faa44324640a9b2db85ffeb93c5d885f56cd83dfa",
+    "bytes": 67718,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-absent-False.json"
+  },
+  "independent-first/seed-cartagena-absent-True.json": {
+    "sha256": "a0fc3e50f6bdb9ce582970a9cd60c2ba4d2ea5b910397d5fc73119e53971f1f3",
+    "bytes": 68671,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-absent-True.json"
+  },
+  "independent-first/seed-cartagena-incompatible-False.json": {
+    "sha256": "996f261fb088b4023d97da062a19041f7223b895756d4c3b4f1b8359e2f70fc6",
+    "bytes": 67716,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-incompatible-False.json"
+  },
+  "independent-first/seed-cartagena-incompatible-True.json": {
+    "sha256": "3455db1bcd80e4da73f5ea2c593693e47049e2c693f64ddfa46d3cc1225f9326",
+    "bytes": 68672,
+    "archive": "traces/independent-first.tar.gz",
+    "member": "seed-cartagena-incompatible-True.json"
+  },
+  "base-dependent/dependent-False-con la alcaldia de cartagena.json": {
+    "sha256": "db495251e257a9cb73849066fb452a970f47f90bd89b2ede1aee3a60910979c3",
+    "bytes": 39738,
+    "archive": "traces/base-dependent.tar.gz",
+    "member": "dependent-False-con la alcaldia de cartagena.json"
+  },
+  "base-dependent/dependent-False-solo 2026.json": {
+    "sha256": "99e60080c469bddf61b6f0c0a3a05976e453dd884a7e3cee3e7a2a92108531b8",
+    "bytes": 36829,
+    "archive": "traces/base-dependent.tar.gz",
+    "member": "dependent-False-solo 2026.json"
+  },
+  "base-dependent/dependent-True-con la alcaldia de cartagena.json": {
+    "sha256": "85cee342211965c58986a2659143c6911f09ad977fbe2823b5e2afd00f37aa75",
+    "bytes": 40887,
+    "archive": "traces/base-dependent.tar.gz",
+    "member": "dependent-True-con la alcaldia de cartagena.json"
+  },
+  "base-dependent/dependent-True-solo 2026.json": {
+    "sha256": "e0aca68d66096c791ae015ade38da53c5c0e45db7e4d04bdb2389a7dfcd2bac7",
+    "bytes": 37978,
+    "archive": "traces/base-dependent.tar.gz",
+    "member": "dependent-True-solo 2026.json"
+  },
+  "network-diagnostic.stdout.txt": {
+    "sha256": "b5385616929dd7d7488ee88250707d0b83628fe91bc9697102b543d6ceea8d11",
+    "bytes": 1083,
+    "archive": "network-diagnostic.stdout.txt.gz"
+  },
+  "city-integrated.stdout.txt": {
+    "sha256": "159f188b87f52a332cab3254cf1e51b1a99acdcd9377f040637831b8c83e1eef",
+    "bytes": 98,
+    "archive": "city-integrated.stdout.txt.gz"
+  },
+  "independent-boundaries-first.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "independent-boundaries-first.stderr.txt.gz"
+  },
+  "frame-on-exact.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "frame-on-exact.stderr.txt.gz"
+  },
+  "base-seeds.stdout.txt": {
+    "sha256": "e3523955873337135d41b194bb8c8dd7f1ace19a07efe4941dba5dbe073e9306",
+    "bytes": 124357,
+    "archive": "base-seeds.stdout.txt.gz"
+  },
+  "focal.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "focal.stderr.txt.gz"
+  },
+  "nodeids.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "nodeids.stderr.txt.gz"
+  },
+  "independent-third.stdout.txt": {
+    "sha256": "63f66eea32dc4929734c2c1351ff03f50a72c9e1a62758fe9506af065dcff12c",
+    "bytes": 1899,
+    "archive": "independent-third.stdout.txt.gz"
+  },
+  "mutation-global-veto-mutant.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "mutation-global-veto-mutant.stderr.txt.gz"
+  },
+  "independent-final-candidate.stdout.txt": {
+    "sha256": "a7e05a47c405a21d74774249b81343e7410f638159f26051da33d28ea0614eb3",
+    "bytes": 180,
+    "archive": "independent-final-candidate.stdout.txt.gz"
+  },
+  "independent-first.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "independent-first.stderr.txt.gz"
+  },
+  "independent-second.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "independent-second.stderr.txt.gz"
+  },
+  "independent-final.stdout.txt": {
+    "sha256": "cfadfaf9242238879091d8031077e56437ee169855c5aea252c90a9250aa5dd7",
+    "bytes": 180,
+    "archive": "independent-final.stdout.txt.gz"
+  },
+  "mutation-verbal-baseline.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "mutation-verbal-baseline.stderr.txt.gz"
+  },
+  "base-dependent.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "base-dependent.stderr.txt.gz"
+  },
+  "mutation-bare-mutant.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "mutation-bare-mutant.stderr.txt.gz"
+  },
+  "mutation-global-veto-baseline.stdout.txt": {
+    "sha256": "343480772bbab25fc127d4a92682ae606c5e64bb52e468ae5e935d8e011d77d7",
+    "bytes": 98,
+    "archive": "mutation-global-veto-baseline.stdout.txt.gz"
+  },
+  "mutation-bare-baseline.stdout.txt": {
+    "sha256": "ccf40bc7cb263bfaa76e45c0a7e67dcc13e9cb587a7c87d277324b34b8d219fc",
+    "bytes": 113,
+    "archive": "mutation-bare-baseline.stdout.txt.gz"
+  },
+  "base-negation.stdout.txt": {
+    "sha256": "e17a6f157ca4dd80321b41558b0bc556d3d950258853d1bfccbe5a114c9135f1",
+    "bytes": 98,
+    "archive": "base-negation.stdout.txt.gz"
+  },
+  "base-strict-two.stdout.txt": {
+    "sha256": "651ce4ca831b1e8be1a240ba4cb3e1dce31b645e728f09916fdbedb5869f420a",
+    "bytes": 2945196,
+    "archive": "base-strict-two.stdout.txt.gz"
+  },
+  "author-exact.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "author-exact.stderr.txt.gz"
+  },
+  "local-opt-in.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "local-opt-in.stderr.txt.gz"
+  },
+  "pre-frame-seeds.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "pre-frame-seeds.stderr.txt.gz"
+  },
+  "lint-core.stdout.txt": {
+    "sha256": "34cb879621b3285addcfbc6b6346ecf0503ad971df5701176242109e8eb11de9",
+    "bytes": 17,
+    "archive": "lint-core.stdout.txt.gz"
+  },
+  "size.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "size.stderr.txt.gz"
+  },
+  "semgrep-base-git.stderr.txt": {
+    "sha256": "4879c00a0a9bc8692c136ba77384a2fe93cd315032e4930fc4ff4655ba663203",
+    "bytes": 766,
+    "archive": "semgrep-base-git.stderr.txt.gz"
+  },
+  "ruff-initial.stdout.txt": {
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "bytes": 19,
+    "archive": "ruff-initial.stdout.txt.gz"
+  },
+  "mutation-context-mutant.stdout.txt": {
+    "sha256": "9ead233748f781839d38506aa422e4590eb927cb6ce1c911efaccd7b47a5e2b7",
+    "bytes": 50668,
+    "archive": "mutation-context-mutant.stdout.txt.gz"
+  },
+  "semgrep-base.stderr.txt": {
+    "sha256": "526bbdee045c4547a28337348de000caf9736cc6bdf6a1ca8e2d4ec177db1bbf",
+    "bytes": 720,
+    "archive": "semgrep-base.stderr.txt.gz"
+  },
+  "mutation-context-baseline.stdout.txt": {
+    "sha256": "90305cfd1f81a61aa0d1a7ef16f4c39ecb09439945420968880a9c4508074564",
+    "bytes": 98,
+    "archive": "mutation-context-baseline.stdout.txt.gz"
+  },
+  "independent-local.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "independent-local.stderr.txt.gz"
+  },
+  "ruff-final.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "ruff-final.stderr.txt.gz"
+  },
+  "mutation-verbal-mutant.stdout.txt": {
+    "sha256": "bb1769960ef0fea6087af8044630174949f2cb9cb0ea5ecafd17b129040d6c68",
+    "bytes": 17995,
+    "archive": "mutation-verbal-mutant.stdout.txt.gz"
+  },
+  "strict-four.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "strict-four.stderr.txt.gz"
+  },
+  "corpus.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "corpus.stderr.txt.gz"
+  },
+  "semgrep-candidate.stdout.txt": {
+    "sha256": "519f493286204a51e5213b8a7b9c3aefdac42f7e90cd9921d4be7517fe76d1ee",
+    "bytes": 18241,
+    "archive": "semgrep-candidate.stdout.txt.gz"
+  },
+  "independent-third.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "independent-third.stderr.txt.gz"
+  },
+  "nodeids.stdout.txt": {
+    "sha256": "e6c6da1eef1c71b05849ac8a8fbd47e517e0b38aa593606ade963567d0fa73ce",
+    "bytes": 13601,
+    "archive": "nodeids.stdout.txt.gz"
+  },
+  "mutation-global-veto-mutant.stdout.txt": {
+    "sha256": "1cfaa7e1e602900cc4831c327aa42d8e4404f3ad532444f701a880252234c6f8",
+    "bytes": 5892,
+    "archive": "mutation-global-veto-mutant.stdout.txt.gz"
+  },
+  "independent-final-candidate.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "independent-final-candidate.stderr.txt.gz"
+  },
+  "base-seeds.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "base-seeds.stderr.txt.gz"
+  },
+  "city-integrated.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "city-integrated.stderr.txt.gz"
+  },
+  "network-diagnostic.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "network-diagnostic.stderr.txt.gz"
+  },
+  "frame-on-exact.stdout.txt": {
+    "sha256": "35f1f1893de508b791b4e882bc2bdd56dc3a8812ac0b932f9cc7c599704c24fa",
+    "bytes": 1547,
+    "archive": "frame-on-exact.stdout.txt.gz"
+  },
+  "independent-boundaries-first.stdout.txt": {
+    "sha256": "414f8d9ee89fbc74b06f8675377a7b1a2899121f873e5f31f8a159025655bb4a",
+    "bytes": 3930,
+    "archive": "independent-boundaries-first.stdout.txt.gz"
+  },
+  "focal.stdout.txt": {
+    "sha256": "7702ddcb4dc692b1cf68cf09960c3d51eb2e4c08f6d3dc63f18c86640cc89e19",
+    "bytes": 92890,
+    "archive": "focal.stdout.txt.gz"
+  },
+  "mutation-bare-baseline.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "mutation-bare-baseline.stderr.txt.gz"
+  },
+  "mutation-global-veto-baseline.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "mutation-global-veto-baseline.stderr.txt.gz"
+  },
+  "preflight.txt": {
+    "sha256": "4986e7caea5dee3c1514f8bd3386006be604f0e4ed438b4d904760fd505de06b",
+    "bytes": 8919,
+    "archive": "preflight.txt.gz"
+  },
+  "author-exact.stdout.txt": {
+    "sha256": "c014c66c6b042ee8e2f519e381925225a4840c03e0619d8e738cf7ebde800934",
+    "bytes": 3052,
+    "archive": "author-exact.stdout.txt.gz"
+  },
+  "base-strict-two.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "base-strict-two.stderr.txt.gz"
+  },
+  "local-opt-in.stdout.txt": {
+    "sha256": "3fbe01ee9ec6ca8fb8843f62a701b7e48d60d6382f4d21a53cea71e2bc6718f6",
+    "bytes": 98,
+    "archive": "local-opt-in.stdout.txt.gz"
+  },
+  "base-negation.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "base-negation.stderr.txt.gz"
+  },
+  "independent-first.stdout.txt": {
+    "sha256": "68883ca75ac6d631a8387bb48d59e2c64ed5de3f74ea13160a0325619d54ff83",
+    "bytes": 424525,
+    "archive": "independent-first.stdout.txt.gz"
+  },
+  "mutation-bare-mutant.stdout.txt": {
+    "sha256": "f898eb4c15d8dc5e288a322e448c991dce4a6a94a07cce959a9e63050baa15bc",
+    "bytes": 13521,
+    "archive": "mutation-bare-mutant.stdout.txt.gz"
+  },
+  "independent-second.stdout.txt": {
+    "sha256": "9d8819ed9a310e86f0e54ef94ef0ef4677492ade84ac8b9d0d6ee6f5908dddf3",
+    "bytes": 1090938,
+    "archive": "independent-second.stdout.txt.gz"
+  },
+  "base-dependent.stdout.txt": {
+    "sha256": "932d7c663d9e1e77234f59285c7fa97b21c2d74b929faa92006136552712555e",
+    "bytes": 98,
+    "archive": "base-dependent.stdout.txt.gz"
+  },
+  "mutation-verbal-baseline.stdout.txt": {
+    "sha256": "f2105805dc2e444d370d6b0394cc9084d0849f30c0ef7862af66bf192a29942c",
+    "bytes": 113,
+    "archive": "mutation-verbal-baseline.stdout.txt.gz"
+  },
+  "independent-final.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "independent-final.stderr.txt.gz"
+  },
+  "size.stdout.txt": {
+    "sha256": "570d6eca2cee31278223b2b6adcac2ab615ae9199c8a0c16418279c36414f36e",
+    "bytes": 98,
+    "archive": "size.stdout.txt.gz"
+  },
+  "semgrep-base-git.stdout.txt": {
+    "sha256": "261a65977680053adbb44b356b7600fe4df27ea5847ca58bd6f826c0465bd6c5",
+    "bytes": 18209,
+    "archive": "semgrep-base-git.stdout.txt.gz"
+  },
+  "lint-core.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "lint-core.stderr.txt.gz"
+  },
+  "pre-frame-seeds.stdout.txt": {
+    "sha256": "ffa93845a4f8dea86baf3f079f7e56d7edfb839292b7acbcb199656382fc1649",
+    "bytes": 60603,
+    "archive": "pre-frame-seeds.stdout.txt.gz"
+  },
+  "mutation-context-baseline.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "mutation-context-baseline.stderr.txt.gz"
+  },
+  "semgrep-base.stdout.txt": {
+    "sha256": "a7e44b1f6909687e1bc7ccca62f3e756b2dc62cfca8d9c4de088e9c17fc438ad",
+    "bytes": 18858,
+    "archive": "semgrep-base.stdout.txt.gz"
+  },
+  "ruff-initial.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "ruff-initial.stderr.txt.gz"
+  },
+  "mutation-context-mutant.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "mutation-context-mutant.stderr.txt.gz"
+  },
+  "strict-four.stdout.txt": {
+    "sha256": "0d1fff70e18bffcd333a946016b8954f527e1bfccbd424a0c333096b05665c57",
+    "bytes": 2924196,
+    "archive": "strict-four.stdout.txt.gz"
+  },
+  "mutation-verbal-mutant.stderr.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "mutation-verbal-mutant.stderr.txt.gz"
+  },
+  "corpus.stdout.txt": {
+    "sha256": "6dd36628d49a71c6c2881bd23b927fc7321dc5d7050705f89b1912496c6b4ea0",
+    "bytes": 66,
+    "archive": "corpus.stdout.txt.gz"
+  },
+  "semgrep-candidate.stderr.txt": {
+    "sha256": "84e74c46b8e081a7ad4f128b6d3c9ce601949b748d65ba4f7fe92cc1c85de973",
+    "bytes": 766,
+    "archive": "semgrep-candidate.stderr.txt.gz"
+  },
+  "independent-local.stdout.txt": {
+    "sha256": "323b6e8172ca85efc11359fec1f99e703d6458693dde26df64789abeced1489f",
+    "bytes": 98,
+    "archive": "independent-local.stdout.txt.gz"
+  },
+  "ruff-final.stdout.txt": {
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "bytes": 19,
+    "archive": "ruff-final.stdout.txt.gz"
+  }
+}

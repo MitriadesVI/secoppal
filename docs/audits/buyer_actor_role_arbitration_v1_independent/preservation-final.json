@@ -1,0 +1,9 @@
+{
+  "candidate": "e06c60482756e2d4238052818117568f9cd4e946",
+  "candidate_files_checked": 3183,
+  "changed_or_missing": [],
+  "author_manifest_matches": true,
+  "tested_to_candidate_executable_delta": [],
+  "main_head": "52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386",
+  "implementer_head": "e06c60482756e2d4238052818117568f9cd4e946"
+}

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.buyer_actor_independent_guard",
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+    "-q",
+    "--tb=short",
+    "-ra"
+  ],
+  "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-base-test-safety-35qp12gp",
+  "exit": 1,
+  "summary": [
+    "2 passed, 2 errors in 2.20s"
+  ]
+}

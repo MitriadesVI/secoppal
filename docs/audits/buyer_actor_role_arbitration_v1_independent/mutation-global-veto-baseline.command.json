@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.buyer_actor_independent_guard",
+    "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention",
+    "-q",
+    "--tb=short",
+    "-ra"
+  ],
+  "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-global-veto-s4r6c_er",
+  "exit": 0,
+  "summary": [
+    "4 passed in 1.68s"
+  ]
+}

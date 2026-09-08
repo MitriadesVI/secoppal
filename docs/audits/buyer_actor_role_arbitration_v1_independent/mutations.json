@@ -1,0 +1,179 @@
+[
+  {
+    "mutation": "verbal",
+    "baseline": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.buyer_actor_independent_guard",
+        "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload",
+        "-k",
+        "barranquilla and 4",
+        "-q",
+        "--tb=short",
+        "-ra"
+      ],
+      "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-verbal-5zfwu0aj",
+      "exit": 0,
+      "summary": [
+        "2 passed, 18 deselected in 1.92s"
+      ]
+    },
+    "mutant": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.buyer_actor_independent_guard",
+        "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload",
+        "-k",
+        "barranquilla and 4",
+        "-q",
+        "--tb=short",
+        "-ra"
+      ],
+      "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-verbal-5zfwu0aj",
+      "exit": 1,
+      "summary": [
+        "2 failed, 18 deselected in 1.25s"
+      ]
+    },
+    "restored_sha256": {
+      "app/core/actor_intent.py": "c4eedcc9db15ebca3892a92edf40f3fe535010194935f3d48d9dd7a8b1dd22f7"
+    }
+  },
+  {
+    "mutation": "bare",
+    "baseline": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.buyer_actor_independent_guard",
+        "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload",
+        "-k",
+        "cartagena and 4",
+        "-q",
+        "--tb=short",
+        "-ra"
+      ],
+      "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-bare-42l_oj0d",
+      "exit": 0,
+      "summary": [
+        "2 passed, 18 deselected in 1.90s"
+      ]
+    },
+    "mutant": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.buyer_actor_independent_guard",
+        "tests/test_buyer_actor_independent_product.py::test_seed_universe_and_reload",
+        "-k",
+        "cartagena and 4",
+        "-q",
+        "--tb=short",
+        "-ra"
+      ],
+      "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-bare-42l_oj0d",
+      "exit": 1,
+      "summary": [
+        "2 failed, 18 deselected in 1.01s"
+      ]
+    },
+    "restored_sha256": {
+      "app/core/actor_arbitration.py": "5ec135ac0c2da0188189da8cf39747a516ecb913414a93c79ecb2f4ec96c0cc2"
+    }
+  },
+  {
+    "mutation": "global-veto",
+    "baseline": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.buyer_actor_independent_guard",
+        "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention",
+        "-q",
+        "--tb=short",
+        "-ra"
+      ],
+      "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-global-veto-s4r6c_er",
+      "exit": 0,
+      "summary": [
+        "4 passed in 1.68s"
+      ]
+    },
+    "mutant": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.buyer_actor_independent_guard",
+        "tests/test_buyer_actor_independent_boundaries.py::test_partial_or_fuzzy_buyer_cannot_veto_whole_mention",
+        "-q",
+        "--tb=short",
+        "-ra"
+      ],
+      "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-global-veto-s4r6c_er",
+      "exit": 1,
+      "summary": [
+        "4 failed in 1.58s"
+      ]
+    },
+    "restored_sha256": {
+      "app/core/buyer_actor_role.py": "59db39022659d22caf454036c1a09f8bc7e8ff489ab7ec79d893afeb006228f3"
+    }
+  },
+  {
+    "mutation": "context",
+    "baseline": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.buyer_actor_independent_guard",
+        "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor",
+        "-q",
+        "--tb=short",
+        "-ra"
+      ],
+      "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-context-0wgt2ltq",
+      "exit": 0,
+      "summary": [
+        "8 passed in 4.64s"
+      ]
+    },
+    "mutant": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.buyer_actor_independent_guard",
+        "tests/test_buyer_actor_independent_product.py::test_new_search_after_actor",
+        "-q",
+        "--tb=short",
+        "-ra"
+      ],
+      "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-mutation-context-0wgt2ltq",
+      "exit": 1,
+      "summary": [
+        "4 failed, 4 passed in 3.49s"
+      ]
+    },
+    "restored_sha256": {
+      "app/core/workflow/actions/parsing.py": "52e34713910e725f7940d43885ecbbccc13f4466b39c9a4d8f2cc795f1ee8fa4",
+      "app/core/workflow/external_admission.py": "ad4e35767f46cfd3ae1047fdcee5d9b1030b621ac94865ae8ac8dc01e07ad26e"
+    }
+  }
+]
