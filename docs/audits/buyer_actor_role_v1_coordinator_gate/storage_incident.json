@@ -1,0 +1,8 @@
+{
+  "command": "check_harness_removal.py initial git archive/export",
+  "error": "OSError: [Errno 28] No space left on device",
+  "stage": "temporary export, before any test",
+  "temporary_cleaned": true,
+  "resolution": "APFS copy-on-write of owned candidate; baseline and removal both completed",
+  "available_mib_after": 367
+}

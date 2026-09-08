@@ -1,0 +1,39 @@
+{
+  "runs": [
+    {
+      "label": "baseline",
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "docs/audits/buyer_actor_role_v1_coordinator_gate/run_gate.py",
+        "focal",
+        "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+        "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+        "--run-id",
+        "baseline"
+      ],
+      "exit": 0,
+      "denied_nodeids": [],
+      "attempt_count": 0
+    },
+    {
+      "label": "removed",
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "docs/audits/buyer_actor_role_v1_coordinator_gate/run_gate.py",
+        "focal",
+        "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+        "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+        "--run-id",
+        "removed"
+      ],
+      "exit": 1,
+      "denied_nodeids": [
+        "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)",
+        "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer (call)"
+      ],
+      "attempt_count": 701
+    }
+  ],
+  "helper_restored": true,
+  "pass": true
+}

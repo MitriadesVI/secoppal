@@ -1,0 +1,38 @@
+[
+  {
+    "component": "focal_harness_and_guards_focused",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "gate_plugin",
+      "-q",
+      "-o",
+      "cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-mjyx8f_y/pytest_cache",
+      "tests/test_actor_conversation_corpus.py",
+      "tests/test_actor_profile_render.py",
+      "tests/test_truth_layer_public_parity.py",
+      "tests/test_module_size_limits.py",
+      "-p",
+      "offline_guard",
+      "--tb=short",
+      "--junitxml=/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/docs/audits/buyer_actor_role_v1_coordinator_gate/focal_harness_and_guards_focused.xml"
+    ],
+    "sha": "7c8cd9be7e071924763d887e8edf14c8804f5b18",
+    "duration": 5.618974042008631,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/buyer_actor_role_v1_coordinator_gate/focal_harness_and_guards_focused.log"
+  },
+  {
+    "component": "preservation",
+    "pass": true
+  },
+  {
+    "component": "code_frozen",
+    "pass": true
+  }
+]

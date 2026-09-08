@@ -1,0 +1,1093 @@
+{
+  "collection": [
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/result_identity.py]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/actor_identity.py]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/territorial_knowledge.py]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/territorial_knowledge_v0.json]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_groups.json]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_source_names.json]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/aliases_db.json]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_later_source_bytes_cannot_change_historical_provenance",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_source_reads_use_only_exact_foundation_ref",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[False]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[True]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[ref]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[blob]",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_unaccredited_path_is_rejected_before_git",
+    "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact",
+    "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates",
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload",
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.004789500002516434,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.009360458003357053,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002589170035207644,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005121249996591359,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.008847791992593557,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00020554200455080718,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000538042004336603,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.008456750001641922,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00019258300017099828,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000697457988280803,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00799120799638331,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0003697499923873693,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005287079984555021,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.008137875003740191,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00020066600700374693,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00045645798672921956,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.39319295799941756,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001674999948590994,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005153340025572106,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3789237500022864,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002035830111708492,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0007616250077262521,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.33728612499544397,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017770800332073122,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005019580130465329,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3272876249975525,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014816700422670692,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006614160083699971,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.36820045800413936,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015041699225548655,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000436707996414043,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00874037500761915,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013875000877305865,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004109170113224536,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.15533516601135489,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014833400200586766,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00045237499580252916,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1176112910034135,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016162500833161175,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004990000015823171,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.22545241699845064,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00018616599845699966,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/result_identity.py]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004884999943897128,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/result_identity.py]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1169210829975782,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/result_identity.py]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002672499977052212,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/actor_identity.py]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0007207919989014044,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/actor_identity.py]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11979133299610112,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/actor_identity.py]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002375839976593852,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/territorial_knowledge.py]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005664999916916713,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/territorial_knowledge.py]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11752458299451973,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/territorial_knowledge.py]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00027104200853500515,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/territorial_knowledge_v0.json]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005918329989071935,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/territorial_knowledge_v0.json]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.12106258400308434,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/territorial_knowledge_v0.json]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.000272749995929189,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_groups.json]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005896249931538478,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_groups.json]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11937787500210106,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_groups.json]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0003120829933322966,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_source_names.json]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0008448339940514416,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_source_names.json]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11783495900454,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_source_names.json]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00045649999810848385,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/aliases_db.json]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005900840042158961,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/aliases_db.json]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11614566700882278,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/aliases_db.json]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00023087499721441418,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_later_source_bytes_cannot_change_historical_provenance",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005092499923193827,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_later_source_bytes_cannot_change_historical_provenance",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 1.4054527499974938,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_later_source_bytes_cannot_change_historical_provenance",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00022599998919758946,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_source_reads_use_only_exact_foundation_ref",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0007761250017210841,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_source_reads_use_only_exact_foundation_ref",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10173454199684784,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_source_reads_use_only_exact_foundation_ref",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00025233300402760506,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005437499930849299,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.000708334002410993,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.633299487177283e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00039441700209863484,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004791669925907627,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.695900032762438e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[ref]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00040379200072493404,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[ref]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.014188667002599686,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[ref]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002787080011330545,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[blob]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005463340057758614,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[blob]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.015620417005266063,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[blob]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00029266699857544154,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_unaccredited_path_is_rejected_before_git",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005808749992866069,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_unaccredited_path_is_rejected_before_git",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0009971670078812167,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_procurement_foundation_frozen_delivery.py::test_unaccredited_path_is_rejected_before_git",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00011395799810998142,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003829589986708015,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0183550829970045,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001814580027712509,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004706249892478809,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.001980957997147925,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.883299935609102e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00040633299795445055,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0017886669957078993,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001332500105490908,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00037545801023952663,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.001701583998510614,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00012320799578446895,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00039312499575316906,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004319580039009452,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.504198922310024e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003944159980164841,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004276669933460653,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.020899597089738e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00035116700746584684,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00043316700612194836,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.208299161400646e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003575830050976947,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00043008300417568535,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.724999497644603e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00036824999551754445,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004329590010456741,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.254200267605484e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003552919952198863,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00043279200326651335,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.783300290815532e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000356707998435013,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004330420051701367,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.916700608097017e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00037420899025164545,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005760409985668957,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00036899998667649925,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/result_identity.py]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/actor_identity.py]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/territorial_knowledge.py]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/territorial_knowledge_v0.json]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_groups.json]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_source_names.json]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/aliases_db.json]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_later_source_bytes_cannot_change_historical_provenance": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_source_reads_use_only_exact_foundation_ref": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[True]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[ref]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[blob]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_unaccredited_path_is_rejected_before_git": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/result_identity.py]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/actor_identity.py]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/territorial_knowledge.py]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/territorial_knowledge_v0.json]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_groups.json]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_source_names.json]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/aliases_db.json]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_later_source_bytes_cannot_change_historical_provenance": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_source_reads_use_only_exact_foundation_ref": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[ref]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[blob]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_procurement_foundation_frozen_delivery.py::test_unaccredited_path_is_rejected_before_git": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_procurement_foundation_frozen_delivery.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_entity_profile_frame_integration_contract.py"
+  },
+  "exitstatus": 0
+}

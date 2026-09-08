@@ -18,6 +18,7 @@ from app.core.actor_profile.render import mask_document, render_actor_profile
 from app.core.actor_profile.turn import ROUTE_REASON, is_actor_profile_turn
 from app.core.orchestrator import SecopalWorkflow
 from app.core.outcome import Outcome, OutcomeReason
+from tests.buyer_actor_harness_source import actor_harness_source  # noqa: F401
 
 CONTRACT = json.loads(
     Path("tests/fixtures/actor_sources/secop2_contratos_source_contract.json")
@@ -319,13 +320,18 @@ def test_a_topical_query_never_enters_the_profile_route():
     assert result["route_reason"] != ROUTE_REASON
 
 
-def test_a_specific_aggregate_question_still_gets_its_specific_answer():
+def test_a_specific_aggregate_question_still_gets_its_specific_answer(actor_harness_source):
     """Los analyzers conservan la precedencia: preguntar la suma da la suma."""
-    result = _workflow().run_query(
+    workflow = actor_harness_source(_workflow(), [{
+        'name': 'SYNTHETIC INSURER', 'base_number': '860002400',
+    }])
+    result = workflow.run_query(
         "cuánto suma lo contratado por el NIT 860002400", channel="streamlit",
     )
     assert result["route_reason"] != ROUTE_REASON
     assert result["analytical_intent"] == "aggregate_sum"
+    assert '$1.3 mil millones' in result['response']
+    assert '2 registros' in result['response']
 
 
 def test_an_actor_plus_a_topic_is_a_filtered_search_not_a_profile():

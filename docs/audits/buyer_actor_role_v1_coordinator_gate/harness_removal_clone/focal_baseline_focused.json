@@ -1,0 +1,67 @@
+{
+  "collection": [
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0034350830101175234,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.8025527080026222,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.002503750001778826,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004436249873833731,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1095454579917714,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00034250000317115337,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-harness-removal-_0cpb1p2/candidate/tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-harness-removal-_0cpb1p2/candidate/tests/test_actor_profile_render.py"
+  },
+  "exitstatus": 0
+}

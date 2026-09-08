@@ -1,0 +1,82 @@
+[
+  {
+    "logical": "focal_additional_guards_focused.log",
+    "stored": "focal_additional_guards_focused.log.gz",
+    "sha256": "7926f898c4fbd286e4cd3c13227343cc0a4d4a59aa0f3fd9f48d2100b43764c1"
+  },
+  {
+    "logical": "focal_additional_guards_focused.xml",
+    "stored": "focal_additional_guards_focused.xml.gz",
+    "sha256": "4c1b6fa4edc279e997b69d86d19db3bdc68bfd26050eddffbcf35b6be8e1589f"
+  },
+  {
+    "logical": "focal_harness_after_focused.log",
+    "stored": "focal_harness_after_focused.log.gz",
+    "sha256": "52395fe4aa7b5b753eae15b43bac7309590b9369c4776a56ff8dbe0bd825ee5e"
+  },
+  {
+    "logical": "focal_harness_after_focused.xml",
+    "stored": "focal_harness_after_focused.xml.gz",
+    "sha256": "caa551439e36ee5ff82a02b1df48a4af47943698f20de4139e692074ac9f1fe0"
+  },
+  {
+    "logical": "focal_harness_and_guards_focused.log",
+    "stored": "focal_harness_and_guards_focused.log.gz",
+    "sha256": "b8f573dc903b06c16a69869df10f52734c0cd5ad5bb140e018334baa8d9375c2"
+  },
+  {
+    "logical": "focal_harness_and_guards_focused.xml",
+    "stored": "focal_harness_and_guards_focused.xml.gz",
+    "sha256": "679701d923135c6bc51349f5ac216f62b525c6e5678fec6604025dda4caf77c5"
+  },
+  {
+    "logical": "focal_harness_before_focused.log",
+    "stored": "focal_harness_before_focused.log.gz",
+    "sha256": "0a450230df74b13a4c9b3e69479aa744a682f30874c4e48fc5020aee333da6c8"
+  },
+  {
+    "logical": "focal_harness_before_focused.xml",
+    "stored": "focal_harness_before_focused.xml.gz",
+    "sha256": "af56ccad9a95e7f60d2214fe7ed96322b4531106d7701be6426dcdae4217b9b6"
+  },
+  {
+    "logical": "focal_harness_before_strict_focused.log",
+    "stored": "focal_harness_before_strict_focused.log.gz",
+    "sha256": "310157cdeb43d66155232d16fc609d3e31dac055db5ca0577556abd1fedbeef3"
+  },
+  {
+    "logical": "focal_harness_before_strict_focused.xml",
+    "stored": "focal_harness_before_strict_focused.xml.gz",
+    "sha256": "aa2f4364f9177d173bb773f17a90189311dba83e7ff0ee9b1577a3307b291aa2"
+  },
+  {
+    "logical": "harness_removal_clone/baseline.runner.log",
+    "stored": "harness_removal_clone/baseline.runner.log.gz",
+    "sha256": "64c6cef31817c53caf0a64c2476b2155150f5aa921365a6ae45e9afc08bd7b96"
+  },
+  {
+    "logical": "harness_removal_clone/focal_baseline_focused.log",
+    "stored": "harness_removal_clone/focal_baseline_focused.log.gz",
+    "sha256": "2664c03871b507f2014ff58b55fec3b6142849e146971cdd013f2f3d589908ad"
+  },
+  {
+    "logical": "harness_removal_clone/focal_baseline_focused.xml",
+    "stored": "harness_removal_clone/focal_baseline_focused.xml.gz",
+    "sha256": "4d4371f0dfcc525ff5f3e751f134b179008ff4b3a1af0590c073e09f500db39a"
+  },
+  {
+    "logical": "harness_removal_clone/focal_removed_focused.log",
+    "stored": "harness_removal_clone/focal_removed_focused.log.gz",
+    "sha256": "3dff232cae20708530c3ef34d850a9ef4866ca71b2315d12e91b676cbfd8f7c9"
+  },
+  {
+    "logical": "harness_removal_clone/focal_removed_focused.xml",
+    "stored": "harness_removal_clone/focal_removed_focused.xml.gz",
+    "sha256": "400a6b1fdfa287b22d3e68a1ce94ac99849657a465771fdd249dcaf9e394c6cd"
+  },
+  {
+    "logical": "harness_removal_clone/removed.runner.log",
+    "stored": "harness_removal_clone/removed.runner.log.gz",
+    "sha256": "b072ed05959118fc343d135fd22a4ebeaf6e378f9b5943d419aab40b07c77bab"
+  }
+]

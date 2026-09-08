@@ -1,0 +1,218 @@
+{
+  "flags": {
+    "tests/test_actor_conversation_corpus.py::test_corpus_meets_size_and_sequence_targets": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_strong_families_produce_clean_actor_frames": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_topic_controls_remain_topics_and_never_open_fuzzy_resolution": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_exact_dogfood_operation_examples_match_the_algebra": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequence_families_have_deterministic_operation_steps": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_scope_declared_the_profile_always_says_what_it_did_not_consult": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_cutoff_the_query_timestamp_is_visible_to_the_reader": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_source_value_the_total_is_named_reported_never_real_or_executed": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_no_verdict_the_profile_never_grades_the_actor": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_the_date_coverage_gap_is_declared_when_a_range_is_shown": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[CC]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Ciudadan\\xeda]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Extranjer\\xeda]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[Tarjeta de Identidad]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_nit_is_shown_in_full": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_actor_profile_renders_a_person_document_in_full": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_no_legal_representative_data_reaches_the_text": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_partial_a_failed_aspect_is_declared_never_shown_as_absence": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_partial_a_complete_profile_carries_no_missing_data_warning": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_partial_losing_the_core_metrics_still_renders_the_rest": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_observed_name_the_text_says_these_are_observed_not_registered": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_name_document_contradiction_uses_source_name_and_warns": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_an_unchecked_asserted_name_never_becomes_the_profile_heading": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_id_type_mixed_document_types_are_warned_about_in_the_text": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_a_single_observed_name_does_not_get_a_names_section": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_recent_contracts_carry_their_links": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_an_actor_query_returns_the_profile_through_the_normal_flow": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_the_profile_response_is_not_rewritten_by_the_advisor_layer": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_every_profile_query_filters_by_the_exact_document": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_an_actor_on_an_unsupported_dataset_asks_instead_of_answering": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_an_unresolved_name_asks_for_the_document_instead_of_profiling": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_a_topical_query_never_enters_the_profile_route": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_an_actor_plus_a_topic_is_a_filtered_search_not_a_profile": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_asking_for_an_ordering_is_a_listing_not_a_profile": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_is_actor_profile_turn_requires_a_document_never_a_name": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_module_size_limits.py::test_query_plan_under_300_loc": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_module_size_limits.py::test_dialogue_policy_under_400_loc": {
+      "actor": true,
+      "frame": false
+    }
+  },
+  "denied": [],
+  "exitstatus": 0
+}

@@ -19,6 +19,7 @@ from app.core.query_router import QueryRouter
 from app.core.workflow.actions.actor_resolution import resolve_actor_name
 from app.data.actor_alias_index import build_actor_alias_index
 from app.data.actor_alias_resolver import ActorNameResolver
+from tests.buyer_actor_harness_source import actor_harness_source  # noqa: F401
 
 
 CORPUS = Path("tests/fixtures/actor_conversation/natural_actor_v1.yaml")
@@ -172,9 +173,10 @@ def test_all_expanded_sequence_families_have_deterministic_operation_steps():
     assert expanded >= 30
 
 
-def test_all_expanded_sequences_mutate_real_query_frames(tmp_path):
+def test_all_expanded_sequences_mutate_real_query_frames(tmp_path, actor_harness_source):
     corpus = _load()
     workflow = _workflow(tmp_path, corpus["real_actors"])
+    actor_harness_source(workflow, corpus["real_actors"])
     actors_by_name = {actor["name"]: actor for actor in corpus["real_actors"]}
     funsocom_base = actors_by_name["FUNSOCOM"]["base_number"]
     expanded = 0

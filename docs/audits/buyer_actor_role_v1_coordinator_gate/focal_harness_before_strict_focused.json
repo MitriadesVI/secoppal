@@ -1,0 +1,4977 @@
+{
+  "collection": [
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.003962165996199474,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.8105904999974882,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "teardown",
+      "outcome": "failed",
+      "duration": 0.0006511249957839027,
+      "xfail": null,
+      "detail": "docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger\n    assert not denied, denied\nE   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_actor_conversation_corpus.py::...id': 'tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)', ...}, ...]\nE   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_actor_conversation_corpus.py::...id': 'tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)', ...}, ...]"
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005124160088598728,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.17270725000707898,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "teardown",
+      "outcome": "failed",
+      "duration": 0.00020991599012631923,
+      "xfail": null,
+      "detail": "docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger\n    assert not denied, denied\nE   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer (call)', ...}]\nE   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer (call)', ...}]"
+    }
+  ],
+  "flags": {
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer (call)"
+    }
+  ],
+  "deselected": [],
+  "modules": {
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py"
+  },
+  "exitstatus": 1
+}

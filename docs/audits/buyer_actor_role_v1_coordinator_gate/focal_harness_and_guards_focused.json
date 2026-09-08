@@ -1,0 +1,1444 @@
+{
+  "collection": [
+    "tests/test_actor_conversation_corpus.py::test_corpus_meets_size_and_sequence_targets",
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_strong_families_produce_clean_actor_frames",
+    "tests/test_actor_conversation_corpus.py::test_topic_controls_remain_topics_and_never_open_fuzzy_resolution",
+    "tests/test_actor_conversation_corpus.py::test_exact_dogfood_operation_examples_match_the_algebra",
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequence_families_have_deterministic_operation_steps",
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+    "tests/test_actor_profile_render.py::test_inv_scope_declared_the_profile_always_says_what_it_did_not_consult",
+    "tests/test_actor_profile_render.py::test_inv_cutoff_the_query_timestamp_is_visible_to_the_reader",
+    "tests/test_actor_profile_render.py::test_inv_source_value_the_total_is_named_reported_never_real_or_executed",
+    "tests/test_actor_profile_render.py::test_inv_no_verdict_the_profile_never_grades_the_actor",
+    "tests/test_actor_profile_render.py::test_the_date_coverage_gap_is_declared_when_a_range_is_shown",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[CC]",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Ciudadan\\xeda]",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Extranjer\\xeda]",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[Tarjeta de Identidad]",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_nit_is_shown_in_full",
+    "tests/test_actor_profile_render.py::test_actor_profile_renders_a_person_document_in_full",
+    "tests/test_actor_profile_render.py::test_inv_pii_no_legal_representative_data_reaches_the_text",
+    "tests/test_actor_profile_render.py::test_inv_partial_a_failed_aspect_is_declared_never_shown_as_absence",
+    "tests/test_actor_profile_render.py::test_inv_partial_a_complete_profile_carries_no_missing_data_warning",
+    "tests/test_actor_profile_render.py::test_inv_partial_losing_the_core_metrics_still_renders_the_rest",
+    "tests/test_actor_profile_render.py::test_inv_observed_name_the_text_says_these_are_observed_not_registered",
+    "tests/test_actor_profile_render.py::test_inv_name_document_contradiction_uses_source_name_and_warns",
+    "tests/test_actor_profile_render.py::test_an_unchecked_asserted_name_never_becomes_the_profile_heading",
+    "tests/test_actor_profile_render.py::test_inv_id_type_mixed_document_types_are_warned_about_in_the_text",
+    "tests/test_actor_profile_render.py::test_a_single_observed_name_does_not_get_a_names_section",
+    "tests/test_actor_profile_render.py::test_recent_contracts_carry_their_links",
+    "tests/test_actor_profile_render.py::test_an_actor_query_returns_the_profile_through_the_normal_flow",
+    "tests/test_actor_profile_render.py::test_the_profile_response_is_not_rewritten_by_the_advisor_layer",
+    "tests/test_actor_profile_render.py::test_every_profile_query_filters_by_the_exact_document",
+    "tests/test_actor_profile_render.py::test_an_actor_on_an_unsupported_dataset_asks_instead_of_answering",
+    "tests/test_actor_profile_render.py::test_an_unresolved_name_asks_for_the_document_instead_of_profiling",
+    "tests/test_actor_profile_render.py::test_a_topical_query_never_enters_the_profile_route",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+    "tests/test_actor_profile_render.py::test_an_actor_plus_a_topic_is_a_filtered_search_not_a_profile",
+    "tests/test_actor_profile_render.py::test_asking_for_an_ordering_is_a_listing_not_a_profile",
+    "tests/test_actor_profile_render.py::test_is_actor_profile_turn_requires_a_document_never_a_name",
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+    "tests/test_module_size_limits.py::test_query_plan_under_300_loc",
+    "tests/test_module_size_limits.py::test_dialogue_policy_under_400_loc"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_corpus_meets_size_and_sequence_targets",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0041297499992651865,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_corpus_meets_size_and_sequence_targets",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.006399833000614308,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_corpus_meets_size_and_sequence_targets",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00020054199558217078,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_strong_families_produce_clean_actor_frames",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043575000017881393,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_strong_families_produce_clean_actor_frames",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.9370441659993958,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_strong_families_produce_clean_actor_frames",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002828330034390092,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_topic_controls_remain_topics_and_never_open_fuzzy_resolution",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0007036669994704425,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_topic_controls_remain_topics_and_never_open_fuzzy_resolution",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.12798604099953081,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_topic_controls_remain_topics_and_never_open_fuzzy_resolution",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00018208300753030926,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_exact_dogfood_operation_examples_match_the_algebra",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006106660002842546,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_exact_dogfood_operation_examples_match_the_algebra",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.006206957987160422,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_exact_dogfood_operation_examples_match_the_algebra",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013566699635703117,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequence_families_have_deterministic_operation_steps",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00038291700184345245,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequence_families_have_deterministic_operation_steps",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.006246749995625578,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequence_families_have_deterministic_operation_steps",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00019187499128747731,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00047379099123645574,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.8296999169979244,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0027691669965861365,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_scope_declared_the_profile_always_says_what_it_did_not_consult",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000591959003941156,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_scope_declared_the_profile_always_says_what_it_did_not_consult",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0007170000026235357,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_scope_declared_the_profile_always_says_what_it_did_not_consult",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010554199980106205,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_cutoff_the_query_timestamp_is_visible_to_the_reader",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000367375003406778,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_cutoff_the_query_timestamp_is_visible_to_the_reader",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004685830062953755,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_cutoff_the_query_timestamp_is_visible_to_the_reader",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.054200199898332e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_source_value_the_total_is_named_reported_never_real_or_executed",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003206670080544427,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_source_value_the_total_is_named_reported_never_real_or_executed",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0007310420041903853,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_source_value_the_total_is_named_reported_never_real_or_executed",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00018033299420494586,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_no_verdict_the_profile_never_grades_the_actor",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00041316699935123324,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_no_verdict_the_profile_never_grades_the_actor",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005063749995315447,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_no_verdict_the_profile_never_grades_the_actor",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013629200111608952,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_the_date_coverage_gap_is_declared_when_a_range_is_shown",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003743339912034571,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_the_date_coverage_gap_is_declared_when_a_range_is_shown",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005039580137236044,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_the_date_coverage_gap_is_declared_when_a_range_is_shown",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.137501183431596e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[CC]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003978750028181821,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[CC]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004707500047516078,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[CC]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.933300316333771e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Ciudadan\\xeda]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00039487499452661723,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Ciudadan\\xeda]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004664169973693788,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Ciudadan\\xeda]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.649999265093356e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Extranjer\\xeda]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004182089905953035,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Extranjer\\xeda]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004623340064426884,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Extranjer\\xeda]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010070801363326609,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[Tarjeta de Identidad]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00034579201019369066,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[Tarjeta de Identidad]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004184580029686913,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[Tarjeta de Identidad]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.774999878369272e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_nit_is_shown_in_full",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003277910000178963,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_nit_is_shown_in_full",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00041120800597127527,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_a_nit_is_shown_in_full",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.76250012172386e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_actor_profile_renders_a_person_document_in_full",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000390208006137982,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_actor_profile_renders_a_person_document_in_full",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00045362499076873064,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_actor_profile_renders_a_person_document_in_full",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 7.916698814369738e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_no_legal_representative_data_reaches_the_text",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003602499928092584,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_no_legal_representative_data_reaches_the_text",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004546669952105731,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_pii_no_legal_representative_data_reaches_the_text",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.358399256598204e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_partial_a_failed_aspect_is_declared_never_shown_as_absence",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00031362500158138573,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_partial_a_failed_aspect_is_declared_never_shown_as_absence",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00045083300210535526,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_partial_a_failed_aspect_is_declared_never_shown_as_absence",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.63330060383305e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_partial_a_complete_profile_carries_no_missing_data_warning",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003372920036781579,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_partial_a_complete_profile_carries_no_missing_data_warning",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00044462499499786645,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_partial_a_complete_profile_carries_no_missing_data_warning",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010124999971594661,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_partial_losing_the_core_metrics_still_renders_the_rest",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00034220800444018096,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_partial_losing_the_core_metrics_still_renders_the_rest",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00045016600051894784,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_partial_losing_the_core_metrics_still_renders_the_rest",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.14169941097498e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_observed_name_the_text_says_these_are_observed_not_registered",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003224579995730892,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_observed_name_the_text_says_these_are_observed_not_registered",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005355419998522848,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_observed_name_the_text_says_these_are_observed_not_registered",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.729199518915266e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_name_document_contradiction_uses_source_name_and_warns",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00033754200558178127,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_name_document_contradiction_uses_source_name_and_warns",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004335830017225817,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_name_document_contradiction_uses_source_name_and_warns",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.241700172424316e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_unchecked_asserted_name_never_becomes_the_profile_heading",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000325416011037305,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_unchecked_asserted_name_never_becomes_the_profile_heading",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.000420958996983245,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_unchecked_asserted_name_never_becomes_the_profile_heading",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.033298945520073e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_id_type_mixed_document_types_are_warned_about_in_the_text",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00046654100879095495,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_id_type_mixed_document_types_are_warned_about_in_the_text",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005030419997638091,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_inv_id_type_mixed_document_types_are_warned_about_in_the_text",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.737499931361526e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_single_observed_name_does_not_get_a_names_section",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003696249914355576,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_single_observed_name_does_not_get_a_names_section",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004342079919297248,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_single_observed_name_does_not_get_a_names_section",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.566598990000784e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_recent_contracts_carry_their_links",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00033033300132956356,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_recent_contracts_carry_their_links",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00042504200246185064,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_recent_contracts_carry_their_links",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.283399802166969e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_actor_query_returns_the_profile_through_the_normal_flow",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003244580002501607,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_actor_query_returns_the_profile_through_the_normal_flow",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.14803966699400917,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_actor_query_returns_the_profile_through_the_normal_flow",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017458399815950543,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_the_profile_response_is_not_rewritten_by_the_advisor_layer",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000490417005494237,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_the_profile_response_is_not_rewritten_by_the_advisor_layer",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10662025000783615,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_the_profile_response_is_not_rewritten_by_the_advisor_layer",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016804199549369514,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_every_profile_query_filters_by_the_exact_document",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00042566600313875824,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_every_profile_query_filters_by_the_exact_document",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10727037501055747,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_every_profile_query_filters_by_the_exact_document",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.000185334007255733,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_actor_on_an_unsupported_dataset_asks_instead_of_answering",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043129100231453776,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_actor_on_an_unsupported_dataset_asks_instead_of_answering",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10565662498993333,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_actor_on_an_unsupported_dataset_asks_instead_of_answering",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015045900363475084,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_unresolved_name_asks_for_the_document_instead_of_profiling",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004028749972349033,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_unresolved_name_asks_for_the_document_instead_of_profiling",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10607633300242014,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_unresolved_name_asks_for_the_document_instead_of_profiling",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001641669950913638,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_topical_query_never_enters_the_profile_route",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005574999959208071,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_topical_query_never_enters_the_profile_route",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10663733399997,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_topical_query_never_enters_the_profile_route",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014783299411647022,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00045520899584516883,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11650945799192414,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0003644170064944774,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_actor_plus_a_topic_is_a_filtered_search_not_a_profile",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00046999999904073775,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_actor_plus_a_topic_is_a_filtered_search_not_a_profile",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.14599433400144335,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_an_actor_plus_a_topic_is_a_filtered_search_not_a_profile",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001696250110398978,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_asking_for_an_ordering_is_a_listing_not_a_profile",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00045783299719914794,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_asking_for_an_ordering_is_a_listing_not_a_profile",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005253330018604174,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_asking_for_an_ordering_is_a_listing_not_a_profile",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00011329200060572475,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_is_actor_profile_turn_requires_a_document_never_a_name",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004057500045746565,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_is_actor_profile_turn_requires_a_document_never_a_name",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005025410064263269,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_is_actor_profile_turn_requires_a_document_never_a_name",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00012724999396596104,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003955000138375908,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0006385419983416796,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013158300134819,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004411659901961684,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005899579991819337,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.358400711789727e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003603750083129853,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005483749991981313,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.450000652577728e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00033133300894405693,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004749169893329963,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.454099588561803e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003551659901859239,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004543329996522516,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.408299229107797e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003692499885801226,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004216249944875017,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.175000013783574e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003730830067070201,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.03241516699199565,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016024999786168337,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00046808300248812884,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0008758750045672059,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010370799282100052,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003729169984580949,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0006871249934192747,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.629199874121696e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00035687499621417373,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0009682500094641,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010645900329109281,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00039400000241585076,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0007867920066928491,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.837498899083585e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00034108301042579114,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 1.005801542007248,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0004657499957829714,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005800409999210387,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0007040000054985285,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.316700743511319e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00038425000093411654,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005152500089025125,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.41660109674558e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_module_size_limits.py::test_query_plan_under_300_loc",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00034745800076052547,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_module_size_limits.py::test_query_plan_under_300_loc",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005493749922607094,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_module_size_limits.py::test_query_plan_under_300_loc",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.324999362230301e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_module_size_limits.py::test_dialogue_policy_under_400_loc",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004883329966105521,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_module_size_limits.py::test_dialogue_policy_under_400_loc",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005577500123763457,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_module_size_limits.py::test_dialogue_policy_under_400_loc",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0003848750056931749,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_actor_conversation_corpus.py::test_corpus_meets_size_and_sequence_targets": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_strong_families_produce_clean_actor_frames": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_topic_controls_remain_topics_and_never_open_fuzzy_resolution": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_exact_dogfood_operation_examples_match_the_algebra": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequence_families_have_deterministic_operation_steps": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_scope_declared_the_profile_always_says_what_it_did_not_consult": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_cutoff_the_query_timestamp_is_visible_to_the_reader": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_source_value_the_total_is_named_reported_never_real_or_executed": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_no_verdict_the_profile_never_grades_the_actor": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_the_date_coverage_gap_is_declared_when_a_range_is_shown": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[CC]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Ciudadan\\xeda]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Extranjer\\xeda]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[Tarjeta de Identidad]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_a_nit_is_shown_in_full": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_actor_profile_renders_a_person_document_in_full": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_pii_no_legal_representative_data_reaches_the_text": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_partial_a_failed_aspect_is_declared_never_shown_as_absence": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_partial_a_complete_profile_carries_no_missing_data_warning": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_partial_losing_the_core_metrics_still_renders_the_rest": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_observed_name_the_text_says_these_are_observed_not_registered": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_name_document_contradiction_uses_source_name_and_warns": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_an_unchecked_asserted_name_never_becomes_the_profile_heading": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_inv_id_type_mixed_document_types_are_warned_about_in_the_text": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_a_single_observed_name_does_not_get_a_names_section": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_recent_contracts_carry_their_links": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_an_actor_query_returns_the_profile_through_the_normal_flow": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_the_profile_response_is_not_rewritten_by_the_advisor_layer": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_every_profile_query_filters_by_the_exact_document": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_an_actor_on_an_unsupported_dataset_asks_instead_of_answering": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_an_unresolved_name_asks_for_the_document_instead_of_profiling": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_a_topical_query_never_enters_the_profile_route": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_an_actor_plus_a_topic_is_a_filtered_search_not_a_profile": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_asking_for_an_ordering_is_a_listing_not_a_profile": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_is_actor_profile_turn_requires_a_document_never_a_name": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_module_size_limits.py::test_query_plan_under_300_loc": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_module_size_limits.py::test_dialogue_policy_under_400_loc": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_actor_conversation_corpus.py::test_corpus_meets_size_and_sequence_targets": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_strong_families_produce_clean_actor_frames": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_conversation_corpus.py::test_topic_controls_remain_topics_and_never_open_fuzzy_resolution": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_conversation_corpus.py::test_exact_dogfood_operation_examples_match_the_algebra": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequence_families_have_deterministic_operation_steps": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_profile_render.py::test_inv_scope_declared_the_profile_always_says_what_it_did_not_consult": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_cutoff_the_query_timestamp_is_visible_to_the_reader": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_source_value_the_total_is_named_reported_never_real_or_executed": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_no_verdict_the_profile_never_grades_the_actor": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_the_date_coverage_gap_is_declared_when_a_range_is_shown": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[CC]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Ciudadan\\xeda]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[C\\xe9dula de Extranjer\\xeda]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked[Tarjeta de Identidad]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_pii_a_nit_is_shown_in_full": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_actor_profile_renders_a_person_document_in_full": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_pii_no_legal_representative_data_reaches_the_text": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_partial_a_failed_aspect_is_declared_never_shown_as_absence": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_partial_a_complete_profile_carries_no_missing_data_warning": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_partial_losing_the_core_metrics_still_renders_the_rest": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_observed_name_the_text_says_these_are_observed_not_registered": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_name_document_contradiction_uses_source_name_and_warns": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_an_unchecked_asserted_name_never_becomes_the_profile_heading": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_inv_id_type_mixed_document_types_are_warned_about_in_the_text": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_a_single_observed_name_does_not_get_a_names_section": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_recent_contracts_carry_their_links": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_an_actor_query_returns_the_profile_through_the_normal_flow": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_the_profile_response_is_not_rewritten_by_the_advisor_layer": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_every_profile_query_filters_by_the_exact_document": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_an_actor_on_an_unsupported_dataset_asks_instead_of_answering": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_an_unresolved_name_asks_for_the_document_instead_of_profiling": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_a_topical_query_never_enters_the_profile_route": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_an_actor_plus_a_topic_is_a_filtered_search_not_a_profile": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_asking_for_an_ordering_is_a_listing_not_a_profile": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_actor_profile_render.py::test_is_actor_profile_turn_requires_a_document_never_a_name": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py",
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_module_size_limits.py::test_query_plan_under_300_loc": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_module_size_limits.py",
+    "tests/test_module_size_limits.py::test_dialogue_policy_under_400_loc": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_module_size_limits.py"
+  },
+  "exitstatus": 0
+}

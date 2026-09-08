@@ -1,0 +1,68 @@
+{
+  "collection": [
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0036138329887762666,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.8027438749995781,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.002572500001406297,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005723749927710742,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "call",
+      "outcome": "failed",
+      "duration": 0.10979966699960642,
+      "xfail": null,
+      "detail": "tests/test_actor_profile_render.py:333: in test_a_specific_aggregate_question_still_gets_its_specific_answer\n    assert '1.300.000.000' in result['response']\nE   AssertionError: assert '1.300.000.000' in 'Para ese universo encontr\u00e9 un valor total contratado aproximado de $1.3 mil millones en 2 registros.\\n\\nUniverso analizado: el universo consultado.'"
+    },
+    {
+      "nodeid": "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0004295839898986742,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_conversation_corpus.py",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_actor_profile_render.py"
+  },
+  "exitstatus": 1
+}

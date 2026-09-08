@@ -1,0 +1,14 @@
+{
+  "flags": {
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer": {
+      "actor": true,
+      "frame": false
+    }
+  },
+  "denied": [],
+  "exitstatus": 1
+}

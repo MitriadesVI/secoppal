@@ -1,0 +1,166 @@
+{
+  "flags": {
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]": {
+      "actor": true,
+      "frame": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]": {
+      "actor": true,
+      "frame": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]": {
+      "actor": true,
+      "frame": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]": {
+      "actor": true,
+      "frame": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]": {
+      "actor": true,
+      "frame": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]": {
+      "actor": true,
+      "frame": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]": {
+      "actor": true,
+      "frame": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]": {
+      "actor": true,
+      "frame": true
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/result_identity.py]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/actor_identity.py]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/core/territorial_knowledge.py]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/territorial_knowledge_v0.json]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_groups.json]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/buyer_source_names.json]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_local_digest_matches_frozen_git_blob_and_registry[app/data/aliases_db.json]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_later_source_bytes_cannot_change_historical_provenance": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_source_reads_use_only_exact_foundation_ref": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_historical_git_failure_never_falls_back_to_checkout[True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[ref]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_real_missing_historical_object_fails_despite_existing_checkout[blob]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_procurement_foundation_frozen_delivery.py::test_unaccredited_path_is_rejected_before_git": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]": {
+      "actor": true,
+      "frame": false
+    }
+  },
+  "denied": [],
+  "exitstatus": 0
+}
