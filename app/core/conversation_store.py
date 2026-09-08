@@ -418,6 +418,11 @@ class ConversationStore:
                 handle.write(line + "\n")
                 handle.flush()
                 os.fsync(handle.fileno())
+            descriptor = os.open(path.parent, os.O_RDONLY)
+            try:
+                os.fsync(descriptor)
+            finally:
+                os.close(descriptor)
         return envelope
 
     def load_envelope(self, chat_id: str) -> EnvelopeRead:

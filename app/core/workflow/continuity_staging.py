@@ -64,9 +64,13 @@ def prepare_generation(store, reservation):
             if path.is_file():
                 with path.open('rb') as handle:
                     os.fsync(handle.fileno())
-        descriptor = os.open(directory, os.O_RDONLY)
-        try:
-            os.fsync(descriptor)
-        finally:
-            os.close(descriptor)
+        # Persist every newly created ancestor before publishing its reference.
+        for parent in (directory, *directory.parents):
+            descriptor = os.open(parent, os.O_RDONLY)
+            try:
+                os.fsync(descriptor)
+            finally:
+                os.close(descriptor)
+            if parent.resolve() == store.base_path.resolve():
+                break
     return generation
