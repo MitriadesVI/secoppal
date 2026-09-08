@@ -1,0 +1,7 @@
+{
+  "tested_head": "aaa9168b75a5633469af507a1cf7c1c2e2c1ce00",
+  "tested_app_tree": "e62dad555fda9a16c9171e1cd9a21401ce9ac5ff",
+  "tested_tests_tree": "8e6a2ca2ca3c90759e3367a4e08a1d0bf9423368",
+  "final_head": "The final task response identifies the evidence commit; resolve git rev-parse HEAD on this branch.",
+  "permitted_tested_to_final_delta": "Only this audit evidence directory. Runtime and tests must be byte-identical."
+}
