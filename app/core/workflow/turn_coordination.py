@@ -16,6 +16,10 @@ def coordinate_turn(workflow, ctx, seed):
         from app.core.workflow.results import empty_result
         read = workflow.conv_store.load_envelope(ctx.chat_id) if ctx.chat_id else None
         if read and read.status is not EnvelopeStatus.EMPTY:
+            from app.core.radar.commands import parse_radar_command, LIST, RUN
+            command = parse_radar_command(ctx.user_query)
+            if command and command.kind in (LIST, RUN):
+                return workflow._dispatch(ctx, None)
             return empty_result(response="Este contexto requiere la versión Frame activa. Inicia una conversación nueva con /reset para buscar.",
                                 route_reason="admission_rollback_incompatible", needs_clarification=True)
         return workflow._dispatch(ctx, seed)

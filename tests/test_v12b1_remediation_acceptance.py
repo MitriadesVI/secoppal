@@ -246,3 +246,35 @@ def test_clarification_rebinds_only_visible_ids(revision, pending):
     assert result.conversation_revision == revision + 1
     assert (result.visible_turn_id, result.result_id) == ('next-turn', 'next-result')
     assert not result.can_paginate
+
+
+@pytest.mark.parametrize('query,route', [('mis radares', 'radar_list_empty'),
+                                       ('ejecutar radar Sintetico', 'radar_run_ok')])
+def test_rollback_keeps_explicit_radar_list_and_run(frame_v12, monkeypatch, query, route):
+    from types import SimpleNamespace
+    from app.core.workflow.handlers import radar
+
+    chat = Conversation('b1-off-radar')
+    chat.say(f'analiza contratos de {BUYER} en agosto')
+    monkeypatch.setenv('SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED', 'false')
+    get_settings.cache_clear()
+    flow, _ = chat.workflow()
+    effects = []
+
+    class Store:
+        def list_radars(self, owner):
+            effects.append(('list', owner))
+            return []
+
+        def get_radar_by_name(self, owner, name):
+            effects.append(('lookup', owner, name))
+            return SimpleNamespace(id='synthetic', name=name)
+
+    flow.radar_store = Store()
+    monkeypatch.setattr(radar, 'run_radar', lambda *args: SimpleNamespace(
+        status='ok', total=0, digest={'text': 'Synthetic digest'}, outcome='completed'))
+    result = flow.run_query(query, chat_id=chat.chat_id, user_identity={'channel_user_key': 'b1-owner'})
+    assert result['route_reason'] == route
+    assert effects and effects[0][1] == 'b1-owner'
+    assert not result.get('continuation')
+    assert chat.say('más').clarifies
