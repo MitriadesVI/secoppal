@@ -1,0 +1,205 @@
+{
+  "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691",
+  "results": [
+    {
+      "name": "F4-partial-recovery",
+      "file": "app/core/workflow/publication_io.py",
+      "anchor": "handle.write(separator + line + '\\n')",
+      "replacement": "handle.write(line + '\\n')",
+      "targets": [
+        "tests/test_v12b2_storage.py::test_explicit_publication_after_partial_append_is_reloadable"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "38bd48985f36546b1e8d629e3ae517e544ddf883810cf6bb33b2000a63d3e255",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "F4-confirmation-recovery",
+      "file": "app/core/workflow/publication_io.py",
+      "anchor": "            _arm(barrier)",
+      "replacement": "            pass",
+      "targets": [
+        "tests/test_v12b2_storage.py::test_barrier_failures_never_authorize_failed_turn[confirm_after-True]"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "38bd48985f36546b1e8d629e3ae517e544ddf883810cf6bb33b2000a63d3e255",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "F9-buyer-snapshot",
+      "file": "app/core/entity_profile/record_validation.py",
+      "anchor": "if plan.get('buyer_scope') != frame.buyer_scope.to_dict():",
+      "replacement": "if False:",
+      "targets": [
+        "tests/test_v12b2_integrity.py::test_buyer_snapshot_rejected_even_with_recomputed_digest"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "5999466d470ac1181ce587337591adfa78e00126480a5646985ae93021ebc0e8",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "F4-reader-fence",
+      "file": "app/core/conversation_store.py",
+      "anchor": "if barrier_path(path).exists():",
+      "replacement": "if False:",
+      "targets": [
+        "tests/test_v12b1_independent_storage.py::test_failed_io_never_authorizes_the_unpublished_generation[envelope_fsync]",
+        "tests/test_v12b1_independent_storage.py::test_append_boundary_is_fail_closed_after_write[False]"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "2b664a2ed62ee51e18670452510bcd9afa73f5035309ceb5e414169dd81db042",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "F5-multiplicity",
+      "file": "app/core/entity_profile/record_validation.py",
+      "anchor": "len(jobs) != len(plan['jobs']) or len(record.calls) != len(jobs)",
+      "replacement": "len(jobs) != len(plan['jobs'])",
+      "targets": [
+        "tests/test_v12b1_independent_records.py::test_individual_record_damage_rejects_before_io[call_duplicate]",
+        "tests/test_v12b1_independent_records.py::test_record_call_membership_preserves_multiplicity"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "5999466d470ac1181ce587337591adfa78e00126480a5646985ae93021ebc0e8",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "F9-buyer-consumers",
+      "file": "app/core/entity_profile/record_validation.py",
+      "anchor": "if plan.buyer_scope != frame.buyer_scope:",
+      "replacement": "if False:",
+      "targets": [
+        "tests/test_v12b1_independent_records.py::test_foreign_buyer_with_reused_ids_is_rejected"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "5999466d470ac1181ce587337591adfa78e00126480a5646985ae93021ebc0e8",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "supplier-unsafe-float",
+      "file": "app/core/entity_profile/aspects/suppliers.py",
+      "anchor": "total_contract_value=amount.value,",
+      "replacement": "total_contract_value=float(row.get(\"total_contract_value\")),",
+      "targets": [
+        "tests/test_v12b2_suppliers.py::test_mixed_supplier_amounts_survive_reload_and_followup[overview-Infinity-INVALID]",
+        "tests/test_v12b2_suppliers.py::test_mixed_supplier_amounts_survive_reload_and_followup[suppliers-1e999-REPRESENTATION_OVERFLOW]"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "37c2e8a0d0e5bf5590b4c8d7112a9aa1e4177f216df5f18372ffa136d5cfb383",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "supplier-false-record-accreditation",
+      "file": "app/core/entity_profile/execution_record.py",
+      "anchor": "if supplier_amount(metric.value).status != 'VALID':",
+      "replacement": "if False:",
+      "targets": [
+        "tests/test_v12b2_suppliers.py::test_mixed_supplier_amounts_survive_reload_and_followup[suppliers-1e999-REPRESENTATION_OVERFLOW]"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "09f4e46c7713087af80904670feef7747883f7f7d283d4e1e84eb0b7558e858e",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "supplier-value-ranking",
+      "file": "app/core/entity_profile/render.py",
+      "anchor": "if by_value and section_ranking(profile.suppliers, 'value').accredited:",
+      "replacement": "if by_value:",
+      "targets": [
+        "tests/test_v12b2_suppliers.py::test_mixed_supplier_amounts_survive_reload_and_followup[overview-Infinity-INVALID]"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "c10ccda99480bf70254ea93595076f260efdfe50690ad5d3a3288ca8ec5f6cab",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "B3-lost-prefix-nonconfirmation",
+      "file": "app/core/workflow/publication_io.py",
+      "anchor": "blocked_prefix = barrier.exists()",
+      "replacement": "blocked_prefix = False",
+      "targets": [
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py::test_failed_prefix_port[True-True]"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "MECHANISM_ONLY_NOT_COUNTED",
+      "restored": true,
+      "sha256": "38bd48985f36546b1e8d629e3ae517e544ddf883810cf6bb33b2000a63d3e255",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691",
+      "adjudication": "Initial port stopped at byte equality before testing admitted authority; rerun required."
+    },
+    {
+      "name": "B3-physical-length-only-recovery",
+      "file": "app/core/workflow/publication_io.py",
+      "anchor": "                    if blocked_prefix:\n                        # The offset delimits our append, NOT a confirmed prefix.\n                        # Preserve the earlier barrier's rejection in our own\n                        # suffix when that barrier cannot be recreated. The\n                        # strict envelope reader rejects this incomplete record.\n                        handle.seek(offset)\n                        handle.write(b'\\n{\"publication_incomplete\":true}\\n')\n",
+      "replacement": "",
+      "targets": [
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_chains.py::test_integrated_three_failures_reload_capabilities_and_recovery[fsync-False]"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "38bd48985f36546b1e8d629e3ae517e544ddf883810cf6bb33b2000a63d3e255",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "B3-global-value-warning",
+      "file": "app/core/entity_profile/frame_sections.py",
+      "anchor": "        warnings.extend(ranking_warnings(ranking, decision))",
+      "replacement": "        warnings.extend(ranking_warnings(ranking, decision))\n        if available and not decision.amounts_valid:\n            warnings.append('El ranking por valor no est\u00e1 acreditado.')",
+      "targets": [
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_supplier_ports.py::test_ranking_claim_and_published_warning_are_consistent[count-overview]",
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_supplier_ports.py::test_ranking_claim_and_published_warning_are_consistent[count-suppliers]"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "ef30cfa65add9cb15cb4ebe7f243652dae626537b925f8d25f69d98de674db11",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    },
+    {
+      "name": "B3-render-reaccredits",
+      "file": "app/core/entity_profile/render.py",
+      "anchor": "if by_value and section_ranking(profile.suppliers, 'value').accredited:",
+      "replacement": "if by_value and all(item.total_contract_value is not None for item in by_value):",
+      "targets": [
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_ranking_matrix.py::test_render_consumes_the_assembler_decision"
+      ],
+      "baseline": 0,
+      "mutant": 1,
+      "result": "BEHAVIOR_DETECTED",
+      "restored": true,
+      "sha256": "c10ccda99480bf70254ea93595076f260efdfe50690ad5d3a3288ca8ec5f6cab",
+      "head": "70f7e54b0a6b6a2f6d8f3fb98525a0b699d59691"
+    }
+  ]
+}

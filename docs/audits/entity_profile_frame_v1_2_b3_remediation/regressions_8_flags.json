@@ -1,0 +1,17 @@
+{
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[buyer reconocido, BOTH por defecto]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[foco overview expl\\xedcito]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[foco proveedores]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[foco montos]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[foco modalidades]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[foco recientes]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[foco evoluci\\xf3n]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[periodos distintos inequ\\xedvocos]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[AND tem\\xe1tico]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[OR tem\\xe1tico]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_supported_request_executes_and_answers[exclusi\\xf3n de modalidad]": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_temporal_change_over_a_profile_executes": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_a_pending_selection_executes_instead_of_asking_again": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_clearing_the_period_executes_instead_of_asking": true,
+  "tests/test_entity_profile_frame_b_utility.py::test_no_supported_case_spends_more_than_the_declared_budget": true
+}

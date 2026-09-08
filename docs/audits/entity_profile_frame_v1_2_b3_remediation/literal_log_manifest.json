@@ -1,0 +1,327 @@
+{
+  "baseline.txt": {
+    "archive": "baseline.txt.gz",
+    "uncompressed_bytes": 268868,
+    "sha256": "1e456bd12cb883b5f8d60ac17b62c074274f40928ab6c7c38b7d7a0fae9d5f58"
+  },
+  "ranking_first.txt": {
+    "archive": "ranking_first.txt.gz",
+    "uncompressed_bytes": 475648,
+    "sha256": "f531e9bcc0e81badac4585bc99e778bdabb493296b7dbe09a4163d5dee090a37"
+  },
+  "regressions_4.txt": {
+    "archive": "regressions_4.txt.gz",
+    "uncompressed_bytes": 367,
+    "sha256": "80048aa0132567156c153cd424a1801839442141dec35753518bc5c042f040e2"
+  },
+  "regressions_5.txt": {
+    "archive": "regressions_5.txt.gz",
+    "uncompressed_bytes": 10970,
+    "sha256": "7f8cca0f87be5893e9205db263057635ce477d116f2b1750fd590840209fa313"
+  },
+  "supplier-false-record-accreditation-control.txt": {
+    "archive": "supplier-false-record-accreditation-control.txt.gz",
+    "uncompressed_bytes": 321,
+    "sha256": "f7f4497800899550b746af7c807fee0017d88ba5773e4fb98eb5220655efb292"
+  },
+  "after_originals.txt": {
+    "archive": "after_originals.txt.gz",
+    "uncompressed_bytes": 195961,
+    "sha256": "fb8e95679a43aa34c39e1f7732d8a04f14466fa2b49ff08f82bee42f4f310101"
+  },
+  "supplier-value-ranking-control.txt": {
+    "archive": "supplier-value-ranking-control.txt.gz",
+    "uncompressed_bytes": 307,
+    "sha256": "914d672db0110c40cdc13886e717dbbcffe598b61b5eb3f56b9b47f104c77505"
+  },
+  "regressions_7.txt": {
+    "archive": "regressions_7.txt.gz",
+    "uncompressed_bytes": 621,
+    "sha256": "639795f9366cbf8555f96cbe781e30df3e51188a3b6d86af9c608329ae23fe55"
+  },
+  "regressions_6.txt": {
+    "archive": "regressions_6.txt.gz",
+    "uncompressed_bytes": 1757,
+    "sha256": "d42db3e1c4fbe26b85fd9bbbd1b2149fd6d10c84e2c45522d69effd8e7bf4f35"
+  },
+  "B3-render-reaccredits-mutant.txt": {
+    "archive": "B3-render-reaccredits-mutant.txt.gz",
+    "uncompressed_bytes": 1412,
+    "sha256": "e7a4ab52fb8630e3e3108ddee76578f384a41e1d6468a2f307b66601891f1fd0"
+  },
+  "tooling_and_head.txt": {
+    "archive": "tooling_and_head.txt.gz",
+    "uncompressed_bytes": 1505,
+    "sha256": "29df2b83abc4fc1eb5d5cbb62cb75250b187320954a22f8593e4779c94bb95bf"
+  },
+  "consumers.txt": {
+    "archive": "consumers.txt.gz",
+    "uncompressed_bytes": 3934,
+    "sha256": "69dc7676ef592e4cfe21615e6de3dd389686d1ed202b370ebae5144521c96acb"
+  },
+  "F4-partial-recovery-control.txt": {
+    "archive": "F4-partial-recovery-control.txt.gz",
+    "uncompressed_bytes": 281,
+    "sha256": "7ba5c31b0c2c958823abf96b8f6ac7d3803c32a2a8a0b590b19044acda361e45"
+  },
+  "ruff.txt": {
+    "archive": "ruff.txt.gz",
+    "uncompressed_bytes": 113,
+    "sha256": "2b80b1654c6ea9efec34d3a4780aa0b4e56993fbda806e97a986206c0d7af9d9"
+  },
+  "initial-B3-lost-prefix-nonconfirmation-mutant.txt": {
+    "archive": "initial-B3-lost-prefix-nonconfirmation-mutant.txt.gz",
+    "uncompressed_bytes": 1824,
+    "sha256": "c244514f56e24b8b1fc21a8694397738f9cc89134ab9bfdf3352d479f3e98481"
+  },
+  "clock_base.txt": {
+    "archive": "clock_base.txt.gz",
+    "uncompressed_bytes": 1133,
+    "sha256": "14217df6be5010e74a3245bef31539922f726dd54a76509f5a6b43f1ec7e9c09"
+  },
+  "B3-lost-prefix-nonconfirmation-mutant.txt": {
+    "archive": "B3-lost-prefix-nonconfirmation-mutant.txt.gz",
+    "uncompressed_bytes": 57272,
+    "sha256": "b4e32a119d506fdb4c80ae248e811e4f38d7e599ac647a22f050b44e41f1cd55"
+  },
+  "F4-partial-recovery-mutant.txt": {
+    "archive": "F4-partial-recovery-mutant.txt.gz",
+    "uncompressed_bytes": 998,
+    "sha256": "a97cffcc46bf4ca6bc3e9ce635994edbbbfe5ae83b4fe861d29ebab45d578667"
+  },
+  "own_verified.txt": {
+    "archive": "own_verified.txt.gz",
+    "uncompressed_bytes": 945965,
+    "sha256": "e68078a92123f6f67c9cb5f857b549097597320efd91958233ad019caef22995"
+  },
+  "semgrep_json.txt": {
+    "archive": "semgrep_json.txt.gz",
+    "uncompressed_bytes": 1045,
+    "sha256": "0dd280601211186ae1ec0b133e210aeec7ec3ab73934af8986ec68b4c0abd4b8"
+  },
+  "regressions_5.xml": {
+    "archive": "regressions_5.xml.gz",
+    "uncompressed_bytes": 338109,
+    "sha256": "6a9e83544b0b5daa5aa1d51748c9c6961fd15566009eaf2e01deb3e12c932bb3"
+  },
+  "after_originals.xml": {
+    "archive": "after_originals.xml.gz",
+    "uncompressed_bytes": 25935,
+    "sha256": "396d10b2b92243b8c8928b603bf2b94b5564f377b74ee35e4a83bc8ab53d9b33"
+  },
+  "baseline.xml": {
+    "archive": "baseline.xml.gz",
+    "uncompressed_bytes": 23945,
+    "sha256": "72539aceea73086cefaf19b9c648cab974c2b2d44054759c5ab0694811841396"
+  },
+  "supplier-false-record-accreditation-mutant.txt": {
+    "archive": "supplier-false-record-accreditation-mutant.txt.gz",
+    "uncompressed_bytes": 1023,
+    "sha256": "12f1c8cef80364ed4ca535070bcc9eba4ee2860337155e06491b0337a44a3acd"
+  },
+  "regressions_4.xml": {
+    "archive": "regressions_4.xml.gz",
+    "uncompressed_bytes": 456,
+    "sha256": "8c23d86dd5827bc71f07a63cba6d1ee58154ec7a3ea7285a8c57858f1cfab52b"
+  },
+  "F9-buyer-consumers-mutant.txt": {
+    "archive": "F9-buyer-consumers-mutant.txt.gz",
+    "uncompressed_bytes": 14160,
+    "sha256": "efdcd5b1ac2ddd76ccd0d15d2136936514b128812024cf327d50bc27647ca026"
+  },
+  "ranking_first.xml": {
+    "archive": "ranking_first.xml.gz",
+    "uncompressed_bytes": 32554,
+    "sha256": "f7fab27dbb604d1f717acfd0e52b325cac2440552cc458d2eb4898f85e1d1f35"
+  },
+  "regressions_6.xml": {
+    "archive": "regressions_6.xml.gz",
+    "uncompressed_bytes": 64785,
+    "sha256": "6929dcce7863d02b7b72b3cfd852c2932912640b6a0be8179998948c91a8b824"
+  },
+  "regressions_7.xml": {
+    "archive": "regressions_7.xml.gz",
+    "uncompressed_bytes": 54005,
+    "sha256": "acd3beeab9aab2420d5fb6128925856f6abb850ff280448512c59296ee7671c0"
+  },
+  "F4-confirmation-recovery-mutant.txt": {
+    "archive": "F4-confirmation-recovery-mutant.txt.gz",
+    "uncompressed_bytes": 1374,
+    "sha256": "607baed9818cd75535376d069883d41d23a1fd29c96081fb7de38420ea6fa43c"
+  },
+  "F9-buyer-consumers-control.txt": {
+    "archive": "F9-buyer-consumers-control.txt.gz",
+    "uncompressed_bytes": 279,
+    "sha256": "5c69bdf538c4f45158eaac3532fdc7f6f9de4b2a27e78b53168fa8e5f86bb51c"
+  },
+  "own_verified.xml": {
+    "archive": "own_verified.xml.gz",
+    "uncompressed_bytes": 56308,
+    "sha256": "ef668d4ff5f969219d11f0d09c9302c18acb412775da9ec02aea98def560f6a5"
+  },
+  "B3-lost-prefix-nonconfirmation-control.txt": {
+    "archive": "B3-lost-prefix-nonconfirmation-control.txt.gz",
+    "uncompressed_bytes": 308,
+    "sha256": "728d32a24bfadea27a38fd265460e908cfe89d74716cc03d22b6ccbb0e68c55e"
+  },
+  "F9-buyer-snapshot-mutant.txt": {
+    "archive": "F9-buyer-snapshot-mutant.txt.gz",
+    "uncompressed_bytes": 1052,
+    "sha256": "85a7b9cffa2fab51d9133a212517c2afcadefc9122802528148dc195677851c9"
+  },
+  "acceptance.xml": {
+    "archive": "acceptance.xml.gz",
+    "uncompressed_bytes": 22417,
+    "sha256": "8689b3d438088e261b4b2319a6a4cf3ab8744215f856ef96f63ad2d744147c59"
+  },
+  "B3-render-reaccredits-control.txt": {
+    "archive": "B3-render-reaccredits-control.txt.gz",
+    "uncompressed_bytes": 312,
+    "sha256": "5a934d6e1076f14bb6ef7c8c0ab64c81085ec6869e908f5d7ec5314420e1dece"
+  },
+  "historical_current.xml": {
+    "archive": "historical_current.xml.gz",
+    "uncompressed_bytes": 17837,
+    "sha256": "dc8dee1f237aac9941cc8cce057cf49f1e45408775530605ab7884c47c6f06b5"
+  },
+  "supplier-unsafe-float-control.txt": {
+    "archive": "supplier-unsafe-float-control.txt.gz",
+    "uncompressed_bytes": 437,
+    "sha256": "a0d2a49fe8ed06d700d6ee89b329951ecd11c70d91beeeb250d3f17de95ff334"
+  },
+  "supplier-unsafe-float-mutant.txt": {
+    "archive": "supplier-unsafe-float-mutant.txt.gz",
+    "uncompressed_bytes": 1725,
+    "sha256": "c215fe0ca48b8e4ddc671925d298f48b1632e5e3b5b560e3ec22f69c2ec67f07"
+  },
+  "new_first.txt": {
+    "archive": "new_first.txt.gz",
+    "uncompressed_bytes": 166532,
+    "sha256": "028a32329ef941be60e46e4867b955a474e0da79ddd3e8d627280a12d14e05bb"
+  },
+  "lint_core.txt": {
+    "archive": "lint_core.txt.gz",
+    "uncompressed_bytes": 45,
+    "sha256": "2cb5bcbd758fd937a7852a3fae37fa9423fd8f63332ace05f77d71711f29d03a"
+  },
+  "semgrep_base.txt": {
+    "archive": "semgrep_base.txt.gz",
+    "uncompressed_bytes": 1050,
+    "sha256": "9aaeb0048af5a62707baab2ca280129b72dbe0ead67f0f45bdb8594d07870555"
+  },
+  "final_ports.txt": {
+    "archive": "final_ports.txt.gz",
+    "uncompressed_bytes": 73736,
+    "sha256": "a6b1dd67f26817710b7d63bc9f1877ff3dd906fe2f2749b455e6d75346fef915"
+  },
+  "B3-global-value-warning-mutant.txt": {
+    "archive": "B3-global-value-warning-mutant.txt.gz",
+    "uncompressed_bytes": 21434,
+    "sha256": "df1d22599be01f13f6ef5cefad0c05def1bbd4891ae4bbeb2d4025a23db523e7"
+  },
+  "regressions_9.xml": {
+    "archive": "regressions_9.xml.gz",
+    "uncompressed_bytes": 84288,
+    "sha256": "362211a0522be6f4e47c24251b46fb7eac0251c0359144637be7b43643673dc9"
+  },
+  "F5-multiplicity-mutant.txt": {
+    "archive": "F5-multiplicity-mutant.txt.gz",
+    "uncompressed_bytes": 2216,
+    "sha256": "8314829a55e0b512b6cb354ac505355fb280f52a0992e1c843807a17114974a7"
+  },
+  "B3-physical-length-only-recovery-mutant.txt": {
+    "archive": "B3-physical-length-only-recovery-mutant.txt.gz",
+    "uncompressed_bytes": 1473,
+    "sha256": "1f52cc5b1a6710a3612a3bc2b31774a6801d9d9899485164e30fba5c895ed0d6"
+  },
+  "regressions_8.xml": {
+    "archive": "regressions_8.xml.gz",
+    "uncompressed_bytes": 2500,
+    "sha256": "8f5c48321ea5f9a1a4cc52f73b6afb7a77a79304fb0f5ee874a2c6de05204cf2"
+  },
+  "acceptance.txt": {
+    "archive": "acceptance.txt.gz",
+    "uncompressed_bytes": 767,
+    "sha256": "8f553402184bc65eae85dfd1d701869b6ad5322a9a0e202d80c6c7e1b22f3bd5"
+  },
+  "F9-buyer-snapshot-control.txt": {
+    "archive": "F9-buyer-snapshot-control.txt.gz",
+    "uncompressed_bytes": 279,
+    "sha256": "aa275118b10e40c075fc3eb4da000e060eb5d39b6b4a01a3f18fef326333e9cb"
+  },
+  "supplier-value-ranking-mutant.txt": {
+    "archive": "supplier-value-ranking-mutant.txt.gz",
+    "uncompressed_bytes": 1410,
+    "sha256": "08dc1b4b71c49a0249c5033cf77514634ba67e4a4ab5ccad201958960a111aec"
+  },
+  "B3-physical-length-only-recovery-control.txt": {
+    "archive": "B3-physical-length-only-recovery-control.txt.gz",
+    "uncompressed_bytes": 351,
+    "sha256": "9dd64626ddafc6129d2a8721b9e987771fa476940147ac2602a6c737ca3d4760"
+  },
+  "diff_check.txt": {
+    "archive": "diff_check.txt.gz",
+    "uncompressed_bytes": 44,
+    "sha256": "6dc2f41a25639a9677fd5adc883965b39c5ab4e20c2664cc7e822468e5816ace"
+  },
+  "F5-multiplicity-control.txt": {
+    "archive": "F5-multiplicity-control.txt.gz",
+    "uncompressed_bytes": 390,
+    "sha256": "1cb2bde3e36fee66d55c2c2944eadeb295916379a9df7bca6f979fc81db9f794"
+  },
+  "new_first.xml": {
+    "archive": "new_first.xml.gz",
+    "uncompressed_bytes": 48721,
+    "sha256": "1c3378657f399093d3ae91093e4a0a77b6dd73b5c1b49b170b3e1658993a289b"
+  },
+  "F4-confirmation-recovery-control.txt": {
+    "archive": "F4-confirmation-recovery-control.txt.gz",
+    "uncompressed_bytes": 292,
+    "sha256": "80e53d7962f6deb0f7adb4d45049914d4065a2603ec52215421278760575a44a"
+  },
+  "F4-reader-fence-control.txt": {
+    "archive": "F4-reader-fence-control.txt.gz",
+    "uncompressed_bytes": 407,
+    "sha256": "19acc4522194f0a6832eccdc0d0cd13823d9ae580eda0c9428db0d08f0ae1c84"
+  },
+  "historical_current.txt": {
+    "archive": "historical_current.txt.gz",
+    "uncompressed_bytes": 9298,
+    "sha256": "f1f3063f3a1a70ee3e00768fc9488fc4e9498d37581eb723abb0bcf2442515be"
+  },
+  "initial-B3-lost-prefix-nonconfirmation-control.txt": {
+    "archive": "initial-B3-lost-prefix-nonconfirmation-control.txt.gz",
+    "uncompressed_bytes": 308,
+    "sha256": "37263fd6d9370ae0d6ef4689dfcf70ced96bea04ab9ef23e0ed8b6facae02d30"
+  },
+  "final_ports.xml": {
+    "archive": "final_ports.xml.gz",
+    "uncompressed_bytes": 867,
+    "sha256": "e28865f31b682dfc4ef2f781d06ec00f558c5000a0180e6be1d64877bd127160"
+  },
+  "regressions_8.txt": {
+    "archive": "regressions_8.txt.gz",
+    "uncompressed_bytes": 380,
+    "sha256": "8da14b33761685d9db4d073216644a761e827336fc519efa06b6c01248915508"
+  },
+  "F4-reader-fence-mutant.txt": {
+    "archive": "F4-reader-fence-mutant.txt.gz",
+    "uncompressed_bytes": 22591,
+    "sha256": "98e7e837729c744d7bd8178619324a2b5bb58be835e11e2b1a3339f5d448ddb1"
+  },
+  "regressions_9.txt": {
+    "archive": "regressions_9.txt.gz",
+    "uncompressed_bytes": 1973,
+    "sha256": "15405717e939bd4aa148cd243e87c350e400832b4d1e91003460f921396f3332"
+  },
+  "B3-global-value-warning-control.txt": {
+    "archive": "B3-global-value-warning-control.txt.gz",
+    "uncompressed_bytes": 494,
+    "sha256": "7a93736790f29d2d658e3440057618e10706b4cc776230330c8d1d7d45e23eec"
+  },
+  "semgrep.txt": {
+    "archive": "semgrep.txt.gz",
+    "uncompressed_bytes": 9913,
+    "sha256": "aa07827e66f7feeed16014c63808729ad01c3ee38ab4f7636207b634e934b99d"
+  }
+}

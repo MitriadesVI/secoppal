@@ -1,0 +1,11 @@
+{
+  "tested_head": "b28a01a09697206dd5c67642cecab71e63742496",
+  "verified_logs": 65,
+  "preserved_base_files": 2650,
+  "mutations": 13,
+  "runtime_tests_unchanged": true,
+  "own_tests_unchanged": true,
+  "main_head": "7868664757b28bed16c583ea50327d669f1501e3",
+  "main_tracked_status": "",
+  "frame_default_config_preserved": true
+}
