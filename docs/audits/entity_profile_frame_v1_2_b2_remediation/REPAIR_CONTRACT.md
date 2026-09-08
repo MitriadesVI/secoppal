@@ -53,3 +53,11 @@ Codegraph 0.9.6 con Node 22: Not initialized; MCP ausente. Fallback rg/manual.
 Primer montaje pytest falló al importar offline_guard; preservado separado.
 Con PYTHONPATH del plugin correcto: 11 failed, 45 passed in 17.54s.
 Node IDs y trazas literales en before.txt. Todos los originales quedan intactos.
+
+## Precisión añadida durante verificación
+
+La nueva publicación separa explícitamente una cola parcial sin salto de línea.
+No valida ni promueve ese fragmento: permite que el nuevo sobre completo tenga
+su propia línea y revisión física. Se añadió una inyección real en Path.open
+modo append y una mutación que retira sólo este separador. Las publicaciones
+previas fallidas siguen inertes; reset sigue siendo recuperación válida.

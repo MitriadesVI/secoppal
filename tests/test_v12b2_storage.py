@@ -131,3 +131,42 @@ def test_success_after_unconfirmed_complete_append_without_reset(frame_v12, monk
     recovered = store.reserve_turn('b2-recovery')
     valid = store.publish_turn(recovered, user_query='new explicit result', response='new')
     assert ConversationStore().load_envelope('b2-recovery').envelope == valid
+
+
+def test_explicit_publication_after_partial_append_is_reloadable(frame_v12, monkeypatch):
+    store = ConversationStore()
+    first = store.reserve_turn('b2-partial-recovery')
+    store.publish_turn(first, user_query='first', response='first')
+    target = store._envelope_path_for(first.chat_id)
+    original_open = Path.open
+    reached = []
+
+    class Writer:
+        def __init__(self, handle):
+            self.handle = handle
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return self.handle.__exit__(*args)
+
+        def write(self, text):
+            self.handle.write(text[:len(text) // 2])
+            self.handle.flush()
+            reached.append(True)
+            raise OSError('partial append reached real write')
+
+    def open_path(path, mode='r', *args, **kwargs):
+        handle = original_open(path, mode, *args, **kwargs)
+        return Writer(handle) if path == target and mode == 'a' else handle
+
+    with monkeypatch.context() as patch:
+        patch.setattr(Path, 'open', open_path)
+        with pytest.raises(OSError):
+            store.publish_turn(store.reserve_turn(first.chat_id), user_query='failed', response='failed')
+    assert reached and not store.load_envelope(first.chat_id).usable
+    reservation = store.reserve_turn(first.chat_id)
+    valid = store.publish_turn(reservation, user_query='explicit new result', response='new')
+    reloaded = ConversationStore().load_envelope(first.chat_id)
+    assert reloaded.usable and reloaded.envelope == valid

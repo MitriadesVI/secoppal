@@ -37,10 +37,16 @@ def append_confirmed(path: Path, line: str) -> None:
     barrier = barrier_path(path)
     offset = path.stat().st_size if path.exists() else 0
     _arm(barrier)
+    separator = ''
+    if offset:
+        with path.open('rb') as previous:
+            previous.seek(-1, os.SEEK_END)
+            if previous.read(1) != b'\n':
+                separator = '\n'
     # Errors before confirmation leave the durable barrier in place. No
     # rollback of other revisions or chats, and no best-effort promotion.
     with path.open('a', encoding='utf-8') as handle:
-        handle.write(line + '\n')
+        handle.write(separator + line + '\n')
         handle.flush()
         os.fsync(handle.fileno())
     _sync_directory(path.parent)

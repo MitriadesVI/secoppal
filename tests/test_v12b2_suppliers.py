@@ -81,10 +81,11 @@ def test_mixed_supplier_amounts_survive_reload_and_followup(frame_v12, raw, stat
         control = Conversation('b2-values-control')
         control.say('analiza contratos de alcaldia de baranoa en agosto')
         assert result.response == control.say('montos').response
+    published_record = chat.execution_record()
     following = chat.say('recientes')
     assert following.calls and following.result['continuation_published'] and not following.clarifies
     assert all('BARANOA' in sql and '2026-08' in sql for sql in following.sql)
-    print('SUPPLIER_RESULT', focus, repr(raw), result.response, chat.execution_record())
+    print('SUPPLIER_RESULT', focus, repr(raw), result.response, published_record)
 
 
 @settings(max_examples=60, derandomize=True, deadline=None)
