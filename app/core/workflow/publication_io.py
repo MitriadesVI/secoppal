@@ -35,6 +35,7 @@ def _arm(barrier: Path) -> None:
 
 def append_confirmed(path: Path, line: str) -> None:
     barrier = barrier_path(path)
+    blocked_prefix = barrier.exists()
     offset = path.stat().st_size if path.exists() else 0
     _arm(barrier)
     separator = ''
@@ -61,6 +62,13 @@ def append_confirmed(path: Path, line: str) -> None:
             try:
                 with path.open('r+b') as handle:
                     handle.truncate(offset)
+                    if blocked_prefix:
+                        # The offset delimits our append, NOT a confirmed prefix.
+                        # Preserve the earlier barrier's rejection in our own
+                        # suffix when that barrier cannot be recreated. The
+                        # strict envelope reader rejects this incomplete record.
+                        handle.seek(offset)
+                        handle.write(b'\n{"publication_incomplete":true}\n')
                     handle.flush()
                     os.fsync(handle.fileno())
                 _sync_directory(path.parent)
