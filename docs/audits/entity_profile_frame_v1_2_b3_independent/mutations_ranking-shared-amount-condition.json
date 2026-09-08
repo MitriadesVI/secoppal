@@ -1,0 +1,21 @@
+[
+  {
+    "mutant": "ranking-shared-amount-condition",
+    "file": "app/core/entity_profile/supplier_rankings.py",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "control_tail": "104 passed in 32.86s",
+    "mutant_tail": "36 failed, 68 passed in 29.10s",
+    "mutant_failures": [
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_counts-overview-False]",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_counts-overview-True]",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_counts-suppliers-False]",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[valid-bad_counts-suppliers-True]",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-valid-overview-False]",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-valid-overview-True]",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-valid-suppliers-False]",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py::test_each_ranking_is_accredited_by_its_own_query[bad_amounts-valid-suppliers-True]"
+    ],
+    "restored": true
+  }
+]

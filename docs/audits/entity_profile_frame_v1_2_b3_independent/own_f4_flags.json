@@ -1,0 +1,9 @@
+{
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_failed_retry_never_promotes_a_barrier_blocked_prefix": false,
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_a_confirmed_prefix_keeps_legitimate_continuity": false,
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_the_marker_stays_inert_across_further_failures": false,
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_a_new_legitimate_publication_recovers_without_reset": false,
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_reset_recovers_and_the_marker_does_not_survive_the_epoch": false,
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_a_partial_tail_without_barrier_or_marker_still_blocks": false,
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_the_marker_is_rejected_by_the_existing_strict_reader": false
+}

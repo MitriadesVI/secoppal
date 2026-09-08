@@ -1,0 +1,14 @@
+[
+  {
+    "mutant": "ranking-render-recomputes-from-amounts",
+    "file": "app/core/entity_profile/render.py",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "control_tail": "90 passed in 28.80s",
+    "mutant_tail": "1 failed, 89 passed in 28.55s",
+    "mutant_failures": [
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_remediation/test_ranking_matrix.py::test_render_consumes_the_assembler_decision"
+    ],
+    "restored": true
+  }
+]

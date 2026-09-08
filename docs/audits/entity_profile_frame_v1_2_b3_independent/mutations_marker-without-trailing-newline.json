@@ -1,0 +1,18 @@
+[
+  {
+    "mutant": "marker-without-trailing-newline",
+    "file": "app/core/workflow/publication_io.py",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "control_tail": "7 passed in 0.57s",
+    "mutant_tail": "5 failed, 2 passed in 0.46s",
+    "mutant_failures": [
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_failed_retry_never_promotes_a_barrier_blocked_prefix",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_the_marker_stays_inert_across_further_failures",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_a_new_legitimate_publication_recovers_without_reset",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_reset_recovers_and_the_marker_does_not_survive_the_epoch",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_the_marker_is_rejected_by_the_existing_strict_reader"
+    ],
+    "restored": true
+  }
+]

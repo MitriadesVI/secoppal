@@ -1,0 +1,16 @@
+[
+  {
+    "mutant": "marker-before-arm-instead-of-after",
+    "file": "app/core/workflow/publication_io.py",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "control_tail": "7 passed in 0.63s",
+    "mutant_tail": "3 failed, 4 passed in 0.41s",
+    "mutant_failures": [
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_a_confirmed_prefix_keeps_legitimate_continuity",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_the_marker_stays_inert_across_further_failures",
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py::test_a_partial_tail_without_barrier_or_marker_still_blocks"
+    ],
+    "restored": true
+  }
+]

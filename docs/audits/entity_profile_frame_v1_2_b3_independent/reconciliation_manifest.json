@@ -1,0 +1,153 @@
+{
+  "audited_sha": "4edc248e60610efdbeebb3cb8010bc7b59445cad",
+  "tested_head_declared": "b28a01a09697206dd5c67642cecab71e63742496",
+  "base_b2_audit": "a7e12ebf037f962d356bb34130e180e97f97aa0e",
+  "runtime_b2": "5d715ba9e7d67aa05f703d2a280fdf9e2efde3b1",
+  "audit_branch": "audit/entity-profile-frame-v1-2-b3-independent",
+  "verdict": "V1_2_B3_GO_FOR_COORDINATOR_GATE",
+  "active_tests_directly_current": {
+    "implementer_b3": {
+      "paths": [
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py",
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_chains.py",
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_supplier_ports.py",
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_ranking_matrix.py"
+      ],
+      "collected": 321,
+      "reproduced_on_audited_sha": "321 passed in 49.57s"
+    },
+    "independent_b3": {
+      "paths": [
+        "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py",
+        "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_property.py",
+        "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_limits.py",
+        "docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py"
+      ],
+      "collected": 115,
+      "results": {
+        "f4": "7 passed in 0.69s",
+        "property": "1 passed in 0.32s",
+        "limits": "3 passed in 0.32s",
+        "sup": "104 passed in 32.53s"
+      }
+    },
+    "isolation": {
+      "pythonpath": [
+        "<root>",
+        "<root>/tests",
+        "scripts/audits/entity_profile_frame_v1_2_b_independent",
+        "docs/audits/entity_profile_frame_v1_2_b2_independent",
+        "docs/audits/entity_profile_frame_v1_2_b3_remediation",
+        "docs/audits/entity_profile_frame_v1_2_b3_independent"
+      ],
+      "pytest_addopts": "-p offline_guard",
+      "env": {
+        "SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED": "false"
+      },
+      "local_conftest_redirects": [
+        "SECOP_FEEDBACK_PATH",
+        "SECOP_FEEDBACK_DB_PATH",
+        "CONVERSATION_STORE_DIR",
+        "SECOP_ACTOR_ALIAS_INDEX_PATH"
+      ]
+    }
+  },
+  "superseded_originals": [
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[True-False]",
+      "port": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py::test_failed_prefix_port[True-False]",
+      "reason": "El oraculo del helper exigia igualdad de bytes y moria antes de sus aserciones funcionales.",
+      "equivalence": "El port invoca la prueba historica sin modificarla; solo relaja la igualdad de bytes a startswith y conserva la igualdad estricta con prefijo confirmado.",
+      "verified": "Muere por autoridad admitida bajo mutacion, no por bytes."
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[True-True]",
+      "port": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py::test_failed_prefix_port[True-True]",
+      "reason": "idem",
+      "equivalence": "idem",
+      "verified": "idem"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[count-overview]",
+      "port": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_supplier_ports.py::test_ranking_claim_and_published_warning_are_consistent[count-overview]",
+      "reason": "Exigia advertencia negativa del ranking por valor cuando el dano estaba en el TOP por cantidad.",
+      "equivalence": "Conserva lineas 34-67 y 70 del original; sustituye solo la linea 69 por cuatro expectativas mas estrictas.",
+      "product_decision": "B.3: cada ranking se acredita por su consulta y sus metricas necesarias. Trazada, no mecanica."
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[count-suppliers]",
+      "port": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_supplier_ports.py::test_ranking_claim_and_published_warning_are_consistent[count-suppliers]",
+      "reason": "idem",
+      "equivalence": "idem",
+      "product_decision": "idem"
+    }
+  ],
+  "positive_controls_to_keep": [
+    "test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-False] y [False-True] (continuidad legitima con prefijo confirmado)",
+    "test_ranking_claim_and_published_warning_are_consistent[None-*] -> SUPPORTED",
+    "test_supported_finite_amounts_keep_response_record_and_universe (12 montos finitos)",
+    "test_a_confirmed_prefix_keeps_legitimate_continuity (propio)",
+    "test_a_partial_tail_without_barrier_or_marker_still_blocks (propio)"
+  ],
+  "observational_probes_not_guarantees": [
+    "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[ok|open_failure]",
+    "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_limits.py (3 casos)"
+  ],
+  "commands_outside_tests": {
+    "semgrep_delta": "exportar a7e12ebf, git init temporal, comparar por regla/ruta/linea/fragmento",
+    "preexistence_probe": "probe_reset.py sobre base y candidato",
+    "mutations": "mutate_independent.py <name> [targets]"
+  },
+  "coordinator_gate_warning": {
+    "issue": "pytest tests/ NO recoge ninguna garantia nueva de B.3",
+    "evidence": {
+      "default_collection": 13089,
+      "b3_implementer": 321,
+      "b3_independent": 115,
+      "pytest_ini": "testpaths = tests"
+    },
+    "action": "incluir explicitamente ambos directorios con su aislamiento"
+  },
+  "preserved_prior_adjudication": [
+    "tres ports B.1 no reabiertos",
+    "dos expectativas de ejecucion tras corrupcion sustituidas por F5 (rojos preexistentes probados en base)",
+    "deuda del reloj del helper: reparacion determinista pendiente, today debe llegar a todas las capas"
+  ],
+  "findings": [
+    {
+      "id": "P2-1",
+      "severity": "P2",
+      "title": "Limite de recuperacion mas amplio de lo documentado",
+      "requirement": "Ningun intento posterior fallido convierte en confirmado un registro anterior no publicado.",
+      "scenario": "A confirmado -> B bloqueado por barrera -> C con unlink visible + rearme fallido + fallo de ESCRITURA de la marca",
+      "expected": "REMEDIATION documenta que en el limite queda admitido el sobre nuevo integro",
+      "observed": {
+        "usable": true,
+        "query": "consulta B NO publicada",
+        "lines": 2,
+        "other_process": true
+      },
+      "cause": "truncate(offset) se ejecuta antes de escribir la marca; si la escritura falla, la cola que bloqueaba ya se elimino",
+      "impact": "solo bajo tres fallos simultaneos, con PublicationRecoveryError lanzado; no es regresion ni reabre F4",
+      "blocking": false
+    },
+    {
+      "id": "OBS-A",
+      "severity": "observacion",
+      "title": "El reset desactiva la barrera",
+      "preexisting": true,
+      "evidence": "probe_reset.py: identico en a7e12ebf y en 4edc248e"
+    },
+    {
+      "id": "OBS-B",
+      "severity": "observacion",
+      "title": "B3-render-reaccredits no acredita defensa observable en producto",
+      "evidence": "sobrevive a 104 casos de flujo real; solo muere ante el control de contrato"
+    },
+    {
+      "id": "OBS-C",
+      "severity": "observacion",
+      "title": "Codegraph MCP no disponible (CONNECTION_CLOSED); fallback rg/manual declarado"
+    }
+  ]
+}

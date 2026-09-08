@@ -1,0 +1,6 @@
+{
+  "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py::test_failed_prefix_port[False-False]": true,
+  "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py::test_failed_prefix_port[False-True]": true,
+  "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py::test_failed_prefix_port[True-False]": true,
+  "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py::test_failed_prefix_port[True-True]": true
+}

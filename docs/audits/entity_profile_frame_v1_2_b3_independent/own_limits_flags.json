@@ -1,0 +1,5 @@
+{
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_limits.py::test_what_a_failed_marker_leaves_admitted[write]": false,
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_limits.py::test_what_a_failed_marker_leaves_admitted[flush]": false,
+  "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_limits.py::test_rollback_open_failure_is_an_observation_not_a_fence": false
+}

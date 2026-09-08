@@ -1,0 +1,14 @@
+[
+  {
+    "mutant": "drop-blocked-prefix-capture",
+    "file": "app/core/workflow/publication_io.py",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "control_tail": "1 passed in 0.36s",
+    "mutant_tail": "1 failed in 0.24s",
+    "mutant_failures": [
+      "FAILED docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_property.py::test_no_failure_chain_ever_admits_an_unpublished_record"
+    ],
+    "restored": true
+  }
+]
