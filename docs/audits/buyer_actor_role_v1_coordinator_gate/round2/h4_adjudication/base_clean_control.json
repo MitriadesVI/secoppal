@@ -1,0 +1,29 @@
+{
+  "clean_educacion_cali": {
+    "ordering_signal": null,
+    "objeto_phrases": null,
+    "resolved_params_keys": [
+      "ciudad",
+      "dataset",
+      "limit"
+    ],
+    "soql": [
+      "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    ]
+  },
+  "clean_adulto_mayor_cartagena": {
+    "ordering_signal": "valor_desc",
+    "objeto_phrases": null,
+    "resolved_params_keys": [
+      "ciudad",
+      "dataset",
+      "limit",
+      "objeto",
+      "ordering_signal"
+    ],
+    "soql": [
+      "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cartagena%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%adulto mayor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%adulto mayor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%persona mayor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%persona mayor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%adultos mayores%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%adultos mayores%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%personas mayores%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%personas mayores%'))) ORDER BY valor_del_contrato DESC, fecha_de_firma DESC, id_contrato DESC LIMIT 50"
+    ]
+  },
+  "external_attempts": 0
+}

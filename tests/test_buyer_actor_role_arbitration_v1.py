@@ -6,6 +6,7 @@ import json
 import os
 import socket
 import re
+import threading
 from datetime import date
 import sqlite3
 from pathlib import Path
@@ -85,9 +86,14 @@ def source_for(flow, monkeypatch, trace, buyer, amount):
                "ciudad", "objeto_del_contrato", "descripcion_del_proceso", "tipo_de_contrato",
                "modalidad_de_contratacion", "valor_del_contrato", "valor_facturado", "estado_contrato",
                "fecha_de_firma", "proveedor_adjudicado", "documento_proveedor", "urlproceso")
-    conn = sqlite3.connect(":memory:")
+    # `check_same_thread=False` + lock porque el observer agrega en 5 hilos
+    # (ThreadPoolExecutor en observer.py); una conexión ligada a un hilo daría
+    # ProgrammingError en vez de evaluar el SQL bajo prueba.
+    conn = sqlite3.connect(":memory:", check_same_thread=False)
+    lock = threading.RLock()
     conn.row_factory = sqlite3.Row
     conn.create_function("unaccent", 1, lambda value: value)
+    conn.create_function("date_trunc_y", 1, lambda value: str(value)[:4] + "-01-01T00:00:00.000")
     conn.execute("CREATE TABLE contracts (" + ",".join(
         f"{name} {'INTEGER' if name.startswith('valor_') else 'TEXT'}" for name in columns) + ")")
     physical_buyer = (project_buyer_names(buyer, "jbjy-vk9h") or (buyer,))[0]
@@ -117,12 +123,19 @@ def source_for(flow, monkeypatch, trace, buyer, amount):
             trace.setdefault("violations", []).extend(violations)
             raise AssertionError(violations)
         sql = re.sub(r"\bWHERE\b", "FROM contracts WHERE", soql, count=1, flags=re.I)
-        result = [dict(r) for r in conn.execute(sql)]
+        with lock:
+            result = [dict(r) for r in conn.execute(sql)]
         trace.setdefault("source_rows", []).append([r.get("id_contrato") for r in result])
         return result
     monkeypatch.setattr(flow.secop_client, "query", query)
     monkeypatch.setattr(flow.secop_client, "aggregate", query)
     monkeypatch.setattr(flow.secop_client, "count", lambda *a, **kw: 60)
+    # Sustituir métodos en la instancia no alcanza: el observer agrega sobre
+    # `secop_client.with_timeout(...)`, que construye un SecopClient nuevo y sale
+    # a la red de verdad. `derived_for_timeout` ya devuelve `self` cuando detecta
+    # métodos mockeados; `with_timeout` no, así que se ata aquí explícitamente.
+    monkeypatch.setattr(flow.secop_client, "with_timeout", lambda *a, **kw: flow.secop_client)
+    monkeypatch.setattr(flow.secop_client, "derived_for_timeout", lambda *a, **kw: flow.secop_client)
 
 
 def write_trace(trace, name):

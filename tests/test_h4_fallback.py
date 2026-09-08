@@ -365,12 +365,30 @@ def test_inherited_ordering_signal_is_conservative_never_lies():
         assert r2.get("result_order_guarantee") != ORDER_SAMPLE
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "Etapa 2 (mutaciones): un cambio de tema/scope no limpia ordering_signal heredado. "
-    "Fuga SEGURA (pierde recall, no miente). Al arreglarse, este xfail pasa a XPASS."
-))
 def test_new_topic_should_clear_inherited_ordering_signal():
+    """REGRESIÓN (era xfail strict hasta el gate Buyer–Actor V1): un cambio de tema/scope
+    SÍ limpia el ordering_signal heredado. Adjudicado contra BASE 52a6bcc, que arrastraba
+    ordering_signal=valor_desc **y** objeto=['adulto_mayor'] a una búsqueda de educación en
+    Cali. El candidato entrega los mismos params que produce la frase aislada. Las
+    aserciones positivas existen para que la limpieza no pueda acreditarse por accidente:
+    un turno sin params, en aclaración o en error también daría ordering_signal None."""
     wf = _conv_workflow(timeout=False)
-    wf.run_query("los contratos mas caros de adulto mayor en cartagena", channel="streamlit", chat_id="pf_clear")
+    r1 = wf.run_query("los contratos mas caros de adulto mayor en cartagena",
+                      channel="streamlit", chat_id="pf_clear")
+    # el turno 1 establece de verdad el orden explícito que el turno 2 no debe heredar:
+    assert r1.get("resolved_params", {}).get("ordering_signal") == "valor_desc"
+
     r2 = wf.run_query("muestrame contratos de educacion en cali", channel="streamlit", chat_id="pf_clear")
-    assert r2.get("resolved_params", {}).get("ordering_signal") is None
+    params = r2.get("resolved_params")
+
+    # …y se ejecutó de verdad: no es una aclaración, un error ni un turno sin params.
+    assert isinstance(params, dict) and params, r2
+    assert r2.get("needs_clarification") is False
+    assert r2.get("query_error") == ""
+    assert len(r2.get("rows") or r2.get("results") or []) == 1
+
+    # búsqueda nueva sobre SU universo (Cali), no sobre el anterior (Cartagena/adulto mayor):
+    assert params.get("ciudad") == "Cali"
+    assert "adulto_mayor" not in (params.get("objeto") or [])
+    # el orden heredado quedó limpio (el objeto de este caso):
+    assert params.get("ordering_signal") is None

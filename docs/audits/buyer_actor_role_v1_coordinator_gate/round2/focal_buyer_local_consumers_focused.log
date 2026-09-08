@@ -1,0 +1,6 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest -p gate_plugin -q -o cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-w32_m6c9/pytest_cache tests/test_buyer_actor_role_arbitration_v1.py tests/test_buyer_actor_role_controls_v1.py tests/test_buyer_actor_role_properties_v1.py tests/test_buyer_actor_role_local_v1.py tests/test_buyer_actor_independent_local.py tests/test_h4_fallback.py -p offline_guard --tb=short --junitxml=/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/docs/audits/buyer_actor_role_v1_coordinator_gate/round2/focal_buyer_local_consumers_focused.xml
+........................................................................ [ 53%]
+...............................................................          [100%]
+135 passed in 26.21s
+
+EXIT_CODE=0

@@ -1,0 +1,374 @@
+{
+  "collection": [
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.003564209007890895,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.18519474999629892,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+      "when": "teardown",
+      "outcome": "failed",
+      "duration": 0.0002699589967960492,
+      "xfail": null,
+      "detail": "docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger\n    assert not denied, denied\nE   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::... 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)', ...}]\nE   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::... 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)', ...}]"
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006578330066986382,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.15811058299732395,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+      "when": "teardown",
+      "outcome": "failed",
+      "duration": 0.0002795000036712736,
+      "xfail": null,
+      "detail": "docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger\n    assert not denied, denied\nE   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...: 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)', ...}]\nE   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...: 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)', ...}]"
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0008715829899301752,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11642333299096208,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+      "when": "teardown",
+      "outcome": "failed",
+      "duration": 0.0002333330048713833,
+      "xfail": null,
+      "detail": "docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger\n    assert not denied, denied\nE   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...OST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)', ...}]\nE   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...OST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)', ...}]"
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004869580006925389,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11508874999708496,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+      "when": "teardown",
+      "outcome": "failed",
+      "duration": 0.00025083300715778023,
+      "xfail": null,
+      "detail": "docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger\n    assert not denied, denied\nE   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)', ...}]\nE   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)', ...}]"
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043770900811068714,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1580937079997966,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017645899788476527,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005269579996820539,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11422108398983255,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017187499906867743,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00047470899880863726,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10913579199404921,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001579590025357902,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00046466699859593064,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11467454199737404,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001956670021172613,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]": {
+      "before_call": false,
+      "after_call": true
+    }
+  },
+  "network": [
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)"
+    },
+    {
+      "method": "POST",
+      "host": "www.datos.gov.co",
+      "path": "/api/v3/views/jbjy-vk9h/query.json",
+      "allowed": false,
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)"
+    }
+  ],
+  "deselected": [],
+  "modules": {
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py"
+  },
+  "exitstatus": 1
+}

@@ -28,9 +28,13 @@ def environment(scratch, name, network, *, output=OUT):
     env.pop('BUYER_ACTOR_EVIDENCE', None)
     env.pop('BUYER_ACTOR_LOCAL_INDEX', None)
     if name.endswith(('buyer_acceptance', 'buyer_local', 'b2_independent',
-                      'b3_remediation', 'b3_independent')) or os.environ.get('BUYER_GATE_STRICT') == '1':
+                      'b3_remediation', 'b3_independent')) or 'buyer_local' in name \
+            or os.environ.get('BUYER_GATE_STRICT') == '1':
         env['PYTEST_PLUGINS'] += ',tests.buyer_actor_independent_guard'
-    if name.endswith('buyer_local'):
+    # Substring, not suffix: a focal rerun of this component is named
+    # focal_buyer_local_focused, and without the index it would silently skip
+    # the eight opt-in cases instead of running them.
+    if 'buyer_local' in name:
         env['BUYER_ACTOR_LOCAL_INDEX'] = str(support.BIN.parents[1] / 'data/actor_alias_index.sqlite')
     return env
 

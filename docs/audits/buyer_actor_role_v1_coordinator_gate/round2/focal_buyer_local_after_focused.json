@@ -1,0 +1,229 @@
+{
+  "collection": [
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.004251083999406546,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.17170491699653212,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00020950000907760113,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005560829886235297,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.15467033300956246,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017587500042282045,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004718330019386485,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11276145800366066,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001707500050542876,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00045816598867531866,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11313104101282079,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017012500029522926,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004321250016801059,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1610665829939535,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017050000315066427,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004754579858854413,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11649149999720976,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001689589989837259,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000501832997542806,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11218924999411684,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00019483300275169313,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0005612079985439777,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11767270900600124,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.000203792005777359,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]": {
+      "before_call": false,
+      "after_call": true
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]": {
+      "before_call": false,
+      "after_call": true
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py"
+  },
+  "exitstatus": 0
+}

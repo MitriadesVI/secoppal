@@ -1,0 +1,55 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest -p gate_plugin -q -o cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-97nm4kck/pytest_cache tests/test_buyer_actor_role_local_v1.py tests/test_buyer_actor_independent_local.py -p offline_guard --tb=short --junitxml=/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/docs/audits/buyer_actor_role_v1_coordinator_gate/round2/focal_buyer_local_before_focused.xml
+.E.E.E.E....                                                             [100%]
+==================================== ERRORS ====================================
+_______ ERROR at teardown of test_local_index_read_only[cartagena-False] _______
+docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger
+    assert not denied, denied
+E   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::... 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)', ...}]
+E   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::... 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)', ...}]
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False] (call)'}
+_______ ERROR at teardown of test_local_index_read_only[cartagena-True] ________
+docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger
+    assert not denied, denied
+E   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...: 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)', ...}]
+E   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...: 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)', ...}]
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True] (call)'}
+_____ ERROR at teardown of test_local_index_read_only[barranquilla-False] ______
+docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger
+    assert not denied, denied
+E   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...OST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)', ...}]
+E   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...OST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)', ...}]
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False] (call)'}
+______ ERROR at teardown of test_local_index_read_only[barranquilla-True] ______
+docs/audits/buyer_actor_role_v1_coordinator_gate/gate_checks.py:17: in external_attempt_ledger
+    assert not denied, denied
+E   AssertionError: [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)', ...}]
+E   assert not [{'allowed': False, 'host': 'www.datos.gov.co', 'method': 'POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::...POST', 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)', ...}]
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)'}
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: GATE_UNAUTHORIZED_NETWORK: {'method': 'POST', 'host': 'www.datos.gov.co', 'path': '/api/v3/views/jbjy-vk9h/query.json', 'allowed': False, 'nodeid': 'tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True] (call)'}
+=========================== short test summary info ============================
+ERROR tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]
+ERROR tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]
+ERROR tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]
+ERROR tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]
+8 passed, 4 errors in 1.87s
+
+EXIT_CODE=1

@@ -1,0 +1,546 @@
+{
+  "flags": {
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-0-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-0-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-1-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-1-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-3-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-3-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-missing-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-missing-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-incompatible-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-incompatible-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-0-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-0-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-1-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-1-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-3-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-3-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-missing-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-missing-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-incompatible-off]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-incompatible-on]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[cartagena-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[cartagena-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[barranquilla-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[barranquilla-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[cartagena-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[cartagena-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[barranquilla-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[barranquilla-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por mas de 500 millones-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por mas de 500 millones-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena en 2026 por mas de 500 millones-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena en 2026 por mas de 500 millones-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -alcaldia de galapa]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -alcaldia de baranoa]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -universidad del atlantico]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\\xe9 ha contratado -alcaldia de galapa]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\\xe9 ha contratado -alcaldia de baranoa]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\\xe9 ha contratado -universidad del atlantico]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -alcaldia de galapa]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -alcaldia de baranoa]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -universidad del atlantico]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\\xe9 ha contratado -alcaldia de galapa]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\\xe9 ha contratado -alcaldia de baranoa]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\\xe9 ha contratado -universidad del atlantico]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos de FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor CC 70000001-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor FUNDACARIBE CC 70000001-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos adjudicados a alcaldia de cartagena-alcaldia de cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor alcaldia de cartagena-alcaldia de cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor UNIVERSIDAD DEL ATLANTICO-UNIVERSIDAD DEL ATLANTICO]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos de FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos del proveedor FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos del proveedor CC 70000001-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos del proveedor FUNDACARIBE CC 70000001-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos adjudicados a alcaldia de cartagena-alcaldia de cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos del proveedor alcaldia de cartagena-alcaldia de cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos del proveedor UNIVERSIDAD DEL ATLANTICO-UNIVERSIDAD DEL ATLANTICO]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos de FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor CC 70000001-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor FUNDACARIBE CC 70000001-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos adjudicados a alcaldia de cartagena-alcaldia de cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor alcaldia de cartagena-alcaldia de cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor UNIVERSIDAD DEL ATLANTICO-UNIVERSIDAD DEL ATLANTICO]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos de FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-qu\\xe9 ha contratado FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos del proveedor FUNDACARIBE-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos del proveedor CC 70000001-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos del proveedor FUNDACARIBE CC 70000001-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos adjudicados a alcaldia de cartagena-alcaldia de cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos del proveedor alcaldia de cartagena-alcaldia de cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos del proveedor UNIVERSIDAD DEL ATLANTICO-UNIVERSIDAD DEL ATLANTICO]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos del proveedor FUNDACARIBE con la Alcald\\xeda de Cartagena-FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_explicit_documents[contratos del proveedor CC 70000001]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_explicit_documents[contratos del proveedor FUNDACARIBE CC 70000001]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_geography_and_topic_do_not_become_buyer_or_actor[contratos de bogota]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_geography_and_topic_do_not_become_buyer_or_actor[contratos de software]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_negation_keeps_policy[contratos donde el proveedor no sea FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_controls_v1.py::test_negation_keeps_policy[contratos no de alcaldia de cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_alias_data_cannot_change_buyer_role_or_sql": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_only_confirmed_buyer_provenance_defeats_probe[fuzzy]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_only_confirmed_buyer_provenance_defeats_probe[city]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_only_confirmed_buyer_provenance_defeats_probe[unconfirmed]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_only_confirmed_buyer_provenance_defeats_probe[value]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_only_confirmed_buyer_provenance_defeats_probe[kind]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_only_confirmed_buyer_provenance_defeats_probe[missing]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_another_or_partial_mention_cannot_borrow_buyer_identity[FUNDACARIBE]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_another_or_partial_mention_cannot_borrow_buyer_identity[cartagena]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_another_or_partial_mention_cannot_borrow_buyer_identity[alcaldia de cartagena servicios integrados]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_properties_v1.py::test_another_or_partial_mention_cannot_borrow_buyer_identity[alcaldia]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_presentational_order_allows_fallback": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_fallback_attempted_but_failed_is_not_used": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_response_does_not_claim_order_on_sample": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_advisor_response_no_ranking_claim_on_sample": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_semantic_value_order_blocks_fallback": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_semantic_recency_order_blocks_fallback": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_budget_split_8_3_4": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_fallback_preserves_where_exactly": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_fallback_reduces_wide_limit": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_order_and_count_are_independent_axes": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_non_timeout_error_does_not_trigger_fallback": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_gate_reads_current_turn_only": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_deadline_exhausted_skips_request_no_false_empty": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_followup_caros_propagates_semantic_order": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_inherited_ordering_signal_is_conservative_never_lies": {
+      "actor": true,
+      "frame": false
+    },
+    "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal": {
+      "actor": true,
+      "frame": false
+    }
+  },
+  "denied": [],
+  "exitstatus": 0
+}
