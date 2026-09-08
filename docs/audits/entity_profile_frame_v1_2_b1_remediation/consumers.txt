@@ -1,0 +1,22 @@
+app/core/orchestrator.py:338:        reservation = deps.conv_store.reserve_turn(ctx.chat_id) if ctx.chat_id else None
+app/core/workflow/handlers/actor_selection.py:64:    def get_history(self, chat_id: str, last_n: int = 5):
+app/core/workflow/handlers/actor_selection.py:67:    def append_turn(self, *args, **kwargs):
+app/core/workflow/handlers/actor_selection.py:69:        return self._delegate.append_turn(*args, **kwargs)
+app/core/workflow/handlers/actor_selection.py:111:    history = deps.conv_store.get_history(ctx.chat_id, last_n=1)
+app/core/workflow/handlers/pagination.py:155:    history = deps.conv_store.get_history(ctx.chat_id, last_n=1)
+app/core/workflow/handlers/pagination.py:319:            deps.conv_store.save_pagination_buffer(ctx.chat_id, advanced)
+app/core/workflow/handlers/direct_lookup.py:70:    """Direct-lookup persistence: trace only, never conv_store.append_turn."""
+app/core/workflow/handlers/refinement.py:113:        deps.conv_store.append_turn(
+app/core/workflow/handlers/radar.py:61:    history = deps.conv_store.get_history(chat_id, last_n=10)
+app/core/workflow/admission.py:165:    return deps.conv_store.load_envelope(chat_id)
+app/core/workflow/persistence.py:6:calls and four ``conv_store.append_turn`` calls — one per run_query
+app/core/workflow/persistence.py:78:        deps.conv_store.append_turn(
+app/core/workflow/helpers.py:72:    → ``format_for_channel``. **No** hace ``append_turn``, **no** registra
+app/core/workflow/handlers/suggestion.py:159:        deps.conv_store.append_turn(
+app/core/workflow/turn_publication.py:158:        envelope = deps.conv_store.publish_turn(
+app/core/workflow/handlers/normal_flow.py:91:    history = deps.conv_store.get_history(ctx.chat_id, last_n=5) if ctx.chat_id else []
+app/core/workflow/handlers/normal_flow.py:164:        deps.conv_store.invalidate_pagination_buffers(ctx.chat_id)
+app/core/workflow/handlers/normal_flow.py:308:                    deps.conv_store.save_pagination_buffer(ctx.chat_id, buffer)
+app/core/workflow/handlers/normal_flow.py:338:                deps.conv_store.save_pagination_buffer(ctx.chat_id, buffer)
+app/core/workflow/handlers/normal_flow.py:407:        last_ok = deps.conv_store.last_successful_turn(ctx.chat_id) if ctx.chat_id else None
+app/core/workflow/handlers/normal_flow.py:441:        deps.conv_store.append_turn(
