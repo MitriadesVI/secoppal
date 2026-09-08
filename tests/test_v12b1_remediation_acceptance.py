@@ -278,3 +278,13 @@ def test_rollback_keeps_explicit_radar_list_and_run(frame_v12, monkeypatch, quer
     assert effects and effects[0][1] == 'b1-owner'
     assert not result.get('continuation')
     assert chat.say('más').clarifies
+
+
+@pytest.mark.parametrize('query', ['busca contratos de obra', 'procesos de pavimentacion en 2025'])
+def test_pending_yields_to_existing_new_search_authorities(frame_v12, query):
+    chat = Conversation('b1-new-tabular')
+    chat.say(f'analiza contratos publicados de {BUYER} en agosto')
+    turn = chat.say(query)
+    assert not turn.owns_profile and turn.calls
+    assert chat.contract().owner.value == 'TABULAR'
+    assert not chat.profile_state().pending
