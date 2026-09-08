@@ -1,0 +1,32 @@
+[
+  {
+    "original": "baseline.txt",
+    "gzip": "baseline.txt.gz",
+    "uncompressed_sha256": "d9064df080024b294bfa1fd24fbd81455b9b1b606b50a4133eb2daaa0dc389db"
+  },
+  {
+    "original": "controls-first.txt",
+    "gzip": "controls-first.txt.gz",
+    "uncompressed_sha256": "1222fafe4534d99d2bf1b63497ebdc1b87f382dbdf2f565e7331274fb8309ce1"
+  },
+  {
+    "original": "history-article-change.diff",
+    "gzip": "history-article-change.diff.gz",
+    "uncompressed_sha256": "daee7a7c024944f7f671ed66af2fca557aa06ba3a6ccbfd755d6ad4f062ccd12"
+  },
+  {
+    "original": "history-verbal-introduction.diff",
+    "gzip": "history-verbal-introduction.diff.gz",
+    "uncompressed_sha256": "477e9a6d07a8229428496546d975f5972fe9445178b5446cec093851bba00794"
+  },
+  {
+    "original": "semgrep-base.txt",
+    "gzip": "semgrep-base.txt.gz",
+    "uncompressed_sha256": "4879c00a0a9bc8692c136ba77384a2fe93cd315032e4930fc4ff4655ba663203"
+  },
+  {
+    "original": "semgrep-final.txt",
+    "gzip": "semgrep-final.txt.gz",
+    "uncompressed_sha256": "84e74c46b8e081a7ad4f128b6d3c9ce601949b748d65ba4f7fe92cc1c85de973"
+  }
+]

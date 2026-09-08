@@ -21,9 +21,9 @@ Archivos y mapa: [scope.md](scope.md). No se tocó query_plan.py, catálogos, í
 
 | Transición | Evidencia | Conclusión limitada |
 |---|---|---|
-| 547c80ff, 18 ago 2026, padre 3d3b54de | history-verbal-introduction.diff | Introduce premisa verbal de sujeto contratista. |
+| 547c80ff, 18 ago 2026, padre 3d3b54de | history-verbal-introduction.diff.gz | Introduce premisa verbal de sujeto contratista. |
 | 3b3c7f97, 19 ago, padre 6fc85ad5 | history-probe-introduction.diff | Introduce resolución contextual y proyección bare_exact_probe. |
-| 2f3b66c8, 20 ago, padre 34053f4f | history-article-change.diff | Protección article_led_buyer posterior al exact miss, con artículo; una colisión exacta la precede. |
+| 2f3b66c8, 20 ago, padre 34053f4f | history-article-change.diff.gz | Protección article_led_buyer posterior al exact miss, con artículo; una colisión exacta la precede. |
 | 691ca352, 6 sep, padre bb1876f1 | history-commits.txt y git log -S default=True | Actor pasa a ON por defecto. Distinguir presencia de regla de configuración efectiva. |
 | 78686647, 7 sep, antes del Frame | history-pre-frame/ y history-pre-frame.txt | Ambas semillas reproducen el secuestro completo con colisiones sintéticas y Actor ON. |
 | 52a6bcc6, 8 sep, base congelada | history-base/ y history-base.txt | Misma falla con Frame OFF y ON. |
@@ -103,7 +103,7 @@ Summary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)
 app/core/ limpio
 ```
 
-Ver ruff.txt, semgrep-final.txt/.json, focal-final.txt, corpus.txt, lint-core.txt y diff-check.txt. Semgrep es baseline global rojo: diez hallazgos idénticos por regla/ruta/fragmento, cero nuevos y cero removidos (semgrep-delta.json), ninguno en archivos propios. El exit 0 del CLI sin --error no significa cero findings.
+Ver ruff.txt, semgrep-final.txt.gz y semgrep-final.json, focal-final.txt, corpus.txt, lint-core.txt y diff-check.txt. Semgrep es baseline global rojo: diez hallazgos idénticos por regla/ruta/fragmento, cero nuevos y cero removidos (semgrep-delta.json), ninguno en archivos propios. El exit 0 del CLI sin --error no significa cero findings.
 
 Corrí los archivos de focal-manifest.txt, no la suite. La pasada adicional frame-on-manifest.txt ejecutó consumidores Actor/admisión/utilidad con Frame ON ambiental y las nuevas pruebas en ambos estados: 530 passed, 2 xfailed. Incluye las cuatro comprobaciones locales efectivas, sin skips. Esos totales se solapan: no se suman como garantías independientes. Los dos xfails estrictos son anteriores y siguen ejecutándose; un skip corresponde a ausencia del índice en el worktree aislado. Otros cuatro skips son los tests locales opt-in, ejecutados aparte con resultado 4 passed. No se ejecutó test_actor_conversation_dogfood.py porque lee otras menciones del directorio real fuera de la autorización; los controles de selección/tokens/TTL se ejecutaron en las suites aisladas.
 
@@ -116,3 +116,5 @@ No pytest global, app, SECOP live, LLM, radares/mensajes, merge, push, despliegu
 3. Antes de integrar corresponde revisión independiente del SHA y suite global única del coordinador. La reparación no autoriza activación ni integración.
 
 Nada de FORMADO/FORMANDO VIDAS, ranking fuzzy de personas, Radar, contador de trazas, publicación P2 o nuevos catálogos forma parte del cambio.
+
+Los logs y diffs con espacios terminales emitidos por las herramientas se guardan en gzip sin pérdida (raw-evidence-packaging.json conserva SHA256 de bytes originales). Así se preserva la salida literal y el diff del carril no introduce whitespace inválido.
