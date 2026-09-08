@@ -1,0 +1,234 @@
+FFFFFFFFFFFFFFFFFFFF                                                     [100%]
+=================================== FAILURES ===================================
+_________________________ test_seeds[cartagena-0-off] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:155: in test_seeds
+    assert not trace.get("resolver")
+E   assert not [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'no_exact_match...'mention': 'alcaldia de cartagena', 'method': 'resolve_exact', 'resolution': 'no_exact_match', 'status': 'UNRESOLVED'}]
+E    +  where [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'no_exact_match...'mention': 'alcaldia de cartagena', 'method': 'resolve_exact', 'resolution': 'no_exact_match', 'status': 'UNRESOLVED'}] = <built-in method get of dict object at 0x1108a7a40>('resolver')
+E    +    where <built-in method get of dict object at 0x1108a7a40> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...431e3b0cb37f4d8088a199d270783b52"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: External I/O forbidden in buyer-role regression
+__________________________ test_seeds[cartagena-0-on] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:155: in test_seeds
+    assert not trace.get("resolver")
+E   assert not [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'no_exact_match...'mention': 'alcaldia de cartagena', 'method': 'resolve_exact', 'resolution': 'no_exact_match', 'status': 'UNRESOLVED'}]
+E    +  where [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'no_exact_match...'mention': 'alcaldia de cartagena', 'method': 'resolve_exact', 'resolution': 'no_exact_match', 'status': 'UNRESOLVED'}] = <built-in method get of dict object at 0x110b0e740>('resolver')
+E    +    where <built-in method get of dict object at 0x110b0e740> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: External I/O forbidden in buyer-role regression
+_________________________ test_seeds[cartagena-1-off] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:148: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...cb9f89b33528970550f4cba97dda4dd9"}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...]
+E    +  where ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...] = <built-in method get of dict object at 0x110cd6940>('violations')
+E    +    where <built-in method get of dict object at 0x110cd6940> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...cb9f89b33528970550f4cba97dda4dd9"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect buyers failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect years failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect territories failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect modalities failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect core failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect date_range failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect observed_names failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect recent_contracts failed: ['unexpected contractor']
+__________________________ test_seeds[cartagena-1-on] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:148: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...d932"}}, "execution_record": null}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...]
+E    +  where ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...] = <built-in method get of dict object at 0x110a49b00>('violations')
+E    +    where <built-in method get of dict object at 0x110a49b00> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...d932"}}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect territories failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect core failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect modalities failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect date_range failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect years failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect buyers failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect observed_names failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect recent_contracts failed: ['unexpected contractor']
+_________________________ test_seeds[cartagena-3-off] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'actor_name_ambiguous', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x110a59280>('sql')
+E    +    where <built-in method get of dict object at 0x110a59280> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...e30e4664ba6c0a9ecbae281645c798b2"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+__________________________ test_seeds[cartagena-3-on] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'fresh', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x110b18c00>('sql')
+E    +    where <built-in method get of dict object at 0x110b18c00> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...62fd"}}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+______________________ test_seeds[cartagena-missing-off] _______________________
+tests/test_buyer_actor_role_arbitration_v1.py:155: in test_seeds
+    assert not trace.get("resolver")
+E   assert not [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'local_index', 'status': 'INDEX_UNAVAILABLE'}]
+E    +  where [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'local_index', 'status': 'INDEX_UNAVAILABLE'}] = <built-in method get of dict object at 0x110b1b000>('resolver')
+E    +    where <built-in method get of dict object at 0x110b1b000> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...431e3b0cb37f4d8088a199d270783b52"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: External I/O forbidden in buyer-role regression
+_______________________ test_seeds[cartagena-missing-on] _______________________
+tests/test_buyer_actor_role_arbitration_v1.py:155: in test_seeds
+    assert not trace.get("resolver")
+E   assert not [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'local_index', 'status': 'INDEX_UNAVAILABLE'}]
+E    +  where [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'local_index', 'status': 'INDEX_UNAVAILABLE'}] = <built-in method get of dict object at 0x10771ed00>('resolver')
+E    +    where <built-in method get of dict object at 0x10771ed00> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: External I/O forbidden in buyer-role regression
+____________________ test_seeds[cartagena-incompatible-off] ____________________
+tests/test_buyer_actor_role_arbitration_v1.py:155: in test_seeds
+    assert not trace.get("resolver")
+E   assert not [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'local_index', 'status': 'INDEX_UNAVAILABLE'}]
+E    +  where [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'local_index', 'status': 'INDEX_UNAVAILABLE'}] = <built-in method get of dict object at 0x1105a9bc0>('resolver')
+E    +    where <built-in method get of dict object at 0x1105a9bc0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...431e3b0cb37f4d8088a199d270783b52"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: External I/O forbidden in buyer-role regression
+____________________ test_seeds[cartagena-incompatible-on] _____________________
+tests/test_buyer_actor_role_arbitration_v1.py:155: in test_seeds
+    assert not trace.get("resolver")
+E   assert not [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'local_index', 'status': 'INDEX_UNAVAILABLE'}]
+E    +  where [{'mention': 'alcaldia de cartagena por mas de 500 millones', 'method': 'resolve_exact', 'resolution': 'local_index', 'status': 'INDEX_UNAVAILABLE'}] = <built-in method get of dict object at 0x110864ac0>('resolver')
+E    +    where <built-in method get of dict object at 0x110864ac0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.observer:observer.py:225 aggregate temporal_dist failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate top_entities failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate date_range failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate value_stats failed: External I/O forbidden in buyer-role regression
+WARNING  app.core.observer:observer.py:225 aggregate top_modalities failed: External I/O forbidden in buyer-role regression
+________________________ test_seeds[barranquilla-0-off] ________________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'actor_name_requires_resolution', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x1101d6380>('sql')
+E    +    where <built-in method get of dict object at 0x1101d6380> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...90462f40f7e3a2d6d488c30"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+________________________ test_seeds[barranquilla-0-on] _________________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'fresh', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x110c15f40>('sql')
+E    +    where <built-in method get of dict object at 0x110c15f40> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+________________________ test_seeds[barranquilla-1-off] ________________________
+tests/test_buyer_actor_role_arbitration_v1.py:148: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...3953525b77b770dd328c2be"}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...]
+E    +  where ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...] = <built-in method get of dict object at 0x110cebc80>('violations')
+E    +    where <built-in method get of dict object at 0x110cebc80> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...3953525b77b770dd328c2be"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect date_range failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect core failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect territories failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect modalities failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect buyers failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect years failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect observed_names failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect recent_contracts failed: ['unexpected contractor']
+________________________ test_seeds[barranquilla-1-on] _________________________
+tests/test_buyer_actor_role_arbitration_v1.py:148: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...]
+E    +  where ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...] = <built-in method get of dict object at 0x1138a3e40>('violations')
+E    +    where <built-in method get of dict object at 0x1138a3e40> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect territories failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect date_range failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect buyers failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect years failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect core failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect modalities failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect observed_names failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect recent_contracts failed: ['unexpected contractor']
+________________________ test_seeds[barranquilla-3-off] ________________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'actor_name_ambiguous', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x11062fcc0>('sql')
+E    +    where <built-in method get of dict object at 0x11062fcc0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...fc034d87e8cea2611f40103"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+________________________ test_seeds[barranquilla-3-on] _________________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'fresh', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x11a3e96c0>('sql')
+E    +    where <built-in method get of dict object at 0x11a3e96c0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+_____________________ test_seeds[barranquilla-missing-off] _____________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'actor_index_unavailable', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x1138fb100>('sql')
+E    +    where <built-in method get of dict object at 0x1138fb100> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...bdc1eed3a72cae70e334e83"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+_____________________ test_seeds[barranquilla-missing-on] ______________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'fresh', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x11a6da200>('sql')
+E    +    where <built-in method get of dict object at 0x11a6da200> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+__________________ test_seeds[barranquilla-incompatible-off] ___________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'actor_index_unavailable', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x113edba00>('sql')
+E    +    where <built-in method get of dict object at 0x113edba00> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...bdc1eed3a72cae70e334e83"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+___________________ test_seeds[barranquilla-incompatible-on] ___________________
+tests/test_buyer_actor_role_arbitration_v1.py:149: in test_seeds
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'fresh', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x110a59740>('sql')
+E    +    where <built-in method get of dict object at 0x110a59740> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+=========================== short test summary info ============================
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-0-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-0-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-1-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-1-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-3-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-3-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-missing-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-missing-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-incompatible-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-incompatible-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-0-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-0-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-1-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-1-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-3-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-3-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-missing-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-missing-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-incompatible-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-incompatible-on]
+20 failed in 6.24s

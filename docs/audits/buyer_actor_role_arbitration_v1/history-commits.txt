@@ -1,0 +1,6 @@
+547c80ff863da0d5728316c226337f9ce9c37df5 3d3b54de30d2f5d3ea9536dde97afeeb54d42076 2026-08-18T21:47:13-05:00 feat(actor): route exact contractor identities safely
+3b3c7f9780bb62086c6e49b8bbe3e028fa76c8ad 6fc85ad50f902380147029766a7a4386f8573ac7 2026-08-19T21:53:15-05:00 feat(actor): integrate contextual name resolution
+2f3b66c852772c75fd5f989e0dcec62a416d8479 34053f4f5106a076c7db25ae4eb94b0c290e7c27 2026-08-20T22:09:58-05:00 feat(actor): harden natural conversation operations
+691ca352c510d3e1b4bb8ca1717ce6c171d43253 bb1876f1338b645e36f837d7d5ab9eeb1c753620 2026-09-06T13:39:38-05:00 fix(actor): enable actor profile by default
+7868664757b28bed16c583ea50327d669f1501e3 52721e02bf139af7875519176ad4d56fa676bd48 2026-09-07T07:46:31-05:00 docs(actor): close independent review remediation v2.1
+52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386 32d7c39e54c10f2e97075d53f0ee0e06e7abbbad 2026-09-08T12:54:53-05:00 docs: record Frame V1.2 fast-forward integration with Frame OFF

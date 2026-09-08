@@ -1,0 +1,283 @@
+....FFFF............F..F..F..F...F.FFFF.....F....F.FFFF.....F.FFFFF.     [100%]
+=================================== FAILURES ===================================
+____________ test_new_buyer_after_legitimate_actor[cartagena-False] ____________
+tests/test_buyer_actor_role_controls_v1.py:62: in test_new_buyer_after_legitimate_actor
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...r IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"}, ...], ...}
+E   assert not ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...]
+E    +  where ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...] = <built-in method get of dict object at 0x11bafb880>('violations')
+E    +    where <built-in method get of dict object at 0x11bafb880> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...r IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"}, ...], ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect territories failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect buyers failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect date_range failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect core failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect modalities failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect years failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect observed_names failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect recent_contracts failed: ['unexpected contractor']
+____________ test_new_buyer_after_legitimate_actor[cartagena-True] _____________
+tests/test_buyer_actor_role_controls_v1.py:62: in test_new_buyer_after_legitimate_actor
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...r IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"}, ...], ...}
+E   assert not ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...]
+E    +  where ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...] = <built-in method get of dict object at 0x11d9738c0>('violations')
+E    +    where <built-in method get of dict object at 0x11d9738c0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...r IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"}, ...], ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect territories failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect core failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect date_range failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect buyers failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect years failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect modalities failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect observed_names failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect recent_contracts failed: ['unexpected contractor']
+__________ test_new_buyer_after_legitimate_actor[barranquilla-False] ___________
+tests/test_buyer_actor_role_controls_v1.py:62: in test_new_buyer_after_legitimate_actor
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...r IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"}, ...], ...}
+E   assert not ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...]
+E    +  where ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...] = <built-in method get of dict object at 0x11c77d000>('violations')
+E    +    where <built-in method get of dict object at 0x11c77d000> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...r IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"}, ...], ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect modalities failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect core failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect years failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect buyers failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect date_range failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect territories failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect observed_names failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect recent_contracts failed: ['unexpected contractor']
+___________ test_new_buyer_after_legitimate_actor[barranquilla-True] ___________
+tests/test_buyer_actor_role_controls_v1.py:62: in test_new_buyer_after_legitimate_actor
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...r IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"}, ...], ...}
+E   assert not ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...]
+E    +  where ['unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', 'unexpected contractor', ...] = <built-in method get of dict object at 0x11c545cc0>('violations')
+E    +    where <built-in method get of dict object at 0x11c545cc0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...r IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"}, ...], ...}.get
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect core failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect modalities failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect years failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect buyers failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect date_range failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect territories failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect observed_names failed: ['unexpected contractor']
+WARNING  app.core.actor_profile.assembler:assembler.py:138 actor profile aspect recent_contracts failed: ['unexpected contractor']
+_ test_existing_catalog_families[False-contratos de -universidad del atlantico] _
+tests/test_buyer_actor_role_controls_v1.py:107: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['wrong buyer']
+E    +  where ['wrong buyer'] = <built-in method get of dict object at 0x11e1c9680>('violations')
+E    +    where <built-in method get of dict object at 0x11e1c9680> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_existing_catalog_families[False-qu\xe9 ha contratado -universidad del atlantico] _
+tests/test_buyer_actor_role_controls_v1.py:107: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['wrong buyer']
+E    +  where ['wrong buyer'] = <built-in method get of dict object at 0x10a91a6c0>('violations')
+E    +    where <built-in method get of dict object at 0x10a91a6c0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_existing_catalog_families[True-contratos de -universidad del atlantico] _
+tests/test_buyer_actor_role_controls_v1.py:107: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['wrong buyer']
+E    +  where ['wrong buyer'] = <built-in method get of dict object at 0x10a8aabc0>('violations')
+E    +    where <built-in method get of dict object at 0x10a8aabc0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_existing_catalog_families[True-qu\xe9 ha contratado -universidad del atlantico] _
+tests/test_buyer_actor_role_controls_v1.py:107: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['wrong buyer']
+E    +  where ['wrong buyer'] = <built-in method get of dict object at 0x11b4a6d80>('violations')
+E    +    where <built-in method get of dict object at 0x11b4a6d80> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_legitimate_provider[False-1-contratos del proveedor alcaldia de cartagena-alcaldia de cartagena] _
+tests/test_buyer_actor_role_controls_v1.py:146: in test_legitimate_provider
+    assert not params.get("entidad_resolved"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': 'actor_profile', 'analytical_response': 'CC 70000001
+E     
+E     *Huella ...dentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.', 'clarification_reason': '', ...}
+E   assert not 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS'
+E    +  where 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS' = <built-in method get of dict object at 0x11d3ccdc0>('entidad_resolved')
+E    +    where <built-in method get of dict object at 0x11d3ccdc0> = {'actor_conversation_construction': 'strong_actor_syntax', 'actor_conversation_operation': 'SET_ACTOR', 'actor_resolution': 'exact_unique_alias', 'actor_resolution_method': 'exact_unique_alias', ...}.get
+_ test_legitimate_provider[False-1-contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados] _
+tests/test_buyer_actor_role_controls_v1.py:146: in test_legitimate_provider
+    assert not params.get("entidad_resolved"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': 'actor_profile', 'analytical_response': 'CC 70000001
+E     
+E     *Huella ...dentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.', 'clarification_reason': '', ...}
+E   assert not 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS'
+E    +  where 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS' = <built-in method get of dict object at 0x11c1e0640>('entidad_resolved')
+E    +    where <built-in method get of dict object at 0x11c1e0640> = {'actor_conversation_construction': 'strong_actor_syntax', 'actor_conversation_operation': 'SET_ACTOR', 'actor_resolution': 'exact_unique_alias', 'actor_resolution_method': 'exact_unique_alias', ...}.get
+_ test_legitimate_provider[False-1-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados] _
+tests/test_buyer_actor_role_controls_v1.py:140: in test_legitimate_provider
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'actor_or_topic_ambiguous', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x11cb15000>('sql')
+E    +    where <built-in method get of dict object at 0x11cb15000> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...cartagena servicios integrados', 'method': 'resolve_exact', 'resolution': 'exact_unique_alias', 'status': 'RESOLVED'}]}.get
+_ test_legitimate_provider[False-1-contratos del proveedor FUNDACARIBE con la Alcald\xeda de Cartagena-FUNDACARIBE] _
+tests/test_buyer_actor_role_controls_v1.py:139: in test_legitimate_provider
+    assert params["actor_scope"]["base_number"] == "70000001", result
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'base_number'
+____ test_legitimate_provider[False-2-contratos de FUNDACARIBE-FUNDACARIBE] ____
+tests/test_buyer_actor_role_controls_v1.py:137: in test_legitimate_provider
+    assert params.get("actor_scope"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'actor_name_ambiguous', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x11c440340>('actor_scope')
+E    +    where <built-in method get of dict object at 0x11c440340> = {'actor_pending': {'actor_name': 'fundacaribe', 'candidates': [{'base_number': '70000001', 'document_type': 'CC', 'mat...xact_ambiguous_alias', 'actor_resolution_method': 'exact_ambiguous_alias', 'actor_resolution_status': 'AMBIGUOUS', ...}.get
+_ test_legitimate_provider[False-2-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados] _
+tests/test_buyer_actor_role_controls_v1.py:137: in test_legitimate_provider
+    assert params.get("actor_scope"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'actor_or_topic_ambiguous', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x11bfcbd00>('actor_scope')
+E    +    where <built-in method get of dict object at 0x11bfcbd00> = {'actor_intent_conflict': {'actor_name': 'alcaldia de cartagena servicios integrados', 'resolution_status': 'AMBIGUOUS......}, ...}, ...}, 'actor_resolution': 'exact_ambiguous_alias', 'actor_resolution_method': 'exact_ambiguous_alias', ...}.get
+_ test_legitimate_provider[True-1-contratos del proveedor alcaldia de cartagena-alcaldia de cartagena] _
+tests/test_buyer_actor_role_controls_v1.py:146: in test_legitimate_provider
+    assert not params.get("entidad_resolved"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': 'actor_profile', 'analytical_response': 'CC 70000001
+E     
+E     *Huella ...ntecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.', 'chat_id': 'provider', ...}
+E   assert not 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS'
+E    +  where 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS' = <built-in method get of dict object at 0x11c67d900>('entidad_resolved')
+E    +    where <built-in method get of dict object at 0x11c67d900> = {'actor_conversation_construction': 'strong_actor_syntax', 'actor_conversation_operation': 'SET_ACTOR', 'actor_resolution': 'exact_unique_alias', 'actor_resolution_method': 'exact_unique_alias', ...}.get
+_ test_legitimate_provider[True-1-contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados] _
+tests/test_buyer_actor_role_controls_v1.py:146: in test_legitimate_provider
+    assert not params.get("entidad_resolved"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': 'actor_profile', 'analytical_response': 'CC 70000001
+E     
+E     *Huella ...ntecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.', 'chat_id': 'provider', ...}
+E   assert not 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS'
+E    +  where 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS' = <built-in method get of dict object at 0x11bb2b780>('entidad_resolved')
+E    +    where <built-in method get of dict object at 0x11bb2b780> = {'actor_conversation_construction': 'strong_actor_syntax', 'actor_conversation_operation': 'SET_ACTOR', 'actor_resolution': 'exact_unique_alias', 'actor_resolution_method': 'exact_unique_alias', ...}.get
+_ test_legitimate_provider[True-1-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados] _
+tests/test_buyer_actor_role_controls_v1.py:140: in test_legitimate_provider
+    assert trace.get("sql"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'provider', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x11c1f8440>('sql')
+E    +    where <built-in method get of dict object at 0x11c1f8440> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...cartagena servicios integrados', 'method': 'resolve_exact', 'resolution': 'exact_unique_alias', 'status': 'RESOLVED'}]}.get
+_ test_legitimate_provider[True-1-contratos del proveedor FUNDACARIBE con la Alcald\xeda de Cartagena-FUNDACARIBE] _
+tests/test_buyer_actor_role_controls_v1.py:139: in test_legitimate_provider
+    assert params["actor_scope"]["base_number"] == "70000001", result
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'base_number'
+____ test_legitimate_provider[True-2-contratos de FUNDACARIBE-FUNDACARIBE] _____
+tests/test_buyer_actor_role_controls_v1.py:137: in test_legitimate_provider
+    assert params.get("actor_scope"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'provider', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x11c00cc00>('actor_scope')
+E    +    where <built-in method get of dict object at 0x11c00cc00> = {'actor_pending': {'actor_name': 'fundacaribe', 'candidates': [{'base_number': '70000001', 'document_type': 'CC', 'mat...xact_ambiguous_alias', 'actor_resolution_method': 'exact_ambiguous_alias', 'actor_resolution_status': 'AMBIGUOUS', ...}.get
+_ test_legitimate_provider[True-2-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados] _
+tests/test_buyer_actor_role_controls_v1.py:137: in test_legitimate_provider
+    assert params.get("actor_scope"), result
+E   AssertionError: {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'provider', ...}
+E   assert None
+E    +  where None = <built-in method get of dict object at 0x11c05eb80>('actor_scope')
+E    +    where <built-in method get of dict object at 0x11c05eb80> = {'actor_intent_conflict': {'actor_name': 'alcaldia de cartagena servicios integrados', 'resolution_status': 'AMBIGUOUS......}, ...}, ...}, 'actor_resolution': 'exact_ambiguous_alias', 'actor_resolution_method': 'exact_ambiguous_alias', ...}.get
+_________ test_explicit_documents[contratos del proveedor CC 70000001] _________
+tests/test_buyer_actor_role_controls_v1.py:159: in test_explicit_documents
+    final = resolve_actor_name(State(parsed_params=initial, raw_query=query), ActorNameResolver(index))["parsed_params"]
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: State.__init__() got an unexpected keyword argument 'parsed_params'
+___ test_explicit_documents[contratos del proveedor FUNDACARIBE CC 70000001] ___
+tests/test_buyer_actor_role_controls_v1.py:159: in test_explicit_documents
+    final = resolve_actor_name(State(parsed_params=initial, raw_query=query), ActorNameResolver(index))["parsed_params"]
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: State.__init__() got an unexpected keyword argument 'parsed_params'
+__ test_geography_and_topic_do_not_become_buyer_or_actor[contratos de bogota] __
+tests/test_buyer_actor_role_controls_v1.py:168: in test_geography_and_topic_do_not_become_buyer_or_actor
+    final = resolve_actor_name(State(parsed_params=initial, raw_query=query), ActorNameResolver(index))["parsed_params"]
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: State.__init__() got an unexpected keyword argument 'parsed_params'
+_ test_geography_and_topic_do_not_become_buyer_or_actor[contratos de software] _
+tests/test_buyer_actor_role_controls_v1.py:168: in test_geography_and_topic_do_not_become_buyer_or_actor
+    final = resolve_actor_name(State(parsed_params=initial, raw_query=query), ActorNameResolver(index))["parsed_params"]
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: State.__init__() got an unexpected keyword argument 'parsed_params'
+_______ test_negation_keeps_policy[contratos sin proveedor FUNDACARIBE] ________
+tests/test_buyer_actor_role_controls_v1.py:189: in test_negation_keeps_policy
+    result = flow.run_query(query, chat_id="negative", today=date(2026, 9, 8))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/orchestrator.py:238: in run_query
+    result = self._admit_and_dispatch(ctx, seed_resolved_params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/orchestrator.py:312: in _admit_and_dispatch
+    return coordinate_turn(self, ctx, seed_resolved_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/workflow/turn_coordination.py:25: in coordinate_turn
+    return workflow._dispatch(ctx, seed)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/orchestrator.py:339: in _dispatch
+    result = handle_normal_flow(self.deps, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/workflow/handlers/normal_flow.py:104: in handle_normal_flow
+    *_, state = app.run(halt_after=["format_response", "clarify_query"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../secoppal/.venv/lib/python3.14/site-packages/burr/telemetry.py:276: in wrapped_fn
+    return call_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+../secoppal/.venv/lib/python3.14/site-packages/burr/core/application.py:685: in wrapper_sync
+    return fn(app_self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../secoppal/.venv/lib/python3.14/site-packages/burr/core/application.py:1287: in run
+    next(gen)
+../secoppal/.venv/lib/python3.14/site-packages/burr/core/application.py:1225: in iterate
+    prior_action, result, state = self.step(inputs=inputs)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^
+../secoppal/.venv/lib/python3.14/site-packages/burr/core/application.py:685: in wrapper_sync
+    return fn(app_self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../secoppal/.venv/lib/python3.14/site-packages/burr/core/application.py:857: in step
+    out = self._step(inputs=inputs, _run_hooks=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../secoppal/.venv/lib/python3.14/site-packages/burr/core/application.py:900: in _step
+    result, new_state = _run_single_step_action(
+../secoppal/.venv/lib/python3.14/site-packages/burr/core/application.py:298: in _run_single_step_action
+    action.run_and_update(state, **inputs), action.name, action.schema
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../secoppal/.venv/lib/python3.14/site-packages/burr/core/action.py:671: in run_and_update
+    return self._fn(state, **self._bound_params, **run_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/workflow/actions/execution.py:173: in execute_query
+    total, results, secop_timings, approximate = _query_first_then_count(
+app/core/workflow/helpers.py:235: in _query_first_then_count
+    results = _query_with_ordering(
+app/core/workflow/helpers.py:173: in _query_with_ordering
+    return client.query(dataset_id, soql)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_buyer_actor_role_controls_v1.py:186: in forbidden
+    pytest.fail("Negated role cannot execute")
+E   Failed: Negated role cannot execute
+=========================== short test summary info ============================
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[cartagena-False]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[cartagena-True]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[barranquilla-False]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[barranquilla-True]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -universidad del atlantico]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\xe9 ha contratado -universidad del atlantico]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -universidad del atlantico]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\xe9 ha contratado -universidad del atlantico]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor alcaldia de cartagena-alcaldia de cartagena]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-1-contratos del proveedor FUNDACARIBE con la Alcald\xeda de Cartagena-FUNDACARIBE]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos de FUNDACARIBE-FUNDACARIBE]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[False-2-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor alcaldia de cartagena-alcaldia de cartagena]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-1-contratos del proveedor FUNDACARIBE con la Alcald\xeda de Cartagena-FUNDACARIBE]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos de FUNDACARIBE-FUNDACARIBE]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_legitimate_provider[True-2-contratos de alcaldia de cartagena servicios integrados-alcaldia de cartagena servicios integrados]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_explicit_documents[contratos del proveedor CC 70000001]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_explicit_documents[contratos del proveedor FUNDACARIBE CC 70000001]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_geography_and_topic_do_not_become_buyer_or_actor[contratos de bogota]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_geography_and_topic_do_not_become_buyer_or_actor[contratos de software]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_negation_keeps_policy[contratos sin proveedor FUNDACARIBE]
+25 failed, 43 passed in 13.95s

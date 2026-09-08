@@ -1,0 +1,3 @@
+{"query": "que ha contratado UNIVERSIDAD INDUSTRIAL DE SANTANDER", "buyer": "UNIVERSIDAD INDUSTRIAL DE SANTANDER", "params": {"dataset": "contratos", "dataset_explicit": false, "entidad": "Universidad industrial de santander", "entidad_resolved": "UNIVERSIDAD INDUSTRIAL DE SANTANDER", "entidad_resolution": {"value": "UNIVERSIDAD INDUSTRIAL DE SANTANDER", "method": "rewrite_(?:la", "kind": "buyer_entity", "confidence": "high", "like_value": null, "metadata": {"rewritten_from": "universidad industrial de santander", "resolution_method": "exact"}}}}
+.
+1 passed in 2.07s

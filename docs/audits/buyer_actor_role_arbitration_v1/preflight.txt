@@ -1,0 +1,29 @@
+$ git rev-parse --show-toplevel
+/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-arbitration-v1
+exit=0
+$ git branch --show-current
+fix/buyer-actor-role-arbitration-v1
+exit=0
+$ git rev-parse HEAD
+aab5d41d45e58f21b727929d4ec454f8fbbbf9cd
+exit=0
+$ /Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff --version
+ruff 0.16.4
+exit=0
+$ /Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep --version
+1.176.0
+exit=0
+$ /Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -c import hypothesis; print(hypothesis.__version__)
+6.165.10
+exit=0
+$ /opt/homebrew/opt/node@22/bin/node /Users/rodrigoortiz/Documents/tools/codegraph/dist/bin/codegraph.js --version
+0.9.6
+exit=0
+$ /opt/homebrew/opt/node@22/bin/node /Users/rodrigoortiz/Documents/tools/codegraph/dist/bin/codegraph.js status
+[1m
+CodeGraph Status
+[0m
+[34mℹ[0m Project: /Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-arbitration-v1
+[33m⚠[0m Not initialized
+[34mℹ[0m Run "codegraph init" to initialize
+exit=0
