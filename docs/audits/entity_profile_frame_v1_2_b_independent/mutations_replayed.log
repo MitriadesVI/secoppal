@@ -1,0 +1,19 @@
+baseline verde: 13 passed in 4.35s
+
+M1-pending-without-selection: DETECTED (restored=True) — 1 failed in 1.12s
+M2-old-cursor-after-corruption: DETECTED (restored=True) — 1 failed in 0.99s
+M3-seed-bypasses-admission: DETECTED (restored=True) — 1 failed in 0.96s
+M4-subject-and-event-swapped: DETECTED (restored=True) — 1 failed in 0.82s
+M5-or-flattened-into-and: DETECTED (restored=True) — 1 failed in 0.98s
+M6-exclusion-dropped-from-scope: DETECTED (restored=True) — 1 failed in 0.91s
+M7-legacy-reader-back-in-the-path: DETECTED (restored=True) — 2 failed in 1.40s
+M8-transport-success-fabricated: DETECTED (restored=True) — 1 failed in 0.86s
+M9-nonfinite-metric-accredited: DETECTED (restored=True) — 1 failed in 0.82s
+M10-month-globalised: DETECTED (restored=True) — 1 failed in 0.83s
+M12-cross-process-lock-removed: DETECTED (restored=True) — 1 failed in 0.69s
+M11-injected-clock-ignored: DETECTED (restored=True) — 1 failed in 0.94s
+
+{"detected": 12, "survived": 0, "inconclusive": 0, "anchor_not_found": 0, "total": 12}
+reporte: docs/audits/entity_profile_frame_v1_2_b/mutation_campaign.json
+
+EXIT_CODE=0

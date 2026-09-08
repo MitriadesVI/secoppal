@@ -1,0 +1,12 @@
+{
+  "candidate": "1b2a85f89e5d556f1de392e11b9da437da6540d1",
+  "tracked_candidate_files_checked": 765,
+  "changed_candidate_files": [],
+  "original_adversarial_sha": "e024753a7a3e26a80aa0c07359078544f45f4ee5",
+  "original_adversarial_hashes": {
+    "tests/test_entity_profile_v1_1_reaudit.py": "41d722fa0855a016415db4fc3afd63aa987b20ddf2f745e7a1574149a78bdf4c",
+    "tests/test_entity_profile_v1_1_reaudit_evidence.py": "6b829183af93fee105c89a86d86c12360dccd7c8e1e7bce2c5ee7f0a2997b2d6"
+  },
+  "runtime_diff_since_author_tested_head": "",
+  "a2_r3d_existing_test_diff": ""
+}

@@ -1,0 +1,102 @@
+SEED None refinement 1
+FSEED {} admission_stale_seed_reference 0
+.SEED {'result_id': 'foreign', 'conversation_revision': 1} admission_stale_seed_reference 0
+.SEED {'result_id': '1991b167741c', 'conversation_revision': 1} refinement 1
+.CURSOR cursor_id pagination_more 0 25
+FCURSOR generation pagination_more 0 25
+FCURSOR fingerprint pagination_more 0 25
+FCURSOR order_contract pagination_more 0 25
+FCURSOR expiration pagination_more 0 25
+FCURSOR group pagination_more 0 25
+FACTOR_TOKEN false actor_selection_stale {}
+.ACTOR_TOKEN true admission_profile_has_no_options {}
+FROLLBACK pagination_more 25 0
+FMIGRATION entity_profile_suppliers ProfileConversationState(confirmed_frame=None, pending=None, schema_version=1) ("SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5", "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5")
+FF
+=================================== FAILURES ===================================
+_____________ test_ui_seed_requires_current_result_reference[None] _____________
+tests/test_v12b_independent_boundaries.py:43: in test_ui_seed_requires_current_result_reference
+    assert turn.clarifies and not turn.calls
+E   assert (False)
+E    +  where False = TurnObservation(query='aplicar filtro', result={'response': '🎚️ Refinamiento aplicado\n\nEncontre 1 resultado listos p...(UPPER('%pavimentacion%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"),)).clarifies
+_____ test_pagination_consumes_the_published_capability[cursor_id-foreign] _____
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.4}, calls=()).clarifies
+____ test_pagination_consumes_the_published_capability[generation-foreign] _____
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.2}, calls=()).clarifies
+____ test_pagination_consumes_the_published_capability[fingerprint-foreign] ____
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.5}, calls=()).clarifies
+__ test_pagination_consumes_the_published_capability[order_contract-foreign] ___
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.2}, calls=()).clarifies
+_ test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00] _
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.4}, calls=()).clarifies
+_______ test_pagination_consumes_the_published_capability[group-foreign] _______
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.5}, calls=()).clarifies
+___________ test_current_actor_api_token_reaches_actor_handler[true] ___________
+tests/test_v12b_independent_boundaries.py:78: in test_current_actor_api_token_reaches_actor_handler
+    assert selected['resolved_params'].get('actor_resolution_status') == 'RESOLVED'
+E   AssertionError: assert None == 'RESOLVED'
+E    +  where None = <built-in method get of dict object at 0x10aae9240>('actor_resolution_status')
+E    +    where <built-in method get of dict object at 0x10aae9240> = {}.get
+________ test_rollback_does_not_reactivate_a_preprofile_tabular_cursor _________
+tests/test_v12b_independent_boundaries.py:92: in test_rollback_does_not_reactivate_a_preprofile_tabular_cursor
+    assert turn.clarifies and not turn.result.get('rows')
+E   AssertionError: assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...n_buffer_hit': True, 'source_total_approximate': False, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 2.7}, calls=()).clarifies
+___________ test_legacy_profile_migrates_or_blocks_in_the_real_route ___________
+tests/test_v12b_independent_boundaries.py:104: in test_legacy_profile_migrates_or_blocks_in_the_real_route
+    assert not turn.calls or chat.profile_state().confirmed_frame is not None, 'B ON executed inherited legacy profile without migrating it'
+E   AssertionError: B ON executed inherited legacy profile without migrating it
+E   assert (not (('aggregate', 'jbjy-vk9h', 'SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name,...roveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5')) or None is not None)
+E    +  where (('aggregate', 'jbjy-vk9h', 'SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name,...roveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5')) = TurnObservation(query='proveedores', result={'response': 'ALCALDIA MUNICIPAL DE BARANOA — SECOP II Contratos\n\nFirmad...oveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"))).calls
+E    +  and   None = ProfileConversationState(confirmed_frame=None, pending=None, schema_version=1).confirmed_frame
+E    +    where ProfileConversationState(confirmed_frame=None, pending=None, schema_version=1) = profile_state()
+E    +      where profile_state = <entity_profile_frame_b_harness.Conversation object at 0x1141fa5d0>.profile_state
+__________ test_reference_free_seed_never_acquires_tabular_authority ___________
+tests/test_v12b_independent_boundaries.py:108: in test_reference_free_seed_never_acquires_tabular_authority
+    @given(st.text(alphabet='abcdef', min_size=1, max_size=12))
+                   ^^^
+tests/test_v12b_independent_boundaries.py:115: in test_reference_free_seed_never_acquires_tabular_authority
+    assert decision.route is AdmissionRoute.CLARIFY
+E   AssertionError: assert <AdmissionRoute.DELEGATED: 'DELEGATED'> is <AdmissionRoute.CLARIFY: 'CLARIFY'>
+E    +  where <AdmissionRoute.DELEGATED: 'DELEGATED'> = AdmissionDecision(route=<AdmissionRoute.DELEGATED: 'DELEGATED'>, reason='delegated_refinement', shape=<InputShape.SEED_REFINEMENT: 'SEED_REFINEMENT'>, owner=<ContinuationOwner.TABULAR: 'TABULAR'>, response='').route
+E    +  and   <AdmissionRoute.CLARIFY: 'CLARIFY'> = AdmissionRoute.CLARIFY
+E   Failing test case: test_reference_free_seed_never_acquires_tabular_authority(
+E       result_id='a',  # or any other generated value
+E   )
+=========================== short test summary info ============================
+FAILED tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[None]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[cursor_id-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[generation-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[fingerprint-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[order_contract-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[group-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[true]
+FAILED tests/test_v12b_independent_boundaries.py::test_rollback_does_not_reactivate_a_preprofile_tabular_cursor
+FAILED tests/test_v12b_independent_boundaries.py::test_legacy_profile_migrates_or_blocks_in_the_real_route
+FAILED tests/test_v12b_independent_boundaries.py::test_reference_free_seed_never_acquires_tabular_authority
+11 failed, 4 passed in 4.21s

@@ -1,0 +1,181 @@
+.FFFFFWRONG_FRAME ('cde2c57f-2268-558d-bba8-e1c7a3632355', 1) ('cde2c57f-2268-558d-bba8-e1c7a3632355', 2) ALCALDIA MUNICIPAL DE BARANOA — SECOP II Contratos
+
+Agosto de 2026, según fecha de firma.
+
+• Se observan 4 contratos por $1.0 mil millones; promedio $250 millones. [SECOP II Contratos]
+• Principal contratista por valor: PROVEEDOR MAYOR SAS ($700 millones). [SECOP II Contratos]
+• Principal contratista por número de contratos: PROVEEDOR FRECUENTE SAS (3 contratos). [SECOP II Contratos]
+• Contrato reciente: OBRA PÚBLICA. [SECOP II Contratos]
+
+Puedes pedirme sus proveedores, valores o contratos recientes.
+FWRONG_FRAME ('375d72d8-19bd-5143-b558-67330389224d', 1) ('6426f762-cd51-58b3-b367-9a6e3d0a95a5', 1) MUNICIPIO DE GALAPA. — SECOP II Contratos
+
+Agosto de 2026, según fecha de firma.
+
+• Se observan 4 contratos por $1.0 mil millones; promedio $250 millones. [SECOP II Contratos]
+• Principal contratista por valor: PROVEEDOR MAYOR SAS ($700 millones). [SECOP II Contratos]
+• Principal contratista por número de contratos: PROVEEDOR FRECUENTE SAS (3 contratos). [SECOP II Contratos]
+• Contrato reciente: OBRA PÚBLICA. [SECOP II Contratos]
+
+Puedes pedirme sus proveedores, valores o contratos recientes.
+F..SEED None refinement 1
+FSEED {} admission_stale_seed_reference 0
+.SEED {'result_id': 'foreign', 'conversation_revision': 1} admission_stale_seed_reference 0
+.SEED {'result_id': '675411f23be4', 'conversation_revision': 1} refinement 1
+.CURSOR cursor_id pagination_more 0 25
+FCURSOR generation pagination_more 0 25
+FCURSOR fingerprint pagination_more 0 25
+FCURSOR order_contract pagination_more 0 25
+FCURSOR expiration pagination_more 0 25
+FCURSOR group pagination_more 0 25
+FACTOR_TOKEN false actor_selection_stale {}
+.ACTOR_TOKEN true admission_profile_has_no_options {}
+FROLLBACK pagination_more 25 0
+FMIGRATION entity_profile_suppliers ProfileConversationState(confirmed_frame=None, pending=None, schema_version=1) ("SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5", "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5")
+FFRADAR_RUN radar_run_ok [('lookup', 'synthetic-owner', 'Sintetico'), ('run', 'synthetic-radar')]
+.RADAR_RUN entity_profile_pending_unresolved []
+FRADAR_SAVE radar_saved [{'owner': 'ind-radar-save', 'name': 'Sintetico', 'params': {'dataset': 'contratos', 'contract_type_include': ['obra'], 'ciudad': 'Baranoa', 'departamento_resolved': 'Atlántico', 'municipal_territory': {'version': 'DANE_DIVIPOLA_MGN_2025_M0_2026-09-03', 'mention': 'baranoa', 'candidates': [{'divipola': '08078', 'municipality': 'BARANOA', 'department': 'ATLÁNTICO', 'department_value': 'Atlántico'}], 'status': 'resolved', 'divipola': '08078', 'municipality': 'BARANOA', 'department': 'ATLÁNTICO', 'department_value': 'Atlántico'}, 'limit': 50}, 'channel': 'streamlit'}]
+F
+=================================== FAILURES ===================================
+_ test_published_execution_matches_sent_sql_and_its_confirmed_frame[proveedores de-2] _
+tests/test_v12b_independent_execution.py:23: in test_published_execution_matches_sent_sql_and_its_confirmed_frame
+    assert record['frame_ref'] == [frame.frame_id, frame.revision]
+           ^^^^^^^^^^^^^^^^^^^
+E   TypeError: 'NoneType' object is not subscriptable
+_ test_published_execution_matches_sent_sql_and_its_confirmed_frame[montos de-1] _
+tests/test_v12b_independent_execution.py:23: in test_published_execution_matches_sent_sql_and_its_confirmed_frame
+    assert record['frame_ref'] == [frame.frame_id, frame.revision]
+           ^^^^^^^^^^^^^^^^^^^
+E   TypeError: 'NoneType' object is not subscriptable
+_ test_published_execution_matches_sent_sql_and_its_confirmed_frame[modalidades de-1] _
+tests/test_v12b_independent_execution.py:23: in test_published_execution_matches_sent_sql_and_its_confirmed_frame
+    assert record['frame_ref'] == [frame.frame_id, frame.revision]
+           ^^^^^^^^^^^^^^^^^^^
+E   TypeError: 'NoneType' object is not subscriptable
+_ test_published_execution_matches_sent_sql_and_its_confirmed_frame[evolucion de-2] _
+tests/test_v12b_independent_execution.py:23: in test_published_execution_matches_sent_sql_and_its_confirmed_frame
+    assert record['frame_ref'] == [frame.frame_id, frame.revision]
+           ^^^^^^^^^^^^^^^^^^^
+E   TypeError: 'NoneType' object is not subscriptable
+_ test_published_execution_matches_sent_sql_and_its_confirmed_frame[recientes de-2] _
+tests/test_v12b_independent_execution.py:23: in test_published_execution_matches_sent_sql_and_its_confirmed_frame
+    assert record['frame_ref'] == [frame.frame_id, frame.revision]
+           ^^^^^^^^^^^^^^^^^^^
+E   TypeError: 'NoneType' object is not subscriptable
+___ test_renderer_rejects_a_frame_other_than_the_authorized_revision[False] ____
+tests/test_v12b_independent_execution.py:45: in test_renderer_rejects_a_frame_other_than_the_authorized_revision
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'ValueError'>
+____ test_renderer_rejects_a_frame_other_than_the_authorized_revision[True] ____
+tests/test_v12b_independent_execution.py:45: in test_renderer_rejects_a_frame_other_than_the_authorized_revision
+    with pytest.raises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'ValueError'>
+_____________ test_ui_seed_requires_current_result_reference[None] _____________
+tests/test_v12b_independent_boundaries.py:43: in test_ui_seed_requires_current_result_reference
+    assert turn.clarifies and not turn.calls
+E   assert (False)
+E    +  where False = TurnObservation(query='aplicar filtro', result={'response': '🎚️ Refinamiento aplicado\n\nEncontre 1 resultado listos p...(UPPER('%pavimentacion%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"),)).clarifies
+_____ test_pagination_consumes_the_published_capability[cursor_id-foreign] _____
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.7}, calls=()).clarifies
+____ test_pagination_consumes_the_published_capability[generation-foreign] _____
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.8}, calls=()).clarifies
+____ test_pagination_consumes_the_published_capability[fingerprint-foreign] ____
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.9}, calls=()).clarifies
+__ test_pagination_consumes_the_published_capability[order_contract-foreign] ___
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.4}, calls=()).clarifies
+_ test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00] _
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 3.8}, calls=()).clarifies
+_______ test_pagination_consumes_the_published_capability[group-foreign] _______
+tests/test_v12b_independent_boundaries.py:63: in test_pagination_consumes_the_published_capability
+    assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
+E   AssertionError: Mismatched published capability did not govern pagination
+E   assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...le': None, 'pending_profile': None, 'delegated': None}, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 4.2}, calls=()).clarifies
+___________ test_current_actor_api_token_reaches_actor_handler[true] ___________
+tests/test_v12b_independent_boundaries.py:78: in test_current_actor_api_token_reaches_actor_handler
+    assert selected['resolved_params'].get('actor_resolution_status') == 'RESOLVED'
+E   AssertionError: assert None == 'RESOLVED'
+E    +  where None = <built-in method get of dict object at 0x1151381c0>('actor_resolution_status')
+E    +    where <built-in method get of dict object at 0x1151381c0> = {}.get
+________ test_rollback_does_not_reactivate_a_preprofile_tabular_cursor _________
+tests/test_v12b_independent_boundaries.py:92: in test_rollback_does_not_reactivate_a_preprofile_tabular_cursor
+    assert turn.clarifies and not turn.result.get('rows')
+E   AssertionError: assert (False)
+E    +  where False = TurnObservation(query='muestrame mas', result={'response': '📄 Resultados mostrados 26-50; 60 validados conocidos de 20...n_buffer_hit': True, 'source_total_approximate': False, 'turn_deadline_ms': 15000.0, 'turn_elapsed_ms': 2.7}, calls=()).clarifies
+___________ test_legacy_profile_migrates_or_blocks_in_the_real_route ___________
+tests/test_v12b_independent_boundaries.py:104: in test_legacy_profile_migrates_or_blocks_in_the_real_route
+    assert not turn.calls or chat.profile_state().confirmed_frame is not None, 'B ON executed inherited legacy profile without migrating it'
+E   AssertionError: B ON executed inherited legacy profile without migrating it
+E   assert (not (('aggregate', 'jbjy-vk9h', 'SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name,...roveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5')) or None is not None)
+E    +  where (('aggregate', 'jbjy-vk9h', 'SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name,...roveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5')) = TurnObservation(query='proveedores', result={'response': 'ALCALDIA MUNICIPAL DE BARANOA — SECOP II Contratos\n\nFirmad...oveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"))).calls
+E    +  and   None = ProfileConversationState(confirmed_frame=None, pending=None, schema_version=1).confirmed_frame
+E    +    where ProfileConversationState(confirmed_frame=None, pending=None, schema_version=1) = profile_state()
+E    +      where profile_state = <entity_profile_frame_b_harness.Conversation object at 0x108de74d0>.profile_state
+__________ test_reference_free_seed_never_acquires_tabular_authority ___________
+tests/test_v12b_independent_boundaries.py:108: in test_reference_free_seed_never_acquires_tabular_authority
+    @given(st.text(alphabet='abcdef', min_size=1, max_size=12))
+                   ^^^
+tests/test_v12b_independent_boundaries.py:115: in test_reference_free_seed_never_acquires_tabular_authority
+    assert decision.route is AdmissionRoute.CLARIFY
+E   AssertionError: assert <AdmissionRoute.DELEGATED: 'DELEGATED'> is <AdmissionRoute.CLARIFY: 'CLARIFY'>
+E    +  where <AdmissionRoute.DELEGATED: 'DELEGATED'> = AdmissionDecision(route=<AdmissionRoute.DELEGATED: 'DELEGATED'>, reason='delegated_refinement', shape=<InputShape.SEED_REFINEMENT: 'SEED_REFINEMENT'>, owner=<ContinuationOwner.TABULAR: 'TABULAR'>, response='').route
+E    +  and   <AdmissionRoute.CLARIFY: 'CLARIFY'> = AdmissionRoute.CLARIFY
+E   Failing test case: test_reference_free_seed_never_acquires_tabular_authority(
+E       result_id='a',  # or any other generated value
+E   )
+____ test_radar_run_preserves_owner_and_reaches_only_synthetic_effect[True] ____
+tests/test_v12b_independent_boundaries.py:146: in test_radar_run_preserves_owner_and_reaches_only_synthetic_effect
+    assert effects == [('lookup', 'synthetic-owner', 'Sintetico'), ('run', 'synthetic-radar')]
+E   AssertionError: assert [] == [('lookup', '...hetic-radar')]
+E
+E     Right contains 2 more items, first extra item: ('lookup', 'synthetic-owner', 'Sintetico')
+E     Use -v to get more diff
+______ test_radar_save_cannot_export_an_older_tabular_search_over_profile ______
+tests/test_v12b_independent_boundaries.py:164: in test_radar_save_cannot_export_an_older_tabular_search_over_profile
+    assert not effects, 'Profile exported a previous tabular universe without an explicit referent'
+E   AssertionError: Profile exported a previous tabular universe without an explicit referent
+E   assert not [{'channel': 'streamlit', 'name': 'Sintetico', 'owner': 'ind-radar-save', 'params': {'ciudad': 'Baranoa', 'contract_type_include': ['obra'], 'dataset': 'contratos', 'departamento_resolved': 'Atlántico', ...}}]
+=========================== short test summary info ============================
+FAILED tests/test_v12b_independent_execution.py::test_published_execution_matches_sent_sql_and_its_confirmed_frame[proveedores de-2]
+FAILED tests/test_v12b_independent_execution.py::test_published_execution_matches_sent_sql_and_its_confirmed_frame[montos de-1]
+FAILED tests/test_v12b_independent_execution.py::test_published_execution_matches_sent_sql_and_its_confirmed_frame[modalidades de-1]
+FAILED tests/test_v12b_independent_execution.py::test_published_execution_matches_sent_sql_and_its_confirmed_frame[evolucion de-2]
+FAILED tests/test_v12b_independent_execution.py::test_published_execution_matches_sent_sql_and_its_confirmed_frame[recientes de-2]
+FAILED tests/test_v12b_independent_execution.py::test_renderer_rejects_a_frame_other_than_the_authorized_revision[False]
+FAILED tests/test_v12b_independent_execution.py::test_renderer_rejects_a_frame_other_than_the_authorized_revision[True]
+FAILED tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[None]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[cursor_id-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[generation-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[fingerprint-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[order_contract-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00]
+FAILED tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[group-foreign]
+FAILED tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[true]
+FAILED tests/test_v12b_independent_boundaries.py::test_rollback_does_not_reactivate_a_preprofile_tabular_cursor
+FAILED tests/test_v12b_independent_boundaries.py::test_legacy_profile_migrates_or_blocks_in_the_real_route
+FAILED tests/test_v12b_independent_boundaries.py::test_reference_free_seed_never_acquires_tabular_authority
+FAILED tests/test_v12b_independent_boundaries.py::test_radar_run_preserves_owner_and_reaches_only_synthetic_effect[True]
+FAILED tests/test_v12b_independent_boundaries.py::test_radar_save_cannot_export_an_older_tabular_search_over_profile
+20 failed, 8 passed in 7.49s

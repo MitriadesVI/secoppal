@@ -1,0 +1,5 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest tests/test_module_size_limits.py -q
+..                                                                       [100%]
+2 passed in 0.13s
+
+EXIT_CODE=0

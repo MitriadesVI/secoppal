@@ -1,0 +1,8 @@
+app/core/workflow/turn_publication.py:135:            cursor_id=f"{reservation.turn_id}:{name}",
+app/core/workflow/turn_publication.py:138:            generation=reservation.turn_id,
+app/core/workflow/continuation.py:54:    cursor_id: str
+app/core/workflow/continuation.py:57:    generation: str
+app/core/workflow/continuation.py:62:            "group": self.group, "cursor_id": self.cursor_id,
+app/core/workflow/continuation.py:65:            "generation": self.generation, "expiration": self.expiration,
+app/core/workflow/continuation.py:74:                group=str(raw["group"]), cursor_id=str(raw["cursor_id"]),
+app/core/workflow/continuation.py:77:                generation=str(raw["generation"]),

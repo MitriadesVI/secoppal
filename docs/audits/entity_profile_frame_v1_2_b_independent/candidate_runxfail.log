@@ -1,0 +1,22 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_actor_region_and_buyer_together_still_resolve[contratos del proveedor ana maria llanos en los llanos con alcaldia de barranquilla-Orinoquia] _
+tests/test_actor_hardening_v2_1_remediation.py:354: in test_actor_region_and_buyer_together_still_resolve
+    assert params.get("actor_resolution_status") == "RESOLVED"
+E   AssertionError: assert 'CANDIDATES' == 'RESOLVED'
+E
+E     - RESOLVED
+E     + CANDIDATES
+_ test_actor_region_and_buyer_together_still_resolve[contratos del proveedor carlos rueda caribe en Caribe con alcaldia de barranquilla-Caribe] _
+tests/test_actor_hardening_v2_1_remediation.py:354: in test_actor_region_and_buyer_together_still_resolve
+    assert params.get("actor_resolution_status") == "RESOLVED"
+E   AssertionError: assert 'CANDIDATES' == 'RESOLVED'
+E
+E     - RESOLVED
+E     + CANDIDATES
+=========================== short test summary info ============================
+FAILED tests/test_actor_hardening_v2_1_remediation.py::test_actor_region_and_buyer_together_still_resolve[contratos del proveedor ana maria llanos en los llanos con alcaldia de barranquilla-Orinoquia]
+FAILED tests/test_actor_hardening_v2_1_remediation.py::test_actor_region_and_buyer_together_still_resolve[contratos del proveedor carlos rueda caribe en Caribe con alcaldia de barranquilla-Caribe]
+2 failed in 1.19s
+
+EXIT_CODE=1

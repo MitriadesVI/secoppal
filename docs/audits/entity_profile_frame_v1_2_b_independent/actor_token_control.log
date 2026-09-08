@@ -1,0 +1,14 @@
+ACTOR_TOKEN false actor_selection_stale {}
+.ACTOR_TOKEN true admission_profile_has_no_options {}
+ACTOR_AUTHORITY_CONTROL actor_profile
+F
+=================================== FAILURES ===================================
+___________ test_current_actor_api_token_reaches_actor_handler[true] ___________
+tests/test_v12b_independent_boundaries.py:87: in test_current_actor_api_token_reaches_actor_handler
+    assert selected['resolved_params'].get('actor_resolution_status') == 'RESOLVED'
+E   AssertionError: assert None == 'RESOLVED'
+E    +  where None = <built-in method get of dict object at 0x1140c0980>('actor_resolution_status')
+E    +    where <built-in method get of dict object at 0x1140c0980> = {}.get
+=========================== short test summary info ============================
+FAILED tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[true]
+1 failed, 1 passed, 19 deselected in 1.36s

@@ -1,0 +1,10 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest tests/test_entity_profile_frame_core.py tests/test_entity_profile_frame_independent_review.py tests/test_entity_profile_frame_independent_contracts.py tests/test_entity_profile_frame_integration_contract.py tests/test_v12a1_independent_counterexamples.py tests/test_entity_profile_frame_mutations.py tests/test_entity_profile_frame_properties.py tests/test_entity_profile_semantic_corpus.py -q
+........................................................................ [ 17%]
+........................................................................ [ 35%]
+........................................................................ [ 52%]
+........................................................................ [ 70%]
+........................................................................ [ 88%]
+................................................                         [100%]
+408 passed in 1.86s
+
+EXIT_CODE=0

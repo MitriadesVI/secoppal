@@ -1,0 +1,228 @@
+{
+  "counts": {
+    "F6": 13,
+    "F3": 8,
+    "F7": 2,
+    "F10": 1,
+    "F1": 8,
+    "F2": 4,
+    "F5": 9,
+    "F9": 2,
+    "F4": 4,
+    "F8": 2
+  },
+  "failed_cases": [
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[None]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[cursor_id-foreign]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[generation-foreign]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[fingerprint-foreign]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[order_contract-foreign]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[group-foreign]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[False-true]",
+      "finding": "F3"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[True-true]",
+      "finding": "F3"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_rollback_does_not_reactivate_a_preprofile_tabular_cursor",
+      "finding": "F7"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_legacy_profile_migrates_or_blocks_in_the_real_route",
+      "finding": "F7"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_reference_free_seed_never_acquires_tabular_authority",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_radar_run_preserves_owner_and_reaches_only_synthetic_effect[True]",
+      "finding": "F3"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_radar_save_cannot_export_an_older_tabular_search_over_profile",
+      "finding": "F10"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_delegated_results_publish_their_actual_owner[mis radares-RADAR]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_delegated_results_publish_their_actual_owner[contratos del proveedor CC 70000011-ACTOR]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_delegated_results_publish_their_actual_owner[CO1.PCCNTR.12345-NONE]",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_real_sidecar_expiry_does_not_silently_repeat_a_search",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_bare_more_uses_the_same_tabular_cursor_as_the_full_phrase",
+      "finding": "F6"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_clarification_preserves_the_profile_it_offers_to_continue[False-M\\xe1s.]",
+      "finding": "F1"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_clarification_preserves_the_profile_it_offers_to_continue[False-1]",
+      "finding": "F1"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_clarification_preserves_the_profile_it_offers_to_continue[False-m\\xe1s repetido]",
+      "finding": "F1"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_clarification_preserves_the_profile_it_offers_to_continue[False-old-chip]",
+      "finding": "F1"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_clarification_preserves_the_profile_it_offers_to_continue[True-M\\xe1s.]",
+      "finding": "F1"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_clarification_preserves_the_profile_it_offers_to_continue[True-1]",
+      "finding": "F1"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_clarification_preserves_the_profile_it_offers_to_continue[True-m\\xe1s repetido]",
+      "finding": "F1"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_clarification_preserves_the_profile_it_offers_to_continue[True-old-chip]",
+      "finding": "F1"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_full_reformulation_exits_a_pending_without_alternatives[alcaldia de baranoa-None]",
+      "finding": "F2"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_full_reformulation_exits_a_pending_without_alternatives[alcaldia de baranoa-alcaldia de baranoa]",
+      "finding": "F2"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_full_reformulation_exits_a_pending_without_alternatives[alcaldia de galapa-None]",
+      "finding": "F2"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_full_reformulation_exits_a_pending_without_alternatives[alcaldia de galapa-alcaldia de galapa]",
+      "finding": "F2"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_explicit_external_commands_keep_their_handler[mis radares-radar_-True]",
+      "finding": "F3"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_explicit_external_commands_keep_their_handler[ejecutar radar Sintetico-radar_-True]",
+      "finding": "F3"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_explicit_external_commands_keep_their_handler[CO1.PCCNTR.12345-direct_lookup-True]",
+      "finding": "F3"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_explicit_external_commands_keep_their_handler[contratos del proveedor CC 70000011-actor-True]",
+      "finding": "F3"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_explicit_external_commands_keep_their_handler[procesos de pavimentacion en bogota-tabular-True]",
+      "finding": "F3"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[plan_ref]",
+      "finding": "F5"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[evidence_ref]",
+      "finding": "F5"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[frame_ref]",
+      "finding": "F5"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[result_id]",
+      "finding": "F5"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[conversation_revision]",
+      "finding": "F5"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[execution_record]",
+      "finding": "F5"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[chat_id]",
+      "finding": "F5"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[record_version]",
+      "finding": "F5"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[catalog_version]",
+      "finding": "F5"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_execution.py::test_renderer_rejects_a_frame_other_than_the_authorized_revision[False]",
+      "finding": "F9"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_execution.py::test_renderer_rejects_a_frame_other_than_the_authorized_revision[True]",
+      "finding": "F9"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_publication.py::test_reservation_serializes_execution_not_only_append[0-True]",
+      "finding": "F4"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_publication.py::test_reservation_serializes_execution_not_only_append[1-True]",
+      "finding": "F4"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_publication.py::test_reset_invalidates_an_already_reserved_initial_turn",
+      "finding": "F4"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_publication.py::test_missing_fcntl_does_not_silently_admit_writers",
+      "finding": "F8"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_publication.py::test_failed_delegated_publication_cannot_replace_legacy_authority",
+      "finding": "F4"
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_publication.py::test_two_processes_both_enter_when_fcntl_is_missing",
+      "finding": "F8"
+    }
+  ]
+}

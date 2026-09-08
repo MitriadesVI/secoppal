@@ -1,0 +1,5 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest tests/test_entity_profile_frame_b_utility.py -q
+...............                                                          [100%]
+15 passed in 3.55s
+
+EXIT_CODE=0

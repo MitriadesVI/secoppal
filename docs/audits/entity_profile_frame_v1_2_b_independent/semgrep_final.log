@@ -1,0 +1,172 @@
+
+
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 332 files tracked by git with 3 Code rules:
+  Scanning 315 files with 3 python rules.
+
+
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 10 (10 blocking)
+ • Rules run: 3
+ • Targets scanned: 315
+ • Parsed lines: ~100.0%
+ • Scan skipped:
+   ◦ Files larger than  files 1.0 MB: 1
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 3 rules on 315 files: 10 findings.
+
+
+┌──────────────────┐
+│ 10 Code Findings │
+└──────────────────┘
+
+    app/core/formatter.py
+   ❯❯❱ semgrep.except-exception-que-silencia
+          ❰❰ Blocking ❱❱
+          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es
+          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.
+          Registra o re-lanza.
+
+          171┆ try:
+          172┆     from app.core.relevance import RelevanceScorer
+          173┆     field = "objeto_del_contrato" if dataset_id == "jbjy-vk9h" else
+               "nombre_del_procedimiento"
+          174┆     scored = RelevanceScorer().score_rows(topic_flat, out, field=field)
+          175┆     out = [r for r, _ in scored]
+          176┆ except Exception:
+          177┆     pass  # best-effort, igual que en normal_flow
+            ⋮┆----------------------------------------
+          699┆ try:
+          700┆     median_str = f" (la mediana es {format_cop(vs['median'])})"
+          701┆ except Exception:
+          702┆     pass
+
+    app/core/response_policy.py
+   ❯❯❱ semgrep.except-exception-que-silencia
+          ❰❰ Blocking ❱❱
+          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es
+          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.
+          Registra o re-lanza.
+
+          508┆ try:
+          509┆     result = narrator.narrate(
+          510┆         rows=rows, query=query, channel=channel,
+          511┆         strict=True, universe_insights=insights, suggestions=None,
+          512┆     )
+          513┆     if result and not _contains_numeric_claim(result):
+          514┆         return result
+          515┆ except Exception:
+          516┆     pass
+            ⋮┆----------------------------------------
+          577┆ try:
+          578┆     median_str = f" (la mediana es {format_cop(vs['median'])})"
+          579┆ except Exception:
+          580┆     pass
+
+    app/core/workflow/actions/execution.py
+   ❯❯❱ semgrep.except-exception-que-silencia
+          ❰❰ Blocking ❱❱
+          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es
+          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.
+          Registra o re-lanza.
+
+          365┆ try:
+          366┆     soql = soql_builder.build(state["dataset_id"], relaxed)
+          367┆     count_soql = soql_builder.build_count(state["dataset_id"], relaxed)
+          368┆     total, results, _timings, _approx = _query_first_then_count(
+          369┆         secop_client, state["dataset_id"], count_soql, soql
+          370┆     )
+          371┆     if results:
+          372┆         return _with_timing(
+          373┆             state,
+          374┆             "degrade_ms",
+             [hid 9 additional lines, adjust with --max-lines-per-finding]
+
+    app/core/workflow/handlers/direct_lookup.py
+   ❯❯❱ semgrep.except-exception-que-silencia
+          ❰❰ Blocking ❱❱
+          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es
+          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.
+          Registra o re-lanza.
+
+          366┆ try:
+          367┆     cards = deps.formatter.to_rows(
+          368┆         [dict(r)], ds,
+          369┆         {"intent_type": "direct_lookup", "route_reason": "entity_ref_disambiguation"},
+          370┆         reference_instant=reference_instant_utc,
+          371┆     )
+          372┆     if cards:
+          373┆         estado = _estado_visible(cards[0]) or estado
+          374┆         nota_estado = _estado_raw_nota(cards[0])
+          375┆ except Exception:
+             [hid 3 additional lines, adjust with --max-lines-per-finding]
+
+    app/core/workflow/handlers/normal_flow.py
+   ❯❯❱ semgrep.except-exception-que-silencia
+          ❰❰ Blocking ❱❱
+          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es
+          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.
+          Registra o re-lanza.
+
+          171┆ try:
+          172┆     from app.core.contextual_suggestions import compute_contextual_filters
+          173┆     computed = compute_contextual_filters(
+          174┆         raw_results,
+          175┆         result["dataset_id"],
+          176┆         result.get("resolved_params", {}),
+          177┆     )
+          178┆     result["contextual_filters"] = computed
+          179┆ except Exception:
+          180┆     pass  # best-effort, never block the main flow
+
+    app/core/workflow/handlers/pagination.py
+   ❯❯❱ semgrep.except-exception-que-silencia
+          ❰❰ Blocking ❱❱
+          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es
+          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.
+          Registra o re-lanza.
+
+          177┆ try:
+          178┆     display_count = max(1, int(deps.formatter.max_results or 25))
+          179┆     if requested_group:
+          180┆         group = requested_group
+          181┆         buffer = deps.conv_store.get_pagination_buffer(ctx.chat_id, group, None)
+          182┆         if buffer is not None:
+          183┆             fetch_params = dict(buffer.query_params)
+          184┆             current_fp = buffer.query_fingerprint
+          185┆         elif isinstance(scope, list) and len(scope) >= 2:
+          186┆             from app.core.workflow.dual_dataset import params_for_dataset
+             [hid 164 additional lines, adjust with --max-lines-per-finding]
+
+    app/core/workflow/handlers/radar.py
+   ❯❯❱ semgrep.except-exception-que-silencia
+          ❰❰ Blocking ❱❱
+          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es
+          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.
+          Registra o re-lanza.
+
+          109┆ try:
+          110┆     total = run_radar(deps, store, radar).total
+          111┆ except Exception:
+          112┆     pass
+
+    app/core/workflow/handlers/refinement.py
+   ❯❯❱ semgrep.except-exception-que-silencia
+          ❰❰ Blocking ❱❱
+          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es
+          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.
+          Registra o re-lanza.
+
+           93┆ try:
+           94┆     from app.core.contextual_suggestions import compute_contextual_filters
+           95┆     result["contextual_filters"] = compute_contextual_filters(
+           96┆         results, ds_id, params,
+           97┆     )
+           98┆ except Exception:
+           99┆     pass

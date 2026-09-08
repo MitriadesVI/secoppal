@@ -1,0 +1,11 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest tests/test_orchestrator.py tests/test_orchestrator_golden.py tests/test_workflow_architecture.py tests/test_workflow_persistence.py tests/test_workflow_results.py tests/test_conversation_store.py tests/test_conversation_snapshot.py tests/test_pagination_buffer.py tests/test_pagination_buffer_lifecycle.py tests/test_pagination_transparency.py tests/test_newsearch_pagination.py tests/test_suggestion_selection.py tests/test_contextual_suggestions.py tests/test_refinement_recovery.py tests/test_direct_lookup.py tests/test_direct_lookup_entity_scope.py tests/test_radar_commands.py tests/test_radar_builder.py tests/test_dual_dataset_conversation.py tests/test_module_size_limits.py tests/test_streamlit_operational_state.py tests/test_actor_flag_off.py tests/test_degrade_query.py tests/test_count_lazy.py tests/test_guard_where_1_1_equivalence.py tests/test_actor_hardening_v2_1_remediation.py tests/test_frame_leak_canary.py -q
+........................................................................ [ 15%]
+........................................................................ [ 30%]
+........................................................................ [ 45%]
+........................................................................ [ 60%]
+........................................................................ [ 75%]
+........................................................................ [ 91%]
+..............................xx..........                               [100%]
+472 passed, 2 xfailed in 13.81s
+
+EXIT_CODE=0
