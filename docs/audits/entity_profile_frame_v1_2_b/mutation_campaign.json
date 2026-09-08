@@ -1,10 +1,10 @@
 {
   "summary": {
-    "detected": 11,
+    "detected": 12,
     "survived": 0,
     "inconclusive": 0,
     "anchor_not_found": 0,
-    "total": 11
+    "total": 12
   },
   "mutations": [
     {
@@ -17,7 +17,7 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "0ce54ece61d5855cba9579248505886b8af467a513f7ba537e5b6cc786fe5313",
-      "pytest_tail": "1 failed in 1.12s"
+      "pytest_tail": "1 failed in 1.19s"
     },
     {
       "id": "M2-old-cursor-after-corruption",
@@ -29,7 +29,7 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "ffdf73869cc2afe10c96deeee3fa7ff9e22197af9136030d1d8a9ef18091ca1f",
-      "pytest_tail": "1 failed in 1.02s"
+      "pytest_tail": "1 failed in 0.90s"
     },
     {
       "id": "M3-seed-bypasses-admission",
@@ -41,7 +41,7 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "ffdf73869cc2afe10c96deeee3fa7ff9e22197af9136030d1d8a9ef18091ca1f",
-      "pytest_tail": "1 failed in 0.92s"
+      "pytest_tail": "1 failed in 0.93s"
     },
     {
       "id": "M4-subject-and-event-swapped",
@@ -53,7 +53,7 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "0046d27abad0fca79f5bd965cde3404076718b04ace35a8ae2b5335dad385298",
-      "pytest_tail": "1 failed in 0.80s"
+      "pytest_tail": "1 failed in 0.82s"
     },
     {
       "id": "M5-or-flattened-into-and",
@@ -65,7 +65,7 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "a590598e4dbcd7b8bc573ce86a1e7733c0940ba19e6edbf070e863e5fe03edbb",
-      "pytest_tail": "1 failed in 1.02s"
+      "pytest_tail": "1 failed in 0.90s"
     },
     {
       "id": "M6-exclusion-dropped-from-scope",
@@ -77,7 +77,7 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "a590598e4dbcd7b8bc573ce86a1e7733c0940ba19e6edbf070e863e5fe03edbb",
-      "pytest_tail": "1 failed in 0.83s"
+      "pytest_tail": "1 failed in 0.80s"
     },
     {
       "id": "M7-legacy-reader-back-in-the-path",
@@ -102,7 +102,7 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "ab5cd4a9583581df8691898e99b528d6a64d78995e8205eaa8ba6f312eac4ffa",
-      "pytest_tail": "1 failed in 0.81s"
+      "pytest_tail": "1 failed in 0.90s"
     },
     {
       "id": "M9-nonfinite-metric-accredited",
@@ -114,7 +114,7 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "1e35a04af53316a3ac7cc8f409dcc682b03aadb652d9182af8e7cededdee73f7",
-      "pytest_tail": "1 failed in 0.80s"
+      "pytest_tail": "1 failed in 0.89s"
     },
     {
       "id": "M10-month-globalised",
@@ -126,7 +126,19 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "acae6fbf6586325153696d6fe24d19538729338848f12908737f99051b58031a",
-      "pytest_tail": "1 failed in 0.79s"
+      "pytest_tail": "1 failed in 0.88s"
+    },
+    {
+      "id": "M12-cross-process-lock-removed",
+      "thesis": "Confiar la exclusión al candado en memoria, que no cruza procesos.",
+      "path": "app/core/store_lock.py",
+      "kills": [
+        "tests/test_entity_profile_frame_b_publication.py::test_a_second_process_cannot_hold_the_same_conversation_lock"
+      ],
+      "verdict": "DETECTED",
+      "restored": true,
+      "sha256": "353f515c1b3445a08705bc6ab1c9ed9d70849ab73b3f2da5a3593dc230741a66",
+      "pytest_tail": "1 failed in 0.71s"
     },
     {
       "id": "M11-injected-clock-ignored",
@@ -138,7 +150,7 @@
       "verdict": "DETECTED",
       "restored": true,
       "sha256": "df637c28e2214bb29f60e363bee0301c5d4ec1fea78bca4367ade44047913114",
-      "pytest_tail": "1 failed in 0.90s"
+      "pytest_tail": "1 failed in 0.91s"
     }
   ]
 }

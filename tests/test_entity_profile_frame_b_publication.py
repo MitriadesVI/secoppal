@@ -300,3 +300,139 @@ def test_the_legacy_history_is_untouched_by_the_new_envelope(frame_v12):
     assert history == []
     for turn in history:
         assert "profile_state" not in turn.parsed_params
+
+
+# ── Exclusión ENTRE PROCESOS ───────────────────────────────────────────────
+
+_PUBLISHER = """
+import json, os, sys, time
+sys.path.insert(0, {root!r})
+from app.core.conversation_store import ConversationStore, StaleRevisionError
+
+store = ConversationStore(base_path={base!r})
+start = float(sys.argv[2])
+reservation = store.reserve_turn("chat")
+while time.time() < start:
+    time.sleep(0.002)
+try:
+    envelope = store.publish_turn(
+        reservation, user_query=sys.argv[1], response=sys.argv[1],
+    )
+    print(json.dumps({{"published": envelope.revision}}))
+except StaleRevisionError:
+    print(json.dumps({{"refused": True}}))
+"""
+
+
+def test_the_exclusion_holds_between_processes_not_only_threads(tmp_path):
+    """El diseño lo dice: «el RLock de un objeto de buffer no acredita esto».
+
+    Cuatro PROCESOS distintos comparten el mismo almacén y publican a la vez.
+    Un candado en memoria no los excluye; `flock` sí. La comprobación es que el
+    archivo nunca contiene dos turnos con la misma revisión.
+    """
+    import json
+    import subprocess
+    import sys
+    import time
+    from pathlib import Path
+
+    root = str(Path(__file__).resolve().parents[1])
+    script = _PUBLISHER.format(root=root, base=str(tmp_path))
+    start = time.time() + 1.0
+    processes = [
+        subprocess.Popen(
+            [sys.executable, "-c", script, f"q{index}", str(start)],
+            stdout=subprocess.PIPE, text=True,
+        )
+        for index in range(4)
+    ]
+    outputs = [process.communicate(timeout=60)[0] for process in processes]
+    verdicts = [json.loads(line.strip().splitlines()[-1]) for line in outputs]
+
+    published = sorted(v["published"] for v in verdicts if "published" in v)
+    assert published, verdicts
+    assert published == sorted(set(published))  # ninguna revisión repetida
+
+    lines = (tmp_path / "chat.envelopes.jsonl").read_text().splitlines()
+    revisions = [json.loads(line)["revision"] for line in lines if line.strip()]
+    assert revisions == list(range(1, len(revisions) + 1))
+    assert revisions == published
+
+
+def test_a_record_from_another_catalog_does_not_govern_the_next_turn(frame_v12):
+    """El catálogo es evidencia de lo ejecutado, no autoridad del universo."""
+    import json
+
+    from app.core.entity_profile.frame_compiler import CATALOG_VERSION
+
+    chat = Conversation("pub-catalog")
+    chat.say(f"analiza contratos firmados de {BUYER} en agosto")
+    record = chat.execution_record()
+    assert record["catalog_version"] == CATALOG_VERSION
+
+    store = ConversationStore()
+    path = store._envelope_path_for("pub-catalog")
+    payload = json.loads(path.read_text().splitlines()[-1])
+    payload["execution_record"]["catalog_version"] = "entity-profile-frame-999"
+    path.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+
+    followup = chat.say("proveedores")
+    assert not followup.clarifies
+    assert followup.planned_jobs == 2
+    # El plan del turno nuevo se compila con el catálogo VIGENTE.
+    assert chat.execution_record()["catalog_version"] == CATALOG_VERSION
+
+
+_HOLDER = """
+import sys, time
+sys.path.insert(0, {root!r})
+from pathlib import Path
+from app.core.store_lock import conversation_lock
+
+with conversation_lock(Path(sys.argv[1])):
+    Path(sys.argv[2]).write_text("held")
+    time.sleep(float(sys.argv[3]))
+"""
+
+
+def test_a_second_process_cannot_hold_the_same_conversation_lock(tmp_path):
+    """La exclusión que se prueba es la del MECANISMO, no la de la carrera.
+
+    La prueba de cuatro publicadores comprueba el resultado; ésta comprueba la
+    causa, y de forma determinista: mientras un PROCESO tiene el candado de este
+    chat, otro no puede tomarlo. Sin `flock` —sólo con el candado en memoria—
+    el segundo entraría de inmediato.
+    """
+    import subprocess
+    import sys
+    import time
+    from pathlib import Path
+
+    import pytest as _pytest
+
+    from app.core.store_lock import ConversationLockTimeout, conversation_lock
+
+    root = str(Path(__file__).resolve().parents[1])
+    target = tmp_path / "chat.envelopes.jsonl"
+    marker = tmp_path / "held.marker"
+    script = _HOLDER.format(root=root)
+    holder = subprocess.Popen(
+        [sys.executable, "-c", script, str(target), str(marker), "3"],
+    )
+    try:
+        deadline = time.time() + 10
+        while not marker.exists() and time.time() < deadline:
+            time.sleep(0.02)
+        assert marker.exists(), "el proceso que sostiene el candado no arrancó"
+
+        with _pytest.raises(ConversationLockTimeout):
+            with conversation_lock(target, timeout=0.5):
+                raise AssertionError("dos procesos sostuvieron el mismo candado")
+    finally:
+        holder.terminate()
+        holder.wait(timeout=10)
+
+    # Liberado el otro proceso, el candado se vuelve a tomar sin problema.
+    with conversation_lock(target, timeout=5):
+        pass

@@ -67,7 +67,7 @@ app/core/entity_profile/claim_adapters.py  asks_to_clear_period + consumo de sus
 streamlit_app.py                           el chip transporta la referencia publicada
 ```
 
-Tests nuevos (7 archivos, 192 pruebas) y un runner de mutaciones en
+Tests nuevos (7 archivos, 196 pruebas) y un runner de mutaciones en
 `scripts/audits/entity_profile_frame_v1_2_b/`.
 
 ## 3. Dos defectos reales encontrados al integrar
@@ -99,6 +99,12 @@ Tests nuevos (7 archivos, 192 pruebas) y un runner de mutaciones en
   queda sólo el candado en memoria; el código lo dice explícitamente en vez de
   fingir la garantía. Una instalación con escritores en almacenes que no
   comparten sistema de archivos necesita otra garantía, como advierte el diseño.
+- **La carrera de publicación no se pudo forzar de forma determinista.** La
+  comprobación de `expected_revision` bajo la exclusión cierra casi toda la
+  ventana por sí sola; la mutación que quita `flock` sobrevivió a la prueba de
+  cuatro publicadores y sólo muere contra una prueba del mecanismo (dos
+  procesos no sostienen el mismo candado). Se declara en vez de presentarlo
+  como una carrera reproducida.
 - **No se promete exactly-once de red ni recepción física por el canal.** El
   contrato describe la respuesta publicada por el servidor.
 - **Índice de Codegraph menor que el de la auditoría** (18.878 aristas frente a

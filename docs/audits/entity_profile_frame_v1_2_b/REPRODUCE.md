@@ -250,30 +250,43 @@ cubren lo que sólo existe cuando el universo sobrevive a un proceso.
 ```
 
 ```text
-baseline verde: 12 passed in 3.52s
+baseline verde: 13 passed in 3.89s
 
-M1-pending-without-selection: DETECTED (restored=True) — 1 failed in 1.12s
-M2-old-cursor-after-corruption: DETECTED (restored=True) — 1 failed in 1.02s
-M3-seed-bypasses-admission: DETECTED (restored=True) — 1 failed in 0.92s
-M4-subject-and-event-swapped: DETECTED (restored=True) — 1 failed in 0.80s
-M5-or-flattened-into-and: DETECTED (restored=True) — 1 failed in 1.02s
-M6-exclusion-dropped-from-scope: DETECTED (restored=True) — 1 failed in 0.83s
+M1-pending-without-selection: DETECTED (restored=True) — 1 failed in 1.19s
+M2-old-cursor-after-corruption: DETECTED (restored=True) — 1 failed in 0.90s
+M3-seed-bypasses-admission: DETECTED (restored=True) — 1 failed in 0.93s
+M4-subject-and-event-swapped: DETECTED (restored=True) — 1 failed in 0.82s
+M5-or-flattened-into-and: DETECTED (restored=True) — 1 failed in 0.90s
+M6-exclusion-dropped-from-scope: DETECTED (restored=True) — 1 failed in 0.80s
 M7-legacy-reader-back-in-the-path: DETECTED (restored=True) — 2 failed in 1.26s
-M8-transport-success-fabricated: DETECTED (restored=True) — 1 failed in 0.81s
-M9-nonfinite-metric-accredited: DETECTED (restored=True) — 1 failed in 0.80s
-M10-month-globalised: DETECTED (restored=True) — 1 failed in 0.79s
-M11-injected-clock-ignored: DETECTED (restored=True) — 1 failed in 0.90s
+M8-transport-success-fabricated: DETECTED (restored=True) — 1 failed in 0.90s
+M9-nonfinite-metric-accredited: DETECTED (restored=True) — 1 failed in 0.89s
+M10-month-globalised: DETECTED (restored=True) — 1 failed in 0.88s
+M12-cross-process-lock-removed: DETECTED (restored=True) — 1 failed in 0.71s
+M11-injected-clock-ignored: DETECTED (restored=True) — 1 failed in 0.91s
 
-{"detected": 11, "survived": 0, "inconclusive": 0, "anchor_not_found": 0, "total": 11}
+{"detected": 12, "survived": 0, "inconclusive": 0, "anchor_not_found": 0, "total": 12}
 ```
 
 Detalle por mutación en [mutation_campaign.json](mutation_campaign.json), con la
 tesis de cada una, su archivo, el sha256 antes y después (idénticos: `restored`
-verdadero en las once) y la cola literal de pytest.
+verdadero en las doce) y la cola literal de pytest.
 
 El clasificador distingue **DETECTADA** de **INCONCLUSA**: un `ImportError`, un
 error de recolección, un `INTERNALERROR` o un timeout no cuentan como muerte.
-Las once murieron por una aserción de comportamiento.
+Las doce murieron por una aserción de comportamiento.
+
+**Un intento fallido, declarado:** la primera versión de M12 apuntaba a
+`test_the_exclusion_holds_between_processes_not_only_threads` —cuatro procesos
+publicando a la vez— y **SOBREVIVIÓ**. La razón es real y vale la pena decirla:
+la comprobación de `expected_revision` bajo la exclusión ya cierra casi toda la
+ventana por sí sola, y la carrera restante es demasiado estrecha para forzarla
+de forma determinista con cuatro procesos. En vez de inventar una carrera, se
+añadió una prueba del MECANISMO —dos procesos no pueden sostener el candado del
+mismo chat— que sí discrimina de forma determinista, y M12 apunta a ella. La
+prueba de los cuatro publicadores se conserva: comprueba el resultado
+observable (ninguna revisión repetida, secuencia sin huecos), aunque no sea el
+oráculo que mata la mutación.
 
 **M11 encontró un defecto real de esta entrega**, no sólo confirmó una guarda:
 `today` llegaba a `run_profile_turn` y no bajaba a `collect_claims`, de modo que

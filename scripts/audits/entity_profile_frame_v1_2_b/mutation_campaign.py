@@ -159,6 +159,17 @@ MUTATIONS = (
         ),
     ),
     Mutation(
+        "M12-cross-process-lock-removed",
+        "Confiar la exclusión al candado en memoria, que no cruza procesos.",
+        "app/core/store_lock.py",
+        "    while True:\n        try:\n            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)",
+        "    while True:\n        try:\n            return",
+        (
+            "tests/test_entity_profile_frame_b_publication.py::"
+            "test_a_second_process_cannot_hold_the_same_conversation_lock",
+        ),
+    ),
+    Mutation(
         "M11-injected-clock-ignored",
         "Resolver un periodo relativo con la fecha del sistema y no con el reloj inyectado.",
         "app/core/entity_profile/frame_turn.py",
