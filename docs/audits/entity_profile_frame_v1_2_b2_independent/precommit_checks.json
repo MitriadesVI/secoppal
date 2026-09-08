@@ -1,0 +1,20 @@
+{
+  "git diff --check af3d0c7..HEAD": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "git diff --check": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "git diff --cached --check": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "staged_files": 102,
+  "staged_scope": "audit directory only",
+  "runtime_changed": false
+}

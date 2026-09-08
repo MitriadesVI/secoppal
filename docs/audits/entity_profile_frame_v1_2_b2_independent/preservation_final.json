@@ -1,0 +1,7 @@
+{
+  "candidate": "5d715ba9e7d67aa05f703d2a280fdf9e2efde3b1",
+  "candidate_files": 2550,
+  "candidate_manifest_sha256": "fe524d252ca7366fda6d5f49df13c95dc1e5699a8d04d91567fc56a01dc13f0b",
+  "mismatches": [],
+  "only_audit_changes": true
+}

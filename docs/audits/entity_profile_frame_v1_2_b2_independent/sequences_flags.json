@@ -1,0 +1,8 @@
+{
+  "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-False]": true,
+  "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[False-True]": true,
+  "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[True-False]": true,
+  "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[True-True]": true,
+  "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[ok]": true,
+  "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[open_failure]": true
+}
