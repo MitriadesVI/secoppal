@@ -331,3 +331,32 @@ def test_planned_jobs_attempted_calls_and_metrics_are_three_different_numbers(
     # Cuatro llamadas intentadas y CERO cifras acreditadas: un plan no prueba
     # que una llamada ocurriera, y una llamada no prueba una cifra.
     assert timings["entity_profile_accredited_metrics"] == 0
+
+
+def test_the_injected_clock_is_the_one_that_resolves_relative_periods(frame_v12):
+    """El reloj se INYECTA; no se lee del sistema en mitad de la ruta.
+
+    Sin esto la prueba pasaría por coincidencia el día correcto y fallaría al
+    siguiente, y una recarga reinterpretaría «este año» con la fecha de hoy.
+    """
+    from datetime import date
+
+    from app.config import Settings
+    from app.core.orchestrator import SecopalWorkflow
+    from test_entity_profile_workflow import WorkflowClient
+
+    seen = {}
+    for clock in (date(2026, 9, 7), date(2024, 5, 3)):
+        workflow = SecopalWorkflow(Settings())
+        client = WorkflowClient()
+        workflow.secop_client = client
+        workflow.narrator.narrate_with_grounding = lambda **_kwargs: None
+        workflow.run_query(
+            f"analiza contratos firmados de {BUYER} este año",
+            chat_id=f"sem-clock-{clock.year}", today=clock,
+        )
+        seen[clock.year] = tuple(soql for _, _, soql in client.calls)
+
+    assert seen[2026] and seen[2024]
+    assert all("2026-01-01" in soql for soql in seen[2026])
+    assert all("2024-01-01" in soql for soql in seen[2024])

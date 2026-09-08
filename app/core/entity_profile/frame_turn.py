@@ -37,9 +37,9 @@ from app.core.entity_profile.frame_alternatives import capability_alternatives
 from app.core.entity_profile.frame_compiler import PlanStatus, ProfilePlan, compile_profile
 from app.core.entity_profile.frame_response import render_frame_profile
 from app.core.entity_profile.frame_runner import ProfileEvidence, execute_plan
-from app.core.entity_profile.patch import EntityProfilePatch, PatchOperation, apply_patch
+from app.core.entity_profile.patch import EntityProfilePatch, apply_patch
+from app.core.entity_profile.pending_resolution import PendingOutcome, resolve_pending
 from app.core.entity_profile.profile_state import (
-    Alternative,
     PendingIssue,
     PendingProfile,
     ProfileConversationState,
@@ -61,11 +61,6 @@ from app.core.entity_profile.followup import PROFILE_FOCUS_PARAM
 # Razones de resolución que significan «esto no habla de un comprador», no
 # «este comprador no existe».
 _NO_BUYER = {"BUYER_SCOPE_REQUIRED", "PRODUCTIVE_BUYER_RESOLUTION_REQUIRED"}
-
-_CANCEL = re.compile(
-    r"\b(?:cancela(?:r)?|olvida(?:lo)?|dejalo|deja\s+eso|anula(?:r)?|"
-    r"no\s+importa)\b",
-)
 
 _PENDING_UNRESOLVED = (
     "Todavía tengo una pregunta abierta sobre este análisis: {question}\n"
@@ -170,6 +165,7 @@ def run_profile_turn(
         user_query=user_query, clean=clean, base=base, buyer=buyer,
         turn_id=turn_id, state=state, soql_builder=soql_builder,
         secop_client=secop_client, resolution=resolution, focus=focus,
+        today=today,
     )
 
 
@@ -177,10 +173,11 @@ def run_profile_turn(
 
 def _compose_and_run(
     *, user_query, clean, base, buyer, turn_id, state, soql_builder,
-    secop_client, resolution, focus,
+    secop_client, resolution, focus, today,
 ) -> ProfileTurnOutcome:
     claims = collect_claims(
         user_query, clean, turn_id=turn_id, buyer_resolution=resolution,
+        today=today,
     )
     proposal = compose_patch(claims, base_frame=base, buyer_scope=buyer)
     if proposal.patch is None:
@@ -246,118 +243,44 @@ def _compile_and_execute(
 def _resolve_pending(
     user_query, clean, state, turn_id, buyer, soql_builder, secop_client, today,
 ) -> ProfileTurnOutcome | None:
-    """Cancelación, «sí» ambiguo, selección válida o cambio no relacionado."""
+    """Traduce el desenlace de la pendiente a un resultado del turno.
+
+    Decidir cuál es el desenlace es de `pending_resolution`; ejecutarlo, de
+    aquí. La separación existe para que «se eligió una alternativa» y «se puede
+    consultar» no acaben siendo la misma condición.
+    """
+    decision = resolve_pending(
+        user_query=user_query, params=clean, state=state, turn_id=turn_id,
+        buyer=buyer, today=today,
+    )
     pending = state.pending
-    if _CANCEL.search(_fold(user_query)):
-        cancelled = state.cancel_pending()
+    if decision.outcome is PendingOutcome.SUPERSEDED:
+        return None
+    if decision.outcome is PendingOutcome.CANCELLED:
+        kept = decision.state.confirmed_frame
         return ProfileTurnOutcome(
-            TurnKind.ANSWER if cancelled.confirmed_frame else TurnKind.CLARIFICATION,
-            _CANCELLED if cancelled.confirmed_frame else _CANCELLED_EMPTY,
-            cancelled, "entity_profile_pending_cancelled",
+            TurnKind.ANSWER if kept else TurnKind.CLARIFICATION,
+            _CANCELLED if kept else _CANCELLED_EMPTY,
+            decision.state, "entity_profile_pending_cancelled",
         )
-    if is_bare_affirmative(user_query):
-        # Un «sí» a secas no elige entre alternativas: elegir por la persona es
-        # justo lo que la aclaración existía para evitar.
+    if decision.outcome is PendingOutcome.REPEATED:
         return ProfileTurnOutcome(
-            TurnKind.CLARIFICATION, _pending_text(pending), state,
+            TurnKind.CLARIFICATION, pending.question, state,
             "entity_profile_pending_repeated",
             issues=tuple(issue.code for issue in pending.issues),
         )
-    if buyer is not None and _is_other_buyer(buyer, state):
-        # Un pedido inequívoco sobre OTRO comprador abandona la pendiente; no se
-        # obliga a contestar una pregunta vieja para empezar otra consulta.
-        return None
-    selected = _selected_alternative(user_query, clean, pending, state, turn_id)
-    if selected is None:
+    if decision.outcome is PendingOutcome.UNRESOLVED:
         return ProfileTurnOutcome(
             TurnKind.CLARIFICATION,
-            _PENDING_UNRESOLVED.format(question=_pending_question(pending)),
+            _PENDING_UNRESOLVED.format(question=_first_line(pending.question)),
             state, "entity_profile_pending_unresolved",
             issues=tuple(issue.code for issue in pending.issues),
         )
-    candidate, patch = selected
     return _compile_and_execute(
-        candidate, patch, state.cancel_pending(), state.confirmed_frame,
-        soql_builder, secop_client, candidate.focus,
+        decision.candidate, decision.patch, decision.state,
+        state.confirmed_frame, soql_builder, secop_client,
+        decision.candidate.focus,
     )
-
-
-def _selected_alternative(user_query, clean, pending, state, turn_id):
-    """Aplica pending.patch sobre su base y luego la alternativa elegida."""
-    if not pending.alternatives:
-        return None
-    alternative = _by_ordinal(user_query, pending)
-    if alternative is None:
-        alternative = _by_own_words(user_query, clean, pending, state, turn_id)
-    if alternative is None:
-        return None
-    base = state.confirmed_frame
-    applied = apply_patch(base, pending.patch)
-    if applied.frame is None:
-        return None
-    completion = EntityProfilePatch(
-        patch_id=f"{pending.pending_id}:{alternative.alternative_id}",
-        turn_id=turn_id,
-        operations=alternative.completion_operations,
-        base_frame_ref=(applied.frame.frame_id, applied.frame.revision),
-    )
-    completed = apply_patch(applied.frame, completion)
-    if completed.frame is None:
-        return None
-    return completed.frame, completion
-
-
-_ORDINAL = re.compile(
-    r"^(?:la\s+)?(?:opcion\s+)?(?:(\d+)|(primera|segunda|tercera))$",
-)
-
-
-def _by_ordinal(user_query: str, pending: PendingProfile) -> Alternative | None:
-    match = _ORDINAL.fullmatch(_fold(user_query).strip())
-    if match is None:
-        return None
-    index = (
-        int(match.group(1)) if match.group(1)
-        else {"primera": 1, "segunda": 2, "tercera": 3}[match.group(2)]
-    )
-    if 1 <= index <= len(pending.alternatives):
-        return pending.alternatives[index - 1]
-    return None
-
-
-def _by_own_words(user_query, clean, pending, state, turn_id) -> Alternative | None:
-    """La persona describe la salida con sus palabras: «solo contratos».
-
-    Se compone su turno y se compara con lo que cada alternativa CAMBIA. No es
-    un emparejamiento de texto: es igualdad de operaciones tipadas, así que una
-    frase que pida otra cosa no puede colarse como si fuera la alternativa.
-    """
-    base = state.confirmed_frame
-    resolution = resolve_profile_scope(clean)
-    claims = collect_claims(
-        user_query, clean, turn_id=turn_id, buyer_resolution=resolution,
-    )
-    proposal = compose_patch(
-        claims, base_frame=base, buyer_scope=buyer_scope_from(resolution),
-    )
-    if proposal.patch is None:
-        return None
-    changes = {
-        (op.target.kind, op.target.source): op.value
-        for op in proposal.patch.operations
-        if op.operation is PatchOperation.SET
-    }
-    if not changes:
-        return None
-    for alternative in pending.alternatives:
-        offered = {
-            (op.target.kind, op.target.source): op.value
-            for op in alternative.completion_operations
-            if op.operation is PatchOperation.SET
-        }
-        if changes and all(offered.get(key) == value for key, value in changes.items()):
-            return alternative
-    return None
 
 
 # ── Utilidades ────────────────────────────────────────────────────────────
@@ -370,7 +293,7 @@ def _clarify(state, base, issues, *, patch, alternatives) -> ProfileTurnOutcome:
         issues=issues, alternatives=alternatives,
     )
     return ProfileTurnOutcome(
-        TurnKind.CLARIFICATION, _pending_text(pending), state.hold(pending),
+        TurnKind.CLARIFICATION, pending.question, state.hold(pending),
         "entity_profile_scope_clarification",
         issues=tuple(issue.code for issue in issues),
     )
@@ -388,12 +311,8 @@ def _question_text(issues, alternatives) -> str:
     return question
 
 
-def _pending_text(pending: PendingProfile) -> str:
-    return pending.question
-
-
-def _pending_question(pending: PendingProfile) -> str:
-    return pending.question.splitlines()[0] if pending.question else ""
+def _first_line(question: str) -> str:
+    return question.splitlines()[0] if question else ""
 
 
 def _pending_focus(state: ProfileConversationState) -> str | None:
