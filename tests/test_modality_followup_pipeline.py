@@ -500,6 +500,7 @@ def test_blocked_turn_rolls_back_orthogonal_deltas(dialogue):
     assert _inc(r) == CD
     assert params.get("dataset") == "procesos"    # rollback al frame anterior
     assert params.get("objeto") == ["alimentacion"]
+    assert dialogue.captured_soql == []            # el turno bloqueado no consulta
 
 
 def test_not_searchable_target_blocks_in_pure_layer():

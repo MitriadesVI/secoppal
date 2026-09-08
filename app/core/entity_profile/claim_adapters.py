@@ -61,7 +61,7 @@ from app.core.entity_profile.text_offsets import NormalizedText, normalize_with_
 from app.core.entity_profile.turn import _FOCUS
 from app.core.estado_families import detect_estado_family
 from app.core.query_text_consumption import mask_consumed_spans
-from app.core.source_occurrence import source_head_occurrences
+from app.core.source_occurrence import source_request_occurrences
 from app.core.temporal_semantics import civil_today, resolve_temporal_scope
 
 
@@ -229,14 +229,13 @@ def _source_claims(
     turn_id,
     next_id,
 ) -> dict[int, SemanticClaim]:
-    """La PRIMERA palabra de fuente de cada cláusula, indexada por cláusula.
+    """Cada petición de fuente acreditada, indexada por cláusula.
 
-    Sólo la cabeza: una segunda aparición vive dentro de un complemento del
-    tema —"contratos de gestión de procesos industriales"— y no es una
-    elección de fuente.
+    Una aparición temática no se acredita. La gramática compartida también
+    admite una fuente pospuesta inequívoca cuando no existe una cabecera.
     """
     found: dict[int, SemanticClaim] = {}
-    for occurrence in source_head_occurrences(masked):
+    for occurrence in source_request_occurrences(masked):
         index = occurrence.clause_index
         if index in found:
             continue

@@ -68,8 +68,8 @@ from app.core.modality_parser_integration import resolve_parser_modality
 from app.core.query_text_consumption import mask_consumed_spans
 from app.core.source_occurrence import (
     is_source_word,
-    mask_source_heads,
-    source_head_occurrences,
+    mask_source_requests,
+    source_request_occurrences,
 )
 from app.utils.money import (
     SMMLV_UNIT_PATTERN,
@@ -271,7 +271,7 @@ class QueryRouter:
                 *protected_money_spans(normalized),
             ),
         )
-        source_occurrences = source_head_occurrences(normalized)
+        source_occurrences = source_request_occurrences(normalized)
         params: dict[str, object] = {}
         actor_conversation = ActorConversationInstruction()
         actor_relation_spans: tuple[str, ...] = ()
@@ -1069,7 +1069,7 @@ class QueryRouter:
             scrubbed = ""
 
         from app.core.phrase_catalog import detect_phrases
-        source_owned_text = mask_source_heads(scrubbed)
+        source_owned_text = mask_source_requests(scrubbed)
         objeto_phrases, objeto_text = detect_phrases(source_owned_text)
         if objeto_phrases:
             params["objeto_phrases"] = objeto_phrases

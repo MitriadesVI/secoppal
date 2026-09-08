@@ -96,8 +96,8 @@ def _buyer_free_text(user_query: str, params: dict) -> str:
     return mask_consumed_spans(text, spans) if spans else text
 
 
-def _clause_head_sources(text: str) -> tuple[bool, bool]:
-    """La PRIMERA palabra de fuente de cada cláusula, y sólo ésa.
+def _request_sources(text: str) -> tuple[bool, bool]:
+    """Las ocurrencias que la autoridad compartida acredita como fuente.
 
     F3: buscar la palabra en toda la frase hacía que el TEMA eligiera fuente.
 
@@ -114,9 +114,9 @@ def _clause_head_sources(text: str) -> tuple[bool, bool]:
     """
     # Local import avoids the package ``__init__`` cycle while keeping this
     # adapter on the shared occurrence authority.
-    from app.core.source_occurrence import source_head_occurrences
+    from app.core.source_occurrence import source_request_occurrences
 
-    occurrences = source_head_occurrences(text)
+    occurrences = source_request_occurrences(text)
     return (
         any(occurrence.is_process for occurrence in occurrences),
         any(not occurrence.is_process for occurrence in occurrences),
@@ -126,7 +126,7 @@ def _clause_head_sources(text: str) -> tuple[bool, bool]:
 def resolve_requested_sources(user_query: str, params: dict) -> SourceRequest:
     """Lee la fuente de las palabras del usuario; sólo si calla mira el frame."""
     text = _buyer_free_text(user_query, params)
-    asked_processes, asked_contracts = _clause_head_sources(text)
+    asked_processes, asked_contracts = _request_sources(text)
     if asked_processes and asked_contracts:
         return SourceRequest(RequestedSources.BOTH, SourceProvenance.EXPLICIT)
     if asked_processes:
