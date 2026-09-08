@@ -4583,3 +4583,61 @@ activación: no hubo push, despliegue ni reinicio; dogfood ON queda para otra
 instancia y persistencia de pruebas, en un encargo posterior.
 
 [Integración efectuada, SHAs y salidas](audits/entity_profile_frame_v1_2_coordinator_gate/integration/INTEGRATION.md).
+
+
+### Buyer–Actor Role V1 — integración efectiva tras gate verde
+
+**Fecha: 2026-09-08. Estado: INTEGRADO EN MAIN, NO ACTIVADO.** El gate del
+coordinador cerró en verde (`BUYER_ACTOR_V1_GO_FOR_MERGE`, 17/17 componentes) y se
+ejecutó `git merge --ff-only ceecac7b75d8f8d95f02a634031029e52b1d4a2e`. Main avanzó
+desde `52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386` sin crear commit de merge. Se
+preservaron por hash `.env`, `data/` y los 239 archivos locales no versionados.
+
+El código integrado equivale al probado en `f864b3b25e46943f79a247bf3f1314db359cdd1d`
+—el delta posterior está íntegramente bajo `docs/audits/`— y su runtime es byte a
+byte el auditado en `e06c60482756e2d4238052818117568f9cd4e946`. No se repitió la
+suite tras el fast-forward: se comprobó equivalencia de árbol
+(`eb8bf8a25804c0c5acfafdab63e26b278d544c1c`).
+
+La corrida completa dio **13278 passed, 19 skipped, 15 xfailed** en 762 s, con
+complementarios Frame 47/303/115, aceptación Buyer–Actor OFF/ON 95/95, opt-in 8/8 y
+corpus 89/89. Ruff limpio en los tres alcances, `lint-core` limpio, `diff --check`
+vacío, Semgrep 10 heredados y **cero nuevos** sobre un baseline que sigue rojo. Cero
+fallos inesperados, cero deselects, cero conexiones denegadas: las 216 peticiones son
+las lecturas públicas SODA3 previstas por la suite histórica.
+
+La primera corrida sigue registrada como `GATE_INCONCLUSIVE` y no se reescribe. Sus
+tres bloqueos se cerraron así:
+
+1. **Capacidad.** Se liberaron 318 MiB de temporales propios del carril; el volumen
+   perdió después ~2,3 GiB por causas ajenas y con 776 MiB **no se lanzó** la suite.
+   Tras autorización específica del usuario para una única cache regenerable se
+   dispuso de 9,88 GiB. No se tocaron datos, índices, `.env` ni evidencia histórica.
+2. **H4.** `test_new_topic_should_clear_inherited_ordering_signal` reproducía
+   XPASS(strict). Ejecutados los dos turnos sobre ambos runtimes con transporte
+   sintético, BASE arrastraba `ordering_signal=valor_desc` **y** `objeto=['adulto_mayor']`
+   a una búsqueda de educación en Cali; el candidato entrega los params que produce la
+   frase aislada. Un control de un solo turno muestra que «educación» no se captura
+   como tema en **ninguno** de los dos runtimes: el WHERE más estrecho es deuda
+   preexistente del parser, no ejecución perdida. Se retiró sólo ese marcador y el
+   caso queda como regresión ordinaria con aserciones positivas; contra BASE **falla**.
+   La familia H4 no se declara resuelta: `test_control_language::
+   test_scope_change_carrying_a_new_topic_keeps_that_topic` sigue xfail.
+3. **Opt-in del autor.** `source_for` sustituía métodos en la instancia, pero
+   `observer.py:214` agrega sobre `with_timeout(...)`, que construye un cliente nuevo
+   —`derived_for_timeout` sí preserva los mocks, `with_timeout` no—. Atados ambos a la
+   fuente sintética y hecha thread-safe (el observer agrega en cinco hilos), los
+   agregados **entran** al doble: 6 llamadas evaluadas por caso en vez de 1, con
+   comprador y monto en cada una. La guarda estricta cubre cinco consultas más, no
+   menos. Retirar el aislamiento reproduce los 4 errores con 20 intentos bloqueados
+   mientras los cuerpos siguen pasando: el observer absorbe la excepción, el registro
+   externo no.
+
+Integración no es activación: no hubo push, despliegue, cambio de flags ni reinicio.
+No se emite PRODUCTION_GO. El default ON y el botón del Frame siguen separados y sin
+validar aquí. Quedan abiertos el baseline Semgrep rojo, los 15 xfails y 19 skips
+listados por caso, y la asimetría `with_timeout` / `derived_for_timeout` en
+`app/core/secop_client.py`, compensada desde el test pero no corregida.
+
+[Recibo de integración](audits/buyer_actor_role_v1_coordinator_gate/integration/INTEGRATION.md).
+[Gate, adjudicación y límites](audits/buyer_actor_role_v1_coordinator_gate/round2/COORDINATOR_GATE.md).

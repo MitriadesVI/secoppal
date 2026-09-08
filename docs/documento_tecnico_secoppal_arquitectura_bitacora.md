@@ -2569,3 +2569,49 @@ esta integración. La evidencia previa y sus límites permanecen vigentes.
 
 [Recibo de integración y comprobaciones](audits/entity_profile_frame_v1_2_coordinator_gate/integration/INTEGRATION.md).
 [Gate, adjudicación y límites](audits/entity_profile_frame_v1_2_coordinator_gate/round2/CLOSEOUT.md).
+
+## Buyer–Actor Role V1 — integrado, sin activación — 2026-09-08
+
+La arbitración de comprador antes de la resolución de actor llegó a main mediante
+fast-forward desde `52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386` a
+`ceecac7b75d8f8d95f02a634031029e52b1d4a2e`, sin commit de merge. El runtime
+incorporado es el auditado en `e06c60482756e2d4238052818117568f9cd4e946`; el
+candidato se probó en `f864b3b25e46943f79a247bf3f1314db359cdd1d` y entre ese SHA y
+el HEAD integrado sólo hay evidencia bajo `docs/audits/`. No se repitió la suite:
+se comprobó equivalencia de árbol.
+
+El gate cerró 17/17 componentes: suite global **13278 passed, 19 skipped, 15
+xfailed**, complementarios Frame 47/303/115, aceptación Buyer–Actor OFF/ON 95/95,
+opt-in 8/8, corpus 89/89, Ruff limpio, `lint-core` limpio, `diff --check` vacío y
+Semgrep con 10 heredados y cero nuevos. Cero fallos inesperados y cero conexiones
+denegadas.
+
+**Dos hallazgos con valor más allá de este carril.**
+
+El primero es de conversación. Antes de este cambio, una búsqueda nueva heredaba del
+turno anterior no sólo el orden pedido sino **el tema**: pedir «contratos de educación
+en Cali» tras «los contratos más caros de adulto mayor en cartagena» ejecutaba sobre
+Cali *y* adulto mayor, ordenado por valor. Es el patrón ya registrado como
+`NORMALIZATION_ERASES_USER_INTENT`, aquí en su forma de arrastre de contexto. El
+runtime integrado limpia ambas herencias cuando reconoce una búsqueda nueva, y
+conserva el orden cuando el turno lo pide —como refinamiento («ahora los más caros»)
+o explícitamente en la búsqueda nueva—. Queda al descubierto una deuda distinta y
+preexistente: «educación» no se captura como tema del parser, ni antes ni después,
+de modo que esa consulta se ejecuta sobre la ciudad sola.
+
+El segundo es de instrumentación, y muerde a cualquier fixture del repo.
+`SecopClient.derived_for_timeout` devuelve `self` cuando detecta `query`/`count`
+mockeados en la instancia, precisamente para no salir a la red en un test con el
+cliente doblado. **`with_timeout` no hace esa comprobación**, y `app/core/observer.py`
+agrega por ahí: cinco agregados por turno construían un cliente nuevo y salían a
+SECOP de verdad, mientras el observer absorbía la excepción y el cuerpo del test
+seguía en verde. Sólo un registro de red comprobado *después* del producto lo delata.
+Los tests de este carril atan ahora ambos métodos a la fuente sintética; la asimetría
+en `app/core/secop_client.py` sigue ahí.
+
+**Estado operativo: integrado, no activado.** No hubo push, despliegue, cambio de
+flags ni reinicio de la app. No es PRODUCTION_GO. El default ON y el botón del Frame
+continúan separados y sin validar en esta integración.
+
+[Recibo de integración y comprobaciones](audits/buyer_actor_role_v1_coordinator_gate/integration/INTEGRATION.md).
+[Gate, adjudicación y límites](audits/buyer_actor_role_v1_coordinator_gate/round2/COORDINATOR_GATE.md).
