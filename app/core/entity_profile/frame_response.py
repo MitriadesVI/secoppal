@@ -66,6 +66,9 @@ def build_profile_sections(
     `scope` que se construye aquí lleva identidad y nada más, sin fechas, tema
     ni modalidad que pudieran competir con el Frame.
     """
+    from app.core.entity_profile.record_validation import validate_frame_plan
+
+    validate_frame_plan(frame, plan)
     sections = build_frame_sections(plan, evidence, soql_builder)
     scope = EntityProfileScope(
         scope_type=(

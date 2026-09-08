@@ -149,6 +149,12 @@ def run_profile_turn(
         return blocked  # None cuando el turno no habla de un comprador
 
     if state.has_pending:
+        from app.core.entity_profile.pending_resolution import complete_reformulation
+        replacement = complete_reformulation(user_query, clean, buyer, turn_id, soql_builder, today)
+        if replacement:
+            candidate, patch = replacement
+            return _compile_and_execute(candidate, patch, state, None, soql_builder,
+                                        secop_client, candidate.focus)
         resolved = _resolve_pending(
             user_query, clean, state, turn_id, buyer, soql_builder, secop_client,
             today,
@@ -228,7 +234,7 @@ def _compile_and_execute(
     # autorizó; confundir las dos cosas es lo que borraba el frame en V1.
     plan = decision.plan
     evidence = execute_plan(plan, secop_client)
-    record = build_execution_record(plan, evidence)
+    record = build_execution_record(plan, evidence, candidate)
     return ProfileTurnOutcome(
         TurnKind.ANSWER,
         render_frame_profile(candidate, plan, evidence, soql_builder),

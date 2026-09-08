@@ -193,3 +193,25 @@ __all__ = [
     "PendingOutcome",
     "resolve_pending",
 ]
+
+
+def complete_reformulation(user_query, params, buyer, turn_id, builder, today):
+    """A standalone, supported request can replace any pending question."""
+    from app.core.entity_profile.turn import detect_entity_profile_turn
+    from app.core.entity_profile.frame_compiler import compile_profile, PlanStatus
+
+    if buyer is None or not detect_entity_profile_turn(user_query, params)[0]:
+        return None
+    resolution = resolve_profile_scope(params)
+    claims = collect_claims(user_query, params, turn_id=turn_id,
+                            buyer_resolution=resolution, today=today)
+    proposal = compose_patch(claims, base_frame=None, buyer_scope=buyer)
+    if proposal.patch is None:
+        return None
+    applied = apply_patch(None, proposal.patch)
+    if applied.frame is None:
+        return None
+    decision = compile_profile(applied.frame, soql_builder=builder)
+    if decision.status is not PlanStatus.READY:
+        return None
+    return applied.frame, proposal.patch

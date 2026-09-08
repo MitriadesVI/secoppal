@@ -111,6 +111,9 @@ class ExecutionRecord:
     not_requested_sections: tuple[str, ...]
     limitations: tuple[str, ...]
     calls: tuple[RecordedCall, ...]
+    authorized_plan: dict | None = None
+    confirmed_frame: dict | None = None
+    plan_digest: str | None = None
     schema_version: int = EXECUTION_RECORD_VERSION
 
     @property
@@ -130,6 +133,9 @@ class ExecutionRecord:
 
     def to_dict(self) -> dict:
         return {
+            "plan_digest": self.plan_digest,
+            "authorized_plan": self.authorized_plan,
+            "confirmed_frame": self.confirmed_frame,
             "schema_version": self.schema_version,
             "record_id": self.record_id, "plan_id": self.plan_id,
             "frame_ref": list(self.frame_ref),
@@ -150,6 +156,9 @@ class ExecutionRecord:
         try:
             ref = raw["frame_ref"]
             return cls(
+                plan_digest=raw.get("plan_digest"),
+                authorized_plan=raw.get("authorized_plan"),
+                confirmed_frame=raw.get("confirmed_frame"),
                 record_id=str(raw["record_id"]), plan_id=str(raw["plan_id"]),
                 frame_ref=(str(ref[0]), int(ref[1])),
                 catalog_version=str(raw["catalog_version"]),
@@ -168,10 +177,12 @@ class ExecutionRecord:
 
 
 def build_execution_record(
-    plan: ProfilePlan, evidence: ProfileEvidence,
+    plan: ProfilePlan, evidence: ProfileEvidence, frame=None,
 ) -> ExecutionRecord:
     if evidence.plan_id != plan.plan_id:
         raise ExecutionRecordError("evidence belongs to another plan")
+    from app.core.entity_profile.record_validation import snapshot, snapshot_digest
+
     calls: list[RecordedCall] = []
     for job in plan.jobs:
         observed = evidence.call(job.job_id)
@@ -190,6 +201,9 @@ def build_execution_record(
             ),
         ))
     return ExecutionRecord(
+        authorized_plan=snapshot(plan),
+        plan_digest=snapshot_digest(snapshot(plan)),
+        confirmed_frame=frame.to_dict() if frame else None,
         record_id=uuid.uuid4().hex[:16],
         plan_id=plan.plan_id, frame_ref=plan.frame_ref,
         catalog_version=plan.catalog_version, focus=plan.focus,

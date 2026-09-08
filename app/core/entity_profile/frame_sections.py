@@ -69,6 +69,8 @@ def build_frame_sections(
     rows = _rows_by_call(plan, evidence)
     calls = section_evidence_calls(rows, _calls_by_call(plan, evidence))
     expected = plan.expected_sections
+    if expected & plan.not_requested_sections or expected | plan.not_requested_sections != set(SECTION_ORDER):
+        raise ValueError("incoherent section coverage")
     coverage = _period_coverage(plan)
     built = {
         "activity": lambda: _activity(rows, calls, coverage),
@@ -79,7 +81,7 @@ def build_frame_sections(
         "recent": lambda: _recent(rows, calls, soql_builder),
     }
     return tuple(
-        built[name]() if name in expected else unavailable_section()
+        unavailable_section() if name in plan.not_requested_sections else built[name]()
         for name in SECTION_ORDER
     )
 
