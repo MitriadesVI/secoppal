@@ -42,6 +42,7 @@ from app.core.entity_profile.models import (
     SourceCall,
     unavailable_section,
 )
+from app.core.entity_profile.supplier_rankings import accredit_ranking, ranking_warnings
 
 
 SECTION_ORDER = (
@@ -280,14 +281,15 @@ def _suppliers(rows, calls) -> EntityProfileSection:
         ("supplier_count", "top_by_contract_count"),
         ("supplier_value", "top_by_contract_value"),
     ):
-        if call_id in ids and calls[call_id].status == "SUCCESS":
-            suppliers = parse_suppliers(rows.get(call_id, []))
-            if any(item.total_contract_value is None for item in suppliers):
+        available = call_id in ids and calls[call_id].status == "SUCCESS"
+        suppliers = parse_suppliers(rows.get(call_id, [])) if available else ()
+        ranking = 'count' if call_id == 'supplier_count' else 'value'
+        decision = accredit_ranking(ranking, suppliers, available=available)
+        facts.append(_fact(f'{ranking}_ranking_accreditation', decision, CONTRACT_DATASET))
+        warnings.extend(ranking_warnings(ranking, decision))
+        if available:
+            if not decision.amounts_valid or not decision.counts_valid:
                 status = SectionStatus.PARTIAL
-                warnings.append(
-                    "Hay montos de proveedores no acreditables; el ranking por valor "
-                    "no está acreditado. Se conservan las identidades y los conteos válidos.",
-                )
             facts.append(_fact(key, suppliers, CONTRACT_DATASET))
     return EntityProfileSection(
         status, (CONTRACT_DATASET,),

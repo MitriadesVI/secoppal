@@ -8,6 +8,7 @@ from app.core.entity_profile.effective_scope import (
 )
 from app.core.entity_profile.models import EntityProfile, RecentRecord, SupplierMetric
 from app.core.entity_profile.source_request import RequestedSources
+from app.core.entity_profile.supplier_rankings import section_ranking
 
 
 _SOURCES = {
@@ -81,14 +82,14 @@ def _overview(profile: EntityProfile) -> list[str]:
 
     by_value = profile.suppliers.fact("top_by_contract_value") or ()
     by_count = profile.suppliers.fact("top_by_contract_count") or ()
-    if by_value and all(item.total_contract_value is not None for item in by_value):
+    if by_value and section_ranking(profile.suppliers, 'value').accredited:
         supplier = by_value[0]
         lines.append(
             f"• Principal contratista por valor: {supplier.observed_name} "
             f"({_money(supplier.total_contract_value)}). "
             f"[{_source('jbjy-vk9h')}]"
         )
-    if by_count:
+    if by_count and section_ranking(profile.suppliers, 'count').accredited:
         supplier = by_count[0]
         lines.append(
             f"• Principal contratista por número de contratos: "
@@ -111,11 +112,14 @@ def _overview(profile: EntityProfile) -> list[str]:
     return lines[:8]
 
 
-def _supplier_lines(title: str, suppliers: tuple[SupplierMetric, ...], metric: str) -> list[str]:
+def _supplier_lines(
+    title: str, suppliers: tuple[SupplierMetric, ...], metric: str, *, accredited: bool,
+) -> list[str]:
     if not suppliers:
         return []
-    if metric == "value" and any(item.total_contract_value is None for item in suppliers):
-        title = "Proveedores observados; ranking por valor no acreditado"
+    if not accredited:
+        label = 'valor' if metric == 'value' else 'número de contratos'
+        title = f"Proveedores observados; ranking por {label} no acreditado"
     lines = [title]
     for supplier in suppliers:
         value = (
@@ -144,11 +148,13 @@ def _focused(profile: EntityProfile) -> list[str]:
                 "Principales contratistas por número de contratos",
                 profile.suppliers.fact("top_by_contract_count") or (),
                 "count",
+                accredited=section_ranking(profile.suppliers, 'count').accredited,
             ),
             *_supplier_lines(
                 "Principales contratistas por valor contratado",
                 profile.suppliers.fact("top_by_contract_value") or (),
                 "value",
+                accredited=section_ranking(profile.suppliers, 'value').accredited,
             ),
         ]
     if profile.focus == "modalities":
