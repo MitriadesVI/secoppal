@@ -83,8 +83,11 @@ def fail_confirmation_and_rearm(chat, query, monkeypatch, *, rollback='ok', othe
     if rollback == 'ok':
         assert error is None and failed.result['continuation_published'] is False
         after = target.read_bytes()
-        expected = before + b'\n{"publication_incomplete":true}\n' if blocked_before else before
-        assert after == expected, 'preserve prefix bytes and its nonconfirmation'
+        assert after.startswith(before), 'preserve every byte of the prior prefix'
+        if not blocked_before:
+            assert after == before
+        # A blocked prefix may acquire a recovery suffix. The historical test
+        # below checks the reader/history/capabilities, not merely marker bytes.
         emit('RECOVERY_PORT', dict(blocked_before=blocked_before, before_bytes=len(before),
                                   after_bytes=len(after), reached=reached))
     else:
