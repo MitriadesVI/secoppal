@@ -1,0 +1,235 @@
+{
+  "query": "que ha contratado alcaldia de barranquilla por mas de 2000 millones",
+  "initial_params": {
+    "dataset": "procesos",
+    "dataset_explicit": false,
+    "entidad": "Municipio de barranquilla",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+    "entidad_resolution": {
+      "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de barranquilla",
+        "resolution_method": "exact"
+      }
+    },
+    "valor_min": 2000000000,
+    "actor_resolution": "name_unresolved",
+    "actor_conversation_operation": "SET_ACTOR",
+    "actor_conversation_construction": "strong_actor_syntax",
+    "actor_scope": {
+      "role": "contractor",
+      "resolution_method": "name_unresolved",
+      "requires_resolution": true,
+      "observed_name": "alcaldia de barranquilla",
+      "reason_codes": [
+        "ACTOR_VERB_MARKER",
+        "ACTOR_NAME_NEEDS_RESOLUTION"
+      ]
+    },
+    "objeto": [
+      "contratado"
+    ]
+  },
+  "effective_config": {
+    "actor": true,
+    "frame": true,
+    "index": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-756/test_seeds_barranquilla_incomp1/actors.sqlite",
+    "persistence": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-756/test_seeds_barranquilla_incomp1"
+  },
+  "resolver": [
+    {
+      "method": "resolve_exact",
+      "mention": "alcaldia de barranquilla por mas de 2000 millones",
+      "status": "INDEX_UNAVAILABLE",
+      "resolution": "local_index"
+    }
+  ],
+  "result": {
+    "response": "No tengo disponible el índice local para distinguir ese nombre. Compárteme el NIT o la cédula y continúo sin adivinar.",
+    "rows": [],
+    "results": [],
+    "dataset_id": "",
+    "soql_query": "",
+    "parsed_params": {
+      "dataset": "contratos",
+      "dataset_explicit": false,
+      "entidad": "Municipio de barranquilla",
+      "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "entidad_resolution": {
+        "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de barranquilla",
+          "resolution_method": "exact"
+        }
+      },
+      "valor_min": 2000000000,
+      "actor_resolution": "local_index",
+      "actor_conversation_operation": "SET_ACTOR",
+      "actor_conversation_construction": "strong_actor_syntax",
+      "actor_scope": {
+        "role": "contractor",
+        "resolution_method": "name_unresolved",
+        "requires_resolution": true,
+        "observed_name": "alcaldia de barranquilla",
+        "reason_codes": [
+          "ACTOR_VERB_MARKER",
+          "ACTOR_NAME_NEEDS_RESOLUTION"
+        ]
+      },
+      "actor_resolution_status": "INDEX_UNAVAILABLE",
+      "actor_resolution_method": "local_index"
+    },
+    "resolved_params": {
+      "dataset": "contratos",
+      "dataset_explicit": false,
+      "entidad": "Municipio de barranquilla",
+      "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "entidad_resolution": {
+        "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de barranquilla",
+          "resolution_method": "exact"
+        }
+      },
+      "valor_min": 2000000000,
+      "actor_resolution": "local_index",
+      "actor_conversation_operation": "SET_ACTOR",
+      "actor_conversation_construction": "strong_actor_syntax",
+      "actor_scope": {
+        "role": "contractor",
+        "resolution_method": "name_unresolved",
+        "requires_resolution": true,
+        "observed_name": "alcaldia de barranquilla",
+        "reason_codes": [
+          "ACTOR_VERB_MARKER",
+          "ACTOR_NAME_NEEDS_RESOLUTION"
+        ]
+      },
+      "actor_resolution_status": "INDEX_UNAVAILABLE",
+      "actor_resolution_method": "local_index"
+    },
+    "needs_llm": false,
+    "needs_clarification": true,
+    "route_reason": "heuristic_only",
+    "degraded": false,
+    "degraded_hint": "",
+    "total_count": 0,
+    "universe_insights": null,
+    "suggestions": [],
+    "timeout_suggestions": [],
+    "risk_flag_timeout": false,
+    "query_error": "",
+    "intent_type": "",
+    "followup_intent_type": "",
+    "followup_mutation": {},
+    "analytical_intent": "",
+    "analytical_response": "",
+    "clarification_reason": "actor_index_unavailable",
+    "total_count_approximate": false,
+    "result_order_guarantee": "exact_order",
+    "fallback_attempted": false,
+    "fallback_used": false,
+    "fallback_strategy": "",
+    "fallback_query_status": "not_attempted",
+    "primary_query_status": "",
+    "transformations_applied": [],
+    "substantive_filters_preserved": true,
+    "query_plan": {
+      "should_execute": false,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": false,
+        "entidad": "Municipio de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de barranquilla",
+            "resolution_method": "exact"
+          }
+        },
+        "valor_min": 2000000000,
+        "actor_resolution": "local_index",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "name_unresolved",
+          "requires_resolution": true,
+          "observed_name": "alcaldia de barranquilla",
+          "reason_codes": [
+            "ACTOR_VERB_MARKER",
+            "ACTOR_NAME_NEEDS_RESOLUTION"
+          ]
+        },
+        "actor_resolution_status": "INDEX_UNAVAILABLE",
+        "actor_resolution_method": "local_index"
+      },
+      "missing_slots": [
+        "actor_document"
+      ],
+      "risk_flags": [
+        "actor_index_unavailable"
+      ],
+      "clarification_question": "No tengo disponible el índice local para distinguir ese nombre. Compárteme el NIT o la cédula y continúo sin adivinar.",
+      "reason": "actor_index_unavailable",
+      "signals": []
+    },
+    "followup": false,
+    "timings_ms": {
+      "parse_ms": 1.04,
+      "clarify_ms": 0.0,
+      "advisor_response_ms": 0.01,
+      "total_ms": 4.77
+    },
+    "contextual_filters": {},
+    "should_execute_decision": false,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "query_fingerprint": "c6edc78df1490ce2dff65997062715b058170a816bdc1eed3a72cae70e334e83",
+    "trace_id": "4f5b70a8c52f",
+    "_continuation_owner": "ACTOR",
+    "continuation_published": true,
+    "conversation_revision": 1,
+    "result_id": "a1071d49cd83",
+    "chat_id": "fresh",
+    "continuation": {
+      "export_ref": null,
+      "schema_version": 1,
+      "conversation_revision": 1,
+      "visible_turn_id": "320709c2fb7c",
+      "result_id": "a1071d49cd83",
+      "result_kind": "CLARIFICATION",
+      "owner": "ACTOR",
+      "tabular_groups": null,
+      "confirmed_profile": null,
+      "pending_profile": null,
+      "delegated": {
+        "reference": "4f5b70a8c52f"
+      }
+    },
+    "turn_deadline_ms": 15000.0,
+    "turn_elapsed_ms": 5.6
+  },
+  "published": [
+    "",
+    "{\"continuity_generation\": \"a1071d49cd83\", \"schema_version\": 1, \"revision\": 1, \"turn_id\": \"320709c2fb7c\", \"result_id\": \"a1071d49cd83\", \"chat_id\": \"fresh\", \"user_query\": \"que ha contratado alcaldia de barranquilla por mas de 2000 millones\", \"response\": \"No tengo disponible el índice local para distinguir ese nombre. Compárteme el NIT o la cédula y continúo sin adivinar.\", \"timestamp\": \"2026-09-08T18:36:04.404961+00:00\", \"profile_state\": {\"schema_version\": 1, \"confirmed_frame\": null, \"pending\": null}, \"continuation\": {\"export_ref\": null, \"schema_version\": 1, \"conversation_revision\": 1, \"visible_turn_id\": \"320709c2fb7c\", \"result_id\": \"a1071d49cd83\", \"result_kind\": \"CLARIFICATION\", \"owner\": \"ACTOR\", \"tabular_groups\": null, \"confirmed_profile\": null, \"pending_profile\": null, \"delegated\": {\"reference\": \"4f5b70a8c52f\"}}, \"execution_record\": null}\n",
+    ""
+  ]
+}

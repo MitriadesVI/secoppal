@@ -1,0 +1,248 @@
+{
+  "query": "contratos de alcaldia de cartagena por mas de 500 millones",
+  "initial_params": {
+    "dataset": "contratos",
+    "dataset_explicit": true,
+    "entidad": "Municipio de cartagena",
+    "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+    "entidad_resolution": {
+      "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de cartagena",
+        "resolution_method": "exact"
+      }
+    },
+    "valor_min": 500000000
+  },
+  "effective_config": {
+    "actor": true,
+    "frame": false,
+    "index": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-756/test_seeds_cartagena_1_off_0/actors.sqlite",
+    "persistence": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-756/test_seeds_cartagena_1_off_0"
+  },
+  "resolver": [
+    {
+      "method": "resolve_exact",
+      "mention": "alcaldia de cartagena por mas de 500 millones",
+      "status": "UNRESOLVED",
+      "resolution": "no_exact_match"
+    },
+    {
+      "method": "resolve_exact",
+      "mention": "alcaldia de cartagena",
+      "status": "RESOLVED",
+      "resolution": "exact_unique_alias"
+    }
+  ],
+  "sql": [
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000 AND (documento_proveedor = '70000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000 AND (documento_proveedor = '70000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000 AND (documento_proveedor = '70000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000 AND (documento_proveedor = '70000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000 AND (documento_proveedor = '70000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000 AND (documento_proveedor = '70000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000 AND (documento_proveedor = '70000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000 AND (documento_proveedor = '70000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+    }
+  ],
+  "result": {
+    "response": "CC 70000001\n\n*Huella contractual observada* — SECOP II contratos, consultado el 08/09/2026 13:36 (hora de Colombia)\n\n*Filtros aplicados*\n- Entidad: ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\n- Valor contractual: desde $500 millones\n\nNo pude obtener el total de contratos ni su valor: la fuente no respondió a esa consulta.\n\n⚠️ No pude consultar los compradores, el total de contratos y su valor, el rango de fechas, las modalidades, los nombres registrados, los contratos recientes, los territorios, la distribución por año: la fuente no respondió. Eso no significa que no exista — significa que no lo sé.\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+    "rows": [],
+    "results": [],
+    "dataset_id": "jbjy-vk9h",
+    "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000 AND (documento_proveedor = '70000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+    "parsed_params": {
+      "dataset": "contratos",
+      "dataset_explicit": true,
+      "entidad": "Municipio de cartagena",
+      "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "entidad_resolution": {
+        "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de cartagena",
+          "resolution_method": "exact"
+        }
+      },
+      "valor_min": 500000000,
+      "actor_resolution_status": "RESOLVED",
+      "actor_resolution_method": "exact_unique_alias",
+      "actor_resolution": "exact_unique_alias",
+      "contratista": [
+        "70000001"
+      ],
+      "actor_scope": {
+        "role": "contractor",
+        "resolution_method": "exact_unique_alias",
+        "requires_resolution": false,
+        "document_type": "CC",
+        "base_number": "70000001",
+        "observed_name": "alcaldia de cartagena"
+      }
+    },
+    "resolved_params": {
+      "dataset": "contratos",
+      "entidad": "Municipio de cartagena",
+      "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "entidad_resolution": {
+        "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de cartagena",
+          "resolution_method": "exact"
+        }
+      },
+      "valor_min": 500000000,
+      "actor_resolution_status": "RESOLVED",
+      "actor_resolution_method": "exact_unique_alias",
+      "actor_resolution": "exact_unique_alias",
+      "contratista": [
+        "70000001"
+      ],
+      "actor_scope": {
+        "role": "contractor",
+        "resolution_method": "exact_unique_alias",
+        "requires_resolution": false,
+        "document_type": "CC",
+        "base_number": "70000001",
+        "observed_name": "alcaldia de cartagena"
+      },
+      "limit": 50
+    },
+    "needs_llm": false,
+    "needs_clarification": false,
+    "route_reason": "actor_profile",
+    "degraded": false,
+    "degraded_hint": "",
+    "total_count": 0,
+    "universe_insights": null,
+    "suggestions": [
+      "Suggestion(label='Ver contratos activos (en ejecución)', modified_params={'dataset': 'contratos', 'entidad': 'Municipio de cartagena', 'entidad_resolved': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'entidad_resolution': {'value': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'method': 'rewrite_alcald[ií]a', 'kind': 'buyer_entity', 'confidence': 'high', 'like_value': None, 'metadata': {'rewritten_from': 'alcaldia de cartagena', 'resolution_method': 'exact'}}, 'valor_min': 500000000, 'actor_resolution_status': 'RESOLVED', 'actor_resolution_method': 'exact_unique_alias', 'actor_resolution': 'exact_unique_alias', 'contratista': ['70000001'], 'actor_scope': {'role': 'contractor', 'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'base_number': '70000001', 'observed_name': 'alcaldia de cartagena'}, 'limit': 50, 'estado': ['En ejecución', 'Modificado', 'Prorrogado']}, expected_count=None, reason='Contratos actualmente activos')",
+      "Suggestion(label='Ver contratos cerrados', modified_params={'dataset': 'contratos', 'entidad': 'Municipio de cartagena', 'entidad_resolved': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'entidad_resolution': {'value': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'method': 'rewrite_alcald[ií]a', 'kind': 'buyer_entity', 'confidence': 'high', 'like_value': None, 'metadata': {'rewritten_from': 'alcaldia de cartagena', 'resolution_method': 'exact'}}, 'valor_min': 500000000, 'actor_resolution_status': 'RESOLVED', 'actor_resolution_method': 'exact_unique_alias', 'actor_resolution': 'exact_unique_alias', 'contratista': ['70000001'], 'actor_scope': {'role': 'contractor', 'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'base_number': '70000001', 'observed_name': 'alcaldia de cartagena'}, 'limit': 50, 'estado': ['Cerrado']}, expected_count=None, reason='Contratos con gestión cerrada')",
+      "Suggestion(label='Ver suspendidos', modified_params={'dataset': 'contratos', 'entidad': 'Municipio de cartagena', 'entidad_resolved': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'entidad_resolution': {'value': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'method': 'rewrite_alcald[ií]a', 'kind': 'buyer_entity', 'confidence': 'high', 'like_value': None, 'metadata': {'rewritten_from': 'alcaldia de cartagena', 'resolution_method': 'exact'}}, 'valor_min': 500000000, 'actor_resolution_status': 'RESOLVED', 'actor_resolution_method': 'exact_unique_alias', 'actor_resolution': 'exact_unique_alias', 'contratista': ['70000001'], 'actor_scope': {'role': 'contractor', 'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'base_number': '70000001', 'observed_name': 'alcaldia de cartagena'}, 'limit': 50, 'estado': ['Suspendido']}, expected_count=None, reason='Contratos suspendidos')"
+    ],
+    "timeout_suggestions": [],
+    "risk_flag_timeout": false,
+    "query_error": "",
+    "intent_type": "",
+    "followup_intent_type": "",
+    "followup_mutation": {},
+    "analytical_intent": "actor_profile",
+    "analytical_response": "CC 70000001\n\n*Huella contractual observada* — SECOP II contratos, consultado el 08/09/2026 13:36 (hora de Colombia)\n\n*Filtros aplicados*\n- Entidad: ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\n- Valor contractual: desde $500 millones\n\nNo pude obtener el total de contratos ni su valor: la fuente no respondió a esa consulta.\n\n⚠️ No pude consultar los compradores, el total de contratos y su valor, el rango de fechas, las modalidades, los nombres registrados, los contratos recientes, los territorios, la distribución por año: la fuente no respondió. Eso no significa que no exista — significa que no lo sé.\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+    "clarification_reason": "",
+    "total_count_approximate": false,
+    "result_order_guarantee": "exact_order",
+    "fallback_attempted": false,
+    "fallback_used": false,
+    "fallback_strategy": "",
+    "fallback_query_status": "not_attempted",
+    "primary_query_status": "",
+    "transformations_applied": [],
+    "substantive_filters_preserved": true,
+    "query_plan": {
+      "should_execute": true,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de cartagena",
+        "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "entidad_resolution": {
+          "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de cartagena",
+            "resolution_method": "exact"
+          }
+        },
+        "valor_min": 500000000,
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "exact_unique_alias",
+        "actor_resolution": "exact_unique_alias",
+        "contratista": [
+          "70000001"
+        ],
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "exact_unique_alias",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "70000001",
+          "observed_name": "alcaldia de cartagena"
+        }
+      },
+      "missing_slots": [],
+      "risk_flags": [],
+      "clarification_question": null,
+      "reason": "valid_query",
+      "signals": []
+    },
+    "followup": false,
+    "timings_ms": {
+      "parse_ms": 1.15,
+      "resolve_ms": 0.02,
+      "build_soql_ms": 0.05,
+      "execute_total_ms": 3.09,
+      "degrade_ms": 0.0,
+      "observe_ms": 0.0,
+      "suggest_ms": 0.01,
+      "rank_ms": 0.01,
+      "format_ms": 0.0,
+      "advisor_response_ms": 0.01,
+      "total_ms": 7.85
+    },
+    "contextual_filters": {},
+    "should_execute_decision": true,
+    "source_candidate_total": 0,
+    "validated_total_known": 0,
+    "displayed_so_far": 0,
+    "source_total_approximate": false,
+    "outcome": "success",
+    "outcome_reason": "results_found",
+    "query_fingerprint": "3c06d9040c547f66f4d27c99366e35e3cb9f89b33528970550f4cba97dda4dd9",
+    "trace_id": "0861cb22f06e",
+    "_continuation_owner": "ACTOR",
+    "turn_deadline_ms": 15000.0,
+    "turn_elapsed_ms": 8.5
+  },
+  "published": [
+    "{\"contratos\": {\"query_fingerprint\": \"f7730cfe95ea18fb705d1a285e70f5a6831c305eec8071e20a5d86dca8323684\", \"group\": \"contratos\", \"dataset_id\": \"jbjy-vk9h\", \"query_params\": {\"dataset\": \"contratos\", \"entidad\": \"Municipio de cartagena\", \"entidad_resolved\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"entidad_resolution\": {\"value\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"method\": \"rewrite_alcald[ií]a\", \"kind\": \"buyer_entity\", \"confidence\": \"high\", \"like_value\": null, \"metadata\": {\"rewritten_from\": \"alcaldia de cartagena\", \"resolution_method\": \"exact\"}}, \"valor_min\": 500000000, \"actor_resolution_status\": \"RESOLVED\", \"actor_resolution_method\": \"exact_unique_alias\", \"actor_resolution\": \"exact_unique_alias\", \"contratista\": [\"70000001\"], \"actor_scope\": {\"role\": \"contractor\", \"resolution_method\": \"exact_unique_alias\", \"requires_resolution\": false, \"document_type\": \"CC\", \"base_number\": \"70000001\", \"observed_name\": \"alcaldia de cartagena\"}, \"limit\": 50}, \"candidate_buffer\": [], \"validated_ranked_buffer\": [], \"display_cursor\": 0, \"source_cursor\": 50, \"source_candidate_total\": 0, \"validated_total_known\": 0, \"created_at_utc\": \"2026-09-08T18:36:00.117651+00:00\", \"expires_at_utc\": \"2026-09-08T18:51:00.117651+00:00\", \"source_total_approximate\": false}}",
+    "{\"turn_id\": \"e3dc5a63e134\", \"timestamp\": \"2026-09-08T18:36:00.118063+00:00\", \"chat_id\": \"fresh\", \"user_query\": \"contratos de alcaldia de cartagena por mas de 500 millones\", \"response\": \"CC 70000001\\n\\n*Huella contractual observada* — SECOP II contratos, consultado el 08/09/2026 13:36 (hora de Colombia)\\n\\n*Filtros aplicados*\\n- Entidad: ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\\n- Valor contractual: desde $500 millones\\n\\nNo pude obtener el total de contratos ni su valor: la fuente no respondió a esa consulta.\\n\\n⚠️ No pude consultar los compradores, el total de contratos y su valor, el rango de fechas, las modalidades, los nombres registrados, los contratos recientes, los territorios, la distribución por año: la fuente no respondió. Eso no significa que no exista — significa que no lo sé.\\n\\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.\", \"parsed_params\": {\"dataset\": \"contratos\", \"entidad\": \"Municipio de cartagena\", \"entidad_resolved\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"entidad_resolution\": {\"value\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"method\": \"rewrite_alcald[ií]a\", \"kind\": \"buyer_entity\", \"confidence\": \"high\", \"like_value\": null, \"metadata\": {\"rewritten_from\": \"alcaldia de cartagena\", \"resolution_method\": \"exact\"}}, \"valor_min\": 500000000, \"actor_resolution_status\": \"RESOLVED\", \"actor_resolution_method\": \"exact_unique_alias\", \"actor_resolution\": \"exact_unique_alias\", \"contratista\": [\"70000001\"], \"actor_scope\": {\"role\": \"contractor\", \"resolution_method\": \"exact_unique_alias\", \"requires_resolution\": false, \"document_type\": \"CC\", \"base_number\": \"70000001\", \"observed_name\": \"alcaldia de cartagena\"}, \"limit\": 50}, \"result_ids\": [], \"trace_id\": \"0861cb22f06e\", \"suggestions\": [{\"label\": \"Ver contratos activos (en ejecución)\", \"modified_params\": {\"dataset\": \"contratos\", \"entidad\": \"Municipio de cartagena\", \"entidad_resolved\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"entidad_resolution\": {\"value\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"method\": \"rewrite_alcald[ií]a\", \"kind\": \"buyer_entity\", \"confidence\": \"high\", \"like_value\": null, \"metadata\": {\"rewritten_from\": \"alcaldia de cartagena\", \"resolution_method\": \"exact\"}}, \"valor_min\": 500000000, \"actor_resolution_status\": \"RESOLVED\", \"actor_resolution_method\": \"exact_unique_alias\", \"actor_resolution\": \"exact_unique_alias\", \"contratista\": [\"70000001\"], \"actor_scope\": {\"role\": \"contractor\", \"resolution_method\": \"exact_unique_alias\", \"requires_resolution\": false, \"document_type\": \"CC\", \"base_number\": \"70000001\", \"observed_name\": \"alcaldia de cartagena\"}, \"limit\": 50, \"estado\": [\"En ejecución\", \"Modificado\", \"Prorrogado\"]}, \"expected_count\": null, \"reason\": \"Contratos actualmente activos\"}, {\"label\": \"Ver contratos cerrados\", \"modified_params\": {\"dataset\": \"contratos\", \"entidad\": \"Municipio de cartagena\", \"entidad_resolved\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"entidad_resolution\": {\"value\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"method\": \"rewrite_alcald[ií]a\", \"kind\": \"buyer_entity\", \"confidence\": \"high\", \"like_value\": null, \"metadata\": {\"rewritten_from\": \"alcaldia de cartagena\", \"resolution_method\": \"exact\"}}, \"valor_min\": 500000000, \"actor_resolution_status\": \"RESOLVED\", \"actor_resolution_method\": \"exact_unique_alias\", \"actor_resolution\": \"exact_unique_alias\", \"contratista\": [\"70000001\"], \"actor_scope\": {\"role\": \"contractor\", \"resolution_method\": \"exact_unique_alias\", \"requires_resolution\": false, \"document_type\": \"CC\", \"base_number\": \"70000001\", \"observed_name\": \"alcaldia de cartagena\"}, \"limit\": 50, \"estado\": [\"Cerrado\"]}, \"expected_count\": null, \"reason\": \"Contratos con gestión cerrada\"}, {\"label\": \"Ver suspendidos\", \"modified_params\": {\"dataset\": \"contratos\", \"entidad\": \"Municipio de cartagena\", \"entidad_resolved\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"entidad_resolution\": {\"value\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"method\": \"rewrite_alcald[ií]a\", \"kind\": \"buyer_entity\", \"confidence\": \"high\", \"like_value\": null, \"metadata\": {\"rewritten_from\": \"alcaldia de cartagena\", \"resolution_method\": \"exact\"}}, \"valor_min\": 500000000, \"actor_resolution_status\": \"RESOLVED\", \"actor_resolution_method\": \"exact_unique_alias\", \"actor_resolution\": \"exact_unique_alias\", \"contratista\": [\"70000001\"], \"actor_scope\": {\"role\": \"contractor\", \"resolution_method\": \"exact_unique_alias\", \"requires_resolution\": false, \"document_type\": \"CC\", \"base_number\": \"70000001\", \"observed_name\": \"alcaldia de cartagena\"}, \"limit\": 50, \"estado\": [\"Suspendido\"]}, \"expected_count\": null, \"reason\": \"Contratos suspendidos\"}], \"outcome\": \"success\", \"outcome_reason\": \"results_found\", \"result_count\": 0, \"query_fingerprint\": \"3c06d9040c547f66f4d27c99366e35e3cb9f89b33528970550f4cba97dda4dd9\"}\n",
+    ""
+  ]
+}
