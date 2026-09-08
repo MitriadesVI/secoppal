@@ -1,0 +1,23 @@
+{
+  "verdict": "GATE_INCONCLUSIVE",
+  "go_for_merge": false,
+  "production_go": false,
+  "GATE_CODE_HEAD": "9f68ed90007153fcbdf4f5aaebf7eec7fbc3fd54",
+  "MAIN_BEFORE": "52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386",
+  "MAIN_AFTER": "52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386",
+  "blockers": [
+    "Global incomplete: ENOSPC; no final counts or reports",
+    "H4 XPASS(strict) reproduced on candidate vs XFAIL on BASE; expectation not adjudicated",
+    "Author local mounting: 20 blocked external aggregate attempts; 4 teardown errors"
+  ],
+  "completed_offline": {
+    "frame_complements": 465,
+    "buyer_independent": 95,
+    "buyer_local_independent": 4
+  },
+  "author_local": "4 call passes plus 4 teardown errors",
+  "full_runs": 1,
+  "full_reruns": 0,
+  "runtime_modified": false,
+  "merge_push_activation_deployment_restart": false
+}

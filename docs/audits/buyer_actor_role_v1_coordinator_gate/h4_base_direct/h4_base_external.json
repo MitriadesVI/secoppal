@@ -1,0 +1,10 @@
+{
+  "flags": {
+    "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal": {
+      "actor": true,
+      "frame": false
+    }
+  },
+  "denied": [],
+  "exitstatus": 0
+}

@@ -1,0 +1,29 @@
+{
+  "runtime_source": "52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386",
+  "restored_paths": [
+    "app/core/actor_arbitration.py",
+    "app/core/actor_conversation.py",
+    "app/core/actor_intent.py",
+    "app/core/buyer_actor_role.py",
+    "app/core/query_router.py",
+    "app/core/workflow/actions/actor_resolution.py",
+    "app/core/workflow/actions/parsing.py",
+    "app/core/workflow/external_admission.py"
+  ],
+  "test_blob_unchanged": true,
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "gate_plugin",
+    "-p",
+    "offline_guard",
+    "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+    "-q",
+    "-ra",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/docs/audits/buyer_actor_role_v1_coordinator_gate/h4_base_direct/h4_base.xml"
+  ],
+  "exit": 0
+}

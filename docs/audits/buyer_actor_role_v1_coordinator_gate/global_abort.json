@@ -1,0 +1,13 @@
+{
+  "status": "INCOMPLETE",
+  "runner_exit": 1,
+  "error": "OSError: [Errno 28] No space left on device",
+  "stack_location": "Frame run_gate.py run(): with log.open(w), during pytest(global)",
+  "completed_global_json": false,
+  "completed_junit": false,
+  "final_pytest_summary": false,
+  "partial_stdout": "full_global.log",
+  "full_reruns": 0,
+  "available_mib_after_temporary_cleanup": 438,
+  "interpretation": "Global assertions and setup failures in progress output cannot be adjudicated from missing final reports. Do not count dots as authoritative passed tests."
+}

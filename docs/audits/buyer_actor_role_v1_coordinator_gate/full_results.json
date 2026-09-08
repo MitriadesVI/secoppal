@@ -1,0 +1,74 @@
+[
+  {
+    "component": "full_ruff",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "app/",
+      "tests/",
+      "scripts/"
+    ],
+    "sha": "9f68ed90007153fcbdf4f5aaebf7eec7fbc3fd54",
+    "duration": 0.013214083999628201,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/buyer_actor_role_v1_coordinator_gate/full_ruff.log"
+  },
+  {
+    "component": "full_ruff_complement",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "docs/audits/buyer_actor_role_v1_coordinator_gate"
+    ],
+    "sha": "9f68ed90007153fcbdf4f5aaebf7eec7fbc3fd54",
+    "duration": 0.009134667008765973,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/buyer_actor_role_v1_coordinator_gate/full_ruff_complement.log"
+  },
+  {
+    "component": "full_semgrep_base",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+      "--config",
+      ".semgrep/secoppal-laws.yml",
+      "app/",
+      "--metrics=off",
+      "--json",
+      "--output",
+      "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/docs/audits/buyer_actor_role_v1_coordinator_gate/semgrep_base.json"
+    ],
+    "sha": "9f68ed90007153fcbdf4f5aaebf7eec7fbc3fd54",
+    "duration": 1.6738174999918556,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/buyer_actor_role_v1_coordinator_gate/full_semgrep_base.log"
+  },
+  {
+    "component": "full_semgrep_candidate",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+      "--config",
+      ".semgrep/secoppal-laws.yml",
+      "app/",
+      "--metrics=off",
+      "--json",
+      "--output",
+      "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/docs/audits/buyer_actor_role_v1_coordinator_gate/semgrep_candidate.json"
+    ],
+    "sha": "9f68ed90007153fcbdf4f5aaebf7eec7fbc3fd54",
+    "duration": 1.3410139999905368,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/buyer_actor_role_v1_coordinator_gate/full_semgrep_candidate.log"
+  }
+]

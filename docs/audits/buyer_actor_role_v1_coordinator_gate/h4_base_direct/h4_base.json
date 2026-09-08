@@ -1,0 +1,41 @@
+{
+  "collection": [
+    "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.002983291997225024,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+      "when": "call",
+      "outcome": "skipped",
+      "duration": 0.14258370800234843,
+      "xfail": "Etapa 2 (mutaciones): un cambio de tema/scope no limpia ordering_signal heredado. Fuga SEGURA (pierde recall, no miente). Al arreglarse, este xfail pasa a XPASS.",
+      "detail": "tests/test_h4_fallback.py:376: in test_new_topic_should_clear_inherited_ordering_signal\n    assert r2.get(\"resolved_params\", {}).get(\"ordering_signal\") is None\nE   AssertionError: assert 'valor_desc' is None\nE    +  where 'valor_desc' = <built-in method get of dict object at 0x11c1250c0>('ordering_signal')\nE    +    where <built-in method get of dict object at 0x11c1250c0> = {'ciudad': 'Cali', 'dataset': 'contratos', 'limit': 50, 'objeto': ['adulto_mayor'], ...}.get\nE    +      where {'ciudad': 'Cali', 'dataset': 'contratos', 'limit': 50, 'objeto': ['adulto_mayor'], ...} = <built-in method get of dict object at 0x11bea3280>('resolved_params', {})\nE    +        where <built-in method get of dict object at 0x11bea3280> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get"
+    },
+    {
+      "nodeid": "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00019595801131799817,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal": "/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/buyer-h4-base-q37oynb7/candidate/tests/test_h4_fallback.py"
+  },
+  "exitstatus": 0
+}

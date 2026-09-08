@@ -1,0 +1,7 @@
+{
+  "tracked_python_files": 327,
+  "python_not_scanned": [],
+  "large_non_python_file": "app/data/territorial_knowledge_v0.json",
+  "rules_language": "python",
+  "command_scoped_to": "all app/ with project laws; no own-file-only scan"
+}

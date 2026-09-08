@@ -1,0 +1,37 @@
+{
+  "GATE_CODE_HEAD": "9f68ed90007153fcbdf4f5aaebf7eec7fbc3fd54",
+  "MAIN_BEFORE": "52a6bcc68efc50e06ba9aa0f60ff8d30f8cf1386",
+  "interval": "9f68ed90007153fcbdf4f5aaebf7eec7fbc3fd54 test(buyer): isolate legacy actor harnesses and freeze integration gate\n7c8cd9be7e071924763d887e8edf14c8804f5b18 audit(buyer): independently verify role arbitration and continuity\ne06c60482756e2d4238052818117568f9cd4e946 docs(buyer): preserve raw gate output in lossless archives\n77595f1d04c06354110e1ae833172901ba270c9f docs(buyer): record role arbitration evidence and review verdict\naab5d41d45e58f21b727929d4ec454f8fbbbf9cd fix(buyer): arbitrate complete buyer mentions before actor resolution\n47e46a1404cefc896f3ad1ded397d307a218e319 test(buyer): reproduce actor role hijack with real alias collisions",
+  "initial_frame": false,
+  "blocks": {
+    "global": [
+      "tests"
+    ],
+    "b2_independent": [
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py"
+    ],
+    "b3_remediation": [
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_ports.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_supplier_ports.py"
+    ],
+    "b3_independent": [
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_limits.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_property.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py"
+    ],
+    "buyer_acceptance": [
+      "tests/test_buyer_actor_independent_product.py",
+      "tests/test_buyer_actor_independent_boundaries.py"
+    ],
+    "buyer_local": [
+      "tests/test_buyer_actor_role_local_v1.py",
+      "tests/test_buyer_actor_independent_local.py"
+    ]
+  }
+}

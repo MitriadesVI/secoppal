@@ -1,0 +1,7 @@
+{
+  "fault": "write",
+  "usable": true,
+  "query": "consulta B NO publicada",
+  "external": true,
+  "lines": 2
+}

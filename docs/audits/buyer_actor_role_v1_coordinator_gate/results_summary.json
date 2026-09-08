@@ -1,0 +1,126 @@
+{
+  "b2_independent": {
+    "collected": 47,
+    "passed": 47,
+    "call_failed": 0,
+    "setup_failed": 0,
+    "teardown_failed": 0,
+    "skipped": 0,
+    "xfailed": 0,
+    "deselected": 0,
+    "denied_attempts": 0,
+    "network_events": 0
+  },
+  "b3_remediation": {
+    "collected": 303,
+    "passed": 303,
+    "call_failed": 0,
+    "setup_failed": 0,
+    "teardown_failed": 0,
+    "skipped": 0,
+    "xfailed": 0,
+    "deselected": 0,
+    "denied_attempts": 0,
+    "network_events": 0
+  },
+  "b3_independent": {
+    "collected": 115,
+    "passed": 115,
+    "call_failed": 0,
+    "setup_failed": 0,
+    "teardown_failed": 0,
+    "skipped": 0,
+    "xfailed": 0,
+    "deselected": 0,
+    "denied_attempts": 0,
+    "network_events": 0
+  },
+  "buyer_acceptance": {
+    "collected": 95,
+    "passed": 95,
+    "call_failed": 0,
+    "setup_failed": 0,
+    "teardown_failed": 0,
+    "skipped": 0,
+    "xfailed": 0,
+    "deselected": 0,
+    "denied_attempts": 0,
+    "network_events": 0
+  },
+  "buyer_local": {
+    "collected": 8,
+    "passed": 8,
+    "call_failed": 0,
+    "setup_failed": 0,
+    "teardown_failed": 4,
+    "skipped": 0,
+    "xfailed": 0,
+    "deselected": 0,
+    "denied_attempts": 20,
+    "network_events": 20
+  },
+  "acceptance_effective_flags": {
+    "observations": 58,
+    "actor_values": [
+      true
+    ],
+    "frame_values": [
+      false,
+      true
+    ]
+  },
+  "independent_local": [
+    {
+      "trace": "local-flags-barranquilla-True.json",
+      "flags": {
+        "actor_reader": true,
+        "frame_reader": true,
+        "settings_actor": true
+      },
+      "index_stat_unchanged": true
+    },
+    {
+      "trace": "local-flags-cartagena-False.json",
+      "flags": {
+        "actor_reader": true,
+        "frame_reader": false,
+        "settings_actor": true
+      },
+      "index_stat_unchanged": true
+    },
+    {
+      "trace": "local-flags-barranquilla-False.json",
+      "flags": {
+        "actor_reader": true,
+        "frame_reader": false,
+        "settings_actor": true
+      },
+      "index_stat_unchanged": true
+    },
+    {
+      "trace": "local-flags-cartagena-True.json",
+      "flags": {
+        "actor_reader": true,
+        "frame_reader": true,
+        "settings_actor": true
+      },
+      "index_stat_unchanged": true
+    }
+  ],
+  "global": {
+    "collected": 13312,
+    "completed": false,
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "xfailed": null,
+    "deselected": null,
+    "reason": "ENOSPC; final pytest report unavailable. No authoritative totals inferred from progress."
+  },
+  "diagnostic_h4": {
+    "base": "1 xfailed in 0.87s",
+    "candidate": "1 failed in 0.82s",
+    "reason": "XPASS(strict), the unchanged assertion succeeds on candidate",
+    "expectation_modified": false
+  }
+}

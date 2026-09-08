@@ -1,0 +1,27 @@
+{
+  "collection": [
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]"
+  ],
+  "results": [],
+  "flags": {},
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_role_local_v1.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[cartagena-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-False]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py",
+    "tests/test_buyer_actor_independent_local.py::test_local_effective_flags_and_product[barranquilla-True]": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_buyer_actor_independent_local.py"
+  },
+  "exitstatus": 0
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "component": "focal_h4_candidate_focused",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "gate_plugin",
+      "-q",
+      "-o",
+      "cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-a1icpzd9/pytest_cache",
+      "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+      "-p",
+      "offline_guard",
+      "--tb=short",
+      "--junitxml=/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/docs/audits/buyer_actor_role_v1_coordinator_gate/focal_h4_candidate_focused.xml"
+    ],
+    "sha": "9f68ed90007153fcbdf4f5aaebf7eec7fbc3fd54",
+    "duration": 1.2297232499986421,
+    "exit": 1,
+    "pass": false,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/buyer_actor_role_v1_coordinator_gate/focal_h4_candidate_focused.log"
+  },
+  {
+    "component": "preservation",
+    "pass": true
+  },
+  {
+    "component": "code_frozen",
+    "pass": true
+  }
+]

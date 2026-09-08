@@ -1,0 +1,390 @@
+{
+  "flags": {
+    "actor_reader": true,
+    "frame_reader": false,
+    "settings_actor": true
+  },
+  "sql": [
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (documento_proveedor = '71000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (documento_proveedor = '71000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (documento_proveedor = '71000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (documento_proveedor = '71000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (documento_proveedor = '71000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (documento_proveedor = '71000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (documento_proveedor = '71000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (documento_proveedor = '71000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+    }
+  ],
+  "errors": [],
+  "resolver": [
+    [
+      "resolve_exact",
+      "fundacaribe con la alcaldia de cartagena",
+      "UNRESOLVED"
+    ],
+    [
+      "resolve_exact",
+      "fundacaribe con la alcaldia de",
+      "UNRESOLVED"
+    ],
+    [
+      "resolve_exact",
+      "fundacaribe con la alcaldia",
+      "UNRESOLVED"
+    ],
+    [
+      "resolve_exact",
+      "fundacaribe con la",
+      "UNRESOLVED"
+    ],
+    [
+      "resolve_exact",
+      "fundacaribe con",
+      "UNRESOLVED"
+    ],
+    [
+      "resolve_exact",
+      "fundacaribe",
+      "RESOLVED"
+    ],
+    [
+      "resolve",
+      "fundacaribe",
+      "RESOLVED"
+    ]
+  ],
+  "source_rows": [
+    [
+      {
+        "total_value": 31000000063,
+        "total_count": 63
+      }
+    ],
+    [
+      {
+        "modalidad_de_contratacion": "Contratacion directa",
+        "cnt": 63
+      }
+    ],
+    [
+      {
+        "departamento": "Bolívar",
+        "cnt": 63
+      }
+    ],
+    [
+      {
+        "yr": "2026-01-01T00:00:00.000",
+        "cnt": 62
+      },
+      {
+        "yr": "2025-01-01T00:00:00.000",
+        "cnt": 1
+      }
+    ],
+    [
+      {
+        "date_min": "2025-03-01T00:00:00.000",
+        "date_max": "2026-03-01T00:00:00.000"
+      }
+    ],
+    [
+      {
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "cnt": 63
+      }
+    ],
+    [
+      {
+        "proveedor_adjudicado": "FUNDACARIBE",
+        "documento_proveedor": "71000001",
+        "tipodocproveedor": "CC",
+        "cnt": 63
+      }
+    ],
+    [
+      {
+        "id_contrato": "INDEPENDENT-064",
+        "referencia_del_contrato": "REF-64",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "departamento": "Bolívar",
+        "ciudad": "Cartagena",
+        "objeto_del_contrato": "software audit",
+        "descripcion_del_proceso": "software audit",
+        "tipo_de_contrato": "Prestacion de servicios",
+        "modalidad_de_contratacion": "Contratacion directa",
+        "valor_del_contrato": 500000001,
+        "valor_facturado": 0,
+        "estado_contrato": "Firmado",
+        "fecha_de_firma": "2026-03-01T00:00:00.000",
+        "proveedor_adjudicado": "FUNDACARIBE",
+        "documento_proveedor": "71000001",
+        "urlproceso": "https://example.invalid/audit"
+      },
+      {
+        "id_contrato": "INDEPENDENT-059",
+        "referencia_del_contrato": "REF-59",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "departamento": "Bolívar",
+        "ciudad": "Cartagena",
+        "objeto_del_contrato": "software audit",
+        "descripcion_del_proceso": "software audit",
+        "tipo_de_contrato": "Prestacion de servicios",
+        "modalidad_de_contratacion": "Contratacion directa",
+        "valor_del_contrato": 500000001,
+        "valor_facturado": 0,
+        "estado_contrato": "Firmado",
+        "fecha_de_firma": "2026-03-01T00:00:00.000",
+        "proveedor_adjudicado": "FUNDACARIBE",
+        "documento_proveedor": "71000001",
+        "urlproceso": "https://example.invalid/audit"
+      },
+      {
+        "id_contrato": "INDEPENDENT-058",
+        "referencia_del_contrato": "REF-58",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "departamento": "Bolívar",
+        "ciudad": "Cartagena",
+        "objeto_del_contrato": "software audit",
+        "descripcion_del_proceso": "software audit",
+        "tipo_de_contrato": "Prestacion de servicios",
+        "modalidad_de_contratacion": "Contratacion directa",
+        "valor_del_contrato": 500000001,
+        "valor_facturado": 0,
+        "estado_contrato": "Firmado",
+        "fecha_de_firma": "2026-03-01T00:00:00.000",
+        "proveedor_adjudicado": "FUNDACARIBE",
+        "documento_proveedor": "71000001",
+        "urlproceso": "https://example.invalid/audit"
+      },
+      {
+        "id_contrato": "INDEPENDENT-057",
+        "referencia_del_contrato": "REF-57",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "departamento": "Bolívar",
+        "ciudad": "Cartagena",
+        "objeto_del_contrato": "software audit",
+        "descripcion_del_proceso": "software audit",
+        "tipo_de_contrato": "Prestacion de servicios",
+        "modalidad_de_contratacion": "Contratacion directa",
+        "valor_del_contrato": 500000001,
+        "valor_facturado": 0,
+        "estado_contrato": "Firmado",
+        "fecha_de_firma": "2026-03-01T00:00:00.000",
+        "proveedor_adjudicado": "FUNDACARIBE",
+        "documento_proveedor": "71000001",
+        "urlproceso": "https://example.invalid/audit"
+      },
+      {
+        "id_contrato": "INDEPENDENT-056",
+        "referencia_del_contrato": "REF-56",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "departamento": "Bolívar",
+        "ciudad": "Cartagena",
+        "objeto_del_contrato": "software audit",
+        "descripcion_del_proceso": "software audit",
+        "tipo_de_contrato": "Prestacion de servicios",
+        "modalidad_de_contratacion": "Contratacion directa",
+        "valor_del_contrato": 500000001,
+        "valor_facturado": 0,
+        "estado_contrato": "Firmado",
+        "fecha_de_firma": "2026-03-01T00:00:00.000",
+        "proveedor_adjudicado": "FUNDACARIBE",
+        "documento_proveedor": "71000001",
+        "urlproceso": "https://example.invalid/audit"
+      }
+    ]
+  ],
+  "query": "contratos del proveedor FUNDACARIBE con la Alcaldía de Cartagena",
+  "result": {
+    "response": "FUNDACARIBE · CC 71000001\n\n*Huella contractual observada* — SECOP II contratos, consultado el 08/09/2026 15:48 (hora de Colombia)\n\n*Filtros aplicados*\n- Entidad: ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\n\n- 63 contratos\n- $31.0 mil millones en valor contractual reportado\n- actividad observada entre 2025 y 2026\n\n*Principales compradores*\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: 63\n\n*Actividad por año*\n- 2026: 62\n- 2025: 1\n\n*Modalidades*\n- Contratacion directa: 63\n\n*Territorios*\n- Bolívar: 63\n\n*Contratos recientes*\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n\nEl rango de actividad se calcula sobre los contratos que publican fecha de firma; cerca del 7% no la reporta.\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+    "rows": [],
+    "results": [],
+    "dataset_id": "jbjy-vk9h",
+    "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (documento_proveedor = '71000001') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+    "parsed_params": {
+      "dataset": "contratos",
+      "dataset_explicit": true,
+      "entidad": "la alcaldia de cartagena",
+      "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "entidad_resolution": {
+        "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "method": "actor_relation_scan_exact",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "buyer_mention": "la alcaldia de cartagena"
+        }
+      },
+      "actor_conversation_operation": "SET_ACTOR",
+      "actor_conversation_construction": "role_contracts_of_x_with_y",
+      "actor_resolution": "exact_unique_alias",
+      "actor_scope": {
+        "role": "contractor",
+        "resolution_method": "exact_unique_alias",
+        "requires_resolution": false,
+        "document_type": "CC",
+        "base_number": "71000001",
+        "observed_name": "fundacaribe"
+      },
+      "actor_resolution_status": "RESOLVED",
+      "actor_resolution_method": "exact_unique_alias",
+      "contratista": [
+        "71000001"
+      ]
+    },
+    "resolved_params": {
+      "dataset": "contratos",
+      "entidad": "la alcaldia de cartagena",
+      "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "entidad_resolution": {
+        "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "method": "actor_relation_scan_exact",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "buyer_mention": "la alcaldia de cartagena"
+        }
+      },
+      "actor_conversation_operation": "SET_ACTOR",
+      "actor_conversation_construction": "role_contracts_of_x_with_y",
+      "actor_resolution": "exact_unique_alias",
+      "actor_scope": {
+        "role": "contractor",
+        "resolution_method": "exact_unique_alias",
+        "requires_resolution": false,
+        "document_type": "CC",
+        "base_number": "71000001",
+        "observed_name": "fundacaribe"
+      },
+      "actor_resolution_status": "RESOLVED",
+      "actor_resolution_method": "exact_unique_alias",
+      "contratista": [
+        "71000001"
+      ],
+      "limit": 50
+    },
+    "needs_llm": false,
+    "needs_clarification": false,
+    "route_reason": "actor_profile",
+    "degraded": false,
+    "degraded_hint": "",
+    "total_count": 63,
+    "universe_insights": null,
+    "suggestions": [
+      "Suggestion(label='Ver contratos activos (en ejecución)', modified_params={'dataset': 'contratos', 'entidad': 'la alcaldia de cartagena', 'entidad_resolved': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'entidad_resolution': {'value': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'method': 'actor_relation_scan_exact', 'kind': 'buyer_entity', 'confidence': 'high', 'like_value': None, 'metadata': {'buyer_mention': 'la alcaldia de cartagena'}}, 'actor_conversation_operation': 'SET_ACTOR', 'actor_conversation_construction': 'role_contracts_of_x_with_y', 'actor_resolution': 'exact_unique_alias', 'actor_scope': {'role': 'contractor', 'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'base_number': '71000001', 'observed_name': 'fundacaribe'}, 'actor_resolution_status': 'RESOLVED', 'actor_resolution_method': 'exact_unique_alias', 'contratista': ['71000001'], 'limit': 50, 'estado': ['En ejecución', 'Modificado', 'Prorrogado']}, expected_count=None, reason='Contratos actualmente activos')",
+      "Suggestion(label='Ordenar por mayor valor', modified_params={'dataset': 'contratos', 'entidad': 'la alcaldia de cartagena', 'entidad_resolved': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'entidad_resolution': {'value': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'method': 'actor_relation_scan_exact', 'kind': 'buyer_entity', 'confidence': 'high', 'like_value': None, 'metadata': {'buyer_mention': 'la alcaldia de cartagena'}}, 'actor_conversation_operation': 'SET_ACTOR', 'actor_conversation_construction': 'role_contracts_of_x_with_y', 'actor_resolution': 'exact_unique_alias', 'actor_scope': {'role': 'contractor', 'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'base_number': '71000001', 'observed_name': 'fundacaribe'}, 'actor_resolution_status': 'RESOLVED', 'actor_resolution_method': 'exact_unique_alias', 'contratista': ['71000001'], 'limit': 50, 'ordering_signal': 'valor_desc'}, expected_count=None, reason='Ver los contratos de mayor cuantía primero')",
+      "Suggestion(label='Buscar en procesos', modified_params={'dataset': 'procesos', 'entidad': 'la alcaldia de cartagena', 'entidad_resolved': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'entidad_resolution': {'value': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'method': 'actor_relation_scan_exact', 'kind': 'buyer_entity', 'confidence': 'high', 'like_value': None, 'metadata': {'buyer_mention': 'la alcaldia de cartagena'}}, 'actor_conversation_operation': 'SET_ACTOR', 'actor_conversation_construction': 'role_contracts_of_x_with_y', 'actor_resolution': 'exact_unique_alias', 'actor_scope': {'role': 'contractor', 'resolution_method': 'exact_unique_alias', 'requires_resolution': False, 'document_type': 'CC', 'base_number': '71000001', 'observed_name': 'fundacaribe'}, 'actor_resolution_status': 'RESOLVED', 'actor_resolution_method': 'exact_unique_alias', 'contratista': ['71000001'], 'limit': 50}, expected_count=None, reason='Explorar resultados similares en procesos')"
+    ],
+    "timeout_suggestions": [],
+    "risk_flag_timeout": false,
+    "query_error": "",
+    "intent_type": "",
+    "followup_intent_type": "",
+    "followup_mutation": {},
+    "analytical_intent": "actor_profile",
+    "analytical_response": "FUNDACARIBE · CC 71000001\n\n*Huella contractual observada* — SECOP II contratos, consultado el 08/09/2026 15:48 (hora de Colombia)\n\n*Filtros aplicados*\n- Entidad: ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\n\n- 63 contratos\n- $31.0 mil millones en valor contractual reportado\n- actividad observada entre 2025 y 2026\n\n*Principales compradores*\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: 63\n\n*Actividad por año*\n- 2026: 62\n- 2025: 1\n\n*Modalidades*\n- Contratacion directa: 63\n\n*Territorios*\n- Bolívar: 63\n\n*Contratos recientes*\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n- ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS: software audit\n  https://example.invalid/audit\n\nEl rango de actividad se calcula sobre los contratos que publican fecha de firma; cerca del 7% no la reporta.\n\nEsta es la actividad contractual publicada en SECOP II. No incluye registros mercantiles (RUES/RUP), antecedentes disciplinarios, fiscales ni penales, ni la composición de uniones temporales.",
+    "clarification_reason": "",
+    "total_count_approximate": false,
+    "result_order_guarantee": "exact_order",
+    "fallback_attempted": false,
+    "fallback_used": false,
+    "fallback_strategy": "",
+    "fallback_query_status": "not_attempted",
+    "primary_query_status": "",
+    "transformations_applied": [],
+    "substantive_filters_preserved": true,
+    "query_plan": {
+      "should_execute": true,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "la alcaldia de cartagena",
+        "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "entidad_resolution": {
+          "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+          "method": "actor_relation_scan_exact",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "buyer_mention": "la alcaldia de cartagena"
+          }
+        },
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "role_contracts_of_x_with_y",
+        "actor_resolution": "exact_unique_alias",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "exact_unique_alias",
+          "requires_resolution": false,
+          "document_type": "CC",
+          "base_number": "71000001",
+          "observed_name": "fundacaribe"
+        },
+        "actor_resolution_status": "RESOLVED",
+        "actor_resolution_method": "exact_unique_alias",
+        "contratista": [
+          "71000001"
+        ]
+      },
+      "missing_slots": [],
+      "risk_flags": [],
+      "clarification_question": null,
+      "reason": "valid_query",
+      "signals": []
+    },
+    "followup": false,
+    "timings_ms": {
+      "parse_ms": 35.08,
+      "resolve_ms": 0.06,
+      "build_soql_ms": 0.05,
+      "execute_total_ms": 4.23,
+      "degrade_ms": 0.0,
+      "observe_ms": 0.0,
+      "suggest_ms": 0.01,
+      "rank_ms": 0.01,
+      "format_ms": 0.0,
+      "advisor_response_ms": 0.01,
+      "total_ms": 147.18
+    },
+    "contextual_filters": {},
+    "should_execute_decision": true,
+    "source_candidate_total": 63,
+    "validated_total_known": 0,
+    "displayed_so_far": 0,
+    "source_total_approximate": false,
+    "outcome": "success",
+    "outcome_reason": "results_found",
+    "query_fingerprint": "8df5e5005ee437df61b6e613e3462c4bfb33f3ac47ce40de1a4f4926e2273cd6",
+    "trace_id": "df8c5a0f0e90",
+    "_continuation_owner": "ACTOR",
+    "turn_deadline_ms": 15000.0,
+    "turn_elapsed_ms": 147.9
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "flags": {
+    "actor_reader": true,
+    "frame_reader": true,
+    "settings_actor": true
+  },
+  "sql": [
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    }
+  ],
+  "errors": [],
+  "resolver": [],
+  "source_rows": [
+    []
+  ],
+  "query": "contratos de barranquilla",
+  "result": {
+    "response": "No encontre resultados exactos con esos filtros.\n\nLa busqueda combinaba:\n- ciudad: Barranquilla\n\nPuedo intentar:\n1. buscar en todo el pais",
+    "rows": [],
+    "results": [],
+    "dataset_id": "jbjy-vk9h",
+    "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+    "parsed_params": {
+      "dataset": "contratos",
+      "dataset_explicit": true,
+      "ciudad": "Barranquilla"
+    },
+    "resolved_params": {
+      "dataset": "contratos",
+      "ciudad": "Barranquilla",
+      "limit": 50
+    },
+    "needs_llm": false,
+    "needs_clarification": false,
+    "route_reason": "heuristic_only",
+    "degraded": false,
+    "degraded_hint": "",
+    "total_count": 0,
+    "universe_insights": null,
+    "suggestions": [
+      "Suggestion(label='Ver contratos activos (en ejecución)', modified_params={'dataset': 'contratos', 'ciudad': 'Barranquilla', 'limit': 50, 'estado': ['En ejecución', 'Modificado', 'Prorrogado']}, expected_count=None, reason='Contratos actualmente activos')",
+      "Suggestion(label='Ver contratos cerrados', modified_params={'dataset': 'contratos', 'ciudad': 'Barranquilla', 'limit': 50, 'estado': ['Cerrado']}, expected_count=None, reason='Contratos con gestión cerrada')",
+      "Suggestion(label='Ver suspendidos', modified_params={'dataset': 'contratos', 'ciudad': 'Barranquilla', 'limit': 50, 'estado': ['Suspendido']}, expected_count=None, reason='Contratos suspendidos')"
+    ],
+    "timeout_suggestions": [],
+    "risk_flag_timeout": false,
+    "query_error": "",
+    "intent_type": "",
+    "followup_intent_type": "",
+    "followup_mutation": {},
+    "analytical_intent": "",
+    "analytical_response": "",
+    "clarification_reason": "",
+    "total_count_approximate": false,
+    "result_order_guarantee": "exact_order",
+    "fallback_attempted": false,
+    "fallback_used": false,
+    "fallback_strategy": "",
+    "fallback_query_status": "not_attempted",
+    "primary_query_status": "",
+    "transformations_applied": [],
+    "substantive_filters_preserved": true,
+    "query_plan": {
+      "should_execute": true,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "ciudad": "Barranquilla"
+      },
+      "missing_slots": [],
+      "risk_flags": [
+        "entity_autopromotion_purged"
+      ],
+      "clarification_question": null,
+      "reason": "entity_autopromotion_purged",
+      "signals": []
+    },
+    "followup": false,
+    "timings_ms": {
+      "parse_ms": 0.42,
+      "resolve_ms": 0.01,
+      "build_soql_ms": 0.03,
+      "secop_query_ms": 0.15,
+      "rows_ready_ms": 0.15,
+      "secop_count_ms": 0,
+      "execute_total_ms": 0.19,
+      "degrade_ms": 0.0,
+      "observe_ms": 0.0,
+      "suggest_ms": 0.01,
+      "rank_ms": 0.01,
+      "format_ms": 0.01,
+      "advisor_response_ms": 0.01,
+      "total_ms": 4.0
+    },
+    "contextual_filters": {},
+    "should_execute_decision": true,
+    "source_candidate_total": 0,
+    "validated_total_known": 0,
+    "displayed_so_far": 0,
+    "source_total_approximate": false,
+    "outcome": "empty",
+    "outcome_reason": "zero_results",
+    "query_fingerprint": "d9719317d7d74be89d97caf5b173384230ff5ee2ab6951d1709e25a32817dbf4",
+    "trace_id": "980658039497",
+    "_continuation_owner": "TABULAR",
+    "continuation_published": true,
+    "conversation_revision": 1,
+    "result_id": "c1897c0f0c1b",
+    "chat_id": "bare-city",
+    "continuation": {
+      "export_ref": "88edbe088024",
+      "schema_version": 1,
+      "conversation_revision": 1,
+      "visible_turn_id": "25f01f445934",
+      "result_id": "c1897c0f0c1b",
+      "result_kind": "TABULAR_SEARCH",
+      "owner": "TABULAR",
+      "tabular_groups": {
+        "contratos": {
+          "group": "contratos",
+          "cursor_id": "0918f676ff35ea97df0ea1ca71a2fb2e272744381c6e22d44d069fd01686152c",
+          "fingerprint": "2918779bd48e05834158026f3c6de40dd9363c2f2ee352dba755d90cf4e30aa6",
+          "order_contract": "e8b.2-1",
+          "generation": "c1897c0f0c1b",
+          "expiration": "2026-09-08T21:03:48.659615+00:00"
+        }
+      },
+      "confirmed_profile": null,
+      "pending_profile": null,
+      "delegated": null
+    },
+    "turn_deadline_ms": 15000.0,
+    "turn_elapsed_ms": 5.6,
+    "time_remaining_before_fetch_ms": 14996.6,
+    "fetch_budget_ms": 8000.0,
+    "request_attempted": true,
+    "fetch_elapsed_ms": 0.1,
+    "fetch_status": "completed"
+  }
+}

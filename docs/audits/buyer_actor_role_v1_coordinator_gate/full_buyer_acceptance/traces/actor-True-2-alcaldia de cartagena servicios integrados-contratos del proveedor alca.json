@@ -1,0 +1,283 @@
+{
+  "flags": {
+    "actor_reader": true,
+    "frame_reader": true,
+    "settings_actor": true
+  },
+  "sql": [],
+  "errors": [],
+  "resolver": [
+    [
+      "resolve_exact",
+      "alcaldia de cartagena servicios integrados",
+      "AMBIGUOUS"
+    ]
+  ],
+  "query": "contratos del proveedor alcaldia de cartagena servicios integrados",
+  "result": {
+    "response": "El nombre ALCALDIA DE CARTAGENA SERVICIOS INTEGRADOS corresponde a más de un actor observado en SECOP.\n\n1. ALCALDIA DE CARTAGENA SERVICIOS INTEGRADOS — CC 71000001\n2. ALCALDIA DE CARTAGENA SERVICIOS INTEGRADOS — CC 71000002\n\nResponde con el número correcto o comparte el NIT/cédula.",
+    "rows": [],
+    "results": [],
+    "dataset_id": "",
+    "soql_query": "",
+    "parsed_params": {
+      "dataset": "contratos",
+      "dataset_explicit": true,
+      "actor_resolution": "exact_ambiguous_alias",
+      "actor_conversation_operation": "SET_ACTOR",
+      "actor_conversation_construction": "strong_actor_syntax",
+      "actor_scope": {
+        "role": "contractor",
+        "resolution_method": "name_unresolved",
+        "requires_resolution": true,
+        "observed_name": "alcaldia de cartagena servicios integrados",
+        "reason_codes": [
+          "ACTOR_ROLE_MARKER",
+          "ACTOR_NAME_NEEDS_RESOLUTION"
+        ]
+      },
+      "actor_resolution_status": "AMBIGUOUS",
+      "actor_resolution_method": "exact_ambiguous_alias",
+      "actor_pending": {
+        "version": 1,
+        "origin": "strong_actor_syntax",
+        "original_query": "contratos del proveedor alcaldia de cartagena servicios integrados",
+        "original_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "name_unresolved",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "alcaldia de cartagena servicios integrados",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          }
+        },
+        "actor_name": "alcaldia de cartagena servicios integrados",
+        "resolution_status": "AMBIGUOUS",
+        "candidates": [
+          {
+            "document_type": "CC",
+            "base_number": "71000001",
+            "matched_alias": "alcaldia de cartagena servicios integrados",
+            "observed_name": "alcaldia de cartagena servicios integrados",
+            "rank": 1,
+            "occurrences": 2
+          },
+          {
+            "document_type": "CC",
+            "base_number": "71000002",
+            "matched_alias": "alcaldia de cartagena servicios integrados",
+            "observed_name": "alcaldia de cartagena servicios integrados",
+            "rank": 2,
+            "occurrences": 2
+          }
+        ],
+        "selection_token": "7fZ2jDwcoMeh3h2NrmESPdhZBhjBbGaJ"
+      }
+    },
+    "resolved_params": {
+      "dataset": "contratos",
+      "dataset_explicit": true,
+      "actor_resolution": "exact_ambiguous_alias",
+      "actor_conversation_operation": "SET_ACTOR",
+      "actor_conversation_construction": "strong_actor_syntax",
+      "actor_scope": {
+        "role": "contractor",
+        "resolution_method": "name_unresolved",
+        "requires_resolution": true,
+        "observed_name": "alcaldia de cartagena servicios integrados",
+        "reason_codes": [
+          "ACTOR_ROLE_MARKER",
+          "ACTOR_NAME_NEEDS_RESOLUTION"
+        ]
+      },
+      "actor_resolution_status": "AMBIGUOUS",
+      "actor_resolution_method": "exact_ambiguous_alias",
+      "actor_pending": {
+        "version": 1,
+        "origin": "strong_actor_syntax",
+        "original_query": "contratos del proveedor alcaldia de cartagena servicios integrados",
+        "original_params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "actor_resolution": "name_unresolved",
+          "actor_conversation_operation": "SET_ACTOR",
+          "actor_conversation_construction": "strong_actor_syntax",
+          "actor_scope": {
+            "role": "contractor",
+            "resolution_method": "name_unresolved",
+            "requires_resolution": true,
+            "observed_name": "alcaldia de cartagena servicios integrados",
+            "reason_codes": [
+              "ACTOR_ROLE_MARKER",
+              "ACTOR_NAME_NEEDS_RESOLUTION"
+            ]
+          }
+        },
+        "actor_name": "alcaldia de cartagena servicios integrados",
+        "resolution_status": "AMBIGUOUS",
+        "candidates": [
+          {
+            "document_type": "CC",
+            "base_number": "71000001",
+            "matched_alias": "alcaldia de cartagena servicios integrados",
+            "observed_name": "alcaldia de cartagena servicios integrados",
+            "rank": 1,
+            "occurrences": 2
+          },
+          {
+            "document_type": "CC",
+            "base_number": "71000002",
+            "matched_alias": "alcaldia de cartagena servicios integrados",
+            "observed_name": "alcaldia de cartagena servicios integrados",
+            "rank": 2,
+            "occurrences": 2
+          }
+        ],
+        "selection_token": "7fZ2jDwcoMeh3h2NrmESPdhZBhjBbGaJ"
+      }
+    },
+    "needs_llm": false,
+    "needs_clarification": true,
+    "route_reason": "heuristic_only",
+    "degraded": false,
+    "degraded_hint": "",
+    "total_count": 0,
+    "universe_insights": null,
+    "suggestions": [],
+    "timeout_suggestions": [],
+    "risk_flag_timeout": false,
+    "query_error": "",
+    "intent_type": "",
+    "followup_intent_type": "",
+    "followup_mutation": {},
+    "analytical_intent": "",
+    "analytical_response": "",
+    "clarification_reason": "actor_name_ambiguous",
+    "total_count_approximate": false,
+    "result_order_guarantee": "exact_order",
+    "fallback_attempted": false,
+    "fallback_used": false,
+    "fallback_strategy": "",
+    "fallback_query_status": "not_attempted",
+    "primary_query_status": "",
+    "transformations_applied": [],
+    "substantive_filters_preserved": true,
+    "query_plan": {
+      "should_execute": false,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "actor_resolution": "exact_ambiguous_alias",
+        "actor_conversation_operation": "SET_ACTOR",
+        "actor_conversation_construction": "strong_actor_syntax",
+        "actor_scope": {
+          "role": "contractor",
+          "resolution_method": "name_unresolved",
+          "requires_resolution": true,
+          "observed_name": "alcaldia de cartagena servicios integrados",
+          "reason_codes": [
+            "ACTOR_ROLE_MARKER",
+            "ACTOR_NAME_NEEDS_RESOLUTION"
+          ]
+        },
+        "actor_resolution_status": "AMBIGUOUS",
+        "actor_resolution_method": "exact_ambiguous_alias",
+        "actor_pending": {
+          "version": 1,
+          "origin": "strong_actor_syntax",
+          "original_query": "contratos del proveedor alcaldia de cartagena servicios integrados",
+          "original_params": {
+            "dataset": "contratos",
+            "dataset_explicit": true,
+            "actor_resolution": "name_unresolved",
+            "actor_conversation_operation": "SET_ACTOR",
+            "actor_conversation_construction": "strong_actor_syntax",
+            "actor_scope": {
+              "role": "contractor",
+              "resolution_method": "name_unresolved",
+              "requires_resolution": true,
+              "observed_name": "alcaldia de cartagena servicios integrados",
+              "reason_codes": [
+                "ACTOR_ROLE_MARKER",
+                "ACTOR_NAME_NEEDS_RESOLUTION"
+              ]
+            }
+          },
+          "actor_name": "alcaldia de cartagena servicios integrados",
+          "resolution_status": "AMBIGUOUS",
+          "candidates": [
+            {
+              "document_type": "CC",
+              "base_number": "71000001",
+              "matched_alias": "alcaldia de cartagena servicios integrados",
+              "observed_name": "alcaldia de cartagena servicios integrados",
+              "rank": 1,
+              "occurrences": 2
+            },
+            {
+              "document_type": "CC",
+              "base_number": "71000002",
+              "matched_alias": "alcaldia de cartagena servicios integrados",
+              "observed_name": "alcaldia de cartagena servicios integrados",
+              "rank": 2,
+              "occurrences": 2
+            }
+          ],
+          "selection_token": "7fZ2jDwcoMeh3h2NrmESPdhZBhjBbGaJ"
+        }
+      },
+      "missing_slots": [
+        "actor_selection"
+      ],
+      "risk_flags": [
+        "actor_requires_selection"
+      ],
+      "clarification_question": "El nombre ALCALDIA DE CARTAGENA SERVICIOS INTEGRADOS corresponde a más de un actor observado en SECOP.\n\n1. ALCALDIA DE CARTAGENA SERVICIOS INTEGRADOS — CC 71000001\n2. ALCALDIA DE CARTAGENA SERVICIOS INTEGRADOS — CC 71000002\n\nResponde con el número correcto o comparte el NIT/cédula.",
+      "reason": "actor_name_ambiguous",
+      "signals": []
+    },
+    "followup": false,
+    "timings_ms": {
+      "parse_ms": 91.03,
+      "clarify_ms": 0.0,
+      "advisor_response_ms": 0.02,
+      "total_ms": 184.18
+    },
+    "contextual_filters": {},
+    "should_execute_decision": false,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "query_fingerprint": "791532f51966a89bd6cdbc042e182889a10918a8f003064f313a53cb8ac3ed59",
+    "trace_id": "694ade70a09b",
+    "_continuation_owner": "ACTOR",
+    "continuation_published": true,
+    "conversation_revision": 1,
+    "result_id": "7642891253ae",
+    "chat_id": "audit",
+    "continuation": {
+      "export_ref": null,
+      "schema_version": 1,
+      "conversation_revision": 1,
+      "visible_turn_id": "d03a14c7453f",
+      "result_id": "7642891253ae",
+      "result_kind": "CLARIFICATION",
+      "owner": "ACTOR",
+      "tabular_groups": null,
+      "confirmed_profile": null,
+      "pending_profile": null,
+      "delegated": {
+        "reference": "694ade70a09b"
+      }
+    },
+    "turn_deadline_ms": 15000.0,
+    "turn_elapsed_ms": 185.4
+  }
+}

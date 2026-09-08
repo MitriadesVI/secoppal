@@ -1,0 +1,41 @@
+{
+  "collection": [
+    "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0030841670086374506,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+      "when": "call",
+      "outcome": "failed",
+      "duration": 0.13870887499069795,
+      "xfail": null,
+      "detail": "[XPASS(strict)] Etapa 2 (mutaciones): un cambio de tema/scope no limpia ordering_signal heredado. Fuga SEGURA (pierde recall, no miente). Al arreglarse, este xfail pasa a XPASS."
+    },
+    {
+      "nodeid": "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00016483299259562045,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal": "/Users/rodrigoortiz/Documents/secoppal-buyer-actor-role-v1-gate/tests/test_h4_fallback.py"
+  },
+  "exitstatus": 1
+}

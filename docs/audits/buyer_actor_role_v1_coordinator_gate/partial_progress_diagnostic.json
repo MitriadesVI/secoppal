@@ -1,0 +1,11 @@
+{
+  "note": "Diagnostic targets inferred from progress before first E; not authoritative outcome totals",
+  "first_failure_target": "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal",
+  "first_failure_ordinal": 3950,
+  "targets_before_first_error": [
+    [
+      3950,
+      "tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal"
+    ]
+  ]
+}

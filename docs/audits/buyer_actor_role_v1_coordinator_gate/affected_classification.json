@@ -1,0 +1,53 @@
+{
+  "modules": [
+    {
+      "path": "tests/test_buyer_actor_independent_boundaries.py",
+      "count": 31,
+      "classification": "31 casos: separar los 2 short_negation_characterization; los otros 29 son controles positivos/negativos"
+    },
+    {
+      "path": "tests/test_buyer_actor_independent_local.py",
+      "count": 4,
+      "classification": "4 opt-in independiente, offline, dos menciones locales y lectores efectivos"
+    },
+    {
+      "path": "tests/test_buyer_actor_independent_product.py",
+      "count": 64,
+      "classification": "64 aceptaciones independientes SQL, respuesta, contexto y continuidad"
+    },
+    {
+      "path": "tests/test_buyer_actor_role_arbitration_v1.py",
+      "count": 20,
+      "classification": "20 semillas OFF/ON e indices; aceptacion autor"
+    },
+    {
+      "path": "tests/test_buyer_actor_role_controls_v1.py",
+      "count": 80,
+      "classification": "80 contrastes proveedor, comprador, contexto y continuidad; aceptacion autor"
+    },
+    {
+      "path": "tests/test_buyer_actor_role_local_v1.py",
+      "count": 4,
+      "classification": "4 opt-in autor, offline, dos menciones locales"
+    },
+    {
+      "path": "tests/test_buyer_actor_role_properties_v1.py",
+      "count": 11,
+      "classification": "11 pruebas con invariantes de autoridad y Hypothesis determinista"
+    },
+    {
+      "path": "tests/test_truth_layer_frame_guard_controls.py",
+      "count": 14,
+      "classification": "14 controles Frame ya presentes en MAIN_BEFORE; posteriores al manifiesto historico original"
+    }
+  ],
+  "known_defect_characterization": [
+    "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[False]",
+    "tests/test_buyer_actor_independent_boundaries.py::test_short_negation_characterization[True]"
+  ],
+  "harness_only": [
+    "tests/test_actor_conversation_corpus.py::test_all_expanded_sequences_mutate_real_query_frames",
+    "tests/test_actor_profile_render.py::test_a_specific_aggregate_question_still_gets_its_specific_answer"
+  ],
+  "removed": []
+}
