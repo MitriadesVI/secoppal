@@ -1,0 +1,228 @@
+{
+  "tested_sha": "64f9836edf96a89051ffc4eb21b0b3397091228c",
+  "detected": 27,
+  "total": 27,
+  "runtime_restored": true,
+  "entries": [
+    {
+      "id": "M1-pending-without-selection",
+      "targets": [
+        "tests/test_entity_profile_frame_b_integration.py::test_r5d_a_pending_period_never_reaches_a_confirmed_execution"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M2-old-cursor-after-corruption",
+      "targets": [
+        "tests/test_entity_profile_frame_b_publication.py::test_a_corrupt_queue_stops_a_pagination_instead_of_continuing"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M3-seed-bypasses-admission",
+      "targets": [
+        "tests/test_entity_profile_frame_b_admission.py::test_a_ui_refinement_over_a_profile_runs_no_query"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M4-subject-and-event-swapped",
+      "targets": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_an_incompatible_subject_and_event_clarifies_without_swapping_them"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M5-or-flattened-into-and",
+      "targets": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_or_and_and_are_not_rendered_or_queried_alike"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M6-exclusion-dropped-from-scope",
+      "targets": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_a_modality_exclusion_stays_in_the_sql_and_is_declared"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M7-legacy-reader-back-in-the-path",
+      "targets": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_tampering_with_legacy_params_changes_neither_frame_nor_sql",
+        "tests/test_entity_profile_frame_b_integration.py::test_r5a_inherited_period_is_in_every_query_after_a_real_reload"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M8-transport-success-fabricated",
+      "targets": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_a_total_source_failure_keeps_the_confirmed_intent"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M9-nonfinite-metric-accredited",
+      "targets": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_a_non_finite_metric_is_never_accredited",
+        "tests/test_v12b1_remediation_acceptance.py::test_nonfinite_metric_remains_an_honest_response"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M10-month-globalised",
+      "targets": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_two_sources_with_different_periods_are_not_globalised"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M12-cross-process-lock-removed",
+      "targets": [
+        "tests/test_entity_profile_frame_b_publication.py::test_a_second_process_cannot_hold_the_same_conversation_lock"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "M11-injected-clock-ignored",
+      "targets": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_the_injected_clock_is_the_one_that_resolves_relative_periods"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F1-preserve",
+      "targets": [
+        "tests/test_v12b_independent_continuity.py::test_clarification_preserves_the_profile_it_offers_to_continue"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F2-reformulate",
+      "targets": [
+        "tests/test_v12b_independent_continuity.py::test_full_reformulation_exits_a_pending_without_alternatives"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F3-actor-operation",
+      "targets": [
+        "tests/test_v12b1_actor_port.py::test_actor_api_publishes_and_rejects_consumed_token"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F3-external-pending",
+      "targets": [
+        "tests/test_v12b_independent_continuity.py::test_explicit_external_commands_keep_their_handler"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F4-serial-execution",
+      "targets": [
+        "tests/test_v12b1_process_ports.py::test_real_workflows_serialize_across_processes_and_reload"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F4-reset-generation",
+      "targets": [
+        "tests/test_v12b_independent_publication.py::test_reset_invalidates_an_already_reserved_initial_turn"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F4-unpublished-history",
+      "targets": [
+        "tests/test_v12b_independent_publication.py::test_failed_delegated_publication_cannot_replace_legacy_authority"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F5-joint-reload",
+      "targets": [
+        "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F6-buffer-reference",
+      "targets": [
+        "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability",
+        "tests/test_v12b_independent_boundaries.py::test_real_sidecar_expiry_does_not_silently_repeat_a_search"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F6-missing-ui-ref",
+      "targets": [
+        "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F7-activation",
+      "targets": [
+        "tests/test_v12b1_remediation_acceptance.py::test_activation_migrates_equivalent_legacy_and_roundtrips"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F7-rollback",
+      "targets": [
+        "tests/test_v12b_independent_boundaries.py::test_rollback_does_not_reactivate_a_preprofile_tabular_cursor"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F8-no-fcntl",
+      "targets": [
+        "tests/test_v12b1_process_ports.py::test_without_fcntl_every_process_refuses_before_entry"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F9-foreign-frame",
+      "targets": [
+        "tests/test_v12b_independent_execution.py::test_renderer_rejects_a_frame_other_than_the_authorized_revision",
+        "tests/test_v12b1_remediation_acceptance.py::test_assembler_refuses_foreign_revision"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    },
+    {
+      "id": "B1-F10-save-current-owner",
+      "targets": [
+        "tests/test_v12b_independent_boundaries.py::test_radar_save_cannot_export_an_older_tabular_search_over_profile"
+      ],
+      "verdict": "DETECTED",
+      "restored": true
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "sha": "f0cba5d79202da6bd3b4a4dca389dfce78c1ef67",
+  "mutations": [
+    {
+      "id": "M9-nonfinite-metric-accredited",
+      "path": "app/core/entity_profile/frame_evidence.py",
+      "targets": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_a_non_finite_metric_is_never_accredited",
+        "tests/test_v12b1_remediation_acceptance.py::test_nonfinite_metric_remains_an_honest_response"
+      ],
+      "baseline_exit": 0,
+      "baseline_output": "..                                                                       [100%]\n2 passed in 1.58s\n",
+      "exit": 1,
+      "output": "FF                                                                       [100%]\n=================================== FAILURES ===================================\n_________________ test_a_non_finite_metric_is_never_accredited _________________\ntests/test_entity_profile_frame_b_semantics.py:297: in test_a_non_finite_metric_is_never_accredited\n    chat.say(\ntests/entity_profile_frame_b_harness.py:94: in say\n    result = workflow.run_query(\napp/core/orchestrator.py:238: in run_query\n    result = self._admit_and_dispatch(ctx, seed_resolved_params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\napp/core/orchestrator.py:312: in _admit_and_dispatch\n    return coordinate_turn(self, ctx, seed_resolved_params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\napp/core/workflow/turn_coordination.py:28: in coordinate_turn\n    return _execute(workflow, ctx, seed, reservation)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\napp/core/workflow/turn_coordination.py:106: in _execute\n    routed = run_profile_route(\napp/core/workflow/profile_route.py:46: in run_profile_route\n    outcome = run_profile_turn(\napp/core/entity_profile/frame_turn.py:170: in run_profile_turn\n    return _compose_and_run(\napp/core/entity_profile/frame_turn.py:209: in _compose_and_run\n    return _compile_and_execute(\napp/core/entity_profile/frame_turn.py:237: in _compile_and_execute\n    record = build_execution_record(plan, evidence, candidate)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\napp/core/entity_profile/execution_record.py:195: in build_execution_record\n    metrics=tuple(\n            ^^^^^\napp/core/entity_profile/execution_record.py:197: in <genexpr>\n    name=metric.name, value=_serialize(metric.value),\n                            ^^^^^^^^^^^^^^^^^^^^^^^^\napp/core/entity_profile/execution_record.py:221: in _serialize\n    raise ExecutionRecordError(\"a non-finite metric never reaches a record\")\nE   app.core.entity_profile.execution_record.ExecutionRecordError: a non-finite metric never reaches a record\n_______________ test_nonfinite_metric_remains_an_honest_response _______________\ntests/test_v12b1_remediation_acceptance.py:223: in test_nonfinite_metric_remains_an_honest_response\n    assert failure is None, 'invalid metric must yield an honest response, not abort publication'\nE   AssertionError: invalid metric must yield an honest response, not abort publication\nE   assert 'a non-finite metric never reaches a record' is None\n=========================== short test summary info ============================\nFAILED tests/test_entity_profile_frame_b_semantics.py::test_a_non_finite_metric_is_never_accredited\nFAILED tests/test_v12b1_remediation_acceptance.py::test_nonfinite_metric_remains_an_honest_response\n2 failed in 4.26s\n",
+      "verdict": "DETECTED",
+      "restored": true
+    }
+  ],
+  "runtime_restored": true,
+  "summary": {
+    "DETECTED": 1
+  }
+}
