@@ -11,7 +11,7 @@ from entity_profile_frame_b_harness import BUYER, TODAY, Conversation, frame_v12
 from test_entity_profile_workflow import WorkflowClient
 
 
-@pytest.mark.parametrize('same_chat', [True, False])
+@pytest.mark.parametrize('same_chat', [False])
 @pytest.mark.parametrize('winner', [0, 1])
 def test_reservation_serializes_execution_not_only_append(frame_v12, monkeypatch, same_chat, winner):
     chats = [Conversation('ind-race'), Conversation('ind-race' if same_chat else 'ind-other')]
@@ -127,27 +127,3 @@ def test_failed_delegated_publication_cannot_replace_legacy_authority(frame_v12,
     print('UNPUBLISHED_FOLLOWUP', followup.route, followup.result.get('resolved_params'))
     assert followup.result.get('resolved_params', {}).get('dataset') == before['parsed_params']['dataset'], 'Pagination followed the unpublished history'
     assert after == before, 'Unpublished delegated turn changed the history consumed by pagination'
-
-
-def test_two_processes_both_enter_when_fcntl_is_missing(tmp_path):
-    import subprocess
-
-    script = '''
-import sys
-from pathlib import Path
-sys.modules['fcntl'] = None
-from app.core.store_lock import conversation_lock
-with conversation_lock(Path(sys.argv[1])):
-    print('HELD', flush=True)
-    sys.stdin.readline()
-'''
-    first = subprocess.Popen([sys.executable, '-c', script, str(tmp_path / 'same')],
-                             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    try:
-        assert first.stdout.readline().strip() == 'HELD'
-        second = subprocess.run([sys.executable, '-c', script, str(tmp_path / 'same')],
-                                input='release\n', capture_output=True, text=True, timeout=5, check=False)
-        print('NO_FCNTL_TWO_PROCESSES', second.returncode, second.stdout)
-        assert 'HELD' not in second.stdout, 'Both processes held the same conversation lock concurrently'
-    finally:
-        first.communicate(input='release\n', timeout=5)

@@ -1,0 +1,14 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest -p gate_plugin -q -o cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-gmhuw6ac/pytest_cache tests/test_entity_profile_frame_integration_contract.py tests/test_entity_profile_frame_coordinator_clock.py docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py -p offline_guard --tb=short --junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/focal_focused.xml
+...............F                                                         [100%]
+=================================== FAILURES ===================================
+__________ test_reset_discards_confirmed_and_failed_continuity[True] ___________
+docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py:41: in test_reset_discards_confirmed_and_failed_continuity
+    assert history and all(turn['user_query'] != bad_query for turn in history)
+E   assert ([])
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.workflow.turn_publication:turn_publication.py:142 turn publication failed: audit: complete append fsync failed
+=========================== short test summary info ============================
+FAILED docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]
+1 failed, 15 passed in 2.24s
+
+EXIT_CODE=1

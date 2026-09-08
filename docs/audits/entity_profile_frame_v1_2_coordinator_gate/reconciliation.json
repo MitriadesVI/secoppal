@@ -1,0 +1,245 @@
+{
+  "base": "616826231d5d2bf25c47640e5dcf4f1bbc491326",
+  "manual_scope": "reconciled and complementary Frame cases only",
+  "files": [
+    {
+      "original": "tests/test_v12b_independent_publication.py",
+      "archive": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/historical/tests/test_v12b_independent_publication.py.original",
+      "sha256": "aa2715297927013ff2723612c258046b209ad18c28ea586e365ab6fab2bbe0ce",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "tests/test_v12b_independent_boundaries.py",
+      "archive": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/historical/tests/test_v12b_independent_boundaries.py.original",
+      "sha256": "020d7b660df50065f72566bdcc463cbc42531be73d48988e67241e17e3fcfd95",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "tests/test_entity_profile_frame_b_publication.py",
+      "archive": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/historical/tests/test_entity_profile_frame_b_publication.py.original",
+      "sha256": "51bfbdd675c737add6e9a915fab89f97aa70d727ed301772c4a5b15cabf1bdd9",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "tests/test_entity_profile_frame_b_semantics.py",
+      "archive": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/historical/tests/test_entity_profile_frame_b_semantics.py.original",
+      "sha256": "df28ed4abe3a9f5f29ff39f8e10cc04f6a8a83b2812556265a57059adc466e9c",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "tests/entity_profile_frame_harness.py",
+      "archive": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/historical/tests/entity_profile_frame_harness.py.original",
+      "sha256": "6b95687a19716ba303fdac4e17408e779b5e33124662ef69a6e21804347135f7",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/conftest.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/conftest.py",
+      "sha256": "c3560d1086a9dd9ab53077b07eac9bbf798fc7a2a943bfa7a0e524a66bf87c31",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/audit_output.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/audit_output.py",
+      "sha256": "e463ed251413e8636fbc098100675ea85ba1611dd63c90d73842427ee8dd75fc",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+      "sha256": "dc4d6409820b89c0ca0e7faa963cbc6d3148c80847d0cf463460f6733971f9b3",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_record_buyer.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+      "sha256": "3cb8363e1a0cfd6c7cb49ff94aab47d8f9815050b72a727a67ff477156f18565",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_supplier_topologies.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+      "sha256": "99fbb64c241db70d2d06cbff8a24e7253af70d87d0aa2ef89398269f99132f84",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/conftest.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/conftest.py",
+      "sha256": "c3560d1086a9dd9ab53077b07eac9bbf798fc7a2a943bfa7a0e524a66bf87c31",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/file_faults.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/file_faults.py",
+      "sha256": "8647ef9b4b00e71529cd802003b7ed300c7394e053a09ef172fc85dc002a658c",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/publication_port.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/publication_port.py",
+      "sha256": "1476f50968d95edaea00ced5272e82b956b468564b0a8b844cdec3491ab1f359",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_ports.py",
+      "sha256": "fc7356663c2f7f6472cd081290cb20844c9213ad6cd3ddb255a74f49cd310670",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_chains.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py",
+      "sha256": "e90a140ef4601c0591b038404da6ae926ccd63f2bbd9a82d5fc0bb9696f3611d",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_supplier_ports.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_supplier_ports.py",
+      "sha256": "443a721c407a4dee74d29421792d4433c3d7782e9318faf06a5fc381f3a2eaee",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_ranking_matrix.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py",
+      "sha256": "ed52ea4352b21f62296d4e8a10d822514a42b16993004f1d0ac1226121b77cf4",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/conftest.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/conftest.py",
+      "sha256": "c3e12b048c859354898631cddc0d9a6b1f7b83046f97f352af24cde70edc3ad8",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/storage_faults.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/storage_faults.py",
+      "sha256": "ae1c37efb499c6ed0d3a967e357c0c32da80004a46d809a9963c5e7406ede445",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py",
+      "sha256": "d5c2151ea78ab27a822550b675dc0bb3ab455c230b06cf1d79b32aa6aea0b7a0",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_property.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_property.py",
+      "sha256": "509c0cd96be311cc0b9c2dee7bdfa165d92bf13c95e63e3916a6e935eed7ac6c",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_limits.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_limits.py",
+      "sha256": "c90b9cf41c08c477155b0751aaf01be2dbd3743c1f8dc06fe7bb27277e64c46f",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    },
+    {
+      "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py",
+      "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py",
+      "sha256": "979466fe06ba8e001e36338e4042e9448eac9f527ab4fb2b282fbd0f89f26a91",
+      "commit": "616826231d5d2bf25c47640e5dcf4f1bbc491326"
+    }
+  ],
+  "adjudications": [
+    {
+      "historical": [
+        "tests/test_v12b_independent_publication.py::test_reservation_serializes_execution_not_only_append[0-False]",
+        "tests/test_v12b_independent_publication.py::test_reservation_serializes_execution_not_only_append[0-True]",
+        "tests/test_v12b_independent_publication.py::test_reservation_serializes_execution_not_only_append[1-False]",
+        "tests/test_v12b_independent_publication.py::test_reservation_serializes_execution_not_only_append[1-True]"
+      ],
+      "replacements": [
+        "tests/test_v12b1_process_ports.py::test_real_workflows_serialize_across_processes_and_reload",
+        "tests/test_v12b1_remediation_acceptance.py::test_other_chat_executes_while_first_chat_is_paused",
+        "tests/test_v12b1_remediation_acceptance.py::test_serial_execution_reserves_the_next_revision"
+      ],
+      "keep_controls": [
+        "tests/test_v12b_independent_publication.py::test_reservation_serializes_execution_not_only_append[0-False]",
+        "tests/test_v12b_independent_publication.py::test_reservation_serializes_execution_not_only_append[1-False]"
+      ]
+    },
+    {
+      "historical": [
+        "tests/test_v12b_independent_publication.py::test_two_processes_both_enter_when_fcntl_is_missing"
+      ],
+      "replacements": [
+        "tests/test_v12b1_process_ports.py::test_without_fcntl_every_process_refuses_before_entry"
+      ]
+    },
+    {
+      "historical": [
+        "tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[False-false]",
+        "tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[False-true]",
+        "tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[True-false]",
+        "tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[True-true]"
+      ],
+      "replacements": [
+        "tests/test_v12b1_actor_port.py::test_actor_api_publishes_and_rejects_consumed_token[False]",
+        "tests/test_v12b1_actor_port.py::test_actor_api_publishes_and_rejects_consumed_token[True]",
+        "tests/test_v12b1_actor_port.py::test_actor_direct_control_with_own_unconsumed_token[False]",
+        "tests/test_v12b1_actor_port.py::test_actor_direct_control_with_own_unconsumed_token[True]"
+      ],
+      "keep_controls": [
+        "tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[False-false]",
+        "tests/test_v12b_independent_boundaries.py::test_current_actor_api_token_reaches_actor_handler[True-false]"
+      ]
+    },
+    {
+      "historical": [
+        "tests/test_entity_profile_frame_b_publication.py::test_a_record_from_another_catalog_does_not_govern_the_next_turn"
+      ],
+      "replacements": [
+        "tests/test_v12b1_independent_records.py::test_individual_record_damage_rejects_before_io[catalog]",
+        "tests/test_v12b_independent_continuity.py::test_cross_references_are_validated_on_real_reload[catalog_version]"
+      ]
+    },
+    {
+      "historical": [
+        "tests/test_entity_profile_frame_b_semantics.py::test_a_forged_execution_record_does_not_change_the_next_turn"
+      ],
+      "replacements": [
+        "tests/test_v12b1_independent_records.py::test_valid_publications_remain_reloadable[executed]",
+        "tests/test_v12b1_independent_records.py::test_valid_publications_remain_reloadable[partial]",
+        "tests/test_v12b1_independent_records.py::test_valid_publications_remain_reloadable[pending_initial]",
+        "tests/test_v12b1_independent_records.py::test_valid_publications_remain_reloadable[pending_keeps_execution]",
+        "tests/test_v12b1_independent_records.py::test_valid_publications_remain_reloadable[total]",
+        "tests/test_v12b1_remediation_acceptance.py::test_current_record_damage_blocks_before_calls[expected_sections]",
+        "tests/test_v12b1_remediation_acceptance.py::test_current_record_damage_blocks_before_calls[focus]"
+      ]
+    }
+  ],
+  "b3_ports": {
+    "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[True-False]": {
+      "port": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py::test_failed_prefix_port[True-False]",
+      "original_after": "MECHANICAL_EXPECTATION_CHANGED",
+      "change": "Terminal recovery suffix preserves blocked prefix; original asserts byte equality."
+    },
+    "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_rollback_of_retry_never_promotes_an_earlier_failed_turn[True-True]": {
+      "port": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py::test_failed_prefix_port[True-True]",
+      "original_after": "MECHANICAL_EXPECTATION_CHANGED",
+      "change": "Terminal recovery suffix preserves blocked prefix; original asserts byte equality."
+    },
+    "docs/audits/entity_profile_frame_v1_2_b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[count-overview]": {
+      "port": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_supplier_ports.py::test_ranking_claim_and_published_warning_are_consistent[count-overview]",
+      "original_after": "MECHANICAL_EXPECTATION_CHANGED",
+      "change": "Count-only damage warns within count TOP; value TOP remains accredited per B.3 product decision."
+    },
+    "docs/audits/entity_profile_frame_v1_2_b2_independent/test_supplier_topologies.py::test_ranking_claim_and_published_warning_are_consistent[count-suppliers]": {
+      "port": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_supplier_ports.py::test_ranking_claim_and_published_warning_are_consistent[count-suppliers]",
+      "original_after": "MECHANICAL_EXPECTATION_CHANGED",
+      "change": "Count-only damage warns within count TOP; value TOP remains accredited per B.3 product decision."
+    }
+  },
+  "observations": [
+    "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[ok]",
+    "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py::test_recovery_error_observes_physical_state_and_next_turn[open_failure]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_limits.py"
+  ],
+  "clock": {
+    "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload",
+    "result": "FAILED_ON_CANDIDATE_AND_BASE",
+    "action": "KEEP_ACTIVE_PENDING_COORDINATOR_TEST_HARNESS_CORRECTION",
+    "evidence": "clock_base.txt.gz"
+  }
+}

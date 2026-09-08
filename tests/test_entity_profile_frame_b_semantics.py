@@ -186,21 +186,6 @@ def test_tampering_with_legacy_params_changes_neither_frame_nor_sql(frame_v12):
     assert frame.focus == "suppliers"
 
 
-def test_a_forged_execution_record_does_not_change_the_next_turn(frame_v12):
-    chat = Conversation("sem-forged")
-    chat.say(f"analiza contratos firmados de {BUYER} en agosto")
-    store = ConversationStore()
-    path = store._envelope_path_for("sem-forged")
-    payload = json.loads(path.read_text().splitlines()[-1])
-    payload["execution_record"]["focus"] = "values"
-    payload["execution_record"]["expected_sections"] = ["values"]
-    path.write_text(json.dumps(payload) + "\n", encoding="utf-8")
-
-    followup = chat.say("proveedores")
-    # El registro de ejecución acredita lo OBSERVADO; no gobierna el próximo
-    # universo, que sale del Frame.
-    assert followup.route == "entity_profile_suppliers"
-    assert followup.planned_jobs == 2
 
 
 # ── Fallo total y parcial ──────────────────────────────────────────────────

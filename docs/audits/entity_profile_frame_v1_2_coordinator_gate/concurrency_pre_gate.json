@@ -1,0 +1,4 @@
+{
+  "observed_pytest": [],
+  "decision": "no concurrent pytest observed; no processes stopped"
+}

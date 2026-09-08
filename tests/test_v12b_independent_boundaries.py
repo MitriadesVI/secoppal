@@ -63,7 +63,7 @@ def test_pagination_consumes_the_published_capability(frame_v12, field, value):
     assert turn.clarifies and not turn.result.get('rows'), 'Mismatched published capability did not govern pagination'
 
 
-@pytest.mark.parametrize('flag', ['false', 'true'])
+@pytest.mark.parametrize('flag', ['false'])
 @pytest.mark.parametrize('profile_pending', [False, True])
 def test_current_actor_api_token_reaches_actor_handler(frame_v12, workflow, monkeypatch, flag, profile_pending):
     monkeypatch.setenv('SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED', flag)

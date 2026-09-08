@@ -360,28 +360,6 @@ def test_the_exclusion_holds_between_processes_not_only_threads(tmp_path):
     assert revisions == published
 
 
-def test_a_record_from_another_catalog_does_not_govern_the_next_turn(frame_v12):
-    """El catálogo es evidencia de lo ejecutado, no autoridad del universo."""
-    import json
-
-    from app.core.entity_profile.frame_compiler import CATALOG_VERSION
-
-    chat = Conversation("pub-catalog")
-    chat.say(f"analiza contratos firmados de {BUYER} en agosto")
-    record = chat.execution_record()
-    assert record["catalog_version"] == CATALOG_VERSION
-
-    store = ConversationStore()
-    path = store._envelope_path_for("pub-catalog")
-    payload = json.loads(path.read_text().splitlines()[-1])
-    payload["execution_record"]["catalog_version"] = "entity-profile-frame-999"
-    path.write_text(json.dumps(payload) + "\n", encoding="utf-8")
-
-    followup = chat.say("proveedores")
-    assert not followup.clarifies
-    assert followup.planned_jobs == 2
-    # El plan del turno nuevo se compila con el catálogo VIGENTE.
-    assert chat.execution_record()["catalog_version"] == CATALOG_VERSION
 
 
 _HOLDER = """

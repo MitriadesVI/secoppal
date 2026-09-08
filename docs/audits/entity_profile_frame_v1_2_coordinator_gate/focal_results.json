@@ -1,0 +1,37 @@
+[
+  {
+    "component": "focal_focused",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "gate_plugin",
+      "-q",
+      "-o",
+      "cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-gmhuw6ac/pytest_cache",
+      "tests/test_entity_profile_frame_integration_contract.py",
+      "tests/test_entity_profile_frame_coordinator_clock.py",
+      "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py",
+      "-p",
+      "offline_guard",
+      "--tb=short",
+      "--junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/focal_focused.xml"
+    ],
+    "sha": "616826231d5d2bf25c47640e5dcf4f1bbc491326",
+    "duration": 2.730939249988296,
+    "exit": 1,
+    "pass": false,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/focal_focused.log"
+  },
+  {
+    "component": "preservation",
+    "pass": true
+  },
+  {
+    "component": "code_frozen",
+    "pass": true
+  }
+]

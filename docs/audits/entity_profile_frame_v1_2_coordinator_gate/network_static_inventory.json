@@ -1,0 +1,1571 @@
+[
+  {
+    "path": "tests/test_v12b1_independent_controls.py",
+    "candidates": [
+      [
+        90,
+        "path.write_text('\\n'.join([*lines[:-1], json.dumps(raw)]) + '\\n')"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_notify_grouping.py",
+    "candidates": [
+      [
+        31,
+        "title=\"T\u00edtulo final\", urlproceso=\"https://secop/K\"),"
+      ],
+      [
+        41,
+        "assert group.urlproceso == \"https://secop/K\""
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_truth_layer_public_parity.py",
+    "candidates": [
+      [
+        354,
+        "\"urlproceso\": \"https://example.test/p2\","
+      ],
+      [
+        364,
+        "\"urlproceso\": \"https://example.test/p1\","
+      ],
+      [
+        374,
+        "\"urlproceso\": \"https://example.test/p1b\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_export_xlsx.py",
+    "candidates": [
+      [
+        26,
+        "\"url\": \"https://community.secop.gov.co/Public/Tendering/NoticeDetail/Index?noticeUID=CO1.NTC.1\","
+      ],
+      [
+        54,
+        "assert results[\"I2\"].hyperlink.target.startswith(\"https://community.secop.gov.co/\")"
+      ],
+      [
+        70,
+        "\"titulo\": \"=HYPERLINK(\\\"https://evil.invalid\\\",\\\"click\\\")\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_institutional_family_compatibility.py",
+    "candidates": [
+      [
+        42,
+        "path.write_text("
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_truth_layer_visibility.py",
+    "candidates": [
+      [
+        27,
+        "\"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/index\""
+      ],
+      [
+        30,
+        "LOGIN_URL = \"https://community.secop.gov.co/Public/Account/Login\""
+      ],
+      [
+        82,
+        "_signals(normalized_url=_obs(\"https://cualquier-host.example/x\"))"
+      ],
+      [
+        121,
+        "@pytest.mark.parametrize(\"raw\", [\"\", \"   \", \"no-es-una-url\", \"https://\"])"
+      ],
+      [
+        335,
+        "for forbidden in (\"http://\", \"https://\", \"noticeuid\", \"urljoin\", \"quote(\"):"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_money_v2_canary.py",
+    "candidates": [
+      [
+        27,
+        "\"urlproceso\": \"https://example.test/contract\","
+      ],
+      [
+        36,
+        "\"urlproceso\": \"https://example.test/process\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_radar_detail.py",
+    "candidates": [
+      [
+        56,
+        "\"urlproceso\": \"https://community.secop.gov.co/Public/Tendering/x\","
+      ],
+      [
+        134,
+        "assert detail.secop_url == \"https://community.secop.gov.co/Public/Tendering/x\""
+      ],
+      [
+        222,
+        "_event(urlproceso={\"url\": \"https://secop/abc\", \"description\": \"x\"}), now=NOW"
+      ],
+      [
+        224,
+        "assert detail.secop_url == \"https://secop/abc\""
+      ],
+      [
+        229,
+        "assert observed_secop_url(\"{'url': 'https://x'}\") is None"
+      ],
+      [
+        233,
+        "assert observed_secop_url(\"https://secop/ok\") == \"https://secop/ok\""
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_notify_render.py",
+    "candidates": [
+      [
+        35,
+        "urlproceso=None if i in missing else f\"https://x/{i}\","
+      ],
+      [
+        60,
+        "\"urlproceso\": \"https://secop/K1\", \"referencia\": \"REF-1\","
+      ],
+      [
+        102,
+        "\"prev_status\": None, \"prev_value\": None, \"urlproceso\": \"https://secop/K1\","
+      ],
+      [
+        111,
+        "\"urlproceso\": \"https://secop/K3\", \"referencia\": None,"
+      ],
+      [
+        121,
+        "\"\u2022 Nuevo: Alimentaci\u00f3n escolar \u2014 Publicado \u00b7 1350000000 \u00b7 https://secop/K1\\n\""
+      ],
+      [
+        162,
+        "\"urlproceso\": \"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10541141\","
+      ],
+      [
+        186,
+        "\"Ver en SECOP: https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10541141\""
+      ],
+      [
+        410,
+        "referencia=f\"REF-{i}-\u00d1\u00d1\u00d1\", urlproceso=\"https://secop/\" + \"a\" * url_len + f\"/{i}\","
+      ],
+      [
+        454,
+        "huge = \"https://secop.gov.co/\" + \"a\" * 4200"
+      ],
+      [
+        459,
+        "assert \"https://secop.gov.co/aaa\" not in rendered.text"
+      ],
+      [
+        691,
+        "huge_url = \"https://secop.gov.co/\" + \"a\" * 4200"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_socrata_retry.py",
+    "candidates": [
+      [
+        19,
+        "secop = SecopClient(\"test.gov\", \"token\", client=client)"
+      ],
+      [
+        30,
+        "secop = SecopClient(\"test.gov\", \"token\", client=client)"
+      ],
+      [
+        39,
+        "secop = SecopClient(\"test.gov\", \"token\", client=client)"
+      ],
+      [
+        49,
+        "client.get.return_value = [{\"id\": \"1\", \"urlproceso\": \"https://test\"}]"
+      ],
+      [
+        50,
+        "secop = SecopClient(\"test.gov\", \"token\", client=client)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/conftest.py",
+    "candidates": [
+      [
+        76,
+        "path.write_bytes(encode(read(ROOT / 'artifacts/audits/municipal_m1a/before_aliases_db.json.gz')))"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_notify_selector.py",
+    "candidates": [
+      [
+        81,
+        "\"urlproceso\": f\"https://secop/{number}\", \"referencia\": f\"REF-{number}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_actor_name_resolver.py",
+    "candidates": [
+      [
+        278,
+        "path.write_bytes(b\"this is not sqlite\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_notify_worker.py",
+    "candidates": [
+      [
+        88,
+        "\"entity\": \"SED\", \"urlproceso\": \"https://example.org/p1\"},"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_url_repair.py",
+    "candidates": [
+      [
+        12,
+        "client = SecopClient(domain=\"www.datos.gov.co\", app_token=None)"
+      ],
+      [
+        27,
+        "client = SecopClient(domain=\"www.datos.gov.co\", app_token=None)"
+      ],
+      [
+        38,
+        "client = SecopClient(domain=\"www.datos.gov.co\", app_token=None)"
+      ],
+      [
+        49,
+        "client = SecopClient(domain=\"www.datos.gov.co\", app_token=None)"
+      ],
+      [
+        60,
+        "client = SecopClient(domain=\"www.datos.gov.co\", app_token=None)"
+      ],
+      [
+        71,
+        "client = SecopClient(domain=\"www.datos.gov.co\", app_token=None)"
+      ],
+      [
+        80,
+        "client = SecopClient(domain=\"www.datos.gov.co\", app_token=None)"
+      ],
+      [
+        81,
+        "original = \"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.123\""
+      ],
+      [
+        91,
+        "client = SecopClient(domain=\"www.datos.gov.co\", app_token=None)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_truth_layer_models.py",
+    "candidates": [
+      [
+        441,
+        "\"requests.\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_count_nonblocking.py",
+    "candidates": [
+      [
+        83,
+        "shared = SecopClient(\"d\", None, client=FakeSocrata())"
+      ],
+      [
+        96,
+        "sc = SecopClient(\"d\", None, client=object())"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_scan_alias_eligibility_r2d3.py",
+    "candidates": [
+      [
+        249,
+        "path.write_text("
+      ],
+      [
+        267,
+        "path.write_text("
+      ],
+      [
+        312,
+        "path.write_text(json.dumps(mutated, ensure_ascii=False), encoding=\"utf-8\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_radar_commands.py",
+    "candidates": [
+      [
+        125,
+        "\"urlproceso\": \"http://x/P-1\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_actor_profile_scope.py",
+    "candidates": [
+      [
+        177,
+        "client = FakeSecopClient(fail={'core'} if failed else set())"
+      ],
+      [
+        269,
+        "profile = build_actor_profile(CASES[name]['params'], DATASET, FakeSecopClient(), SoQLBuilder())"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_municipal_m1a.py",
+    "candidates": [
+      [
+        35,
+        "path.write_bytes(encode(records))"
+      ],
+      [
+        141,
+        "path.write_bytes(encode(prediction['before']))"
+      ],
+      [
+        172,
+        "path.write_text("
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_v12b2_integrity.py",
+    "candidates": [
+      [
+        92,
+        "path.write_text('\\n'.join([*lines[:-1], json.dumps(raw)]) + '\\n')"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_entity_profile_independent_review.py",
+    "candidates": [
+      [
+        45,
+        "path.write_text(json.dumps(value, ensure_ascii=False, indent=2, default=str) + \"\\n\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_entity_profile_frame_independent_review.py",
+    "candidates": [
+      [
+        37,
+        "Path(output, name + \".json\").write_text("
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_e2e_estado_followup_bug.py",
+    "candidates": [
+      [
+        35,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_demo_veedor.py",
+    "candidates": [
+      [
+        21,
+        "\"urlproceso\": f\"https://example.com/{i}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_notify_telegram_provider.py",
+    "candidates": [
+      [
+        116,
+        "self.requests.append("
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_procurement_layers_sources.py",
+    "candidates": [
+      [
+        18,
+        "monkeypatch.setattr(requests.sessions.Session, \"request\", forbidden)"
+      ],
+      [
+        27,
+        "(audit / \"observations\" / name).write_bytes(raw)"
+      ],
+      [
+        28,
+        "(audit / \"observation_manifest.json\").write_text(json.dumps({\"receipts\": {"
+      ],
+      [
+        38,
+        "path.write_bytes(path.read_bytes() + b\" \")"
+      ],
+      [
+        63,
+        "path.write_text(json.dumps(receipt))"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_value_sanity_reachability.py",
+    "candidates": [
+      [
+        57,
+        "return SecopClient(\"example.invalid\", None, client=source), source"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_demo_alcalde.py",
+    "candidates": [
+      [
+        31,
+        "\"urlproceso\": f\"https://example.com/{i}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_entity_profile_queries.py",
+    "candidates": [
+      [
+        89,
+        "\"urlproceso\": \"https://community.secop.gov.co/process/1\","
+      ],
+      [
+        96,
+        "\"urlproceso\": \"https://community.secop.gov.co/contract/1\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_process_operational_state.py",
+    "candidates": [
+      [
+        36,
+        "\"urlproceso\": \"https://community.secop.gov.co/x\","
+      ],
+      [
+        247,
+        "urlproceso={\"url\": \"https://community.secop.gov.co/x?noticeUID=CO1.NTC.9872684\"},"
+      ],
+      [
+        259,
+        "urlproceso={\"url\": \"https://community.secop.gov.co/x\"})])"
+      ],
+      [
+        398,
+        "\"fecha_de_firma\": \"2026-05-19T00:00:00.000\", \"urlproceso\": \"http://c1\"}"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_telegram_webhook.py",
+    "candidates": [
+      [
+        137,
+        "\"\"\"Reemplaza httpx.AsyncClient; registra los posts y devuelve status fijo.\"\"\""
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_gazetteer_ownership_gate_r2a.py",
+    "candidates": [
+      [
+        51,
+        "path.write_text(json.dumps({\"count\": len(keys), \"keys\": keys}), encoding=\"utf-8\")"
+      ],
+      [
+        57,
+        "path.write_text(json.dumps(records, ensure_ascii=False), encoding=\"utf-8\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_direct_lookup_entity_scope.py",
+    "candidates": [
+      [
+        149,
+        "\"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index\""
+      ],
+      [
+        281,
+        "\"urlproceso\": {\"url\": \"https://example.test/selected\"},"
+      ],
+      [
+        288,
+        "\"urlproceso\": {\"url\": \"https://example.test/evaluation\"},"
+      ],
+      [
+        296,
+        "\"urlproceso\": \"https://example.test/contract\","
+      ],
+      [
+        390,
+        "\"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index\""
+      ],
+      [
+        413,
+        "\"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index\""
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_negation_lifecycle.py",
+    "candidates": [
+      [
+        29,
+        "\"urlproceso\": \"https://example.com\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_secop1_procesos_field_mapping.py",
+    "candidates": [
+      [
+        74,
+        "# URL \u2014 Socrata devuelve tipo 'url' como dict {'url': 'https://...'}"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_accredited_name_rewrite_spans.py",
+    "candidates": [
+      [
+        21,
+        "path.write_text(json.dumps(records))"
+      ],
+      [
+        31,
+        "path.write_text(json.dumps(["
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_observability_traces.py",
+    "candidates": [
+      [
+        88,
+        "path.write_text(\"\\n\".join(json.dumps(row) for row in rows), encoding=\"utf-8\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_entity_profile_frame_b_publication.py",
+    "candidates": [
+      [
+        227,
+        "path.write_text(json.dumps(payload) + \"\\n\", encoding=\"utf-8\")"
+      ],
+      [
+        281,
+        "path.write_text(json.dumps(payload) + \"\\n\", encoding=\"utf-8\")"
+      ],
+      [
+        372,
+        "Path(sys.argv[2]).write_text(\"held\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_demo_proponente.py",
+    "candidates": [
+      [
+        21,
+        "\"urlproceso\": f\"https://example.com/{i}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_socrata_transport_classic.py",
+    "candidates": [
+      [
+        27,
+        "secop = SecopClient(\"test.gov\", \"token\", client=MagicMock())"
+      ],
+      [
+        42,
+        "secop = SecopClient(\"test.gov\", \"token\", client=original)"
+      ],
+      [
+        58,
+        "secop = SecopClient(\"test.gov\", \"token\", client=client)"
+      ],
+      [
+        84,
+        "SecopClient(\"test.gov\", \"token\", client=client).query(\"ds\", soql)"
+      ],
+      [
+        94,
+        "rows = SecopClient(\"test.gov\", \"token\", client=client).query(\"jbjy-vk9h\", \"SELECT *\")"
+      ],
+      [
+        102,
+        "assert SecopClient(\"test.gov\", \"token\", client=client).count(\"ds\", \"SELECT count(*)\") == 42"
+      ],
+      [
+        108,
+        "assert SecopClient(\"test.gov\", \"token\", client=client).count(\"ds\", \"SELECT count(*)\") == 0"
+      ],
+      [
+        115,
+        "SecopClient(\"test.gov\", \"token\", client=client).aggregate(\"ds\", \"SELECT count(*)\")"
+      ],
+      [
+        121,
+        "shared = SecopClient(\"test.gov\", \"token\", timeout=30, client=client)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_ordering_proper_name_spans.py",
+    "candidates": [
+      [
+        31,
+        "path.write_text(json.dumps(records))"
+      ],
+      [
+        70,
+        "path.write_text(json.dumps([dict("
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_v12b_independent_continuity.py",
+    "candidates": [
+      [
+        122,
+        "path.write_text(json.dumps(raw) + '\\n')"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_secop_access.py",
+    "candidates": [
+      [
+        27,
+        "\"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/\""
+      ],
+      [
+        30,
+        "_LOGIN = \"https://community.secop.gov.co/STS/Users/Login/Index\""
+      ],
+      [
+        70,
+        "\"https://community.secop.gov.co/Public/Tendering/\""
+      ],
+      [
+        153,
+        "\"{'url': 'https://community.secop.gov.co/x'}\","
+      ],
+      [
+        156,
+        "\"https://evil.example.com/Public/Tendering/OpportunityDetail/Index\","
+      ],
+      [
+        157,
+        "\"https://community.secop.gov.co.evil.example.com/x\","
+      ],
+      [
+        160,
+        "\"https://community.secop.gov.co:puerto/x\","
+      ],
+      [
+        161,
+        "\"https://[::1/x\","
+      ],
+      [
+        174,
+        "\"https://login.secop.gov.co/Public/Tendering/OpportunityDetail/Index\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_feedback_isolation.py",
+    "candidates": [
+      [
+        39,
+        "real_feedback.write_bytes(before)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_root_buyer_evidence_r1d.py",
+    "candidates": [
+      [
+        180,
+        "alias_path.write_text("
+      ],
+      [
+        236,
+        "alias_path.write_text(json.dumps(records), encoding=\"utf-8\")"
+      ],
+      [
+        248,
+        "alias_path.write_text("
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_sprint6_integration.py",
+    "candidates": [
+      [
+        21,
+        "\"urlproceso\": f\"https://example.com/{i}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_orchestrator.py",
+    "candidates": [
+      [
+        17,
+        "\"urlproceso\": \"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.TEST.1\","
+      ],
+      [
+        36,
+        "\"urlproceso\": \"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.TEST.1\","
+      ],
+      [
+        64,
+        "\"urlproceso\": \"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.TEST.2\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_url_fallback_channel_parity.py",
+    "candidates": [
+      [
+        35,
+        "\"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/\""
+      ],
+      [
+        38,
+        "_AUTENTICACION = \"https://community.secop.gov.co/STS/Users/Login/Index\""
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_money_polarity_e2e.py",
+    "candidates": [
+      [
+        28,
+        "\"urlproceso\": \"https://example.test/mpv2\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_v12b1_independent_records.py",
+    "candidates": [
+      [
+        84,
+        "path.write_text('\\n'.join([*lines[:-1], json.dumps(raw)]) + '\\n')"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_modality_catalog_v1.py",
+    "candidates": [
+      [
+        198,
+        "p.write_text(yaml.safe_dump(data, allow_unicode=True, sort_keys=False), encoding=\"utf-8\")"
+      ],
+      [
+        210,
+        "p.write_text(\"- just\\n- a\\n- list\\n\", encoding=\"utf-8\")"
+      ],
+      [
+        494,
+        "path.write_text(\"\".join(lines), encoding=\"utf-8\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_radar_keys.py",
+    "candidates": [
+      [
+        41,
+        "\"urlproceso\": \"http://x\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_entity_profile_workflow.py",
+    "candidates": [
+      [
+        87,
+        "\"urlproceso\": \"https://community.secop.gov.co/process/1\","
+      ],
+      [
+        99,
+        "\"urlproceso\": \"https://community.secop.gov.co/contract/1\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_followup_post_merge.py",
+    "candidates": [
+      [
+        18,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ],
+      [
+        125,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_radar_follows.py",
+    "candidates": [
+      [
+        57,
+        "\"valor\": valor, \"estado\": estado, \"url\": f\"http://secop/{pid}\","
+      ],
+      [
+        69,
+        "\"estado_de_apertura_del_proceso\": estado, \"urlproceso\": f\"http://secop/{pid}\","
+      ],
+      [
+        865,
+        "assert ev[\"urlproceso\"] == \"http://secop/P-1\""
+      ],
+      [
+        900,
+        "\"urlproceso\": f\"http://secop/{cid}\","
+      ],
+      [
+        907,
+        "\"valor\": \"$5.000.000\", \"estado\": estado, \"url\": f\"http://secop/{cid}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_feedback_sqlite.py",
+    "candidates": [
+      [
+        115,
+        "jsonl_path.write_text(json.dumps(trace) + \"\\n\", encoding=\"utf-8\")"
+      ],
+      [
+        182,
+        "jsonl_path.write_text(\"\\n\".join(json.dumps(row) for row in rows), encoding=\"utf-8\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_soda3_transport_selection.py",
+    "candidates": [
+      [
+        153,
+        "client = SecopClient(domain=\"www.datos.gov.co\", app_token=None)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_v12b_independent_boundaries.py",
+    "candidates": [
+      [
+        60,
+        "path.write_text(json.dumps(raw) + '\\n')"
+      ],
+      [
+        207,
+        "path.write_text(json.dumps(raw))"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_query_frame.py",
+    "candidates": [
+      [
+        157,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_actor_profile_render.py",
+    "candidates": [
+      [
+        227,
+        "assert \"https://community.secop.gov.co\" in text"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_truth_layer_observers.py",
+    "candidates": [
+      [
+        34,
+        "\"https://community.secop.gov.co/Public/Tendering/NoticeDetail/\""
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_pagination_buffer.py",
+    "candidates": [
+      [
+        46,
+        "\"urlproceso\": f\"https://secop.gov.co/p/{i}\","
+      ],
+      [
+        138,
+        "\"urlproceso\": f\"https://secop.gov.co/c/{i}\","
+      ],
+      [
+        192,
+        "\"urlproceso\": f\"https://secop.gov.co/p/{i}\","
+      ],
+      [
+        292,
+        "\"urlproceso\": f\"https://secop.gov.co/c/{i}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_procurement_relationships.py",
+    "candidates": [
+      [
+        176,
+        "(tmp_path / \"tampered.json\").write_text(json.dumps(receipt))"
+      ],
+      [
+        184,
+        "monkeypatch.setattr(\"requests.get\", no_network)"
+      ],
+      [
+        250,
+        "consumer.write_text(statement + \"\\n\", encoding=\"utf-8\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_v12b1_remediation_acceptance.py",
+    "candidates": [
+      [
+        105,
+        "path.write_text(json.dumps(raw) + '\\n')"
+      ],
+      [
+        142,
+        "path.write_text(json.dumps(raw) + '\\n')"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_followup_delta_queries.py",
+    "candidates": [
+      [
+        72,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ],
+      [
+        165,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_sprint_anaphora_mayor.py",
+    "candidates": [
+      [
+        33,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ],
+      [
+        58,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ],
+      [
+        123,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_city_detection.py",
+    "candidates": [
+      [
+        78,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_notify_preferences.py",
+    "candidates": [
+      [
+        478,
+        "\"urlproceso\": f\"https://secop/{n}\", \"referencia\": f\"REF-{n}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_radar_workspace.py",
+    "candidates": [
+      [
+        54,
+        "\"urlproceso\": \"https://community.secop.gov.co/Public/Tendering/x\","
+      ],
+      [
+        168,
+        "assert snapshot[\"secop_url\"].startswith(\"https://\")"
+      ],
+      [
+        263,
+        "# ``dict.get`` s\u00ed se usa (lectura del evento); ``requests.get`` no existe"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_radar_runner.py",
+    "candidates": [
+      [
+        97,
+        "\"urlproceso\": f\"http://secop/{pid}\","
+      ],
+      [
+        1459,
+        "\"urlproceso\": f\"http://secop/{cid}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_e2e_followup_context.py",
+    "candidates": [
+      [
+        21,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_newsearch_pagination.py",
+    "candidates": [
+      [
+        126,
+        "\"urlproceso\": f\"https://secop.gov.co/p/{i}\","
+      ],
+      [
+        265,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_dialogue_e2e_invariants.py",
+    "candidates": [
+      [
+        45,
+        "\"urlproceso\": \"https://example.com\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_territorial_import_guard.py",
+    "candidates": [
+      [
+        133,
+        "(core / \"territorial_knowledge.py\").write_text(statement, encoding=\"utf-8\")"
+      ],
+      [
+        136,
+        "scope.write_text(\"from app.core.territorial_knowledge import load\\n\", encoding=\"utf-8\")"
+      ],
+      [
+        139,
+        "procurement.write_text(provenance, encoding=\"utf-8\")"
+      ],
+      [
+        150,
+        "procurement.write_text(provenance + statement, encoding=\"utf-8\")"
+      ],
+      [
+        173,
+        "scope.write_text(\"from app.core.territorial_knowledge import load\\n\", encoding=\"utf-8\")"
+      ],
+      [
+        175,
+        "(root / f\"app/core/{name}.py\").write_text(statement, encoding=\"utf-8\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_entity_profile_r3d_postposed_source.py",
+    "candidates": [
+      [
+        188,
+        "aliases.write_text(json.dumps([{"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_dual_dataset_presentation.py",
+    "candidates": [
+      [
+        21,
+        "\"fecha_de_publicacion_del\": \"2026-05-01T00:00:00.000\", \"urlproceso\": \"http://p1\"}"
+      ],
+      [
+        27,
+        "\"urlproceso\": \"http://c1\"}"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_instrumentation.py",
+    "candidates": [
+      [
+        102,
+        "client = SecopClient(domain=\"d\", app_token=None, client=fake)"
+      ],
+      [
+        116,
+        "client = SecopClient(domain=\"d\", app_token=None, client=fake)"
+      ],
+      [
+        124,
+        "client = SecopClient(domain=\"d\", app_token=None, client=fake, max_retries=1)"
+      ],
+      [
+        136,
+        "client = SecopClient(domain=\"d\", app_token=None, client=fake, max_retries=2)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_orchestrator_golden.py",
+    "candidates": [
+      [
+        63,
+        "\"urlproceso\": f\"https://example.com/{i}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_streamlit_operational_state.py",
+    "candidates": [
+      [
+        23,
+        "\"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/\""
+      ],
+      [
+        27,
+        "\"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/\""
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_buyer_candidate_execution_limit.py",
+    "candidates": [
+      [
+        36,
+        "\"urlproceso\": \"https://community.secop.gov.co/Public/Tendering/NoticeDetail/Index?id=1\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_formatter_no_results.py",
+    "candidates": [
+      [
+        106,
+        "\"urlproceso\": \"https://example.com\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_compound_identity_guard.py",
+    "candidates": [
+      [
+        23,
+        "path.write_bytes(encode(records))"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_analyze_modality_followup_gate.py",
+    "candidates": [
+      [
+        529,
+        "manifest.write_text(json.dumps({\"sample_provenance\": \"real\", \"sample_source\": \"prod\"}))"
+      ],
+      [
+        539,
+        "manifest.write_text(json.dumps({\"sample_provenance\": \"synthetic\", \"sample_source\": \"test\"}))"
+      ],
+      [
+        549,
+        "manifest.write_text(json.dumps({\"sample_source\": \"prod\"}))"
+      ],
+      [
+        559,
+        "log.write_text(_record(\"r1\", source=\"runtime\"))"
+      ],
+      [
+        571,
+        "log.write_text("
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_notify_worker_store.py",
+    "candidates": [
+      [
+        1837,
+        "\"urlproceso\": \"https://secop/1\", \"referencia\": \"REF-1\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_modality_lexicon.py",
+    "candidates": [
+      [
+        510,
+        "path.write_text("
+      ],
+      [
+        522,
+        "path.write_text("
+      ],
+      [
+        532,
+        "path.write_text(\"- uno\\n- dos\\n\", encoding=\"utf-8\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_soda3_h4_ordering_wiring.py",
+    "candidates": [
+      [
+        72,
+        "return SecopClient(\"www.datos.gov.co\", None, timeout=15, transport=transport)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_municipal_territory.py",
+    "candidates": [
+      [
+        43,
+        "path.write_text(json.dumps(data))"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_socrata_transport_soda3.py",
+    "candidates": [
+      [
+        54,
+        "return httpx.Response(200, json=payload)"
+      ],
+      [
+        72,
+        "\"https://www.datos.gov.co/api/v3/views/jbjy-vk9h/query.json\""
+      ],
+      [
+        137,
+        "client = SecopClient(\"www.datos.gov.co\", \"tok\", timeout=8, transport=transport)"
+      ],
+      [
+        145,
+        "SecopClient(\"d\", None, timeout=5, transport=transport).query(\"ds\", \"SELECT 1\")"
+      ],
+      [
+        159,
+        "transport, _ = _transport(httpx.Response(status, text=\"nope\"))"
+      ],
+      [
+        170,
+        "transport, _ = _transport(httpx.Response(200, text=\"<html>not json</html>\"))"
+      ],
+      [
+        188,
+        "boom = httpx.ConnectError(\"dns\")"
+      ],
+      [
+        201,
+        "cause = httpx.ReadTimeout(\"budget\")"
+      ],
+      [
+        219,
+        "transport, _ = _transport(httpx.ReadTimeout(\"budget\"))"
+      ],
+      [
+        220,
+        "client = SecopClient(\"d\", None, timeout=3, transport=transport)"
+      ],
+      [
+        229,
+        "transport, _ = _transport(httpx.Response(status, text=\"nope\"))"
+      ],
+      [
+        230,
+        "client = SecopClient(\"d\", None, timeout=3, transport=transport)"
+      ],
+      [
+        237,
+        "transport, fake = _transport(httpx.ReadTimeout(\"budget\"))"
+      ],
+      [
+        238,
+        "client = SecopClient(\"d\", None, timeout=3, transport=transport)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_timeout_handling.py",
+    "candidates": [
+      [
+        53,
+        "\"urlproceso\": \"https://secop.gov.co/test\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_modality_resolver.py",
+    "candidates": [
+      [
+        172,
+        "path.write_text("
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_query_router_source_occurrence.py",
+    "candidates": [
+      [
+        57,
+        "aliases.write_text(json.dumps([{"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_territorial_knowledge.py",
+    "candidates": [
+      [
+        212,
+        "replay.write_bytes(second)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_telegram_pilot.py",
+    "candidates": [
+      [
+        154,
+        "existing.write_bytes(b\"\")"
+      ],
+      [
+        312,
+        "db_path.write_bytes(b\"\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_radar_receipts.py",
+    "candidates": [
+      [
+        103,
+        "\"urlproceso\": \"https://secop.example/proceso\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_actor_profile.py",
+    "candidates": [
+      [
+        107,
+        "params, CONTRATOS, client or FakeSecopClient(), SoQLBuilder(),"
+      ],
+      [
+        187,
+        "profile = profile_for(params, FakeSecopClient(fail={broken}))"
+      ],
+      [
+        202,
+        "profile = profile_for(params, FakeSecopClient(fail={\"territories\"}))"
+      ],
+      [
+        212,
+        "params, FakeSecopClient(fail={\"buyers\"}, exc=TimeoutError(\"read timed out\")),"
+      ],
+      [
+        233,
+        "profile = profile_for(params, FakeSecopClient(fail={\"core\"}))"
+      ],
+      [
+        315,
+        "client = FakeSecopClient()"
+      ],
+      [
+        325,
+        "client = FakeSecopClient()"
+      ],
+      [
+        338,
+        "client = FakeSecopClient()"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_modality_followup_telemetry.py",
+    "candidates": [
+      [
+        387,
+        "path.write_text(json.dumps({\"event_id\": \"first\"}) + \"\\n\")"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_value_sanity.py",
+    "candidates": [
+      [
+        86,
+        "\"urlproceso\": \"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.8089879\","
+      ],
+      [
+        121,
+        "\"urlproceso\": \"https://community.secop.gov.co/...\","
+      ],
+      [
+        142,
+        "\"urlproceso\": \"https://community.secop.gov.co/...\","
+      ],
+      [
+        160,
+        "\"urlproceso\": \"https://community.secop.gov.co/...\","
+      ],
+      [
+        180,
+        "\"urlproceso\": \"https://community.secop.gov.co/...\","
+      ],
+      [
+        190,
+        "\"urlproceso\": \"https://community.secop.gov.co/...\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_pilot_real.py",
+    "candidates": [
+      [
+        116,
+        "\"urlproceso\": f\"http://secop/{pid}\","
+      ],
+      [
+        198,
+        "decoy.write_bytes(b\"\")"
+      ],
+      [
+        880,
+        "\"urlproceso\": \"https://secop/prior\", \"referencia\": \"REF-PRIOR\","
+      ],
+      [
+        914,
+        "\"urlproceso\": \"https://secop/concurrent\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_direct_lookup.py",
+    "candidates": [
+      [
+        46,
+        "url = \"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.2597221\""
+      ],
+      [
+        51,
+        "\"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index\""
+      ],
+      [
+        74,
+        "\"mira CO1.NTC.123 y https://community.secop.gov.co/...?noticeUID=CO1.NTC.456\""
+      ],
+      [
+        87,
+        "assert detect_direct_lookup(\"https://google.com\") == (None, None)"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_audit_runner_isolation.py",
+    "candidates": [
+      [
+        89,
+        "(sentinel / \"feedback.jsonl\").write_text(\"SENTINEL\\n\", encoding=\"utf-8\")"
+      ],
+      [
+        93,
+        "corpus.write_text(MINI_CORPUS, encoding=\"utf-8\")"
+      ],
+      [
+        171,
+        "corpus.write_text('cases:\\n- id: PROFILE_OFFLINE\\n  turns:\\n  - {q: \"contratos del NIT 900739049\", expect: execute}\\n')"
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_modality_followup_pipeline.py",
+    "candidates": [
+      [
+        36,
+        "\"urlproceso\": \"https://example.com\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/test_search_sh1_dogfood_regressions.py",
+    "candidates": [
+      [
+        98,
+        "\"urlproceso\": f\"https://secop.gov.co/c/{index}\","
+      ]
+    ]
+  },
+  {
+    "path": "tests/helpers/mock_data.py",
+    "candidates": [
+      [
+        21,
+        "\"urlproceso\": \"https://example.com/contract\","
+      ],
+      [
+        40,
+        "\"urlproceso\": \"https://example.com/process\","
+      ]
+    ]
+  }
+]

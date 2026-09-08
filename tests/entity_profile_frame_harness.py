@@ -114,8 +114,8 @@ class Observation:
         return tuple(issue.code for issue in self.decision.issues)
 
 
-def parse(query: str, overrides: dict | None = None) -> dict:
-    params = ROUTER.parse(query, today=TODAY).params
+def parse(query: str, overrides: dict | None = None, *, today: date = TODAY) -> dict:
+    params = ROUTER.parse(query, today=today).params
     params.update(overrides or {})
     return params
 
@@ -126,13 +126,14 @@ def observe(
     overrides: dict | None = None,
     base: EntityProfileFrame | None = None,
     turn_id: str = "t1",
+    today: date = TODAY,
 ) -> Observation:
     """Texto -> claims -> patch -> Frame -> plan compilado, sin runtime legacy."""
-    params = parse(query, overrides)
+    params = parse(query, overrides, today=today)
     clean = profile_query_params(params)
     resolution = resolve_profile_scope(clean)
     claims = collect_claims(
-        query, clean, turn_id=turn_id, buyer_resolution=resolution,
+        query, clean, turn_id=turn_id, buyer_resolution=resolution, today=today,
     )
     proposal = compose_patch(
         claims, base_frame=base, buyer_scope=buyer_scope_from(resolution),

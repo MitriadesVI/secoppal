@@ -1,0 +1,5 @@
+{
+  "MAIN_AFTER": "7868664757b28bed16c583ea50327d669f1501e3",
+  "HEAD": "616826231d5d2bf25c47640e5dcf4f1bbc491326",
+  "tracked_status": "M tests/entity_profile_frame_harness.py\n M tests/test_entity_profile_frame_b_publication.py\n M tests/test_entity_profile_frame_b_semantics.py\n M tests/test_v12b_independent_boundaries.py\n M tests/test_v12b_independent_publication.py"
+}

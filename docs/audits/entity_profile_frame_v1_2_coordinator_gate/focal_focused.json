@@ -1,0 +1,446 @@
+{
+  "collection": [
+    "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact",
+    "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates",
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload",
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]",
+    "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on0-reloaded_on0]",
+    "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on1-reloaded_on1]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0037863329926040024,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.04533104199799709,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001860839984146878,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004496660112636164,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0019856250000884756,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00011545800953172147,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00034779199631884694,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.001561375000164844,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.858299745246768e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003460830048425123,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0015040840080473572,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.966599463950843e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003557089949026704,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004427920066518709,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.700001101009548e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003633330052252859,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00043362499854993075,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.566699736751616e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003390829951968044,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004410840047057718,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010191700130235404,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00035120800021104515,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00042370900337118655,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.637499169912189e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00033912499202415347,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00044108300062362105,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.545800276100636e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003440000000409782,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00042475000373087823,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.137499728240073e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00034779199631884694,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00042291700083296746,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.050000517163426e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000346040993463248,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00043216599442530423,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.462500747758895e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on0-reloaded_on0]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003432079975027591,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on0-reloaded_on0]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.002434207999613136,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on0-reloaded_on0]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.958299051504582e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on1-reloaded_on1]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00037604200770147145,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on1-reloaded_on1]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0018492079980205745,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on1-reloaded_on1]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.8082993645221e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003063329932047054,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.7366423750063404,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0014106250018812716,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00048312501166947186,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]",
+      "when": "call",
+      "outcome": "failed",
+      "duration": 0.529209208994871,
+      "xfail": null,
+      "detail": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py:41: in test_reset_discards_confirmed_and_failed_continuity\n    assert history and all(turn['user_query'] != bad_query for turn in history)\nE   assert ([])"
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.001981833003810607,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on0-reloaded_on0]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on1-reloaded_on1]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]": {
+      "before_call": true,
+      "after_call": true
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_entity_profile_frame_integration_contract.py::test_frame_survives_json_serialization_intact": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_reloaded_frame_compiles_to_the_same_predicates": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_relative_period_does_not_get_reinterpreted_on_reload": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_a_plan_names_the_exact_frame_revision_it_compiled": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5a displayed inherited period after a real reload]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5b explicit completeness after a real reload]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5c pending selection across turns]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R5d pending period does not leak into confirmed execution]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R6 explicit origin survives persistence]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7a profile does not seed tabular pagination]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7b CLEAR survives another reload]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_integration_contract.py::test_integration_b_cases_are_declared_not_claimed[R7c a tabular cursor is inert after a profile]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_integration_contract.py",
+    "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on0-reloaded_on0]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_coordinator_clock.py",
+    "tests/test_entity_profile_frame_coordinator_clock.py::test_injected_clock_survives_later_helper_turn_and_reload[confirmed_on1-reloaded_on1]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_entity_profile_frame_coordinator_clock.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py"
+  },
+  "exitstatus": 1
+}

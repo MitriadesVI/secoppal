@@ -1,0 +1,67 @@
+{
+  "collection": [
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]"
+  ],
+  "results": [
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00287949999619741,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.7590461249928921,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0014134999946691096,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00044654100202023983,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.6321900409966474,
+      "xfail": null
+    },
+    {
+      "nodeid": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0017308339884039015,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]": {
+      "before_call": true,
+      "after_call": true
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[False]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py",
+    "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py::test_reset_discards_confirmed_and_failed_continuity[True]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_coordinator_reset.py"
+  },
+  "exitstatus": 0
+}

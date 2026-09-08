@@ -1,0 +1,307 @@
+[
+  {
+    "original": "tests/test_v12b_independent_publication.py",
+    "active": "tests/test_v12b_independent_publication.py",
+    "identical_function_bodies": [
+      "test_failed_delegated_publication_cannot_replace_legacy_authority",
+      "test_missing_fcntl_does_not_silently_admit_writers",
+      "test_reservation_serializes_execution_not_only_append",
+      "test_reset_invalidates_an_already_reserved_initial_turn"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": [
+      "test_two_processes_both_enter_when_fcntl_is_missing"
+    ]
+  },
+  {
+    "original": "tests/test_v12b_independent_boundaries.py",
+    "active": "tests/test_v12b_independent_boundaries.py",
+    "identical_function_bodies": [
+      "test_bare_more_uses_the_same_tabular_cursor_as_the_full_phrase",
+      "test_current_actor_api_token_reaches_actor_handler",
+      "test_delegated_results_publish_their_actual_owner",
+      "test_legacy_profile_migrates_or_blocks_in_the_real_route",
+      "test_pagination_consumes_the_published_capability",
+      "test_radar_run_preserves_owner_and_reaches_only_synthetic_effect",
+      "test_radar_save_cannot_export_an_older_tabular_search_over_profile",
+      "test_real_sidecar_expiry_does_not_silently_repeat_a_search",
+      "test_reference_free_seed_never_acquires_tabular_authority",
+      "test_rollback_does_not_reactivate_a_preprofile_tabular_cursor",
+      "test_ui_seed_requires_current_result_reference"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "tests/test_entity_profile_frame_b_publication.py",
+    "active": "tests/test_entity_profile_frame_b_publication.py",
+    "identical_function_bodies": [
+      "test_a_broken_frame_reference_invalidates_the_whole_state",
+      "test_a_corrupt_queue_stops_a_pagination_instead_of_continuing",
+      "test_a_non_finite_metric_never_becomes_a_published_envelope",
+      "test_a_pending_anchored_to_a_foreign_revision_is_refused",
+      "test_a_publication_failure_does_not_advance_the_durable_frame",
+      "test_a_reader_that_does_not_understand_the_new_envelope_refuses_it",
+      "test_a_second_process_cannot_hold_the_same_conversation_lock",
+      "test_a_truncated_tail_invalidates_continuity_and_never_falls_back",
+      "test_an_envelope_whose_state_is_unreadable_yields_no_partial_context",
+      "test_an_interleaved_writer_loses_instead_of_overwriting",
+      "test_an_orphan_pagination_sidecar_does_not_resurrect_a_cursor",
+      "test_an_unknown_continuation_version_is_refused",
+      "test_an_unknown_envelope_version_is_refused_not_guessed",
+      "test_an_unknown_profile_state_version_is_refused_not_emptied",
+      "test_concurrent_publishers_never_produce_two_turns_with_one_revision",
+      "test_nan_in_a_stored_line_is_refused_on_read",
+      "test_the_exclusion_holds_between_processes_not_only_threads",
+      "test_the_flag_is_off_by_default_and_writes_no_envelope",
+      "test_the_frame_travels_only_through_what_was_published",
+      "test_the_legacy_history_is_untouched_by_the_new_envelope",
+      "test_two_independent_conversations_do_not_share_a_universe"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": [
+      "test_a_record_from_another_catalog_does_not_govern_the_next_turn"
+    ]
+  },
+  {
+    "original": "tests/test_entity_profile_frame_b_semantics.py",
+    "active": "tests/test_entity_profile_frame_b_semantics.py",
+    "identical_function_bodies": [
+      "test_a_cleared_period_is_not_resurrected_by_a_later_turn",
+      "test_a_modality_exclusion_stays_in_the_sql_and_is_declared",
+      "test_a_non_finite_metric_is_never_accredited",
+      "test_a_partial_failure_names_what_is_missing_without_zeroing_it",
+      "test_a_pending_never_touches_the_confirmed_frame",
+      "test_a_source_switch_does_not_inherit_the_other_event",
+      "test_a_total_source_failure_keeps_the_confirmed_intent",
+      "test_a_valid_selection_keeps_the_focus_and_filters_it_proposed",
+      "test_an_ambiguous_yes_does_not_select_on_its_own",
+      "test_an_explicit_origin_is_still_explicit_after_a_reload",
+      "test_an_incompatible_subject_and_event_clarifies_without_swapping_them",
+      "test_an_unreadable_amount_never_invalidates_its_count",
+      "test_or_and_and_are_not_rendered_or_queried_alike",
+      "test_planned_jobs_attempted_calls_and_metrics_are_three_different_numbers",
+      "test_tampering_with_legacy_params_changes_neither_frame_nor_sql",
+      "test_the_displayed_period_is_in_every_executed_query",
+      "test_the_injected_clock_is_the_one_that_resolves_relative_periods",
+      "test_the_order_of_two_unambiguous_clauses_does_not_change_the_universe",
+      "test_two_sources_with_different_periods_are_not_globalised"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": [
+      "test_a_forged_execution_record_does_not_change_the_next_turn"
+    ]
+  },
+  {
+    "original": "tests/entity_profile_frame_harness.py",
+    "active": "tests/entity_profile_frame_harness.py",
+    "identical_function_bodies": [
+      "conversation"
+    ],
+    "changed_function_bodies": [
+      "observe",
+      "parse"
+    ],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/conftest.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/conftest.py",
+    "identical_function_bodies": [
+      "isolated_audit_persistence"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/audit_output.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/audit_output.py",
+    "identical_function_bodies": [
+      "emit"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_publication_sequences.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_publication_sequences.py",
+    "identical_function_bodies": [
+      "fail_confirmation_and_rearm",
+      "fail_envelope_fsync",
+      "process_read",
+      "test_explicit_valid_retry_and_reset_never_copy_failed_history",
+      "test_recovery_error_observes_physical_state_and_next_turn",
+      "test_rollback_of_retry_never_promotes_an_earlier_failed_turn"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_record_buyer.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_record_buyer.py",
+    "identical_function_bodies": [
+      "damage_last",
+      "test_each_authorized_buyer_field_rejected_after_digest_recalculation",
+      "test_kind_is_authority_in_both_consumers_with_equivalent_clone_control",
+      "test_observations_reject_multiplicity_and_membership_on_reload"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b2_independent/test_supplier_topologies.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b2_independent/test_supplier_topologies.py",
+    "identical_function_bodies": [
+      "test_ranking_claim_and_published_warning_are_consistent",
+      "test_supported_finite_amounts_keep_response_record_and_universe"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/conftest.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/conftest.py",
+    "identical_function_bodies": [
+      "isolated_audit_persistence"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/file_faults.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/file_faults.py",
+    "identical_function_bodies": [
+      "file_fault"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/publication_port.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/publication_port.py",
+    "identical_function_bodies": [
+      "fail_confirmation_and_rearm",
+      "fail_envelope_fsync",
+      "process_read"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_ports.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_ports.py",
+    "identical_function_bodies": [
+      "test_failed_prefix_port"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_publication_chains.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_publication_chains.py",
+    "identical_function_bodies": [
+      "check_sequence",
+      "test_integrated_three_failures_reload_capabilities_and_recovery",
+      "test_new_process_at_every_critical_boundary",
+      "test_no_promotion_property",
+      "test_three_failures_exhaustive"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_supplier_ports.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_supplier_ports.py",
+    "identical_function_bodies": [
+      "test_ranking_claim_and_published_warning_are_consistent"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": [
+      "test_supported_finite_amounts_keep_response_record_and_universe"
+    ]
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_remediation/test_ranking_matrix.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_remediation/test_ranking_matrix.py",
+    "identical_function_bodies": [
+      "row",
+      "test_amount_damage_never_invalidates_valid_count_order",
+      "test_independent_ranking_matrix",
+      "test_render_consumes_the_assembler_decision"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/conftest.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/conftest.py",
+    "identical_function_bodies": [
+      "isolated_audit_persistence"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/storage_faults.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/storage_faults.py",
+    "identical_function_bodies": [
+      "fail_after_visible_unlink",
+      "publish"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_chained_failures.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_chained_failures.py",
+    "identical_function_bodies": [
+      "leave_barrier",
+      "observe",
+      "read_in_new_process",
+      "test_a_confirmed_prefix_keeps_legitimate_continuity",
+      "test_a_new_legitimate_publication_recovers_without_reset",
+      "test_a_partial_tail_without_barrier_or_marker_still_blocks",
+      "test_failed_retry_never_promotes_a_barrier_blocked_prefix",
+      "test_reset_recovers_and_the_marker_does_not_survive_the_epoch",
+      "test_the_marker_is_rejected_by_the_existing_strict_reader",
+      "test_the_marker_stays_inert_across_further_failures"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_property.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_property.py",
+    "identical_function_bodies": [
+      "test_no_failure_chain_ever_admits_an_unpublished_record"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/test_f4_limits.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_f4_limits.py",
+    "identical_function_bodies": [
+      "fail_with_broken_marker",
+      "test_rollback_open_failure_is_an_observation_not_a_fence"
+    ],
+    "changed_function_bodies": [
+      "test_what_a_failed_marker_leaves_admitted"
+    ],
+    "removed_functions": []
+  },
+  {
+    "original": "docs/audits/entity_profile_frame_v1_2_b3_independent/test_sup_ranking_matrix.py",
+    "active": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/active/b3_independent/test_sup_ranking_matrix.py",
+    "identical_function_bodies": [
+      "profile_for",
+      "row",
+      "test_an_empty_success_is_not_an_invented_ranking",
+      "test_each_ranking_is_accredited_by_its_own_query",
+      "test_no_amount_is_borrowed_across_the_two_queries",
+      "test_the_frame_route_always_supplies_the_explicit_decision"
+    ],
+    "changed_function_bodies": [],
+    "removed_functions": []
+  }
+]
