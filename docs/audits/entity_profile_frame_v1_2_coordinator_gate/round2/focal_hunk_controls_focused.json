@@ -1,0 +1,1633 @@
+{
+  "collection": [
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]",
+    "tests/test_pagination_buffer.py::test_pagination_no_overlap_no_skip_across_three_pages",
+    "tests/test_pagination_buffer.py::test_characterization_phrase_pagination_matches_validated_ranked_prefix",
+    "tests/test_pagination_buffer.py::test_exclusions_and_source_ties_keep_exact_concatenated_prefix",
+    "tests/test_pagination_buffer.py::test_canonical_route_preserves_first_page_rows_and_order",
+    "tests/test_pagination_buffer.py::test_combined_phrase_levels_dedupe_ties_and_three_page_prefix",
+    "tests/test_pagination_buffer.py::test_pagination_keeps_source_without_post_query_ecosystem",
+    "tests/test_pagination_buffer.py::test_refill_deduplicates_boundary_row_between_source_batches",
+    "tests/test_pagination_buffer.py::test_buffer_survives_workflow_restart_without_refetch",
+    "tests/test_pagination_buffer.py::test_expired_buffer_refetches_from_page_one",
+    "tests/test_pagination_buffer.py::test_approximate_source_total_does_not_stop_refill",
+    "tests/test_pagination_buffer.py::test_rank_and_dedupe_is_deterministic",
+    "tests/test_pagination_buffer.py::test_rank_and_dedupe_collapses_versions_without_cutting",
+    "tests/test_pagination_buffer.py::test_order_has_stable_id_tiebreak",
+    "tests/test_pagination_buffer.py::test_page_fingerprint_stable_and_change_sensitive",
+    "tests/test_pagination_buffer.py::test_pagination_resets_on_incompatible_cursor",
+    "tests/test_pagination_transparency.py::test_sample_insights_marks_truncated_universe",
+    "tests/test_pagination_transparency.py::test_sample_insights_omits_truncation_when_total_fits",
+    "tests/test_pagination_transparency.py::test_formatter_names_remaining_results_when_paginated",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[absent]",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[incomplete]",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[old]",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[foreign_chat]",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[valid]",
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[None]",
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference1]",
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference2]",
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[valid]",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[cursor_id-foreign]",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[generation-foreign]",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[fingerprint-foreign]",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[order_contract-foreign]",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00]",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[group-foreign]",
+    "tests/test_v12b_independent_boundaries.py::test_real_sidecar_expiry_does_not_silently_repeat_a_search",
+    "tests/test_v12b_independent_boundaries.py::test_bare_more_uses_the_same_tabular_cursor_as_the_full_phrase",
+    "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[m\\xe1s]",
+    "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[mu\\xe9strame m\\xe1s]",
+    "tests/test_v12b1_remediation_acceptance.py::test_dual_selection_uses_only_offered_group_after_clarification",
+    "tests/test_v12b1_remediation_acceptance.py::test_seed_foreign_reference_property",
+    "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_selected_and_raw_note_not_green_open",
+    "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_evaluation_and_raw_note",
+    "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_published_without_raw_noise",
+    "tests/test_streamlit_operational_state.py::test_streamlit_contract_card_keeps_raw_baseline_render",
+    "tests/test_streamlit_operational_state.py::test_streamlit_legacy_fallback_keeps_raw_baseline_render",
+    "tests/test_streamlit_operational_state.py::test_streamlit_direct_lookup_detail_uses_operational_state",
+    "tests/test_streamlit_operational_state.py::test_streamlit_contract_detail_keeps_raw_baseline_render"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0036347499990370125,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.008070875002886169,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015675000031478703,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00042091700015589595,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.007628041988937184,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013141600356902927,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043325001024641097,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.007379165996098891,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013991699961479753,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00038862499059177935,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0075053750042570755,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001102920068660751,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004091669979970902,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.007485875001293607,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010429199028294533,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00036912500218022615,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3692711670009885,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013737499830313027,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043133299914188683,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.33919395798875485,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015583299682475626,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00047391699627041817,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2998715410067234,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014187500346451998,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00041591699118725955,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3058465000067372,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001673340011620894,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004337919963290915,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.34520799999882,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014041700342204422,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003600000054575503,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.00838858300994616,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001202080020448193,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00042183299956377596,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.14310304100217763,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001662499998928979,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000422583005274646,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11211479199118912,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015541700122412294,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00041620800038799644,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.208633792004548,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015891600924078375,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_pagination_no_overlap_no_skip_across_three_pages",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003880419972119853,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_pagination_no_overlap_no_skip_across_three_pages",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11887258299975656,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_pagination_no_overlap_no_skip_across_three_pages",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00012724999396596104,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_characterization_phrase_pagination_matches_validated_ranked_prefix",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003668749995995313,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_characterization_phrase_pagination_matches_validated_ranked_prefix",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1394674170005601,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_characterization_phrase_pagination_matches_validated_ranked_prefix",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013058299373369664,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_exclusions_and_source_ties_keep_exact_concatenated_prefix",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000500916998134926,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_exclusions_and_source_ties_keep_exact_concatenated_prefix",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11036045900254976,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_exclusions_and_source_ties_keep_exact_concatenated_prefix",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00012837500253226608,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_canonical_route_preserves_first_page_rows_and_order",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00036225000803824514,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_canonical_route_preserves_first_page_rows_and_order",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0010513750021345913,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_canonical_route_preserves_first_page_rows_and_order",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.399999933317304e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_combined_phrase_levels_dedupe_ties_and_three_page_prefix",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003108749951934442,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_combined_phrase_levels_dedupe_ties_and_three_page_prefix",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.10931658299523406,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_combined_phrase_levels_dedupe_ties_and_three_page_prefix",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001408749958500266,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_pagination_keeps_source_without_post_query_ecosystem",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003718750085681677,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_pagination_keeps_source_without_post_query_ecosystem",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11079799999424722,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_pagination_keeps_source_without_post_query_ecosystem",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014879100490361452,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_refill_deduplicates_boundary_row_between_source_batches",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00036712500150315464,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_refill_deduplicates_boundary_row_between_source_batches",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.1133777080103755,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_refill_deduplicates_boundary_row_between_source_batches",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013337501150090247,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_buffer_survives_workflow_restart_without_refetch",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00036558399733621627,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_buffer_survives_workflow_restart_without_refetch",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.20903245800582226,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_buffer_survives_workflow_restart_without_refetch",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00018391601042822003,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_expired_buffer_refetches_from_page_one",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004603749985108152,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_expired_buffer_refetches_from_page_one",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.15064387499296572,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_expired_buffer_refetches_from_page_one",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015916700067464262,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_approximate_source_total_does_not_stop_refill",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00044837499444838613,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_approximate_source_total_does_not_stop_refill",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11787945899413899,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_approximate_source_total_does_not_stop_refill",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017949999892152846,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_rank_and_dedupe_is_deterministic",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004921660001855344,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_rank_and_dedupe_is_deterministic",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.002324749992112629,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_rank_and_dedupe_is_deterministic",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00020304200006648898,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_rank_and_dedupe_collapses_versions_without_cutting",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004666250024456531,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_rank_and_dedupe_collapses_versions_without_cutting",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0006140830082586035,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_rank_and_dedupe_collapses_versions_without_cutting",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.904199057724327e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_order_has_stable_id_tiebreak",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00044754199916496873,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_order_has_stable_id_tiebreak",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005256250005913898,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_order_has_stable_id_tiebreak",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.68750100582838e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_page_fingerprint_stable_and_change_sensitive",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000338249999913387,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_page_fingerprint_stable_and_change_sensitive",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004481249925447628,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_page_fingerprint_stable_and_change_sensitive",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.262498886324465e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_pagination_resets_on_incompatible_cursor",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00029791699489578605,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_pagination_resets_on_incompatible_cursor",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.11597816599532962,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_buffer.py::test_pagination_resets_on_incompatible_cursor",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013845899957232177,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_transparency.py::test_sample_insights_marks_truncated_universe",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00038337499427143484,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_transparency.py::test_sample_insights_marks_truncated_universe",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0006713330076308921,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_transparency.py::test_sample_insights_marks_truncated_universe",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.699999307282269e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_transparency.py::test_sample_insights_omits_truncation_when_total_fits",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00033024999720510095,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_transparency.py::test_sample_insights_omits_truncation_when_total_fits",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005007500003557652,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_transparency.py::test_sample_insights_omits_truncation_when_total_fits",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.158399188891053e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_transparency.py::test_formatter_names_remaining_results_when_paginated",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00034899999445769936,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_transparency.py::test_formatter_names_remaining_results_when_paginated",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.004337000005762093,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_pagination_transparency.py::test_formatter_names_remaining_results_when_paginated",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00012195800081826746,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[absent]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00040608400013297796,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[absent]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.30335608299355954,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[absent]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014658299915026873,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[incomplete]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000429457999416627,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[incomplete]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3315945840004133,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[incomplete]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001414159924024716,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[old]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004351249954197556,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[old]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.29742250000708736,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[old]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001475409953854978,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[foreign_chat]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004417080053826794,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[foreign_chat]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2951065829984145,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[foreign_chat]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001416669983882457,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[valid]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000435791997006163,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[valid]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.3352633339964086,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[valid]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001323750038864091,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[None]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004175420035608113,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[None]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.19905208400450647,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[None]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014158300473354757,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference1]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00044095900375396013,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference1]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.19832616599160247,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference1]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001364579948130995,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference2]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00043279200326651335,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference2]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.23170741599460598,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference2]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00017808399570640177,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[valid]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00047795800492167473,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[valid]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.19857999999658205,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[valid]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014062499394640326,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[cursor_id-foreign]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00047554100456181914,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[cursor_id-foreign]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.19941920800192747,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[cursor_id-foreign]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001452919968869537,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[generation-foreign]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004559579974738881,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[generation-foreign]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.23885212499590125,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[generation-foreign]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015075001283548772,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[fingerprint-foreign]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004594589991029352,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[fingerprint-foreign]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.20404799999960233,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[fingerprint-foreign]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014120800187811255,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[order_contract-foreign]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0004572500038193539,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[order_contract-foreign]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.20531329099321738,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[order_contract-foreign]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015816699306014925,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006306669965852052,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.20755658300186042,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001437499886378646,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[group-foreign]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006976250006118789,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[group-foreign]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.24356787498982158,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[group-foreign]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00018104200717061758,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_real_sidecar_expiry_does_not_silently_repeat_a_search",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00046404100430663675,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_real_sidecar_expiry_does_not_silently_repeat_a_search",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.21009795799909625,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_real_sidecar_expiry_does_not_silently_repeat_a_search",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001376250002067536,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_bare_more_uses_the_same_tabular_cursor_as_the_full_phrase",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00040379200072493404,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_bare_more_uses_the_same_tabular_cursor_as_the_full_phrase",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.20824695799092297,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b_independent_boundaries.py::test_bare_more_uses_the_same_tabular_cursor_as_the_full_phrase",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013566699635703117,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[m\\xe1s]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00044733399408869445,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[m\\xe1s]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.20578045799629763,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[m\\xe1s]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001731249940348789,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[mu\\xe9strame m\\xe1s]",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00046795800153631717,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[mu\\xe9strame m\\xe1s]",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.24092612499953248,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[mu\\xe9strame m\\xe1s]",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015637499745935202,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_dual_selection_uses_only_offered_group_after_clarification",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00046137499157339334,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_dual_selection_uses_only_offered_group_after_clarification",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.2985362920007901,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_dual_selection_uses_only_offered_group_after_clarification",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013712499639950693,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_seed_foreign_reference_property",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00040683300176169723,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_seed_foreign_reference_property",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.16518816699681338,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_v12b1_remediation_acceptance.py::test_seed_foreign_reference_property",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014174998796079308,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_selected_and_raw_note_not_green_open",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00040225000702776015,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_selected_and_raw_note_not_green_open",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.008493417000863701,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_selected_and_raw_note_not_green_open",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00011929099855478853,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_evaluation_and_raw_note",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00038187499740161,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_evaluation_and_raw_note",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.007826082990504801,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_evaluation_and_raw_note",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0001238750119227916,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_published_without_raw_noise",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003836250107269734,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_published_without_raw_noise",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.007925291996798478,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_published_without_raw_noise",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010137500066775829,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_contract_card_keeps_raw_baseline_render",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00037816700933035463,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_contract_card_keeps_raw_baseline_render",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.007944832992507145,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_contract_card_keeps_raw_baseline_render",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00011704200005624443,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_legacy_fallback_keeps_raw_baseline_render",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00036479100526776165,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_legacy_fallback_keeps_raw_baseline_render",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.007808249996742234,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_legacy_fallback_keeps_raw_baseline_render",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.820899867918342e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_direct_lookup_detail_uses_operational_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00037491599505301565,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_direct_lookup_detail_uses_operational_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.008218125003622845,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_direct_lookup_detail_uses_operational_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015433299995493144,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_contract_detail_keeps_raw_baseline_render",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00040591599827166647,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_contract_detail_keeps_raw_baseline_render",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.007917124996311031,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_streamlit_operational_state.py::test_streamlit_contract_detail_keeps_raw_baseline_render",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00024141601170413196,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_pagination_buffer.py::test_pagination_no_overlap_no_skip_across_three_pages": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_characterization_phrase_pagination_matches_validated_ranked_prefix": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_exclusions_and_source_ties_keep_exact_concatenated_prefix": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_canonical_route_preserves_first_page_rows_and_order": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_combined_phrase_levels_dedupe_ties_and_three_page_prefix": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_pagination_keeps_source_without_post_query_ecosystem": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_refill_deduplicates_boundary_row_between_source_batches": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_buffer_survives_workflow_restart_without_refetch": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_expired_buffer_refetches_from_page_one": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_approximate_source_total_does_not_stop_refill": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_rank_and_dedupe_is_deterministic": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_rank_and_dedupe_collapses_versions_without_cutting": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_order_has_stable_id_tiebreak": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_page_fingerprint_stable_and_change_sensitive": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_buffer.py::test_pagination_resets_on_incompatible_cursor": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_transparency.py::test_sample_insights_marks_truncated_universe": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_transparency.py::test_sample_insights_omits_truncation_when_total_fits": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_pagination_transparency.py::test_formatter_names_remaining_results_when_paginated": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[absent]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[incomplete]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[old]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[foreign_chat]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[valid]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[None]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference1]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference2]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[valid]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[cursor_id-foreign]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[generation-foreign]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[fingerprint-foreign]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[order_contract-foreign]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[group-foreign]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_real_sidecar_expiry_does_not_silently_repeat_a_search": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b_independent_boundaries.py::test_bare_more_uses_the_same_tabular_cursor_as_the_full_phrase": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[m\\xe1s]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[mu\\xe9strame m\\xe1s]": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b1_remediation_acceptance.py::test_dual_selection_uses_only_offered_group_after_clarification": {
+      "before_call": true,
+      "after_call": true
+    },
+    "tests/test_v12b1_remediation_acceptance.py::test_seed_foreign_reference_property": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_selected_and_raw_note_not_green_open": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_evaluation_and_raw_note": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_published_without_raw_noise": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_streamlit_operational_state.py::test_streamlit_contract_card_keeps_raw_baseline_render": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_streamlit_operational_state.py::test_streamlit_legacy_fallback_keeps_raw_baseline_render": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_streamlit_operational_state.py::test_streamlit_direct_lookup_detail_uses_operational_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_streamlit_operational_state.py::test_streamlit_contract_detail_keeps_raw_baseline_render": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload0-None]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload1-None]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload2-None]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload3-expected3]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_reference_transports_only_published_identifiers[payload4-expected4]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[valid]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[absent]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[incomplete]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[old]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_actual_ui_chip_reference_is_consumed_on_real_reload[foreign_chat]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_ui_empty_latest_context_does_not_reuse_an_older_search": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_exclusions_and_source_ties_keep_exact_concatenated_prefix]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_pagination_keeps_source_without_post_query_ecosystem]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_truth_layer_frame_guard_controls.py::test_validated_referent_keeps_legacy_universe_and_order[test_buffer_survives_workflow_restart_without_refetch]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_frame_guard_controls.py",
+    "tests/test_pagination_buffer.py::test_pagination_no_overlap_no_skip_across_three_pages": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_characterization_phrase_pagination_matches_validated_ranked_prefix": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_exclusions_and_source_ties_keep_exact_concatenated_prefix": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_canonical_route_preserves_first_page_rows_and_order": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_combined_phrase_levels_dedupe_ties_and_three_page_prefix": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_pagination_keeps_source_without_post_query_ecosystem": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_refill_deduplicates_boundary_row_between_source_batches": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_buffer_survives_workflow_restart_without_refetch": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_expired_buffer_refetches_from_page_one": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_approximate_source_total_does_not_stop_refill": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_rank_and_dedupe_is_deterministic": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_rank_and_dedupe_collapses_versions_without_cutting": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_order_has_stable_id_tiebreak": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_page_fingerprint_stable_and_change_sensitive": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_buffer.py::test_pagination_resets_on_incompatible_cursor": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_buffer.py",
+    "tests/test_pagination_transparency.py::test_sample_insights_marks_truncated_universe": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_transparency.py",
+    "tests/test_pagination_transparency.py::test_sample_insights_omits_truncation_when_total_fits": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_transparency.py",
+    "tests/test_pagination_transparency.py::test_formatter_names_remaining_results_when_paginated": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_pagination_transparency.py",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[absent]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b1_independent_controls.py",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[incomplete]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b1_independent_controls.py",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[old]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b1_independent_controls.py",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[foreign_chat]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b1_independent_controls.py",
+    "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload[valid]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b1_independent_controls.py",
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[None]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference1]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[reference2]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference[valid]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[cursor_id-foreign]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[generation-foreign]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[fingerprint-foreign]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[order_contract-foreign]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[expiration-2000-01-01T00:00:00+00:00]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability[group-foreign]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_real_sidecar_expiry_does_not_silently_repeat_a_search": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b_independent_boundaries.py::test_bare_more_uses_the_same_tabular_cursor_as_the_full_phrase": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b_independent_boundaries.py",
+    "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[m\\xe1s]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b1_remediation_acceptance.py",
+    "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches[mu\\xe9strame m\\xe1s]": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b1_remediation_acceptance.py",
+    "tests/test_v12b1_remediation_acceptance.py::test_dual_selection_uses_only_offered_group_after_clarification": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b1_remediation_acceptance.py",
+    "tests/test_v12b1_remediation_acceptance.py::test_seed_foreign_reference_property": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_v12b1_remediation_acceptance.py",
+    "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_selected_and_raw_note_not_green_open": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_streamlit_operational_state.py",
+    "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_evaluation_and_raw_note": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_streamlit_operational_state.py",
+    "tests/test_streamlit_operational_state.py::test_streamlit_card_shows_published_without_raw_noise": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_streamlit_operational_state.py",
+    "tests/test_streamlit_operational_state.py::test_streamlit_contract_card_keeps_raw_baseline_render": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_streamlit_operational_state.py",
+    "tests/test_streamlit_operational_state.py::test_streamlit_legacy_fallback_keeps_raw_baseline_render": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_streamlit_operational_state.py",
+    "tests/test_streamlit_operational_state.py::test_streamlit_direct_lookup_detail_uses_operational_state": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_streamlit_operational_state.py",
+    "tests/test_streamlit_operational_state.py::test_streamlit_contract_detail_keeps_raw_baseline_render": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_streamlit_operational_state.py"
+  },
+  "exitstatus": 0
+}

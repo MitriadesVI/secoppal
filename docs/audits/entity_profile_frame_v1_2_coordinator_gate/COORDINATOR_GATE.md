@@ -202,3 +202,27 @@ gzip, sin limpiar ni reescribir la salida. artifact_storage.json mapea los
 nombres lógicos de los comandos/resultados a .gz y registra ambos SHA256.
 La descompresión reproduce exactamente la salida original. Esto permite
 verificar diff-check también sobre el commit documental final.
+
+## Segunda corrida — adjudicación autorizada de las dos guardas
+
+La primera corrida y su GATE_INCONCLUSIVE se conservan íntegros arriba. El
+usuario autorizó el cierre de las dos huellas y una nueva corrida completa si
+sus hunks se acreditaban. La adjudicación está en round2/ADJUDICATION.md.
+
+Los cinco hunks de los dos archivos pertenecen al transporte/consumo de
+referentes B/B.1 F6; no hay cambios ajenos. Sesenta controles focales offline
+pasaron, incluidos 14 controles acotados que ejecutan UI real extraída por AST
+y controles legacy de orden/universo con Frame ON. Se actualizaron sólo los
+dos SHA256 calculados de archivos idénticos al runtime auditado; todas las
+funciones/aserciones y restantes hashes del módulo permanecen idénticos.
+El módulo de paridad completo pasó 14 pruebas tras la actualización.
+
+Ruff pasó; Semgrep completó con el baseline rojo de 10 y cero nuevos;
+diff-check pasó. Se reutiliza el runner con --output-dir round2 para no
+sobrescribir la primera corrida. Esa adaptación sólo cambia rutas de salida,
+no targets, flags, restricciones de red ni criterios de aprobación.
+
+El nuevo SHA congelado y los resultados de la segunda corrida se consignarán
+en round2/full_refs.json, round2/full_results.json y round2/CLOSEOUT.md. Los
+límites P2, las observaciones de reset y los baselines siguen vigentes. Este
+cierre no autoriza merge, push, despliegue, dogfood ni activación.

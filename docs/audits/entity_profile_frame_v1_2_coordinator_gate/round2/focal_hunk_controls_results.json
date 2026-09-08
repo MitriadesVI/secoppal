@@ -1,0 +1,46 @@
+[
+  {
+    "component": "focal_hunk_controls_focused",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "gate_plugin",
+      "-q",
+      "-o",
+      "cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-k48flva0/pytest_cache",
+      "tests/test_truth_layer_frame_guard_controls.py",
+      "tests/test_pagination_buffer.py",
+      "tests/test_pagination_transparency.py",
+      "tests/test_v12b1_independent_controls.py::test_ui_reference_is_checked_on_real_reload",
+      "tests/test_v12b_independent_boundaries.py::test_ui_seed_requires_current_result_reference",
+      "tests/test_v12b_independent_boundaries.py::test_pagination_consumes_the_published_capability",
+      "tests/test_v12b_independent_boundaries.py::test_real_sidecar_expiry_does_not_silently_repeat_a_search",
+      "tests/test_v12b_independent_boundaries.py::test_bare_more_uses_the_same_tabular_cursor_as_the_full_phrase",
+      "tests/test_v12b1_remediation_acceptance.py::test_exhausted_cursor_never_refetches",
+      "tests/test_v12b1_remediation_acceptance.py::test_dual_selection_uses_only_offered_group_after_clarification",
+      "tests/test_v12b1_remediation_acceptance.py::test_seed_foreign_reference_property",
+      "tests/test_streamlit_operational_state.py",
+      "-p",
+      "offline_guard",
+      "--tb=short",
+      "--junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/focal_hunk_controls_focused.xml"
+    ],
+    "sha": "2de487228a091842a3a553f0db503f78f44008a4",
+    "duration": 10.603586916011409,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/focal_hunk_controls_focused.log"
+  },
+  {
+    "component": "preservation",
+    "pass": true
+  },
+  {
+    "component": "code_frozen",
+    "pass": true
+  }
+]

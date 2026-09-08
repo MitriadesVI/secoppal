@@ -1,0 +1,12 @@
+[
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/focal_semgrep.log",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/focal_semgrep.log.gz",
+    "uncompressed_sha256": "34228065b2fabe45b0fd16621dafa053f9c1de28597f360fd7f7abe3a6af2e37"
+  },
+  {
+    "logical_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/guard_update.diff",
+    "stored_path": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/guard_update.diff.gz",
+    "uncompressed_sha256": "8ee38b8b9d7e3505a1c0523a2a92e6ad4673f94755fde39703a54f43d4c707a3"
+  }
+]

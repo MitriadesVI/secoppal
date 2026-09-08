@@ -1,0 +1,391 @@
+{
+  "collection": [
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query"
+  ],
+  "results": [
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.03655599999183323,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.000830165998195298,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00014808299602009356,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00040779200207907706,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0006288330041570589,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010579200170468539,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003643749951152131,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005723750073229894,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.158399188891053e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00033604200871195644,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0005749589909100905,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.000116915995022282,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003785419976338744,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0007469580014003441,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00015829098992981017,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00038720799784641713,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0004067090048920363,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.037500083446503e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00030366700957529247,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.04255491599906236,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00013520799984689802,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00039000000106170774,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0007803750049788505,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.00010133400792255998,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003415829996811226,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0007307499909074977,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 8.554200758226216e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.00031191599555313587,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0006795830122428015,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 7.89580080891028e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0003081659961026162,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0006901250017108396,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 9.283299732487649e-05,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.000356332995579578,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 1.0494049999979325,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005896249931538478,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006805419980082661,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.26226316699467134,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002474169887136668,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+      "when": "setup",
+      "outcome": "passed",
+      "duration": 0.0006834590021753684,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+      "when": "call",
+      "outcome": "passed",
+      "duration": 0.0025676670047687367,
+      "xfail": null
+    },
+    {
+      "nodeid": "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query",
+      "when": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002006249997066334,
+      "xfail": null
+    }
+  ],
+  "flags": {
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns": {
+      "before_call": false,
+      "after_call": false
+    },
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query": {
+      "before_call": false,
+      "after_call": false
+    }
+  },
+  "network": [],
+  "deselected": [],
+  "modules": {
+    "tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_is_covered_by_parity_guard": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_normal_application_import_does_not_activate_truth_layer": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_entity_profile_ownership_gate_is_inert_for_tabular_turns": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py",
+    "tests/test_truth_layer_public_parity.py::test_dual_expansion_still_runs_for_an_ordinary_dual_query": "/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/tests/test_truth_layer_public_parity.py"
+  },
+  "exitstatus": 0
+}

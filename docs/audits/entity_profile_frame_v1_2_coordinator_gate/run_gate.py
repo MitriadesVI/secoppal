@@ -1,5 +1,6 @@
 """Sequential gate: every required component contributes to the final exit."""
 import argparse
+from functools import partial
 import json
 from pathlib import Path
 import shlex
@@ -9,7 +10,7 @@ import tarfile
 import tempfile
 import time
 
-from gate_support import ACTIVE, BASE, BIN, OUT, ROOT, code_snapshot, environment, git, preservation, semgrep_delta, write
+from gate_support import ACTIVE, BASE, BIN, OUT, ROOT, code_snapshot, environment, git, preservation, semgrep_delta, write as save
 
 BLOCKS = {'global': ['tests'], **{
     group: [str(path.relative_to(ROOT)) for path in sorted((ACTIVE / group).glob('test_*.py'))]
@@ -22,11 +23,17 @@ def main():
     parser.add_argument('mode', choices=['collect', 'focal', 'full'])
     parser.add_argument('targets', nargs='*')
     parser.add_argument('--run-id', default='')
+    parser.add_argument('--output-dir', type=Path, default=OUT)
     args = parser.parse_args()
+    run_output = args.output_dir.resolve()
+    if not run_output.is_relative_to(OUT):
+        raise SystemExit('Output must remain inside the coordinator gate directory')
+    run_output.mkdir(parents=True, exist_ok=True)
+    write = partial(save, destination=run_output)
     if args.mode == 'full' and args.run_id:
         raise SystemExit('A full rerun requires an explicit candidate review, not a new label')
     prefix = args.mode + ('_' + args.run_id if args.run_id else '')
-    if (OUT / f'{prefix}_results.json').exists():
+    if (run_output / f'{prefix}_results.json').exists():
         raise SystemExit('This run exists; preserve it and choose a separately reviewed candidate before rerun.')
     rows = []
     before = preservation()
@@ -41,9 +48,9 @@ def main():
 
         def run(name, command, *, network='offline', cwd=ROOT, scanner=False):
             name = prefix + '_' + name
-            env = environment(scratch, name, network)
+            env = environment(scratch, name, network, output=run_output)
             started = time.monotonic()
-            log = OUT / f'{name}.log'
+            log = run_output / f'{name}.log'
             with log.open('w') as output:
                 output.write(shlex.join(command) + '\n')
                 output.flush()
@@ -69,7 +76,7 @@ def main():
             if collect:
                 command += ['--collect-only']
             else:
-                command += ['--tb=short', '--junitxml=' + str(OUT / f'{prefix}_{name}.xml')]
+                command += ['--tb=short', '--junitxml=' + str(run_output / f'{prefix}_{name}.xml')]
             return run(name, command, network='secop_reads' if name == 'global' else 'offline')
 
         if args.mode == 'focal':
@@ -95,9 +102,9 @@ def main():
             for label, cwd in [('base', base_root), ('candidate', ROOT)]:
                 scans.append(run('semgrep_' + label, [str(BIN / 'semgrep'), '--config',
                     '.semgrep/secoppal-laws.yml', 'app/', '--metrics=off', '--json',
-                    '--output', str(OUT / f'semgrep_{label}.json')], cwd=cwd, scanner=True))
-            delta = semgrep_delta(json.loads((OUT/'semgrep_base.json').read_text()),
-                                  json.loads((OUT/'semgrep_candidate.json').read_text()), base_root)
+                    '--output', str(run_output / f'semgrep_{label}.json')], cwd=cwd, scanner=True))
+            delta = semgrep_delta(json.loads((run_output/'semgrep_base.json').read_text()),
+                                  json.loads((run_output/'semgrep_candidate.json').read_text()), base_root)
             delta['pass'] = delta['pass'] and all(row['pass'] for row in scans)
             write('semgrep_delta.json', delta)
             rows.append({'component': 'semgrep_evaluation', 'pass': delta['pass']})

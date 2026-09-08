@@ -1,0 +1,5 @@
+/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python -m pytest -p gate_plugin -q -o cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-y95_3p3u/pytest_cache tests/test_truth_layer_public_parity.py -p offline_guard --tb=short --junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/focal_parity_updated_focused.xml
+..............                                                           [100%]
+14 passed in 1.58s
+
+EXIT_CODE=0

@@ -1,0 +1,35 @@
+[
+  {
+    "component": "focal_parity_updated_focused",
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "gate_plugin",
+      "-q",
+      "-o",
+      "cache_dir=/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-coordinator-y95_3p3u/pytest_cache",
+      "tests/test_truth_layer_public_parity.py",
+      "-p",
+      "offline_guard",
+      "--tb=short",
+      "--junitxml=/Users/rodrigoortiz/Documents/secoppal-entity-frame-v1-2-coordinator-gate/docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/focal_parity_updated_focused.xml"
+    ],
+    "sha": "2de487228a091842a3a553f0db503f78f44008a4",
+    "duration": 1.9907270840049023,
+    "exit": 0,
+    "pass": true,
+    "network": "offline",
+    "initial_frame": false,
+    "log": "docs/audits/entity_profile_frame_v1_2_coordinator_gate/round2/focal_parity_updated_focused.log"
+  },
+  {
+    "component": "preservation",
+    "pass": true
+  },
+  {
+    "component": "code_frozen",
+    "pass": true
+  }
+]

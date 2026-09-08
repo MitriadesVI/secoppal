@@ -179,7 +179,10 @@ M2_1_MODIFIED_FILE_SHA256 = {
     # oráculos de Search de este archivo siguen byte-idénticos—. Lo acotan
     # tests/test_secop_access.py, tests/test_radar_detail.py y los casos de
     # superficie de tests/test_radar_ui_truth.py.
-    "streamlit_app.py": "fff6ba33d084ed981c81c718f9854ee7135d62966035730b556f376a41a30880",
+    # Frame B/B.1 (20aea784, ff2a5844): transport result/revision/chat refs.
+    # test_truth_layer_frame_guard_controls exercises actual UI helpers/chips
+    # and valid/invalid reloads; Search/M2.1 oracles below remain unchanged.
+    "streamlit_app.py": "97c33b7e964e8c8abf8e3d33a3261170d6942419a3a035d432c96f131076b9a2",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried
@@ -189,7 +192,10 @@ M2_1_MODIFIED_FILE_SHA256 = {
 # touches no cursor, buffer or fingerprint logic; test_m2_does_not_move_ranking_
 # ordering_counts_or_pagination below is what bounds that claim.
 CONTROL_LANGUAGE_REPINNED_SHA256 = {
-    "app/core/workflow/handlers/pagination.py": "9d93cc16d8354bbf302ef0ea87acaf78e017309326f4ea717ee47db62ae86b7d",
+    # Frame B.1 F6 (ff2a5844): consume the admitted buffer and its params.
+    # test_truth_layer_frame_guard_controls reuses legacy order/universe
+    # controls with Frame ON; test_pagination_buffer covers legacy OFF.
+    "app/core/workflow/handlers/pagination.py": "af41276b320a872d7a9df71f2023c794ce8078be5ec7ca1f5f02af781ae4d4a3",
 }
 
 # Still byte-frozen: M2/SEARCH-SH1 touch neither ranking nor the surrounding

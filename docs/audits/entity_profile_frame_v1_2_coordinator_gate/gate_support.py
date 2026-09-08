@@ -18,11 +18,11 @@ def git(*args):
     return subprocess.check_output(['git', *args], cwd=ROOT, text=True).strip()
 
 
-def write(name, data):
-    (OUT / name).write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
+def write(name, data, *, destination=OUT):
+    (destination / name).write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 
 
-def environment(scratch, name, network):
+def environment(scratch, name, network, *, output=OUT):
     env = dict(os.environ)
     for key in list(env):
         if any(token in key for token in ('API_KEY', 'TOKEN', 'PASSWORD', 'SECRET')):
@@ -39,10 +39,10 @@ def environment(scratch, name, network):
                SECOP_FEEDBACK_DB_PATH=str(scratch / 'feedback.sqlite'),
                CONVERSATION_STORE_DIR=str(scratch / 'conversations'),
                SECOP_ACTOR_ALIAS_INDEX_PATH=str(scratch / 'missing-index.sqlite'),
-               COORDINATOR_OUTPUT=str(OUT), COORDINATOR_COMPONENT=name,
+               COORDINATOR_OUTPUT=str(output), COORDINATOR_COMPONENT=name,
                COORDINATOR_NETWORK=network, HYPOTHESIS_STORAGE_DIRECTORY=str(scratch / 'hypothesis'),
-               FRAME_REVIEW_OUTPUT=str(OUT / 'frame_observations'))
-    (OUT / 'frame_observations').mkdir(exist_ok=True)
+               FRAME_REVIEW_OUTPUT=str(output / 'frame_observations'))
+    (output / 'frame_observations').mkdir(exist_ok=True)
     return env
 
 
