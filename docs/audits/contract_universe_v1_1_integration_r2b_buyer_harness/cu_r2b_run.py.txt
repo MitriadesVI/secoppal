@@ -1,0 +1,25 @@
+from pathlib import Path
+import json, os, subprocess, time, sys
+W=Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness')
+E=W/'docs/audits/contract_universe_v1_1_integration_r2b_buyer_harness'
+E.mkdir(exist_ok=True)
+P='/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python'
+V=str(Path(P).parent)+'/'
+ENV={**os.environ,'BURR_TELEMETRY_ENABLED':'false','PATH':'/opt/homebrew/opt/node@22/bin:'+os.environ['PATH']}
+def run(name,command,cwd=W,env=None):
+ t=time.monotonic();r=subprocess.run(command,cwd=cwd,env={**ENV,**(env or {})},capture_output=True,text=True)
+ d=dict(command=command,cwd=str(cwd),exit_code=r.returncode,duration_seconds=time.monotonic()-t,stdout=r.stdout,stderr=r.stderr)
+ (E/(name+'.json')).write_text(json.dumps(d,indent=2)+'\n');(E/(name+'.txt')).write_text(r.stdout+r.stderr)
+ print(name,r.returncode,(r.stdout+r.stderr)[-250:],flush=True)
+ return d
+def pytest(name,ids,cwd=W,env=None):
+ return run(name,[P,'-m','pytest','-p','tests.contract_universe_sql_dates',*ids,'-q','--tb=short','--junitxml='+str(E/(name+'.xml'))],cwd,env)
+if __name__=='__main__':
+ r1=W/'docs/audits/contract_universe_v1_1_integration_regression_r1'
+ ids98=json.loads((r1/'previous_116_after_fix.json').read_text())['nodeids_still_fail']
+ ids44=[x for x in ids98 if any('::'+key+'[' in x for key in ['test_seeds','test_reload_buyer_year_more','test_orthogonal_variants','test_existing_catalog_families'])]
+ assert len(ids98)==98 and len(ids44)==44
+ for n,ids in [(44,ids44),(98,ids98)]: (E/f'nodeids_{n}.json').write_text(json.dumps(ids,indent=2)+'\n')
+ for name,cmd in [('ruff_version',[V+'ruff','--version']),('semgrep_version',[V+'semgrep','--version']),('hypothesis_version',[P,'-c','import hypothesis; print(hypothesis.__version__)']),('codegraph_version',['codegraph','--version']),('codegraph_status',['codegraph','status']),('ruff',[V+'ruff','check','app/','tests/','scripts/']),('semgrep',[V+'semgrep','--config','.semgrep/secoppal-laws.yml','app/','--metrics=off'])]:run(name,cmd)
+ pytest('harness_integrity',['tests/test_buyer_actor_harness_compatibility.py'])
+ pytest('C05_C08',ids44,env={'BUYER_ACTOR_EVIDENCE':str(E/'buyer_traces')})

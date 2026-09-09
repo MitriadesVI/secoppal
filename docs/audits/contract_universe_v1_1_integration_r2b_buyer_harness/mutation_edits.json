@@ -1,0 +1,17 @@
+{
+  "M1": {
+    "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/cu_r2b_M1_8j6dw30k",
+    "before": "1, 0, \"En ejecuci\u00f3n\",",
+    "after": "1, 0, \"Firmado\","
+  },
+  "M2": {
+    "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/cu_r2b_M2_lut1pqy8",
+    "before": "conn.create_function(\"unaccent\", 1, unaccent)",
+    "after": "conn.create_function(\"unaccent\", 1, lambda value: value)"
+  },
+  "M3": {
+    "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/cu_r2b_M3_vi2lwh66",
+    "before": "        try:\n            assert_no_request_language_in_object_predicates(soql)\n        except AssertionError:\n            violations.append(\"request language as topic\")",
+    "after": "        if \"CONTRATADO\" in where or \"ALCALDIA\" in where.split(\"AND\", 1)[-1]:\n            violations.append(\"request language as topic\")"
+  }
+}

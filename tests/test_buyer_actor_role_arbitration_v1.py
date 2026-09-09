@@ -18,6 +18,8 @@ from app.core.orchestrator import SecopalWorkflow
 from app.core.query_router import QueryRouter
 from app.core.buyer_source_names import project_buyer_names
 from app.data.actor_alias_index import build_actor_alias_index
+from tests.buyer_actor_sql_dialect import unaccent
+from tests.buyer_actor_object_predicates import assert_no_request_language_in_object_predicates
 
 CARTAGENA = "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
 BARRANQUILLA = "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
@@ -92,16 +94,18 @@ def source_for(flow, monkeypatch, trace, buyer, amount):
     conn = sqlite3.connect(":memory:", check_same_thread=False)
     lock = threading.RLock()
     conn.row_factory = sqlite3.Row
-    conn.create_function("unaccent", 1, lambda value: value)
+    conn.create_function("unaccent", 1, unaccent)
     conn.create_function("date_trunc_y", 1, lambda value: str(value)[:4] + "-01-01T00:00:00.000")
     conn.execute("CREATE TABLE contracts (" + ",".join(
         f"{name} {'INTEGER' if name.startswith('valor_') else 'TEXT'}" for name in columns) + ")")
     physical_buyer = (project_buyer_names(buyer, "jbjy-vk9h") or (buyer,))[0]
     rows = []
+    # "Firmado" no es valor de estado_contrato. Usamos "En ejecución": estos
+    # tests prueban Buyer/Actor, monto y continuidad, no semántica jurídica de estados.
     for n in range(62):
         rows.append((f"SYNTH-{n:03d}", f"FIXTURE-{n}", physical_buyer if n < 61 else "DECOY BUYER",
                      "Atlantico", "Fixture City", "software fixture", "software fixture", "Prestacion de servicios",
-                     "Contratacion directa", amount + 1000 if n != 60 else 1, 0, "Firmado",
+                     "Contratacion directa", amount + 1000 if n != 60 else 1, 0, "En ejecución",
                      "2026-06-01T00:00:00.000", "SYNTHETIC SUPPLIER", "70000999", "https://example.invalid/fixture"))
     conn.executemany("INSERT INTO contracts VALUES (" + ",".join("?" for _ in columns) + ")", rows)
 
@@ -117,7 +121,9 @@ def source_for(flow, monkeypatch, trace, buyer, amount):
             violations.append("unexpected contractor")
         if "VALOR_DEL_CONTRATO" not in where or str(amount) not in where:
             violations.append("missing amount")
-        if "CONTRATADO" in where or "ALCALDIA" in where.split("AND", 1)[-1]:
+        try:
+            assert_no_request_language_in_object_predicates(soql)
+        except AssertionError:
             violations.append("request language as topic")
         if violations:
             trace.setdefault("violations", []).extend(violations)

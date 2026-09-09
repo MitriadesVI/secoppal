@@ -1,0 +1,54 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.7, pytest-9.0.2, pluggy-1.6.0 -- /Users/rodrigoortiz/Documents/secoppal/.venv/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness
+configfile: pytest.ini
+plugins: cov-7.1.0, hypothesis-6.165.10, anyio-4.13.0
+collecting ... collected 43 items
+
+tests/test_contract_universe_independent.py::test_independent_sql_matrix[False-seed0] PASSED [  2%]
+tests/test_contract_universe_independent.py::test_independent_sql_matrix[False-seed1] PASSED [  4%]
+tests/test_contract_universe_independent.py::test_independent_sql_matrix[True-seed0] PASSED [  6%]
+tests/test_contract_universe_independent.py::test_independent_sql_matrix[True-seed1] PASSED [  9%]
+tests/test_contract_universe_independent.py::test_object_borradores_is_not_state PASSED [ 11%]
+tests/test_contract_universe_independent.py::test_two_states_not_silently_partial[registros cancelados y borradores de la Alcald\xeda de Cartagena] PASSED [ 13%]
+tests/test_contract_universe_independent.py::test_two_states_not_silently_partial[registros borradores y cancelados de la Alcald\xeda de Cartagena] PASSED [ 16%]
+tests/test_contract_universe_independent.py::test_negated_records_do_not_widen[contratos de la Alcald\xeda de Cartagena sin registros cancelados] PASSED [ 18%]
+tests/test_contract_universe_independent.py::test_negated_records_do_not_widen[contratos de la Alcald\xeda de Cartagena no quiero borradores] PASSED [ 20%]
+tests/test_contract_universe_independent.py::test_negated_records_do_not_widen[contratos de la Alcald\xeda de Cartagena excluyendo los registros cancelados] PASSED [ 23%]
+tests/test_contract_universe_independent.py::test_materialized_fields_are_not_consent[params0] PASSED [ 25%]
+tests/test_contract_universe_independent.py::test_materialized_fields_are_not_consent[params1] PASSED [ 27%]
+tests/test_contract_universe_independent.py::test_materialized_fields_are_not_consent[params2] PASSED [ 30%]
+tests/test_contract_universe_independent.py::test_published_description_not_rewritten[False] PASSED [ 32%]
+tests/test_contract_universe_independent.py::test_published_description_not_rewritten[True] PASSED [ 34%]
+tests/test_contract_universe_independent.py::test_complete_continuity_and_export[False] PASSED [ 37%]
+tests/test_contract_universe_independent.py::test_complete_continuity_and_export[True] PASSED [ 39%]
+tests/test_contract_universe_independent.py::test_frame_fingerprint_scope_changes PASSED [ 41%]
+tests/test_contract_universe_independent.py::test_direct_record_does_not_leak_to_search PASSED [ 44%]
+tests/test_contract_universe_independent.py::test_radar_cancellation_event_and_digest PASSED [ 46%]
+tests/test_contract_universe_independent.py::test_admitted_state_independent_of_date PASSED [ 48%]
+tests/test_contract_universe_independent_consumers.py::test_explicit_control_with_independent_rows[registros cancelados de la alcaldia de cartagena-Cancelado] PASSED [ 51%]
+tests/test_contract_universe_independent_consumers.py::test_explicit_control_with_independent_rows[borradores de la alcaldia de cartagena-Borrador] PASSED [ 53%]
+tests/test_contract_universe_independent_consumers.py::test_explicit_control_with_independent_rows[registros enviados al proveedor de la alcaldia de cartagena-enviado Proveedor] PASSED [ 55%]
+tests/test_contract_universe_independent_consumers.py::test_explicit_control_with_independent_rows[contratos suspendidos de la alcaldia de cartagena-Suspendido] PASSED [ 58%]
+tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[False] PASSED [ 60%]
+tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[True] PASSED [ 62%]
+tests/test_contract_universe_independent_consumers.py::test_materialized_dual_children_and_source_names[celebrated-22] PASSED [ 65%]
+tests/test_contract_universe_independent_consumers.py::test_materialized_dual_children_and_source_names[source_records-94] PASSED [ 67%]
+tests/test_contract_universe_independent_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[False] PASSED [ 69%]
+tests/test_contract_universe_independent_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[True] PASSED [ 72%]
+tests/test_contract_universe_independent_consumers.py::test_invalid_date_is_not_published_as_a_date PASSED [ 74%]
+tests/test_contract_universe_independent_legacy.py::test_real_base_conversation_requires_review PASSED [ 76%]
+tests/test_contract_universe_independent_legacy.py::test_real_base_buffer_requires_review PASSED [ 79%]
+tests/test_contract_universe_independent_legacy.py::test_real_base_frame_and_authorized_plan_require_review PASSED [ 81%]
+tests/test_contract_universe_independent_legacy.py::test_real_base_radar_preserved_and_blocked PASSED [ 83%]
+tests/test_contract_universe_independent_safety.py::test_actual_derived_client_keeps_injected_transport[with_timeout] PASSED [ 86%]
+tests/test_contract_universe_independent_safety.py::test_actual_derived_client_keeps_injected_transport[derived_for_timeout] PASSED [ 88%]
+tests/test_contract_universe_independent_safety.py::test_ledger_rejects_swallowed_aggregate_attempt_outside_workflow[with_timeout] PASSED [ 90%]
+tests/test_contract_universe_independent_safety.py::test_ledger_rejects_swallowed_aggregate_attempt_outside_workflow[derived_for_timeout] PASSED [ 93%]
+tests/test_contract_universe_independent_safety.py::test_repeated_mutations_require_green_and_product_difference PASSED [ 95%]
+tests/test_module_size_limits.py::test_query_plan_under_300_loc PASSED   [ 97%]
+tests/test_module_size_limits.py::test_dialogue_policy_under_400_loc PASSED [100%]
+
+============================== 43 passed in 5.80s ==============================

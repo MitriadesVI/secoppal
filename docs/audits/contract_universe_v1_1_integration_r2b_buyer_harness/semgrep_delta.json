@@ -1,0 +1,6 @@
+{
+  "baseline": 10,
+  "current": 10,
+  "new": 0,
+  "evidence": "semgrep.json literal output and runtime_identity.json: app/ byte-identical to 387267d"
+}

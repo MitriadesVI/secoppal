@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+    "--version"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+  "exit_code": 0,
+  "duration_seconds": 0.023794625001755776,
+  "stdout": "ruff 0.16.4\n",
+  "stderr": ""
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor",
+    "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants",
+    "tests/test_buyer_actor_role_local_v1.py",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness/docs/audits/contract_universe_v1_1_integration_r2b_buyer_harness/other_source_consumers.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+  "exit_code": 0,
+  "duration_seconds": 3.4044505410020065,
+  "stdout": "..............ssss                                                       [100%]\n14 passed, 4 skipped in 3.00s\n",
+  "stderr": ""
+}

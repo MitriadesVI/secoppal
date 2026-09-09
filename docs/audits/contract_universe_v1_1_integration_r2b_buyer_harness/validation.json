@@ -1,0 +1,396 @@
+{
+  "verdict": "BUYER_ACTOR_HARNESS_COMPATIBILITY_ADJUDICATED",
+  "base": "387267d2156f96e03d69b2a8b4039c218ab56638",
+  "r2_evidence_commit": "9e264f6",
+  "runtime_byte_identical": true,
+  "app_files": 349,
+  "c05_c08": {
+    "C05": {
+      "total": 20,
+      "passed": 20,
+      "failed": 0
+    },
+    "C06": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "C07": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "C08": {
+      "total": 12,
+      "passed": 12,
+      "failed": 0
+    }
+  },
+  "harness_integrity": {
+    "total": 18,
+    "passed": 18,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "cases": [
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_sqlite_unaccent[En ejecuci\\xf3n-En ejecucion]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_sqlite_unaccent[None-None]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_buyer_literals_are_not_object_contamination[nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA' AND valor_del_contrato >= 500000000]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_buyer_literals_are_not_object_contamination[objeto_del_contrato LIKE '%software%' AND nombre_entidad = 'CONTRATADO ALCALDIA']",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_buyer_literals_are_not_object_contamination[nombre_entidad = 'objeto_del_contrato LIKE ''%alcaldia%''']",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_object_contamination_is_rejected[objeto_del_contrato LIKE '%alcaldia%']",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_object_contamination_is_rejected[descripcion_del_proceso LIKE '%contratado%']",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_object_contamination_is_rejected[unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alcald\\xeda%'))]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_object_contamination_is_rejected[coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%contratado%')), false)]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_object_contamination_is_rejected[descripcion_del_proceso = 'contratado']",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_object_contamination_is_rejected['alcaldia' = objeto_del_contrato]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_object_contamination_is_rejected[objeto_del_contrato NOT LIKE '%alcaldia%']",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_object_contamination_is_rejected[objeto_del_contrato LIKE '%O''Brien AND alcaldia%']",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_boolean_siblings_do_not_change_field_ownership",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_real_compiler_object_wrappers[alcaldia-True]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_real_compiler_object_wrappers[contratado-True]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_real_compiler_object_wrappers[software-False]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_harness_compatibility.py::test_fixture_eligibility_and_decoys",
+        "status": "PASS",
+        "failure": null
+      }
+    ]
+  },
+  "residual_98": {
+    "before": 98,
+    "now_pass": 44,
+    "still_fail": 54
+  },
+  "gates": {
+    "ruff": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+        "check",
+        "app/",
+        "tests/",
+        "scripts/"
+      ],
+      "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+      "exit_code": 0,
+      "duration_seconds": 0.019475959001283627,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    },
+    "semgrep": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+        "--config",
+        ".semgrep/secoppal-laws.yml",
+        "app/",
+        "--metrics=off"
+      ],
+      "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+      "exit_code": 0,
+      "duration_seconds": 1.0563017079985002,
+      "stdout": "                    \n                    \n┌──────────────────┐\n│ 10 Code Findings │\n└──────────────────┘\n                         \n    app/core/formatter.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          173┆ try:\n          174┆     from app.core.relevance import RelevanceScorer\n          175┆     field = \"objeto_del_contrato\" if dataset_id == \"jbjy-vk9h\" else\n               \"nombre_del_procedimiento\"                                         \n          176┆     scored = RelevanceScorer().score_rows(topic_flat, out, field=field)\n          177┆     out = [r for r, _ in scored]\n          178┆ except Exception:\n          179┆     pass  # best-effort, igual que en normal_flow\n            ⋮┆----------------------------------------\n          718┆ try:\n          719┆     median_str = f\" (la mediana es {format_cop(vs['median'])})\"\n          720┆ except Exception:\n          721┆     pass\n                               \n    app/core/response_policy.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          508┆ try:\n          509┆     result = narrator.narrate(\n          510┆         rows=rows, query=query, channel=channel,\n          511┆         strict=True, universe_insights=insights, suggestions=None,\n          512┆     )\n          513┆     if result and not _contains_numeric_claim(result):\n          514┆         return result\n          515┆ except Exception:\n          516┆     pass\n            ⋮┆----------------------------------------\n          577┆ try:\n          578┆     median_str = f\" (la mediana es {format_cop(vs['median'])})\"\n          579┆ except Exception:\n          580┆     pass\n                                          \n    app/core/workflow/actions/execution.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          365┆ try:\n          366┆     soql = soql_builder.build(state[\"dataset_id\"], relaxed)\n          367┆     count_soql = soql_builder.build_count(state[\"dataset_id\"], relaxed)\n          368┆     total, results, _timings, _approx = _query_first_then_count(\n          369┆         secop_client, state[\"dataset_id\"], count_soql, soql\n          370┆     )\n          371┆     if results:\n          372┆         return _with_timing(\n          373┆             state,\n          374┆             \"degrade_ms\",\n             [hid 9 additional lines, adjust with --max-lines-per-finding] \n                                               \n    app/core/workflow/handlers/direct_lookup.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          371┆ try:\n          372┆     cards = deps.formatter.to_rows(\n          373┆         [dict(r)], ds,\n          374┆         {\"intent_type\": \"direct_lookup\", \"route_reason\": \"entity_ref_disambiguation\"},\n          375┆         reference_instant=reference_instant_utc,\n          376┆     )\n          377┆     if cards:\n          378┆         estado = _estado_visible(cards[0]) or estado\n          379┆         nota_estado = _estado_raw_nota(cards[0])\n          380┆ except Exception:\n             [hid 3 additional lines, adjust with --max-lines-per-finding] \n                                             \n    app/core/workflow/handlers/normal_flow.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          171┆ try:\n          172┆     from app.core.contextual_suggestions import compute_contextual_filters\n          173┆     computed = compute_contextual_filters(\n          174┆         raw_results,\n          175┆         result[\"dataset_id\"],\n          176┆         result.get(\"resolved_params\", {}),\n          177┆     )\n          178┆     result[\"contextual_filters\"] = computed\n          179┆ except Exception:\n          180┆     pass  # best-effort, never block the main flow\n                                            \n    app/core/workflow/handlers/pagination.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          186┆ try:\n          187┆     display_count = max(1, int(deps.formatter.max_results or 25))\n          188┆     if admitted_buffer is not None:\n          189┆         buffer = admitted_buffer\n          190┆         group = buffer.group\n          191┆         fetch_params = dict(buffer.query_params)\n          192┆         current_fp = buffer.query_fingerprint\n          193┆     elif requested_group:\n          194┆         group = requested_group\n          195┆         buffer = deps.conv_store.get_pagination_buffer(ctx.chat_id, group, None)\n             [hid 171 additional lines, adjust with --max-lines-per-finding] \n                                       \n    app/core/workflow/handlers/radar.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          114┆ try:\n          115┆     total = run_radar(deps, store, radar).total\n          116┆ except Exception:\n          117┆     pass\n                                            \n    app/core/workflow/handlers/refinement.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n           93┆ try:\n           94┆     from app.core.contextual_suggestions import compute_contextual_filters\n           95┆     result[\"contextual_filters\"] = compute_contextual_filters(\n           96┆         results, ds_id, params,\n           97┆     )\n           98┆ except Exception:\n           99┆     pass\n\n",
+      "stderr": "               \n               \n┌─────────────┐\n│ Scan Status │\n└─────────────┘\n  Scanning 348 files tracked by git with 3 Code rules:\n  Scanning 331 files with 3 python rules.\n                \n                \n┌──────────────┐\n│ Scan Summary │\n└──────────────┘\n✅ Scan completed successfully.\n • Findings: 10 (10 blocking)\n • Rules run: 3\n • Targets scanned: 331\n • Parsed lines: ~100.0%\n • Scan skipped: \n   ◦ Files larger than  files 1.0 MB: 1\n • Scan was limited to files tracked by git\n • For a detailed list of skipped files and lines, run semgrep with the --verbose flag\nRan 3 rules on 331 files: 10 findings.\n"
+    },
+    "lint_core": {
+      "command": [
+        "make",
+        "lint-core"
+      ],
+      "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+      "exit_code": 0,
+      "duration_seconds": 0.026102207997610094,
+      "stdout": "app/core/ limpio\n",
+      "stderr": ""
+    },
+    "size": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_module_size_limits.py",
+        "-q",
+        "--tb=short",
+        "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness/docs/audits/contract_universe_v1_1_integration_r2b_buyer_harness/size.xml"
+      ],
+      "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+      "exit_code": 0,
+      "duration_seconds": 0.34161945799860405,
+      "stdout": "..                                                                       [100%]\n2 passed in 0.12s\n",
+      "stderr": ""
+    },
+    "auditor_final_19": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_cu_f21_final_delta.py",
+        "-q",
+        "--tb=short"
+      ],
+      "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+      "exit_code": 0,
+      "duration_seconds": 4.26637791700341,
+      "stdout": "...................                                                      [100%]\n19 passed in 3.82s\n",
+      "stderr": ""
+    },
+    "f2_2_product_properties": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_contract_universe_f2_2_materialization.py",
+        "-q",
+        "--tb=short"
+      ],
+      "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+      "exit_code": 0,
+      "duration_seconds": 12.340407707997656,
+      "stdout": "..................................                                       [100%]\n34 passed in 11.91s\n",
+      "stderr": ""
+    },
+    "frozen_after": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_contract_universe_independent.py",
+        "tests/test_contract_universe_independent_consumers.py",
+        "tests/test_contract_universe_independent_legacy.py",
+        "tests/test_contract_universe_independent_safety.py",
+        "tests/test_module_size_limits.py",
+        "-v",
+        "--tb=short"
+      ],
+      "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+      "exit_code": 0,
+      "duration_seconds": 6.2992638329997135,
+      "stdout": "============================= test session starts ==============================\nplatform darwin -- Python 3.14.7, pytest-9.0.2, pluggy-1.6.0 -- /Users/rodrigoortiz/Documents/secoppal/.venv/bin/python\ncachedir: .pytest_cache\nhypothesis profile 'default'\nrootdir: /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness\nconfigfile: pytest.ini\nplugins: cov-7.1.0, hypothesis-6.165.10, anyio-4.13.0\ncollecting ... collected 43 items\n\ntests/test_contract_universe_independent.py::test_independent_sql_matrix[False-seed0] PASSED [  2%]\ntests/test_contract_universe_independent.py::test_independent_sql_matrix[False-seed1] PASSED [  4%]\ntests/test_contract_universe_independent.py::test_independent_sql_matrix[True-seed0] PASSED [  6%]\ntests/test_contract_universe_independent.py::test_independent_sql_matrix[True-seed1] PASSED [  9%]\ntests/test_contract_universe_independent.py::test_object_borradores_is_not_state PASSED [ 11%]\ntests/test_contract_universe_independent.py::test_two_states_not_silently_partial[registros cancelados y borradores de la Alcald\\xeda de Cartagena] PASSED [ 13%]\ntests/test_contract_universe_independent.py::test_two_states_not_silently_partial[registros borradores y cancelados de la Alcald\\xeda de Cartagena] PASSED [ 16%]\ntests/test_contract_universe_independent.py::test_negated_records_do_not_widen[contratos de la Alcald\\xeda de Cartagena sin registros cancelados] PASSED [ 18%]\ntests/test_contract_universe_independent.py::test_negated_records_do_not_widen[contratos de la Alcald\\xeda de Cartagena no quiero borradores] PASSED [ 20%]\ntests/test_contract_universe_independent.py::test_negated_records_do_not_widen[contratos de la Alcald\\xeda de Cartagena excluyendo los registros cancelados] PASSED [ 23%]\ntests/test_contract_universe_independent.py::test_materialized_fields_are_not_consent[params0] PASSED [ 25%]\ntests/test_contract_universe_independent.py::test_materialized_fields_are_not_consent[params1] PASSED [ 27%]\ntests/test_contract_universe_independent.py::test_materialized_fields_are_not_consent[params2] PASSED [ 30%]\ntests/test_contract_universe_independent.py::test_published_description_not_rewritten[False] PASSED [ 32%]\ntests/test_contract_universe_independent.py::test_published_description_not_rewritten[True] PASSED [ 34%]\ntests/test_contract_universe_independent.py::test_complete_continuity_and_export[False] PASSED [ 37%]\ntests/test_contract_universe_independent.py::test_complete_continuity_and_export[True] PASSED [ 39%]\ntests/test_contract_universe_independent.py::test_frame_fingerprint_scope_changes PASSED [ 41%]\ntests/test_contract_universe_independent.py::test_direct_record_does_not_leak_to_search PASSED [ 44%]\ntests/test_contract_universe_independent.py::test_radar_cancellation_event_and_digest PASSED [ 46%]\ntests/test_contract_universe_independent.py::test_admitted_state_independent_of_date PASSED [ 48%]\ntests/test_contract_universe_independent_consumers.py::test_explicit_control_with_independent_rows[registros cancelados de la alcaldia de cartagena-Cancelado] PASSED [ 51%]\ntests/test_contract_universe_independent_consumers.py::test_explicit_control_with_independent_rows[borradores de la alcaldia de cartagena-Borrador] PASSED [ 53%]\ntests/test_contract_universe_independent_consumers.py::test_explicit_control_with_independent_rows[registros enviados al proveedor de la alcaldia de cartagena-enviado Proveedor] PASSED [ 55%]\ntests/test_contract_universe_independent_consumers.py::test_explicit_control_with_independent_rows[contratos suspendidos de la alcaldia de cartagena-Suspendido] PASSED [ 58%]\ntests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[False] PASSED [ 60%]\ntests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[True] PASSED [ 62%]\ntests/test_contract_universe_independent_consumers.py::test_materialized_dual_children_and_source_names[celebrated-22] PASSED [ 65%]\ntests/test_contract_universe_independent_consumers.py::test_materialized_dual_children_and_source_names[source_records-94] PASSED [ 67%]\ntests/test_contract_universe_independent_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[False] PASSED [ 69%]\ntests/test_contract_universe_independent_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[True] PASSED [ 72%]\ntests/test_contract_universe_independent_consumers.py::test_invalid_date_is_not_published_as_a_date PASSED [ 74%]\ntests/test_contract_universe_independent_legacy.py::test_real_base_conversation_requires_review PASSED [ 76%]\ntests/test_contract_universe_independent_legacy.py::test_real_base_buffer_requires_review PASSED [ 79%]\ntests/test_contract_universe_independent_legacy.py::test_real_base_frame_and_authorized_plan_require_review PASSED [ 81%]\ntests/test_contract_universe_independent_legacy.py::test_real_base_radar_preserved_and_blocked PASSED [ 83%]\ntests/test_contract_universe_independent_safety.py::test_actual_derived_client_keeps_injected_transport[with_timeout] PASSED [ 86%]\ntests/test_contract_universe_independent_safety.py::test_actual_derived_client_keeps_injected_transport[derived_for_timeout] PASSED [ 88%]\ntests/test_contract_universe_independent_safety.py::test_ledger_rejects_swallowed_aggregate_attempt_outside_workflow[with_timeout] PASSED [ 90%]\ntests/test_contract_universe_independent_safety.py::test_ledger_rejects_swallowed_aggregate_attempt_outside_workflow[derived_for_timeout] PASSED [ 93%]\ntests/test_contract_universe_independent_safety.py::test_repeated_mutations_require_green_and_product_difference PASSED [ 95%]\ntests/test_module_size_limits.py::test_query_plan_under_300_loc PASSED   [ 97%]\ntests/test_module_size_limits.py::test_dialogue_policy_under_400_loc PASSED [100%]\n\n============================== 43 passed in 5.80s ==============================\n",
+      "stderr": ""
+    },
+    "corpus": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "scripts/run_query_corpus.py",
+        "--mode",
+        "all"
+      ],
+      "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+      "exit_code": 0,
+      "duration_seconds": 0.7244457499982673,
+      "stdout": "\nSummary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)\n",
+      "stderr": ""
+    },
+    "diff_check": {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "semgrep_delta": {
+    "inherited": 10,
+    "new": 0
+  },
+  "tools": {
+    "ruff": "0.16.4",
+    "semgrep": "1.176.0",
+    "hypothesis": "6.165.10; deterministic 100-example Boolean-sibling property plus existing F2.2 properties",
+    "codegraph": "0.9.6; Node 22; status Not initialized; rg/direct inspection fallback"
+  },
+  "additional_consumers": {
+    "total": 18,
+    "passed": 14,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 4,
+    "cases": [
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[cartagena-False]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[cartagena-True]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[barranquilla-False]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor[barranquilla-True]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por mas de 500 millones-False]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por mas de 500 millones-True]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-False]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-True]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena en 2026 por mas de 500 millones-False]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena en 2026 por mas de 500 millones-True]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-False]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-True]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-False]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-True]",
+        "status": "PASS",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-False]",
+        "status": "SKIP",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[cartagena-True]",
+        "status": "SKIP",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-False]",
+        "status": "SKIP",
+        "failure": null
+      },
+      {
+        "nodeid": "tests/test_buyer_actor_role_local_v1.py::test_local_index_read_only[barranquilla-True]",
+        "status": "SKIP",
+        "failure": null
+      }
+    ]
+  },
+  "mutation_kills": [
+    "M1",
+    "M2",
+    "M3"
+  ],
+  "global_suite": false,
+  "merge": false,
+  "push": false,
+  "deploy": false,
+  "restart": false
+}

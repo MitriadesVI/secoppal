@@ -1,0 +1,11 @@
+{
+  "command": [
+    "make",
+    "lint-core"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+  "exit_code": 0,
+  "duration_seconds": 0.026102207997610094,
+  "stdout": "app/core/ limpio\n",
+  "stderr": ""
+}

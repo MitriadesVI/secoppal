@@ -1,0 +1,25 @@
+from cu_r2b_run import *
+import io, tarfile, tempfile, shutil
+assert json.loads((E/'harness_integrity.json').read_text())['exit_code']==0
+assert json.loads((E/'C05_C08.json').read_text())['exit_code']==0
+archive=subprocess.check_output(['git','archive','387267d'],cwd=W)
+files=['tests/test_buyer_actor_role_arbitration_v1.py','tests/buyer_actor_sql_dialect.py','tests/buyer_actor_object_predicates.py','tests/test_buyer_actor_harness_compatibility.py']
+ids=json.loads((E/'nodeids_44.json').read_text())
+locations={}
+for mutation in ['M1','M2','M3']:
+ copy=Path(tempfile.mkdtemp(prefix='cu_r2b_'+mutation+'_'))
+ with tarfile.open(fileobj=io.BytesIO(archive)) as t:t.extractall(copy,filter='data')
+ for name in files:shutil.copyfile(W/name,copy/name)
+ f=copy/files[0];s=f.read_text()
+ if mutation=='M1':
+  before='1, 0, "En ejecución",';after='1, 0, "Firmado",'
+ elif mutation=='M2':
+  before='conn.create_function("unaccent", 1, unaccent)';after='conn.create_function("unaccent", 1, lambda value: value)'
+ else:
+  before='        try:\n            assert_no_request_language_in_object_predicates(soql)\n        except AssertionError:\n            violations.append("request language as topic")'
+  after='        if "CONTRATADO" in where or "ALCALDIA" in where.split("AND", 1)[-1]:\n            violations.append("request language as topic")'
+ assert s.count(before)==1
+ f.write_text(s.replace(before,after))
+ locations[mutation]=dict(cwd=str(copy),before=before,after=after)
+ pytest(mutation,ids,cwd=copy)
+(E/'mutation_edits.json').write_text(json.dumps(locations,indent=2)+'\n')

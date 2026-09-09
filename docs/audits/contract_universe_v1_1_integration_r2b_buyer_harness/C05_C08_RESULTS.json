@@ -1,0 +1,251 @@
+{
+  "total": 44,
+  "passed": 44,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-0-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-0-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-1-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-1-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-3-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-3-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-missing-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-missing-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-incompatible-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-incompatible-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-0-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-0-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-1-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-1-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-3-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-3-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-missing-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-missing-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-incompatible-off]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-incompatible-on]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[cartagena-False]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[cartagena-True]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[barranquilla-False]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[barranquilla-True]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por mas de 500 millones-False]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[CONTRATOS DE LA ALCALD\\xcdA DE CARTAGENA por mas de 500 millones-True]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-False]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[qu\\xe9 ha contratado la alcald\\xeda de Cartagena por mas de 500 millones-True]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-False]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-True]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-False]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-True]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -alcaldia de galapa]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -alcaldia de baranoa]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -universidad del atlantico]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\\xe9 ha contratado -alcaldia de galapa]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\\xe9 ha contratado -alcaldia de baranoa]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\\xe9 ha contratado -universidad del atlantico]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -alcaldia de galapa]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -alcaldia de baranoa]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -universidad del atlantico]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\\xe9 ha contratado -alcaldia de galapa]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\\xe9 ha contratado -alcaldia de baranoa]",
+      "status": "PASS",
+      "failure": null
+    },
+    {
+      "nodeid": "tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\\xe9 ha contratado -universidad del atlantico]",
+      "status": "PASS",
+      "failure": null
+    }
+  ],
+  "clusters": {
+    "C05": {
+      "total": 20,
+      "passed": 20,
+      "failed": 0
+    },
+    "C06": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "C07": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "C08": {
+      "total": 12,
+      "passed": 12,
+      "failed": 0
+    }
+  }
+}

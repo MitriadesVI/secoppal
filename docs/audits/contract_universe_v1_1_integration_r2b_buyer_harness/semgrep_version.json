@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+    "--version"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+  "exit_code": 0,
+  "duration_seconds": 1.0198404580005445,
+  "stdout": "1.176.0\n",
+  "stderr": ""
+}

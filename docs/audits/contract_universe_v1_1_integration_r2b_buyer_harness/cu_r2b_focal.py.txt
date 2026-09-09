@@ -1,0 +1,18 @@
+from cu_r2b_run import *
+import shutil
+r1=W/'docs/audits/contract_universe_v1_1_integration_regression_r1'
+for name in ['auditor_final_19','f2_2_product_properties','frozen_after','corpus']:
+ cmd=json.loads((r1/(name+'.json')).read_text())['command'];run(name,cmd)
+# Preserve new observations in this lane; restore only self-generated historical writes.
+p=W/'docs/audits/contract_universe_v1_1_f2_2/product_trace.jsonl'
+shutil.copyfile(p,E/'f2_2_generated_product_trace.jsonl')
+p.write_bytes(subprocess.check_output(['git','show','387267d:'+str(p.relative_to(W))],cwd=W))
+p=W/'docs/audits/contract_universe_v1_1_f2_1_final/observations.jsonl'
+if p.exists():shutil.move(p,E/'auditor_generated_observations.jsonl')
+pytest('residual_98',json.loads((E/'nodeids_98.json').read_text()))
+pytest('other_source_consumers',[
+ 'tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor',
+ 'tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants',
+ 'tests/test_buyer_actor_role_local_v1.py'])
+run('lint_core',['make','lint-core'])
+pytest('size',['tests/test_module_size_limits.py'])

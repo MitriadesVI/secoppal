@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+    "check",
+    "app/",
+    "tests/",
+    "scripts/"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+  "exit_code": 0,
+  "duration_seconds": 0.019475959001283627,
+  "stdout": "All checks passed!\n",
+  "stderr": ""
+}

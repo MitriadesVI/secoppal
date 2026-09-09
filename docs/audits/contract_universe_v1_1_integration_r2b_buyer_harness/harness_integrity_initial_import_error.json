@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_buyer_actor_harness_compatibility.py",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness/docs/audits/contract_universe_v1_1_integration_r2b_buyer_harness/harness_integrity.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness",
+  "exit_code": 2,
+  "duration_seconds": 0.3793496660000528,
+  "stdout": "\n==================================== ERRORS ====================================\n_______ ERROR collecting tests/test_buyer_actor_harness_compatibility.py _______\nImportError while importing test module '/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness/tests/test_buyer_actor_harness_compatibility.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py:88: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/test_buyer_actor_harness_compatibility.py:9: in <module>\n    from app.core.soql_builder import SoqlBuilder\nE   ImportError: cannot import name 'SoqlBuilder' from 'app.core.soql_builder' (/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r2b-buyer-harness/app/core/soql_builder.py)\n=========================== short test summary info ============================\nERROR tests/test_buyer_actor_harness_compatibility.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.19s\n",
+  "stderr": ""
+}

@@ -1,0 +1,36 @@
+.................................F..F..F..F.                             [100%]
+=================================== FAILURES ===================================
+___ test_existing_catalog_families[False-contratos de -alcaldia de baranoa] ____
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['request language as topic']
+E    +  where ['request language as topic'] = <built-in method get of dict object at 0x10fe20600>('violations')
+E    +    where <built-in method get of dict object at 0x10fe20600> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_existing_catalog_families[False-qu\xe9 ha contratado -alcaldia de baranoa] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['request language as topic']
+E    +  where ['request language as topic'] = <built-in method get of dict object at 0x10fb3ca00>('violations')
+E    +    where <built-in method get of dict object at 0x10fb3ca00> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+____ test_existing_catalog_families[True-contratos de -alcaldia de baranoa] ____
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['request language as topic']
+E    +  where ['request language as topic'] = <built-in method get of dict object at 0x10f6fa2c0>('violations')
+E    +    where <built-in method get of dict object at 0x10f6fa2c0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_existing_catalog_families[True-qu\xe9 ha contratado -alcaldia de baranoa] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['request language as topic']
+E    +  where ['request language as topic'] = <built-in method get of dict object at 0x10f3ff200>('violations')
+E    +    where <built-in method get of dict object at 0x10f3ff200> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+=========================== short test summary info ============================
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -alcaldia de baranoa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\xe9 ha contratado -alcaldia de baranoa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -alcaldia de baranoa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\xe9 ha contratado -alcaldia de baranoa]
+4 failed, 40 passed in 9.88s
