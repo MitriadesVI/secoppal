@@ -165,3 +165,20 @@ def test_actor_owns_a_complete_record_phrase(tmp_path, monkeypatch, frame):
         assert result['total_count'] == 24
     finally:
         conn.close()
+
+
+@pytest.mark.parametrize('frame', [False, True])
+@pytest.mark.parametrize('text', [
+    'contratos de borradores de documentos de la Alcaldía de Cartagena',
+    'todos los contratos de elaboración de borradores de documentos de la Alcaldía de Cartagena',
+])
+def test_contract_head_owns_the_following_object(tmp_path, monkeypatch, frame, text):
+    flow, conn = setup(tmp_path, monkeypatch, SEEDS[0][2], SEEDS[0][3], frame)
+    try:
+        result = say(flow, text)
+        assert not result.get('needs_clarification'), result
+        assert result['resolved_params']['contract_universe'] == 'celebrated'
+        assert result['results']
+        assert 'borrador' in str(result['resolved_params']['objeto'])
+    finally:
+        conn.close()

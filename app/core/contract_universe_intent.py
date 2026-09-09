@@ -38,10 +38,22 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
         protected.extend((m.start(), m.end()) for m in re.finditer(re.escape(needle), normalized.text) if needle)
     from app.core.entity_profile.clauses import split_clauses
     from app.core.source_occurrence import _is_request_framing, source_request_occurrences
+    occurrences = source_request_occurrences(normalized.text)
+    for occurrence in occurrences:
+        if occurrence.is_process or any(a < occurrence.span[1] and occurrence.span[0] < b for a, b in protected):
+            continue
+        contradictory = re.match(rf'\s+(?:celebrados?|firmados?|suscritos?)\s+{_STATE}\b',
+                                 normalized.text[occurrence.span[1]:])
+        if contradictory:
+            span = normalized.to_original((occurrence.span[0], occurrence.span[1] + contradictory.end()))
+            if span is not None:
+                return UniverseRequest(ContractUniverse.CELEBRATED, span, conflict=True)
     for pattern, state in _PATTERNS:
         for match in re.finditer(pattern, normalized.text):
             clause = next(c for c in split_clauses(normalized.text) if c.start <= match.start() <= c.end)
             prefix = normalized.text[clause.start:match.start()]
+            if any(clause.start <= o.span[0] < match.start() for o in occurrences):
+                continue  # A prior source head owns its following object complement.
             if any(a < match.end() and match.start() < b for a, b in protected):
                 continue
             if re.search(r'\b(?:ha contratado|proveedor|contratista)\s*$', prefix):
@@ -56,17 +68,25 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
             # can be transported by both adapters. Never execute a first match.
             conflict = len(states) > 1 or any(
                 re.match(r"\s+(?:celebrados?|firmados?|suscritos?)\b", normalized.text[o.span[1]:])
-                for o in source_request_occurrences(normalized.text) if not o.is_process)
+                for o in occurrences if not o.is_process)
             tail = normalized.text[match.end():]
             conflict |= bool(re.match(
                 r'\s+y\s+(?:(?:registros?|contratos?)\s+)?(?:suspendidos?|prorrogados?|aprobados?|cerrados?|terminados?|celebrados?|firmados?)\b', tail))
             # The legacy record adapter cannot accredit a second source child.
             # Preserve the whole request as clarification, before either SQL job.
-            conflict |= any(o.is_process for o in source_request_occurrences(normalized.text))
+            conflict |= any(o.is_process for o in occurrences)
             return UniverseRequest(ContractUniverse.SOURCE_RECORDS, span,
                                    states[0] if len(states) == 1 else None, conflict)
-    if re.search(r'\b(?:todos\s+los\s+contratos|contratos\s+celebrados)\b', normalized.text):
-        return UniverseRequest(ContractUniverse.CELEBRATED, (0, 0))
+    for occurrence in occurrences:
+        if occurrence.is_process or any(a < occurrence.span[1] and occurrence.span[0] < b for a, b in protected):
+            continue
+        clause = split_clauses(normalized.text)[occurrence.clause_index]
+        prefix = normalized.text[clause.start:occurrence.span[0]]
+        if re.search(r'\b(?:ha contratado|proveedor|contratista)\b', prefix):
+            continue
+        if (re.search(r'\btodos\s+los\s+$', prefix)
+                or re.match(r'\s+celebrados?\b', normalized.text[occurrence.span[1]:])):
+            return UniverseRequest(ContractUniverse.CELEBRATED, (0, 0))
     return None
 
 
@@ -107,5 +127,6 @@ def state_authorized(dataset, values, intent):
     from app.core.contract_universe import EXCLUDED_STATES, fold_state
     values = values if isinstance(values, (list, tuple)) else (values,)
     excluded = {fold_state(s) for s in EXCLUDED_STATES}
-    return dataset != 'contratos' or intent is not None or not any(
-        fold_state(value) in excluded for value in values)
+    selected = {fold_state(value) for value in values} & excluded
+    return (dataset != 'contratos' or not selected or bool(
+        intent and intent.state and selected == {fold_state(intent.state)}))
