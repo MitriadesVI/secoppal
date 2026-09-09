@@ -1,0 +1,36 @@
+{
+  "base": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate",
+      "tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-gate-base",
+    "HEAD": "c52d7eda355f44278164d4cb9803a199eec83486",
+    "exit_code": 0,
+    "duration_seconds": 2.3670612090027134,
+    "stdout": "============================= test session starts ==============================\nplatform darwin -- Python 3.14.7, pytest-9.0.2, pluggy-1.6.0 -- /Users/rodrigoortiz/Documents/secoppal/.venv/bin/python\ncachedir: .pytest_cache\nhypothesis profile 'default'\nrootdir: /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-gate-base\nconfigfile: pytest.ini\nplugins: cov-7.1.0, hypothesis-6.165.10, anyio-4.13.0\ncollecting ... collected 2 items\n\ntests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate PASSED [ 50%]\ntests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection PASSED [100%]\n\n============================== 2 passed in 1.57s ===============================\n",
+    "stderr": ""
+  },
+  "candidate": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate",
+      "tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection",
+      "-v",
+      "--tb=short"
+    ],
+    "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-coordinator-gate",
+    "HEAD": "3c323d5cad9b104f82aeb63e788bccbeae3796ed",
+    "exit_code": 1,
+    "duration_seconds": 1.576845958999911,
+    "stdout": "============================= test session starts ==============================\nplatform darwin -- Python 3.14.7, pytest-9.0.2, pluggy-1.6.0 -- /Users/rodrigoortiz/Documents/secoppal/.venv/bin/python\ncachedir: .pytest_cache\nhypothesis profile 'default'\nrootdir: /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-coordinator-gate\nconfigfile: pytest.ini\nplugins: cov-7.1.0, hypothesis-6.165.10, anyio-4.13.0\ncollecting ... collected 2 items\n\ntests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate FAILED [ 50%]\ntests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection FAILED [100%]\n\n=================================== FAILURES ===================================\n____________ test_document_of_one_candidate_matches_that_candidate _____________\ntests/test_actor_pending_document_selection.py:113: in test_document_of_one_candidate_matches_that_candidate\n    assert selection.outcome == DOCUMENT_PENDING_MATCH\nE   AssertionError: assert 'NO_DOCUMENT' == 'MATCH'\nE     \nE     - MATCH\nE     + NO_DOCUMENT\n________________ test_year_survives_explicit_document_selection ________________\ntests/test_actor_pending_document_selection.py:184: in test_year_survives_explicit_document_selection\n    assert params[\"fecha_desde\"] == \"2025-01-01\"\n           ^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'fecha_desde'\n=========================== short test summary info ============================\nFAILED tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate\nFAILED tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection\n============================== 2 failed in 1.11s ===============================\n",
+    "stderr": ""
+  }
+}

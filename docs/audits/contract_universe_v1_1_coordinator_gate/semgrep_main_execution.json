@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+    "--config",
+    ".semgrep/secoppal-laws.yml",
+    "app/",
+    "--metrics=off",
+    "--json"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal",
+  "exit_code": 0,
+  "stderr": "               \n               \n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 Scan Status \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n  Scanning 344 files tracked by git with 3 Code rules:\n  Scanning 327 files with 3 python rules.\n                \n                \n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 Scan Summary \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n\u2705 Scan completed successfully.\n \u2022 Findings: 10 (10 blocking)\n \u2022 Rules run: 3\n \u2022 Targets scanned: 327\n \u2022 Parsed lines: ~100.0%\n \u2022 Scan skipped: \n   \u25e6 Files larger than  files 1.0 MB: 1\n \u2022 Scan was limited to files tracked by git\n \u2022 For a detailed list of skipped files and lines, run semgrep with the --verbose flag\nRan 3 rules on 327 files: 10 findings.\n"
+}

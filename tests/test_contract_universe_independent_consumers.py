@@ -40,12 +40,12 @@ def test_actor_name_state_word_has_no_universe_authority(tmp_path, monkeypatch, 
         capture(flow, 'actor-state-word', result)
         assert result['resolved_params']['actor_scope']['base_number'] == '71000001'
         assert result['resolved_params'].get('contract_universe', 'celebrated') == 'celebrated'
-        assert result['total_count'] == 26
+        assert result['total_count'] == 24
     finally:
         conn.close()
 
 
-@pytest.mark.parametrize('universe,expected', [('celebrated', 24), ('source_records', 94)])
+@pytest.mark.parametrize('universe,expected', [('celebrated', 22), ('source_records', 94)])
 def test_materialized_dual_children_and_source_names(fixture, universe, expected):
     from app.core.workflow.dual_dataset import execute_dataset_child
     flow, conn = fixture

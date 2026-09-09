@@ -27,7 +27,7 @@ def test_real_base_conversation_requires_review(tmp_path, monkeypatch, historica
         assert not flow.audit_trace['sql']
         assert path.read_bytes().startswith(original)
         fresh = say(flow, SEEDS[0][0])
-        assert fresh['total_count'] == 24
+        assert fresh['total_count'] == 22
         assert path.read_bytes().startswith(original)
     finally:
         conn.close()

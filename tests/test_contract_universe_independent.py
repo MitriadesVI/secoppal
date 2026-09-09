@@ -31,14 +31,14 @@ def test_independent_sql_matrix(tmp_path, monkeypatch, seed, frame):
         capture(flow, 'matrix', result)
         expected = {f'A-{i}-{s}' for i in range(7) for s in ('dated', 'absent', 'invalid')}
         assert ids(result) - {f'A-7-{s}' for s in ('dated', 'absent', 'invalid')} == expected
-        assert result['total_count'] == 24  # Observed candidate rule includes 3 Aprobado.
-        assert sum(int(r['valor_del_contrato']) for r in result['results']) == 24 * (minimum + 100)
+        assert result['total_count'] == 22  # V1.1 includes only Aprobado with a usable date.
+        assert sum(int(r['valor_del_contrato']) for r in result['results']) == 22 * (minimum + 100)
         assert result['resolved_params']['entidad_resolved'] == buyer
         assert result['resolved_params']['valor_min'] == minimum
         from app.core.analytics.aggregate_sum import build_aggregate_sum_query
         sql = build_aggregate_sum_query(flow.soql_builder, 'jbjy-vk9h', result['resolved_params'])
         metrics = flow.secop_client.aggregate('jbjy-vk9h', sql)[0]
-        assert metrics == {'total_value': 24 * (minimum + 100), 'total_count': 24}
+        assert metrics == {'total_value': 22 * (minimum + 100), 'total_count': 22}
         record('matrix-aggregate', dict(sql=sql, metrics=metrics, buyer=buyer))
         assert not flow.audit_trace['errors']
     finally:
@@ -165,7 +165,7 @@ def test_direct_record_does_not_leak_to_search(fixture):
     assert direct['results'][0]['estado_contrato'] == 'Cancelado'
     result = say(flow, SEEDS[0][0])
     capture(flow, 'direct-then-search', result)
-    assert result['total_count'] == 24
+    assert result['total_count'] == 22
     assert result['resolved_params']['contract_universe'] == 'celebrated'
 
 
@@ -181,7 +181,7 @@ def test_radar_cancellation_event_and_digest(fixture, tmp_path):
     conn.execute("UPDATE contracts SET estado_contrato='Cancelado' WHERE id_contrato='A-0-dated'")
     second = run_radar(flow, store, store.get_radar(radar_id))
     record('radar-cancellation', dict(first=asdict(first), second=asdict(second), source=flow.audit_trace))
-    assert first.total == 24 and second.total == 23
+    assert first.total == 22 and second.total == 21
     assert 'Cancelado' in second.digest['text']
     assert 'salieron del universo' in second.digest['text']
     assert len(second.diff.changed_state) == 1

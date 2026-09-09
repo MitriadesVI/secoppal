@@ -1,0 +1,12 @@
+{
+  "compared_to": "4a22efc330101c3511c034a53cd02d4790bb192f",
+  "files_compared": 1029,
+  "changed": [
+    "tests/test_contract_universe_independent.py",
+    "tests/test_contract_universe_independent_consumers.py",
+    "tests/test_contract_universe_independent_legacy.py"
+  ],
+  "frame_default": false,
+  "config_identical_to_main": true,
+  "runtime_unchanged": true
+}

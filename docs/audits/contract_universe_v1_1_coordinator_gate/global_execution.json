@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "-v",
+    "--tb=short",
+    "-ra",
+    "--junitxml=docs/audits/contract_universe_v1_1_coordinator_gate/global_junit.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-coordinator-gate",
+  "PYTEST_ADDOPTS": null,
+  "PYTEST_PLUGINS": null,
+  "note": "Full pytest.ini collection; date dialect plugin only, no offline guard and no V1 policy shim; no exclusions added.",
+  "exit_code": 1,
+  "duration_seconds": 826.8673606249977
+}

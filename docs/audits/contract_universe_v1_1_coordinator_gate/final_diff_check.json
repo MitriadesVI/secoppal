@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "note": "Original JUnit whitespace preserved in global_literal.json; human-readable XML trailing whitespace normalized."
+}

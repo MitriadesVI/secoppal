@@ -1,0 +1,274 @@
+[
+  {
+    "classname": "tests.test_actor_conversation_dogfood",
+    "name": "test_d1_con_means_buyer_and_preserves_actor_and_year",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "production actor index is not available"
+    }
+  },
+  {
+    "classname": "tests.test_actor_conversation_dogfood",
+    "name": "test_d2_candidate_two_has_selection_precedence_and_no_framing_leak",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "production actor index is not available"
+    }
+  },
+  {
+    "classname": "tests.test_actor_conversation_dogfood",
+    "name": "test_d3_actor_and_buyer_are_separate_roles_and_not_topic",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "production actor index is not available"
+    }
+  },
+  {
+    "classname": "tests.test_actor_conversation_dogfood",
+    "name": "test_d4_distinctive_actor_token_cannot_degrade_to_topic",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "production actor index is not available"
+    }
+  },
+  {
+    "classname": "tests.test_actor_conversation_dogfood",
+    "name": "test_r7_real_lmp_top_candidate_is_never_identity_authority[ingenieria]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "production actor index is not available"
+    }
+  },
+  {
+    "classname": "tests.test_actor_conversation_dogfood",
+    "name": "test_r7_real_lmp_top_candidate_is_never_identity_authority[ingieneria]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "production actor index is not available"
+    }
+  },
+  {
+    "classname": "tests.test_actor_conversation_dogfood",
+    "name": "test_r7_real_lmp_top_candidate_is_never_identity_authority[ingeneria]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "production actor index is not available"
+    }
+  },
+  {
+    "classname": "tests.test_actor_conversation_dogfood",
+    "name": "test_r7_real_lmp_top_candidate_is_never_identity_authority[ingeniera]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "production actor index is not available"
+    }
+  },
+  {
+    "classname": "tests.test_actor_hardening_v2_1_remediation",
+    "name": "test_actor_region_and_buyer_together_still_resolve[contratos del proveedor ana maria llanos en los llanos con alcaldia de barranquilla-Orinoquia]",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "Pre-existing in BASE f9cb8c9, not a V2 regression: actor + explicit region + explicit buyer ends CANDIDATES instead of resolving. Verified on BASE directly; out of scope for this remediation."
+    }
+  },
+  {
+    "classname": "tests.test_actor_hardening_v2_1_remediation",
+    "name": "test_actor_region_and_buyer_together_still_resolve[contratos del proveedor carlos rueda caribe en Caribe con alcaldia de barranquilla-Caribe]",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "Pre-existing in BASE f9cb8c9, not a V2 regression: actor + explicit region + explicit buyer ends CANDIDATES instead of resolving. Verified on BASE directly; out of scope for this remediation."
+    }
+  },
+  {
+    "classname": "tests.test_actor_index_isolation",
+    "name": "test_the_production_index_does_not_leak_into_the_default_resolver",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "sin directorio local no hay nada que aislar"
+    }
+  },
+  {
+    "classname": "tests.test_buyer_actor_independent_local",
+    "name": "test_local_effective_flags_and_product[cartagena-False]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Opt-in requires BUYER_ACTOR_LOCAL_INDEX"
+    }
+  },
+  {
+    "classname": "tests.test_buyer_actor_independent_local",
+    "name": "test_local_effective_flags_and_product[cartagena-True]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Opt-in requires BUYER_ACTOR_LOCAL_INDEX"
+    }
+  },
+  {
+    "classname": "tests.test_buyer_actor_independent_local",
+    "name": "test_local_effective_flags_and_product[barranquilla-False]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Opt-in requires BUYER_ACTOR_LOCAL_INDEX"
+    }
+  },
+  {
+    "classname": "tests.test_buyer_actor_independent_local",
+    "name": "test_local_effective_flags_and_product[barranquilla-True]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Opt-in requires BUYER_ACTOR_LOCAL_INDEX"
+    }
+  },
+  {
+    "classname": "tests.test_buyer_actor_role_local_v1",
+    "name": "test_local_index_read_only[cartagena-False]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Local index check requires explicit BUYER_ACTOR_LOCAL_INDEX"
+    }
+  },
+  {
+    "classname": "tests.test_buyer_actor_role_local_v1",
+    "name": "test_local_index_read_only[cartagena-True]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Local index check requires explicit BUYER_ACTOR_LOCAL_INDEX"
+    }
+  },
+  {
+    "classname": "tests.test_buyer_actor_role_local_v1",
+    "name": "test_local_index_read_only[barranquilla-False]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Local index check requires explicit BUYER_ACTOR_LOCAL_INDEX"
+    }
+  },
+  {
+    "classname": "tests.test_buyer_actor_role_local_v1",
+    "name": "test_local_index_read_only[barranquilla-True]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Local index check requires explicit BUYER_ACTOR_LOCAL_INDEX"
+    }
+  },
+  {
+    "classname": "tests.test_control_language",
+    "name": "test_scope_change_carrying_a_new_topic_keeps_that_topic",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "Pre-existing, unrelated to control language: a follow-up classified as change_scope carries a genuinely new topic, but change_scope's mutation policy does not allow topic fields, so the gate drops it and the merger inherits the previous topic. Verified identical on main b661a09. Belongs to follow-up topic hygiene, not R6 \u2014 see DEFERRED_FOLLOWUP_SCOPE_TOPIC."
+    }
+  },
+  {
+    "classname": "tests.test_demo_alcalde",
+    "name": "test_turno2_contiene_insights_entity_concentration",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    }
+  },
+  {
+    "classname": "tests.test_demo_alcalde",
+    "name": "test_turno2_contiene_insights_modality_dominance",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    }
+  },
+  {
+    "classname": "tests.test_demo_proponente",
+    "name": "test_turno1_insights_modality_dominance",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    }
+  },
+  {
+    "classname": "tests.test_demo_proponente",
+    "name": "test_turno1_insights_entity_concentration",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    }
+  },
+  {
+    "classname": "tests.test_demo_veedor",
+    "name": "test_turno1_insights_entity_concentration",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    }
+  },
+  {
+    "classname": "tests.test_demo_veedor",
+    "name": "test_turno1_insights_modality_dominance",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "Observer 2.0 signals requieren mock de aggregate() adicional"
+    }
+  },
+  {
+    "classname": "tests.test_dogfood_regressions",
+    "name": "test_dogfood_regression[live_recall_solo_medellin]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Recall vivo (Etapa 5): no asertable sin red; los params ya son correctos."
+    }
+  },
+  {
+    "classname": "tests.test_dogfood_regressions",
+    "name": "test_dogfood_regression[live_recall_entre_100_150_millones]",
+    "attributes": {
+      "type": "pytest.skip",
+      "message": "Recall vivo (Etapa 5): no asertable sin red; los params ya son correctos."
+    }
+  },
+  {
+    "classname": "tests.test_gazetteer_lote_01.TestLote01Resolution",
+    "name": "test_entity_resolves[hospital municipal de acacias-ACACIAS]",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "'hospital municipal' alias on existing entity steals resolution"
+    }
+  },
+  {
+    "classname": "tests.test_gazetteer_lote_01.TestLote01Resolution",
+    "name": "test_entity_resolves[sena choco-SENA REGIONAL CHOCO]",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "'sena' resolves to SENA SECRETARIA GENERAL first"
+    }
+  },
+  {
+    "classname": "tests.test_gazetteer_lote_01.TestLote01Resolution",
+    "name": "test_entity_resolves[sena casanare-SENA REGIONAL CASANARE]",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "'sena' resolves to SENA SECRETARIA GENERAL first"
+    }
+  },
+  {
+    "classname": "tests.test_opportunity_queries",
+    "name": "test_opportunity_followup_alguno_en_atlantico_inherits_topic",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "OPP-003 pendiente: intent_type expl\u00edcito para opportunity_search"
+    }
+  },
+  {
+    "classname": "tests.test_opportunity_queries",
+    "name": "test_opportunity_followup_soql",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "requiere contexto de followup \u2014 pintura no puede aparecer parseando 'alguno en atlantico' aislado"
+    }
+  },
+  {
+    "classname": "tests.test_opportunity_queries",
+    "name": "test_dicar_reference_query",
+    "attributes": {
+      "type": "pytest.xfail",
+      "message": "REFERENCE-001 pendiente: b\u00fasqueda exacta por referencia de proceso"
+    }
+  }
+]

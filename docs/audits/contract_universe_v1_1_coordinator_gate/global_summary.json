@@ -1,0 +1,11 @@
+{
+  "collected": 14219,
+  "passed": 14069,
+  "skipped": 19,
+  "xfailed": 15,
+  "failed": 116,
+  "duration_pytest_seconds": 824.47,
+  "duration_process_seconds": 826.8673606249977,
+  "exit_code": 1,
+  "literal_summary": "==== 116 failed, 14069 passed, 19 skipped, 15 xfailed in 824.47s (0:13:44) ====="
+}

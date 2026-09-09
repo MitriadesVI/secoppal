@@ -1,0 +1,17 @@
+{
+  "tests/test_contract_universe_independent.py": {
+    "before_sha256": "63ed0c7ae42f9617d995cd0b920727c800609a2856b878854063e8da40723f59",
+    "after_sha256": "d08c8a0bfe46b9914643a008a5177f44eeb87b0c82669dfd8f1014b696397a79",
+    "AST_identical_except_integer_values": true
+  },
+  "tests/test_contract_universe_independent_consumers.py": {
+    "before_sha256": "ba1311fa49117e02dbb90fd312a422d05f052b9aeec64f73b2333875bcd5b8b0",
+    "after_sha256": "b71bf02999ebb16917b2e835cb702ef67f855db71d6aab3d98423bb666fcb5d9",
+    "AST_identical_except_integer_values": true
+  },
+  "tests/test_contract_universe_independent_legacy.py": {
+    "before_sha256": "23032541143a9b18eb6079b49b836b9cf48a1997639c996ee8a010c814c27259",
+    "after_sha256": "5d55d3e6251d9e6fd0dee6801627f8fb9c3964db761e1ddb81dd00c5828550c4",
+    "AST_identical_except_integer_values": true
+  }
+}
