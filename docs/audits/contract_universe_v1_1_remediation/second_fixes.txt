@@ -1,0 +1,42 @@
+.............FF......F..............FF......F...                         [100%]
+=================================== FAILURES ===================================
+_______________ test_published_description_not_rewritten[False] ________________
+tests/test_contract_universe_remediation.py:100: in test_published_description_not_rewritten
+    assert DESCRIPTION in result['response']
+E   AssertionError: assert 'elaboración de borradores de documentos y contratos de consultoría' in 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS — SECOP II Contratos\n\nTema: registros.\nEstado ac...Se observan 0 registros por $0. [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, valores o contratos recientes.'
+________________ test_published_description_not_rewritten[True] ________________
+tests/test_contract_universe_remediation.py:100: in test_published_description_not_rewritten
+    assert DESCRIPTION in result['response']
+E   AssertionError: assert 'elaboración de borradores de documentos y contratos de consultoría' in 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS — SECOP II Contratos\n\nTodo el histórico disponibl...Se observan 0 registros por $0. [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, valores o contratos recientes.'
+_ test_explicit_control_with_independent_rows[registros cancelados de la alcaldia de cartagena-Cancelado] _
+tests/test_contract_universe_remediation_consumers.py:28: in test_explicit_control_with_independent_rows
+    assert {r['estado_contrato'] for r in result['results']} == {state}
+E   AssertionError: assert set() == {'Cancelado'}
+E
+E     Extra items in the right set:
+E     'Cancelado'
+E     Use -v to get more diff
+______ test_explicit_records[registros cancelados de Cartagena-Cancelado] ______
+tests/test_contract_universe_product.py:38: in test_explicit_records
+    assert result['results'], result
+E   AssertionError: {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}
+E   assert []
+___________ test_explicit_records[borradores de Cartagena-Borrador] ____________
+tests/test_contract_universe_product.py:37: in test_explicit_records
+    assert not result.get('needs_clarification'), result
+E   AssertionError: {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'opportunity_scope_too_broad', ...}
+E   assert not True
+E    +  where True = <built-in method get of dict object at 0x113b380c0>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x113b380c0> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'opportunity_scope_too_broad', ...}.get
+______________________ test_explicit_frame_records_reload ______________________
+tests/test_contract_universe_product.py:138: in test_explicit_frame_records_reload
+    assert metric['contract_count'] == (5 if text == 'solo 2026' else 10)
+E   assert 0 == 10
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_remediation.py::test_published_description_not_rewritten[False]
+FAILED tests/test_contract_universe_remediation.py::test_published_description_not_rewritten[True]
+FAILED tests/test_contract_universe_remediation_consumers.py::test_explicit_control_with_independent_rows[registros cancelados de la alcaldia de cartagena-Cancelado]
+FAILED tests/test_contract_universe_product.py::test_explicit_records[registros cancelados de Cartagena-Cancelado]
+FAILED tests/test_contract_universe_product.py::test_explicit_records[borradores de Cartagena-Borrador]
+FAILED tests/test_contract_universe_product.py::test_explicit_frame_records_reload
+6 failed, 42 passed in 6.92s

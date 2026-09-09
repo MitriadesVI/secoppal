@@ -1,0 +1,88 @@
+....FFF...FFFFF..........FF..FF..........                                [100%]
+=================================== FAILURES ===================================
+_____________________ test_object_borradores_is_not_state ______________________
+tests/test_contract_universe_independent.py:52: in test_object_borradores_is_not_state
+    assert result['resolved_params'].get('contract_universe') == 'celebrated'
+E   AssertionError: assert 'source_records' == 'celebrated'
+E
+E     - celebrated
+E     + source_records
+_ test_two_states_not_silently_partial[registros cancelados y borradores de la Alcald\xeda de Cartagena] _
+tests/test_contract_universe_independent.py:68: in test_two_states_not_silently_partial
+    assert {r['estado_contrato'] for r in result['results']} == {'Cancelado', 'Borrador'}
+E   AssertionError: assert {'Cancelado'} == {'Borrador', 'Cancelado'}
+E
+E     Extra items in the right set:
+E     'Borrador'
+E     Use -v to get more diff
+_ test_two_states_not_silently_partial[registros borradores y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_contract_universe_independent.py:68: in test_two_states_not_silently_partial
+    assert {r['estado_contrato'] for r in result['results']} == {'Cancelado', 'Borrador'}
+E   AssertionError: assert set() == {'Borrador', 'Cancelado'}
+E
+E     Extra items in the right set:
+E     'Borrador'
+E     'Cancelado'
+E     Use -v to get more diff
+______________ test_materialized_fields_are_not_consent[params0] _______________
+tests/test_contract_universe_independent.py:91: in test_materialized_fields_are_not_consent
+    assert result.get('contract_universe') != 'source_records'
+E   AssertionError: assert 'source_records' != 'source_records'
+E    +  where 'source_records' = <built-in method get of dict object at 0x11f2d0f00>('contract_universe')
+E    +    where <built-in method get of dict object at 0x11f2d0f00> = {'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1', 'dataset': 'contratos', 'estado': ['Cancelado'], ...}.get
+______________ test_materialized_fields_are_not_consent[params1] _______________
+tests/test_contract_universe_independent.py:91: in test_materialized_fields_are_not_consent
+    assert result.get('contract_universe') != 'source_records'
+E   AssertionError: assert 'source_records' != 'source_records'
+E    +  where 'source_records' = <built-in method get of dict object at 0x10bf6d640>('contract_universe')
+E    +    where <built-in method get of dict object at 0x10bf6d640> = {'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1', 'dataset': 'contratos', 'estado_contrato': ['Cancelado'], ...}.get
+______________ test_materialized_fields_are_not_consent[params2] _______________
+tests/test_contract_universe_independent.py:91: in test_materialized_fields_are_not_consent
+    assert result.get('contract_universe') != 'source_records'
+E   AssertionError: assert 'source_records' != 'source_records'
+E    +  where 'source_records' = <built-in method get of dict object at 0x11fcf8a00>('contract_universe')
+E    +    where <built-in method get of dict object at 0x11fcf8a00> = {'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1', 'dataset': 'contratos', 'estado': ['Cancelado'], ...}.get
+_______________ test_published_description_not_rewritten[False] ________________
+tests/test_contract_universe_independent.py:100: in test_published_description_not_rewritten
+    assert DESCRIPTION in result['response']
+E   AssertionError: assert 'elaboración de borradores de documentos y contratos de consultoría' in 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS — SECOP II Contratos\n\nEstado actual: Cancelado.\n...tos y registros de consultoría. [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, valores o registros recientes.'
+________________ test_published_description_not_rewritten[True] ________________
+tests/test_contract_universe_independent.py:100: in test_published_description_not_rewritten
+    assert DESCRIPTION in result['response']
+E   AssertionError: assert 'elaboración de borradores de documentos y contratos de consultoría' in 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS — SECOP II Contratos\n\nTodo el histórico disponibl...tos y registros de consultoría. [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, valores o registros recientes.'
+_________ test_actor_name_state_word_has_no_universe_authority[False] __________
+tests/test_contract_universe_independent_consumers.py:42: in test_actor_name_state_word_has_no_universe_authority
+    assert result['resolved_params'].get('contract_universe', 'celebrated') == 'celebrated'
+E   AssertionError: assert 'source_records' == 'celebrated'
+E
+E     - celebrated
+E     + source_records
+__________ test_actor_name_state_word_has_no_universe_authority[True] __________
+tests/test_contract_universe_independent_consumers.py:42: in test_actor_name_state_word_has_no_universe_authority
+    assert result['resolved_params'].get('contract_universe', 'celebrated') == 'celebrated'
+E   AssertionError: assert 'source_records' == 'celebrated'
+E
+E     - celebrated
+E     + source_records
+__________ test_dual_raw_explicit_records_not_silently_dropped[False] __________
+tests/test_contract_universe_independent_consumers.py:76: in test_dual_raw_explicit_records_not_silently_dropped
+    assert values and values[0]['contract_count'] == 94
+E   assert ([])
+__________ test_dual_raw_explicit_records_not_silently_dropped[True] ___________
+tests/test_contract_universe_independent_consumers.py:76: in test_dual_raw_explicit_records_not_silently_dropped
+    assert values and values[0]['contract_count'] == 94
+E   assert ([])
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_independent.py::test_object_borradores_is_not_state
+FAILED tests/test_contract_universe_independent.py::test_two_states_not_silently_partial[registros cancelados y borradores de la Alcald\xeda de Cartagena]
+FAILED tests/test_contract_universe_independent.py::test_two_states_not_silently_partial[registros borradores y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_contract_universe_independent.py::test_materialized_fields_are_not_consent[params0]
+FAILED tests/test_contract_universe_independent.py::test_materialized_fields_are_not_consent[params1]
+FAILED tests/test_contract_universe_independent.py::test_materialized_fields_are_not_consent[params2]
+FAILED tests/test_contract_universe_independent.py::test_published_description_not_rewritten[False]
+FAILED tests/test_contract_universe_independent.py::test_published_description_not_rewritten[True]
+FAILED tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[False]
+FAILED tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[True]
+FAILED tests/test_contract_universe_independent_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[False]
+FAILED tests/test_contract_universe_independent_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[True]
+12 failed, 29 passed in 6.94s

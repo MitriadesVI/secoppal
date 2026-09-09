@@ -1,0 +1,14 @@
+{
+  "tested_sha": "8fc5643651d6a603d3bc3849369d9773ab55ea11",
+  "files": {
+    "app/core/contract_universe.py": "5b0c73b91ceac6100201de1fb0e5f7396e8e5367ad04736460bc7771d0f29e11",
+    "app/core/contract_universe_intent.py": "ad07662f5b9bd63e1e0baea6a39c2bc0605afac4536e561357987609c08e420b",
+    "app/core/entity_profile/claim_adapters.py": "56623b636b7aa9019eb352a606e9e07b1a7872b0f2de6b6a90045222123d01a5",
+    "app/core/entity_profile/frame_compiler.py": "1649af715fe444b7b1bb05521ab181b57df2dac1d605fdf9559a58829624fc3e",
+    "app/core/entity_profile/frame_response.py": "e8d220f1c132fc5edbdad308df57dd2bf36f2e006042a4e5515a55663af40990",
+    "app/core/entity_profile/render.py": "93b113527c17797906f1409db0e9a74f042d6a4c74bd2fdb4a42f542501662c9",
+    "app/core/entity_profile/universe_claims.py": "9cee8aad4b4c2b5afa4f3231194e8456170917669f95c0ff75364e8f3d52ed7b",
+    "app/core/query_router.py": "7375f0ffbf9ec8c7d149414b3fe5e8730d478d37a54ac7672ae60d7267246e38",
+    "app/core/truth_layer/contract_signature.py": "643baec696c1a1d09665e507ebc01c7cb3c56c7f5595b2104417a5fb6d3c3cd4"
+  }
+}

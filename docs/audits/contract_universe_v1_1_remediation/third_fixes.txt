@@ -1,0 +1,9 @@
+.................F.................................                      [100%]
+=================================== FAILURES ===================================
+_____________________ test_frame_fingerprint_scope_changes _____________________
+tests/test_contract_universe_remediation.py:155: in test_frame_fingerprint_scope_changes
+    assert metrics['total_contract_value'] == 22 * 500_000_100 + 70 * 900_000_000_000
+E   assert 63012000002400 == ((22 * 500000100) + (70 * 900000000000))
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_remediation.py::test_frame_fingerprint_scope_changes
+1 failed, 50 passed in 7.00s

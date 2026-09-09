@@ -1,0 +1,174 @@
+{
+  "baseline": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_remediation.py::test_object_borradores_is_not_state",
+      "tests/test_contract_universe_remediation.py::test_materialized_fields_are_not_consent",
+      "tests/test_contract_universe_remediation.py::test_published_description_not_rewritten",
+      "tests/test_contract_universe_remediation.py::test_two_states_not_silently_partial",
+      "tests/test_contract_universe_remediation_consumers.py::test_dual_raw_explicit_records_not_silently_dropped",
+      "tests/test_contract_universe_remediation.py::test_independent_sql_matrix",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": "..............                                                           [100%]\n14 passed in 2.02s\n",
+    "stderr": ""
+  },
+  "mutations": {
+    "global_lexical_match": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_contract_universe_remediation.py::test_object_borradores_is_not_state",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_____________________ test_object_borradores_is_not_state ______________________\ntests/test_contract_universe_remediation.py:52: in test_object_borradores_is_not_state\n    assert result['resolved_params'].get('contract_universe') == 'celebrated'\nE   AssertionError: assert 'source_records' == 'celebrated'\nE     \nE     - celebrated\nE     + source_records\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_remediation.py::test_object_borradores_is_not_state\n1 failed in 0.97s\n",
+      "stderr": "",
+      "functional_kill": true
+    },
+    "params_fallback": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_contract_universe_remediation.py::test_materialized_fields_are_not_consent",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "stdout": "FFF                                                                      [100%]\n=================================== FAILURES ===================================\n______________ test_materialized_fields_are_not_consent[params0] _______________\ntests/test_contract_universe_remediation.py:91: in test_materialized_fields_are_not_consent\n    assert result.get('contract_universe') != 'source_records'\nE   AssertionError: assert 'source_records' != 'source_records'\nE    +  where 'source_records' = <built-in method get of dict object at 0x1118d9540>('contract_universe')\nE    +    where <built-in method get of dict object at 0x1118d9540> = {'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'estado': ['Cancelado'], ...}.get\n______________ test_materialized_fields_are_not_consent[params1] _______________\ntests/test_contract_universe_remediation.py:91: in test_materialized_fields_are_not_consent\n    assert result.get('contract_universe') != 'source_records'\nE   AssertionError: assert 'source_records' != 'source_records'\nE    +  where 'source_records' = <built-in method get of dict object at 0x111835040>('contract_universe')\nE    +    where <built-in method get of dict object at 0x111835040> = {'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'estado_contrato': ['Cancelado'], ...}.get\n______________ test_materialized_fields_are_not_consent[params2] _______________\ntests/test_contract_universe_remediation.py:91: in test_materialized_fields_are_not_consent\n    assert result.get('contract_universe') != 'source_records'\nE   AssertionError: assert 'source_records' != 'source_records'\nE    +  where 'source_records' = <built-in method get of dict object at 0x11185b980>('contract_universe')\nE    +    where <built-in method get of dict object at 0x11185b980> = {'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'estado': ['Cancelado'], ...}.get\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_remediation.py::test_materialized_fields_are_not_consent[params0]\nFAILED tests/test_contract_universe_remediation.py::test_materialized_fields_are_not_consent[params1]\nFAILED tests/test_contract_universe_remediation.py::test_materialized_fields_are_not_consent[params2]\n3 failed in 0.63s\n",
+      "stderr": "",
+      "functional_kill": true
+    },
+    "global_record_terms": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_contract_universe_remediation.py::test_published_description_not_rewritten",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "stdout": "FF                                                                       [100%]\n=================================== FAILURES ===================================\n_______________ test_published_description_not_rewritten[False] ________________\ntests/test_contract_universe_remediation.py:100: in test_published_description_not_rewritten\n    assert DESCRIPTION in result['response']\nE   AssertionError: assert 'elaboración de borradores de documentos y contratos de consultoría' in 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS — SECOP II Contratos\\n\\nEstado actual: Cancelado.\\n...tos y registros de consultoría. [SECOP II Contratos]\\n\\nPuedes pedirme sus proveedores, valores o registros recientes.'\n________________ test_published_description_not_rewritten[True] ________________\ntests/test_contract_universe_remediation.py:100: in test_published_description_not_rewritten\n    assert DESCRIPTION in result['response']\nE   AssertionError: assert 'elaboración de borradores de documentos y contratos de consultoría' in 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS — SECOP II Contratos\\n\\nTodo el histórico disponibl...tos y registros de consultoría. [SECOP II Contratos]\\n\\nPuedes pedirme sus proveedores, valores o registros recientes.'\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_remediation.py::test_published_description_not_rewritten[False]\nFAILED tests/test_contract_universe_remediation.py::test_published_description_not_rewritten[True]\n2 failed in 0.93s\n",
+      "stderr": "",
+      "functional_kill": true
+    },
+    "first_match_wins": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_contract_universe_remediation.py::test_two_states_not_silently_partial",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "stdout": "FF                                                                       [100%]\n=================================== FAILURES ===================================\n_ test_two_states_not_silently_partial[registros cancelados y borradores de la Alcald\\xeda de Cartagena] _\ntests/test_contract_universe_remediation.py:68: in test_two_states_not_silently_partial\n    assert {r['estado_contrato'] for r in result['results']} == {'Cancelado', 'Borrador'}\nE   AssertionError: assert {'Cancelado'} == {'Borrador', 'Cancelado'}\nE     \nE     Extra items in the right set:\nE     'Borrador'\nE     Use -v to get more diff\n_ test_two_states_not_silently_partial[registros borradores y cancelados de la Alcald\\xeda de Cartagena] _\ntests/test_contract_universe_remediation.py:68: in test_two_states_not_silently_partial\n    assert {r['estado_contrato'] for r in result['results']} == {'Cancelado', 'Borrador'}\nE   AssertionError: assert {'Borrador'} == {'Borrador', 'Cancelado'}\nE     \nE     Extra items in the right set:\nE     'Cancelado'\nE     Use -v to get more diff\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_remediation.py::test_two_states_not_silently_partial[registros cancelados y borradores de la Alcald\\xeda de Cartagena]\nFAILED tests/test_contract_universe_remediation.py::test_two_states_not_silently_partial[registros borradores y cancelados de la Alcald\\xeda de Cartagena]\n2 failed in 0.89s\n",
+      "stderr": "",
+      "functional_kill": true
+    },
+    "dual_process_veto": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_contract_universe_remediation_consumers.py::test_dual_raw_explicit_records_not_silently_dropped",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "stdout": "FF                                                                       [100%]\n=================================== FAILURES ===================================\n__________ test_dual_raw_explicit_records_not_silently_dropped[False] __________\ntests/test_contract_universe_remediation_consumers.py:76: in test_dual_raw_explicit_records_not_silently_dropped\n    assert values and values[0]['contract_count'] == 94\nE   assert ([])\n__________ test_dual_raw_explicit_records_not_silently_dropped[True] ___________\ntests/test_contract_universe_remediation_consumers.py:76: in test_dual_raw_explicit_records_not_silently_dropped\n    assert values and values[0]['contract_count'] == 94\nE   assert ([])\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_remediation_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[False]\nFAILED tests/test_contract_universe_remediation_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[True]\n2 failed in 0.95s\n",
+      "stderr": "",
+      "functional_kill": true
+    },
+    "aprobado_without_date": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "-p",
+        "tests.contract_universe_sql_dates",
+        "tests/test_contract_universe_remediation.py::test_independent_sql_matrix",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "stdout": "FFFF                                                                     [100%]\n=================================== FAILURES ===================================\n___________________ test_independent_sql_matrix[False-seed0] ___________________\ntests/test_contract_universe_remediation.py:34: in test_independent_sql_matrix\n    assert result['total_count'] == 22  # V1.1 includes only dated Aprobado.\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   assert 24 == 22\n___________________ test_independent_sql_matrix[False-seed1] ___________________\ntests/test_contract_universe_remediation.py:34: in test_independent_sql_matrix\n    assert result['total_count'] == 22  # V1.1 includes only dated Aprobado.\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   assert 24 == 22\n___________________ test_independent_sql_matrix[True-seed0] ____________________\ntests/test_contract_universe_remediation.py:34: in test_independent_sql_matrix\n    assert result['total_count'] == 22  # V1.1 includes only dated Aprobado.\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   assert 24 == 22\n___________________ test_independent_sql_matrix[True-seed1] ____________________\ntests/test_contract_universe_remediation.py:34: in test_independent_sql_matrix\n    assert result['total_count'] == 22  # V1.1 includes only dated Aprobado.\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   assert 24 == 22\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_remediation.py::test_independent_sql_matrix[False-seed0]\nFAILED tests/test_contract_universe_remediation.py::test_independent_sql_matrix[False-seed1]\nFAILED tests/test_contract_universe_remediation.py::test_independent_sql_matrix[True-seed0]\nFAILED tests/test_contract_universe_remediation.py::test_independent_sql_matrix[True-seed1]\n4 failed in 1.13s\n",
+      "stderr": "",
+      "functional_kill": true
+    }
+  },
+  "owned_ports_on_frozen_candidate": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_remediation.py::test_object_borradores_is_not_state",
+      "tests/test_contract_universe_remediation.py::test_materialized_fields_are_not_consent",
+      "tests/test_contract_universe_remediation.py::test_published_description_not_rewritten",
+      "tests/test_contract_universe_remediation.py::test_two_states_not_silently_partial",
+      "tests/test_contract_universe_remediation_consumers.py::test_dual_raw_explicit_records_not_silently_dropped",
+      "tests/test_contract_universe_remediation.py::test_independent_sql_matrix",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 1,
+    "stdout": "FFFFFFFFFFFFFF                                                           [100%]\n=================================== FAILURES ===================================\n_____________________ test_object_borradores_is_not_state ______________________\ntests/test_contract_universe_remediation.py:52: in test_object_borradores_is_not_state\n    assert result['resolved_params'].get('contract_universe') == 'celebrated'\nE   AssertionError: assert 'source_records' == 'celebrated'\nE     \nE     - celebrated\nE     + source_records\n______________ test_materialized_fields_are_not_consent[params0] _______________\ntests/test_contract_universe_remediation.py:91: in test_materialized_fields_are_not_consent\n    assert result.get('contract_universe') != 'source_records'\nE   AssertionError: assert 'source_records' != 'source_records'\nE    +  where 'source_records' = <built-in method get of dict object at 0x10fa7c900>('contract_universe')\nE    +    where <built-in method get of dict object at 0x10fa7c900> = {'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1', 'dataset': 'contratos', 'estado': ['Cancelado'], ...}.get\n______________ test_materialized_fields_are_not_consent[params1] _______________\ntests/test_contract_universe_remediation.py:91: in test_materialized_fields_are_not_consent\n    assert result.get('contract_universe') != 'source_records'\nE   AssertionError: assert 'source_records' != 'source_records'\nE    +  where 'source_records' = <built-in method get of dict object at 0x10fa45780>('contract_universe')\nE    +    where <built-in method get of dict object at 0x10fa45780> = {'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1', 'dataset': 'contratos', 'estado_contrato': ['Cancelado'], ...}.get\n______________ test_materialized_fields_are_not_consent[params2] _______________\ntests/test_contract_universe_remediation.py:91: in test_materialized_fields_are_not_consent\n    assert result.get('contract_universe') != 'source_records'\nE   AssertionError: assert 'source_records' != 'source_records'\nE    +  where 'source_records' = <built-in method get of dict object at 0x10ffe7bc0>('contract_universe')\nE    +    where <built-in method get of dict object at 0x10ffe7bc0> = {'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1', 'dataset': 'contratos', 'estado': ['Cancelado'], ...}.get\n_______________ test_published_description_not_rewritten[False] ________________\ntests/test_contract_universe_remediation.py:100: in test_published_description_not_rewritten\n    assert DESCRIPTION in result['response']\nE   AssertionError: assert 'elaboración de borradores de documentos y contratos de consultoría' in 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS — SECOP II Contratos\\n\\nEstado actual: Cancelado.\\n...tos y registros de consultoría. [SECOP II Contratos]\\n\\nPuedes pedirme sus proveedores, valores o registros recientes.'\n________________ test_published_description_not_rewritten[True] ________________\ntests/test_contract_universe_remediation.py:100: in test_published_description_not_rewritten\n    assert DESCRIPTION in result['response']\nE   AssertionError: assert 'elaboración de borradores de documentos y contratos de consultoría' in 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS — SECOP II Contratos\\n\\nTodo el histórico disponibl...tos y registros de consultoría. [SECOP II Contratos]\\n\\nPuedes pedirme sus proveedores, valores o registros recientes.'\n_ test_two_states_not_silently_partial[registros cancelados y borradores de la Alcald\\xeda de Cartagena] _\ntests/test_contract_universe_remediation.py:68: in test_two_states_not_silently_partial\n    assert {r['estado_contrato'] for r in result['results']} == {'Cancelado', 'Borrador'}\nE   AssertionError: assert {'Cancelado'} == {'Borrador', 'Cancelado'}\nE     \nE     Extra items in the right set:\nE     'Borrador'\nE     Use -v to get more diff\n_ test_two_states_not_silently_partial[registros borradores y cancelados de la Alcald\\xeda de Cartagena] _\ntests/test_contract_universe_remediation.py:68: in test_two_states_not_silently_partial\n    assert {r['estado_contrato'] for r in result['results']} == {'Cancelado', 'Borrador'}\nE   AssertionError: assert set() == {'Borrador', 'Cancelado'}\nE     \nE     Extra items in the right set:\nE     'Cancelado'\nE     'Borrador'\nE     Use -v to get more diff\n__________ test_dual_raw_explicit_records_not_silently_dropped[False] __________\ntests/test_contract_universe_remediation_consumers.py:76: in test_dual_raw_explicit_records_not_silently_dropped\n    assert values and values[0]['contract_count'] == 94\nE   assert ([])\n__________ test_dual_raw_explicit_records_not_silently_dropped[True] ___________\ntests/test_contract_universe_remediation_consumers.py:76: in test_dual_raw_explicit_records_not_silently_dropped\n    assert values and values[0]['contract_count'] == 94\nE   assert ([])\n___________________ test_independent_sql_matrix[False-seed0] ___________________\ntests/test_contract_universe_remediation.py:34: in test_independent_sql_matrix\n    assert result['total_count'] == 22  # V1.1 includes only dated Aprobado.\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   assert 24 == 22\n___________________ test_independent_sql_matrix[False-seed1] ___________________\ntests/test_contract_universe_remediation.py:34: in test_independent_sql_matrix\n    assert result['total_count'] == 22  # V1.1 includes only dated Aprobado.\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   assert 24 == 22\n___________________ test_independent_sql_matrix[True-seed0] ____________________\ntests/test_contract_universe_remediation.py:34: in test_independent_sql_matrix\n    assert result['total_count'] == 22  # V1.1 includes only dated Aprobado.\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   assert 24 == 22\n___________________ test_independent_sql_matrix[True-seed1] ____________________\ntests/test_contract_universe_remediation.py:34: in test_independent_sql_matrix\n    assert result['total_count'] == 22  # V1.1 includes only dated Aprobado.\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   assert 24 == 22\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_remediation.py::test_object_borradores_is_not_state\nFAILED tests/test_contract_universe_remediation.py::test_materialized_fields_are_not_consent[params0]\nFAILED tests/test_contract_universe_remediation.py::test_materialized_fields_are_not_consent[params1]\nFAILED tests/test_contract_universe_remediation.py::test_materialized_fields_are_not_consent[params2]\nFAILED tests/test_contract_universe_remediation.py::test_published_description_not_rewritten[False]\nFAILED tests/test_contract_universe_remediation.py::test_published_description_not_rewritten[True]\nFAILED tests/test_contract_universe_remediation.py::test_two_states_not_silently_partial[registros cancelados y borradores de la Alcald\\xeda de Cartagena]\nFAILED tests/test_contract_universe_remediation.py::test_two_states_not_silently_partial[registros borradores y cancelados de la Alcald\\xeda de Cartagena]\nFAILED tests/test_contract_universe_remediation_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[False]\nFAILED tests/test_contract_universe_remediation_consumers.py::test_dual_raw_explicit_records_not_silently_dropped[True]\nFAILED tests/test_contract_universe_remediation.py::test_independent_sql_matrix[False-seed0]\nFAILED tests/test_contract_universe_remediation.py::test_independent_sql_matrix[False-seed1]\nFAILED tests/test_contract_universe_remediation.py::test_independent_sql_matrix[True-seed0]\nFAILED tests/test_contract_universe_remediation.py::test_independent_sql_matrix[True-seed1]\n14 failed in 2.14s\n",
+    "stderr": ""
+  },
+  "v1_artifact_generation": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_generate_v1_artifacts.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": ".                                                                        [100%]\n1 passed in 0.85s\n",
+    "stderr": ""
+  },
+  "tested_sha": "8fc5643651d6a603d3bc3849369d9773ab55ea11"
+}

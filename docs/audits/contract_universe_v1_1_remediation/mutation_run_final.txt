@@ -1,0 +1,1 @@
+{'global_lexical_match': True, 'params_fallback': True, 'global_record_terms': True, 'first_match_wins': True, 'dual_process_veto': True, 'aprobado_without_date': True}

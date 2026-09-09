@@ -1,0 +1,9 @@
+{'global_lexical_match': False, 'params_fallback': False, 'global_record_terms': False, 'first_match_wins': False, 'dual_process_veto': True, 'aprobado_without_date': True}
+Traceback (most recent call last):
+  File "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-remediation/scripts/audits/contract_universe_remediation_mutations.py", line 95, in <module>
+    main()
+    ~~~~^^
+  File "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-remediation/scripts/audits/contract_universe_remediation_mutations.py", line 91, in main
+    assert all(result['functional_kill'] for result in evidence['mutations'].values())
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

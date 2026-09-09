@@ -1,0 +1,36 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_contract_head_owns_the_following_object[contratos de borradores de documentos de la Alcald\xeda de Cartagena-False] _
+tests/test_contract_universe_remediation_properties.py:180: in test_contract_head_owns_the_following_object
+    assert result['resolved_params']['contract_universe'] == 'celebrated'
+E   AssertionError: assert 'source_records' == 'celebrated'
+E
+E     - celebrated
+E     + source_records
+_ test_contract_head_owns_the_following_object[contratos de borradores de documentos de la Alcald\xeda de Cartagena-True] _
+tests/test_contract_universe_remediation_properties.py:180: in test_contract_head_owns_the_following_object
+    assert result['resolved_params']['contract_universe'] == 'celebrated'
+E   AssertionError: assert 'source_records' == 'celebrated'
+E
+E     - celebrated
+E     + source_records
+_ test_contract_head_owns_the_following_object[todos los contratos de elaboraci\xf3n de borradores de documentos de la Alcald\xeda de Cartagena-False] _
+tests/test_contract_universe_remediation_properties.py:179: in test_contract_head_owns_the_following_object
+    assert not result.get('needs_clarification'), result
+E   AssertionError: {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'El est...o de contratos celebrados. Aclara si quieres conservar ese filtro de registros o consultar contratos celebrados.', ...}
+E   assert not True
+E    +  where True = <built-in method get of dict object at 0x11230c880>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11230c880> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'El est...o de contratos celebrados. Aclara si quieres conservar ese filtro de registros o consultar contratos celebrados.', ...}.get
+_ test_contract_head_owns_the_following_object[todos los contratos de elaboraci\xf3n de borradores de documentos de la Alcald\xeda de Cartagena-True] _
+tests/test_contract_universe_remediation_properties.py:179: in test_contract_head_owns_the_following_object
+    assert not result.get('needs_clarification'), result
+E   AssertionError: {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'audit', ...}
+E   assert not True
+E    +  where True = <built-in method get of dict object at 0x11b8d19c0>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11b8d19c0> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'audit', ...}.get
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_remediation_properties.py::test_contract_head_owns_the_following_object[contratos de borradores de documentos de la Alcald\xeda de Cartagena-False]
+FAILED tests/test_contract_universe_remediation_properties.py::test_contract_head_owns_the_following_object[contratos de borradores de documentos de la Alcald\xeda de Cartagena-True]
+FAILED tests/test_contract_universe_remediation_properties.py::test_contract_head_owns_the_following_object[todos los contratos de elaboraci\xf3n de borradores de documentos de la Alcald\xeda de Cartagena-False]
+FAILED tests/test_contract_universe_remediation_properties.py::test_contract_head_owns_the_following_object[todos los contratos de elaboraci\xf3n de borradores de documentos de la Alcald\xeda de Cartagena-True]
+4 failed in 1.29s

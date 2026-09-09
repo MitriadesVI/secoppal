@@ -1,0 +1,8 @@
+{
+  "tested_code_sha": "8fc5643651d6a603d3bc3849369d9773ab55ea11",
+  "artifacts": {
+    "docs/audits/contract_universe_v1_1_remediation/v1_serialized.json": "262192ab607afe34cc5b6557fc26407eb93ae4e461a3d7f38307d6e01cec9ac8",
+    "docs/audits/contract_universe_v1_independent/base_serialized.json": "f998afd5a896a8e53768bf0ecf1a22fa83b0e7eb282237479bba4efa1aa4d91e",
+    "docs/audits/contract_universe_v1_independent/mutations_repeated.json": "1b5eb4b939424cbfa130aa60559f21269f7f73c3388537ef574e122681f79925"
+  }
+}

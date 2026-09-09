@@ -1,0 +1,10 @@
+┌  Initializing CodeGraph
+│
+◆  Initialized in /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-remediation
+│
+●  Run "codegraph index" to index the project
+│
+└  Done
+
+(node:35716) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
