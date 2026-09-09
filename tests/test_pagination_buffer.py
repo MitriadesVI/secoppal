@@ -607,7 +607,7 @@ def test_page_fingerprint_stable_and_change_sensitive():
 def test_pagination_resets_on_incompatible_cursor(tmp_path, monkeypatch):
     """Si el contrato de paginación cambia (deploy), el cursor previo es incompatible
     (huella distinta) → 'más' NO continúa la página vieja: reinicia desde la página 1."""
-    import app.core.workflow.handlers.pagination as pag
+    import app.core.pagination_buffer as pag
     wf = _wf(tmp_path, monkeypatch)
     chat = "buf_fp"
     wf.run_query(
@@ -619,7 +619,7 @@ def test_pagination_resets_on_incompatible_cursor(tmp_path, monkeypatch):
     assert p2 and min(p2) >= 25, f"la página 2 debería empezar tras la 1: {p2}"
 
     # Simular un deploy que cambia el contrato de orden/ranking/validación.
-    monkeypatch.setattr(pag, "_PAGINATION_CONTRACT_VERSION", "e8a-CHANGED")
+    monkeypatch.setattr(pag, "pagination_contract_version", lambda params: "e8a-CHANGED")
     r3 = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
     p3 = _shown_indices(r3)
     assert 0 in p3, f"cursor incompatible → debió reiniciar en la página 1: {p3}"

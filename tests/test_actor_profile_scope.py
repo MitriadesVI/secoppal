@@ -57,11 +57,20 @@ def scope_for(name):
     return scope_from_resolved_params(CASES[name]['params'])
 
 
+
+
+def _contract_universe_sql(sql):
+    # Historical scope oracle remains frozen. Only the adjudicated common
+    # universe is projected; all identity, topic, date and transport bytes stay.
+    from app.core.contract_universe import predicate
+    return sql.replace(' WHERE ', ' WHERE ' + predicate() + ' AND ', 1)
+
 @pytest.mark.parametrize('name', CASES)
 def test_before_after_sql_and_source_calls_identical_for_every_aspect(name):
     params = deepcopy(CASES[name]['params'])
     original = deepcopy(params)
-    expected = CASES[name]['queries']
+    expected = {name: {**query, 'soql': _contract_universe_sql(query['soql'])}
+                for name, query in CASES[name]['queries'].items()}
     assert set(expected) == {a.name for a in ASPECTS}
     assert {a.name: a.build(SoQLBuilder(), DATASET, params) for a in ASPECTS} == {
         name: query['soql'] for name, query in expected.items()
@@ -221,7 +230,7 @@ def test_modality_labels_follow_dataset_projection_including_unsatisfiable():
                 assert 'sin valores compatibles' in str(scope)
             else:
                 assert scope.is_empty()
-                assert sql == CASES['global']['queries']['core']['soql']
+                assert sql == _contract_universe_sql(CASES['global']['queries']['core']['soql'])
 
 
 def test_catalog_context_reuses_execution_cache_without_io_or_resolver_calls(monkeypatch):

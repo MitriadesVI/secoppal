@@ -1269,7 +1269,12 @@ Los estados de SECOP no se deben traducir de forma coloquial sin control jurídi
 
 ### 7.3 Invariante INV-005 — Firmado no es estado
 
-`Firmado/firmados` no es un estado contractual filtrable. Es una propiedad universal del dataset contratos (`jbjy-vk9h`). Todo registro en ese dataset representa un contrato con existencia contractual.
+`Firmado/firmados` no es un estado contractual filtrable en `jbjy-vk9h`.
+Actualización Contract Universe V1 (2026-09-08): no toda fila acredita celebración.
+Las consultas ordinarias aplican la política operativa de
+[contratos celebrados](audits/contract_universe_v1/POLICY.md); el acceso explícito
+a registros de la fuente conserva preparatorios y cancelados. Universo,
+estado actual y fecha de firma son dimensiones distintas.
 
 Por tanto:
 

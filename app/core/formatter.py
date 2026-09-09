@@ -64,6 +64,8 @@ def _estado_raw_nota(row: dict) -> str:
     ``estado_de_apertura_del_proceso`` es corroboracion, no el estado del
     proceso. Se reporta lo que dice, no que se equivoque.
     """
+    if row.get("contract_universe_note"):
+        return row["contract_universe_note"]
     if not row.get("estado_op_mostrar_raw"):
         return ""
     raw = str(row.get("estado_op_raw", "") or "").strip()
@@ -264,11 +266,15 @@ class Formatter:
                            reference_instant: datetime | None = None) -> tuple[str, list[dict]]:
         rows = self.to_rows(results, dataset_id, params=params,
                             reference_instant=reference_instant)
-        if channel == "telegram":
-            return self.format_telegram(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate, order_guarantee=order_guarantee), rows
-        if channel == "streamlit":
-            return self.format_streamlit(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate, order_guarantee=order_guarantee), rows
-        return self.format_whatsapp(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate, order_guarantee=order_guarantee), rows
+        renderer = {"telegram": self.format_telegram, "streamlit": self.format_streamlit}.get(
+            channel, self.format_whatsapp)
+        response = renderer(rows, params=params, dataset_id=dataset_id, total_count=total_count,
+                            universe_insights=universe_insights, suggestions=suggestions,
+                            total_count_approximate=total_count_approximate, order_guarantee=order_guarantee)
+        if dataset_id == "jbjy-vk9h":
+            from app.core.contract_universe import label, universe_from_params
+            response = label(universe_from_params(params or {})) + "\n\n" + response
+        return response, rows
 
     # Dual-dataset Commit 3: presentación agrupada. Recibe dataset_groups YA
     # resueltos (DatasetGroupResult). NO construye SoQL, NO ejecuta, NO rankea —
@@ -350,6 +356,9 @@ class Formatter:
                 continue
             emoji, label, ds_id = self._GROUP_META[name]
             parts.append(f"\n{emoji} {label}")
+            if ds_id == "jbjy-vk9h":
+                from app.core.contract_universe import label as universe_label, universe_from_params
+                parts.append(universe_label(universe_from_params(params or {})))
             if g.status == "error":
                 parts.append(f"La consulta de {label.lower()} no respondió a tiempo. "
                              "Los resultados del otro grupo siguen disponibles.")
@@ -394,8 +403,13 @@ class Formatter:
         for field, label in cascade:
             val = item.get(field)
             if val:
-                return str(val), label
-        return "", "Pendiente de publicación"
+                if dataset_id != "jbjy-vk9h":
+                    return str(val), label
+                from app.core.truth_layer.temporal_value import parse_iso_text
+                if parse_iso_text(str(val))[1] is not None:
+                    return str(val), label
+        return "", ("Fecha de firma no publicada" if dataset_id == "jbjy-vk9h"
+                    else "Pendiente de publicación")
 
     def to_rows(self, results: list[dict], dataset_id: str, params: dict | None = None,
                 *, reference_instant: datetime | None = None) -> list[dict]:
@@ -459,6 +473,11 @@ class Formatter:
                     "referencia_del_contrato": item.get("referencia_del_contrato", ""),
                     "dataset_id": dataset_id,
                 }
+                from app.core.contract_universe import eligible
+                if not eligible(item) and fecha_label == "Firma" and fecha_iso:
+                    row_data["contract_universe_note"] = (
+                        "Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación."
+                    )
                 if anomaly:
                     row_data.update(anomaly)
                 rows.append(row_data)

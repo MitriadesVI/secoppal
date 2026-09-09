@@ -56,7 +56,7 @@ _MODIFIER_KEYS = frozenset({
     "fecha_desde", "fecha_hasta",
     "_temporal_replace_scope",
     "valor_min", "valor_max",
-    "money_metadata",
+    "money_metadata", "contract_universe", "contract_universe_version",
     "estado", "estado_field", "estado_family",
     "estado_contrato", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_contrato_adicional",

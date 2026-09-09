@@ -480,6 +480,10 @@ def _render_excel_export(item: dict, history_idx: int) -> None:
     if not rows:
         return
     debug = item.get("debug") or {}
+    from app.core.contract_universe import compatible
+    if not compatible({**(debug.get("resolved_params") or {}), "dataset": debug.get("dataset_id", "")}):
+        st.info("El universo de esta exportación requiere revisión. Repite la búsqueda.")
+        return
     payload = build_results_xlsx(
         rows=rows,
         query=item.get("query", ""),

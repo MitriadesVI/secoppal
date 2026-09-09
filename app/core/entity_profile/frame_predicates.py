@@ -62,6 +62,12 @@ def compile_predicates(
     spec = builder.SPECS[source.dataset_id]
     clauses: list[str] = [_buyer_clause(builder, spec, buyer)]
 
+    if source is SourceKind.CONTRACTS:
+        from app.core.contract_universe import predicate
+        universe_clause = predicate(predicates.contract_universe)
+        if universe_clause:
+            clauses.append(universe_clause)
+
     topic = _topic_clause(builder, spec, predicates.topic)
     if topic:
         clauses.append(topic)

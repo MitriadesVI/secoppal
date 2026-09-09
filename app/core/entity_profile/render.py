@@ -224,6 +224,10 @@ def render_entity_profile(profile: EntityProfile) -> str:
     ]
     if scope:
         blocks.extend(_scope_lines(scope))
+    if profile.plan and 'jbjy-vk9h' in profile.plan.executed_datasets:
+        from app.core.contract_universe import label, universe_from_params
+        contract_params = profile.plan.plan_for('jbjy-vk9h').params
+        blocks.append(label(universe_from_params(contract_params)))
     if profile.scope.territory_context and profile.scope.buyer_group_id is None:
         territory = profile.scope.territory_context[0]
         blocks.append(

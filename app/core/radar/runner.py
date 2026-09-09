@@ -203,6 +203,15 @@ def _validate_frame_json(radar: Radar) -> _RadarFailure | None:
             permanent=True,
             next_run_after=_after(hours=PERMANENT_BACKOFF_HOURS),
         )
+    from app.core.contract_universe import compatible
+    restored = {**frame.get("raw_params", {}), **frame.get("modifiers", {}),
+                "dataset": frame.get("dataset") or radar.dataset}
+    if not compatible(restored):
+        return _RadarFailure(
+            outcome=RADAR_INVALID_FRAME, reason="contract_universe_review_required",
+            message="El universo contractual de este Radar requiere revisión antes de ejecutarlo.",
+            permanent=True, next_run_after=_after(hours=PERMANENT_BACKOFF_HOURS),
+        )
     return None
 
 
@@ -626,6 +635,15 @@ def _run_radar_locked(
     digest = build_digest(radar.name, diff, run_meta, seen_map)
     digest["outcome"] = outcome
     digest["reason"] = reason
+    if ds_id == SoQLBuilder.CONTRATOS_DATASET:
+        from app.core.contract_universe import eligible, label, universe_from_params, POLICY_VERSION
+        universe = universe_from_params(params)
+        digest["contract_universe"] = universe.value
+        digest["contract_universe_version"] = POLICY_VERSION
+        digest["text"] = label(universe) + "\n\n" + digest.get("text", "")
+        if any(not eligible(row, universe) for row in refreshed):
+            digest["text"] += ("\nEl seguimiento por ID incluye cambios de registros que salieron "
+                               "del universo de descubrimiento; no integran su conteo contractual.")
 
     approx_total = execution.total if execution.approximate else None
     run_id = new_run_id()

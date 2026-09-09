@@ -81,6 +81,10 @@ def _do_save(deps, ctx, store, owner, name) -> dict:
             route_reason="radar_save_no_context",
         )
 
+    from app.core.contract_universe import compatible
+    if not compatible(params):
+        return _resp("La búsqueda contractual anterior requiere revisión de universo. Repite la búsqueda antes de guardarla.",
+                     route_reason="contract_universe_review_required")
     try:
         radar_id = save_radar_from_params(
             store, owner=owner, name=name, params=params, channel=ctx.channel,

@@ -37,7 +37,7 @@ ESTADO_FAMILIES = {
             ],
         },
         "contratos": {
-            # "oferta_abierta" doesn't apply to contracts — contracts mean it's signed
+            # "oferta_abierta" is a process intent, not a contract state
             "estado_contrato": [],
         },
     },
@@ -98,6 +98,7 @@ ESTADO_FAMILIES = {
             "estado_contrato": ["cedido"],
         },
     },
+    "contrato_suspendido": {"contratos": {"estado_contrato": ["Suspendido"]}},
     "no_procede": {
         "procesos": {
             "estado_de_apertura_del_proceso": [],  # not necessarily closed
@@ -308,6 +309,9 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
         dict with 'family', 'filters' (field→list[value]), 'consumed_span', or None.
     """
     token_lower = natural_token.lower().strip()
+    if dataset == "contratos" and token_lower in ("suspendido", "suspendidos", "suspendida", "suspendidas"):
+        return {"family": "contrato_suspendido", "filters": {"estado_contrato": ["Suspendido"]},
+                "consumed_span": natural_token}
 
     # Precedencia léxica: si el token NOMBRA un estado del dataset, ese estado
     # es la respuesta — la familia no lo ensancha.

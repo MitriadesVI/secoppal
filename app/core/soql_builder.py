@@ -378,7 +378,12 @@ class SoQLBuilder:
                 "(scope/topic/estado/modalidad/contract_type). "
                 "Pass allow_global=True only if a global query is intentional."
             )
+        from app.core.contract_universe import predicate, universe_from_params
         where_clauses: list[str] = []
+        if spec.dataset_id == self.CONTRATOS_DATASET:
+            universe_clause = predicate(universe_from_params(params))
+            if universe_clause:
+                where_clauses.append(universe_clause)
         opportunity_policy = evaluate_current_opportunity_policy(
             params,
             spec.dataset_id,

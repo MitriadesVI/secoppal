@@ -120,6 +120,11 @@ def project_source(
     else:
         _purge_orphan_state_metadata(projected, dataset_id)
 
+    from app.core.contract_universe import stamp
+    if dataset_id == PROCESS_DATASET:
+        projected.pop("contract_universe", None)
+        projected.pop("contract_universe_version", None)
+    projected = stamp(projected)
     should_execute = wanted and not unsupported
     return SourcePlan(
         dataset_id=dataset_id,

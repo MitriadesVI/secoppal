@@ -90,10 +90,11 @@ def test_formula_like_source_text_is_neutralized():
 
 
 def test_empty_rows_still_build_valid_workbook():
+    from app.core.contract_universe import stamp
     payload = build_results_xlsx(
         rows=[],
         query="contratos de seguros",
-        resolved_params={"dataset": "contratos"},
+        resolved_params=stamp({"dataset": "contratos"}),
         dataset_id="jbjy-vk9h",
         total_count=0,
     )

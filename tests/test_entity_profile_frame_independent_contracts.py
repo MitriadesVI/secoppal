@@ -76,7 +76,7 @@ def test_exact_roundtrip_and_explicit_keep_set_clear_conflict():
     assert clear.frame.predicates_for(SourceKind.CONTRACTS).temporal.period.is_unbounded
 
 
-@pytest.mark.parametrize("version", [None, 0, 2, "1", 999])
+@pytest.mark.parametrize("version", [None, 0, 1, 3, "1", 999])
 def test_unknown_frame_version_rejected(version):
     payload = observe(f"analiza contratos de {BUYER}").frame.to_dict()
     payload["schema_version"] = version

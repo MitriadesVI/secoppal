@@ -101,7 +101,7 @@ def attach_source(flow, monkeypatch, buyer=CARTAGENA, minimum=500_000_000,
         rows.append((f'INDEPENDENT-{i:03}', f'REF-{i}', buyer if i != 60 else 'WRONG BUYER',
                      'Bolívar', 'Cartagena', 'software audit', 'software audit',
                      'Prestacion de servicios', 'Contratacion directa',
-                     minimum + 1 if i != 61 else 1, 0, 'Firmado',
+                     minimum + 1 if i != 61 else 1, 0, 'En ejecución',
                      '2026-03-01T00:00:00.000' if i != 62 else '2025-03-01T00:00:00.000',
                      supplier, '71000001' if i != 63 else '71000999',
                      'https://example.invalid/audit', 'CC'))

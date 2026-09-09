@@ -38,6 +38,7 @@ class ClaimDimension(str, Enum):
     EVENT = "EVENT"
     PERIOD = "PERIOD"
     CURRENT_STATE = "CURRENT_STATE"
+    CONTRACT_UNIVERSE = "CONTRACT_UNIVERSE"
     TOPIC = "TOPIC"
     MODALITY = "MODALITY"
     CONTRACT_TYPE = "CONTRACT_TYPE"
@@ -65,6 +66,7 @@ _VALUE_TYPE: dict[ClaimDimension, type | tuple[type, ...]] = {
     ClaimDimension.EVENT: TemporalEventKind,
     ClaimDimension.PERIOD: Period,
     ClaimDimension.CURRENT_STATE: StatePredicate,
+    ClaimDimension.CONTRACT_UNIVERSE: str,
     ClaimDimension.TOPIC: TopicNode,
     ClaimDimension.MODALITY: Selection,
     ClaimDimension.CONTRACT_TYPE: Selection,

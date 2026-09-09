@@ -24,6 +24,8 @@ from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.results import empty_result, tabular_result
 
 
+# Contract Universe V1: eight explicit file repins are adjudicated individually
+# in docs/audits/contract_universe_v1/repins.json. All process output oracles remain frozen.
 # Files M2 is authorized to touch, re-pinned. Their divergence is not taken on
 # trust: it is bounded by the structural tests at the end of this module.
 M2_MODIFIED_FILE_SHA256 = {
@@ -50,7 +52,7 @@ M2_MODIFIED_FILE_SHA256 = {
     # or fingerprint, which test_m2_does_not_move_ranking_ordering_counts_or_
     # pagination bounds. tests/test_url_fallback_channel_parity.py pins the new
     # copy and proves the three channels take the SAME decision per row.
-    "app/core/formatter.py": "6f6391988d698c3765d133bd6d089fca4347d255df75180fbfcbd18abf441db5",
+    "app/core/formatter.py": "b28f2c9b03c7615be0d61e29b0ad776e8ee92a0efcb433e8be5a4a00e15f19b9",
     # Money V2 / M7 adds a section gated strictly by valor_min/valor_max. The
     # no-money oracle below remains byte-identical and bounds that condition;
     # tests/test_money_presentation.py pins the authorized monetary divergence.
@@ -108,7 +110,7 @@ M2_MODIFIED_FILE_SHA256 = {
     # previous 15 fields and proves that removing this one column restores the
     # query byte for byte, with identical count, WHERE, ORDER BY and LIMIT.
     # The process/public oracles below and all other pins remain unchanged.
-    "app/core/soql_builder.py": "b64a3f1bd7bf22c77c6cca36bf094176af6f47b61cfebc2c4e61819f7eae7a46",
+    "app/core/soql_builder.py": "e7672dda139464c071b64336d5dc315fe7ac8eed093b20cc5b539962ad293754",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de
@@ -166,7 +168,7 @@ M2_MODIFIED_FILE_SHA256 = {
 # Lo acotan tests/test_auth.py (frontera de sesión), tests/test_web_session.py,
 # tests/test_radar_detail.py (dueño en el enrutado) y tests/test_radar_store.py.
 M2_1_MODIFIED_FILE_SHA256 = {
-    "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
+    "app/core/workflow/handlers/direct_lookup.py": "fe552becbb2f8c8daeda58398f411e0018f5912a8c85b5f3a4ddfd0371bdd982",
     # 078fb1b was a documentation-only microfix after the isolation hotfix.
     # RADAR-SECOP-ACCESS-V2 lo repinea por la vía a SECOP. Dos cambios y ambos
     # de presentación: (a) la app deja de INFERIR etapa de la ausencia de enlace
@@ -182,7 +184,7 @@ M2_1_MODIFIED_FILE_SHA256 = {
     # Frame B/B.1 (20aea784, ff2a5844): transport result/revision/chat refs.
     # test_truth_layer_frame_guard_controls exercises actual UI helpers/chips
     # and valid/invalid reloads; Search/M2.1 oracles below remain unchanged.
-    "streamlit_app.py": "97c33b7e964e8c8abf8e3d33a3261170d6942419a3a035d432c96f131076b9a2",
+    "streamlit_app.py": "5d82284c3489ea57f1440248e32d1352c58e4314fcba94e8092dda2f906e879d",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried
@@ -195,7 +197,7 @@ CONTROL_LANGUAGE_REPINNED_SHA256 = {
     # Frame B.1 F6 (ff2a5844): consume the admitted buffer and its params.
     # test_truth_layer_frame_guard_controls reuses legacy order/universe
     # controls with Frame ON; test_pagination_buffer covers legacy OFF.
-    "app/core/workflow/handlers/pagination.py": "af41276b320a872d7a9df71f2023c794ce8078be5ec7ca1f5f02af781ae4d4a3",
+    "app/core/workflow/handlers/pagination.py": "09767248a26190bd26f367d98ad397b0b7adf6670c10968168f536ac88e4b74c",
 }
 
 # Still byte-frozen: M2/SEARCH-SH1 touch neither ranking nor the surrounding
@@ -214,9 +216,9 @@ CONTROL_LANGUAGE_REPINNED_SHA256 = {
 # ordinary dual query still expands; the oracles in this module stay
 # byte-identical because none of them is a profile turn.
 BASELINE_FILE_SHA256 = {
-    "app/core/pagination_buffer.py": "18165ce221b19f49aa190f0c57a399112f72ce4a6906c49062967b7978c474ea",
+    "app/core/pagination_buffer.py": "802e763ace630368eada377319a715d3ca1bcdca00cb90dd4187236988e2f25c",
     "app/core/phrase_ranking.py": "0a99c8f4ebc10dd71556f1796a40c9192404475831a424964871954bab598c5a",
-    "app/core/workflow/dual_dataset.py": "0332333bfa744906d06d3ea4a0588f0995292c5819f0b7ddecd4a09b73b43240",
+    "app/core/workflow/dual_dataset.py": "17320c3e694de6d1a0c6bae0c749230b546373be4517428691e6620ed6cf1957",
     "app/core/workflow/handlers/refinement.py": "fe1a08d26550d5a39fb4fdddbcb40fd623b89e7ab09c634d0bba7a95db00e076",
     "app/core/workflow/results.py": "b4e869d985dadcb50679a19aafda27d92ead18ef756d4833a0ad9e4100d51057",
     "app/main.py": "bad1f025e142301e036fd40d6dbde78077719850bfda45e45ff1ff0bf4dda282",
@@ -252,7 +254,7 @@ SEARCH_SH1_MODIFIED_FILE_SHA256 = {
     # contexto asesor; pagination_buffer exige ausencia de la inyección en
     # ambos turnos. No cambian los oráculos de ranking/conteo/paginación.
     "app/core/workflow/handlers/normal_flow.py": (
-        "d64c051fc21f044565a6a81d7fb6f09644010bd9791d17007e22fa330dccd872"
+        "807b0e91cfda5351a5e271722d551bec7146213ccb80bf1362f638b05a1a78f6"
     ),
 }
 

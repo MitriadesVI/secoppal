@@ -36,7 +36,7 @@ FILTER_FIELDS = frozenset({
     *MONEY_FIELDS, "fecha_desde", "fecha_hasta", "_temporal_replace_scope",
     *MODALITY_FIELDS,
     *CONTRACT_TYPE_FIELDS,
-    "contratista", *STATE_FIELDS,
+    "contratista", *STATE_FIELDS, "contract_universe", "contract_universe_version",
 })
 PAGING_FIELDS = frozenset({"offset", "_display_offset", "_shown_total"})
 CLASSIFICATION_FIELDS = frozenset({"intent_type", "opportunity_mode", "filter_active_only"})

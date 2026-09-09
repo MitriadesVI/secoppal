@@ -39,6 +39,7 @@ PATCH_SCHEMA_VERSION = 1
 # como `Selection` no se «adapta», se rechaza.
 _VALUE_CODEC = {
     TargetKind.FOCUS: (str, lambda v: v, lambda raw: str(raw)),
+    TargetKind.CONTRACT_UNIVERSE: (str, lambda v: v, lambda raw: str(raw)),
     TargetKind.SOURCE_SELECTION: (
         SourceSelection, lambda v: v.to_dict(), SourceSelection.from_dict,
     ),

@@ -20,6 +20,7 @@ Lo que este modelo hace estructuralmente imposible:
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
+from app.core.contract_universe import POLICY_VERSION, ContractUniverse
 from enum import Enum
 from types import MappingProxyType
 from typing import Mapping
@@ -40,7 +41,7 @@ from app.core.entity_profile.frame_values import (
 )
 
 
-FRAME_SCHEMA_VERSION = 1
+FRAME_SCHEMA_VERSION = 2
 
 FOCUS_VALUES = frozenset(
     {"overview", "suppliers", "values", "modalities", "recent", "temporal"},
@@ -141,6 +142,13 @@ class SourcePredicates:
     modality: Selection = Selection()
     contract_type: Selection = Selection()
     value: ValueConstraint = UNBOUNDED_VALUE
+    contract_universe: str = ContractUniverse.CELEBRATED.value
+    contract_universe_version: str = POLICY_VERSION
+
+    def __post_init__(self):
+        from app.core.contract_universe import universe_from_params
+        universe_from_params({"contract_universe": self.contract_universe,
+                              "contract_universe_version": self.contract_universe_version})
 
     def fingerprint(self) -> str:
         """La representación normalizada de la que salen SQL y alcance visible."""
@@ -152,6 +160,7 @@ class SourcePredicates:
             f"modality:{self.modality.fingerprint()}",
             f"contract_type:{self.contract_type.fingerprint()}",
             self.value.fingerprint(),
+            f"universe:{self.contract_universe_version}:{self.contract_universe}",
         ))
 
     def to_dict(self) -> dict:
@@ -163,6 +172,8 @@ class SourcePredicates:
             "modality": self.modality.to_dict(),
             "contract_type": self.contract_type.to_dict(),
             "value": self.value.to_dict(),
+            "contract_universe": self.contract_universe,
+            "contract_universe_version": self.contract_universe_version,
         }
 
     @classmethod
@@ -177,6 +188,8 @@ class SourcePredicates:
             modality=Selection.from_dict(raw["modality"]),
             contract_type=Selection.from_dict(raw["contract_type"]),
             value=ValueConstraint.from_dict(raw["value"]),
+            contract_universe=raw["contract_universe"],
+            contract_universe_version=raw["contract_universe_version"],
         )
 
 

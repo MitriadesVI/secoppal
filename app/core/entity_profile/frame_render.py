@@ -163,7 +163,9 @@ def describe_topic(node: TopicNode) -> str | None:
 
 
 def _filter_lines(predicates, *, name_magnitude: bool) -> tuple[str, ...]:
-    lines: list[str] = []
+    from app.core.contract_universe import label
+    lines: list[str] = ([label(predicates.contract_universe)]
+                        if predicates.source is SourceKind.CONTRACTS else [])
     topic = describe_topic(predicates.topic)
     if topic:
         lines.append(f"Tema: {topic}.")

@@ -273,6 +273,8 @@ class QueryRouter:
             ),
         )
         source_occurrences = source_request_occurrences(normalized)
+        from app.core.contract_universe_intent import request, apply_request
+        universe_request = request(user_query)
         params: dict[str, object] = {}
         actor_conversation = ActorConversationInstruction()
         actor_relation_spans: tuple[str, ...] = ()
@@ -1075,6 +1077,11 @@ class QueryRouter:
         if objeto_phrases:
             params["objeto_phrases"] = objeto_phrases
 
+        if universe_request and universe_request.span != (0, 0):
+            control = normalize_text(user_query[slice(*universe_request.span)])
+            for token in control.split():
+                objeto_text = re.sub(rf"\b{re.escape(token)}\b", " ", objeto_text)
+
         # ── 12. Object terms (whatever remains after all extractions) ───
         object_terms = self._extract_object_terms(objeto_text)
         if object_terms:
@@ -1105,7 +1112,7 @@ class QueryRouter:
         # INV-STATE-FAMILY-PROJECTS-COMPLETE: una familia declarada por
         # cualquier ruta (detector de estado o intent) se materializa entera
         # antes de salir del parser. Rellena; nunca pisa un estado ya acotado.
-        params = project_estado_family(params)
+        params = apply_request(project_estado_family(params), universe_request)
         negation_requests = attach_scope_anchors(
             negation_policy.requests, params,
         )

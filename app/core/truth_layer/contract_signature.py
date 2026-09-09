@@ -56,10 +56,11 @@ _VALID_SIGNATURE = frozenset(
     }
 )
 _VALID_DATE = frozenset({"observed", "missing", "not_observed"})
-_PRE_SIGNATURE_STATES = frozenset({"borrador", "en aprobacion", "aprobado"})
+_PRE_SIGNATURE_STATES = frozenset({"borrador", "en aprobacion", "enviado proveedor"})
 _POST_SIGNATURE_STATES = frozenset(
     {
         "en ejecucion",
+        "aprobado",
         "suspendido",
         "terminado",
         "cerrado",

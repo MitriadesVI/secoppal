@@ -67,6 +67,7 @@ def test_observed_signature_date_is_direct_and_raw_is_preserved() -> None:
         "Modificado",
         "Prorrogado",
         "cedido",
+        "Aprobado",
     ],
 )
 def test_post_signature_state_can_infer_signing_without_inventing_a_date(
@@ -86,13 +87,13 @@ def test_post_signature_state_can_infer_signing_without_inventing_a_date(
     } & {field.name for field in dataclasses.fields(assessment)}
 
 
-@pytest.mark.parametrize("state", ["Borrador", "En aprobación", "Aprobado"])
+@pytest.mark.parametrize("state", ["Borrador", "En aprobación", "enviado Proveedor"])
 def test_pre_signature_state_without_date_is_not_signed(state: str) -> None:
     assessment = resolve_contract_signature(_signals(state))
     assert assessment.signature_status == "not_signed"
 
 
-@pytest.mark.parametrize("state", ["Borrador", "En aprobación", "Aprobado"])
+@pytest.mark.parametrize("state", ["Borrador", "En aprobación", "enviado Proveedor"])
 def test_pre_signature_state_with_date_is_conflicting(state: str) -> None:
     assessment = resolve_contract_signature(
         _signals(state, "2025-01-01")

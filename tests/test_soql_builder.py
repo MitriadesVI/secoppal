@@ -304,6 +304,9 @@ def test_variant_explosion_mantenimiento_no_redundant_likes() -> None:
     ):
         assert banned not in lower, f"Variante redundante '{banned}' presente en SoQL"
 
+    # El tope mide el tema, no el nuevo predicado común del universo.
+    from app.core.contract_universe import predicate
+    where = where.removeprefix(predicate() + " AND ")
     # WHERE clause debe ser compacto (<300 caracteres vs ~1500 del bug)
     assert len(where) < 300, (
         f"WHERE clause muy largo: {len(where)} caracteres (debe ser <300)"

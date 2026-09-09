@@ -24,7 +24,7 @@ _FORMULA_PREFIXES = ("=", "+", "-", "@")
 # User-facing filters only. Avoid exporting resolver/debug payloads that happen
 # to live inside resolved_params.
 _FILTER_KEYS = (
-    "dataset",
+    "dataset", "contract_universe", "contract_universe_version",
     "intent_type",
     "objeto",
     "objeto_or",
@@ -76,6 +76,9 @@ def build_results_xlsx(
     generated_at: datetime | None = None,
 ) -> bytes:
     """Build a two-sheet workbook from the rows already visible to the user."""
+    from app.core.contract_universe import compatible
+    if not compatible({**(resolved_params or {}), "dataset": dataset_id}):
+        raise ValueError("El universo de esta exportación requiere revisión. Repite la búsqueda.")
     instant = _colombia_time(generated_at)
     workbook = Workbook()
     results_ws = workbook.active

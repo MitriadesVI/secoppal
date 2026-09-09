@@ -11,6 +11,9 @@ def migrate_current_legacy(store, chat_id):
     params = history[0].parsed_params
     if not params.get(PROFILE_ACTIVE_PARAM):
         return None
+    from app.core.contract_universe import compatible
+    if not compatible({**params, "dataset": "contratos"}):
+        return ProfileConversationState(), 'legacy contract universe requires review'
     request = params.get(PROFILE_REQUEST_PARAM)
     state = params.get('_entity_profile_state') or {}
     if state.get('pending') or (state.get('confirmed') and state['confirmed'] != request):

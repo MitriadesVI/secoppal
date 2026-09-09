@@ -1463,6 +1463,8 @@ def _cont(cid, estado="En ejecución", valor="5000000",
 def _make_contratos_radar(store):
     params = {"objeto": ["alimentacion_escolar"],
               "departamento_resolved": "ATLÁNTICO", "dataset": "contratos"}
+    from app.core.contract_universe import stamp
+    params = stamp(params)  # This fixture is a newly saved Radar, not a legacy migration.
     frame_json = json.dumps(dataclasses.asdict(frame_from_params(params)))
     rid = store.create_radar(
         name="Radar contratos PAE", owner="u1",

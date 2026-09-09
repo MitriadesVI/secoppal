@@ -44,7 +44,7 @@ from app.core.entity_profile.frame_values import (
 )
 from app.core.entity_profile.immutability import deep_freeze
 
-CATALOG_VERSION = "entity-profile-frame-1"
+CATALOG_VERSION = "entity-profile-frame-2-contract-universe-1"
 
 PROFILE_QUERY_BUDGET = 6
 
@@ -365,6 +365,14 @@ def _validate_predicates(frame: EntityProfileFrame) -> tuple[PlanIssue, ...]:
     issues: list[PlanIssue] = []
     for source in frame.sources:
         predicates = frame.predicates_for(source)
+        if source is SourceKind.CONTRACTS:
+            from app.core.contract_universe import conflict_message
+            state_values = [value for item in predicates.current_state.predicates
+                            if item.field == "estado_contrato" for value in item.values]
+            message = conflict_message({"dataset": "contratos", "contract_universe": predicates.contract_universe,
+                                        "estado_contrato": state_values})
+            if message:
+                issues.append(PlanIssue("CONTRACT_UNIVERSE_CONFLICT", message, (source,)))
         event = predicates.temporal.event
         if event.source is not None and event.source is not source:
             issues.append(PlanIssue(

@@ -43,6 +43,8 @@ def is_actor_profile_turn(params: dict) -> bool:
     Exige una identidad autoritativa según la primitive central. Un candidato
     fuzzy nunca ejecuta un perfil; una selección explícita del usuario sí.
     """
+    if params.get("contract_universe") == "source_records":
+        return False
     if not actor_profile_enabled():
         return False
     if not is_authoritative_actor_resolution(params):

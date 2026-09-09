@@ -142,7 +142,7 @@ def plan_query(state: State) -> State:
 
 
 @action(
-    reads=["parsed_params", "timings_ms"],
+    reads=["parsed_params", "timings_ms", "context_params", "followup_intent_type", "user_query"],
     writes=["resolved_params", "dataset_id", "query_plan", "needs_clarification", "clarification_reason", "formatted_response", "formatted_rows", "timings_ms"],
 )
 def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
@@ -171,7 +171,21 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
 
     start = time.perf_counter()
     params = dict(state["parsed_params"])
-    resolved = dict(params)
+    from app.core.contract_universe import stamp, conflict_message, compatible
+    from app.core.contract_universe_intent import request
+    previous = state.get("context_params") or {}
+    if (state.get("followup_intent_type") not in (None, "", "new_search", "reset_context")
+            and not compatible(previous) and params.get("dataset") == "contratos"
+            and request(state.get("user_query", "")) is None):
+        return state.update(
+            resolved_params=previous, needs_clarification=True,
+            clarification_reason="La búsqueda contractual anterior requiere revisión de universo. Repite la consulta completa.",
+        )
+    resolved = stamp(params)
+    universe_error = params.get("contract_universe_error") or conflict_message(resolved)
+    if universe_error:
+        return state.update(resolved_params=resolved, needs_clarification=True,
+                            clarification_reason=universe_error)
     resolved.pop("dataset_explicit", None)  # meta-field, not for SECOP
     needs_clarification = False
     clarification_reason = ""

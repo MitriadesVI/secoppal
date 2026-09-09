@@ -52,7 +52,7 @@ def test_phrase_only_query_has_no_where_1_1(builder):
     # objeto_phrases es topic suficiente: nunca debe degenerar en WHERE 1=1
     sql = builder.build(DATASET, {"objeto_phrases": ["manual de contratacion"]})
     assert "1=1" not in sql
-    assert re.search(r"where\s+\(", sql.lower())
+    assert re.search(r"(?:where|and)\s+\(", sql.lower())
 
 
 def test_unknown_canonical_is_ignored(builder):

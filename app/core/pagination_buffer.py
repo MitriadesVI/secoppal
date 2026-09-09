@@ -10,14 +10,19 @@ from app.core.query_fingerprint import query_fingerprint
 DEFAULT_TTL_SECONDS = 15 * 60
 MAX_CANDIDATE_ROWS = 600
 MAX_VALIDATED_ROWS = 600
-PAGINATION_CONTRACT_VERSION = "e8b.2-1"
+PAGINATION_CONTRACT_VERSION = "e8b.2-2-contract-universe-1"
+
+
+def pagination_contract_version(params: dict) -> str:
+    return (PAGINATION_CONTRACT_VERSION if params.get("dataset") in ("contratos", "jbjy-vk9h")
+            else "e8b.2-1")
 
 
 def pagination_fingerprint(
-    params: dict, *, contract_version: str = PAGINATION_CONTRACT_VERSION,
+    params: dict, *, contract_version: str | None = None,
 ) -> str:
     return query_fingerprint(
-        params, extra={"pagination_contract": contract_version},
+        params, extra={"pagination_contract": contract_version or pagination_contract_version(params)},
     )
 
 

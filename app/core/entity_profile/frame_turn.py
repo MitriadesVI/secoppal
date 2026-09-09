@@ -111,6 +111,12 @@ def is_profile_turn(
         return True, _pending_focus(state)
     if state.confirmed_frame is None:
         return detect_entity_profile_turn(user_query, params)
+    from app.core.contract_universe_intent import request
+    dependent_filter = (params.get("fecha_desde") or params.get("fecha_hasta")
+                        or request(user_query) is not None
+                        or (re.match(r"^de\s+", user_query.strip(), re.I) and params.get("objeto")))
+    if dependent_filter and not params.get("entidad") and not params.get("contratista"):
+        return True, state.confirmed_frame.focus
     if asks_to_clear_period(user_query):
         # «sin filtro de fecha» sobre un perfil activo es un turno del perfil:
         # es la MISMA autoridad que produce el claim CLEAR_PERIOD, y sin esta

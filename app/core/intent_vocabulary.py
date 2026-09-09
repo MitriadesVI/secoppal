@@ -131,6 +131,9 @@ _BIDDER_VERBS = "|".join(
 #   filter_active_only: bool — add fecha_cierre >= today (future work)
 #   consumed_span: str — override auto-detected span
 INTENT_PATTERNS: list[tuple[re.Pattern, dict]] = [
+    # Contract purchase action must not depend on the Actor feature flag.
+    (re.compile(r"\b(?:que\s+)?(?:ha|han)\s+contratado\b", re.IGNORECASE),
+     {"force_dataset": "contratos", "scrub_only": True}),
     # ── "para presentarme" / "donde me pueda presentar" / "para poder presentarme" ──
     # CORPUS-003B: added quiero/necesito + verb, puedo variant of pueda
     (

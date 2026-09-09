@@ -60,6 +60,7 @@ from app.core.entity_profile.patch import (
 # Una cuestión sin resolver que no puede convertirse en un universo ejecutable.
 BLOCKING_ISSUES = frozenset({
     "UNSUPPORTED_EVENT",
+    "CONTRACT_UNIVERSE_CONFLICT",
     "SOURCE_CHOICE_AMBIGUOUS",
     "AMBIGUOUS_PERIOD_ANCHOR",
     "EVENT_SUBJECT_UNRESOLVED",
@@ -194,6 +195,10 @@ def _source_operations(
         temporal = _temporal(claims, owner)
         if temporal is not None:
             operations.append(_op(TargetKind.TEMPORAL, temporal[0], temporal[1], source))
+
+    universe = _single(claims, ClaimDimension.CONTRACT_UNIVERSE)
+    if universe is not None and source is SourceKind.CONTRACTS:
+        operations.append(_op(TargetKind.CONTRACT_UNIVERSE, universe.canonical_value, (universe,), source))
 
     state = _state(claims, owner)
     if state is not None:

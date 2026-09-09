@@ -125,7 +125,13 @@ def render_frame_profile(
         blocks.extend(profile.warnings)
     if plan.focus == "overview":
         blocks.append(_NEXT_STEPS.get(planned, _NEXT_STEPS_BOTH))
-    return "\n\n".join(blocks)
+    response = "\n\n".join(blocks)
+    contract_plan = plan.source_plans.get(SourceKind.CONTRACTS)
+    if contract_plan and contract_plan.predicates.contract_universe == "source_records":
+        import re
+        response = re.sub(r"\bcontratos\b", "registros", response)
+        response = response.replace("Contrato reciente:", "Registro reciente:")
+    return response
 
 
 def render_scope_only(plan: ProfilePlan) -> tuple[str, ...]:

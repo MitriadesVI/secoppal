@@ -24,7 +24,8 @@ _PROCESOS_ONLY_KEYS = (
     "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_family", "estado_field", "estado", "intent_type",
 )
-_CONTRATOS_ONLY_KEYS = ("estado_contrato", "estado_contrato_adicional")
+_CONTRATOS_ONLY_KEYS = ("estado_contrato", "estado_contrato_adicional",
+                        "contract_universe", "contract_universe_version")
 
 _CANDIDATE_LIMIT = 200
 _DEFAULT_LIMIT = 50
@@ -43,7 +44,8 @@ def params_for_dataset(common: dict, dataset_name: str) -> dict:
     drop = _CONTRATOS_ONLY_KEYS if dataset_name == "procesos" else _PROCESOS_ONLY_KEYS
     for key in drop:
         p.pop(key, None)
-    return p
+    from app.core.contract_universe import stamp
+    return stamp(p)
 
 
 @dataclass(frozen=True)

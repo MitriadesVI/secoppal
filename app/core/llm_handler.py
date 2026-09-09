@@ -33,8 +33,8 @@ Reglas:
    - "200 palos" = 200000000
 4. "abiertas" o "vigentes" -> estado "Abierto"
 5. "contratos firmados" -> dataset "contratos", SIN estado.
-   Razon: todos los registros del dataset contratos son por definicion
-   contratos firmados. "Firmado" selecciona dataset, no estado.
+   "Firmado" selecciona dataset y el universo de contratos celebrados, no estado.
+   El dataset también contiene registros preparatorios y cancelados.
    Nunca emitas valores en estado, estado_contrato ni estado_field
    cuando el usuario diga "firmados", "firmado", "contratos suscritos"
    o equivalentes.

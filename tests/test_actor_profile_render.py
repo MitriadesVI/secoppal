@@ -277,7 +277,7 @@ def test_an_actor_query_returns_the_profile_through_the_normal_flow():
 def test_the_profile_response_is_not_rewritten_by_the_advisor_layer():
     """El texto que se construyó es el que se entrega: sin secciones añadidas."""
     result = _workflow().run_query("contratos del NIT 860002400", channel="streamlit")
-    assert result["response"].startswith("LA PREVISORA")
+    assert result["response"].startswith("Contratos celebrados según las señales publicadas en SECOP.\n\nLA PREVISORA")
     assert "RUES" in result["response"]
 
 

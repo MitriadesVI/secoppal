@@ -422,6 +422,12 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
                 except Exception as exc:  # best-effort: diagnóstico nunca rompe la respuesta
                     logger.warning("recall audit failed: %s", exc)
 
+    from app.core.contract_universe import label, universe_from_params
+    if result.get("dataset_id") == "jbjy-vk9h" and not result.get("needs_clarification"):
+        universe_label = label(universe_from_params(result.get("resolved_params") or {}))
+        if universe_label not in result.get("response", ""):
+            result["response"] = universe_label + "\n\n" + result.get("response", "")
+
     trace_id = deps.feedback.log_trace(
         ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
     )

@@ -50,6 +50,7 @@ class TargetKind(str, Enum):
     SOURCE_SELECTION = "source_selection"
     TEMPORAL = "temporal"
     CURRENT_STATE = "current_state"
+    CONTRACT_UNIVERSE = "contract_universe"
     TOPIC = "topic"
     MODALITY = "modality"
     CONTRACT_TYPE = "contract_type"
@@ -61,7 +62,7 @@ class TargetKind(str, Enum):
 # pueden quedar vacías: un perfil sin universo no es un perfil.
 _PER_SOURCE = frozenset({
     TargetKind.TEMPORAL, TargetKind.CURRENT_STATE, TargetKind.TOPIC,
-    TargetKind.MODALITY, TargetKind.CONTRACT_TYPE, TargetKind.VALUE,
+    TargetKind.MODALITY, TargetKind.CONTRACT_TYPE, TargetKind.VALUE, TargetKind.CONTRACT_UNIVERSE,
 })
 _CLEARABLE = _PER_SOURCE
 

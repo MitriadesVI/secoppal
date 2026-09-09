@@ -65,7 +65,8 @@ def save_radar_from_params(
     scheduler push; en v1.0 (pull) no cambia el comportamiento.
     Puede lanzar ``RadarExistsError`` si ya existe ``(owner, name)``.
     """
-    clean = sanitize_for_save(params)
+    from app.core.contract_universe import stamp
+    clean = stamp(sanitize_for_save(params))
     frame = frame_from_params(clean)
     frame_json = json.dumps(dataclasses.asdict(frame), ensure_ascii=False)
     return store.create_radar(

@@ -1,0 +1,42 @@
+{
+  "app/core/formatter.py": {
+    "before": "6f6391988d698c3765d133bd6d089fca4347d255df75180fbfcbd18abf441db5",
+    "after": "b28f2c9b03c7615be0d61e29b0ad776e8ee92a0efcb433e8be5a4a00e15f19b9",
+    "adjudication": "Contract label, valid date display, contradiction note and dual group label; product/direct/dual/format controls; process oracles unchanged."
+  },
+  "app/core/soql_builder.py": {
+    "before": "b64a3f1bd7bf22c77c6cca36bf094176af6f47b61cfebc2c4e61819f7eae7a46",
+    "after": "e7672dda139464c071b64336d5dc315fe7ac8eed093b20cc5b539962ad293754",
+    "adjudication": "One common eligibility predicate before retrieval and every aggregate; SQL-executed consumer and mutation tests."
+  },
+  "app/core/workflow/handlers/direct_lookup.py": {
+    "before": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
+    "after": "fe552becbb2f8c8daeda58398f411e0018f5912a8c85b5f3a4ddfd0371bdd982",
+    "adjudication": "Persist explicit source_records metadata for direct ID; direct excluded record control."
+  },
+  "app/core/workflow/handlers/pagination.py": {
+    "before": "af41276b320a872d7a9df71f2023c794ce8078be5ec7ca1f5f02af781ae4d4a3",
+    "after": "09767248a26190bd26f367d98ad397b0b7adf6670c10968168f536ac88e4b74c",
+    "adjudication": "Use shared fingerprint and reject unversioned contract buffers; reload/pages and legacy rejection controls."
+  },
+  "app/core/pagination_buffer.py": {
+    "before": "18165ce221b19f49aa190f0c57a399112f72ce4a6906c49062967b7978c474ea",
+    "after": "802e763ace630368eada377319a715d3ca1bcdca00cb90dd4187236988e2f25c",
+    "adjudication": "Version contractual cursors only; process fingerprint and process byte oracles unchanged."
+  },
+  "app/core/workflow/dual_dataset.py": {
+    "before": "0332333bfa744906d06d3ea4a0588f0995292c5819f0b7ddecd4a09b73b43240",
+    "after": "17320c3e694de6d1a0c6bae0c749230b546373be4517428691e6620ed6cf1957",
+    "adjudication": "Stamp contract child before execution and buffering, strip contract-only keys from process child; SQL-executed dual control."
+  },
+  "app/core/workflow/handlers/normal_flow.py": {
+    "before": "d64c051fc21f044565a6a81d7fb6f09644010bd9791d17007e22fa330dccd872",
+    "after": "807b0e91cfda5351a5e271722d551bec7146213ccb80bf1362f638b05a1a78f6",
+    "adjudication": "Show applied contract universe in analytical and tabular final response; both seeds and Actor controls."
+  },
+  "streamlit_app.py": {
+    "before": "97c33b7e964e8c8abf8e3d33a3261170d6942419a3a035d432c96f131076b9a2",
+    "after": "5d82284c3489ea57f1440248e32d1352c58e4314fcba94e8092dda2f906e879d",
+    "adjudication": "Existing XLSX export shows review message for stale contractual metadata; isolated UI function control verifies no workbook is built. No new button or setting."
+  }
+}

@@ -40,7 +40,7 @@ from app.core.pagination_buffer import (
     PaginationBuffer,
 )
 from app.core.phrase_ranking import validate_rank_and_dedupe
-from app.core.query_fingerprint import query_fingerprint
+from app.core.pagination_buffer import pagination_fingerprint
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.helpers import _query_first_then_count
 from app.core.workflow.persistence import persist_trace_and_turn
@@ -66,7 +66,6 @@ _DEFAULT_SECOP_LIMIT = 50
 # la semántica de cómo se ordena/valida/rankea una página, BUMPEAR → el fingerprint del
 # cursor cambia → un cursor de un deploy anterior NO se reutiliza (se reinicia desde la
 # página 1). Protege contra "continuar una página vieja" tras un cambio de código.
-_PAGINATION_CONTRACT_VERSION = "e8b.2-1"
 _PAGINATION_CURSOR_KEYS = (_DISPLAY_OFFSET_KEY, _SHOWN_TOTAL_KEY, _PAGE_FP_KEY)
 
 
@@ -74,7 +73,7 @@ def _page_fingerprint(params: dict) -> str:
     """Huella de la consulta que define la página (sin claves de cursor), versionada por
     el contrato de paginación. Dos turnos con MISMA consulta y MISMO contrato comparten
     huella; un cambio de consulta/dataset/orden/contrato la cambia → cursor incompatible."""
-    return query_fingerprint(params, extra={"pagination_contract": _PAGINATION_CONTRACT_VERSION})
+    return pagination_fingerprint(params)
 
 
 def _fetch_window(
@@ -158,6 +157,14 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
         prev_params = (dict(ctx.tabular_referent.params) if ctx.tabular_referent
                        else dict(history[-1].parsed_params))
 
+        from app.core.contract_universe import compatible
+        if not compatible(prev_params):
+            return persist_trace_and_turn(deps, ctx, empty_result(
+                response="El universo contractual de esa página es anterior a la política vigente. Repite la búsqueda.",
+                route_reason="contract_universe_review_required", needs_clarification=True,
+                parsed_params=prev_params, resolved_params=prev_params,
+            ))
+
         # Dual-dataset: "más" tras una búsqueda dual es ambiguo. No paginar uno solo
         # en silencio: preguntar cuál (primera versión; "más procesos"/"más contratos"
         # colapsan vía el dual-collapse del follow-up).
@@ -212,6 +219,8 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
                 "validated_count": 0,
                 "quarantined_count": 0,
             }
+            if buffer is not None and not compatible(buffer.query_params):
+                raise ValueError("El universo contractual del buffer requiere una nueva búsqueda")
             buffer_hit = buffer is not None
             soql = (
                 deps.soql_builder.build(buffer.dataset_id, buffer.query_params)

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import hashlib
 import json
 
-from app.core.pagination_buffer import PaginationBuffer, PAGINATION_CONTRACT_VERSION
+from app.core.pagination_buffer import PaginationBuffer, pagination_contract_version
 from app.core.workflow.continuation import TabularGroup
 
 
@@ -14,7 +14,7 @@ def cursor_id(buffer):
 
 def capability(buffer, generation):
     return TabularGroup(buffer.group, cursor_id(buffer), buffer.query_fingerprint,
-                        PAGINATION_CONTRACT_VERSION, generation, buffer.expires_at_utc)
+                        pagination_contract_version(buffer.query_params), generation, buffer.expires_at_utc)
 
 
 def published_groups(store, reservation):
@@ -50,6 +50,9 @@ def validate_tabular(store, reservation, contract, query):
     if not isinstance(raw, dict):
         raise ValueError('published cursor is absent')
     buffer = PaginationBuffer.from_dict(raw)
+    from app.core.contract_universe import compatible
+    if not compatible({**buffer.query_params, "dataset": buffer.dataset_id}):
+        raise ValueError('contract universe requires a new search')
     generation = reservation.previous.envelope.continuity_generation
     if groups[name] != capability(buffer, generation) or buffer.is_expired():
         raise ValueError('published cursor is incompatible or expired')
@@ -62,4 +65,6 @@ def export_params(store, contract, chat):
     history = store.get_history(chat, last_n=1)
     if len(history) != 1 or history[0].turn_id != contract.export_ref:
         return None
-    return dict(history[0].parsed_params)
+    from app.core.contract_universe import compatible
+    params = dict(history[0].parsed_params)
+    return params if compatible(params) else None

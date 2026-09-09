@@ -68,6 +68,11 @@ logger = logging.getLogger(__name__)
 
 def _log_trace(deps: "WorkflowDeps", ctx: "HandlerContext", result: dict) -> dict:
     """Direct-lookup persistence: trace only, never conv_store.append_turn."""
+    if result.get("dataset_id") == "jbjy-vk9h":
+        from app.core.contract_universe import POLICY_VERSION
+        for key in ("parsed_params", "resolved_params"):
+            result.setdefault(key, {}).update(contract_universe="source_records",
+                                               contract_universe_version=POLICY_VERSION)
     trace_id = deps.feedback.log_trace(
         ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
     )
