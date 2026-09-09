@@ -55,7 +55,30 @@
     "exit_code": 0,
     "stdout_tail": [
       "..............................................                           [100%]",
-      "46 passed in 5.50s"
+      "46 passed in 5.38s"
+    ],
+    "stderr_tail": []
+  },
+  "f2_1_completeness": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_f2_1_completeness.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "........................................................................ [ 29%]",
+      "........................................................................ [ 58%]",
+      "........................................................................ [ 87%]",
+      "................................                                         [100%]",
+      "248 passed in 32.14s"
     ],
     "stderr_tail": []
   },
@@ -105,7 +128,7 @@
       "........................................................................ [ 73%]",
       "........................................................................ [ 92%]",
       "..............................                                           [100%]",
-      "390 passed in 9.86s"
+      "390 passed in 9.50s"
     ],
     "stderr_tail": []
   },
@@ -129,7 +152,7 @@
     "stdout_tail": [
       "........................................................................ [ 84%]",
       ".............                                                            [100%]",
-      "85 passed in 8.72s"
+      "85 passed in 8.97s"
     ],
     "stderr_tail": []
   },
@@ -196,7 +219,7 @@
       "........................................................................ [ 88%]",
       "........................................................................ [ 94%]",
       ".................................................................        [100%]",
-      "1217 passed in 72.13s (0:01:12)"
+      "1217 passed in 72.59s (0:01:12)"
     ],
     "stderr_tail": []
   },
@@ -226,7 +249,7 @@
       "FAILED tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[True]",
       "FAILED tests/test_contract_universe_independent_consumers.py::test_materialized_dual_children_and_source_names[celebrated-24]",
       "FAILED tests/test_contract_universe_independent_legacy.py::test_real_base_conversation_requires_review",
-      "10 failed, 33 passed in 5.43s"
+      "10 failed, 33 passed in 5.22s"
     ],
     "stderr_tail": []
   },
@@ -252,7 +275,7 @@
     "exit_code": 0,
     "stdout_tail": [
       "...........................................                              [100%]",
-      "43 passed in 5.16s"
+      "43 passed in 5.25s"
     ],
     "stderr_tail": []
   },

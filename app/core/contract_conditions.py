@@ -57,6 +57,34 @@ ADMITTED_CONDITION = (
 )
 _CONDITION = re.compile(rf"\b(?P<excluded>{EXCLUDED_CONDITION})\b"
                         rf"|\b(?P<admitted>{ADMITTED_CONDITION})\b")
+
+# `celebrados`, `firmados` y `suscritos` no nombran un estado de Socrata: nombran
+# el universo entero. Se distinguen de los estados concretos porque el universo
+# ya viaja en el predicado, mientras que un estado necesita el filtro.
+CELEBRATED_UNIVERSE = '*universo celebrado*'
+_DENOTES = (
+    (re.compile(r"^(?:celebrad|firmad|suscrit)"), CELEBRATED_UNIVERSE),
+    (re.compile(r"^cancelad"), 'Cancelado'),
+    (re.compile(r"^(?:en\s+)?borrador"), 'Borrador'),
+    (re.compile(r"^enviad"), 'enviado Proveedor'),
+    (re.compile(r"^en\s+aprobacion"), 'En aprobación'),
+    (re.compile(r"^en\s+ejecucion"), 'En ejecución'),
+    (re.compile(r"^cerrad"), 'Cerrado'),
+    (re.compile(r"^modificad"), 'Modificado'),
+    (re.compile(r"^terminad"), 'terminado'),
+    (re.compile(r"^cedid"), 'cedido'),
+    (re.compile(r"^suspendid"), 'Suspendido'),
+    (re.compile(r"^prorrogad"), 'Prorrogado'),
+    (re.compile(r"^aprobad"), 'Aprobado'),
+)
+
+
+def denotes(surface: str) -> str:
+    """Qué nombra una superficie: un literal de estado, o el universo celebrado."""
+    for pattern, value in _DENOTES:
+        if pattern.match(surface):
+            return value
+    raise ValueError(f'superficie sin denotación declarada: {surface!r}')
 # El sustantivo con que se nombra la petición no es tema: precede a la condición
 # sin convertirla en objeto contractual.
 _REQUEST_NOUN = re.compile(r"\b(?:registros?|contratos?)\b")
@@ -89,17 +117,31 @@ class ConditionComposition:
         return tuple(c for c in self.conditions if c.admitted)
 
     @property
+    def denoted(self) -> frozenset[str]:
+        """Lo que la petición nombra, ya sin variantes de superficie."""
+        return frozenset(denotes(condition.surface) for condition in self.conditions)
+
+    @property
     def representable(self) -> bool:
         """Un solo ``estado_contrato`` dentro de un solo universo.
 
-        Dos estados excluidos distintos no caben en un filtro singular, y un
-        estado admitido junto a uno excluido cruza la frontera del universo.
-        Dos condiciones admitidas sí caben: ambas viven en el celebrado.
+        Dos estados distintos —excluidos o admitidos, da igual— no caben en el
+        filtro singular que producen los adaptadores vigentes: ``UniverseRequest``
+        transporta un ``state`` escalar y ``detect_estado_family`` declara que
+        «multiple matches are not allowed». El transporte SQL sí sabe emitir
+        ``estado_contrato IN (...)``, pero ningún productor construye esa unión a
+        partir de dos condiciones sueltas, y fabricarla sería una gramática nueva.
+        Mientras no exista esa autoridad, la composición se aclara.
+
+        El universo celebrado no cuenta como estado: ya viaja en el predicado, de
+        modo que ``celebrados y suspendidos`` conserva ambas condiciones. Lo que
+        no puede convivir con él es un estado excluido: eso cruza la frontera.
         """
-        excluded = {condition.surface for condition in self.excluded}
-        if len(excluded) > 1:
+        states = {value for value in self.denoted if value != CELEBRATED_UNIVERSE}
+        if len(states) > 1:
             return False
-        return not (excluded and self.admitted)
+        excluded = states & {denotes(c.surface) for c in self.excluded}
+        return not (excluded and CELEBRATED_UNIVERSE in self.denoted)
 
     @property
     def span(self) -> tuple[int, int] | None:

@@ -17,7 +17,7 @@ Todo pytest usa `-p tests.contract_universe_offline_guard` y
 ```
 
 Escribe [validation.json](validation.json) con cada comando, su exit code y su
-salida. Incluye ruff, semgrep, simetría, los tests del auditor, los 85 de
+salida. Incluye ruff, semgrep, simetría, completitud, los tests del auditor, los 85 de
 remediación, los 1.217 targets del autor, los 43 congelados literales, el
 control de causalidad con el shim V1 de Aprobado, corpus, lint-core y
 diff-check. **No** ejecuta la suite global.
@@ -40,10 +40,17 @@ El arnés vive en el scratchpad de la sesión porque opera sobre una copia
 desechable: crea un worktree de la base, le aplica encima el fix, y luego muta,
 ejecuta el killer y restaura. Comprueba al final que cada archivo mutado volvió
 byte por byte a su contenido post-fix —comparar contra git no serviría, porque
-el fix mismo aparece como diferencia frente a la base—. Los killers son
-`test_contract_universe_f2_1_symmetry.py`, `test_cu_v11_audit_findings.py` y
+el fix mismo aparece como diferencia frente a la base—. Los killers son `test_contract_universe_f2_1_symmetry.py`,
+`test_contract_universe_f2_1_completeness.py`, `test_cu_v11_audit_findings.py` y
 `test_cu_v11_audit_f1_f5.py`; sólo cuenta un kill con fallos de aserción y cero
-errores de colección. Resultados en [mutations.json](mutations.json).
+errores de colección. El arnés vive en
+[mutation_harness.py](mutation_harness.py) y sus resultados en
+[mutations.json](mutations.json).
+
+Una corrida intermedia salió con baseline rojo y restauración fallida porque dos
+arneses compartieron el mismo worktree desechable. Se descartó y se repitió sobre
+un árbol nuevo, con el baseline verde comprobado **antes** de mutar; los
+resultados que se reportan son los de esa segunda corrida.
 
 ## Preservación de los tests del auditor
 

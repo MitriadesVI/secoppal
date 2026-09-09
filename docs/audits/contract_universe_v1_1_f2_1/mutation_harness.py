@@ -7,6 +7,7 @@ PY = '/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python'
 ARGS = ['-m', 'pytest', '-p', 'tests.contract_universe_offline_guard',
         '-p', 'tests.contract_universe_sql_dates', '-q', '--tb=no']
 KILLERS = ['tests/test_contract_universe_f2_1_symmetry.py',
+           'tests/test_contract_universe_f2_1_completeness.py',
            'tests/test_cu_v11_audit_findings.py',
            'tests/test_cu_v11_audit_f1_f5.py']
 
@@ -33,13 +34,24 @@ MUTATIONS = [
    """            conflict = len(states) > 1""",
    'Only two adjacent excluded states count; an admitted one before them is dropped.'),
 
-  ('M4_representable_ignores_universe_frontier',
+  ('M6_two_admitted_states_are_representable',
    'app/core/contract_conditions.py',
-   """        excluded = {condition.surface for condition in self.excluded}
+   """        states = {value for value in self.denoted if value != CELEBRATED_UNIVERSE}
+        if len(states) > 1:
+            return False
+        excluded = states & {denotes(c.surface) for c in self.excluded}
+        return not (excluded and CELEBRATED_UNIVERSE in self.denoted)""",
+   """        excluded = {denotes(c.surface) for c in self.excluded}
         if len(excluded) > 1:
             return False
         return not (excluded and self.admitted)""",
-   """        return len({condition.surface for condition in self.excluded}) <= 1""",
+   'Two distinct admitted states count as representable again, as before the probe.'),
+
+  ('M4_representable_ignores_universe_frontier',
+   'app/core/contract_conditions.py',
+   """        excluded = states & {denotes(c.surface) for c in self.excluded}
+        return not (excluded and CELEBRATED_UNIVERSE in self.denoted)""",
+   """        return True""",
    'Crossing the universe frontier (admitted + excluded) stops being a conflict.'),
 
   ('M5_reader_drops_clause_ownership',

@@ -4,9 +4,8 @@ Se cerró exclusivamente el P1 restante de la segunda auditoría. Ninguna otra
 superficie acreditada cambió: F1, F3, F4, F5, Aprobado, persistencia, Radar,
 Actor, Frame y Buyer–Actor conservan su comportamiento y sus controles.
 
-**SHA probado:** `da7d1703e4ccc4527612712bee12c5ec609985a3`.
-El HEAD final añade sólo esta línea de documentación al SHA probado; se comunica
-completo en la entrega y se obtiene con `git rev-parse HEAD` en este worktree.
+**SHA probado:** se comunica completo en la entrega y se obtiene con
+`git rev-parse HEAD` en este worktree; el HEAD final añade sólo documentación.
 **Base de remediación:** `2e564d06a4f18a8ef4d3b5a1fa462000e21a00da`.
 **SHA probado anterior:** `8fc5643651d6a603d3bc3849369d9773ab55ea11`.
 **Segunda auditoría:** `298c79271e1a57ff57c1a841c05dd35d2a0a3b10`.
@@ -57,7 +56,7 @@ incompatible: se aclara, sin ampliar el universo.
 
 Runtime tocado, y nada más:
 
-- `app/core/contract_conditions.py` (nuevo, 167 LoC)
+- `app/core/contract_conditions.py` (nuevo, 209 LoC)
 - `app/core/contract_universe_intent.py` (132 → 143 LoC)
 
 ## Matriz antes/después
@@ -103,6 +102,36 @@ registros del dataset`, `registros cancelados y borradores` y su inverso, y los
 dos controles de F1 (`contratos de elaboración de borradores de documentos …`,
 `contratos de custodia de borradores cancelados de archivo …`).
 
+## Probe de composiciones admitidas, y la corrección que produjo
+
+Antes de entregar se sondeó una superficie que el arreglo inicial daba por
+buena: dos estados **admitidos** distintos. No lo era.
+[PROBE_ADMITTED_COMPOSITIONS.md](PROBE_ADMITTED_COMPOSITIONS.md) tiene la
+evidencia completa; el resumen es que `contratos suspendidos y aprobados …`
+ejecutaba con `estado_contrato=['Suspendido']` y mandaba `aprobados` al objeto,
+devolviendo cero filas —una respuesta falsa—, y que `terminados y cedidos`
+devolvía 0 mientras `cedidos y terminados` devolvía 3.
+
+El transporte SQL sí sabe emitir `estado_contrato IN (...)`, pero ningún
+productor construye esa unión: `detect_estado_family` declara que «multiple
+matches are not allowed» y `UniverseRequest.state` es escalar. Fabricar esa
+autoridad sería la gramática multiestado que el encargo prohíbe, así que se
+adoptó la salida conservadora.
+
+`representable` pasó a razonar sobre lo que cada condición **denota** —un
+literal de estado, o el universo celebrado— en vez de sobre su superficie. Dos
+estados denotados distintos, sean admitidos o excluidos, aclaran. El universo
+celebrado no cuenta como estado, porque ya viaja en el predicado: `contratos
+celebrados y suspendidos` conserva ambas condiciones y sigue ejecutando. La
+tabla de denotación se comprueba contra el catálogo de política, de modo que no
+puedan divergir en silencio.
+
+Quedó registrado un hueco **preexistente** y fuera de alcance:
+`contratos prorrogados` y `contratos aprobados`, sin composición alguna, ya
+pierden su filtro en la base `2e564d0` porque `resolve_estado` devuelve `None`
+para esas palabras. No es ejecución parcial de una composición; es léxico de
+`estado_families`, y se deja para el coordinador.
+
 ## Simetría
 
 [`tests/test_contract_universe_f2_1_symmetry.py`](../../../tests/test_contract_universe_f2_1_symmetry.py),
@@ -121,6 +150,25 @@ misma composición, y cruzar la frontera del universo siempre aclara, en ambos
 Los pares incluyen dos que el encargo no pedía —`prorrogados`/`borradores` y
 `terminados`/`cancelados`— porque la regla es por frontera de universo, no por
 lista de frases.
+
+## Completitud: representable obliga a conservar todo
+
+[`tests/test_contract_universe_f2_1_completeness.py`](../../../tests/test_contract_universe_f2_1_completeness.py),
+**248 casos verdes** sobre las 240 permutaciones de dieciséis superficies.
+
+- **184 pares no representables** aclaran con cero SQL; ninguno ejecuta.
+- **56 pares representables** o aclaran con cero SQL, o el filtro ejecutado
+  conserva **cada** condición.
+
+Pertenecer al mismo universo no basta, y la prueba lo hace explícito: el
+predicado celebrado ya contiene los siete estados posteriores, así que buscar el
+literal en el SoQL completo daría un verde falso. La propiedad aísla el
+fragmento `estado_contrato` y descarta el del universo antes de comprobar nada;
+un control deja constancia de que cinco de esos literales viven en el predicado.
+
+La referencia de cada condición es esa misma condición ejecutada sola, así que
+la propiedad exige que componer no degrade lo que el caso simple conservaba, sin
+imputar a esta remediación el hueco léxico ajeno.
 
 ## Pruebas de la auditoría
 
@@ -144,6 +192,7 @@ sirven los ports adjudicados, que pasan.
 ruff: exit 0                      All checks passed!
 semgrep: exit 0                   Ran 3 rules on 331 files: 10 findings.
 f2_1_symmetry: exit 0             46 passed
+f2_1_completeness: exit 0        248 passed
 auditor_findings_now_green: 0     8 passed
 auditor_rest: exit 0              390 passed
 remediation_85: exit 0            85 passed
@@ -166,18 +215,20 @@ Comandos completos, códigos de salida y colas de salida en
 
 ## Mutaciones
 
-Cinco mutaciones sobre una copia desechable, con baseline verde de 102 casos.
-**5/5 muertas por aserciones de producto, cero errores de importación, montaje o
-timeout**, y cada archivo mutado vuelve byte por byte a su contenido. Detalle en
-[mutations.json](mutations.json).
+Seis mutaciones sobre una copia desechable, con baseline verde de **350 casos**.
+**6/6 muertas por aserciones de producto, cero errores de importación, montaje o
+timeout**, y cada archivo mutado vuelve byte por byte a su contenido —se
+comprueba contra el árbol con el fix, no contra git, porque el fix mismo aparece
+como diferencia frente a la base—. Detalle en [mutations.json](mutations.json).
 
 | Mutación | Qué restaura | Resultado |
 |---|---|---|
-| M1 detección sólo en la cola | el cálculo de conflicto V1.1 exacto | 26 fallos |
-| M2 first-match-wins | ejecutar el primer estado seleccionable | 29 fallos |
-| M3 sólo dos excluidos adyacentes cuentan | ignorar la composición leída | 25 fallos |
-| M4 la frontera de universo deja de ser conflicto | admitido + excluido se ejecuta | 25 fallos |
+| M1 detección sólo en la cola | el cálculo de conflicto V1.1 exacto | 101 fallos |
+| M2 first-match-wins | ejecutar el primer estado seleccionable | 159 fallos |
+| M3 sólo dos excluidos adyacentes cuentan | ignorar la composición leída | 135 fallos |
+| M4 la frontera de universo deja de ser conflicto | admitido + excluido se ejecuta | 45 fallos |
 | M5 el lector pierde la propiedad de cláusula | una palabra del objeto o del nombre cuenta como condición | 6 fallos |
+| M6 dos admitidos vuelven a ser representables | el `representable` previo al probe | 34 fallos |
 
 M5 es la que acredita que la propiedad de ocurrencias es load-bearing y no
 decorativa: sin ella, `FUNDACION BORRADORES CANCELADOS` y un objeto con dos

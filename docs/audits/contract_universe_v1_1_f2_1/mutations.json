@@ -1,5 +1,5 @@
 {
-  "baseline": "102 passed in 11.05s",
+  "baseline": "350 passed in 42.35s",
   "baseline_exit": 0,
   "every_mutated_file_restored": true,
   "restored": {
@@ -8,6 +8,7 @@
   },
   "killers": [
     "tests/test_contract_universe_f2_1_symmetry.py",
+    "tests/test_contract_universe_f2_1_completeness.py",
     "tests/test_cu_v11_audit_findings.py",
     "tests/test_cu_v11_audit_f1_f5.py"
   ],
@@ -18,8 +19,8 @@
       "intent": "Restores V1.1: a second condition is only seen in the tail after the match.",
       "applied": true,
       "exit_code": 1,
-      "summary": "26 failed, 76 passed in 10.94s",
-      "failed": 26,
+      "summary": "101 failed, 249 passed in 42.82s",
+      "failed": 101,
       "errors": 0,
       "killed_by_product_assertion": true
     },
@@ -29,8 +30,8 @@
       "intent": "Pure first-match-wins: the first selectable state is executed, whatever else was asked.",
       "applied": true,
       "exit_code": 1,
-      "summary": "29 failed, 73 passed in 11.40s",
-      "failed": 29,
+      "summary": "159 failed, 191 passed in 42.45s",
+      "failed": 159,
       "errors": 0,
       "killed_by_product_assertion": true
     },
@@ -40,8 +41,19 @@
       "intent": "Only two adjacent excluded states count; an admitted one before them is dropped.",
       "applied": true,
       "exit_code": 1,
-      "summary": "25 failed, 77 passed in 10.91s",
-      "failed": 25,
+      "summary": "135 failed, 215 passed in 43.65s",
+      "failed": 135,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "M6_two_admitted_states_are_representable",
+      "file": "app/core/contract_conditions.py",
+      "intent": "Two distinct admitted states count as representable again, as before the probe.",
+      "applied": true,
+      "exit_code": 1,
+      "summary": "34 failed, 316 passed in 43.01s",
+      "failed": 34,
       "errors": 0,
       "killed_by_product_assertion": true
     },
@@ -51,8 +63,8 @@
       "intent": "Crossing the universe frontier (admitted + excluded) stops being a conflict.",
       "applied": true,
       "exit_code": 1,
-      "summary": "25 failed, 77 passed in 11.05s",
-      "failed": 25,
+      "summary": "45 failed, 305 passed in 44.14s",
+      "failed": 45,
       "errors": 0,
       "killed_by_product_assertion": true
     },
@@ -62,7 +74,7 @@
       "intent": "Ownership guard removed: a word inside an object or a name counts as a condition.",
       "applied": true,
       "exit_code": 1,
-      "summary": "6 failed, 96 passed in 10.73s",
+      "summary": "6 failed, 344 passed in 43.00s",
       "failed": 6,
       "errors": 0,
       "killed_by_product_assertion": true
