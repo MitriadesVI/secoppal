@@ -1,0 +1,142 @@
+[
+  {
+    "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24query=SELECT+estado_contrato%2C+count%28%2A%29+AS+n%2C+count%28fecha_de_firma%29+AS+dated+WHERE+nombre_entidad+%3D+%27DISTRITO+ESPECIAL+INDUSTRIAL+Y+PORTUARIO+DE+BARRANQUILLA%27+GROUP+BY+estado_contrato+LIMIT+20",
+    "query": "SELECT estado_contrato, count(*) AS n, count(fecha_de_firma) AS dated WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' GROUP BY estado_contrato LIMIT 20",
+    "observed_at": "2026-09-08T23:23:52.989348+00:00",
+    "timeout_seconds": 15,
+    "selection": "exact reported buyer; grouped states or first 5 approved IDs",
+    "error": "The read operation timed out"
+  },
+  {
+    "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24query=SELECT+id_contrato%2Cnombre_entidad%2Cestado_contrato%2Cfecha_de_firma%2Curlproceso+WHERE+nombre_entidad+%3D+%27DISTRITO+ESPECIAL+INDUSTRIAL+Y+PORTUARIO+DE+BARRANQUILLA%27+AND+estado_contrato+%3D+%27Aprobado%27+ORDER+BY+id_contrato+ASC+LIMIT+5",
+    "query": "SELECT id_contrato,nombre_entidad,estado_contrato,fecha_de_firma,urlproceso WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND estado_contrato = 'Aprobado' ORDER BY id_contrato ASC LIMIT 5",
+    "observed_at": "2026-09-08T23:24:08.534766+00:00",
+    "timeout_seconds": 15,
+    "selection": "exact reported buyer; grouped states or first 5 approved IDs",
+    "status": 200,
+    "rows": [
+      {
+        "id_contrato": "CO1.PCCNTR.1356949",
+        "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-27T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1086269&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      },
+      {
+        "id_contrato": "CO1.PCCNTR.1499912",
+        "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-13T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1201316&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      },
+      {
+        "id_contrato": "CO1.PCCNTR.1503058",
+        "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-27T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1203825&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      },
+      {
+        "id_contrato": "CO1.PCCNTR.1506974",
+        "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-20T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1206508&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      },
+      {
+        "id_contrato": "CO1.PCCNTR.1506990",
+        "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-20T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1206520&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      }
+    ]
+  },
+  {
+    "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24query=SELECT+estado_contrato%2C+count%28%2A%29+AS+n%2C+count%28fecha_de_firma%29+AS+dated+WHERE+nombre_entidad+%3D+%27ALCALD%C3%8DA+DEL+DISTRITO+TUR%C3%8DSTICO+Y+CULTURAL+DE+CARTAGENA+DE+INDIAS%27+GROUP+BY+estado_contrato+LIMIT+20",
+    "query": "SELECT estado_contrato, count(*) AS n, count(fecha_de_firma) AS dated WHERE nombre_entidad = 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS' GROUP BY estado_contrato LIMIT 20",
+    "observed_at": "2026-09-08T23:24:10.346066+00:00",
+    "timeout_seconds": 15,
+    "selection": "exact reported buyer; grouped states or first 5 approved IDs",
+    "error": "The read operation timed out"
+  },
+  {
+    "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24query=SELECT+id_contrato%2Cnombre_entidad%2Cestado_contrato%2Cfecha_de_firma%2Curlproceso+WHERE+nombre_entidad+%3D+%27ALCALD%C3%8DA+DEL+DISTRITO+TUR%C3%8DSTICO+Y+CULTURAL+DE+CARTAGENA+DE+INDIAS%27+AND+estado_contrato+%3D+%27Aprobado%27+ORDER+BY+id_contrato+ASC+LIMIT+5",
+    "query": "SELECT id_contrato,nombre_entidad,estado_contrato,fecha_de_firma,urlproceso WHERE nombre_entidad = 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS' AND estado_contrato = 'Aprobado' ORDER BY id_contrato ASC LIMIT 5",
+    "observed_at": "2026-09-08T23:24:25.694466+00:00",
+    "timeout_seconds": 15,
+    "selection": "exact reported buyer; grouped states or first 5 approved IDs",
+    "status": 200,
+    "rows": [
+      {
+        "id_contrato": "CO1.PCCNTR.1470416",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-07T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1179330&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      },
+      {
+        "id_contrato": "CO1.PCCNTR.1500968",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-15T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1193916&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      },
+      {
+        "id_contrato": "CO1.PCCNTR.1506978",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-17T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1180640&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      },
+      {
+        "id_contrato": "CO1.PCCNTR.1507293",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-17T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1206614&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      },
+      {
+        "id_contrato": "CO1.PCCNTR.1509458",
+        "nombre_entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "estado_contrato": "Aprobado",
+        "fecha_de_firma": "2020-04-17T00:00:00.000",
+        "urlproceso": {
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.1207546&isFromPublicArea=True&isModal=true&asPopupView=true"
+        }
+      }
+    ]
+  },
+  {
+    "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24query=SELECT+id_contrato%2Cestado_contrato+WHERE+id_contrato+%3D+%27CO1.PCCNTR.1356949%27+AND+upper%28unaccent%28trim%28estado_contrato%29%29%29+IN+%28%27APROBADO%27%29+LIMIT+1",
+    "query": "SELECT id_contrato,estado_contrato WHERE id_contrato = 'CO1.PCCNTR.1356949' AND upper(unaccent(trim(estado_contrato))) IN ('APROBADO') LIMIT 1",
+    "observed_at": "2026-09-08T23:46:24.789758+00:00",
+    "timeout_seconds": 15,
+    "selection": "exact reported buyer; grouped states or first 5 approved IDs",
+    "status": 200,
+    "rows": [
+      {
+        "id_contrato": "CO1.PCCNTR.1356949",
+        "estado_contrato": "Aprobado"
+      }
+    ]
+  }
+]

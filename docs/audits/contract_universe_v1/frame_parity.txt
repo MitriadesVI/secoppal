@@ -1,0 +1,11 @@
+........................................................................ [ 63%]
+...............F..........................                               [100%]
+=================================== FAILURES ===================================
+____________________ test_unknown_frame_version_rejected[2] ____________________
+tests/test_entity_profile_frame_independent_contracts.py:83: in test_unknown_frame_version_rejected
+    with pytest.raises((FrameSchemaError, ValueError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE any of (<class 'app.core.entity_profile.frame.FrameSchemaError'>, <class 'ValueError'>)
+=========================== short test summary info ============================
+FAILED tests/test_entity_profile_frame_independent_contracts.py::test_unknown_frame_version_rejected[2]
+1 failed, 113 passed in 11.65s

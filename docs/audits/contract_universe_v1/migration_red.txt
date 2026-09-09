@@ -1,0 +1,10 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_current_record_profile_migration_keeps_universe _____________
+tests/test_contract_universe_product.py:186: in test_current_record_profile_migration_keeps_universe
+    assert rows[0]['contract_count'] == expected, result
+E   AssertionError: {'analytical_intent': 'entity_profile', 'analytical_response': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGEN...e sus proveedores, modalidades, evolución o contratos recientes.', 'chat_id': 'audit', 'clarification_reason': '', ...}
+E   assert 5 == 35
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_product.py::test_current_record_profile_migration_keeps_universe
+1 failed in 1.25s

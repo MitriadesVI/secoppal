@@ -1,0 +1,79 @@
+FEFEFEF                                                                  [100%]
+==================================== ERRORS ====================================
+_ ERROR at teardown of test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\xcdA DEL DISTRITO TUR\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-False] _
+tests/contract_universe_support.py:16: in offline_universe
+    assert not attempts, attempts
+           ^^^^^^^^^^^^
+E   AssertionError: ['external connection', 'external connection', 'external connection']
+_ ERROR at teardown of test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\xcdA DEL DISTRITO TUR\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-True] _
+tests/contract_universe_support.py:16: in offline_universe
+    assert not attempts, attempts
+           ^^^^^^^^^^^^
+E   AssertionError: ['external connection', 'external connection', 'external connection', 'external connection', 'external connection', 'external connection']
+_ ERROR at teardown of test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-False] _
+tests/contract_universe_support.py:16: in offline_universe
+    assert not attempts, attempts
+           ^^^^^^^^^^^^
+E   AssertionError: ['external connection']
+=================================== FAILURES ===================================
+_ test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\xcdA DEL DISTRITO TUR\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-False] _
+tests/test_contract_universe_product.py:16: in test_seeds_before_limit
+    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}
+E   AssertionError: assert {'EXCLUDED-00...DED-010', ...} == {'VALID-0', '...VALID-5', ...}
+E
+E     Extra items in the left set:
+E     'EXCLUDED-046'
+E     'EXCLUDED-022'
+E     'EXCLUDED-045'
+E     'EXCLUDED-020'
+E     'EXCLUDED-050'...
+E
+E     ...Full output truncated (43 lines hidden), use '-vv' to show
+_ test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\xcdA DEL DISTRITO TUR\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-True] _
+tests/test_contract_universe_product.py:16: in test_seeds_before_limit
+    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}
+E   AssertionError: assert {'EXCLUDED-00...DED-010', ...} == {'VALID-0', '...VALID-5', ...}
+E
+E     Extra items in the left set:
+E     'EXCLUDED-046'
+E     'EXCLUDED-022'
+E     'EXCLUDED-045'
+E     'EXCLUDED-020'
+E     'EXCLUDED-050'...
+E
+E     ...Full output truncated (43 lines hidden), use '-vv' to show
+_ test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-False] _
+tests/test_contract_universe_product.py:16: in test_seeds_before_limit
+    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}
+E   AssertionError: assert {'EXCLUDED-00...DED-010', ...} == {'VALID-0', '...VALID-5', ...}
+E
+E     Extra items in the left set:
+E     'EXCLUDED-046'
+E     'EXCLUDED-022'
+E     'EXCLUDED-045'
+E     'EXCLUDED-020'
+E     'EXCLUDED-050'...
+E
+E     ...Full output truncated (43 lines hidden), use '-vv' to show
+_ test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-True] _
+tests/test_contract_universe_product.py:16: in test_seeds_before_limit
+    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}
+E   AssertionError: assert {'EXCLUDED-00...DED-010', ...} == {'VALID-0', '...VALID-5', ...}
+E
+E     Extra items in the left set:
+E     'EXCLUDED-046'
+E     'EXCLUDED-022'
+E     'EXCLUDED-045'
+E     'EXCLUDED-020'
+E     'EXCLUDED-050'...
+E
+E     ...Full output truncated (43 lines hidden), use '-vv' to show
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_product.py::test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\xcdA DEL DISTRITO TUR\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-False]
+FAILED tests/test_contract_universe_product.py::test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\xcdA DEL DISTRITO TUR\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-True]
+FAILED tests/test_contract_universe_product.py::test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-False]
+FAILED tests/test_contract_universe_product.py::test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-True]
+ERROR tests/test_contract_universe_product.py::test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\xcdA DEL DISTRITO TUR\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-False]
+ERROR tests/test_contract_universe_product.py::test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\xcdA DEL DISTRITO TUR\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-True]
+ERROR tests/test_contract_universe_product.py::test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-False]
+4 failed, 3 errors in 1.57s

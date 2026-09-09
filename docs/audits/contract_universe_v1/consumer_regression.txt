@@ -1,0 +1,61 @@
+........................................................................ [ 31%]
+........................................................................ [ 62%]
+............................................................F........... [ 93%]
+FFFFF.........                                                           [100%]
+=================================== FAILURES ===================================
+________________ test_pagination_resets_on_incompatible_cursor _________________
+tests/test_pagination_buffer.py:622: in test_pagination_resets_on_incompatible_cursor
+    monkeypatch.setattr(pag, "_PAGINATION_CONTRACT_VERSION", "e8a-CHANGED")
+E   AttributeError: <module 'app.core.workflow.handlers.pagination' from '/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1/app/core/workflow/handlers/pagination.py'> has no attribute '_PAGINATION_CONTRACT_VERSION'
+________ test_control_language_repinned_files_match_their_pinned_state _________
+tests/test_truth_layer_public_parity.py:445: in test_control_language_repinned_files_match_their_pinned_state
+    assert actual == CONTROL_LANGUAGE_REPINNED_SHA256
+E   AssertionError: assert {'app/core/wo...36ac88e4b74c'} == {'app/core/wo...af781ae4d4a3'}
+E
+E     Differing items:
+E     {'app/core/workflow/handlers/pagination.py': '09767248a26190bd26f367d98ad397b0b7adf6670c10968168f536ac88e4b74c'} != {'app/core/workflow/handlers/pagination.py': 'af41276b320a872d7a9df71f2023c794ce8078be5ec7ca1f5f02af781ae4d4a3'}
+E     Use -v to get more diff
+_________ test_public_product_files_are_byte_identical_to_pre_m1_main __________
+tests/test_truth_layer_public_parity.py:453: in test_public_product_files_are_byte_identical_to_pre_m1_main
+    assert actual == BASELINE_FILE_SHA256
+E   AssertionError: assert {'app/core/pa...b00e076', ...} == {'app/core/pa...b00e076', ...}
+E
+E     Omitting 5 identical items, use -vv to show
+E     Differing items:
+E     {'app/core/pagination_buffer.py': '802e763ace630368eada377319a715d3ca1bcdca00cb90dd4187236988e2f25c'} != {'app/core/pagination_buffer.py': '18165ce221b19f49aa190f0c57a399112f72ce4a6906c49062967b7978c474ea'}
+E     Use -v to get more diff
+_______________ test_m2_modified_files_match_their_pinned_state ________________
+tests/test_truth_layer_public_parity.py:461: in test_m2_modified_files_match_their_pinned_state
+    assert actual == M2_MODIFIED_FILE_SHA256
+E   AssertionError: assert {'app/core/fo...9962ad293754'} == {'app/core/fo...819f7eae7a46'}
+E
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'app/core/formatter.py': '5ec93829f505ae9820ddb8eab3f3b4927a5cf38de7acbdfbd5eecc2812d86b39'} != {'app/core/formatter.py': '6f6391988d698c3765d133bd6d089fca4347d255df75180fbfcbd18abf441db5'}
+E     {'app/core/soql_builder.py': 'e7672dda139464c071b64336d5dc315fe7ac8eed093b20cc5b539962ad293754'} != {'app/core/soql_builder.py': 'b64a3f1bd7bf22c77c6cca36bf094176af6f47b61cfebc2c4e61819f7eae7a46'}
+E     Use -v to get more diff
+____________ test_m2_1_modified_consumers_match_their_pinned_state _____________
+tests/test_truth_layer_public_parity.py:469: in test_m2_1_modified_consumers_match_their_pinned_state
+    assert actual == M2_1_MODIFIED_FILE_SHA256
+E   AssertionError: assert {'app/core/wo...6f131076b9a2'} == {'app/core/wo...6f131076b9a2'}
+E
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'app/core/workflow/handlers/direct_lookup.py': 'fe552becbb2f8c8daeda58398f411e0018f5912a8c85b5f3a4ddfd0371bdd982'} != {'app/core/workflow/handlers/direct_lookup.py': '6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b'}
+E     Use -v to get more diff
+__________ test_search_sh1_modified_handler_matches_its_pinned_state ___________
+tests/test_truth_layer_public_parity.py:477: in test_search_sh1_modified_handler_matches_its_pinned_state
+    assert actual == SEARCH_SH1_MODIFIED_FILE_SHA256
+E   AssertionError: assert {'app/core/wo...38b05a1a78f6'} == {'app/core/wo...fa330dccd872'}
+E
+E     Differing items:
+E     {'app/core/workflow/handlers/normal_flow.py': '807b0e91cfda5351a5e271722d551bec7146213ccb80bf1362f638b05a1a78f6'} != {'app/core/workflow/handlers/normal_flow.py': 'd64c051fc21f044565a6a81d7fb6f09644010bd9791d17007e22fa330dccd872'}
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_pagination_buffer.py::test_pagination_resets_on_incompatible_cursor
+FAILED tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state
+FAILED tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main
+FAILED tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state
+FAILED tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state
+FAILED tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state
+6 failed, 224 passed in 15.65s

@@ -1,0 +1,30 @@
+{
+  "base": "c52d7eda355f44278164d4cb9803a199eec83486",
+  "tested_commit": "d63ce7e9f33831ac2bb8a6e773078e4d8964c902",
+  "branch": "fix/contract-universe-v1",
+  "worktree": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1",
+  "ruff": "ruff 0.16.4",
+  "semgrep": "1.176.0",
+  "hypothesis": "6.165.10",
+  "codegraph": "0.9.6",
+  "codegraph_scope": "CLI on the unchanged integrated base: status up to date, query, callers and impact. No Codegraph MCP loaded. rg/manual inspection supplement the graph and cover new code.",
+  "codegraph_runtime": "Existing /opt/homebrew/opt/node@22/bin; the default Node 26.8.1 was rejected by Codegraph.",
+  "codegraph_status": {
+    "files": 1064,
+    "nodes": 23550,
+    "edges": 52974,
+    "database_mb": 62.84,
+    "index_up_to_date": true
+  },
+  "storage_before": "9.6 GiB available",
+  "storage_after_initial_validation": "9.3 GiB available",
+  "network": "Five bounded Socrata requests; two timeout errors retained, two five-row approved samples, one successful predicate probe. Acceptance uses SQL-evaluated fixtures and external-attempt ledgers.",
+  "authoritative_product_trace": "product_trace_d63ce7e.jsonl",
+  "trace_flags_note": "flags in the shared fixture record construction. The Actor OFF test explicitly clears settings cache and asserts the effective reader is False before executing.",
+  "trees": {
+    "app": "695ade7c27e85d3c2f147071460c4a6243b5b7ea",
+    "tests": "a06ee5da1fdf9f5a77d88966d038e74129fc7893",
+    "scripts": "04ac038f2498c0a84f8fe402076f1097124734c6",
+    "streamlit_app.py": "9ee7c7d72ed19c5370721cbbc510a284462c34e0"
+  }
+}

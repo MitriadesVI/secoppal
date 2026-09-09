@@ -1,0 +1,96 @@
+{
+  "baseline": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "tests/test_contract_universe_consumers.py::test_count_analytics_observer_and_rankings",
+      "tests/test_contract_universe_product.py::test_frame_effective_plan_and_reload",
+      "tests/test_contract_universe_product.py::test_seeds_before_limit",
+      "tests/test_contract_universe_consumers.py::test_records_universe_survives_reload_values",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "output": ".......                                                                  [100%]\n7 passed in 1.64s\n"
+  },
+  "mutations": {
+    "count": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "tests/test_contract_universe_consumers.py::test_count_analytics_observer_and_rankings",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "output": "F                                                                        [100%]\n=================================== FAILURES ===================================\n__________________ test_count_analytics_observer_and_rankings __________________\ntests/test_contract_universe_consumers.py:26: in test_count_analytics_observer_and_rankings\n    assert client.count(ds, b.build_count(ds, params)) == 8\nE   assert 63 == 8\nE    +  where 63 = <function source.<locals>.count at 0x113bc64b0>('jbjy-vk9h', \"SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000\")\nE    +    where <function source.<locals>.count at 0x113bc64b0> = <app.core.secop_client.SecopClient object at 0x1139cee40>.count\nE    +    and   \"SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND valor_del_contrato >= 500000000\" = build_count('jbjy-vk9h', {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1', 'dataset': 'contratos', 'entidad_resolved': 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', ...})\nE    +      where build_count = <app.core.soql_builder.SoQLBuilder object at 0x1139cecf0>.build_count\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_consumers.py::test_count_analytics_observer_and_rankings\n1 failed in 0.95s\n",
+      "killed_by_product": true
+    },
+    "frame": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "tests/test_contract_universe_product.py::test_frame_effective_plan_and_reload",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "output": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_____________________ test_frame_effective_plan_and_reload _____________________\ntests/test_contract_universe_product.py:81: in test_frame_effective_plan_and_reload\n    assert values['contract_count'] == 8\nE   assert 63 == 8\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_product.py::test_frame_effective_plan_and_reload\n1 failed in 0.89s\n",
+      "killed_by_product": true
+    },
+    "limit": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "tests/test_contract_universe_product.py::test_seeds_before_limit",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "output": "FFFF                                                                     [100%]\n=================================== FAILURES ===================================\n_ test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-False] _\ntests/test_contract_universe_product.py:16: in test_seeds_before_limit\n    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}\nE   AssertionError: assert {'VALID-0', '...6', 'VALID-7'} == {'VALID-0', '...VALID-5', ...}\nE     \nE     Extra items in the right set:\nE     'VALID-2'\nE     'VALID-1'\nE     Use -v to get more diff\n_ test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-True] _\ntests/test_contract_universe_product.py:16: in test_seeds_before_limit\n    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}\nE   AssertionError: assert {'VALID-0', '...6', 'VALID-7'} == {'VALID-0', '...VALID-5', ...}\nE     \nE     Extra items in the right set:\nE     'VALID-2'\nE     'VALID-1'\nE     Use -v to get more diff\n_ test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-False] _\ntests/test_contract_universe_product.py:16: in test_seeds_before_limit\n    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}\nE   AssertionError: assert {'VALID-0', '...6', 'VALID-7'} == {'VALID-0', '...VALID-5', ...}\nE     \nE     Extra items in the right set:\nE     'VALID-2'\nE     'VALID-1'\nE     Use -v to get more diff\n_ test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-True] _\ntests/test_contract_universe_product.py:16: in test_seeds_before_limit\n    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}\nE   AssertionError: assert {'VALID-0', '...6', 'VALID-7'} == {'VALID-0', '...VALID-5', ...}\nE     \nE     Extra items in the right set:\nE     'VALID-2'\nE     'VALID-1'\nE     Use -v to get more diff\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_product.py::test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-False]\nFAILED tests/test_contract_universe_product.py::test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-True]\nFAILED tests/test_contract_universe_product.py::test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-False]\nFAILED tests/test_contract_universe_product.py::test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-True]\n4 failed in 1.23s\n",
+      "killed_by_product": true
+    },
+    "reload": {
+      "command": [
+        "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "tests.contract_universe_offline_guard",
+        "tests/test_contract_universe_consumers.py::test_records_universe_survives_reload_values",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 1,
+      "output": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_________________ test_records_universe_survives_reload_values _________________\ntests/test_contract_universe_consumers.py:154: in test_records_universe_survives_reload_values\n    assert say(flow, 'todos los registros del dataset')['total_count'] == 63\nE   assert 8 == 63\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_consumers.py::test_records_universe_survives_reload_values\n1 failed in 0.84s\n",
+      "killed_by_product": true
+    }
+  },
+  "integrated_base_red": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "tests/test_contract_universe_product.py::test_seeds_before_limit",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 1,
+    "output": "FFFF                                                                     [100%]\n=================================== FAILURES ===================================\n_ test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-False] _\ntests/test_contract_universe_product.py:16: in test_seeds_before_limit\n    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}\nE   AssertionError: assert {'EXCLUDED-00...DED-005', ...} == {'VALID-0', '...VALID-5', ...}\nE     \nE     Extra items in the left set:\nE     'EXCLUDED-050'\nE     'EXCLUDED-048'\nE     'EXCLUDED-004'\nE     'EXCLUDED-001'\nE     'EXCLUDED-025'...\nE     \nE     ...Full output truncated (43 lines hidden), use '-vv' to show\n_ test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-True] _\ntests/test_contract_universe_product.py:16: in test_seeds_before_limit\n    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}\nE   AssertionError: assert {'EXCLUDED-00...DED-005', ...} == {'VALID-0', '...VALID-5', ...}\nE     \nE     Extra items in the left set:\nE     'EXCLUDED-050'\nE     'EXCLUDED-048'\nE     'EXCLUDED-004'\nE     'EXCLUDED-001'\nE     'EXCLUDED-025'...\nE     \nE     ...Full output truncated (43 lines hidden), use '-vv' to show\n_ test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-False] _\ntests/test_contract_universe_product.py:16: in test_seeds_before_limit\n    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}\nE   AssertionError: assert {'EXCLUDED-00...DED-005', ...} == {'VALID-0', '...VALID-5', ...}\nE     \nE     Extra items in the left set:\nE     'EXCLUDED-050'\nE     'EXCLUDED-048'\nE     'EXCLUDED-004'\nE     'EXCLUDED-001'\nE     'EXCLUDED-025'...\nE     \nE     ...Full output truncated (43 lines hidden), use '-vv' to show\n_ test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-True] _\ntests/test_contract_universe_product.py:16: in test_seeds_before_limit\n    assert {row['id_contrato'] for row in result['results']} == {f'VALID-{i}' for i in range(8)}\nE   AssertionError: assert {'EXCLUDED-00...DED-005', ...} == {'VALID-0', '...VALID-5', ...}\nE     \nE     Extra items in the left set:\nE     'EXCLUDED-050'\nE     'EXCLUDED-048'\nE     'EXCLUDED-004'\nE     'EXCLUDED-001'\nE     'EXCLUDED-025'...\nE     \nE     ...Full output truncated (43 lines hidden), use '-vv' to show\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_product.py::test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-False]\nFAILED tests/test_contract_universe_product.py::test_seeds_before_limit[contratos de alcaldia de cartagena por mas de 500 millones-alcaldia de cartagena-ALCALD\\xcdA DEL DISTRITO TUR\\xcdSTICO Y CULTURAL DE CARTAGENA DE INDIAS-500000000-True]\nFAILED tests/test_contract_universe_product.py::test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-False]\nFAILED tests/test_contract_universe_product.py::test_seeds_before_limit[que ha contratado alcaldia de barranquilla por mas de 2000 millones-alcaldia de barranquilla-DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA-2000000000-True]\n4 failed in 1.24s\n"
+  },
+  "tested_commit": "d63ce7e9f33831ac2bb8a6e773078e4d8964c902"
+}

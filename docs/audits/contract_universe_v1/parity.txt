@@ -1,0 +1,108 @@
+.........................FFFFF.FFFFF...                                  [100%]
+=================================== FAILURES ===================================
+________ test_control_language_repinned_files_match_their_pinned_state _________
+tests/test_truth_layer_public_parity.py:445: in test_control_language_repinned_files_match_their_pinned_state
+    assert actual == CONTROL_LANGUAGE_REPINNED_SHA256
+E   AssertionError: assert {'app/core/wo...31dcbde08a30'} == {'app/core/wo...af781ae4d4a3'}
+E
+E     Differing items:
+E     {'app/core/workflow/handlers/pagination.py': '1b00c8d8ac11c3e776eb5a027b13ad840ac43baec29bad98e68631dcbde08a30'} != {'app/core/workflow/handlers/pagination.py': 'af41276b320a872d7a9df71f2023c794ce8078be5ec7ca1f5f02af781ae4d4a3'}
+E     Use -v to get more diff
+_________ test_public_product_files_are_byte_identical_to_pre_m1_main __________
+tests/test_truth_layer_public_parity.py:453: in test_public_product_files_are_byte_identical_to_pre_m1_main
+    assert actual == BASELINE_FILE_SHA256
+E   AssertionError: assert {'app/core/pa...b00e076', ...} == {'app/core/pa...b00e076', ...}
+E
+E     Omitting 5 identical items, use -vv to show
+E     Differing items:
+E     {'app/core/pagination_buffer.py': '0e96d4f6ded29db19dbdb32e07f19f8e2ddcdb0ea9ab58fd8729c068898ca20a'} != {'app/core/pagination_buffer.py': '18165ce221b19f49aa190f0c57a399112f72ce4a6906c49062967b7978c474ea'}
+E     Use -v to get more diff
+_______________ test_m2_modified_files_match_their_pinned_state ________________
+tests/test_truth_layer_public_parity.py:461: in test_m2_modified_files_match_their_pinned_state
+    assert actual == M2_MODIFIED_FILE_SHA256
+E   AssertionError: assert {'app/core/fo...9962ad293754'} == {'app/core/fo...819f7eae7a46'}
+E
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'app/core/soql_builder.py': 'e7672dda139464c071b64336d5dc315fe7ac8eed093b20cc5b539962ad293754'} != {'app/core/soql_builder.py': 'b64a3f1bd7bf22c77c6cca36bf094176af6f47b61cfebc2c4e61819f7eae7a46'}
+E     {'app/core/formatter.py': 'b3a54687fc88670d13ba5b284d586564ce19afadc16d40d2d1959d9596271ea8'} != {'app/core/formatter.py': '6f6391988d698c3765d133bd6d089fca4347d255df75180fbfcbd18abf441db5'}
+E     Use -v to get more diff
+____________ test_m2_1_modified_consumers_match_their_pinned_state _____________
+tests/test_truth_layer_public_parity.py:469: in test_m2_1_modified_consumers_match_their_pinned_state
+    assert actual == M2_1_MODIFIED_FILE_SHA256
+E   AssertionError: assert {'app/core/wo...6f131076b9a2'} == {'app/core/wo...6f131076b9a2'}
+E
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'app/core/workflow/handlers/direct_lookup.py': 'fe552becbb2f8c8daeda58398f411e0018f5912a8c85b5f3a4ddfd0371bdd982'} != {'app/core/workflow/handlers/direct_lookup.py': '6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b'}
+E     Use -v to get more diff
+__________ test_search_sh1_modified_handler_matches_its_pinned_state ___________
+tests/test_truth_layer_public_parity.py:477: in test_search_sh1_modified_handler_matches_its_pinned_state
+    assert actual == SEARCH_SH1_MODIFIED_FILE_SHA256
+E   AssertionError: assert {'app/core/wo...38b05a1a78f6'} == {'app/core/wo...fa330dccd872'}
+E
+E     Differing items:
+E     {'app/core/workflow/handlers/normal_flow.py': '807b0e91cfda5351a5e271722d551bec7146213ccb80bf1362f638b05a1a78f6'} != {'app/core/workflow/handlers/normal_flow.py': 'd64c051fc21f044565a6a81d7fb6f09644010bd9791d17007e22fa330dccd872'}
+E     Use -v to get more diff
+___ test_public_keys_values_types_ordering_and_serialization_match_baseline ____
+tests/test_truth_layer_public_parity.py:485: in test_public_keys_values_types_ordering_and_serialization_match_baseline
+    values = _oracle_values()
+             ^^^^^^^^^^^^^^^^
+tests/test_truth_layer_public_parity.py:424: in _oracle_values
+    assert fingerprint == "3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f"
+E   AssertionError: assert '91cd9e96b1c7...2c9bd348570c0' == '3e69c27c8cf7...946f99e2fe62f'
+E
+E     - 3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f
+E     + 91cd9e96b1c74572bd1dbe12016fb3137a227d2d061e5b9fc3b2c9bd348570c0
+_________ test_m2_soql_divergence_is_confined_to_the_select_projection _________
+tests/test_truth_layer_public_parity.py:499: in test_m2_soql_divergence_is_confined_to_the_select_projection
+    soql = _oracle_values()["soql"]
+           ^^^^^^^^^^^^^^^^
+tests/test_truth_layer_public_parity.py:424: in _oracle_values
+    assert fingerprint == "3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f"
+E   AssertionError: assert '91cd9e96b1c7...2c9bd348570c0' == '3e69c27c8cf7...946f99e2fe62f'
+E
+E     - 3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f
+E     + 91cd9e96b1c74572bd1dbe12016fb3137a227d2d061e5b9fc3b2c9bd348570c0
+__________________ test_m2_card_divergence_is_purely_additive __________________
+tests/test_truth_layer_public_parity.py:512: in test_m2_card_divergence_is_purely_additive
+    values = _oracle_values()
+             ^^^^^^^^^^^^^^^^
+tests/test_truth_layer_public_parity.py:424: in _oracle_values
+    assert fingerprint == "3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f"
+E   AssertionError: assert '91cd9e96b1c7...2c9bd348570c0' == '3e69c27c8cf7...946f99e2fe62f'
+E
+E     - 3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f
+E     + 91cd9e96b1c74572bd1dbe12016fb3137a227d2d061e5b9fc3b2c9bd348570c0
+____ test_m2_response_policy_divergence_is_only_process_state_presentation _____
+tests/test_truth_layer_public_parity.py:528: in test_m2_response_policy_divergence_is_only_process_state_presentation
+    cards = _oracle_values()["cards"]
+            ^^^^^^^^^^^^^^^^
+tests/test_truth_layer_public_parity.py:424: in _oracle_values
+    assert fingerprint == "3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f"
+E   AssertionError: assert '91cd9e96b1c7...2c9bd348570c0' == '3e69c27c8cf7...946f99e2fe62f'
+E
+E     - 3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f
+E     + 91cd9e96b1c74572bd1dbe12016fb3137a227d2d061e5b9fc3b2c9bd348570c0
+_________ test_m2_does_not_move_ranking_ordering_counts_or_pagination __________
+tests/test_truth_layer_public_parity.py:550: in test_m2_does_not_move_ranking_ordering_counts_or_pagination
+    values = _oracle_values()
+             ^^^^^^^^^^^^^^^^
+tests/test_truth_layer_public_parity.py:424: in _oracle_values
+    assert fingerprint == "3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f"
+E   AssertionError: assert '91cd9e96b1c7...2c9bd348570c0' == '3e69c27c8cf7...946f99e2fe62f'
+E
+E     - 3e69c27c8cf7914b54161c47dafd30d402c4397210f5f7afeda946f99e2fe62f
+E     + 91cd9e96b1c74572bd1dbe12016fb3137a227d2d061e5b9fc3b2c9bd348570c0
+=========================== short test summary info ============================
+FAILED tests/test_truth_layer_public_parity.py::test_control_language_repinned_files_match_their_pinned_state
+FAILED tests/test_truth_layer_public_parity.py::test_public_product_files_are_byte_identical_to_pre_m1_main
+FAILED tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state
+FAILED tests/test_truth_layer_public_parity.py::test_m2_1_modified_consumers_match_their_pinned_state
+FAILED tests/test_truth_layer_public_parity.py::test_search_sh1_modified_handler_matches_its_pinned_state
+FAILED tests/test_truth_layer_public_parity.py::test_public_keys_values_types_ordering_and_serialization_match_baseline
+FAILED tests/test_truth_layer_public_parity.py::test_m2_soql_divergence_is_confined_to_the_select_projection
+FAILED tests/test_truth_layer_public_parity.py::test_m2_card_divergence_is_purely_additive
+FAILED tests/test_truth_layer_public_parity.py::test_m2_response_policy_divergence_is_only_process_state_presentation
+FAILED tests/test_truth_layer_public_parity.py::test_m2_does_not_move_ranking_ordering_counts_or_pagination
+10 failed, 29 passed in 4.84s
