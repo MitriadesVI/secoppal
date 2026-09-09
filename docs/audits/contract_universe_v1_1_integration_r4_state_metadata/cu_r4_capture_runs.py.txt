@@ -1,0 +1,18 @@
+from pathlib import Path
+exec(Path('docs/audits/contract_universe_v1_1_integration_r4_state_metadata/runner.py.txt').read_text())
+ENV['PYTHONPATH']='/tmp:'+str(W)
+ids=json.loads((E/'nodeids_10.json').read_text())
+files=['app/core/contract_universe_intent.py','app/core/followup_mutations.py','tests/test_entity_profile_remediation_properties.py']
+backups={f:(W/f).read_bytes() for f in files}
+try:
+ for f in files:(W/f).write_bytes(subprocess.check_output(['git','show','e23753c:'+f],cwd=W))
+ ENV['R4_CAPTURE']=str(E/'base_full_pipeline.jsonl')
+ run('base_full_capture',[P,'-m','pytest','-p','cu_r4_observe',*ids,'-q','--tb=short'])
+ ENV['R4_OBSERVATIONS']=str(E/'base_controls.jsonl')
+ pytest('base_new_controls',['tests/test_contract_universe_r4_state_metadata.py'])
+finally:
+ for f,b in backups.items():(W/f).write_bytes(b)
+ENV.pop('R4_OBSERVATIONS',None)
+ENV['R4_CAPTURE']=str(E/'candidate_full_pipeline.jsonl')
+run('candidate_full_capture',[P,'-m','pytest','-p','cu_r4_observe',*ids,'-q','--tb=short'])
+for name in ['cu_r4_observe.py','cu_r4_capture_runs.py']:(E/(name+'.txt')).write_bytes((Path('/tmp')/name).read_bytes())

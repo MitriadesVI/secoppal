@@ -15,6 +15,7 @@ from app.core.followup_control_tokens import (
     requested_clear_fields,
 )
 from app.core.negation_followup import is_object_exclusion_replace
+from app.core.followup_universe_trace import derived_universe_fields
 
 
 TOPIC_FIELDS = frozenset({"objeto", "objeto_or", "objeto_phrases", "objeto_exclude", "topic_facets"})
@@ -132,6 +133,7 @@ class GatedDelta:
     cleaned_previous: dict[str, Any] = field(default_factory=dict)
     requested_fields: list[str] = field(default_factory=list)
     accepted_fields: list[str] = field(default_factory=list)
+    derived_fields: list[str] = field(default_factory=list)
     transition_cleared_fields: list[str] = field(default_factory=list)
     rejected_fields: list[str] = field(default_factory=list)
     rejection_reasons: dict[str, str] = field(default_factory=dict)
@@ -141,6 +143,7 @@ class GatedDelta:
             "intent": intent,
             "requested_fields": self.requested_fields,
             "accepted_fields": self.accepted_fields,
+            "derived_fields": self.derived_fields,
             "transition_cleared_fields": self.transition_cleared_fields,
             "rejected_fields": self.rejected_fields,
             "rejection_reasons": self.rejection_reasons,
@@ -314,8 +317,9 @@ def gate_delta(
     return GatedDelta(
         accepted_delta=accepted,
         cleaned_previous=cleaned,
-        requested_fields=sorted(delta),
-        accepted_fields=sorted(accepted),
+        requested_fields=sorted(delta.keys() - derived_universe_fields(delta, text)),
+        accepted_fields=sorted(accepted.keys() - derived_universe_fields(accepted, text)),
+        derived_fields=sorted(derived_universe_fields(accepted, text)),
         transition_cleared_fields=actual_clears,
         rejected_fields=sorted(rejected),
         rejection_reasons={key: rejected[key] for key in sorted(rejected)},

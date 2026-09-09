@@ -1,0 +1,72 @@
+..FFFF.FFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+_ test_state_provenance_survives_plan_frame_reload_without_sql_change[cerrados-values0-contrato_cerrado] _
+tests/test_contract_universe_r4_state_metadata.py:70: in test_state_provenance_survives_plan_frame_reload_without_sql_change
+    assert params['estado_family'] == family
+           ^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+_ test_state_provenance_survives_plan_frame_reload_without_sql_change[suspendidos-values1-contrato_suspendido] _
+tests/test_contract_universe_r4_state_metadata.py:70: in test_state_provenance_survives_plan_frame_reload_without_sql_change
+    assert params['estado_family'] == family
+           ^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+_ test_state_provenance_survives_plan_frame_reload_without_sql_change[terminados-values2-contrato_terminado] _
+tests/test_contract_universe_r4_state_metadata.py:70: in test_state_provenance_survives_plan_frame_reload_without_sql_change
+    assert params['estado_family'] == family
+           ^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+_ test_state_provenance_survives_plan_frame_reload_without_sql_change[en ejecuci\xf3n-values3-contrato_activo] _
+tests/test_contract_universe_r4_state_metadata.py:69: in test_state_provenance_survives_plan_frame_reload_without_sql_change
+    assert params['estado_contrato'] == values
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_contrato'
+_ test_followup_default_metadata_is_derived[regresa a los contratos-celebrated-False] _
+tests/test_contract_universe_r4_state_metadata.py:90: in test_followup_default_metadata_is_derived
+    assert ('contract_universe' in trace['accepted_fields']) is explicit
+E   AssertionError: assert ('contract_universe' in ['contract_universe', 'contract_universe_version', 'dataset', 'dataset_explicit']) is False
+_ test_followup_default_metadata_is_derived[todos los registros de la fuente-source_records-True] _
+tests/test_contract_universe_r4_state_metadata.py:91: in test_followup_default_metadata_is_derived
+    assert ('contract_universe' in trace['derived_fields']) is not explicit
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'derived_fields'
+_ test_followup_default_metadata_is_derived[registros cancelados-source_records-True] _
+tests/test_contract_universe_r4_state_metadata.py:91: in test_followup_default_metadata_is_derived
+    assert ('contract_universe' in trace['derived_fields']) is not explicit
+                                   ^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'derived_fields'
+_____________ test_incompatible_family_is_removed_without_widening _____________
+tests/test_contract_universe_r4_state_metadata.py:101: in test_incompatible_family_is_removed_without_widening
+    @given(state=st.sampled_from(['Cerrado', 'Suspendido', 'terminado', 'En ejecución']),
+                   ^^^
+tests/test_contract_universe_r4_state_metadata.py:110: in test_incompatible_family_is_removed_without_widening
+    assert 'estado_family' not in after
+E   AssertionError: assert 'estado_family' not in {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'estado_contrato': ['Cerrado'], ...}
+E   Failing test case: test_incompatible_family_is_removed_without_widening(
+E       state='Cerrado',  # or any other generated value
+E       family='oferta_abierta',
+E   )
+E   Explanation:
+E       These lines were always and only run by failing test cases:
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/tests/test_contract_universe_r4_state_metadata.py:110
+_____________ test_explicit_closed_replaces_incompatible_metadata ______________
+tests/test_contract_universe_r4_state_metadata.py:120: in test_explicit_closed_replaces_incompatible_metadata
+    assert after['estado_family'] == 'contrato_cerrado'
+           ^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+___________ test_closed_provenance_drives_recovery_after_disk_reload ___________
+tests/test_contract_universe_r4_state_metadata.py:135: in test_closed_provenance_drives_recovery_after_disk_reload
+    assert loaded['estado'] == 'Cerrado'
+           ^^^^^^^^^^^^^^^^
+E   KeyError: 'estado'
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_state_provenance_survives_plan_frame_reload_without_sql_change[cerrados-values0-contrato_cerrado]
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_state_provenance_survives_plan_frame_reload_without_sql_change[suspendidos-values1-contrato_suspendido]
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_state_provenance_survives_plan_frame_reload_without_sql_change[terminados-values2-contrato_terminado]
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_state_provenance_survives_plan_frame_reload_without_sql_change[en ejecuci\xf3n-values3-contrato_activo]
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_followup_default_metadata_is_derived[regresa a los contratos-celebrated-False]
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_followup_default_metadata_is_derived[todos los registros de la fuente-source_records-True]
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_followup_default_metadata_is_derived[registros cancelados-source_records-True]
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_incompatible_family_is_removed_without_widening
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_explicit_closed_replaces_incompatible_metadata
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_closed_provenance_drives_recovery_after_disk_reload
+10 failed, 3 passed in 1.99s

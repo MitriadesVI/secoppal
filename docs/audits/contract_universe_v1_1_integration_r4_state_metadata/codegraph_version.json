@@ -1,0 +1,11 @@
+{
+  "command": [
+    "codegraph",
+    "--version"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata",
+  "exit_code": 0,
+  "duration_seconds": 0.17335358299897052,
+  "stdout": "0.9.6\n",
+  "stderr": ""
+}

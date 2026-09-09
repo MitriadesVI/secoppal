@@ -1,0 +1,51 @@
+from pathlib import Path
+import hashlib, xml.etree.ElementTree as ET
+exec(Path('docs/audits/contract_universe_v1_1_integration_r4_state_metadata/runner.py.txt').read_text())
+
+def statuses(name, expected):
+ result={}
+ for c in ET.parse(E/(name+'.xml')).iter('testcase'):
+  n=c.attrib['classname'].replace('.','/')+'.py::'+c.attrib['name']
+  result[n]='failed' if c.find('failure') is not None else 'error' if c.find('error') is not None else 'skipped' if c.find('skipped') is not None else 'passed'
+ assert set(result)==set(expected)
+ return result
+ids=json.loads((E/'nodeids_20.json').read_text())
+clusters=json.loads((W/'docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/clusters.json').read_text())
+s= statuses('residual_20',ids)
+remaining=[n for n,v in s.items() if v=='failed']
+res=dict(before=20,now_pass=list(s.values()).count('passed'),still_fail=len(remaining),errors=list(s.values()).count('error'),skipped=list(s.values()).count('skipped'),clusters_still_present=sorted({clusters[n] for n in remaining}),nodeids_still_fail=remaining,nodeids_now_pass=[n for n,v in s.items() if v=='passed'],results=s)
+assert res['now_pass']==10 and res['still_fail']==10 and res['errors']==0
+(E/'RESIDUAL_20_AFTER_R4.json').write_text(json.dumps(res,indent=2)+'\n')
+mat=json.loads((E/'C10_C13_MATRIX.json').read_text())
+base={d['nodeid']:d for d in map(json.loads,(E/'base_full_pipeline.jsonl').read_text().splitlines())}
+new={d['nodeid']:d for d in map(json.loads,(E/'candidate_full_pipeline.jsonl').read_text().splitlines())}
+for row in mat:
+ row['main_behavior']='PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt'
+ row['candidate_behavior']='FAIL at e23753c; PASS after R4; after_10.txt'
+ row['evidence'] += ['main_full_pipeline.jsonl','base_full_pipeline.jsonl','candidate_full_pipeline.jsonl','after_10.txt']
+ if row['cluster']=='C10':
+  a,b=base[row['nodeid']]['sql'],new[row['nodeid']]['sql']
+  assert a==b
+  row['unchanged_all_observed_sql']=True
+ if row['cluster']=='C12':row['derived_fields']=['contract_universe','contract_universe_version']
+(E/'C10_C13_MATRIX.json').write_text(json.dumps(mat,indent=2)+'\n')
+# Compare diagnostic builder SQL for admitted states independently of legacy metadata.
+a={d['case']:d for d in map(json.loads,(E/'base_controls.jsonl').read_text().splitlines())}
+b={d['case']:d for d in map(json.loads,(E/'candidate_final_controls_v2.jsonl').read_text().splitlines())}
+comparisons=[]
+for q in sorted(a.keys() & b.keys()):
+ x,y=a[q],b[q]
+ if isinstance(x.get('sql'),str) and isinstance(y.get('sql'),str):
+  assert x['sql']==y['sql'],q
+  comparisons.append(dict(query=q,byte_identical_sql=True,base_sql=x['sql'],candidate_sql=y['sql']))
+(E/'SQL_PARITY.json').write_text(json.dumps(comparisons,indent=2,ensure_ascii=False)+'\n')
+sg=json.loads(json.loads((E/'semgrep_final_structured.json').read_text())['stdout'])
+findings=sg['results'];assert len(findings)==10
+owned=['app/core/contract_state_metadata.py','app/core/followup_universe_trace.py','app/core/contract_universe_intent.py','app/core/followup_mutations.py']
+assert not any(f['path'] in owned for f in findings)
+for f in findings:
+ assert (W/f['path']).read_bytes()==subprocess.check_output(['git','show','e23753c:'+f['path']],cwd=W)
+validation=dict(verdict='STATE_UNIVERSE_METADATA_COMPATIBILITY_ADJUDICATED',base='e23753cc6f37401ac1e9b1a5f9d89809c3e4daf6',historical_main='c52d7eda355f44278164d4cb9803a199eec83486',scope_clusters=['C10','C11','C12','C13'],adjudication={'OBSOLETE_ORACLE':6,'REAL_REGRESSION':4},tests={'before_10':'10 failed in 1.94s','historical_main_10':'10 passed in 3.05s','after_10':'10 passed in 1.26s','auditor_final_19':'19 passed in 3.49s','f2_2_product_properties':'34 passed in 12.00s','frozen_after':'43 passed in 5.45s','corpus':'89/89 PASS','C05_C08':'44 passed in 9.47s','R3_sql_oracles':'34 passed in 1.76s','state_consumers':'181 passed in 10.98s','r4_controls_final_v2':'16 passed in 2.30s','residual_20':'10 failed, 10 passed in 2.20s','size':'2 passed in 0.11s'},totals_are_overlapping=True,global_suite_run=False,tooling={'ruff':'0.16.4','semgrep':'1.176.0','hypothesis':'6.165.10; derandomize=True; 40 examples for state/family invariant','codegraph':'0.9.6 with Node22; status Not initialized; fallback rg and manual inspection'},semgrep={'baseline':10,'new_in_owned_files':0,'all_finding_files_identical_to_base':True,'limitations':sg.get('paths',{}).get('skipped',[])},mutations={'M1':'killed','M2':'killed','M3':'killed','M4':'killed'},residual=res,limitations=['Contiguous firmados en ejecución already clarifies with zero actual SQL at base and candidate Frame OFF/ON. Relative clause preserves all three states.','Bare y los suspendidos remaps to Cancelado+Suspendido in inherited followup normalizer at base and candidate; not remediated in this ten-nodeid lane. Explicit y los contratos suspendidos preserves exact state.','Diagnostic direct SoQLBuilder output is not observed execution; workflow guards must run.','Codegraph index unavailable; no indexed impact claim.'],merged=False,pushed=False,deployed=False,restarted=False,owned_runtime_sha256={f:hashlib.sha256((W/f).read_bytes()).hexdigest() for f in owned})
+(E/'validation.json').write_text(json.dumps(validation,indent=2,ensure_ascii=False)+'\n')
+(E/'cu_r4_report.py.txt').write_bytes(Path(__file__).read_bytes())
+print('Report: 10 closed; 10 residual; 10 baseline Semgrep, zero delta; SQL parity',len(comparisons))

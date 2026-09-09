@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_contract_universe_r4_state_metadata.py::test_incompatible_family_is_removed_without_widening",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/docs/audits/contract_universe_v1_1_integration_r4_state_metadata/M3.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata",
+  "exit_code": 1,
+  "duration_seconds": 1.259033583002747,
+  "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_____________ test_incompatible_family_is_removed_without_widening _____________\ntests/test_contract_universe_r4_state_metadata.py:100: in test_incompatible_family_is_removed_without_widening\n    @given(state=st.sampled_from(['Cerrado', 'Suspendido', 'terminado', 'En ejecuci\u00f3n']),\n                   ^^^\ntests/test_contract_universe_r4_state_metadata.py:109: in test_incompatible_family_is_removed_without_widening\n    assert 'estado_family' not in after\nE   AssertionError: assert 'estado_family' not in {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'estado_contrato': ['Cerrado'], ...}\nE   Failing test case: test_incompatible_family_is_removed_without_widening(\nE       state='Cerrado',  # or any other generated value\nE       family='oferta_abierta',\nE   )\nE   Explanation:\nE       These lines were always and only run by failing test cases:\nE           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/app/core/contract_state_metadata.py:20\nE           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/tests/test_contract_universe_r4_state_metadata.py:109\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_r4_state_metadata.py::test_incompatible_family_is_removed_without_widening\n1 failed in 0.88s\n",
+  "stderr": ""
+}

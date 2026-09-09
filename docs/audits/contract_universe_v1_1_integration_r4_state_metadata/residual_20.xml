@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="10" skipped="0" tests="20" time="2.203" timestamp="2026-09-09T16:33:08.226369-05:00" hostname="Rodrigos-MacBook-Pro.local"><testcase classname="tests.test_actor_routing" name="test_inv_actor_mention_atomicity_name_plus_document_cannot_leak[qu\xe9 ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1]" time="0.052"><failure message="AssertionError: assert ['asilo'] is None&#10; +  where ['asilo'] = &lt;built-in method get of dict object at 0x111b876c0&gt;('objeto')&#10; +    where &lt;built-in method get of dict object at 0x111b876c0&gt; = {'actor_conversation_construction': 'what_x_did_with_y', 'actor_conversation_operation': 'SET_ACTOR', 'actor_resolutio...erted_name': 'asilo de san antonio', 'base_number': '890102896', 'check_digit': '1', 'document_type': 'NIT', ...}, ...}.get">tests/test_actor_routing.py:186: in test_inv_actor_mention_atomicity_name_plus_document_cannot_leak
+    assert params.get("objeto") is None
+E   AssertionError: assert ['asilo'] is None
+E    +  where ['asilo'] = &lt;built-in method get of dict object at 0x111b876c0&gt;('objeto')
+E    +    where &lt;built-in method get of dict object at 0x111b876c0&gt; = {'actor_conversation_construction': 'what_x_did_with_y', 'actor_conversation_operation': 'SET_ACTOR', 'actor_resolutio...erted_name': 'asilo de san antonio', 'base_number': '890102896', 'check_digit': '1', 'document_type': 'NIT', ...}, ...}.get</failure></testcase><testcase classname="tests.test_actor_routing" name="test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto[qu\xe9 ha contratado FUNSOCOM]" time="0.001"><failure message="AssertionError: assert not ({'funsocom'} &amp; {'fundacaribe', 'funsocom'})">tests/test_actor_routing.py:426: in test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto
+    assert not (tokens &amp; {"fundacaribe", "funsocom"})
+E   AssertionError: assert not ({'funsocom'} &amp; {'fundacaribe', 'funsocom'})</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_galapa_does_not_report_false_zero" time="0.125"><failure message="AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'&#10;  &#10;  'Se observan 0 contratos' is contained here:&#10;    ocesos]&#10;    • Se observan 0 contratos por $0. [SECOP II Contratos]&#10;    • Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]&#10;    • Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]&#10;    &#10;    Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes.">tests/test_beta_entity_actor_conversation.py:80: in test_entity_profile_galapa_does_not_report_false_zero
+    assert "Se observan 0 contratos" not in result["response"]
+E   AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'
+E
+E     'Se observan 0 contratos' is contained here:
+E       ocesos]
+E       • Se observan 0 contratos por $0. [SECOP II Contratos]
+E       • Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]
+E       • Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]
+E
+E       Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes.</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]" time="0.101"><failure message="AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'&#10;  &#10;  - entity_profile_suppliers&#10;  + heuristic_only">tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E     - entity_profile_suppliers
+E     + heuristic_only</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]" time="0.101"><failure message="AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'&#10;  &#10;  - entity_profile_suppliers&#10;  + heuristic_only">tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E     - entity_profile_suppliers
+E     + heuristic_only</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]" time="0.102"><failure message="AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'&#10;  &#10;  - entity_profile_suppliers&#10;  + heuristic_only">tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E     - entity_profile_suppliers
+E     + heuristic_only</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]" time="0.103"><failure message="AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'&#10;  &#10;  - entity_profile_suppliers&#10;  + heuristic_only">tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E     - entity_profile_suppliers
+E     + heuristic_only</failure></testcase><testcase classname="tests.test_entity_profile_remediation_properties" name="test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None]" time="0.003" /><testcase classname="tests.test_entity_profile_remediation_properties" name="test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None]" time="0.023" /><testcase classname="tests.test_entity_profile_remediation_properties" name="test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None]" time="0.002" /><testcase classname="tests.test_entity_profile_remediation_properties" name="test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5]" time="0.002" /><testcase classname="tests.test_entity_profile_remediation_properties" name="test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6]" time="0.002" /><testcase classname="tests.test_entity_profile_remediation_properties" name="test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None]" time="0.003" /><testcase classname="tests.test_firmado_signed_semantics" name="test_firmados_mas_estado_explicito_usa_el_estado" time="0.227" /><testcase classname="tests.test_followup_mutations" name="test_change_dataset_cleans_incompatible_fields_before_apply" time="0.091" /><testcase classname="tests.test_invariants_characterization" name="test_signed_closed_contracts_preserve_real_closed_state[False]" time="0.091" /><testcase classname="tests.test_invariants_characterization" name="test_signed_closed_contracts_preserve_real_closed_state[True]" time="0.091" /><testcase classname="tests.test_state_catalog" name="test_catalog_no_unexpected_duplicates" time="0.001"><failure message="AssertionError: Unexpected duplicate contratos:estado_contrato:Suspendido in families contrato_suspendido and no_procede&#10;assert 'contratos:estado_contrato:Suspendido' in {'procesos:estado_del_procedimiento:Aprobado', 'procesos:estado_del_procedimiento:En aprobación', 'procesos:estado_del_procedimiento:Seleccionado'}">tests/test_state_catalog.py:95: in test_catalog_no_unexpected_duplicates
+    assert key in _KNOWN_OVERLAPS, (
+E   AssertionError: Unexpected duplicate contratos:estado_contrato:Suspendido in families contrato_suspendido and no_procede
+E   assert 'contratos:estado_contrato:Suspendido' in {'procesos:estado_del_procedimiento:Aprobado', 'procesos:estado_del_procedimiento:En aprobación', 'procesos:estado_del_procedimiento:Seleccionado'}</failure></testcase><testcase classname="tests.test_truth_layer_temporal" name="test_temporal_modules_have_no_runtime_consumers" time="0.025"><failure message="AssertionError: assert ['app/core/co...formatter.py'] == []&#10;  &#10;  Left contains 2 more items, first extra item: 'app/core/contract_universe.py'&#10;  Use -v to get more diff">tests/test_truth_layer_temporal.py:1314: in test_temporal_modules_have_no_runtime_consumers
+    assert consumers == []
+E   AssertionError: assert ['app/core/co...formatter.py'] == []
+E
+E     Left contains 2 more items, first extra item: 'app/core/contract_universe.py'
+E     Use -v to get more diff</failure></testcase><testcase classname="tests.test_value_sanity_reachability" name="test_export_preserves_source_amount_and_existing_columns" time="0.001"><failure message="ValueError: El universo de esta exportación requiere revisión. Repite la búsqueda.">tests/test_value_sanity_reachability.py:195: in test_export_preserves_source_amount_and_existing_columns
+    payload = build_results_xlsx(
+app/core/export_xlsx.py:81: in build_results_xlsx
+    raise ValueError("El universo de esta exportación requiere revisión. Repite la búsqueda.")
+E   ValueError: El universo de esta exportación requiere revisión. Repite la búsqueda.</failure></testcase></testsuite></testsuites>

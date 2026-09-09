@@ -208,6 +208,14 @@ def test_p17_every_material_filter_in_sql_is_declared_in_the_scope(phrase, injec
     declared = " ".join(scope_filter_lines(build_effective_scope(profile)))
     sql = "\n".join(where for _, where in _wheres(client))
     exercised = False
+    # R4: the universe is declared by render, separately from explicit state.
+    from app.core.contract_universe import predicate
+    if predicate() in sql:
+        assert "Contratos celebrados según las señales publicadas en SECOP." in render_entity_profile(profile)
+        sql = sql.replace(predicate(), "")
+        exercised = True
+        if "estado_contrato" not in sql:
+            assert "Estado actual" not in declared
     for marker, visible in _MATERIAL_MARKERS:
         if marker in sql:
             exercised = True

@@ -1,0 +1,192 @@
+[
+  {
+    "nodeid": "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None]",
+    "cluster": "C10",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "Universe is visible without invented explicit state",
+    "consumer_runtime": "entity_profile.render.render_entity_profile",
+    "verdict": "OBSOLETE_ORACLE",
+    "fix_or_new_oracle": "P17 verifies rendered universe separately from explicit WHERE state",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ],
+    "unchanged_all_observed_sql": true
+  },
+  {
+    "nodeid": "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None]",
+    "cluster": "C10",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "Universe is visible without invented explicit state",
+    "consumer_runtime": "entity_profile.render.render_entity_profile",
+    "verdict": "OBSOLETE_ORACLE",
+    "fix_or_new_oracle": "P17 verifies rendered universe separately from explicit WHERE state",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ],
+    "unchanged_all_observed_sql": true
+  },
+  {
+    "nodeid": "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None]",
+    "cluster": "C10",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "Universe is visible without invented explicit state",
+    "consumer_runtime": "entity_profile.render.render_entity_profile",
+    "verdict": "OBSOLETE_ORACLE",
+    "fix_or_new_oracle": "P17 verifies rendered universe separately from explicit WHERE state",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ],
+    "unchanged_all_observed_sql": true
+  },
+  {
+    "nodeid": "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5]",
+    "cluster": "C10",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "Universe is visible without invented explicit state",
+    "consumer_runtime": "entity_profile.render.render_entity_profile",
+    "verdict": "OBSOLETE_ORACLE",
+    "fix_or_new_oracle": "P17 verifies rendered universe separately from explicit WHERE state",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ],
+    "unchanged_all_observed_sql": true
+  },
+  {
+    "nodeid": "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6]",
+    "cluster": "C10",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "Universe is visible without invented explicit state",
+    "consumer_runtime": "entity_profile.render.render_entity_profile",
+    "verdict": "OBSOLETE_ORACLE",
+    "fix_or_new_oracle": "P17 verifies rendered universe separately from explicit WHERE state",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ],
+    "unchanged_all_observed_sql": true
+  },
+  {
+    "nodeid": "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None]",
+    "cluster": "C10",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "Universe is visible without invented explicit state",
+    "consumer_runtime": "entity_profile.render.render_entity_profile",
+    "verdict": "OBSOLETE_ORACLE",
+    "fix_or_new_oracle": "P17 verifies rendered universe separately from explicit WHERE state",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ],
+    "unchanged_all_observed_sql": true
+  },
+  {
+    "nodeid": "tests/test_firmado_signed_semantics.py::test_firmados_mas_estado_explicito_usa_el_estado",
+    "cluster": "C11",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "Preserve exact state semantic provenance without widening execution",
+    "consumer_runtime": "query_frame; conversation_store; refinement_recovery; frame_migration",
+    "verdict": "REAL_REGRESSION",
+    "fix_or_new_oracle": "Narrow runtime remediation; retain original test",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ]
+  },
+  {
+    "nodeid": "tests/test_followup_mutations.py::test_change_dataset_cleans_incompatible_fields_before_apply",
+    "cluster": "C12",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "System metadata is not accepted user intent",
+    "consumer_runtime": "followup_mutations.GatedDelta.trace",
+    "verdict": "REAL_REGRESSION",
+    "fix_or_new_oracle": "Narrow runtime remediation; retain original test",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ],
+    "derived_fields": [
+      "contract_universe",
+      "contract_universe_version"
+    ]
+  },
+  {
+    "nodeid": "tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[False]",
+    "cluster": "C13",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "Preserve compatible state provenance across QueryPlan and Frame",
+    "consumer_runtime": "query_frame; frame_migration; estado_projection",
+    "verdict": "REAL_REGRESSION",
+    "fix_or_new_oracle": "Narrow runtime remediation; retain original test",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ]
+  },
+  {
+    "nodeid": "tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[True]",
+    "cluster": "C13",
+    "main_behavior": "PASS measured on isolated git archive c52d7eda355f44278164d4cb9803a199eec83486; main_10.txt",
+    "candidate_behavior": "FAIL at e23753c; PASS after R4; after_10.txt",
+    "semantic_property": "Preserve compatible state provenance across QueryPlan and Frame",
+    "consumer_runtime": "query_frame; frame_migration; estado_projection",
+    "verdict": "REAL_REGRESSION",
+    "fix_or_new_oracle": "Narrow runtime remediation; retain original test",
+    "evidence": [
+      "before_10.txt",
+      "base_observations.jsonl",
+      "main_full_pipeline.jsonl",
+      "base_full_pipeline.jsonl",
+      "candidate_full_pipeline.jsonl",
+      "after_10.txt"
+    ]
+  }
+]

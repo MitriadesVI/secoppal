@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_contract_universe_r4_state_metadata.py::test_closed_provenance_drives_recovery_after_disk_reload",
+    "tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/docs/audits/contract_universe_v1_1_integration_r4_state_metadata/M2.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata",
+  "exit_code": 1,
+  "duration_seconds": 1.4102088329964317,
+  "stdout": "FFF                                                                      [100%]\n=================================== FAILURES ===================================\n___________ test_closed_provenance_drives_recovery_after_disk_reload ___________\ntests/test_contract_universe_r4_state_metadata.py:134: in test_closed_provenance_drives_recovery_after_disk_reload\n    assert loaded.get('estado') == 'Cerrado'\nE   AssertionError: assert None == 'Cerrado'\nE    +  where None = <built-in method get of dict object at 0x1125f5c00>('estado')\nE    +    where <built-in method get of dict object at 0x1125f5c00> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'dataset_explicit': True, ...}.get\n________ test_signed_closed_contracts_preserve_real_closed_state[False] ________\ntests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state\n    assert snap[\"after_plan\"][\"estado_family\"] == \"contrato_cerrado\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'estado_family'\n________ test_signed_closed_contracts_preserve_real_closed_state[True] _________\ntests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state\n    assert snap[\"after_plan\"][\"estado_family\"] == \"contrato_cerrado\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'estado_family'\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_r4_state_metadata.py::test_closed_provenance_drives_recovery_after_disk_reload\nFAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[False]\nFAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[True]\n3 failed in 1.03s\n",
+  "stderr": ""
+}

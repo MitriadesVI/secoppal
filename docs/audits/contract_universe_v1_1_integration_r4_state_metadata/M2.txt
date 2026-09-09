@@ -1,0 +1,23 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_closed_provenance_drives_recovery_after_disk_reload ___________
+tests/test_contract_universe_r4_state_metadata.py:134: in test_closed_provenance_drives_recovery_after_disk_reload
+    assert loaded.get('estado') == 'Cerrado'
+E   AssertionError: assert None == 'Cerrado'
+E    +  where None = <built-in method get of dict object at 0x1125f5c00>('estado')
+E    +    where <built-in method get of dict object at 0x1125f5c00> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'dataset_explicit': True, ...}.get
+________ test_signed_closed_contracts_preserve_real_closed_state[False] ________
+tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+________ test_signed_closed_contracts_preserve_real_closed_state[True] _________
+tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_closed_provenance_drives_recovery_after_disk_reload
+FAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[False]
+FAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[True]
+3 failed in 1.03s

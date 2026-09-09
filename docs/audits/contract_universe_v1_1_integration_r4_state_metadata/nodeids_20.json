@@ -1,0 +1,22 @@
+[
+  "tests/test_actor_routing.py::test_inv_actor_mention_atomicity_name_plus_document_cannot_leak[qu\\xe9 ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1]",
+  "tests/test_actor_routing.py::test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto[qu\\xe9 ha contratado FUNSOCOM]",
+  "tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero",
+  "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]",
+  "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]",
+  "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]",
+  "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]",
+  "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None]",
+  "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None]",
+  "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None]",
+  "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5]",
+  "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6]",
+  "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None]",
+  "tests/test_firmado_signed_semantics.py::test_firmados_mas_estado_explicito_usa_el_estado",
+  "tests/test_followup_mutations.py::test_change_dataset_cleans_incompatible_fields_before_apply",
+  "tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[False]",
+  "tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[True]",
+  "tests/test_state_catalog.py::test_catalog_no_unexpected_duplicates",
+  "tests/test_truth_layer_temporal.py::test_temporal_modules_have_no_runtime_consumers",
+  "tests/test_value_sanity_reachability.py::test_export_preserves_source_amount_and_existing_columns"
+]

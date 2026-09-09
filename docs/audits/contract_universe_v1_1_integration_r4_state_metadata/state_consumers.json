@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_followup_mutations.py",
+    "tests/test_query_frame.py",
+    "tests/test_conversation_store.py",
+    "tests/test_contextual_suggestions.py",
+    "tests/test_invariants_characterization.py",
+    "tests/test_firmado_signed_semantics.py",
+    "tests/test_entity_profile_frame_migration.py",
+    "tests/test_entity_profile_frame_b_integration.py",
+    "tests/test_entity_profile_remediation_properties.py",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/docs/audits/contract_universe_v1_1_integration_r4_state_metadata/state_consumers.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata",
+  "exit_code": 0,
+  "duration_seconds": 11.43309254199994,
+  "stdout": "........................................................................ [ 39%]\n........................................................................ [ 79%]\n.....................................                                    [100%]\n181 passed in 10.98s\n",
+  "stderr": ""
+}

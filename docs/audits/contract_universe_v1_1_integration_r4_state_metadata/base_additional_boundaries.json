@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_contract_universe_r4_state_metadata.py::test_followup_state_replaces_closed_provenance",
+    "tests/test_contract_universe_r4_state_metadata.py::test_contiguous_active_composition_preserves_base_clarification",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/docs/audits/contract_universe_v1_1_integration_r4_state_metadata/base_additional_boundaries.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata",
+  "exit_code": 1,
+  "duration_seconds": 1.5763607920016511,
+  "stdout": "F...                                                                     [100%]\n=================================== FAILURES ===================================\n_ test_followup_state_replaces_closed_provenance[y los suspendidos-Suspendido] _\ntests/test_contract_universe_r4_state_metadata.py:173: in test_followup_state_replaces_closed_provenance\n    assert merged['estado_contrato'] == [state]\nE   AssertionError: assert ['Cancelado', 'Suspendido'] == ['Suspendido']\nE     \nE     At index 0 diff: 'Cancelado' != 'Suspendido'\nE     Left contains one more item: 'Suspendido'\nE     Use -v to get more diff\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_r4_state_metadata.py::test_followup_state_replaces_closed_provenance[y los suspendidos-Suspendido]\n1 failed, 3 passed in 1.19s\n",
+  "stderr": ""
+}

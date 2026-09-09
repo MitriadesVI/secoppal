@@ -1,0 +1,12 @@
+from pathlib import Path
+import tempfile,tarfile,io
+exec(Path('docs/audits/contract_universe_v1_1_integration_r4_state_metadata/runner.py.txt').read_text())
+root=Path(tempfile.mkdtemp(prefix='secoppal-r4-historical-'))
+blob=subprocess.check_output(['git','archive','c52d7ed','app','tests','pytest.ini'],cwd=W)
+with tarfile.open(fileobj=io.BytesIO(blob)) as tf:tf.extractall(root,filter='data')
+ENV['PYTHONPATH']='/tmp:'+str(root)
+ENV['R4_CAPTURE']=str(E/'main_full_pipeline.jsonl')
+ids=json.loads((E/'nodeids_10.json').read_text())
+run('main_10',[P,'-m','pytest','-p','cu_r4_observe',*ids,'-q','--tb=short'],cwd=root)
+(E/'historical_snapshot.json').write_text(json.dumps({'commit':subprocess.check_output(['git','rev-parse','c52d7ed'],cwd=W,text=True).strip(),'snapshot':str(root),'method':'git archive app tests pytest.ini; isolated local snapshot; no shared worktree edits'},indent=2)+'\n')
+(E/'cu_r4_historical.py.txt').write_bytes(Path(__file__).read_bytes())

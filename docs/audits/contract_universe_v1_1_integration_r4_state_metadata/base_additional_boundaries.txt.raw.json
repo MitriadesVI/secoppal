@@ -1,0 +1,4 @@
+{
+  "sha256": "ab05571a797c5b864d944266aac36ae3b4dce812cd856d9ad4e7e543e8fc843c",
+  "original_text": "F...                                                                     [100%]\n=================================== FAILURES ===================================\n_ test_followup_state_replaces_closed_provenance[y los suspendidos-Suspendido] _\ntests/test_contract_universe_r4_state_metadata.py:173: in test_followup_state_replaces_closed_provenance\n    assert merged['estado_contrato'] == [state]\nE   AssertionError: assert ['Cancelado', 'Suspendido'] == ['Suspendido']\nE     \nE     At index 0 diff: 'Cancelado' != 'Suspendido'\nE     Left contains one more item: 'Suspendido'\nE     Use -v to get more diff\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_r4_state_metadata.py::test_followup_state_replaces_closed_provenance[y los suspendidos-Suspendido]\n1 failed, 3 passed in 1.19s\n"
+}

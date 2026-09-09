@@ -1,0 +1,25 @@
+from pathlib import Path
+import re
+exec(Path('docs/audits/contract_universe_v1_1_integration_r4_state_metadata/runner.py.txt').read_text())
+test='tests/test_contract_universe_r4_state_metadata.py::'
+cases=[
+ ('M1','app/core/entity_profile/render.py','        blocks.append(label(universe_from_params(contract_params)))','        blocks.append(label(universe_from_params(contract_params)))\n        blocks.append("Estado actual: celebrado")',[test+'test_visible_universe_is_not_an_invented_state']),
+ ('M2','app/core/contract_universe_intent.py','            preserve_state_metadata(clean, intent.state)','            pass  # mutation: erase required provenance',[test+'test_closed_provenance_drives_recovery_after_disk_reload','tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state']),
+ ('M3','app/core/contract_state_metadata.py',"            params.pop('estado_family', None)",'            pass  # mutation: retain incompatible family',[test+'test_incompatible_family_is_removed_without_widening']),
+ ('M4','app/core/followup_mutations.py','accepted_fields=sorted(accepted.keys() - derived_universe_fields(accepted, text)),','accepted_fields=sorted(accepted),',[test+'test_followup_default_metadata_is_derived','tests/test_followup_mutations.py::test_change_dataset_cleans_incompatible_fields_before_apply']),
+]
+ledger=[]
+for name,file,old,new,ids in cases:
+ baseline=pytest(name+'_positive',ids)
+ assert baseline['exit_code']==0,(name,baseline['stdout'])
+ p=W/file;original=p.read_bytes();s=original.decode();assert s.count(old)==1
+ try:
+  p.write_text(s.replace(old,new))
+  result=pytest(name,ids)
+ finally:p.write_bytes(original)
+ text=result['stdout']+result['stderr']
+ killed=result['exit_code']==1 and ('AssertionError' in text or re.search(r'^E\s+assert ',text,re.M)) and 'ERROR collecting' not in text
+ ledger.append(dict(mutation=name,file=file,before=old,after=new,nodeids=ids,baseline_exit=baseline['exit_code'],mutation_exit=result['exit_code'],killed=bool(killed),evidence=name+'.txt'))
+ assert killed,(name,text)
+(E/'MUTATIONS.json').write_text(json.dumps(ledger,indent=2)+'\n')
+(E/'cu_r4_mutations.py.txt').write_bytes(Path(__file__).read_bytes())

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "codegraph",
+    "status"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata",
+  "exit_code": 0,
+  "duration_seconds": 0.11555362500075717,
+  "stdout": "\u001b[1m\nCodeGraph Status\n\u001b[0m\n\u001b[34m\u2139\u001b[0m Project: /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata\n\u001b[33m\u26a0\u001b[0m Not initialized\n\u001b[34m\u2139\u001b[0m Run \"codegraph init\" to initialize\n",
+  "stderr": ""
+}

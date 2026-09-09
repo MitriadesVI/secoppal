@@ -1,0 +1,56 @@
+[
+  {
+    "mutation": "M1",
+    "file": "app/core/entity_profile/render.py",
+    "before": "        blocks.append(label(universe_from_params(contract_params)))",
+    "after": "        blocks.append(label(universe_from_params(contract_params)))\n        blocks.append(\"Estado actual: celebrado\")",
+    "nodeids": [
+      "tests/test_contract_universe_r4_state_metadata.py::test_visible_universe_is_not_an_invented_state"
+    ],
+    "baseline_exit": 0,
+    "mutation_exit": 1,
+    "killed": true,
+    "evidence": "M1.txt"
+  },
+  {
+    "mutation": "M2",
+    "file": "app/core/contract_universe_intent.py",
+    "before": "            preserve_state_metadata(clean, intent.state)",
+    "after": "            pass  # mutation: erase required provenance",
+    "nodeids": [
+      "tests/test_contract_universe_r4_state_metadata.py::test_closed_provenance_drives_recovery_after_disk_reload",
+      "tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state"
+    ],
+    "baseline_exit": 0,
+    "mutation_exit": 1,
+    "killed": true,
+    "evidence": "M2.txt"
+  },
+  {
+    "mutation": "M3",
+    "file": "app/core/contract_state_metadata.py",
+    "before": "            params.pop('estado_family', None)",
+    "after": "            pass  # mutation: retain incompatible family",
+    "nodeids": [
+      "tests/test_contract_universe_r4_state_metadata.py::test_incompatible_family_is_removed_without_widening"
+    ],
+    "baseline_exit": 0,
+    "mutation_exit": 1,
+    "killed": true,
+    "evidence": "M3.txt"
+  },
+  {
+    "mutation": "M4",
+    "file": "app/core/followup_mutations.py",
+    "before": "accepted_fields=sorted(accepted.keys() - derived_universe_fields(accepted, text)),",
+    "after": "accepted_fields=sorted(accepted),",
+    "nodeids": [
+      "tests/test_contract_universe_r4_state_metadata.py::test_followup_default_metadata_is_derived",
+      "tests/test_followup_mutations.py::test_change_dataset_cleans_incompatible_fields_before_apply"
+    ],
+    "baseline_exit": 0,
+    "mutation_exit": 1,
+    "killed": true,
+    "evidence": "M4.txt"
+  }
+]

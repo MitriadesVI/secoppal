@@ -2,6 +2,7 @@
 import re
 from dataclasses import dataclass
 from app.core.contract_universe import ContractUniverse, POLICY_VERSION, conflict_message, stamp
+from app.core.contract_state_metadata import preserve_state_metadata
 
 _STATE = r'(?:cancelad[oa]s?|(?:en\s+)?borrador(?:es)?|enviados?\s+(?:al\s+)?proveedor|en\s+aprobacion)'
 _PATTERNS = (
@@ -147,9 +148,10 @@ def apply_request(params: dict, intent: UniverseRequest | None) -> dict:
                         'estado_de_apertura_del_proceso', 'estado_del_procedimiento'):
                 clean.pop(key, None)
             clean['estado_contrato'] = [intent.state]
+            preserve_state_metadata(clean, intent.state)
         elif intent.universe is ContractUniverse.SOURCE_RECORDS:
             clean.pop('estado_contrato', None)
-    clean = stamp(clean)
+    clean = stamp(preserve_state_metadata(clean))
     error = conflict_message(clean)
     if error:
         clean['contract_universe_error'] = error

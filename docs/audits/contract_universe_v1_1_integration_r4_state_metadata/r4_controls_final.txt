@@ -1,0 +1,13 @@
+..............F.                                                         [100%]
+=================================== FAILURES ===================================
+_ test_followup_state_replaces_closed_provenance[y los suspendidos-Suspendido] _
+tests/test_contract_universe_r4_state_metadata.py:173: in test_followup_state_replaces_closed_provenance
+    assert merged['estado_contrato'] == [state]
+E   AssertionError: assert ['Cancelado', 'Suspendido'] == ['Suspendido']
+E
+E     At index 0 diff: 'Cancelado' != 'Suspendido'
+E     Left contains one more item: 'Suspendido'
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_followup_state_replaces_closed_provenance[y los suspendidos-Suspendido]
+1 failed, 15 passed in 2.72s

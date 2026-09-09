@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_incompatible_family_is_removed_without_widening _____________
+tests/test_contract_universe_r4_state_metadata.py:100: in test_incompatible_family_is_removed_without_widening
+    @given(state=st.sampled_from(['Cerrado', 'Suspendido', 'terminado', 'En ejecución']),
+                   ^^^
+tests/test_contract_universe_r4_state_metadata.py:109: in test_incompatible_family_is_removed_without_widening
+    assert 'estado_family' not in after
+E   AssertionError: assert 'estado_family' not in {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'estado_contrato': ['Cerrado'], ...}
+E   Failing test case: test_incompatible_family_is_removed_without_widening(
+E       state='Cerrado',  # or any other generated value
+E       family='oferta_abierta',
+E   )
+E   Explanation:
+E       These lines were always and only run by failing test cases:
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/app/core/contract_state_metadata.py:20
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/tests/test_contract_universe_r4_state_metadata.py:109
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_r4_state_metadata.py::test_incompatible_family_is_removed_without_widening
+1 failed in 0.88s

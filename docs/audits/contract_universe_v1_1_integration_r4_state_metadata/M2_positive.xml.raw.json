@@ -1,0 +1,4 @@
+{
+  "sha256": "b6a4c3b5df946789ec72ed00ed219d2d5f4498d77b3674989682a9e69690466c",
+  "original_text": "<?xml version=\"1.0\" encoding=\"utf-8\"?><testsuites name=\"pytest tests\"><testsuite name=\"pytest\" errors=\"0\" failures=\"0\" skipped=\"0\" tests=\"3\" time=\"1.114\" timestamp=\"2026-09-09T16:32:20.867082-05:00\" hostname=\"Rodrigos-MacBook-Pro.local\"><testcase classname=\"tests.test_contract_universe_r4_state_metadata\" name=\"test_closed_provenance_drives_recovery_after_disk_reload\" time=\"0.214\" /><testcase classname=\"tests.test_invariants_characterization\" name=\"test_signed_closed_contracts_preserve_real_closed_state[False]\" time=\"0.092\" /><testcase classname=\"tests.test_invariants_characterization\" name=\"test_signed_closed_contracts_preserve_real_closed_state[True]\" time=\"0.127\" /></testsuite></testsuites>"
+}

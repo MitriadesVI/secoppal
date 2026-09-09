@@ -1,0 +1,5 @@
+{
+  "commit": "c52d7eda355f44278164d4cb9803a199eec83486",
+  "snapshot": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/secoppal-r4-historical-7_qehyqv",
+  "method": "git archive app tests pytest.ini; isolated local snapshot; no shared worktree edits"
+}

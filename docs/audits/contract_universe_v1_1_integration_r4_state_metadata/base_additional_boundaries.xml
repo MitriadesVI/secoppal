@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="4" time="1.189" timestamp="2026-09-09T16:34:09.085319-05:00" hostname="Rodrigos-MacBook-Pro.local"><testcase classname="tests.test_contract_universe_r4_state_metadata" name="test_followup_state_replaces_closed_provenance[y los suspendidos-Suspendido]" time="0.124"><failure message="AssertionError: assert ['Cancelado', 'Suspendido'] == ['Suspendido']&#10;  &#10;  At index 0 diff: 'Cancelado' != 'Suspendido'&#10;  Left contains one more item: 'Suspendido'&#10;  Use -v to get more diff">tests/test_contract_universe_r4_state_metadata.py:173: in test_followup_state_replaces_closed_provenance
+    assert merged['estado_contrato'] == [state]
+E   AssertionError: assert ['Cancelado', 'Suspendido'] == ['Suspendido']
+E
+E     At index 0 diff: 'Cancelado' != 'Suspendido'
+E     Left contains one more item: 'Suspendido'
+E     Use -v to get more diff</failure></testcase><testcase classname="tests.test_contract_universe_r4_state_metadata" name="test_followup_state_replaces_closed_provenance[y los terminados-terminado]" time="0.093" /><testcase classname="tests.test_contract_universe_r4_state_metadata" name="test_contiguous_active_composition_preserves_base_clarification[False]" time="0.102" /><testcase classname="tests.test_contract_universe_r4_state_metadata" name="test_contiguous_active_composition_preserves_base_clarification[True]" time="0.162" /></testsuite></testsuites>

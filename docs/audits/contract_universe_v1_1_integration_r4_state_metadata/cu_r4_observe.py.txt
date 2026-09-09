@@ -1,0 +1,39 @@
+import json, os, sys
+from pathlib import Path
+from unittest.mock import patch
+import pytest
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_call(item):
+    from app.core.query_router import QueryRouter
+    from app.core.soql_builder import SoQLBuilder
+    parsed, queries, results = [], [], []
+    parse, build = QueryRouter.parse, SoQLBuilder.build
+    def observe_parse(self, *args, **kwargs):
+        result = parse(self, *args, **kwargs)
+        parsed.append({'text': args[0], 'params_after_parse': dict(result.params)})
+        return result
+    def observe_build(self, *args, **kwargs):
+        result = build(self, *args, **kwargs)
+        queries.append(result)
+        return result
+    def profile(frame, event, arg):
+        if event != 'return' or frame.f_code.co_name != item.originalname:
+            return
+        loc = frame.f_locals
+        record = {k: loc[k] for k in ('snap', 'merged', 'trace', 'declared', 'sql') if k in loc}
+        if 'turn' in loc:
+            record['after_profile_plan'] = loc['turn'].params
+        if loc.get('profile') is not None:
+            from app.core.entity_profile.render import render_entity_profile
+            record['visible'] = render_entity_profile(loc['profile'])
+        results.append(record)
+    previous = sys.getprofile()
+    with patch.object(QueryRouter, 'parse', observe_parse), patch.object(SoQLBuilder, 'build', observe_build):
+        sys.setprofile(profile)
+        try:
+            yield
+        finally:
+            sys.setprofile(previous)
+    with Path(os.environ['R4_CAPTURE']).open('a') as f:
+        f.write(json.dumps({'nodeid': item.nodeid, 'parse': parsed, 'sql': queries, 'results': results}, default=str, ensure_ascii=False)+'\n')

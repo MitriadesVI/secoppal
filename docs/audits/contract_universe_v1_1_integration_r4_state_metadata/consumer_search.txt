@@ -1,0 +1,175 @@
+app/core/contract_universe.py:38:    state = fold_state(row.get('estado_contrato'))
+app/core/contract_universe.py:93:    family = ESTADO_FAMILIES.get(params.get('estado_family'), {}).get('contratos', {})
+app/core/contract_universe.py:94:    states = params.get('estado_contrato') or params.get('estado') or family.get('estado_contrato') or ()
+app/core/phrase_ranking.py:33:        params.get("estado") or params.get("estado_family")
+app/core/phrase_ranking.py:34:        or params.get("estado_de_apertura_del_proceso")
+app/core/phrase_ranking.py:35:        or params.get("estado_del_procedimiento")
+app/core/phrase_ranking.py:36:        or params.get("estado_contrato")
+app/core/opportunity_stage.py:113:    estado = _norm(row.get("estado_del_procedimiento"))
+app/core/opportunity_stage.py:114:    apertura = _norm(row.get("estado_de_apertura_del_proceso"))
+app/core/recall_audit.py:43:        "estado", "estado_family", "estado_field",
+app/core/contract_conditions.py:130:        transporta un ``state`` escalar y ``detect_estado_family`` declara que
+app/core/contract_conditions.py:166:            if not resolution or value not in resolution['filters'].get('estado_contrato', ()):
+app/core/formatter.py:53:    label = row.get("estado_op_label")
+app/core/formatter.py:55:        return str(row.get("estado", "") or "")
+app/core/formatter.py:56:    icon = row.get("estado_op_icono") or ""
+app/core/formatter.py:69:    if not row.get("estado_op_mostrar_raw"):
+app/core/formatter.py:71:    raw = str(row.get("estado_op_raw", "") or "").strip()
+app/core/formatter.py:198:    if params.get("estado") or params.get("estado_de_apertura_del_proceso") or params.get("estado_contrato"):
+app/core/formatter.py:328:                seg += f"  {estado}" if row.get("estado_op_label") else f"  ⚪ {estado}"
+app/core/formatter.py:448:                        "estado": item.get("estado_de_apertura_del_proceso", ""),
+app/core/formatter.py:466:                    "estado": item.get("estado_contrato", ""),
+app/core/contract_state_metadata.py:12:    values = params.get('estado_contrato')
+app/core/contract_state_metadata.py:16:    family = params.get('estado_family')
+app/core/contract_state_metadata.py:20:            params.pop('estado_family', None)
+app/core/contract_state_metadata.py:22:        params['estado'] = explicit_state
+app/core/contract_state_metadata.py:23:        params['estado_field'] = 'estado_contrato'
+app/core/contract_state_metadata.py:29:                params['estado_family'] = family
+app/core/contextual_suggestions.py:71:def _estado_field_for(dataset_id: str) -> str:
+app/core/contextual_suggestions.py:104:    estado_field = _estado_field_for(dataset_id)
+app/core/contextual_suggestions.py:120:        params.get("estado")
+app/core/contextual_suggestions.py:121:        or params.get("estado_family")
+app/core/contextual_suggestions.py:122:        or params.get("estado_de_apertura_del_proceso")
+app/core/contextual_suggestions.py:123:        or params.get("estado_del_procedimiento")
+app/core/contextual_suggestions.py:124:        or params.get("estado_contrato")
+app/core/contextual_suggestions.py:130:            val = str(r.get(estado_field, "") or "").strip()
+app/core/contextual_suggestions.py:136:            filters["estado"] = [
+app/core/contextual_suggestions.py:266:        refined["estado"] = filter_value
+app/core/response_policy.py:239:    if resolved.get("estado"):
+app/core/response_policy.py:240:        filters.append(f"estado: {resolved['estado']}")
+app/core/conversation_store.py:66:    "estado_family":          "replace",
+app/core/conversation_store.py:553:        "estado", "estado_field", "estado_family",
+app/core/export_xlsx.py:38:    "estado_family",
+app/core/export_xlsx.py:153:    return _safe_text(row.get("estado_op_label") or row.get("estado") or "")
+app/core/followup_engine.py:630:# solo un subconjunto ("y los cerrados?" → estado='Cerrado' + estado_field), así
+app/core/followup_engine.py:631:# que las claves del estado anterior (estado_family, estado_del_procedimiento)
+app/core/followup_engine.py:635:    "estado", "estado_field", "estado_family",
+app/core/followup_engine.py:848:            curr.estado_family = "oferta_abierta"
+app/core/contract_invariants.py:112:        not cleaned.get("estado_contrato")
+app/core/contract_invariants.py:113:        and not cleaned.get("estado")
+app/core/contract_invariants.py:114:        and cleaned.get("estado_field") == "estado_contrato"
+app/core/contract_invariants.py:116:        cleaned.pop("estado_field", None)
+app/core/contract_invariants.py:151:        or params.get("estado_family") == "oferta_abierta"
+app/core/contract_invariants.py:160:    cleaned["estado_family"] = "oferta_abierta"
+app/core/contract_invariants.py:172:    if params.get("estado_family") != "oferta_abierta" or params.get("dataset") != "contratos":
+app/core/estado_families.py:195:# ``estado_family='oferta_abierta'`` encima. El canario vivo lo cazó como
+app/core/estado_families.py:362:def detect_estado_family(normalized_query: str, dataset: str) -> dict | None:
+app/core/query_router.py:45:from app.core.estado_projection import project_estado_family
+app/core/query_router.py:300:            if intent_config.get("estado_family"):
+app/core/query_router.py:301:                params["estado_family"] = intent_config["estado_family"]
+app/core/query_router.py:303:            if intent_config.get("scrub_only") or "estado_family" in intent_config:
+app/core/query_router.py:305:                if intent_config.get("estado_family"):
+app/core/query_router.py:311:            if intent_config.get("estado_family") == "oferta_abierta":
+app/core/query_router.py:336:            params.setdefault("estado_family", "oferta_abierta")
+app/core/query_router.py:446:                "estado_family", "estado_del_procedimiento",
+app/core/query_router.py:496:            and (intent_config.get("scrub_only") or "estado_family" in intent_config)
+app/core/query_router.py:862:        from app.core.estado_families import detect_estado_family
+app/core/query_router.py:863:        estado_family_result = detect_estado_family(scrubbed, str(params["dataset"]))
+app/core/query_router.py:864:        if estado_family_result and not state_authorized(
+app/core/query_router.py:865:            params['dataset'], estado_family_result['filters'].get('estado_contrato', ()), universe_request,
+app/core/query_router.py:867:            estado_family_result = None
+app/core/query_router.py:868:        if estado_family_result:
+app/core/query_router.py:869:            for field, values in estado_family_result["filters"].items():
+app/core/query_router.py:871:            params["estado_family"] = estado_family_result["family"]
+app/core/query_router.py:872:            # Backward compat: set legacy estado/estado_field for old tests
+app/core/query_router.py:873:            if "estado_de_apertura_del_proceso" in estado_family_result["filters"]:
+app/core/query_router.py:874:                params["estado"] = estado_family_result["filters"]["estado_de_apertura_del_proceso"][0]
+app/core/query_router.py:875:                params["estado_field"] = "estado_de_apertura_del_proceso"
+app/core/query_router.py:876:            elif "estado_del_procedimiento" in estado_family_result["filters"]:
+app/core/query_router.py:877:                params["estado"] = estado_family_result["filters"]["estado_del_procedimiento"][0]
+app/core/query_router.py:878:                params["estado_field"] = "estado_del_procedimiento"
+app/core/query_router.py:879:            elif "estado_contrato" in estado_family_result["filters"]:
+app/core/query_router.py:880:                params["estado"] = estado_family_result["filters"]["estado_contrato"][0]
+app/core/query_router.py:881:                params["estado_field"] = "estado_contrato"
+app/core/query_router.py:883:            span = estado_family_result["consumed_span"]
+app/core/query_router.py:902:            # vía estado_family=oferta_abierta sobre dataset=procesos, esto es
+app/core/query_router.py:906:            if (estado_family_result["family"] == "oferta_abierta"
+app/core/query_router.py:929:                    params["estado"] = state_result["value"]
+app/core/query_router.py:931:                        params["estado_field"] = state_result["field"]
+app/core/query_router.py:1123:        params = apply_request(project_estado_family(params), universe_request)
+app/core/estado_projection.py:5:Si el frame afirma ``estado_family = contrato_activo``, la consulta a la fuente
+app/core/estado_projection.py:14:* ``estado_families.detect_estado_family`` devuelve familia **y** filtros de
+app/core/estado_projection.py:16:* ``intent_vocabulary`` declara ``estado_family`` como configuración de intent y
+app/core/estado_projection.py:43:__all__ = ["STATE_FILTER_FIELDS", "project_estado_family"]
+app/core/estado_projection.py:58:def project_estado_family(params: dict[str, Any]) -> dict[str, Any]:
+app/core/estado_projection.py:63:    family_name = params.get("estado_family")
+app/core/query_plan.py:173:                    if not working_params.get("estado_family"):
+app/core/query_plan.py:174:                        working_params["estado_family"] = "oferta_abierta"
+app/core/entity_profile/temporal_event.py:37:from app.core.estado_families import detect_estado_family
+app/core/entity_profile/temporal_event.py:194:    return detect_estado_family(masked, dataset) is not None
+app/core/soql_builder.py:260:            params.get("estado")
+app/core/soql_builder.py:261:            or params.get("estado_family")
+app/core/soql_builder.py:262:            or params.get("estado_de_apertura_del_proceso")
+app/core/soql_builder.py:263:            or params.get("estado_del_procedimiento")
+app/core/soql_builder.py:264:            or params.get("estado_contrato")
+app/core/soql_builder.py:529:        if params.get("estado"):
+app/core/soql_builder.py:531:            estado_field = params.get("estado_field", spec.state)
+app/core/soql_builder.py:532:            estado_val = params["estado"]
+app/core/soql_builder.py:534:            # (estado_family resolved fields take priority over legacy estado)
+app/core/soql_builder.py:543:                self._add_estado_clause(where_clauses, estado_field, estado_val)
+app/core/soql_builder.py:571:            and not params.get("estado_de_apertura_del_proceso")
+app/core/entity_profile/source_plan.py:146:    conservaba ``estado_field`` apuntando a ese mismo campo, más
+app/core/entity_profile/source_plan.py:147:    ``estado_family``/``intent_type`` de procesos. Ningún predicado salía mal
+app/core/entity_profile/source_plan.py:155:        field = projected.get("estado_field")
+app/core/entity_profile/frame_migration.py:265:    has_legacy_field = "estado_field" in params
+app/core/entity_profile/frame_migration.py:268:            field = params.get("estado_field")
+app/core/entity_profile/frame_migration.py:279:    legacy_values = _state_values(params.get("estado"))
+app/core/entity_profile/frame_migration.py:282:    field = params.get("estado_field")
+app/core/entity_profile/frame_migration.py:306:    if "estado_family" not in params:
+app/core/entity_profile/frame_migration.py:308:    family = params.get("estado_family")
+app/core/followup_mutations.py:197:            if accepted.get("estado_family") != "oferta_abierta":
+app/core/followup_mutations.py:246:    family_name = accepted.get("estado_family")
+app/core/followup_mutations.py:271:    normalized["estado_family"] = family_name
+app/core/followup_mutations.py:274:    normalized["estado"] = filters[first_field][0]
+app/core/followup_mutations.py:275:    normalized["estado_field"] = first_field
+app/core/entity_profile/semantic_request.py:41:SHARED_STATE_KEYS = ("estado", "estado_family", "estado_field", "intent_type")
+app/core/opportunity_retrieval_policy.py:52:    raw = params.get("estado_del_procedimiento")
+app/core/opportunity_retrieval_policy.py:62:    QueryRouter emits legacy ``estado``/``estado_field`` only when it consumed
+app/core/opportunity_retrieval_policy.py:67:    if _truthy(params.get("estado")) or _truthy(params.get("estado_field")):
+app/core/opportunity_retrieval_policy.py:75:    family = params.get("estado_family")
+app/core/llm_handler.py:38:   Nunca emitas valores en estado, estado_contrato ni estado_field
+app/core/llm_handler.py:107:_ESTADO_KEYS = ("estado", "estado_field", "estado_contrato", "estado_contrato_adicional")
+app/core/llm_handler.py:130:    estado_contrato = params.get("estado_contrato")
+app/core/llm_handler.py:138:    if params.get("estado") and _is_invalid_contract_state(params["estado"]):
+app/core/llm_handler.py:140:        if params.get("estado_field") == "estado_contrato":
+app/core/llm_handler.py:141:            params.pop("estado_field", None)
+app/core/llm_handler.py:144:def _apply_contract_estado_family(user_query: str, params: dict) -> None:
+app/core/llm_handler.py:149:    if params.get("estado"):
+app/core/llm_handler.py:150:        candidates.append(str(params["estado"]))
+app/core/llm_handler.py:169:        _apply_contract_estado_family(user_query, cleaned)
+app/core/llm_handler.py:173:        if not cleaned.get("estado_contrato"):
+app/core/llm_handler.py:175:            cleaned.pop("estado_field", None)
+app/core/llm_handler.py:180:    _apply_contract_estado_family(user_query, cleaned)
+app/core/actor_profile/scope.py:72:    if not fields and params.get('estado'):
+app/core/actor_profile/scope.py:73:        fields = ['estado']
+app/core/entity_profile/claim_adapters.py:62:from app.core.estado_families import detect_estado_family
+app/core/entity_profile/claim_adapters.py:432:        family = detect_estado_family(clause.text, source.canonical_value.noun)
+app/core/entity_profile/claim_adapters.py:439:                                            family['filters'].get('estado_contrato', ()), universe_request):
+app/core/entity_profile/claim_adapters.py:470:    Old callers can still supply ``estado``/``estado_field``.  Accepting those
+app/core/entity_profile/claim_adapters.py:475:    raw_values = params.get("estado")
+app/core/entity_profile/claim_adapters.py:478:    field = params.get("estado_field")
+app/core/contract_universe_intent.py:109:                   if r and r['filters'].get('estado_contrato')]
+app/core/contract_universe_intent.py:147:            for key in ('estado', 'estado_field', 'estado_family', 'estado_contrato_adicional',
+app/core/entity_profile/legacy_equivalence.py:132:        "estado", "estado_field", "estado_family",
+app/core/entity_profile/legacy_equivalence.py:154:    legacy = _terms(payload.get("estado"))
+app/core/entity_profile/legacy_equivalence.py:156:        field = payload.get("estado_field")
+app/core/refinement_recovery.py:23:    "estado_family": "estado", "estado": "estado", "modalidad": "modalidad",
+app/core/intent_vocabulary.py:129:#   estado_family: str — force a specific estado family
+app/core/intent_vocabulary.py:148:            "estado_family": "oferta_abierta",
+app/core/intent_vocabulary.py:173:            "estado_family": "contrato_activo",
+app/core/intent_vocabulary.py:193:            "estado_family": "no_procede",
+app/core/intent_vocabulary.py:213:            "estado_family": "oferta_abierta",
+app/core/intent_vocabulary.py:229:            "estado_family": "oferta_abierta",
+app/core/intent_vocabulary.py:240:            "estado_family": "oferta_abierta",
+app/core/intent_vocabulary.py:250:            "estado_family": "oferta_abierta",
+app/core/intent_vocabulary.py:260:    intent_config is a dict with optional keys: estado_family, force_dataset,
+app/core/actor_arbitration.py:75:    "contract_type_include", "estado", "estado_family", "ordering_signal",
+app/core/source_occurrence.py:16:from app.core.estado_families import detect_estado_family
+app/core/source_occurrence.py:215:    return detect_estado_family(tail, dataset) is not None
+app/core/followup_control_tokens.py:19:    "estado", "estado_field", "estado_family", "estado_contrato",
+app/core/query_frame.py:60:    "estado", "estado_field", "estado_family",
+app/core/radar/follows.py:210:        "status": row.get("estado", ""),
+app/core/workflow/dual_dataset.py:25:    "estado_family", "estado_field", "estado", "intent_type",
+app/core/workflow/handlers/direct_lookup.py:368:        estado = r.get("estado_de_apertura_del_proceso") or r.get("estado_contrato", "?")
+app/core/workflow/actions/actor_resolution.py:39:    "estado", "estado_field", "estado_family",
+app/core/workflow/helpers.py:301:        del p["estado"]

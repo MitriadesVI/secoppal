@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="0.946" timestamp="2026-09-09T16:32:19.546103-05:00" hostname="Rodrigos-MacBook-Pro.local"><testcase classname="tests.test_contract_universe_r4_state_metadata" name="test_visible_universe_is_not_an_invented_state[]" time="0.141"><failure message="AssertionError: assert 'Estado actual' not in 'ALCALDIA MU...s recientes.'&#10;  &#10;  'Estado actual' is contained here:&#10;    n SECOP.&#10;    &#10;    Estado actual: celebrado&#10;    &#10;    Territorio: Baranoa, Atlántico (DIVIPOLA 08078)....&#10;  &#10;  ...Full output truncated (7 lines hidden), use '-vv' to show">tests/test_contract_universe_r4_state_metadata.py:51: in test_visible_universe_is_not_an_invented_state
+    assert 'Estado actual' not in visible
+E   AssertionError: assert 'Estado actual' not in 'ALCALDIA MU...s recientes.'
+E
+E     'Estado actual' is contained here:
+E       n SECOP.
+E
+E       Estado actual: celebrado
+E
+E       Territorio: Baranoa, Atlántico (DIVIPOLA 08078)....
+E
+E     ...Full output truncated (7 lines hidden), use '-vv' to show</failure></testcase><testcase classname="tests.test_contract_universe_r4_state_metadata" name="test_visible_universe_is_not_an_invented_state[suspendidos]" time="0.095" /></testsuite></testsuites>

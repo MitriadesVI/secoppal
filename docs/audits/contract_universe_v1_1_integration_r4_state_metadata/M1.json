@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_contract_universe_r4_state_metadata.py::test_visible_universe_is_not_an_invented_state",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/docs/audits/contract_universe_v1_1_integration_r4_state_metadata/M1.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata",
+  "exit_code": 1,
+  "duration_seconds": 1.3215922500021406,
+  "stdout": "F.                                                                       [100%]\n=================================== FAILURES ===================================\n_______________ test_visible_universe_is_not_an_invented_state[] _______________\ntests/test_contract_universe_r4_state_metadata.py:51: in test_visible_universe_is_not_an_invented_state\n    assert 'Estado actual' not in visible\nE   AssertionError: assert 'Estado actual' not in 'ALCALDIA MU...s recientes.'\nE     \nE     'Estado actual' is contained here:\nE       n SECOP.\nE       \nE       Estado actual: celebrado\nE       \nE       Territorio: Baranoa, Atl\u00e1ntico (DIVIPOLA 08078)....\nE     \nE     ...Full output truncated (7 lines hidden), use '-vv' to show\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_r4_state_metadata.py::test_visible_universe_is_not_an_invented_state[]\n1 failed, 1 passed in 0.95s\n",
+  "stderr": ""
+}

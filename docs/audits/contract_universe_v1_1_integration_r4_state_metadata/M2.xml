@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="1.035" timestamp="2026-09-09T16:32:22.341856-05:00" hostname="Rodrigos-MacBook-Pro.local"><testcase classname="tests.test_contract_universe_r4_state_metadata" name="test_closed_provenance_drives_recovery_after_disk_reload" time="0.127"><failure message="AssertionError: assert None == 'Cerrado'&#10; +  where None = &lt;built-in method get of dict object at 0x1125f5c00&gt;('estado')&#10; +    where &lt;built-in method get of dict object at 0x1125f5c00&gt; = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'dataset_explicit': True, ...}.get">tests/test_contract_universe_r4_state_metadata.py:134: in test_closed_provenance_drives_recovery_after_disk_reload
+    assert loaded.get('estado') == 'Cerrado'
+E   AssertionError: assert None == 'Cerrado'
+E    +  where None = &lt;built-in method get of dict object at 0x1125f5c00&gt;('estado')
+E    +    where &lt;built-in method get of dict object at 0x1125f5c00&gt; = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'dataset_explicit': True, ...}.get</failure></testcase><testcase classname="tests.test_invariants_characterization" name="test_signed_closed_contracts_preserve_real_closed_state[False]" time="0.092"><failure message="KeyError: 'estado_family'">tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'</failure></testcase><testcase classname="tests.test_invariants_characterization" name="test_signed_closed_contracts_preserve_real_closed_state[True]" time="0.093"><failure message="KeyError: 'estado_family'">tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'</failure></testcase></testsuite></testsuites>

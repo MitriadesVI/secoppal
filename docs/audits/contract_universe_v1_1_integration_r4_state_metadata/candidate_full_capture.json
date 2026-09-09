@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "cu_r4_observe",
+    "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None]",
+    "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None]",
+    "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None]",
+    "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5]",
+    "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6]",
+    "tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None]",
+    "tests/test_firmado_signed_semantics.py::test_firmados_mas_estado_explicito_usa_el_estado",
+    "tests/test_followup_mutations.py::test_change_dataset_cleans_incompatible_fields_before_apply",
+    "tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[False]",
+    "tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[True]",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata",
+  "exit_code": 0,
+  "duration_seconds": 3.301122625001881,
+  "stdout": "..........                                                               [100%]\n10 passed in 2.93s\n",
+  "stderr": ""
+}

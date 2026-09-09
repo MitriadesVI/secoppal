@@ -1,0 +1,92 @@
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tema: mantenimiento, excepto interventoria.')
+E   assert 'estado actual' in 'tema: mantenimiento, excepto interventoria.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x109042e70>()
+E    +    where <built-in method casefold of str object at 0x109042e70> = 'Estado actual'.casefold
+E    +  and   'tema: mantenimiento, excepto interventoria.' = <built-in method casefold of str object at 0x1118e3b10>()
+E    +    where <built-in method casefold of str object at 0x1118e3b10> = 'Tema: mantenimiento, excepto interventoria.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Modalidad: Contratación directa, Contratación Directa (con ofertas).')
+E   assert 'estado actual' in 'modalidad: contratación directa, contratación directa (con ofertas).'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x109042e70>()
+E    +    where <built-in method casefold of str object at 0x109042e70> = 'Estado actual'.casefold
+E    +  and   'modalidad: contratación directa, contratación directa (con ofertas).' = <built-in method casefold of str object at 0x112068330>()
+E    +    where <built-in method casefold of str object at 0x112068330> = 'Modalidad: Contratación directa, Contratación Directa (con ofertas).'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tipo de contrato: obra.')
+E   assert 'estado actual' in 'tipo de contrato: obra.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x109042e70>()
+E    +    where <built-in method casefold of str object at 0x109042e70> = 'Estado actual'.casefold
+E    +  and   'tipo de contrato: obra.' = <built-in method casefold of str object at 0x1119927b0>()
+E    +    where <built-in method casefold of str object at 0x1119927b0> = 'Tipo de contrato: obra.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tema: mantenimiento o vias.')
+E   assert 'estado actual' in 'tema: mantenimiento o vias.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x109042e70>()
+E    +    where <built-in method casefold of str object at 0x109042e70> = 'Estado actual'.casefold
+E    +  and   'tema: mantenimiento o vias.' = <built-in method casefold of str object at 0x111efd2a0>()
+E    +    where <built-in method casefold of str object at 0x111efd2a0> = 'Tema: mantenimiento o vias.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tema: mantenimiento y vias.')
+E   assert 'estado actual' in 'tema: mantenimiento y vias.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x109042e70>()
+E    +    where <built-in method casefold of str object at 0x109042e70> = 'Estado actual'.casefold
+E    +  and   'tema: mantenimiento y vias.' = <built-in method casefold of str object at 0x111efff50>()
+E    +    where <built-in method casefold of str object at 0x111efff50> = 'Tema: mantenimiento y vias.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Valor: entre $100 millones y $500 millones.')
+E   assert 'estado actual' in 'valor: entre $100 millones y $500 millones.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x109042e70>()
+E    +    where <built-in method casefold of str object at 0x109042e70> = 'Estado actual'.casefold
+E    +  and   'valor: entre $100 millones y $500 millones.' = <built-in method casefold of str object at 0x1119bfbd0>()
+E    +    where <built-in method casefold of str object at 0x1119bfbd0> = 'Valor: entre $100 millones y $500 millones.'.casefold
+_______________ test_firmados_mas_estado_explicito_usa_el_estado _______________
+tests/test_firmado_signed_semantics.py:59: in test_firmados_mas_estado_explicito_usa_el_estado
+    assert cerrados.get("estado") == "Cerrado"
+E   AssertionError: assert None == 'Cerrado'
+E    +  where None = <built-in method get of dict object at 0x111a14980>('estado')
+E    +    where <built-in method get of dict object at 0x111a14980> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'dataset_explicit': True, ...}.get
+_________ test_change_dataset_cleans_incompatible_fields_before_apply __________
+tests/test_followup_mutations.py:98: in test_change_dataset_cleans_incompatible_fields_before_apply
+    assert trace["accepted_fields"] == ["dataset", "dataset_explicit"]
+E   AssertionError: assert ['contract_un...set_explicit'] == ['dataset', '...set_explicit']
+E
+E     At index 0 diff: 'contract_universe' != 'dataset'
+E     Left contains 2 more items, first extra item: 'dataset'
+E     Use -v to get more diff
+________ test_signed_closed_contracts_preserve_real_closed_state[False] ________
+tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+________ test_signed_closed_contracts_preserve_real_closed_state[True] _________
+tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+=========================== short test summary info ============================
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None]
+FAILED tests/test_firmado_signed_semantics.py::test_firmados_mas_estado_explicito_usa_el_estado
+FAILED tests/test_followup_mutations.py::test_change_dataset_cleans_incompatible_fields_before_apply
+FAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[False]
+FAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[True]
+10 failed in 2.47s

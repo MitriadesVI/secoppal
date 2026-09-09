@@ -1,0 +1,177 @@
+"""R4: universe, explicit state and provenance have separate authorities."""
+from __future__ import annotations
+
+import json
+import os
+from pathlib import Path
+
+import pytest
+from hypothesis import given, settings, strategies as st
+
+from app.core.contract_universe import predicate
+from app.core.contract_universe_intent import apply_request, request
+from app.core.estado_families import ESTADO_FAMILIES
+from app.core.query_frame import frame_from_params, params_from_frame
+from app.core.query_router import QueryRouter
+from app.core.soql_builder import SoQLBuilder
+from test_entity_profile_remediation_properties import (
+    BUYER, _execute, _turn, _wheres, render_entity_profile,
+)
+from test_followup_mutations import _followup
+from test_invariants_characterization import run_offline_invariant_pipeline
+
+
+def _record(name, **values):
+    if target := os.environ.get('R4_OBSERVATIONS'):
+        with Path(target).open('a') as stream:
+            stream.write(json.dumps({'case': name, **values}, default=str, ensure_ascii=False) + '\n')
+
+
+def _sql(params):
+    return SoQLBuilder().build('jbjy-vk9h', {**params, 'allow_global': True})
+
+
+@pytest.mark.parametrize('state', ['', 'suspendidos'])
+def test_visible_universe_is_not_an_invented_state(state):
+    query = f'analiza contratos {state} de mantenimiento de {BUYER}'
+    turn = _turn(query)
+    client, profile = _execute(turn)
+    assert profile is not None
+    visible = render_entity_profile(profile)
+    sql = '\n'.join(where for _, where in _wheres(client))
+    snap = run_offline_invariant_pipeline(query)
+    _record(query, **snap, sql=sql, visible=visible, turn_params=turn.params)
+    assert 'Contratos celebrados según las señales publicadas en SECOP.' in visible
+    assert predicate() in sql
+    explicit_sql = sql.replace(predicate(), '')
+    if state:
+        assert 'Estado actual:' in visible and 'Suspendido' in visible
+        assert 'estado_contrato' in explicit_sql and 'Suspendido' in explicit_sql
+    else:
+        assert 'Estado actual' not in visible
+        assert 'estado_contrato' not in explicit_sql
+
+
+@pytest.mark.parametrize('surface,values,family', [
+    ('cerrados', ['Cerrado'], 'contrato_cerrado'),
+    ('suspendidos', ['Suspendido'], 'contrato_suspendido'),
+    ('terminados', ['terminado'], 'contrato_terminado'),
+    ('que estén en ejecución', ['En ejecución', 'Modificado', 'Prorrogado'], 'contrato_activo'),
+])
+def test_state_provenance_survives_plan_frame_reload_without_sql_change(surface, values, family):
+    query = f'contratos firmados {surface} de mantenimiento'
+    snap = run_offline_invariant_pipeline(query)
+    params = snap['after_plan']
+    sql = _sql(params)
+    restored = params_from_frame(frame_from_params(json.loads(json.dumps(params))))
+    _record(query, **snap, sql=sql, reloaded=restored)
+    assert params['estado_contrato'] == values
+    assert params['estado_family'] == family
+    if len(values) == 1:
+        assert params['estado'] == values[0]
+        assert params['estado_field'] == 'estado_contrato'
+    for key in ('estado_contrato', 'estado_family', 'estado', 'estado_field'):
+        assert restored.get(key) == params.get(key)
+    stripped = {k: v for k, v in params.items() if k not in ('estado', 'estado_field', 'estado_family')}
+    assert _sql(stripped) == sql == _sql(restored)
+
+
+@pytest.mark.parametrize('query,universe,explicit', [
+    ('regresa a los contratos', 'celebrated', False),
+    ('todos los registros de la fuente', 'source_records', True),
+    ('registros cancelados', 'source_records', True),
+])
+def test_followup_default_metadata_is_derived(query, universe, explicit):
+    params, trace = _followup(QueryRouter(), query, {'dataset': 'procesos', 'objeto': ['mantenimiento']})
+    _record(query, final_params=params, trace=trace, sql=_sql(params))
+    assert params['contract_universe'] == universe
+    assert params['contract_universe_version'] == 'contract-universe-1.1'
+    assert ('contract_universe' in trace['accepted_fields']) is explicit
+    assert ('contract_universe' in trace['derived_fields']) is not explicit
+    assert 'contract_universe_version' not in trace['accepted_fields']
+    assert 'contract_universe_version' in trace['derived_fields']
+    if not explicit:
+        assert trace['accepted_fields'] == ['dataset', 'dataset_explicit']
+    else:
+        assert predicate() not in _sql(params)
+
+
+@settings(max_examples=40, derandomize=True, deadline=None)
+@given(state=st.sampled_from(['Cerrado', 'Suspendido', 'terminado', 'En ejecución']),
+       family=st.sampled_from(list(ESTADO_FAMILIES)))
+def test_incompatible_family_is_removed_without_widening(state, family):
+    before = {'dataset': 'contratos', 'objeto': ['mantenimiento'],
+              'estado_contrato': [state], 'estado_family': family}
+    after = apply_request(before, None)
+    projection = ESTADO_FAMILIES[family].get('contratos', {})
+    assert after['estado_contrato'] == [state]
+    if projection != {'estado_contrato': [state]}:
+        assert 'estado_family' not in after
+    assert _sql(after) == _sql({k: v for k, v in after.items() if k != 'estado_family'})
+    assert before['estado_family'] == family
+
+
+def test_explicit_closed_replaces_incompatible_metadata():
+    before = {'dataset': 'contratos', 'estado_contrato': ['En ejecución'],
+              'estado': 'En ejecución', 'estado_field': 'estado_contrato', 'estado_family': 'contrato_activo'}
+    after = apply_request(before, request('contratos firmados cerrados'))
+    assert after['estado_contrato'] == ['Cerrado']
+    assert after['estado_family'] == 'contrato_cerrado'
+    assert after['estado'] == 'Cerrado'
+
+
+def test_closed_provenance_drives_recovery_after_disk_reload(tmp_path):
+    from app.core.conversation_store import ConversationStore
+    from app.core.refinement_recovery import describe_delta, refinement_delta
+    from app.core.contextual_suggestions import compute_contextual_filters
+
+    query = 'contratos firmados cerrados de mantenimiento'
+    params = QueryRouter().parse(query).params
+    ConversationStore(base_path=tmp_path).append_turn(
+        chat_id='r4', user_query=query, response='control', parsed_params=params,
+    )
+    loaded = ConversationStore(base_path=tmp_path).get_history('r4')[-1].parsed_params
+    assert loaded.get('estado') == 'Cerrado'
+    assert loaded.get('estado_family') == 'contrato_cerrado'
+    assert loaded.get('estado_field') == 'estado_contrato'
+    previous = QueryRouter().parse('contratos de mantenimiento').params
+    assert describe_delta(refinement_delta(previous, loaded)) == 'estado'
+    rows = [{'estado_contrato': 'Cerrado'}, {'estado_contrato': 'Suspendido'}]
+    suggestions = compute_contextual_filters(rows, 'jbjy-vk9h', loaded)
+    assert 'estado' not in suggestions
+    assert _sql(loaded) == _sql(params)
+
+
+@pytest.mark.parametrize('frame', [False, True])
+def test_contiguous_active_composition_preserves_base_clarification(tmp_path, monkeypatch, frame):
+    # e23753c already blocks this contiguous composition: the scalar adapter
+    # cannot carry the existing three-valued family. R4 must not execute its
+    # incidental legacy scalar. The supported relative clause above retains
+    # the complete family. This control documents the inherited F2.2 boundary.
+    from tests.buyer_actor_independent_support import SEEDS, say
+    from tests.contract_universe_independent_support import setup
+
+    query = 'contratos firmados en ejecución de mantenimiento'
+    flow, connection = setup(tmp_path, monkeypatch, SEEDS[0][2], SEEDS[0][3], frame)
+    try:
+        result = say(flow, query)
+        sql = flow.audit_trace['sql']
+        _record(query, frame=frame, result=result, sql=sql)
+        assert result.get('needs_clarification')
+        assert sql == []
+    finally:
+        connection.close()
+
+
+@pytest.mark.parametrize('query,state', [('y los suspendidos', 'Suspendido'), ('y los terminados', 'terminado')])
+def test_followup_state_replaces_closed_provenance(query, state):
+    router = QueryRouter()
+    previous = router.parse('contratos firmados cerrados de mantenimiento').params
+    merged, trace = _followup(router, query, previous)
+    sql = _sql(merged).replace(predicate(), '')
+    _record(query, previous=previous, final_params=merged, trace=trace, sql=sql)
+    assert merged['estado_contrato'] == [state]
+    assert merged.get('estado') == state
+    assert merged.get('estado_family') != 'contrato_cerrado'
+    assert 'Cerrado' not in sql
+    assert state in sql

@@ -1,0 +1,14 @@
+from pathlib import Path
+import json,os,subprocess,time
+W=Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata')
+E=W/'docs/audits/contract_universe_v1_1_integration_r4_state_metadata'
+P=str(W/'.venv/bin/python'); V=str(W/'.venv/bin')+'/'
+ENV={**os.environ,'BURR_TELEMETRY_ENABLED':'false','PATH':'/opt/homebrew/opt/node@22/bin:'+os.environ['PATH']}
+def run(name,cmd,cwd=W):
+ t=time.monotonic()
+ r=subprocess.run(cmd,cwd=cwd,env=ENV,capture_output=True,text=True)
+ d=dict(command=cmd,cwd=str(cwd),exit_code=r.returncode,duration_seconds=time.monotonic()-t,stdout=r.stdout,stderr=r.stderr)
+ (E/(name+'.json')).write_text(json.dumps(d,indent=2)+'\n');(E/(name+'.txt')).write_text(r.stdout+r.stderr)
+ print(name,r.returncode,(r.stdout+r.stderr)[-350:],flush=True);return d
+def pytest(name,ids,cwd=W):
+ return run(name,[P,'-m','pytest','-p','tests.contract_universe_sql_dates',*ids,'-q','--tb=short','--junitxml='+str(E/(name+'.xml'))],cwd)

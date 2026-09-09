@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="1.044" timestamp="2026-09-09T16:31:30.094338-05:00" hostname="Rodrigos-MacBook-Pro.local"><testcase classname="tests.test_contract_universe_r4_state_metadata" name="test_closed_provenance_drives_recovery_after_disk_reload" time="0.126"><failure message="KeyError: 'estado'">tests/test_contract_universe_r4_state_metadata.py:134: in test_closed_provenance_drives_recovery_after_disk_reload
+    assert loaded['estado'] == 'Cerrado'
+           ^^^^^^^^^^^^^^^^
+E   KeyError: 'estado'</failure></testcase><testcase classname="tests.test_invariants_characterization" name="test_signed_closed_contracts_preserve_real_closed_state[False]" time="0.092"><failure message="KeyError: 'estado_family'">tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'</failure></testcase><testcase classname="tests.test_invariants_characterization" name="test_signed_closed_contracts_preserve_real_closed_state[True]" time="0.095"><failure message="KeyError: 'estado_family'">tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'</failure></testcase></testsuite></testsuites>
