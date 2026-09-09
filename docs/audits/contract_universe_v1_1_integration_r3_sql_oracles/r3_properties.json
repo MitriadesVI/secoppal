@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_contract_universe_r3_sql_oracles.py",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/r3_properties.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles",
+  "exit_code": 0,
+  "duration_seconds": 0.45069991600030335,
+  "stdout": "........                                                                 [100%]\n8 passed in 0.28s\n",
+  "stderr": ""
+}

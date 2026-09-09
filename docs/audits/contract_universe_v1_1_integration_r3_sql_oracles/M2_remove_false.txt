@@ -1,0 +1,28 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_____ test_dual_resolution_keeps_id_and_each_child_projects_independently ______
+tests/test_modality_pipeline_integration.py:350: in test_dual_resolution_keeps_id_and_each_child_projects_independently
+    assert_unsatisfiable(contract_where)
+tests/sql_oracle_properties.py:64: in assert_unsatisfiable
+    assert "1=0" in scoped_clauses(sql, "jbjy-vk9h"), sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=1
+_______ test_soql_canonical_clauses_zero_set_unknown_id_and_global_guard _______
+tests/test_modality_pipeline_integration.py:396: in test_soql_canonical_clauses_zero_set_unknown_id_and_global_guard
+    assert_unsatisfiable(zero)
+tests/sql_oracle_properties.py:64: in assert_unsatisfiable
+    assert "1=0" in scoped_clauses(sql, "jbjy-vk9h"), sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=1 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50
+_______________ test_fully_inapplicable_include_is_unsatisfiable _______________
+tests/test_safe_soql.py:179: in test_fully_inapplicable_include_is_unsatisfiable
+    assert_unsatisfiable(soql)
+tests/sql_oracle_properties.py:64: in assert_unsatisfiable
+    assert "1=0" in scoped_clauses(sql, "jbjy-vk9h"), sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=1 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50
+=========================== short test summary info ============================
+FAILED tests/test_modality_pipeline_integration.py::test_dual_resolution_keeps_id_and_each_child_projects_independently
+FAILED tests/test_modality_pipeline_integration.py::test_soql_canonical_clauses_zero_set_unknown_id_and_global_guard
+FAILED tests/test_safe_soql.py::test_fully_inapplicable_include_is_unsatisfiable
+3 failed in 1.21s

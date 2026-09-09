@@ -1,0 +1,13 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_allow_global_opt_in_bypasses_guard ____________________
+tests/test_safe_soql.py:109: in test_allow_global_opt_in_bypasses_guard
+    assert scoped_clauses(soql, CONTRATOS) == []
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/sql_oracle_properties.py:45: in scoped_clauses
+    assert clauses.count(CELEBRATED) == 1, sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE 1=1 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50
+=========================== short test summary info ============================
+FAILED tests/test_safe_soql.py::test_allow_global_opt_in_bypasses_guard - Ass...
+1 failed in 0.18s

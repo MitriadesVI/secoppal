@@ -1,0 +1,20 @@
+import json, os
+from pathlib import Path
+import pytest
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_call(item):
+ from app.core.soql_builder import SoQLBuilder
+ originals={name:getattr(SoQLBuilder,name) for name in ['build','build_count']}
+ records=[]
+ def wrap(name,old):
+  def capture(self,*args,**kwargs):
+   sql=old(self,*args,**kwargs)
+   records.append(dict(method=name,args=args,kwargs=kwargs,sql=sql))
+   return sql
+  return capture
+ for name,old in originals.items():setattr(SoQLBuilder,name,wrap(name,old))
+ try:yield
+ finally:
+  for name,old in originals.items():setattr(SoQLBuilder,name,old)
+  with Path(os.environ['CU_R3_SQL_CAPTURE']).open('a') as f:
+   f.write(json.dumps(dict(nodeid=item.nodeid,records=records),ensure_ascii=False,default=str)+'\n')

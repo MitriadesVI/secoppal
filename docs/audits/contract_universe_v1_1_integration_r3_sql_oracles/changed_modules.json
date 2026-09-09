@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_buyer_unit_integrity_p02.py",
+    "tests/test_modality_pipeline_integration.py",
+    "tests/test_object_negation_soql.py",
+    "tests/test_public_university_completion_r2fb.py",
+    "tests/test_public_university_pilot_r2fa.py",
+    "tests/test_safe_soql.py",
+    "tests/test_source_name_projection_v1.py",
+    "tests/test_contract_universe_r3_sql_oracles.py",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/changed_modules.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles",
+  "exit_code": 0,
+  "duration_seconds": 7.176089583997964,
+  "stdout": "........................................................................ [ 26%]\n........................................................................ [ 53%]\n........................................................................ [ 79%]\n.......................................................                  [100%]\n271 passed in 6.82s\n",
+  "stderr": ""
+}

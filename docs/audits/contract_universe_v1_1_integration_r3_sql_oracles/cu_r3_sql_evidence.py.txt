@@ -1,0 +1,4 @@
+from cu_r3_run import *
+ENV['PYTHONPATH']='/tmp'
+ENV['CU_R3_SQL_CAPTURE']=str(E/'observed_sql.jsonl')
+run('sql_capture',[P,'-m','pytest','-p','cu_r3_sql_capture',*json.loads((E/'nodeids_34.json').read_text()),'-q','--tb=short'])

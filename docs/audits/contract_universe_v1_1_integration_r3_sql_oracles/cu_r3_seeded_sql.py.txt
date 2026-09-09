@@ -1,0 +1,8 @@
+from cu_r3_run import *
+ENV['PYTHONPATH']='/tmp';ENV['PYTHONHASHSEED']='0'
+for name,cwd,file in [('main_34',Path('/tmp/cu-r3-main'),'main_observed_sql.jsonl'),('sql_capture',W,'observed_sql.jsonl')]:
+ p=E/file;p.rename(E/('unseeded_'+file))
+ for ext in ['json','txt']:
+  p=E/(name+'.'+ext);p.rename(E/('unseeded_'+name+'.'+ext))
+ ENV['CU_R3_SQL_CAPTURE']=str(E/file)
+ run(name,[P,'-m','pytest','-p','cu_r3_sql_capture',*json.loads((E/'nodeids_34.json').read_text()),'-q','--tb=short'],cwd)

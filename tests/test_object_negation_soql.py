@@ -1,6 +1,8 @@
 """Specification tests for the null-safe OBJECT exclusion predicate."""
 from __future__ import annotations
 
+from tests.sql_oracle_properties import assert_object_exclusion
+
 import pytest
 
 from app.core.soql_builder import SoQLBuilder
@@ -41,7 +43,7 @@ def test_generated_object_exclusion_is_null_safe_for_real_dataset_fields(
             "unaccent(UPPER('%zznegtest%')), false)"
         )
         assert expected in where
-    assert where.startswith("NOT (")
+    assert_object_exclusion(where, dataset_id, (field_a, field_b))
 
 
 @pytest.mark.parametrize(

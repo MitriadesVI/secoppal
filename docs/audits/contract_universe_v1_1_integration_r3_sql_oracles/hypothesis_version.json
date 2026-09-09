@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/.venv/bin/python",
+    "-c",
+    "import hypothesis; print(hypothesis.__version__)"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles",
+  "exit_code": 0,
+  "duration_seconds": 0.11345170900312951,
+  "stdout": "6.165.10\n",
+  "stderr": ""
+}

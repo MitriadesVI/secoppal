@@ -1,0 +1,21 @@
+import json,os
+from pathlib import Path
+import pytest
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_call(item):
+ if item.originalname != 'test_no_modality_pre_post_golden_parity':
+  yield;return
+ m=item.module
+ old=m.query_fingerprint
+ def capture(params,*a,**kw):
+  from app.core.query_fingerprint import _canonical,_TRANSIENT,_EMPTY
+  result=old(params,*a,**kw)
+  relevant=_canonical({k:v for k,v in params.items() if k not in _TRANSIENT and v not in _EMPTY})
+  builder=m.SoQLBuilder()
+  sql=builder.build(builder.dataset_id_for(params.get('dataset')),params)
+  record=dict(query=item.callspec.params['query'],nodeid=item.nodeid,params=params,canonical=relevant,fingerprint=result,sql=sql,golden=item.callspec.params['golden'])
+  with Path(os.environ['CU_R3_CAPTURE']).open('a') as f:f.write(json.dumps(record,ensure_ascii=False,default=str)+'\n')
+  return result
+ m.query_fingerprint=capture
+ try:yield
+ finally:m.query_fingerprint=old

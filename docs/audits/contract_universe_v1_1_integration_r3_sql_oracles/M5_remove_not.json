@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_object_negation_soql.py::test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso]",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M5_remove_not.xml"
+  ],
+  "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/cu-r3-mutations-ym1clnk1/M5_remove_not",
+  "exit_code": 1,
+  "duration_seconds": 0.35479270799987717,
+  "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_ test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso] _\ntests/test_object_negation_soql.py:46: in test_generated_object_exclusion_is_null_safe_for_real_dataset_fields\n    assert_object_exclusion(where, dataset_id, (field_a, field_b))\ntests/sql_oracle_properties.py:72: in assert_object_exclusion\n    assert scoped_clauses(sql, dataset) == [\"NOT (\" + \" OR \".join(terms) + \")\"], sql\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   AssertionError: (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%zznegtest%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegtest%')), false))\n=========================== short test summary info ============================\nFAILED tests/test_object_negation_soql.py::test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso]\n1 failed in 0.18s\n",
+  "stderr": ""
+}

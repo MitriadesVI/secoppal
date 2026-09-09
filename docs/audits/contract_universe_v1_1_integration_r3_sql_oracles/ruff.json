@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/.venv/bin/ruff",
+    "check",
+    "app/",
+    "tests/",
+    "scripts/"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles",
+  "exit_code": 0,
+  "duration_seconds": 0.07869541699983529,
+  "stdout": "All checks passed!\n",
+  "stderr": ""
+}

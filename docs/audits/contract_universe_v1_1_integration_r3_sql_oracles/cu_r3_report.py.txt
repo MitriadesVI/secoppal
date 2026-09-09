@@ -1,0 +1,77 @@
+from cu_r3_run import *
+import hashlib, re, xml.etree.ElementTree as ET
+import sys
+sys.path.insert(0,str(W))
+from tests.sql_oracle_properties import CELEBRATED, conjunctions
+ids=json.loads((E/'nodeids_34.json').read_text());clusters=json.loads((E/'clusters.json').read_text())
+old={r['nodeid']:r['records'] for r in map(json.loads,(E/'main_observed_sql.jsonl').read_text().splitlines())}
+new={r['nodeid']:r['records'] for r in map(json.loads,(E/'observed_sql.jsonl').read_text().splitlines())}
+properties={
+'C09':('Proyección buyer por igualdad exacta al nombre físico','Igualdad byte a byte del SELECT completo','assert_identity + exact_identity; universo como conjunción separada'),
+'C14':('Modalidad no aplicable produce conjunto necesariamente vacío','Exigía 1=0 como WHERE completo','assert_unsatisfiable: 1=0 en conjunción efectiva, sin OR exterior'),
+'C15':('Modalidad no aplicable vacía; IDs desconocidos y global guard conservados','Exigía WHERE 1=0 como primeros tokens','assert_unsatisfiable; demás assertions intactas'),
+'C16':('Fingerprint semántico y ausencia de modalidad; filtros originales preservados','Faltaban las dos claves versionadas del universo','Hash repineado sólo tras diff canónico de dos claves; marcadores intactos'),
+'C17':('Exclusión de objeto negativa y null-safe en ambos campos','Exigía NOT como primer token del WHERE','Predicado NOT/coalesce completo, aislado del universo; ejecución SQLite con NULL'),
+'C18':('Universidad por igualdad exacta, sin fuzzy sobre buyer','Prohibía unaccent en dimensiones ajenas al buyer','assert_identity exacto y todas las variantes físicas'),
+'C19':('Universidad por igualdad exacta y canonical/params intactos','Prohibía unaccent global y exigía WHERE junto al buyer','assert_identity exacto y todas las variantes físicas'),
+'C20':('Opt-in evita anti-global guard sin añadir scope artificial','Equiparaba global autorizado con WHERE 1=1','Único conjunct celebrado; no geografía/topic; allow_global no es source_records'),
+'C21':('Include totalmente inaplicable es insatisfacible','Exigía WHERE 1=0 como primeros tokens','assert_unsatisfiable sin dependencia de orden'),
+'C22':('Identidad sin binding conserva operador LIKE y nombre/variantes originales','Paridad byte a byte de todo el SQL contractual preuniverso','Cláusula source idéntica a main; procesos sin universo'),
+'C23':('DAPRE físico por igualdad exacta en ambos datasets','SQL contractual completo carecía del universo','Igualdad nombre_entidad=DAPRE con universo independiente; procesos exactos intactos'),
+}
+matrix=[]
+for n in ids:
+ a,b=old[n],new[n];assert len(a)==len(b),(n,len(a),len(b))
+ records=[]
+ for x,y in zip(a,b,strict=True):
+  sql=y['sql'];dataset=y['args'][0]
+  if dataset=='jbjy-vk9h':
+   clauses=conjunctions(sql);assert clauses.count(CELEBRATED)==1,(n,sql)
+   normalized=sql.replace(' WHERE '+CELEBRATED+' AND ',' WHERE ',1)
+   if normalized==sql:normalized=sql.replace(' WHERE '+CELEBRATED,' WHERE 1=1',1)
+   assert normalized==x['sql'],(n,normalized,x['sql'])
+  else:
+   assert sql==x['sql'] and 'estado_contrato' not in sql,(n,sql)
+  records.append(dict(dataset=dataset,method=y['method'],main_sql=x['sql'],candidate_sql=sql,only_independent_contract_universe_added=dataset=='jbjy-vk9h',process_semantics_unchanged=dataset!='jbjy-vk9h'))
+ prop,cause,oracle=properties[clusters[n]]
+ matrix.append(dict(nodeid=n,cluster=clusters[n],propiedad_original=prop,causa_del_rojo=cause,tipo='OBSOLETE_ORACLE',nuevo_oraculo=oracle,evidencia=records))
+(E/'SQL_PROPERTY_MATRIX.json').write_text(json.dumps(matrix,indent=2,ensure_ascii=False)+'\n')
+# Pytest displays AssertionError either explicitly or as E assert; both are assertion kills.
+mutations=json.loads((E/'MUTATIONS.json').read_text())
+for row in mutations:
+ cases=list(ET.parse(E/(row['mutation']+'.xml')).iter('testcase'))
+ failures=[c.find('failure') for c in cases if c.find('failure') is not None]
+ row['assertion_messages']=[f.attrib.get('message','') for f in failures]
+ row['killed_by_assertions']=len(failures)==len(row['nodeids']) and row['errors']==0 and all('AssertionError' in (f.text or '') or re.search(r'^E\s+assert ',f.text or '',re.M) for f in failures)
+ assert row['killed_by_assertions'],row['mutation']
+(E/'MUTATIONS.json').write_text(json.dumps(mutations,indent=2)+'\n')
+# Recover exact nodeids from the measured JUnit, never infer residual counts.
+def results(name,expected):
+ cases=list(ET.parse(E/(name+'.xml')).iter('testcase'));byid={}
+ for c in cases:
+  prefix=c.attrib['classname'].replace('.','/')+'.py::'
+  n=prefix+c.attrib['name'];assert n in expected,n
+  byid[n]='failed' if c.find('failure') is not None else 'error' if c.find('error') is not None else 'skipped' if c.find('skipped') is not None else 'passed'
+ assert set(byid)==set(expected)
+ return byid
+all54=json.loads((E/'nodeids_54.json').read_text());statuses=results('residual_54',all54)
+remaining=[n for n,s in statuses.items() if s=='failed']
+res=dict(before=54,now_pass=sum(s=='passed' for s in statuses.values()),still_fail=len(remaining),errors=sum(s=='error' for s in statuses.values()),skipped=sum(s=='skipped' for s in statuses.values()),clusters_still_present=sorted({clusters[n] for n in remaining}),nodeids_still_fail=remaining,nodeids_now_pass=[n for n,s in statuses.items() if s=='passed'],results=statuses)
+assert res['now_pass']==34 and res['still_fail']==20 and set(res['nodeids_now_pass'])==set(ids)
+(E/'RESIDUAL_54_AFTER_R3.json').write_text(json.dumps(res,indent=2)+'\n')
+# Byte evidence, including every product source and scripts, against the requested base.
+paths=subprocess.check_output(['git','ls-tree','-r','--name-only','cb02e08','app','scripts'],cwd=W,text=True).splitlines()
+manifest=[]
+for p in paths:
+ before=subprocess.check_output(['git','show','cb02e08:'+p],cwd=W)
+ after=(W/p).read_bytes()
+ assert before==after,p
+ manifest.append(dict(path=p,base_sha256=hashlib.sha256(before).hexdigest(),candidate_sha256=hashlib.sha256(after).hexdigest()))
+(E/'runtime_identity.json').write_text(json.dumps(dict(base=subprocess.check_output(['git','rev-parse','cb02e08'],cwd=W,text=True).strip(),all_byte_identical=True,files=manifest),indent=2)+'\n')
+lines=['# R3 — Matriz de adjudicación de 34 nodeids','', '| nodeid | cluster | propiedad_original | causa_del_rojo | tipo | nuevo_oraculo | evidencia |','|---|---|---|---|---|---|---|']
+for i,r in enumerate(matrix):
+ lines.append('| '+' | '.join([r[k].replace('|','\\|') for k in ['nodeid','cluster','propiedad_original','causa_del_rojo','tipo','nuevo_oraculo']])+f' | SQL_PROPERTY_MATRIX.json[{i}], before_34.txt, after_34.txt; C16: FINGERPRINT_DIFFS.json |')
+(E/'ORACLE_MATRIX.md').write_text('\n'.join(lines)+'\n')
+validation=dict(verdict='SQL_ORACLE_COMPATIBILITY_ADJUDICATED',base='cb02e08',historical_main='c52d7ed',scope_clusters=['C09']+[f'C{x}' for x in range(14,24)],before=results('before_34',ids),after=results('after_34',ids),residual=res,tools={n:json.loads((E/(n+'.json')).read_text()) for n in ['ruff_version','semgrep_version','hypothesis_version','codegraph_version','codegraph_status']},gates={n:json.loads((E/(n+'.json')).read_text()) for n in ['ruff','semgrep','lint_core','size','diff_check','auditor_final_19','f2_2_product_properties','frozen_after','corpus','C05_C08','changed_modules','r3_properties']},semgrep_baseline=10,semgrep_new=0,semgrep_reason='App bytes and rule config unchanged versus cb02e08; current scan 10 findings, inherited R2B scan 10',runtime_byte_identical=True,runtime_files=len(manifest),mutations_killed=len(mutations),codegraph_fallback='CLI status Not initialized; rg and direct inspection',global_suite_executed=False,merge_push_deploy_restart=False)
+(E/'validation.json').write_text(json.dumps(validation,indent=2)+'\n')
+print('MATRIX',len(matrix),'RUNTIME',len(manifest),'RESIDUAL',res['now_pass'],res['still_fail'],flush=True)

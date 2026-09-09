@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_safe_soql.py::test_allow_global_opt_in_bypasses_guard",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M3_remove_universe.xml"
+  ],
+  "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/cu-r3-mutations-ym1clnk1/M3_remove_universe",
+  "exit_code": 1,
+  "duration_seconds": 0.35172070800035726,
+  "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n___________________ test_allow_global_opt_in_bypasses_guard ____________________\ntests/test_safe_soql.py:109: in test_allow_global_opt_in_bypasses_guard\n    assert scoped_clauses(soql, CONTRATOS) == []\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/sql_oracle_properties.py:45: in scoped_clauses\n    assert clauses.count(CELEBRATED) == 1, sql\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   AssertionError: SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE 1=1 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50\n=========================== short test summary info ============================\nFAILED tests/test_safe_soql.py::test_allow_global_opt_in_bypasses_guard - Ass...\n1 failed in 0.18s\n",
+  "stderr": ""
+}

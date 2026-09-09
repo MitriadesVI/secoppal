@@ -11,6 +11,8 @@ analytics over a pre-validated universe) must opt in explicitly with
 """
 from __future__ import annotations
 
+from tests.sql_oracle_properties import assert_unsatisfiable, scoped_clauses
+
 import pytest
 
 from app.core.modality_dataset_projection import (
@@ -104,7 +106,7 @@ def test_allow_global_opt_in_bypasses_guard() -> None:
     """Callers que necesiten un global query DEBEN pasar allow_global=True."""
     builder = SoQLBuilder()
     soql = builder.build(CONTRATOS, {}, allow_global=True)
-    assert " WHERE 1=1 " in soql
+    assert scoped_clauses(soql, CONTRATOS) == []
 
 
 def test_build_count_allow_global_opt_in() -> None:
@@ -174,7 +176,7 @@ def test_fully_inapplicable_include_is_unsatisfiable() -> None:
             ]
         },
     )
-    assert " WHERE 1=0 " in soql
+    assert_unsatisfiable(soql)
 
 
 def test_unknown_modality_id_fails_closed() -> None:

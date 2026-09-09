@@ -1,0 +1,28 @@
+from pathlib import Path
+import json,os,subprocess,time
+W=Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles')
+E=W/'docs/audits/contract_universe_v1_1_integration_r3_sql_oracles'
+P=str(W/'.venv/bin/python'); V=str(W/'.venv/bin')+'/'
+ENV={**os.environ,'BURR_TELEMETRY_ENABLED':'false','PATH':'/opt/homebrew/opt/node@22/bin:'+os.environ['PATH']}
+def run(name,cmd,cwd=W):
+ t=time.monotonic()
+ r=subprocess.run(cmd,cwd=cwd,env=ENV,capture_output=True,text=True)
+ d=dict(command=cmd,cwd=str(cwd),exit_code=r.returncode,duration_seconds=time.monotonic()-t,stdout=r.stdout,stderr=r.stderr)
+ (E/(name+'.json')).write_text(json.dumps(d,indent=2)+'\n');(E/(name+'.txt')).write_text(r.stdout+r.stderr)
+ print(name,r.returncode,(r.stdout+r.stderr)[-350:],flush=True);return d
+def pytest(name,ids,cwd=W):
+ return run(name,[P,'-m','pytest','-p','tests.contract_universe_sql_dates',*ids,'-q','--tb=short','--junitxml='+str(E/(name+'.xml'))],cwd)
+if __name__=='__main__':
+ import re
+ ids=json.loads((W/'docs/audits/contract_universe_v1_1_integration_r2b_buyer_harness/RESIDUAL_98_AFTER_R2B.json').read_text())['nodeids_still_fail']
+ clusters=(W/'docs/audits/contract_universe_v1_1_integration_regression_r1/FAILURE_CLUSTERS.md').read_text()
+ mapping={}
+ for c,body in re.findall(r'## (C\d+) —(.*?)(?=\n## |\Z)',clusters,re.S):
+  func=re.search(r'Archivo/función: `([^`]+)`',body)[1].replace('tests.','tests/').replace('::','.py::')
+  for n in ids:
+   if n.split('[')[0]==func:mapping[n]=c
+ targeted=[n for n in ids if mapping[n] in ['C09']+[f'C{x}' for x in range(14,24)]]
+ assert len(targeted)==34
+ for name,data in [('nodeids_54',ids),('nodeids_34',targeted),('clusters',mapping)]: (E/(name+'.json')).write_text(json.dumps(data,indent=2)+'\n')
+ for name,cmd in [('ruff_version',[V+'ruff','--version']),('semgrep_version',[V+'semgrep','--version']),('hypothesis_version',[P,'-c','import hypothesis; print(hypothesis.__version__)']),('codegraph_version',['codegraph','--version']),('codegraph_status',['codegraph','status'])]:run(name,cmd)
+ pytest('before_34',targeted)

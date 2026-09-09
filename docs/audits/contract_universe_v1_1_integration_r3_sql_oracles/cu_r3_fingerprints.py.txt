@@ -1,0 +1,14 @@
+from cu_r3_run import *
+ENV['PYTHONPATH']='/tmp'
+for name,cwd in [('main',Path('/tmp/cu-r3-main')),('candidate',W)]:
+ ENV['CU_R3_CAPTURE']=str(E/(name+'_fingerprints.jsonl'))
+ run(name+'_goldens',[P,'-m','pytest','-p','cu_r3_capture','tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity','-q','--tb=short'],cwd)
+a=[json.loads(x) for x in (E/'main_fingerprints.jsonl').read_text().splitlines()]
+b=[json.loads(x) for x in (E/'candidate_fingerprints.jsonl').read_text().splitlines()]
+out=[]
+for old,new in zip(a,b,strict=True):
+ assert old['query']==new['query']
+ diff={k:{'main':old['canonical'].get(k),'candidate':new['canonical'].get(k)} for k in old['canonical'].keys()|new['canonical'].keys() if old['canonical'].get(k)!=new['canonical'].get(k)}
+ out.append(dict(query=old['query'],main=old,candidate=new,canonical_diff=diff))
+ print(old['query'],json.dumps(diff,ensure_ascii=False),flush=True)
+(E/'FINGERPRINT_DIFFS.json').write_text(json.dumps(out,indent=2,ensure_ascii=False)+'\n')

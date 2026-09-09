@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "cu_r3_capture",
+    "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/tmp/cu-r3-main",
+  "exit_code": 0,
+  "duration_seconds": 2.2871704999997746,
+  "stdout": "............                                                             [100%]\n12 passed in 1.94s\n",
+  "stderr": ""
+}

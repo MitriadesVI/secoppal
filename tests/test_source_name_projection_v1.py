@@ -8,6 +8,8 @@ por substring y el defecto vuelve sin que ningún test caiga.
 
 from __future__ import annotations
 
+from tests.sql_oracle_properties import assert_identity
+
 from datetime import date
 import json
 import re
@@ -193,7 +195,7 @@ def test_unbound_identity_is_byte_identical_to_pre(builder, canonical, dataset, 
         f"SELECT count(*) WHERE unaccent(UPPER({field})) LIKE "
         f"unaccent(UPPER('%{canonical}%'))"
     )
-    assert soql == expected
+    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])
 
 
 def test_ecosystem_branch_still_fires_when_no_entity_value(builder):
@@ -246,8 +248,9 @@ def test_dapre_projects_physical_name_in_both_datasets(builder):
     assert builder.build_count(PROCESOS, {"entidad_resolved": DAPRE_CANONICAL}) == (
         "SELECT count(*) WHERE entidad = 'DAPRE'"
     )
-    assert builder.build_count(CONTRATOS, {"entidad_resolved": DAPRE_CANONICAL}) == (
-        "SELECT count(*) WHERE nombre_entidad = 'DAPRE'"
+    assert_identity(
+        builder.build_count(CONTRATOS, {"entidad_resolved": DAPRE_CANONICAL}),
+        CONTRATOS, "nombre_entidad = 'DAPRE'",
     )
 
 

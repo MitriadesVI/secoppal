@@ -1,0 +1,102 @@
+FFFFFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-FONDO FINANCIERO DISTRITAL DE SALUD] _
+tests/test_buyer_unit_integrity_p02.py:318: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert_identity(query, dataset_id, exact_identity(field, (expected,)))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'FONDO FINANCIERO DISTRITAL DE SALUD.'
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MINISTERIO DE JUSTICIA Y DEL DERECHO] _
+tests/test_buyer_unit_integrity_p02.py:318: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert_identity(query, dataset_id, exact_identity(field, (expected,)))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'MINISTERIO DE JUSTICIA Y DEL DERECHO.'
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE SOACHA] _
+tests/test_buyer_unit_integrity_p02.py:318: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert_identity(query, dataset_id, exact_identity(field, (expected,)))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'MUNICIPIO DE SOACHA.'
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE YOPAL] _
+tests/test_buyer_unit_integrity_p02.py:318: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert_identity(query, dataset_id, exact_identity(field, (expected,)))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'MUNICIPIO DE YOPAL..'
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS P\xdaBLICOS] _
+tests/test_buyer_unit_integrity_p02.py:318: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert_identity(query, dataset_id, exact_identity(field, (expected,)))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.'
+_ test_source_projection_is_exact_equality_never_like[UNIVERSIDAD DEL PAC\xcdFICO-by_dataset1] _
+tests/test_public_university_completion_r2fb.py:182: in test_source_projection_is_exact_equality_never_like
+    assert_identity(soql, dataset, exact_identity(field, physical_names))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD DEL PACIFICO//'
+_ test_source_projection_is_exact_equality_never_like[UNIVERSIDAD TECNOL\xd3GICA DEL CHOC\xd3 DIEGO LUIS C\xd3RDOBA-by_dataset3] _
+tests/test_public_university_completion_r2fb.py:182: in test_source_projection_is_exact_equality_never_like
+    assert_identity(soql, dataset, exact_identity(field, physical_names))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD TECNOLOGICA DEL CHOCO'
+_ test_source_projection_is_exact_and_preserves_canonical[UNIATLANTICO-by_dataset0] _
+tests/test_public_university_pilot_r2fa.py:170: in test_source_projection_is_exact_and_preserves_canonical
+    assert_identity(soql, dataset, exact_identity(field, physical_names))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'Universidad del Atlántico'
+_ test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE C\xd3RDOBA-by_dataset1] _
+tests/test_public_university_pilot_r2fa.py:170: in test_source_projection_is_exact_and_preserves_canonical
+    assert_identity(soql, dataset, exact_identity(field, physical_names))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD DE CORDOBA'
+_ test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE LA AMAZONIA-by_dataset2] _
+tests/test_public_university_pilot_r2fa.py:170: in test_source_projection_is_exact_and_preserves_canonical
+    assert_identity(soql, dataset, exact_identity(field, physical_names))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD DE LA AMAZONIA (Entidad)'
+_ test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCA\xd1A-by_dataset3] _
+tests/test_public_university_pilot_r2fa.py:170: in test_source_projection_is_exact_and_preserves_canonical
+    assert_identity(soql, dataset, exact_identity(field, physical_names))
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)'
+______________ test_dapre_projects_physical_name_in_both_datasets ______________
+tests/test_source_name_projection_v1.py:248: in test_dapre_projects_physical_name_in_both_datasets
+    assert builder.build_count(PROCESOS, {"entidad_resolved": DAPRE_CANONICAL}) == (
+E   assert "SELECT count... LIKE 'DAPRE'" == "SELECT count...dad = 'DAPRE'"
+E     
+E     - SELECT count(*) WHERE entidad = 'DAPRE'
+E     ?                              ^^
+E     + SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'DAPRE'
+E     ?                       +++++++++++++++       ^^^^^^^
+=========================== short test summary info ============================
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-FONDO FINANCIERO DISTRITAL DE SALUD]
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MINISTERIO DE JUSTICIA Y DEL DERECHO]
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE SOACHA]
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE YOPAL]
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS P\xdaBLICOS]
+FAILED tests/test_public_university_completion_r2fb.py::test_source_projection_is_exact_equality_never_like[UNIVERSIDAD DEL PAC\xcdFICO-by_dataset1]
+FAILED tests/test_public_university_completion_r2fb.py::test_source_projection_is_exact_equality_never_like[UNIVERSIDAD TECNOL\xd3GICA DEL CHOC\xd3 DIEGO LUIS C\xd3RDOBA-by_dataset3]
+FAILED tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIATLANTICO-by_dataset0]
+FAILED tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE C\xd3RDOBA-by_dataset1]
+FAILED tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE LA AMAZONIA-by_dataset2]
+FAILED tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCA\xd1A-by_dataset3]
+FAILED tests/test_source_name_projection_v1.py::test_dapre_projects_physical_name_in_both_datasets
+12 failed in 0.30s

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_offline_guard",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_contract_universe_f2_2_materialization.py",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles",
+  "exit_code": 0,
+  "duration_seconds": 12.105504875002225,
+  "stdout": "..................................                                       [100%]\n34 passed in 11.69s\n",
+  "stderr": ""
+}

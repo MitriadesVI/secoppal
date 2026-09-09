@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from tests.sql_oracle_properties import assert_unsatisfiable
+
 import json
 import re
 from pathlib import Path
@@ -345,7 +347,7 @@ def test_dual_resolution_keeps_id_and_each_child_projects_independently():
     ).split(" WHERE ", 1)[1].rsplit(" ORDER BY ", 1)[0]
 
     assert "Solicitud de información a los Proveedores" in process_where
-    assert contract_where == "1=0"
+    assert_unsatisfiable(contract_where)
     assert process_params[_INCLUDE] == contract_params[_INCLUDE]
 
 
@@ -391,7 +393,7 @@ def test_soql_canonical_clauses_zero_set_unknown_id_and_global_guard():
         builder.CONTRATOS_DATASET,
         {_INCLUDE: ["solicitud_informacion_proveedores"]},
     )
-    assert " WHERE 1=0 " in zero
+    assert_unsatisfiable(zero)
 
     with pytest.raises(ModalityDatasetProjectionError):
         builder.build(
@@ -488,13 +490,16 @@ def test_formatter_uses_canonical_filter_and_suppresses_tautological_dominance()
 
 # M1A.1: four Barranquilla fingerprints now carry accredited municipal
 # city+department scope and never an inferred BuyerUnit; modality stays NO_MATCH.
+# R3: nine contractual hashes include the versioned V1.1 universe.
+# FINGERPRINT_DIFFS.json in the R3 audit proves these are the only input changes;
+# all original SQL markers and the three non-contractual hashes are preserved.
 _NO_MODALITY_GOLDEN = {
     "contratos de alimentación": (
-        "1084437227dc22cc853225828a8a7996bb8f46ba7a1ce2eba5b3febc6ba87f4f",
+        "55480b721e4badd24a04e560e90e0ff44a22ed4e3384219dc3f1e0f75dc1a7a2",
         ("objeto_del_contrato", "fecha_de_firma DESC"),
     ),
     "contratos de alimentación del SENA": (
-        "2cc2481aa110cb9e4f2741466f290b07bccb156ec0a4259efa3c563b1abe0a26",
+        "579279e6c7eb24803f72694ee4df768742d3963ef356c65617baf9bda3716fc0",
         ("SENA SECRETARIA GENERAL", "objeto_del_contrato"),
     ),
     "procesos de alimentación en el departamento del Atlántico": (
@@ -502,15 +507,15 @@ _NO_MODALITY_GOLDEN = {
         ("departamento_entidad = 'Atlántico'",),
     ),
     "contratos de alimentación en Barranquilla": (
-        "49217e5c57215bc84b71ad8ea9f50516a24afb272bb4a9f72cedec72e1183978",
+        "438d1dffadaf70fb1d52f32926a81a833e7d2b2a08bd6a64c51633f4774e5db9",
         ("ciudad", "Barranquilla"),
     ),
     "contratos de alimentación por más de 500 millones": (
-        "9a8a07cfe52b75ac9f5b7519bf8c0abbd86d47b2f0bd10e7e2caad3658c460f5",
+        "bd50720f01f01e4d117a936e8744ad9ddfce3e0a342ba4a75f840822b9141379",
         ("valor_del_contrato >= 500000000",),
     ),
     "contratos de alimentación entre 2024 y 2025": (
-        "8bc90f440f7bfda2938525825fd5f8b2e1bb5c0cf970d72050f2a6c45f9b8eb5",
+        "360331eb1cc3545e12267dc5a7ce09a42582f54bd2446426803cc32482edbd00",
         ("fecha_de_firma >= '2024-01-01'", "fecha_de_firma <= '2025-12-31'"),
     ),
     # ADR-067: contrato_activo se proyecta completo. El marcador anterior era
@@ -519,7 +524,7 @@ _NO_MODALITY_GOLDEN = {
     # el fingerprint cambia porque cambió el FILTRO, no la interpretación de
     # modalidad, que sigue siendo NO_MATCH y sin cláusula propia.
     "contratos en ejecución de alimentación": (
-        "efe365c825462125cec0541db2ed2b7040ebdaf3d71e86d5dedd90519c889aef",
+        "0e7c87f746120a867a5b5274dcfe9ca1ab707b974c5ac7cb6298442017bd1a5b",
         ("estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado')",),
     ),
     "oportunidades de alimentación en Barranquilla": (
@@ -535,11 +540,11 @@ _NO_MODALITY_GOLDEN = {
     # Bolívar; ahora nombra a la regional, que es lo que el usuario pidió. El
     # fingerprint cambia porque cambió el WHERE, no la modalidad.
     "contratos de alimentación de la regional SENA Bolívar": (
-        "a55f462444d86196ea012f4eb8ff5f0636b75a9d022b264f4c91015ac2901bd1",
+        "50f01184d13c61dd3a689a0cfecb10e646db836cd5938dbb7bf3f8f06e491573",
         ("SENA REGIONAL BOLIVAR",),
     ),
     "contratos de manual de contratación en Barranquilla": (
-        "41ac6afc1db80deea8ee1ef09afda50255d110539a9adea424dbfd74f1246c00",
+        "0800d01191f6b265073f4a2e12bd128675e1ca3ca113e225e0cd9b8fe976d367",
         ("manual", "LIMIT 200"),
     ),
     # AP2-B: el filtro ganó una tercera variante, "800091140-4". La fuente
@@ -547,7 +552,7 @@ _NO_MODALITY_GOLDEN = {
     # filtro de igualdad solo alcanzaba dos. El fingerprint cambia porque
     # cambió el filtro, no la interpretación de modalidad.
     "contratos del proveedor NIT 800.091.140-4": (
-        "32b6c4fad81841570b88e3d38ca4824c733fa2ec63660e59b1a16dfd3308d669",
+        "f8387e05758189d4c0144fd201ef5fea5dc6b9ba870a42144abcc274d6387e80",
         ("documento_proveedor = '800091140'", "documento_proveedor = '8000911404'",
          "documento_proveedor = '800091140-4'"),
     ),

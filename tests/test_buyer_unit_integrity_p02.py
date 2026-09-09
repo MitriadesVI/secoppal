@@ -21,6 +21,8 @@ antes de aplicar cualquier merge; estos tests corren offline a propósito.
 """
 from __future__ import annotations
 
+from tests.sql_oracle_properties import assert_identity, exact_identity
+
 import json
 import re
 import unicodedata
@@ -313,4 +315,4 @@ def test_verified_buyer_unit_soql_uses_exact_source_name(
     expected = MERGED_BUYER_UNITS[canonical]["sources"][dataset_id]
     query = SoQLBuilder().build_count(dataset_id, {"entidad_resolved": canonical})
     field = "entidad" if dataset_id == PROCESOS else "nombre_entidad"
-    assert query == f"SELECT count(*) WHERE {field} = '{expected}'"
+    assert_identity(query, dataset_id, exact_identity(field, (expected,)))

@@ -1,0 +1,9 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso] _
+tests/test_object_negation_soql.py:45: in test_generated_object_exclusion_is_null_safe_for_real_dataset_fields
+    assert expected in where
+E   assert "coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%zznegtest%')), false)" in "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent...) LIKE unaccent(UPPER('%zznegtest%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegtest%')))"
+=========================== short test summary info ============================
+FAILED tests/test_object_negation_soql.py::test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso]
+1 failed in 0.18s

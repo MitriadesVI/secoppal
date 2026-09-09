@@ -1,0 +1,36 @@
+from cu_r3_run import *
+def edit(name,old,new,imports):
+ p=W/'tests'/name;s=p.read_text();assert old in s,(name,old);s=s.replace(old,new,1)
+ anchor='from __future__ import annotations\n'
+ if anchor in s:s=s.replace(anchor,anchor+'\n'+imports+'\n',1)
+ else:
+  idx=s.index('import pytest');s=s[:idx]+imports+'\n\n'+s[idx:]
+ p.write_text(s)
+edit('test_buyer_unit_integrity_p02.py','assert query == f"SELECT count(*) WHERE {field} = \'{expected}\'"','assert_identity(query, dataset_id, exact_identity(field, (expected,)))','from tests.sql_oracle_properties import assert_identity, exact_identity')
+for name in ['test_public_university_pilot_r2fa.py','test_public_university_completion_r2fb.py']:
+ p=W/'tests'/name;s=p.read_text();start=s.index('        assert " LIKE " not in soql',s.index('def test_source_projection_is_exact'))
+ end=s.index('\n\n',start)
+ s=s[:start]+'''        field = "entidad" if dataset == PROCESSES else "nombre_entidad"
+        assert_identity(soql, dataset, exact_identity(field, physical_names))'''+s[end:]
+ s=s.replace('from __future__ import annotations\n','from __future__ import annotations\n\nfrom tests.sql_oracle_properties import assert_identity, exact_identity\n',1);p.write_text(s)
+edit('test_modality_pipeline_integration.py','assert contract_where == "1=0"','assert_unsatisfiable(contract_where)','from tests.sql_oracle_properties import assert_unsatisfiable')
+p=W/'tests/test_modality_pipeline_integration.py';s=p.read_text().replace('assert " WHERE 1=0 " in zero','assert_unsatisfiable(zero)');p.write_text(s)
+edit('test_safe_soql.py','assert " WHERE 1=1 " in soql','assert scoped_clauses(soql, CONTRATOS) == []','from tests.sql_oracle_properties import assert_unsatisfiable, scoped_clauses')
+p=W/'tests/test_safe_soql.py';s=p.read_text().replace('assert " WHERE 1=0 " in soql','assert_unsatisfiable(soql)');p.write_text(s)
+edit('test_object_negation_soql.py','assert where.startswith("NOT (")','assert_object_exclusion(where, dataset_id, (field_a, field_b))','from tests.sql_oracle_properties import assert_object_exclusion')
+edit('test_source_name_projection_v1.py','    assert soql == expected\n','    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])\n','from tests.sql_oracle_properties import assert_identity')
+p=W/'tests/test_source_name_projection_v1.py';s=p.read_text();old='''    assert builder.build_count(CONTRATOS, {"entidad_resolved": DAPRE_CANONICAL}) == (
+        "SELECT count(*) WHERE nombre_entidad = 'DAPRE'"
+    )''';new='''    assert_identity(
+        builder.build_count(CONTRATOS, {"entidad_resolved": DAPRE_CANONICAL}),
+        CONTRATOS, "nombre_entidad = 'DAPRE'",
+    )''';assert old in s;s=s.replace(old,new);p.write_text(s)
+# Only repin after the recorded canonical-input diff has been proved.
+p=W/'tests/test_modality_pipeline_integration.py';s=p.read_text();diffs=json.loads((E/'FINGERPRINT_DIFFS.json').read_text())
+for row in diffs:
+ if not row['canonical_diff']:continue
+ assert set(row['canonical_diff'])=={'contract_universe','contract_universe_version'}
+ assert row['main']['fingerprint']==row['main']['golden'][0]
+ assert all(marker in row['candidate']['sql'] for marker in row['main']['golden'][1])
+ s=s.replace(row['main']['fingerprint'],row['candidate']['fingerprint'])
+p.write_text(s)

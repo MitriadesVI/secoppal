@@ -1,0 +1,198 @@
+[
+  {
+    "mutation": "M1_exact_to_like",
+    "path": "app/core/soql_builder.py",
+    "before": "equalities = [f\"{field} = '{cls._escape(name)}'\" for name in names]",
+    "after": "equalities = [f\"unaccent(UPPER({field})) LIKE '{cls._escape(name)}'\" for name in names]",
+    "clusters": [
+      "C09",
+      "C18",
+      "C19",
+      "C23"
+    ],
+    "nodeids": [
+      "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-FONDO FINANCIERO DISTRITAL DE SALUD]",
+      "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MINISTERIO DE JUSTICIA Y DEL DERECHO]",
+      "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE SOACHA]",
+      "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE YOPAL]",
+      "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS P\\xdaBLICOS]",
+      "tests/test_public_university_completion_r2fb.py::test_source_projection_is_exact_equality_never_like[UNIVERSIDAD DEL PAC\\xcdFICO-by_dataset1]",
+      "tests/test_public_university_completion_r2fb.py::test_source_projection_is_exact_equality_never_like[UNIVERSIDAD TECNOL\\xd3GICA DEL CHOC\\xd3 DIEGO LUIS C\\xd3RDOBA-by_dataset3]",
+      "tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIATLANTICO-by_dataset0]",
+      "tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE C\\xd3RDOBA-by_dataset1]",
+      "tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE LA AMAZONIA-by_dataset2]",
+      "tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCA\\xd1A-by_dataset3]",
+      "tests/test_source_name_projection_v1.py::test_dapre_projects_physical_name_in_both_datasets"
+    ],
+    "failed": 12,
+    "errors": 0,
+    "killed_by_assertions": true,
+    "log": "M1_exact_to_like.txt",
+    "assertion_messages": [
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'FONDO FINANCIERO DISTRITAL DE SALUD.'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'MINISTERIO DE JUSTICIA Y DEL DERECHO.'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'MUNICIPIO DE SOACHA.'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'MUNICIPIO DE YOPAL..'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE 'UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS P\u00daBLICOS.'",
+      "AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD DEL PACIFICO//'",
+      "AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD TECNOLOGICA DEL CHOCO'",
+      "AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'Universidad del Atl\u00e1ntico'",
+      "AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD DE CORDOBA'",
+      "AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD DE LA AMAZONIA (Entidad)'",
+      "AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCA\u00d1A (ENTIDAD)'",
+      "assert \"SELECT count... LIKE 'DAPRE'\" == \"SELECT count...dad = 'DAPRE'\"\n  \n  - SELECT count(*) WHERE entidad = 'DAPRE'\n  ?                              ^^\n  + SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'DAPRE'\n  ?                       +++++++++++++++       ^^^^^^^"
+    ]
+  },
+  {
+    "mutation": "M1b_unbound_like_to_exact",
+    "path": "app/core/soql_builder.py",
+    "before": "return self._accent_fold_like(spec.entity, self._escape(str(entidad_value)))",
+    "after": "return self._exact_entity_clause(spec.entity, (str(entidad_value),))",
+    "clusters": [
+      "C22"
+    ],
+    "nodeids": [
+      "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CONTRALOR\\xcdA GENERAL DE LA REP\\xdaBLICA]",
+      "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-AUDITOR\\xcdA GENERAL DE LA REP\\xdaBLICA]",
+      "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-PROCURADUR\\xcdA GENERAL DE LA NACI\\xd3N]",
+      "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-DEFENSOR\\xcdA DEL PUEBLO]",
+      "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CORPORACI\\xd3N AUT\\xd3NOMA REGIONAL DE CUNDINAMARCA]",
+      "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-GOBERNACI\\xd3N DE ANTIOQUIA]",
+      "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-SERVICIO NACIONAL DE APRENDIZAJE]",
+      "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-MUNICIPIO DE SOACHA.]"
+    ],
+    "failed": 8,
+    "errors": 0,
+    "killed_by_assertions": true,
+    "log": "M1b_unbound_like_to_exact.txt",
+    "assertion_messages": [
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'CONTRALOR\u00cdA GENERAL DE LA REP\u00daBLICA'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'AUDITOR\u00cdA GENERAL DE LA REP\u00daBLICA'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'PROCURADUR\u00cdA GENERAL DE LA NACI\u00d3N'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DEFENSOR\u00cdA DEL PUEBLO'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'CORPORACI\u00d3N AUT\u00d3NOMA REGIONAL DE CUNDINAMARCA'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'GOBERNACI\u00d3N DE ANTIOQUIA'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'SERVICIO NACIONAL DE APRENDIZAJE'",
+      "AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'MUNICIPIO DE SOACHA.'"
+    ]
+  },
+  {
+    "mutation": "M2_remove_false",
+    "path": "app/core/soql_builder.py",
+    "before": "return \"1=0\"",
+    "after": "return \"1=1\"",
+    "clusters": [
+      "C14",
+      "C15",
+      "C21"
+    ],
+    "nodeids": [
+      "tests/test_modality_pipeline_integration.py::test_dual_resolution_keeps_id_and_each_child_projects_independently",
+      "tests/test_modality_pipeline_integration.py::test_soql_canonical_clauses_zero_set_unknown_id_and_global_guard",
+      "tests/test_safe_soql.py::test_fully_inapplicable_include_is_unsatisfiable"
+    ],
+    "failed": 3,
+    "errors": 0,
+    "killed_by_assertions": true,
+    "log": "M2_remove_false.txt",
+    "assertion_messages": [
+      "AssertionError: (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=1",
+      "AssertionError: SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=1 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "AssertionError: SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=1 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    ]
+  },
+  {
+    "mutation": "M3_remove_universe",
+    "path": "app/core/soql_builder.py",
+    "before": "where_clauses.append(universe_clause)",
+    "after": "where_clauses.extend([])",
+    "clusters": [
+      "C20"
+    ],
+    "nodeids": [
+      "tests/test_safe_soql.py::test_allow_global_opt_in_bypasses_guard"
+    ],
+    "failed": 1,
+    "errors": 0,
+    "killed_by_assertions": true,
+    "log": "M3_remove_universe.txt",
+    "assertion_messages": [
+      "AssertionError: SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE 1=1 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    ]
+  },
+  {
+    "mutation": "M4_fingerprint_collision",
+    "path": "app/core/query_fingerprint.py",
+    "before": "if k not in _TRANSIENT and v not in _EMPTY",
+    "after": "if k not in _TRANSIENT and k not in {\"contract_universe\", \"contract_universe_version\"} and v not in _EMPTY",
+    "clusters": [
+      "C16"
+    ],
+    "nodeids": [
+      "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n-golden0]",
+      "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n del SENA-golden1]",
+      "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n en Barranquilla-golden3]",
+      "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n por m\\xe1s de 500 millones-golden4]",
+      "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n entre 2024 y 2025-golden5]",
+      "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos en ejecuci\\xf3n de alimentaci\\xf3n-golden6]",
+      "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n de la regional SENA Bol\\xedvar-golden9]",
+      "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de manual de contrataci\\xf3n en Barranquilla-golden10]",
+      "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos del proveedor NIT 800.091.140-4-golden11]",
+      "tests/test_contract_universe_r3_sql_oracles.py::test_contract_universe_changes_fingerprint_and_version_is_semantic"
+    ],
+    "failed": 10,
+    "errors": 0,
+    "killed_by_assertions": true,
+    "log": "M4_fingerprint_collision.txt",
+    "assertion_messages": [
+      "AssertionError: assert '1084437227dc...3febc6ba87f4f' == '55480b721e4b...1e0f75dc1a7a2'\n  \n  - 55480b721e4badd24a04e560e90e0ff44a22ed4e3384219dc3f1e0f75dc1a7a2\n  + 1084437227dc22cc853225828a8a7996bb8f46ba7a1ce2eba5b3febc6ba87f4f",
+      "AssertionError: assert '2cc2481aa110...c563b1abe0a26' == '579279e6c7eb...af9bda3716fc0'\n  \n  - 579279e6c7eb24803f72694ee4df768742d3963ef356c65617baf9bda3716fc0\n  + 2cc2481aa110cb9e4f2741466f290b07bccb156ec0a4259efa3c563b1abe0a26",
+      "AssertionError: assert '49217e5c5721...dec72e1183978' == '438d1dffadaf...633f4774e5db9'\n  \n  - 438d1dffadaf70fb1d52f32926a81a833e7d2b2a08bd6a64c51633f4774e5db9\n  + 49217e5c57215bc84b71ad8ea9f50516a24afb272bb4a9f72cedec72e1183978",
+      "AssertionError: assert '9a8a07cfe52b...aad3658c460f5' == 'bd50720f01f0...40822b9141379'\n  \n  - bd50720f01f01e4d117a936e8744ad9ddfce3e0a342ba4a75f840822b9141379\n  + 9a8a07cfe52b75ac9f5b7519bf8c0abbd86d47b2f0bd10e7e2caad3658c460f5",
+      "AssertionError: assert '8bc90f440f7b...2a6c45f9b8eb5' == '360331eb1cc3...cc32482edbd00'\n  \n  - 360331eb1cc3545e12267dc5a7ce09a42582f54bd2446426803cc32482edbd00\n  + 8bc90f440f7bfda2938525825fd5f8b2e1bb5c0cf970d72050f2a6c45f9b8eb5",
+      "AssertionError: assert 'efe365c82546...d90519c889aef' == '0e7c87f74612...8442017bd1a5b'\n  \n  - 0e7c87f746120a867a5b5274dcfe9ca1ab707b974c5ac7cb6298442017bd1a5b\n  + efe365c825462125cec0541db2ed2b7040ebdaf3d71e86d5dedd90519c889aef",
+      "AssertionError: assert 'a55f462444d8...1015ac2901bd1' == '50f01184d13c...3f8f06e491573'\n  \n  - 50f01184d13c61dd3a689a0cfecb10e646db836cd5938dbb7bf3f8f06e491573\n  + a55f462444d86196ea012f4eb8ff5f0636b75a9d022b264f4c91015ac2901bd1",
+      "AssertionError: assert '41ac6afc1db8...bfd74f1246c00' == '0800d01191f6...d9b8fe976d367'\n  \n  - 0800d01191f6b265073f4a2e12bd128675e1ca3ca113e225e0cd9b8fe976d367\n  + 41ac6afc1db80deea8ee1ef09afda50255d110539a9adea424dbfd74f1246c00",
+      "AssertionError: assert '32b6c4fad818...16dfd3308d669' == 'f8387e057581...cc274d6387e80'\n  \n  - f8387e05758189d4c0144fd201ef5fea5dc6b9ba870a42144abcc274d6387e80\n  + 32b6c4fad81841570b88e3d38ca4824c733fa2ec63660e59b1a16dfd3308d669",
+      "AssertionError: assert 'f27b919d7ab6e277f68990f9cefbbf9a4d5f32cbaabbbcc3f587cf5154ef555f' != 'f27b919d7ab6e277f68990f9cefbbf9a4d5f32cbaabbbcc3f587cf5154ef555f'\n +  where 'f27b919d7ab6e277f68990f9cefbbf9a4d5f32cbaabbbcc3f587cf5154ef555f' = query_fingerprint({'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'objeto': ['alimentacion']})\n +  and   'f27b919d7ab6e277f68990f9cefbbf9a4d5f32cbaabbbcc3f587cf5154ef555f' = query_fingerprint({'contract_universe': 'source_records', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'objeto': ['alimentacion']})"
+    ]
+  },
+  {
+    "mutation": "M5_remove_not",
+    "path": "app/core/soql_builder.py",
+    "before": "where_clauses.append(f\"NOT ({' OR '.join(conditions)})\")",
+    "after": "where_clauses.append(f\"({' OR '.join(conditions)})\")",
+    "clusters": [
+      "C17"
+    ],
+    "nodeids": [
+      "tests/test_object_negation_soql.py::test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso]"
+    ],
+    "failed": 1,
+    "errors": 0,
+    "killed_by_assertions": true,
+    "log": "M5_remove_not.txt",
+    "assertion_messages": [
+      "AssertionError: (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%zznegtest%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegtest%')), false))"
+    ]
+  },
+  {
+    "mutation": "M5b_remove_null_safety",
+    "path": "app/core/soql_builder.py",
+    "before": "spec, str(term), null_safe=True,",
+    "after": "spec, str(term), null_safe=False,",
+    "clusters": [
+      "C17"
+    ],
+    "nodeids": [
+      "tests/test_object_negation_soql.py::test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso]"
+    ],
+    "failed": 1,
+    "errors": 0,
+    "killed_by_assertions": true,
+    "log": "M5b_remove_null_safety.txt",
+    "assertion_messages": [
+      "assert \"coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%zznegtest%')), false)\" in \"(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent...) LIKE unaccent(UPPER('%zznegtest%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegtest%')))\""
+    ]
+  }
+]

@@ -1,0 +1,68 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CONTRALOR\xcdA GENERAL DE LA REP\xdaBLICA] _
+tests/test_source_name_projection_v1.py:198: in test_unbound_identity_is_byte_identical_to_pre
+    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'CONTRALORÍA GENERAL DE LA REPÚBLICA'
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-AUDITOR\xcdA GENERAL DE LA REP\xdaBLICA] _
+tests/test_source_name_projection_v1.py:198: in test_unbound_identity_is_byte_identical_to_pre
+    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'AUDITORÍA GENERAL DE LA REPÚBLICA'
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-PROCURADUR\xcdA GENERAL DE LA NACI\xd3N] _
+tests/test_source_name_projection_v1.py:198: in test_unbound_identity_is_byte_identical_to_pre
+    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'PROCURADURÍA GENERAL DE LA NACIÓN'
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-DEFENSOR\xcdA DEL PUEBLO] _
+tests/test_source_name_projection_v1.py:198: in test_unbound_identity_is_byte_identical_to_pre
+    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DEFENSORÍA DEL PUEBLO'
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CORPORACI\xd3N AUT\xd3NOMA REGIONAL DE CUNDINAMARCA] _
+tests/test_source_name_projection_v1.py:198: in test_unbound_identity_is_byte_identical_to_pre
+    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'CORPORACIÓN AUTÓNOMA REGIONAL DE CUNDINAMARCA'
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-GOBERNACI\xd3N DE ANTIOQUIA] _
+tests/test_source_name_projection_v1.py:198: in test_unbound_identity_is_byte_identical_to_pre
+    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'GOBERNACIÓN DE ANTIOQUIA'
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-SERVICIO NACIONAL DE APRENDIZAJE] _
+tests/test_source_name_projection_v1.py:198: in test_unbound_identity_is_byte_identical_to_pre
+    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'SERVICIO NACIONAL DE APRENDIZAJE'
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-MUNICIPIO DE SOACHA.] _
+tests/test_source_name_projection_v1.py:198: in test_unbound_identity_is_byte_identical_to_pre
+    assert_identity(soql, dataset, expected.split(" WHERE ", 1)[1])
+tests/sql_oracle_properties.py:54: in assert_identity
+    assert scoped_clauses(sql, dataset) == [expected], sql
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'MUNICIPIO DE SOACHA.'
+=========================== short test summary info ============================
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CONTRALOR\xcdA GENERAL DE LA REP\xdaBLICA]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-AUDITOR\xcdA GENERAL DE LA REP\xdaBLICA]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-PROCURADUR\xcdA GENERAL DE LA NACI\xd3N]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-DEFENSOR\xcdA DEL PUEBLO]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CORPORACI\xd3N AUT\xd3NOMA REGIONAL DE CUNDINAMARCA]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-GOBERNACI\xd3N DE ANTIOQUIA]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-SERVICIO NACIONAL DE APRENDIZAJE]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-MUNICIPIO DE SOACHA.]
+8 failed in 0.22s

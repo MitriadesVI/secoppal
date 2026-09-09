@@ -10,6 +10,8 @@ ADR-073 separa identidad canonica de nombre fisico proyectado por dataset.
 
 from __future__ import annotations
 
+from tests.sql_oracle_properties import assert_identity, exact_identity
+
 import json
 import sys
 from pathlib import Path
@@ -176,12 +178,8 @@ def test_source_projection_is_exact_equality_never_like(
 
         assert projected == physical_names
         assert params == snapshot
-        assert " LIKE " not in soql
-        assert "UPPER" not in soql
-        assert "unaccent" not in soql
-        assert "%" not in soql
         field = "entidad" if dataset == PROCESSES else "nombre_entidad"
-        assert soql.endswith(f"WHERE {field} = '{physical_names[0]}'")
+        assert_identity(soql, dataset, exact_identity(field, physical_names))
 
 
 def test_zero_contract_rows_do_not_fabricate_a_contract_name() -> None:

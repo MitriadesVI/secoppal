@@ -1,0 +1,170 @@
+FFFFFFF.....FFFFFFFFFF.............................FFF                   [100%]
+=================================== FAILURES ===================================
+_ test_inv_actor_mention_atomicity_name_plus_document_cannot_leak[qu\xe9 ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1] _
+tests/test_actor_routing.py:186: in test_inv_actor_mention_atomicity_name_plus_document_cannot_leak
+    assert params.get("objeto") is None
+E   AssertionError: assert ['asilo'] is None
+E    +  where ['asilo'] = <built-in method get of dict object at 0x11a096e40>('objeto')
+E    +    where <built-in method get of dict object at 0x11a096e40> = {'actor_conversation_construction': 'what_x_did_with_y', 'actor_conversation_operation': 'SET_ACTOR', 'actor_resolutio...erted_name': 'asilo de san antonio', 'base_number': '890102896', 'check_digit': '1', 'document_type': 'NIT', ...}, ...}.get
+_ test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto[qu\xe9 ha contratado FUNSOCOM] _
+tests/test_actor_routing.py:426: in test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto
+    assert not (tokens & {"fundacaribe", "funsocom"})
+E   AssertionError: assert not ({'funsocom'} & {'fundacaribe', 'funsocom'})
+____________ test_entity_profile_galapa_does_not_report_false_zero _____________
+tests/test_beta_entity_actor_conversation.py:80: in test_entity_profile_galapa_does_not_report_false_zero
+    assert "Se observan 0 contratos" not in result["response"]
+E   AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'
+E     
+E     'Se observan 0 contratos' is contained here:
+E       ocesos]
+E       • Se observan 0 contratos por $0. [SECOP II Contratos]
+E       • Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]
+E       • Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]
+E       
+E       Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes.
+_ test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos] _
+tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E     
+E     - entity_profile_suppliers
+E     + heuristic_only
+_ test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos] _
+tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E     
+E     - entity_profile_suppliers
+E     + heuristic_only
+_ test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos] _
+tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E     
+E     - entity_profile_suppliers
+E     + heuristic_only
+_ test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos] _
+tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E     
+E     - entity_profile_suppliers
+E     + heuristic_only
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tema: mantenimiento, excepto interventoria.')
+E   assert 'estado actual' in 'tema: mantenimiento, excepto interventoria.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x1101e8170>()
+E    +    where <built-in method casefold of str object at 0x1101e8170> = 'Estado actual'.casefold
+E    +  and   'tema: mantenimiento, excepto interventoria.' = <built-in method casefold of str object at 0x11aa730f0>()
+E    +    where <built-in method casefold of str object at 0x11aa730f0> = 'Tema: mantenimiento, excepto interventoria.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Modalidad: Contratación directa, Contratación Directa (con ofertas).')
+E   assert 'estado actual' in 'modalidad: contratación directa, contratación directa (con ofertas).'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x1101e8170>()
+E    +    where <built-in method casefold of str object at 0x1101e8170> = 'Estado actual'.casefold
+E    +  and   'modalidad: contratación directa, contratación directa (con ofertas).' = <built-in method casefold of str object at 0x1106de930>()
+E    +    where <built-in method casefold of str object at 0x1106de930> = 'Modalidad: Contratación directa, Contratación Directa (con ofertas).'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tipo de contrato: obra.')
+E   assert 'estado actual' in 'tipo de contrato: obra.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x1101e8170>()
+E    +    where <built-in method casefold of str object at 0x1101e8170> = 'Estado actual'.casefold
+E    +  and   'tipo de contrato: obra.' = <built-in method casefold of str object at 0x11a7e22f0>()
+E    +    where <built-in method casefold of str object at 0x11a7e22f0> = 'Tipo de contrato: obra.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tema: mantenimiento o vias.')
+E   assert 'estado actual' in 'tema: mantenimiento o vias.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x1101e8170>()
+E    +    where <built-in method casefold of str object at 0x1101e8170> = 'Estado actual'.casefold
+E    +  and   'tema: mantenimiento o vias.' = <built-in method casefold of str object at 0x11ac83af0>()
+E    +    where <built-in method casefold of str object at 0x11ac83af0> = 'Tema: mantenimiento o vias.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tema: mantenimiento y vias.')
+E   assert 'estado actual' in 'tema: mantenimiento y vias.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x1101e8170>()
+E    +    where <built-in method casefold of str object at 0x1101e8170> = 'Estado actual'.casefold
+E    +  and   'tema: mantenimiento y vias.' = <built-in method casefold of str object at 0x11ac818e0>()
+E    +    where <built-in method casefold of str object at 0x11ac818e0> = 'Tema: mantenimiento y vias.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Valor: entre $100 millones y $500 millones.')
+E   assert 'estado actual' in 'valor: entre $100 millones y $500 millones.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x1101e8170>()
+E    +    where <built-in method casefold of str object at 0x1101e8170> = 'Estado actual'.casefold
+E    +  and   'valor: entre $100 millones y $500 millones.' = <built-in method casefold of str object at 0x11b0e2d90>()
+E    +    where <built-in method casefold of str object at 0x11b0e2d90> = 'Valor: entre $100 millones y $500 millones.'.casefold
+_______________ test_firmados_mas_estado_explicito_usa_el_estado _______________
+tests/test_firmado_signed_semantics.py:59: in test_firmados_mas_estado_explicito_usa_el_estado
+    assert cerrados.get("estado") == "Cerrado"
+E   AssertionError: assert None == 'Cerrado'
+E    +  where None = <built-in method get of dict object at 0x110f1c080>('estado')
+E    +    where <built-in method get of dict object at 0x110f1c080> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'dataset_explicit': True, ...}.get
+_________ test_change_dataset_cleans_incompatible_fields_before_apply __________
+tests/test_followup_mutations.py:98: in test_change_dataset_cleans_incompatible_fields_before_apply
+    assert trace["accepted_fields"] == ["dataset", "dataset_explicit"]
+E   AssertionError: assert ['contract_un...set_explicit'] == ['dataset', '...set_explicit']
+E     
+E     At index 0 diff: 'contract_universe' != 'dataset'
+E     Left contains 2 more items, first extra item: 'dataset'
+E     Use -v to get more diff
+________ test_signed_closed_contracts_preserve_real_closed_state[False] ________
+tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+________ test_signed_closed_contracts_preserve_real_closed_state[True] _________
+tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+____________________ test_catalog_no_unexpected_duplicates _____________________
+tests/test_state_catalog.py:95: in test_catalog_no_unexpected_duplicates
+    assert key in _KNOWN_OVERLAPS, (
+E   AssertionError: Unexpected duplicate contratos:estado_contrato:Suspendido in families contrato_suspendido and no_procede
+E   assert 'contratos:estado_contrato:Suspendido' in {'procesos:estado_del_procedimiento:Aprobado', 'procesos:estado_del_procedimiento:En aprobación', 'procesos:estado_del_procedimiento:Seleccionado'}
+_______________ test_temporal_modules_have_no_runtime_consumers ________________
+tests/test_truth_layer_temporal.py:1314: in test_temporal_modules_have_no_runtime_consumers
+    assert consumers == []
+E   AssertionError: assert ['app/core/co...formatter.py'] == []
+E     
+E     Left contains 2 more items, first extra item: 'app/core/contract_universe.py'
+E     Use -v to get more diff
+___________ test_export_preserves_source_amount_and_existing_columns ___________
+tests/test_value_sanity_reachability.py:195: in test_export_preserves_source_amount_and_existing_columns
+    payload = build_results_xlsx(
+app/core/export_xlsx.py:81: in build_results_xlsx
+    raise ValueError("El universo de esta exportación requiere revisión. Repite la búsqueda.")
+E   ValueError: El universo de esta exportación requiere revisión. Repite la búsqueda.
+=========================== short test summary info ============================
+FAILED tests/test_actor_routing.py::test_inv_actor_mention_atomicity_name_plus_document_cannot_leak[qu\xe9 ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1]
+FAILED tests/test_actor_routing.py::test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto[qu\xe9 ha contratado FUNSOCOM]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None]
+FAILED tests/test_firmado_signed_semantics.py::test_firmados_mas_estado_explicito_usa_el_estado
+FAILED tests/test_followup_mutations.py::test_change_dataset_cleans_incompatible_fields_before_apply
+FAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[False]
+FAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[True]
+FAILED tests/test_state_catalog.py::test_catalog_no_unexpected_duplicates - A...
+FAILED tests/test_truth_layer_temporal.py::test_temporal_modules_have_no_runtime_consumers
+FAILED tests/test_value_sanity_reachability.py::test_export_preserves_source_amount_and_existing_columns
+20 failed, 34 passed in 3.28s

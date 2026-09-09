@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "scripts/run_query_corpus.py",
+    "--mode",
+    "all"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles",
+  "exit_code": 0,
+  "duration_seconds": 0.6823598749979283,
+  "stdout": "\nSummary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)\n",
+  "stderr": ""
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "codegraph",
+    "--version"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles",
+  "exit_code": 0,
+  "duration_seconds": 0.16080941700056428,
+  "stdout": "0.9.6\n",
+  "stderr": ""
+}

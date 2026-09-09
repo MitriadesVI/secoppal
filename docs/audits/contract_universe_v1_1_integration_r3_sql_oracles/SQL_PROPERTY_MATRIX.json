@@ -1,0 +1,710 @@
+[
+  {
+    "nodeid": "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-FONDO FINANCIERO DISTRITAL DE SALUD]",
+    "cluster": "C09",
+    "propiedad_original": "Proyección buyer por igualdad exacta al nombre físico",
+    "causa_del_rojo": "Igualdad byte a byte del SELECT completo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity + exact_identity; universo como conjunción separada",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'FONDO FINANCIERO DISTRITAL DE SALUD.'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'FONDO FINANCIERO DISTRITAL DE SALUD.'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MINISTERIO DE JUSTICIA Y DEL DERECHO]",
+    "cluster": "C09",
+    "propiedad_original": "Proyección buyer por igualdad exacta al nombre físico",
+    "causa_del_rojo": "Igualdad byte a byte del SELECT completo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity + exact_identity; universo como conjunción separada",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'MINISTERIO DE JUSTICIA Y DEL DERECHO.'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'MINISTERIO DE JUSTICIA Y DEL DERECHO.'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE SOACHA]",
+    "cluster": "C09",
+    "propiedad_original": "Proyección buyer por igualdad exacta al nombre físico",
+    "causa_del_rojo": "Igualdad byte a byte del SELECT completo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity + exact_identity; universo como conjunción separada",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SOACHA.'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'MUNICIPIO DE SOACHA.'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE YOPAL]",
+    "cluster": "C09",
+    "propiedad_original": "Proyección buyer por igualdad exacta al nombre físico",
+    "causa_del_rojo": "Igualdad byte a byte del SELECT completo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity + exact_identity; universo como conjunción separada",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE YOPAL..'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'MUNICIPIO DE YOPAL..'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS P\\xdaBLICOS]",
+    "cluster": "C09",
+    "propiedad_original": "Proyección buyer por igualdad exacta al nombre físico",
+    "causa_del_rojo": "Igualdad byte a byte del SELECT completo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity + exact_identity; universo como conjunción separada",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_dual_resolution_keeps_id_and_each_child_projects_independently",
+    "cluster": "C14",
+    "propiedad_original": "Modalidad no aplicable produce conjunto necesariamente vacío",
+    "causa_del_rojo": "Exigía 1=0 como WHERE completo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_unsatisfiable: 1=0 en conjunción efectiva, sin OR exterior",
+    "evidencia": [
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build",
+        "main_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE modalidad_de_contratacion = 'Solicitud de información a los Proveedores' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "candidate_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE modalidad_de_contratacion = 'Solicitud de información a los Proveedores' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE 1=0 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=0 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_soql_canonical_clauses_zero_set_unknown_id_and_global_guard",
+    "cluster": "C15",
+    "propiedad_original": "Modalidad no aplicable vacía; IDs desconocidos y global guard conservados",
+    "causa_del_rojo": "Exigía WHERE 1=0 como primeros tokens",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_unsatisfiable; demás assertions intactas",
+    "evidencia": [
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build",
+        "main_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE modalidad_de_contratacion = 'Licitación pública' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "candidate_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE modalidad_de_contratacion = 'Licitación pública' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build",
+        "main_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE modalidad_de_contratacion IN ('Licitación pública', 'Mínima cuantía') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "candidate_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE modalidad_de_contratacion IN ('Licitación pública', 'Mínima cuantía') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build",
+        "main_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE modalidad_de_contratacion NOT IN ('Contratación directa') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "candidate_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE modalidad_de_contratacion NOT IN ('Contratación directa') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build",
+        "main_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (modalidad_de_contratacion = 'Licitación pública') AND (modalidad_de_contratacion NOT IN ('Contratación directa')) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "candidate_sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (modalidad_de_contratacion = 'Licitación pública') AND (modalidad_de_contratacion NOT IN ('Contratación directa')) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE 1=0 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=0 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n-golden0]",
+    "cluster": "C16",
+    "propiedad_original": "Fingerprint semántico y ausencia de modalidad; filtros originales preservados",
+    "causa_del_rojo": "Faltaban las dos claves versionadas del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Hash repineado sólo tras diff canónico de dos claves; marcadores intactos",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n del SENA-golden1]",
+    "cluster": "C16",
+    "propiedad_original": "Fingerprint semántico y ausencia de modalidad; filtros originales preservados",
+    "causa_del_rojo": "Faltaban las dos claves versionadas del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Hash repineado sólo tras diff canónico de dos claves; marcadores intactos",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA SECRETARIA GENERAL%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA SECRETARIA GENERAL%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n en Barranquilla-golden3]",
+    "cluster": "C16",
+    "propiedad_original": "Fingerprint semántico y ausencia de modalidad; filtros originales preservados",
+    "causa_del_rojo": "Faltaban las dos claves versionadas del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Hash repineado sólo tras diff canónico de dos claves; marcadores intactos",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) = unaccent(UPPER('Barranquilla')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) = unaccent(UPPER('Barranquilla')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n por m\\xe1s de 500 millones-golden4]",
+    "cluster": "C16",
+    "propiedad_original": "Fingerprint semántico y ausencia de modalidad; filtros originales preservados",
+    "causa_del_rojo": "Faltaban las dos claves versionadas del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Hash repineado sólo tras diff canónico de dos claves; marcadores intactos",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND valor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND valor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n entre 2024 y 2025-golden5]",
+    "cluster": "C16",
+    "propiedad_original": "Fingerprint semántico y ausencia de modalidad; filtros originales preservados",
+    "causa_del_rojo": "Faltaban las dos claves versionadas del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Hash repineado sólo tras diff canónico de dos claves; marcadores intactos",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_firma >= '2024-01-01' AND fecha_de_firma <= '2025-12-31' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_firma >= '2024-01-01' AND fecha_de_firma <= '2025-12-31' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos en ejecuci\\xf3n de alimentaci\\xf3n-golden6]",
+    "cluster": "C16",
+    "propiedad_original": "Fingerprint semántico y ausencia de modalidad; filtros originales preservados",
+    "causa_del_rojo": "Faltaban las dos claves versionadas del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Hash repineado sólo tras diff canónico de dos claves; marcadores intactos",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado') ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado') ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\\xf3n de la regional SENA Bol\\xedvar-golden9]",
+    "cluster": "C16",
+    "propiedad_original": "Fingerprint semántico y ausencia de modalidad; filtros originales preservados",
+    "causa_del_rojo": "Faltaban las dos claves versionadas del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Hash repineado sólo tras diff canónico de dos claves; marcadores intactos",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA REGIONAL BOLIVAR Grupo de Apoyo Administrativo Mixto%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%regional%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%regional%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA REGIONAL BOLIVAR Grupo de Apoyo Administrativo Mixto%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%regional%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%regional%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de manual de contrataci\\xf3n en Barranquilla-golden10]",
+    "cluster": "C16",
+    "propiedad_original": "Fingerprint semántico y ausencia de modalidad; filtros originales preservados",
+    "causa_del_rojo": "Faltaban las dos claves versionadas del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Hash repineado sólo tras diff canónico de dos claves; marcadores intactos",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) = unaccent(UPPER('Barranquilla')) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%manual%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%contratacion%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%manual%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%contratacion%')))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 200",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND departamento = 'Atlántico' AND unaccent(UPPER(ciudad)) = unaccent(UPPER('Barranquilla')) AND ((unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%manual%')) AND unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%contratacion%'))) OR (unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%manual%')) AND unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%contratacion%')))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 200",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos del proveedor NIT 800.091.140-4-golden11]",
+    "cluster": "C16",
+    "propiedad_original": "Fingerprint semántico y ausencia de modalidad; filtros originales preservados",
+    "causa_del_rojo": "Faltaban las dos claves versionadas del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Hash repineado sólo tras diff canónico de dos claves; marcadores intactos",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (documento_proveedor = '800091140' OR documento_proveedor = '8000911404' OR documento_proveedor = '800091140-4') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (documento_proveedor = '800091140' OR documento_proveedor = '8000911404' OR documento_proveedor = '800091140-4') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_object_negation_soql.py::test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso]",
+    "cluster": "C17",
+    "propiedad_original": "Exclusión de objeto negativa y null-safe en ambos campos",
+    "causa_del_rojo": "Exigía NOT como primer token del WHERE",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Predicado NOT/coalesce completo, aislado del universo; ejecución SQLite con NULL",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%zznegtest%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegtest%')), false))",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%zznegtest%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegtest%')), false))",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_public_university_completion_r2fb.py::test_source_projection_is_exact_equality_never_like[UNIVERSIDAD DEL PAC\\xcdFICO-by_dataset1]",
+    "cluster": "C18",
+    "propiedad_original": "Universidad por igualdad exacta, sin fuzzy sobre buyer",
+    "causa_del_rojo": "Prohibía unaccent en dimensiones ajenas al buyer",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity exacto y todas las variantes físicas",
+    "evidencia": [
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD DEL PACIFICO//'",
+        "candidate_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD DEL PACIFICO//'",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD DEL PACIFICO//'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD DEL PACIFICO//'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_public_university_completion_r2fb.py::test_source_projection_is_exact_equality_never_like[UNIVERSIDAD TECNOL\\xd3GICA DEL CHOC\\xd3 DIEGO LUIS C\\xd3RDOBA-by_dataset3]",
+    "cluster": "C18",
+    "propiedad_original": "Universidad por igualdad exacta, sin fuzzy sobre buyer",
+    "causa_del_rojo": "Prohibía unaccent en dimensiones ajenas al buyer",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity exacto y todas las variantes físicas",
+    "evidencia": [
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD TECNOLOGICA DEL CHOCO'",
+        "candidate_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD TECNOLOGICA DEL CHOCO'",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD TECNOLOGICA DEL CHOCO'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD TECNOLOGICA DEL CHOCO'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIATLANTICO-by_dataset0]",
+    "cluster": "C19",
+    "propiedad_original": "Universidad por igualdad exacta y canonical/params intactos",
+    "causa_del_rojo": "Prohibía unaccent global y exigía WHERE junto al buyer",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity exacto y todas las variantes físicas",
+    "evidencia": [
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE entidad = 'Universidad del Atlántico'",
+        "candidate_sql": "SELECT count(*) WHERE entidad = 'Universidad del Atlántico'",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'Universidad del Atlántico'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'Universidad del Atlántico'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE C\\xd3RDOBA-by_dataset1]",
+    "cluster": "C19",
+    "propiedad_original": "Universidad por igualdad exacta y canonical/params intactos",
+    "causa_del_rojo": "Prohibía unaccent global y exigía WHERE junto al buyer",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity exacto y todas las variantes físicas",
+    "evidencia": [
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD DE CORDOBA'",
+        "candidate_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD DE CORDOBA'",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD DE CORDOBA'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD DE CORDOBA'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE LA AMAZONIA-by_dataset2]",
+    "cluster": "C19",
+    "propiedad_original": "Universidad por igualdad exacta y canonical/params intactos",
+    "causa_del_rojo": "Prohibía unaccent global y exigía WHERE junto al buyer",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity exacto y todas las variantes físicas",
+    "evidencia": [
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD DE LA AMAZONIA (Entidad)'",
+        "candidate_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD DE LA AMAZONIA (Entidad)'",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD DE LA AMAZONIA (Entidad)'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD DE LA AMAZONIA (Entidad)'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCA\\xd1A-by_dataset3]",
+    "cluster": "C19",
+    "propiedad_original": "Universidad por igualdad exacta y canonical/params intactos",
+    "causa_del_rojo": "Prohibía unaccent global y exigía WHERE junto al buyer",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_identity exacto y todas las variantes físicas",
+    "evidencia": [
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)'",
+        "candidate_sql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)'",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_safe_soql.py::test_allow_global_opt_in_bypasses_guard",
+    "cluster": "C20",
+    "propiedad_original": "Opt-in evita anti-global guard sin añadir scope artificial",
+    "causa_del_rojo": "Equiparaba global autorizado con WHERE 1=1",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Único conjunct celebrado; no geografía/topic; allow_global no es source_records",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE 1=1 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_safe_soql.py::test_fully_inapplicable_include_is_unsatisfiable",
+    "cluster": "C21",
+    "propiedad_original": "Include totalmente inaplicable es insatisfacible",
+    "causa_del_rojo": "Exigía WHERE 1=0 como primeros tokens",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "assert_unsatisfiable sin dependencia de orden",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build",
+        "main_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE 1=0 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "candidate_sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=0 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CONTRALOR\\xcdA GENERAL DE LA REP\\xdaBLICA]",
+    "cluster": "C22",
+    "propiedad_original": "Identidad sin binding conserva operador LIKE y nombre/variantes originales",
+    "causa_del_rojo": "Paridad byte a byte de todo el SQL contractual preuniverso",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Cláusula source idéntica a main; procesos sin universo",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CONTRALORÍA GENERAL DE LA REPÚBLICA%'))",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CONTRALORÍA GENERAL DE LA REPÚBLICA%'))",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-AUDITOR\\xcdA GENERAL DE LA REP\\xdaBLICA]",
+    "cluster": "C22",
+    "propiedad_original": "Identidad sin binding conserva operador LIKE y nombre/variantes originales",
+    "causa_del_rojo": "Paridad byte a byte de todo el SQL contractual preuniverso",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Cláusula source idéntica a main; procesos sin universo",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%AUDITORÍA GENERAL DE LA REPÚBLICA%'))",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%AUDITORÍA GENERAL DE LA REPÚBLICA%'))",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-PROCURADUR\\xcdA GENERAL DE LA NACI\\xd3N]",
+    "cluster": "C22",
+    "propiedad_original": "Identidad sin binding conserva operador LIKE y nombre/variantes originales",
+    "causa_del_rojo": "Paridad byte a byte de todo el SQL contractual preuniverso",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Cláusula source idéntica a main; procesos sin universo",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%PROCURADURÍA GENERAL DE LA NACIÓN%'))",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%PROCURADURÍA GENERAL DE LA NACIÓN%'))",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-DEFENSOR\\xcdA DEL PUEBLO]",
+    "cluster": "C22",
+    "propiedad_original": "Identidad sin binding conserva operador LIKE y nombre/variantes originales",
+    "causa_del_rojo": "Paridad byte a byte de todo el SQL contractual preuniverso",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Cláusula source idéntica a main; procesos sin universo",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEFENSORÍA DEL PUEBLO%'))",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEFENSORÍA DEL PUEBLO%'))",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CORPORACI\\xd3N AUT\\xd3NOMA REGIONAL DE CUNDINAMARCA]",
+    "cluster": "C22",
+    "propiedad_original": "Identidad sin binding conserva operador LIKE y nombre/variantes originales",
+    "causa_del_rojo": "Paridad byte a byte de todo el SQL contractual preuniverso",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Cláusula source idéntica a main; procesos sin universo",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CORPORACIÓN AUTÓNOMA REGIONAL DE CUNDINAMARCA%'))",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CORPORACIÓN AUTÓNOMA REGIONAL DE CUNDINAMARCA%'))",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-GOBERNACI\\xd3N DE ANTIOQUIA]",
+    "cluster": "C22",
+    "propiedad_original": "Identidad sin binding conserva operador LIKE y nombre/variantes originales",
+    "causa_del_rojo": "Paridad byte a byte de todo el SQL contractual preuniverso",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Cláusula source idéntica a main; procesos sin universo",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GOBERNACIÓN DE ANTIOQUIA%'))",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GOBERNACIÓN DE ANTIOQUIA%'))",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-SERVICIO NACIONAL DE APRENDIZAJE]",
+    "cluster": "C22",
+    "propiedad_original": "Identidad sin binding conserva operador LIKE y nombre/variantes originales",
+    "causa_del_rojo": "Paridad byte a byte de todo el SQL contractual preuniverso",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Cláusula source idéntica a main; procesos sin universo",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SERVICIO NACIONAL DE APRENDIZAJE%'))",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SERVICIO NACIONAL DE APRENDIZAJE%'))",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-MUNICIPIO DE SOACHA.]",
+    "cluster": "C22",
+    "propiedad_original": "Identidad sin binding conserva operador LIKE y nombre/variantes originales",
+    "causa_del_rojo": "Paridad byte a byte de todo el SQL contractual preuniverso",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Cláusula source idéntica a main; procesos sin universo",
+    "evidencia": [
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE SOACHA.%'))",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE SOACHA.%'))",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  },
+  {
+    "nodeid": "tests/test_source_name_projection_v1.py::test_dapre_projects_physical_name_in_both_datasets",
+    "cluster": "C23",
+    "propiedad_original": "DAPRE físico por igualdad exacta en ambos datasets",
+    "causa_del_rojo": "SQL contractual completo carecía del universo",
+    "tipo": "OBSOLETE_ORACLE",
+    "nuevo_oraculo": "Igualdad nombre_entidad=DAPRE con universo independiente; procesos exactos intactos",
+    "evidencia": [
+      {
+        "dataset": "p6dx-8zbt",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE entidad = 'DAPRE'",
+        "candidate_sql": "SELECT count(*) WHERE entidad = 'DAPRE'",
+        "only_independent_contract_universe_added": false,
+        "process_semantics_unchanged": true
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "method": "build_count",
+        "main_sql": "SELECT count(*) WHERE nombre_entidad = 'DAPRE'",
+        "candidate_sql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DAPRE'",
+        "only_independent_contract_universe_added": true,
+        "process_semantics_unchanged": false
+      }
+    ]
+  }
+]

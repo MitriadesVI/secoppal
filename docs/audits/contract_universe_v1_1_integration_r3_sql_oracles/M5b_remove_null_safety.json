@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_object_negation_soql.py::test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso]",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles/docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M5b_remove_null_safety.xml"
+  ],
+  "cwd": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/cu-r3-mutations-ym1clnk1/M5b_remove_null_safety",
+  "exit_code": 1,
+  "duration_seconds": 0.36038470800122013,
+  "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_ test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso] _\ntests/test_object_negation_soql.py:45: in test_generated_object_exclusion_is_null_safe_for_real_dataset_fields\n    assert expected in where\nE   assert \"coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%zznegtest%')), false)\" in \"(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent...) LIKE unaccent(UPPER('%zznegtest%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegtest%')))\"\n=========================== short test summary info ============================\nFAILED tests/test_object_negation_soql.py::test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso]\n1 failed in 0.18s\n",
+  "stderr": ""
+}

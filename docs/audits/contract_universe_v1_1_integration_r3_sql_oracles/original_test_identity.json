@@ -1,0 +1,30 @@
+[
+  {
+    "path": "tests/test_buyer_unit_integrity_p02.py",
+    "main_and_base_sha256": "2b7821f4e22a79fe2563e00a5a366665be565df021d9359cfd61095f575b9385"
+  },
+  {
+    "path": "tests/test_modality_pipeline_integration.py",
+    "main_and_base_sha256": "aec50565a189f7bc1a3a1c7533b5ff59234cc24a99e9b381ff737ab940ac6a1e"
+  },
+  {
+    "path": "tests/test_object_negation_soql.py",
+    "main_and_base_sha256": "9f29c4b912123803c2f5bcbd5bf82e2aceda12bad6e86fe78876a74e8e10b97c"
+  },
+  {
+    "path": "tests/test_public_university_completion_r2fb.py",
+    "main_and_base_sha256": "07a13a1ce46e0d9012d7219797ee08667f487001d267bb7f557e2ecf9757dcdc"
+  },
+  {
+    "path": "tests/test_public_university_pilot_r2fa.py",
+    "main_and_base_sha256": "09fd71373291a2325939e38375df1607b3d1ef32cb4967c40d0a3f2dc4c0a690"
+  },
+  {
+    "path": "tests/test_safe_soql.py",
+    "main_and_base_sha256": "87c1c6998d8e1ea38acb0023257da9fe6de00577bb9b3020858b9e57bfb8e312"
+  },
+  {
+    "path": "tests/test_source_name_projection_v1.py",
+    "main_and_base_sha256": "8646399a12627b734a25f65ba2d377638a9efa458f99360c52d3f71e0e5e7e38"
+  }
+]

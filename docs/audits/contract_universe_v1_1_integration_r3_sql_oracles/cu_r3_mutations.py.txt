@@ -1,0 +1,35 @@
+from cu_r3_run import *
+import shutil,tarfile,tempfile,xml.etree.ElementTree as ET,re
+ids=json.loads((E/'nodeids_34.json').read_text());clusters=json.loads((E/'clusters.json').read_text())
+base=Path(tempfile.mkdtemp(prefix='cu-r3-mutations-'))
+archive=base/'base.tar'
+with archive.open('wb') as f:subprocess.run(['git','archive','cb02e08'],cwd=W,stdout=f,check=True)
+changed=subprocess.check_output(['git','diff','--name-only'],cwd=W,text=True).splitlines()+['tests/sql_oracle_properties.py','tests/test_contract_universe_r3_sql_oracles.py']
+mutations=[
+ ('M1_exact_to_like','app/core/soql_builder.py',"equalities = [f\"{field} = '{cls._escape(name)}'\" for name in names]","equalities = [f\"unaccent(UPPER({field})) LIKE '{cls._escape(name)}'\" for name in names]",['C09','C18','C19','C23']),
+ ('M1b_unbound_like_to_exact','app/core/soql_builder.py','return self._accent_fold_like(spec.entity, self._escape(str(entidad_value)))','return self._exact_entity_clause(spec.entity, (str(entidad_value),))',['C22']),
+ ('M2_remove_false','app/core/soql_builder.py','return "1=0"','return "1=1"',['C14','C15','C21']),
+ ('M3_remove_universe','app/core/soql_builder.py','where_clauses.append(universe_clause)','where_clauses.extend([])',['C20']),
+ ('M4_fingerprint_collision','app/core/query_fingerprint.py','if k not in _TRANSIENT and v not in _EMPTY','if k not in _TRANSIENT and k not in {"contract_universe", "contract_universe_version"} and v not in _EMPTY',['C16']),
+ ('M5_remove_not','app/core/soql_builder.py','where_clauses.append(f"NOT ({\' OR \'.join(conditions)})")','where_clauses.append(f"({\' OR \'.join(conditions)})")',['C17']),
+ ('M5b_remove_null_safety','app/core/soql_builder.py','spec, str(term), null_safe=True,','spec, str(term), null_safe=False,',['C17']),
+]
+results=[]
+for name,path,old,new,cs in mutations:
+ root=base/name;root.mkdir()
+ with tarfile.open(archive) as tf:tf.extractall(root,filter='data')
+ for file in changed:
+  if file.startswith('tests/'):shutil.copyfile(W/file,root/file)
+ p=root/path;s=p.read_text();assert s.count(old)==1,(name,s.count(old));p.write_text(s.replace(old,new))
+ selected=[n for n in ids if clusters[n] in cs]
+ if name=='M4_fingerprint_collision':selected+=['tests/test_contract_universe_r3_sql_oracles.py::test_contract_universe_changes_fingerprint_and_version_is_semantic']
+ r=pytest(name,selected,root)
+ xml=ET.parse(E/(name+'.xml'));cases=list(xml.iter('testcase'))
+ failures=[c for c in cases if c.find('failure') is not None]
+ errors=[c for c in cases if c.find('error') is not None]
+ killed=r['exit_code']==1 and len(failures)==len(selected) and not errors and all('AssertionError' in (c.find('failure').text or '') or re.search(r'^E\s+assert ', c.find('failure').text or '', re.M) for c in failures)
+ results.append(dict(mutation=name,path=path,before=old,after=new,clusters=cs,nodeids=selected,failed=len(failures),errors=len(errors),killed_by_assertions=killed,log=name+'.txt'))
+ print('KILL',name,killed,flush=True)
+ shutil.rmtree(root)
+(E/'MUTATIONS.json').write_text(json.dumps(results,indent=2)+'\n')
+shutil.rmtree(base)

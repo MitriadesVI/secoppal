@@ -1,0 +1,19 @@
+from cu_r3_run import *
+import shutil
+pytest('r3_properties',['tests/test_contract_universe_r3_sql_oracles.py'])
+r1=W/'docs/audits/contract_universe_v1_1_integration_regression_r1'
+# Preserve historical evidence bytes when inherited tests write their fixed output path.
+paths=[W/'docs/audits/contract_universe_v1_1_f2_2/product_trace.jsonl', W/'docs/audits/contract_universe_v1_1_f2_1_final/observations.jsonl']
+snapshots={p:p.read_bytes() if p.exists() else None for p in paths}
+for name in ['auditor_final_19','f2_2_product_properties','frozen_after','corpus']:
+ run(name,json.loads((r1/(name+'.json')).read_text())['command'])
+for p,old in snapshots.items():
+ if p.exists(): shutil.copyfile(p,E/('generated_'+p.name))
+ if old is None:p.unlink(missing_ok=True)
+ else:p.write_bytes(old)
+pytest('C05_C08',json.loads((W/'docs/audits/contract_universe_v1_1_integration_r2b_buyer_harness/nodeids_44.json').read_text()))
+pytest('residual_54',json.loads((E/'nodeids_54.json').read_text()))
+# Entire changed test modules, still a bounded lane, including process controls.
+pytest('changed_modules',sorted({n.split('::')[0] for n in json.loads((E/'nodeids_34.json').read_text())})+['tests/test_contract_universe_r3_sql_oracles.py'])
+for name,cmd in [('ruff',[V+'ruff','check','app/','tests/','scripts/']),('semgrep',[V+'semgrep','--config','.semgrep/secoppal-laws.yml','app/','--metrics=off']),('lint_core',['make','lint-core']),('diff_check',['git','diff','--check'])]:run(name,cmd)
+pytest('size',['tests/test_module_size_limits.py'])
