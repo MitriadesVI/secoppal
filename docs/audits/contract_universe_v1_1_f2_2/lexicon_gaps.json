@@ -1,0 +1,193 @@
+{
+  "debt": "CONTRACT_STATE_LEXICON_GAPS_001",
+  "current_resolution": {
+    "prorrogados": null,
+    "aprobados": null
+  },
+  "prior_review": "8dfd574",
+  "base_runtime": "2e564d06a4f18a8ef4d3b5a1fa462000e21a00da",
+  "prior_observations": [
+    {
+      "query": "contratos celebrados y prorrogados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%prorrogados%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%prorrogados%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "rows": 0,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de cartagena",
+        "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "entidad_resolution": {
+          "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de cartagena",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "prorrogados"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "states": []
+    },
+    {
+      "query": "contratos prorrogados y celebrados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%prorrogados%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%prorrogados%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "rows": 0,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de cartagena",
+        "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "entidad_resolution": {
+          "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de cartagena",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "prorrogados"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "states": []
+    },
+    {
+      "query": "contratos prorrogados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%prorrogados%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%prorrogados%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "rows": 0,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de cartagena",
+        "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "entidad_resolution": {
+          "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de cartagena",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "prorrogados"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "states": []
+    },
+    {
+      "query": "contratos celebrados y aprobados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aprobados%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aprobados%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "rows": 0,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de cartagena",
+        "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "entidad_resolution": {
+          "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de cartagena",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "aprobados"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "states": []
+    },
+    {
+      "query": "contratos aprobados y celebrados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aprobados%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aprobados%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "rows": 0,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "Municipio de cartagena",
+        "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "entidad_resolution": {
+          "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de cartagena",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "aprobados"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "states": []
+    },
+    {
+      "query": "contratos cancelados y cancelados de la Alcaldía de Cartagena",
+      "clarification": true,
+      "sql": [],
+      "rows": 0,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de cartagena",
+        "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "entidad_resolution": {
+          "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de cartagena",
+            "resolution_method": "exact"
+          }
+        },
+        "contract_universe": "source_records",
+        "contract_universe_version": "contract-universe-1.1",
+        "contract_universe_error": "No puedo representar esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar."
+      },
+      "states": []
+    }
+  ]
+}

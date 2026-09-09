@@ -44,8 +44,11 @@ como segunda condición, sin necesidad de listarla.
 `ConditionComposition.representable` responde una única pregunta: ¿cabe esto en
 un `estado_contrato` singular dentro de un solo universo? No caben dos estados
 excluidos distintos, ni un estado admitido junto a uno excluido —eso cruza la
-frontera del universo—. Dos condiciones admitidas sí caben: ambas viven en el
-celebrado, y seguir ejecutándolas no pierde nada.
+frontera del universo—. Pertenecer al mismo universo no prueba representabilidad: dos estados
+concretos distintos no se ejecutan sin autoridad multiestado. Universo celebrado
+más un estado concreto sólo ejecuta si el productor vigente materializa ese
+estado; las ocurrencias con idéntica denotación se deduplican. F2.2 cierra estos
+requisitos y se documenta en `../contract_universe_v1_1_f2_2/REMEDIATION.md`.
 
 `contract_universe_intent` consume esa lectura y **sustituye** con ella las tres
 reglas locales que tenía; no se les añadió una cuarta. El span del control pasa
@@ -239,9 +242,10 @@ la remediación anterior ni la auditoría; se añadió aquí.
 ## Límites
 
 No se implementó la unión multi-estado: la aclaración es la salida adoptada, tal
-como el encargo la admite. Dos condiciones **admitidas** siguen ejecutándose,
-porque ambas caben en el universo celebrado y no hay nada que perder; sólo se
-aclara cuando la composición no es representable.
+como el encargo la admite. Dos estados concretos distintos no se ejecutan. Universo celebrado más
+un estado concreto requiere prueba del filtro efectivo del productor vigente;
+si falta, se aclara. Una misma condición semántica repetida se deduplica.
+Véase el cierre F2.2; compartir universo nunca acredita por sí solo estas condiciones.
 
 Los conteos son de fixtures controladas. No se ejecutó la suite global, no hubo
 SECOP live, LLM, app, despliegue, activación, merge ni push. Los worktrees

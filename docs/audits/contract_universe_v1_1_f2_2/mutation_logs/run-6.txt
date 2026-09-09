@@ -1,0 +1,504 @@
+FFFF.....FFFF................................F...........FFFFF.......... [ 20%]
+FFFFF..........FFFFF........................FFFFFF.FFF.FFFFFF........... [ 41%]
+........................................................................ [ 61%]
+........................................................................ [ 82%]
+......FFFF......................FF............................           [100%]
+=================================== FAILURES ===================================
+____ test_unsupported_pair_clarifies_in_both_orders[celebrados-cancelados] _____
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 10, 'sql_calls': 1, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 1, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'states_returned': ()} != {'states_returned': ('Cancelado',)}
+E     {'rows': 0} != {'rows': 10}
+E     Use -v to get more diff
+____ test_unsupported_pair_clarifies_in_both_orders[celebrados-borradores] _____
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Borrador',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': False, 'estado_contrato': ('Borrador',), 'rows': 10, 'sql_calls': 1, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 1, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'states_returned': ()} != {'states_returned': ('Borrador',)}
+E     {'rows': 0} != {'rows': 10}
+E     Use -v to get more diff
+_____ test_unsupported_pair_clarifies_in_both_orders[firmados-cancelados] ______
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 10, 'sql_calls': 1, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 1, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'states_returned': ()} != {'states_returned': ('Cancelado',)}
+E     {'rows': 0} != {'rows': 10}
+E     Use -v to get more diff
+_____ test_unsupported_pair_clarifies_in_both_orders[suscritos-cancelados] _____
+tests/test_contract_universe_f2_1_symmetry.py:64: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct']['clarifies'], seen['direct']
+E   AssertionError: {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 1, ...}
+E   assert False
+______ test_no_condition_is_dropped_from_the_span[celebrados-cancelados] _______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros celebrados y cancelados de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False).conflict
+______ test_no_condition_is_dropped_from_the_span[celebrados-borradores] _______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros celebrados y borradores de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Borrador', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Borrador', conflict=False).conflict
+_______ test_no_condition_is_dropped_from_the_span[firmados-cancelados] ________
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros firmados y cancelados de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(21, 32), state='Cancelado', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(21, 32), state='Cancelado', conflict=False).conflict
+_______ test_no_condition_is_dropped_from_the_span[suscritos-cancelados] _______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros suscritos y cancelados de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(22, 33), state='Cancelado', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(22, 33), state='Cancelado', conflict=False).conflict
+____________ test_property_admitted_plus_excluded_always_clarifies _____________
+tests/test_contract_universe_f2_1_symmetry.py:198: in test_property_admitted_plus_excluded_always_clarifies
+    @given(st.sampled_from(ADMITTED_WORDS), st.sampled_from(EXCLUDED_WORDS))
+                   ^^^
+tests/test_contract_universe_f2_1_symmetry.py:205: in test_property_admitted_plus_excluded_always_clarifies
+    assert intent.conflict, (text, intent)
+E   AssertionError: ('registros celebrados y cancelados de la Alcaldía de Cartagena', UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False))
+E   assert False
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False).conflict
+E   Failing test case: test_property_admitted_plus_excluded_always_clarifies(
+E       admitted='celebrados',
+E       excluded='cancelados',  # or any other generated value
+E   )
+E   Explanation:
+E       These lines were always and only run by failing test cases:
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_conditions.py:143
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_conditions.py:162
+_______ test_representable_keeps_every_condition[celebrados-cancelados] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos celebrados y cancelados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_ca...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...celado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_______ test_representable_keeps_every_condition[celebrados-borradores] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos celebrados y borradores de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_ca...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_______ test_representable_keeps_every_condition[celebrados-en borrador] _______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos celebrados y en borrador de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_c...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+__ test_representable_keeps_every_condition[celebrados-enviados al proveedor] __
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos celebrados y enviados al proveedor de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': Fal...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...veedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+______ test_representable_keeps_every_condition[celebrados-en aprobacion] ______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos celebrados y en aprobacion de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...bación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[firmados-cancelados] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos firmados y cancelados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_call...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...celado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[firmados-borradores] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos firmados y borradores de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_call...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[firmados-en borrador] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos firmados y en borrador de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_cal...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+___ test_representable_keeps_every_condition[firmados-enviados al proveedor] ___
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos firmados y enviados al proveedor de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...veedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_______ test_representable_keeps_every_condition[firmados-en aprobacion] _______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos firmados y en aprobacion de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_c...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...bación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[suscritos-cancelados] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos suscritos y cancelados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_cal...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...celado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[suscritos-borradores] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos suscritos y borradores de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_cal...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_______ test_representable_keeps_every_condition[suscritos-en borrador] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos suscritos y en borrador de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_ca...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+__ test_representable_keeps_every_condition[suscritos-enviados al proveedor] ___
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos suscritos y enviados al proveedor de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': Fals...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...veedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+______ test_representable_keeps_every_condition[suscritos-en aprobacion] _______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos suscritos y en aprobacion de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...bación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_______ test_representable_keeps_every_condition[cancelados-celebrados] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos cancelados y celebrados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_ca...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...celado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[cancelados-firmados] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos cancelados y firmados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_call...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...celado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[cancelados-suscritos] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos cancelados y suscritos de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_cal...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...celado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_______ test_representable_keeps_every_condition[borradores-celebrados] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos borradores y celebrados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_ca...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[borradores-firmados] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos borradores y firmados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_call...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[borradores-suscritos] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos borradores y suscritos de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_cal...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_______ test_representable_keeps_every_condition[en borrador-celebrados] _______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos en borrador y celebrados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_c...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+________ test_representable_keeps_every_condition[en borrador-firmados] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos en borrador y firmados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_cal...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_______ test_representable_keeps_every_condition[en borrador-suscritos] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos en borrador y suscritos de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_ca...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...rrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+__ test_representable_keeps_every_condition[enviados al proveedor-celebrados] __
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos enviados al proveedor y celebrados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': Fal...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...veedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+___ test_representable_keeps_every_condition[enviados al proveedor-firmados] ___
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos enviados al proveedor y firmados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...veedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+__ test_representable_keeps_every_condition[enviados al proveedor-suscritos] ___
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos enviados al proveedor y suscritos de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': Fals...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...veedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+______ test_representable_keeps_every_condition[en aprobacion-celebrados] ______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos en aprobacion y celebrados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...bación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_______ test_representable_keeps_every_condition[en aprobacion-firmados] _______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos en aprobacion y firmados de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_c...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...bación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+______ test_representable_keeps_every_condition[en aprobacion-suscritos] _______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos en aprobacion y suscritos de la Alcaldía de Cartagena', '*universo celebrado*', {'clarifies': False, 'sql_...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, dep...bación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False}, '*universo celebrado*')
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros celebrados y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Cancelado'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x117729e00>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x117729e00> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros celebrados y borradores de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Borrador'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x11e589d00>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11e589d00> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros firmados y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Cancelado'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x11f62ee40>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11f62ee40> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros suscritos y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Cancelado'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x1146d3cc0>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x1146d3cc0> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_f2_celebrated_plus_excluded_clarifies[contratos celebrados y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_f1_f5.py:167: in test_f2_celebrated_plus_excluded_clarifies
+    assert result.get('needs_clarification'), result['response']
+E   AssertionError: Registros de la fuente solicitados explícitamente.
+E
+E     📋 Contratos de ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E     Encontre 10 resultados más recientes:
+E
+E     El 100% son de ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS.
+E
+E     1. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     2. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     3. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     4. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     5. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     6. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     7. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     8. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     9. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     10. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     💡 Sugerencias:
+E     1. Ver contratos activos (en ejecución)
+E     2. Ordenar por mayor valor
+E     3. Buscar en procesos
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x11df49f00>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11df49f00> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_f2_celebrated_plus_excluded_clarifies[registros cancelados y celebrados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_f1_f5.py:167: in test_f2_celebrated_plus_excluded_clarifies
+    assert result.get('needs_clarification'), result['response']
+E   AssertionError: Registros de la fuente solicitados explícitamente.
+E
+E     📋 Contratos de ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E     Encontre 10 resultados más recientes:
+E
+E     El 100% son de ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS.
+E
+E     1. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     2. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     3. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     4. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     5. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     6. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     7. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     8. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     9. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     10. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     💡 Sugerencias:
+E     1. Ver contratos activos (en ejecución)
+E     2. Ordenar por mayor valor
+E     3. Buscar en procesos
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x1148029c0>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x1148029c0> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[celebrados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[celebrados-borradores]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[firmados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[suscritos-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[celebrados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[celebrados-borradores]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[firmados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[suscritos-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_property_admitted_plus_excluded_always_clarifies
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[celebrados-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[celebrados-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[celebrados-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[celebrados-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[celebrados-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[firmados-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[firmados-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[firmados-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[firmados-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[firmados-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[suscritos-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[suscritos-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[suscritos-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[suscritos-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[suscritos-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[cancelados-celebrados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[cancelados-firmados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[cancelados-suscritos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[borradores-celebrados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[borradores-firmados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[borradores-suscritos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[en borrador-celebrados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[en borrador-firmados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[en borrador-suscritos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[enviados al proveedor-celebrados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[enviados al proveedor-firmados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[enviados al proveedor-suscritos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[en aprobacion-celebrados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[en aprobacion-firmados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[en aprobacion-suscritos]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros celebrados y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros celebrados y borradores de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros firmados y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros suscritos y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_f1_f5.py::test_f2_celebrated_plus_excluded_clarifies[contratos celebrados y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_f1_f5.py::test_f2_celebrated_plus_excluded_clarifies[registros cancelados y celebrados de la Alcald\xeda de Cartagena]
+45 failed, 305 passed in 41.89s

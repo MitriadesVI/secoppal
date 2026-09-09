@@ -1,0 +1,104 @@
+........................................................................ [ 20%]
+....................FFF................F.FF......F.FF......F.FF......... [ 41%]
+........................................................................ [ 61%]
+........................................................................ [ 82%]
+.FF...........................................................           [100%]
+=================================== FAILURES ===================================
+________ test_representable_keeps_every_condition[cerrados-terminados] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos cerrados y terminados de la Alcaldía de Cartagena', 'terminado', {'clarifies': False, 'sql_calls': 1, 'sta...errado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'Cerrado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'terminado')
+__________ test_representable_keeps_every_condition[cerrados-cedidos] __________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos cerrados y cedidos de la Alcaldía de Cartagena', 'cedido', {'clarifies': False, 'sql_calls': 1, 'state_fil...errado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'Cerrado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'cedido')
+________ test_representable_keeps_every_condition[cerrados-suspendidos] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos cerrados y suspendidos de la Alcaldía de Cartagena', 'Suspendido', {'clarifies': False, 'sql_calls': 1, 's...errado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'Cerrado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'Suspendido')
+________ test_representable_keeps_every_condition[terminados-cerrados] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos terminados y cerrados de la Alcaldía de Cartagena', 'Cerrado', {'clarifies': False, 'sql_calls': 1, 'state...minado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'Cerrado')
+_________ test_representable_keeps_every_condition[terminados-cedidos] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos terminados y cedidos de la Alcaldía de Cartagena', 'cedido', {'clarifies': False, 'sql_calls': 1, 'state_f...minado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'cedido')
+_______ test_representable_keeps_every_condition[terminados-suspendidos] _______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos terminados y suspendidos de la Alcaldía de Cartagena', 'Suspendido', {'clarifies': False, 'sql_calls': 1, ...minado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'Suspendido')
+__________ test_representable_keeps_every_condition[cedidos-cerrados] __________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos cedidos y cerrados de la Alcaldía de Cartagena', 'Cerrado', {'clarifies': False, 'sql_calls': 1, 'state_fi...cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'Cerrado')
+_________ test_representable_keeps_every_condition[cedidos-terminados] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos cedidos y terminados de la Alcaldía de Cartagena', 'terminado', {'clarifies': False, 'sql_calls': 1, 'stat...cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'terminado')
+________ test_representable_keeps_every_condition[cedidos-suspendidos] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos cedidos y suspendidos de la Alcaldía de Cartagena', 'Suspendido', {'clarifies': False, 'sql_calls': 1, 'st...cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'Suspendido')
+________ test_representable_keeps_every_condition[suspendidos-cerrados] ________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos suspendidos y cerrados de la Alcaldía de Cartagena', 'Cerrado', {'clarifies': False, 'sql_calls': 1, 'stat...endido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'Cerrado')
+_______ test_representable_keeps_every_condition[suspendidos-terminados] _______
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos suspendidos y terminados de la Alcaldía de Cartagena', 'terminado', {'clarifies': False, 'sql_calls': 1, '...endido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'terminado')
+________ test_representable_keeps_every_condition[suspendidos-cedidos] _________
+tests/test_contract_universe_f2_1_completeness.py:108: in test_representable_keeps_every_condition
+    assert _holds(observed, value), (text, value, observed)
+E   AssertionError: ('contratos suspendidos y cedidos de la Alcaldía de Cartagena', 'cedido', {'clarifies': False, 'sql_calls': 1, 'state_...endido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True})
+E   assert False
+E    +  where False = _holds({'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}, 'cedido')
+_____________ test_two_admitted_states_clarify[terminados-cedidos] _____________
+tests/test_contract_universe_f2_1_completeness.py:127: in test_two_admitted_states_clarify
+    assert observed['clarifies'], observed
+E   AssertionError: {'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}
+E   assert False
+_____________ test_two_admitted_states_clarify[cedidos-terminados] _____________
+tests/test_contract_universe_f2_1_completeness.py:127: in test_two_admitted_states_clarify
+    assert observed['clarifies'], observed
+E   AssertionError: {'clarifies': False, 'sql_calls': 1, 'state_filter': "estado_contrato = 'cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': True}
+E   assert False
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[cerrados-terminados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[cerrados-cedidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[cerrados-suspendidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[terminados-cerrados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[terminados-cedidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[terminados-suspendidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[cedidos-cerrados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[cedidos-terminados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[cedidos-suspendidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[suspendidos-cerrados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[suspendidos-terminados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_representable_keeps_every_condition[suspendidos-cedidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_two_admitted_states_clarify[terminados-cedidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_two_admitted_states_clarify[cedidos-terminados]
+14 failed, 336 passed in 41.95s

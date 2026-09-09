@@ -1,0 +1,46 @@
+..............FFF.F                                                      [100%]
+=================================== FAILURES ===================================
+______________ test_repeated_denotation_has_no_spurious_conflict _______________
+tests/test_cu_f21_final_delta.py:73: in test_repeated_denotation_has_no_spurious_conflict
+    @given(st.sampled_from(['suspendidos', 'cerrados', 'cancelados', 'borradores']))
+                   ^^^
+tests/test_cu_f21_final_delta.py:78: in test_repeated_denotation_has_no_spurious_conflict
+    assert intent is None or not intent.conflict, (text, intent)
+E   AssertionError: ('registros cancelados y cancelados de la Alcaldía de Cartagena', UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(0, 33), state=None, conflict=True))
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(0, 33), state=None, conflict=True) is None or not True)
+E    +  where True = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(0, 33), state=None, conflict=True).conflict
+E   Failing test case: test_repeated_denotation_has_no_spurious_conflict(
+E       word='cancelados',
+E   )
+E   Explanation:
+E       These lines were always and only run by failing test cases:
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/contract_universe_intent.py:15
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/contract_universe_intent.py:57
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/contract_universe_intent.py:58
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/contract_universe_intent.py:65
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/contract_universe_intent.py:67
+_ test_representable_composition_does_not_lose_prorrogado[celebrados-prorrogados] _
+tests/test_cu_f21_final_delta.py:87: in test_representable_composition_does_not_lose_prorrogado
+    assert e['params'].get('estado_contrato') == ['Prorrogado'], e
+E   AssertionError: {'clarification': False, 'params': {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe...nicipio de cartagena', ...}, 'query': 'contratos celebrados y prorrogados de la Alcaldía de Cartagena', 'rows': 0, ...}
+E   assert None == ['Prorrogado']
+E    +  where None = <built-in method get of dict object at 0x11f819900>('estado_contrato')
+E    +    where <built-in method get of dict object at 0x11f819900> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'entidad': 'Municipio de cartagena', ...}.get
+_ test_representable_composition_does_not_lose_prorrogado[prorrogados-celebrados] _
+tests/test_cu_f21_final_delta.py:87: in test_representable_composition_does_not_lose_prorrogado
+    assert e['params'].get('estado_contrato') == ['Prorrogado'], e
+E   AssertionError: {'clarification': False, 'params': {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe...nicipio de cartagena', ...}, 'query': 'contratos prorrogados y celebrados de la Alcaldía de Cartagena', 'rows': 0, ...}
+E   assert None == ['Prorrogado']
+E    +  where None = <built-in method get of dict object at 0x11d8edac0>('estado_contrato')
+E    +    where <built-in method get of dict object at 0x11d8edac0> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'entidad': 'Municipio de cartagena', ...}.get
+_______________ test_duplicate_excluded_condition_executes_once ________________
+tests/test_cu_f21_final_delta.py:101: in test_duplicate_excluded_condition_executes_once
+    assert not e['clarification'], e
+E   AssertionError: {'clarification': True, 'params': {'contract_universe': 'source_records', 'contract_universe_error': 'No puedo represe...'dataset': 'contratos', ...}, 'query': 'registros cancelados y cancelados de la Alcaldía de Cartagena', 'rows': 0, ...}
+E   assert not True
+=========================== short test summary info ============================
+FAILED tests/test_cu_f21_final_delta.py::test_repeated_denotation_has_no_spurious_conflict
+FAILED tests/test_cu_f21_final_delta.py::test_representable_composition_does_not_lose_prorrogado[celebrados-prorrogados]
+FAILED tests/test_cu_f21_final_delta.py::test_representable_composition_does_not_lose_prorrogado[prorrogados-celebrados]
+FAILED tests/test_cu_f21_final_delta.py::test_duplicate_excluded_condition_executes_once
+4 failed, 15 passed in 5.04s

@@ -1,0 +1,87 @@
+..............F...F............FF..FF...........F....                    [100%]
+=================================== FAILURES ===================================
+______________ test_repeated_denotation_has_no_spurious_conflict _______________
+tests/test_cu_f21_final_delta.py:73: in test_repeated_denotation_has_no_spurious_conflict
+    @given(st.sampled_from(['suspendidos', 'cerrados', 'cancelados', 'borradores']))
+                   ^^^
+tests/test_cu_f21_final_delta.py:78: in test_repeated_denotation_has_no_spurious_conflict
+    assert intent is None or not intent.conflict, (text, intent)
+E   AssertionError: ('registros cancelados y cancelados de la Alcaldía de Cartagena', UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(0, 33), state=None, conflict=True))
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(0, 33), state=None, conflict=True) is None or not True)
+E    +  where True = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(0, 33), state=None, conflict=True).conflict
+E   Failing test case: test_repeated_denotation_has_no_spurious_conflict(
+E       word='cancelados',
+E   )
+E   Explanation:
+E       These lines were always and only run by failing test cases:
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_universe_intent.py:15
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_universe_intent.py:61
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_universe_intent.py:62
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_universe_intent.py:69
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_universe_intent.py:71
+_______________ test_duplicate_excluded_condition_executes_once ________________
+tests/test_cu_f21_final_delta.py:101: in test_duplicate_excluded_condition_executes_once
+    assert not e['clarification'], e
+E   AssertionError: {'clarification': True, 'params': {'contract_universe': 'source_records', 'contract_universe_error': 'No puedo represe...'dataset': 'contratos', ...}, 'query': 'registros cancelados y cancelados de la Alcaldía de Cartagena', 'rows': 0, ...}
+E   assert not True
+____ test_duplicate_equals_single_execution[registros-cancelados-Cancelado] ____
+tests/test_contract_universe_f2_2_materialization.py:90: in test_duplicate_equals_single_execution
+    assert_effective(repeated, state)
+tests/test_contract_universe_f2_2_materialization.py:59: in assert_effective
+    assert not e['clarification'] and e['sql'], e
+E   AssertionError: {'clarification': True, 'params': {'contract_universe': 'source_records', 'contract_universe_error': 'No puedo represe...dataset': 'contratos', ...}, 'query': 'registros cancelados y cancelados de la Alcaldía de Cartagena', 'rows': [], ...}
+E   assert (not True)
+____ test_duplicate_equals_single_execution[registros-borradores-Borrador] _____
+tests/test_contract_universe_f2_2_materialization.py:90: in test_duplicate_equals_single_execution
+    assert_effective(repeated, state)
+tests/test_contract_universe_f2_2_materialization.py:59: in assert_effective
+    assert not e['clarification'] and e['sql'], e
+E   AssertionError: {'clarification': True, 'params': {'contract_universe': 'source_records', 'contract_universe_error': 'No puedo represe...dataset': 'contratos', ...}, 'query': 'registros borradores y borradores de la Alcaldía de Cartagena', 'rows': [], ...}
+E   assert (not True)
+_ test_equivalent_surfaces_in_both_orders[registros-cancelados-cancelado-Cancelado] _
+tests/test_contract_universe_f2_2_materialization.py:102: in test_equivalent_surfaces_in_both_orders
+    assert_effective(e, state)
+tests/test_contract_universe_f2_2_materialization.py:59: in assert_effective
+    assert not e['clarification'] and e['sql'], e
+E   AssertionError: {'clarification': True, 'params': {'contract_universe': 'source_records', 'contract_universe_error': 'No puedo represe...'dataset': 'contratos', ...}, 'query': 'registros cancelados y cancelado de la Alcaldía de Cartagena', 'rows': [], ...}
+E   assert (not True)
+_ test_equivalent_surfaces_in_both_orders[registros-borradores-en borrador-Borrador] _
+tests/test_contract_universe_f2_2_materialization.py:102: in test_equivalent_surfaces_in_both_orders
+    assert_effective(e, state)
+tests/test_contract_universe_f2_2_materialization.py:59: in assert_effective
+    assert not e['clarification'] and e['sql'], e
+E   AssertionError: {'clarification': True, 'params': {'contract_universe': 'source_records', 'contract_universe_error': 'No puedo represe...ataset': 'contratos', ...}, 'query': 'registros borradores y en borrador de la Alcaldía de Cartagena', 'rows': [], ...}
+E   assert (not True)
+_______________ test_property_repetition_preserves_single_filter _______________
+tests/test_contract_universe_f2_2_materialization.py:134: in test_property_repetition_preserves_single_filter
+    @given(st.sampled_from(VARIANTS), st.integers(min_value=2, max_value=4), st.booleans())
+                   ^^^
+tests/test_contract_universe_f2_2_materialization.py:142: in test_property_repetition_preserves_single_filter
+    assert_effective(e, state)
+tests/test_contract_universe_f2_2_materialization.py:59: in assert_effective
+    assert not e['clarification'] and e['sql'], e
+E   AssertionError: {'clarification': True, 'params': {'contract_universe': 'source_records', 'contract_universe_error': 'No puedo represe...'dataset': 'contratos', ...}, 'query': 'registros cancelados y cancelado de la Alcaldía de Cartagena', 'rows': [], ...}
+E   assert (not True)
+E   Failing test case: test_property_repetition_preserves_single_filter(
+E       # The test always failed when commented parts were varied together.
+E       case=('registros', 'cancelados', 'cancelado', 'Cancelado'),
+E       count=2,  # or any other generated value
+E       reverse=False,  # or any other generated value
+E   )
+E   Explanation:
+E       These lines were always and only run by failing test cases:
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_invariants.py:107
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_invariants.py:113
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_universe.py:91
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_universe_intent.py:15
+E           /private/tmp/secoppal-f22-mutations/app/core/contract_universe_intent.py:61
+E           (and 15 more with settings.verbosity >= verbose)
+=========================== short test summary info ============================
+FAILED tests/test_cu_f21_final_delta.py::test_repeated_denotation_has_no_spurious_conflict
+FAILED tests/test_cu_f21_final_delta.py::test_duplicate_excluded_condition_executes_once
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_duplicate_equals_single_execution[registros-cancelados-Cancelado]
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_duplicate_equals_single_execution[registros-borradores-Borrador]
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_equivalent_surfaces_in_both_orders[registros-cancelados-cancelado-Cancelado]
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_equivalent_surfaces_in_both_orders[registros-borradores-en borrador-Borrador]
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_property_repetition_preserves_single_filter
+7 failed, 46 passed in 16.97s

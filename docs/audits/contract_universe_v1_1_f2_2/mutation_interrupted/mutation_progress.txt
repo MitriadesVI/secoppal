@@ -1,0 +1,3 @@
+baseline before: 403 passed in 59.70s
+M1_tail_only_detection: 107 failed, 296 passed in 58.69s
+M2_first_match_wins: 165 failed, 238 passed in 58.18s

@@ -1,0 +1,378 @@
+{
+  "tested_sha": "4a22efc330101c3511c034a53cd02d4790bb192f",
+  "source": "last observations from final validation in product_trace.jsonl",
+  "rows": [
+    {
+      "query": "contratos celebrados y prorrogados de la Alcaldía de Cartagena",
+      "clarification": true,
+      "sql_calls": 0,
+      "row_count": 0,
+      "universe": "celebrated",
+      "state": null,
+      "objeto": null,
+      "state_filter": [],
+      "returned_states": [],
+      "sql": []
+    },
+    {
+      "query": "contratos prorrogados y celebrados de la Alcaldía de Cartagena",
+      "clarification": true,
+      "sql_calls": 0,
+      "row_count": 0,
+      "universe": "celebrated",
+      "state": null,
+      "objeto": null,
+      "state_filter": [],
+      "returned_states": [],
+      "sql": []
+    },
+    {
+      "query": "contratos celebrados y aprobados de la Alcaldía de Cartagena",
+      "clarification": true,
+      "sql_calls": 0,
+      "row_count": 0,
+      "universe": "celebrated",
+      "state": null,
+      "objeto": null,
+      "state_filter": [],
+      "returned_states": [],
+      "sql": []
+    },
+    {
+      "query": "contratos aprobados y celebrados de la Alcaldía de Cartagena",
+      "clarification": true,
+      "sql_calls": 0,
+      "row_count": 0,
+      "universe": "celebrated",
+      "state": null,
+      "objeto": null,
+      "state_filter": [],
+      "returned_states": [],
+      "sql": []
+    },
+    {
+      "query": "contratos celebrados y suspendidos de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "Suspendido"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Suspendido"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos suspendidos y celebrados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "Suspendido"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Suspendido"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos celebrados y cerrados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "Cerrado"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'Cerrado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Cerrado"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Cerrado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos cerrados y celebrados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "Cerrado"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'Cerrado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Cerrado"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Cerrado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos celebrados y terminados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "terminado"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "terminado"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos terminados y celebrados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "terminado"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "terminado"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos celebrados y cedidos de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "cedido"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "cedido"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos cedidos y celebrados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "cedido"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "cedido"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'cedido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "registros cancelados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 10,
+      "universe": "source_records",
+      "state": [
+        "Cancelado"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%'))",
+        "estado_contrato = 'Cancelado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Cancelado"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Cancelado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "registros cancelados y cancelados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 10,
+      "universe": "source_records",
+      "state": [
+        "Cancelado"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%'))",
+        "estado_contrato = 'Cancelado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Cancelado"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Cancelado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "registros borradores de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 10,
+      "universe": "source_records",
+      "state": [
+        "Borrador"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%'))",
+        "estado_contrato = 'Borrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Borrador"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Borrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "registros borradores y borradores de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 10,
+      "universe": "source_records",
+      "state": [
+        "Borrador"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%'))",
+        "estado_contrato = 'Borrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Borrador"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Borrador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos suspendidos de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "Suspendido"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Suspendido"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos suspendidos y suspendidos de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "Suspendido"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "Suspendido"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'Suspendido' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos terminados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "terminado"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "terminado"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    },
+    {
+      "query": "contratos terminados y terminados de la Alcaldía de Cartagena",
+      "clarification": false,
+      "sql_calls": 1,
+      "row_count": 3,
+      "universe": "celebrated",
+      "state": [
+        "terminado"
+      ],
+      "objeto": null,
+      "state_filter": [
+        "estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ],
+      "returned_states": [
+        "terminado"
+      ],
+      "sql": [
+        "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND estado_contrato = 'terminado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+      ]
+    }
+  ]
+}

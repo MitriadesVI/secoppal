@@ -1,0 +1,766 @@
+FFFFFFFF.FFFFFFFF............................F.......................... [ 20%]
+...............................FFFFFFFFFFFFFFF.......FFFFF.......FFFFF.. [ 41%]
+.....FFFFF.......FFFFF.......FFFFF.......FFFFF.......FFFFF.......FFFFF.. [ 61%]
+FF.F.F.........FF.F.F........FF.F.F........FF.F.F.........FF.F.F........ [ 82%]
+......FFFFFFFF..................F.............................           [100%]
+=================================== FAILURES ===================================
+____ test_unsupported_pair_clarifies_in_both_orders[celebrados-cancelados] _____
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': True, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 0, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 0, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'clarifies': False} != {'clarifies': True}
+E     {'sql_calls': 1} != {'sql_calls': 0}
+E     Use -v to get more diff
+____ test_unsupported_pair_clarifies_in_both_orders[celebrados-borradores] _____
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Borrador',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': True, 'estado_contrato': ('Borrador',), 'rows': 0, 'sql_calls': 0, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 0, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'clarifies': False} != {'clarifies': True}
+E     {'sql_calls': 1} != {'sql_calls': 0}
+E     Use -v to get more diff
+_____ test_unsupported_pair_clarifies_in_both_orders[firmados-cancelados] ______
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': True, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 0, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 0, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'clarifies': False} != {'clarifies': True}
+E     {'sql_calls': 1} != {'sql_calls': 0}
+E     Use -v to get more diff
+_____ test_unsupported_pair_clarifies_in_both_orders[suscritos-cancelados] _____
+tests/test_contract_universe_f2_1_symmetry.py:64: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct']['clarifies'], seen['direct']
+E   AssertionError: {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 1, ...}
+E   assert False
+____ test_unsupported_pair_clarifies_in_both_orders[suspendidos-cancelados] ____
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': True, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 0, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 0, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'clarifies': False} != {'clarifies': True}
+E     {'sql_calls': 1} != {'sql_calls': 0}
+E     Use -v to get more diff
+_____ test_unsupported_pair_clarifies_in_both_orders[aprobados-cancelados] _____
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': True, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 0, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 0, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'clarifies': False} != {'clarifies': True}
+E     {'sql_calls': 1} != {'sql_calls': 0}
+E     Use -v to get more diff
+____ test_unsupported_pair_clarifies_in_both_orders[prorrogados-borradores] ____
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Borrador',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': True, 'estado_contrato': ('Borrador',), 'rows': 0, 'sql_calls': 0, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 0, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'clarifies': False} != {'clarifies': True}
+E     {'sql_calls': 1} != {'sql_calls': 0}
+E     Use -v to get more diff
+____ test_unsupported_pair_clarifies_in_both_orders[terminados-cancelados] _____
+tests/test_contract_universe_f2_1_symmetry.py:63: in test_unsupported_pair_clarifies_in_both_orders
+    assert seen['direct'] == seen['inverse'], seen
+E   AssertionError: {'direct': {'clarifies': False, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 1, ...}, 'inverse': {'clarifies': True, 'estado_contrato': ('Cancelado',), 'rows': 0, 'sql_calls': 0, ...}}
+E   assert {'clarifies':...alls': 1, ...} == {'clarifies':...alls': 0, ...}
+E
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'clarifies': False} != {'clarifies': True}
+E     {'sql_calls': 1} != {'sql_calls': 0}
+E     Use -v to get more diff
+______ test_no_condition_is_dropped_from_the_span[celebrados-cancelados] _______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros celebrados y cancelados de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False).conflict
+______ test_no_condition_is_dropped_from_the_span[celebrados-borradores] _______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros celebrados y borradores de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Borrador', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Borrador', conflict=False).conflict
+_______ test_no_condition_is_dropped_from_the_span[firmados-cancelados] ________
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros firmados y cancelados de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(21, 32), state='Cancelado', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(21, 32), state='Cancelado', conflict=False).conflict
+_______ test_no_condition_is_dropped_from_the_span[suscritos-cancelados] _______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros suscritos y cancelados de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(22, 33), state='Cancelado', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(22, 33), state='Cancelado', conflict=False).conflict
+______ test_no_condition_is_dropped_from_the_span[suspendidos-cancelados] ______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros suspendidos y cancelados de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(24, 35), state='Cancelado', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(24, 35), state='Cancelado', conflict=False).conflict
+_______ test_no_condition_is_dropped_from_the_span[aprobados-cancelados] _______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros aprobados y cancelados de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(22, 33), state='Cancelado', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(22, 33), state='Cancelado', conflict=False).conflict
+______ test_no_condition_is_dropped_from_the_span[prorrogados-borradores] ______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros prorrogados y borradores de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(24, 35), state='Borrador', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(24, 35), state='Borrador', conflict=False).conflict
+______ test_no_condition_is_dropped_from_the_span[terminados-cancelados] _______
+tests/test_contract_universe_f2_1_symmetry.py:75: in test_no_condition_is_dropped_from_the_span
+    assert intent is not None and intent.conflict, text
+E   AssertionError: registros terminados y cancelados de la Alcaldía de Cartagena
+E   assert (UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False) is not None and False)
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False).conflict
+____________ test_property_admitted_plus_excluded_always_clarifies _____________
+tests/test_contract_universe_f2_1_symmetry.py:198: in test_property_admitted_plus_excluded_always_clarifies
+    @given(st.sampled_from(ADMITTED_WORDS), st.sampled_from(EXCLUDED_WORDS))
+                   ^^^
+tests/test_contract_universe_f2_1_symmetry.py:205: in test_property_admitted_plus_excluded_always_clarifies
+    assert intent.conflict, (text, intent)
+E   AssertionError: ('registros celebrados y cancelados de la Alcaldía de Cartagena', UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False))
+E   assert False
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False).conflict
+E   Failing test case: test_property_admitted_plus_excluded_always_clarifies(
+E       # The test always failed when commented parts were varied together.
+E       admitted='celebrados',  # or any other generated value
+E       excluded='cancelados',  # or any other generated value
+E   )
+____________ test_unsupported_never_executes[celebrados-cancelados] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('celebrados', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[celebrados-borradores] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('celebrados', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[celebrados-en borrador] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('celebrados', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+______ test_unsupported_never_executes[celebrados-enviados al proveedor] _______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('celebrados', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, refe...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+__________ test_unsupported_never_executes[celebrados-en aprobacion] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('celebrados', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_d...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[firmados-cancelados] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('firmados', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_co...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[firmados-borradores] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('firmados', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_co...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[firmados-en borrador] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('firmados', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_c...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_______ test_unsupported_never_executes[firmados-enviados al proveedor] ________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('firmados', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, refere...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[firmados-en aprobacion] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('firmados', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[suscritos-cancelados] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suscritos', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_c...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[suscritos-borradores] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suscritos', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_c...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[suscritos-en borrador] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suscritos', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_______ test_unsupported_never_executes[suscritos-enviados al proveedor] _______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suscritos', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, refer...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[suscritos-en aprobacion] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suscritos', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[en ejecucion-cancelados] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en ejecucion', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[en ejecucion-borradores] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en ejecucion', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+__________ test_unsupported_never_executes[en ejecucion-en borrador] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en ejecucion', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_d...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____ test_unsupported_never_executes[en ejecucion-enviados al proveedor] ______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en ejecucion', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, re...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_________ test_unsupported_never_executes[en ejecucion-en aprobacion] __________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en ejecucion', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[cerrados-cancelados] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cerrados', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_co...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[cerrados-borradores] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cerrados', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_co...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[cerrados-en borrador] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cerrados', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_c...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_______ test_unsupported_never_executes[cerrados-enviados al proveedor] ________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cerrados', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, refere...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[cerrados-en aprobacion] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cerrados', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[modificados-cancelados] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('modificados', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[modificados-borradores] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('modificados', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[modificados-en borrador] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('modificados', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+______ test_unsupported_never_executes[modificados-enviados al proveedor] ______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('modificados', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, ref...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+__________ test_unsupported_never_executes[modificados-en aprobacion] __________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('modificados', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[terminados-cancelados] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('terminados', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[terminados-borradores] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('terminados', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[terminados-en borrador] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('terminados', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+______ test_unsupported_never_executes[terminados-enviados al proveedor] _______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('terminados', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, refe...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+__________ test_unsupported_never_executes[terminados-en aprobacion] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('terminados', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_d...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[cedidos-cancelados] ______________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cedidos', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_con...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[cedidos-borradores] ______________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cedidos', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_con...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[cedidos-en borrador] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cedidos', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_co...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+________ test_unsupported_never_executes[cedidos-enviados al proveedor] ________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cedidos', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referen...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[cedidos-en aprobacion] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cedidos', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[suspendidos-cancelados] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suspendidos', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[suspendidos-borradores] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suspendidos', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[suspendidos-en borrador] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suspendidos', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+______ test_unsupported_never_executes[suspendidos-enviados al proveedor] ______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suspendidos', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, ref...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+__________ test_unsupported_never_executes[suspendidos-en aprobacion] __________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('suspendidos', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[prorrogados-cancelados] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('prorrogados', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[prorrogados-borradores] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('prorrogados', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[prorrogados-en borrador] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('prorrogados', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+______ test_unsupported_never_executes[prorrogados-enviados al proveedor] ______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('prorrogados', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, ref...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+__________ test_unsupported_never_executes[prorrogados-en aprobacion] __________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('prorrogados', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[aprobados-cancelados] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('aprobados', 'cancelados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_c...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[aprobados-borradores] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('aprobados', 'borradores', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_c...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[aprobados-en borrador] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('aprobados', 'en borrador', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_______ test_unsupported_never_executes[aprobados-enviados al proveedor] _______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('aprobados', 'enviados al proveedor', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, refer...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[aprobados-en aprobacion] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('aprobados', 'en aprobacion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[cancelados-suscritos] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cancelados', 'suscritos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_c...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[cancelados-en ejecucion] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cancelados', 'en ejecucion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[cancelados-modificados] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cancelados', 'modificados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[cancelados-cedidos] ______________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('cancelados', 'cedidos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_con...elado' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[borradores-suscritos] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('borradores', 'suscritos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_c...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[borradores-en ejecucion] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('borradores', 'en ejecucion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[borradores-modificados] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('borradores', 'modificados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[borradores-cedidos] ______________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('borradores', 'cedidos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_con...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[en borrador-suscritos] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en borrador', 'suscritos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+__________ test_unsupported_never_executes[en borrador-en ejecucion] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en borrador', 'en ejecucion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_d...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[en borrador-modificados] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en borrador', 'modificados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____________ test_unsupported_never_executes[en borrador-cedidos] _____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en borrador', 'cedidos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_co...rador' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_______ test_unsupported_never_executes[enviados al proveedor-suscritos] _______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('enviados al proveedor', 'suscritos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, refer...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_____ test_unsupported_never_executes[enviados al proveedor-en ejecucion] ______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('enviados al proveedor', 'en ejecucion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, re...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+______ test_unsupported_never_executes[enviados al proveedor-modificados] ______
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('enviados al proveedor', 'modificados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, ref...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+________ test_unsupported_never_executes[enviados al proveedor-cedidos] ________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('enviados al proveedor', 'cedidos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referen...eedor' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+___________ test_unsupported_never_executes[en aprobacion-suscritos] ___________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en aprobacion', 'suscritos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_de...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_________ test_unsupported_never_executes[en aprobacion-en ejecucion] __________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en aprobacion', 'en ejecucion', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+__________ test_unsupported_never_executes[en aprobacion-modificados] __________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en aprobacion', 'modificados', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+____________ test_unsupported_never_executes[en aprobacion-cedidos] ____________
+tests/test_contract_universe_f2_1_completeness.py:114: in test_unsupported_never_executes
+    assert observed['clarifies'], (first, second, observed)
+E   AssertionError: ('en aprobacion', 'cedidos', {'clarifies': False, 'sql_calls': 1, 'state_filter': "SELECT id_contrato, referencia_del_...ación' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'universe_predicate': False})
+E   assert False
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros celebrados y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Cancelado'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x112994c40>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x112994c40> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros celebrados y borradores de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Borrador'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x115b47e80>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x115b47e80> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros firmados y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Cancelado'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x112eaaa00>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x112eaaa00> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros suscritos y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Cancelado'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x11208c640>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11208c640> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros suspendidos y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Cancelado'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x11d510a80>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11d510a80> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_finding_first_state_wins_when_admitted_state_comes_first[registros aprobados y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:29: in test_finding_first_state_wins_when_admitted_state_comes_first
+    assert result.get('needs_clarification'), (
+E   AssertionError: executed half a composition: universe=source_records estado=['Cancelado'] sql_calls=1
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x11e0451c0>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11e0451c0> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+_ test_finding_order_symmetry_of_the_universe_request[registros celebrados y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:54: in test_finding_order_symmetry_of_the_universe_request
+    assert direct_intent.conflict == inverse_intent.conflict, (
+E   AssertionError: 'registros celebrados y cancelados de la Alcaldía de Cartagena' -> conflict=False; 'registros cancelados y celebrados de la Alcaldía de Cartagena' -> conflict=True
+E   assert False == True
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(23, 34), state='Cancelado', conflict=False).conflict
+E    +  and   True = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(0, 33), state='Cancelado', conflict=True).conflict
+_ test_finding_order_symmetry_of_the_universe_request[registros suspendidos y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_findings.py:54: in test_finding_order_symmetry_of_the_universe_request
+    assert direct_intent.conflict == inverse_intent.conflict, (
+E   AssertionError: 'registros suspendidos y cancelados de la Alcaldía de Cartagena' -> conflict=False; 'registros cancelados y suspendidos de la Alcaldía de Cartagena' -> conflict=True
+E   assert False == True
+E    +  where False = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(24, 35), state='Cancelado', conflict=False).conflict
+E    +  and   True = UniverseRequest(universe=<ContractUniverse.SOURCE_RECORDS: 'source_records'>, span=(0, 34), state='Cancelado', conflict=True).conflict
+_ test_f2_celebrated_plus_excluded_clarifies[contratos celebrados y cancelados de la Alcald\xeda de Cartagena] _
+tests/test_cu_v11_audit_f1_f5.py:167: in test_f2_celebrated_plus_excluded_clarifies
+    assert result.get('needs_clarification'), result['response']
+E   AssertionError: Registros de la fuente solicitados explícitamente.
+E
+E     📋 Contratos de ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E     Encontre 10 resultados más recientes:
+E
+E     El 100% son de ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS.
+E
+E     1. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     2. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     3. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     4. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     5. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado | 2026-08-01
+E        Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación.
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     6. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     7. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     8. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     9. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     10. elaboración de borradores de documentos y contratos de consultoría
+E        ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS
+E        $900,000,000,000 | Cancelado
+E        FUNDACARIBE
+E        https://example.invalid/audit
+E
+E     💡 Sugerencias:
+E     1. Ver contratos activos (en ejecución)
+E     2. Ordenar por mayor valor
+E     3. Buscar en procesos
+E   assert False
+E    +  where False = <built-in method get of dict object at 0x11d0cc180>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11d0cc180> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}.get
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[celebrados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[celebrados-borradores]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[firmados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[suscritos-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[suspendidos-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[aprobados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[prorrogados-borradores]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_unsupported_pair_clarifies_in_both_orders[terminados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[celebrados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[celebrados-borradores]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[firmados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[suscritos-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[suspendidos-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[aprobados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[prorrogados-borradores]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_no_condition_is_dropped_from_the_span[terminados-cancelados]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_property_admitted_plus_excluded_always_clarifies
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[celebrados-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[celebrados-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[celebrados-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[celebrados-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[celebrados-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[firmados-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[firmados-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[firmados-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[firmados-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[firmados-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suscritos-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suscritos-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suscritos-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suscritos-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suscritos-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en ejecucion-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en ejecucion-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en ejecucion-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en ejecucion-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en ejecucion-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cerrados-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cerrados-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cerrados-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cerrados-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cerrados-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[modificados-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[modificados-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[modificados-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[modificados-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[modificados-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[terminados-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[terminados-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[terminados-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[terminados-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[terminados-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cedidos-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cedidos-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cedidos-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cedidos-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cedidos-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suspendidos-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suspendidos-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suspendidos-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suspendidos-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[suspendidos-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[prorrogados-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[prorrogados-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[prorrogados-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[prorrogados-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[prorrogados-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[aprobados-cancelados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[aprobados-borradores]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[aprobados-en borrador]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[aprobados-enviados al proveedor]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[aprobados-en aprobacion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cancelados-suscritos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cancelados-en ejecucion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cancelados-modificados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[cancelados-cedidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[borradores-suscritos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[borradores-en ejecucion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[borradores-modificados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[borradores-cedidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en borrador-suscritos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en borrador-en ejecucion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en borrador-modificados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en borrador-cedidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[enviados al proveedor-suscritos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[enviados al proveedor-en ejecucion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[enviados al proveedor-modificados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[enviados al proveedor-cedidos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en aprobacion-suscritos]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en aprobacion-en ejecucion]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en aprobacion-modificados]
+FAILED tests/test_contract_universe_f2_1_completeness.py::test_unsupported_never_executes[en aprobacion-cedidos]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros celebrados y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros celebrados y borradores de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros firmados y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros suscritos y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros suspendidos y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_first_state_wins_when_admitted_state_comes_first[registros aprobados y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_order_symmetry_of_the_universe_request[registros celebrados y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_findings.py::test_finding_order_symmetry_of_the_universe_request[registros suspendidos y cancelados de la Alcald\xeda de Cartagena]
+FAILED tests/test_cu_v11_audit_f1_f5.py::test_f2_celebrated_plus_excluded_clarifies[contratos celebrados y cancelados de la Alcald\xeda de Cartagena]
+101 failed, 249 passed in 43.74s

@@ -1,0 +1,73 @@
+........................................................................ [ 19%]
+....................................................F................... [ 38%]
+.....................................................F.................. [ 57%]
+................................................F....................... [ 76%]
+...........................................F............................ [ 95%]
+................                                                         [100%]
+=================================== FAILURES ===================================
+_ test_the_corpus_understands_what_was_asked[analiza contratos firmados en 2026 y actualmente en ejecucion de alcaldia de baranoa] _
+tests/test_entity_profile_semantic_corpus.py:202: in test_the_corpus_understands_what_was_asked
+    turn = _turn(router, case.query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_entity_profile_semantic_corpus.py:193: in _turn
+    return classify_entity_profile_turn(text, router.parse(text, today=TODAY).params)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/query_router.py:464: in parse
+    scrubbed = mask_consumed_spans(
+app/core/query_text_consumption.py:60: in mask_consumed_spans
+    validated = [_validate_span(span, text_len) for span in spans]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/query_text_consumption.py:31: in _validate_span
+    raise ValueError(f"end fuera de rango (> len(text)={text_len}): {span!r}")
+E   ValueError: end fuera de rango (> len(text)=32): (27, 34)
+_ test_the_corpus_executes_only_the_sources_it_understood[analiza contratos firmados en 2026 y actualmente en ejecucion de alcaldia de baranoa] _
+tests/test_entity_profile_semantic_corpus.py:220: in test_the_corpus_executes_only_the_sources_it_understood
+    turn = _turn(router, case.query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_entity_profile_semantic_corpus.py:193: in _turn
+    return classify_entity_profile_turn(text, router.parse(text, today=TODAY).params)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/query_router.py:464: in parse
+    scrubbed = mask_consumed_spans(
+app/core/query_text_consumption.py:60: in mask_consumed_spans
+    validated = [_validate_span(span, text_len) for span in spans]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/query_text_consumption.py:31: in _validate_span
+    raise ValueError(f"end fuera de rango (> len(text)={text_len}): {span!r}")
+E   ValueError: end fuera de rango (> len(text)=32): (27, 34)
+_ test_the_corpus_never_leaks_a_predicate_across_schemas[analiza contratos firmados en 2026 y actualmente en ejecucion de alcaldia de baranoa] _
+tests/test_entity_profile_semantic_corpus.py:242: in test_the_corpus_never_leaks_a_predicate_across_schemas
+    turn = _turn(router, case.query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_entity_profile_semantic_corpus.py:193: in _turn
+    return classify_entity_profile_turn(text, router.parse(text, today=TODAY).params)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/query_router.py:464: in parse
+    scrubbed = mask_consumed_spans(
+app/core/query_text_consumption.py:60: in mask_consumed_spans
+    validated = [_validate_span(span, text_len) for span in spans]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/query_text_consumption.py:31: in _validate_span
+    raise ValueError(f"end fuera de rango (> len(text)={text_len}): {span!r}")
+E   ValueError: end fuera de rango (> len(text)=32): (27, 34)
+_ test_the_corpus_never_filters_by_a_contractual_action_verb[analiza contratos firmados en 2026 y actualmente en ejecucion de alcaldia de baranoa] _
+tests/test_entity_profile_semantic_corpus.py:263: in test_the_corpus_never_filters_by_a_contractual_action_verb
+    turn = _turn(router, case.query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_entity_profile_semantic_corpus.py:193: in _turn
+    return classify_entity_profile_turn(text, router.parse(text, today=TODAY).params)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/query_router.py:464: in parse
+    scrubbed = mask_consumed_spans(
+app/core/query_text_consumption.py:60: in mask_consumed_spans
+    validated = [_validate_span(span, text_len) for span in spans]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/core/query_text_consumption.py:31: in _validate_span
+    raise ValueError(f"end fuera de rango (> len(text)={text_len}): {span!r}")
+E   ValueError: end fuera de rango (> len(text)=32): (27, 34)
+=========================== short test summary info ============================
+FAILED tests/test_entity_profile_semantic_corpus.py::test_the_corpus_understands_what_was_asked[analiza contratos firmados en 2026 y actualmente en ejecucion de alcaldia de baranoa]
+FAILED tests/test_entity_profile_semantic_corpus.py::test_the_corpus_executes_only_the_sources_it_understood[analiza contratos firmados en 2026 y actualmente en ejecucion de alcaldia de baranoa]
+FAILED tests/test_entity_profile_semantic_corpus.py::test_the_corpus_never_leaks_a_predicate_across_schemas[analiza contratos firmados en 2026 y actualmente en ejecucion de alcaldia de baranoa]
+FAILED tests/test_entity_profile_semantic_corpus.py::test_the_corpus_never_filters_by_a_contractual_action_verb[analiza contratos firmados en 2026 y actualmente en ejecucion de alcaldia de baranoa]
+4 failed, 372 passed in 16.86s

@@ -1,0 +1,1 @@
+Corrida interrumpida deliberadamente antes de completar M3: el bloque del autor detectó regresiones temporales durante la implementación. Estos resultados parciales no acreditan el candidato final. Las mutaciones se repiten íntegramente en mutation_logs y mutations.json del directorio padre.

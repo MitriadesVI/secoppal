@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "ruff 0.16.4\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "1.176.0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-c",
+      "import hypothesis; print(hypothesis.__version__)"
+    ],
+    "exit": 0,
+    "stdout": "6.165.10\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "codegraph",
+      "--version"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "------------------------------------------------------------------------\n[CodeGraph] Unsupported Node.js version: 26.8.1\n------------------------------------------------------------------------\nNode.js 25.x has a V8 WASM JIT (turboshaft) Zone allocator bug that\ncrashes with `Fatal process out of memory: Zone` when CodeGraph\ncompiles tree-sitter grammars. CodeGraph WILL crash on this Node\nversion mid-indexing. See https://github.com/colbymchenry/codegraph/issues/81\n\nFix: install Node.js 22 LTS:\n  nvm install 22 && nvm use 22                          # nvm\n  brew install node@22 && brew link --overwrite --force node@22  # Homebrew\n\nTo override (NOT recommended - you will likely OOM):\n  CODEGRAPH_ALLOW_UNSAFE_NODE=1 codegraph ...\n------------------------------------------------------------------------\n"
+  },
+  {
+    "command": [
+      "codegraph",
+      "status"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "------------------------------------------------------------------------\n[CodeGraph] Unsupported Node.js version: 26.8.1\n------------------------------------------------------------------------\nNode.js 25.x has a V8 WASM JIT (turboshaft) Zone allocator bug that\ncrashes with `Fatal process out of memory: Zone` when CodeGraph\ncompiles tree-sitter grammars. CodeGraph WILL crash on this Node\nversion mid-indexing. See https://github.com/colbymchenry/codegraph/issues/81\n\nFix: install Node.js 22 LTS:\n  nvm install 22 && nvm use 22                          # nvm\n  brew install node@22 && brew link --overwrite --force node@22  # Homebrew\n\nTo override (NOT recommended - you will likely OOM):\n  CODEGRAPH_ALLOW_UNSAFE_NODE=1 codegraph ...\n------------------------------------------------------------------------\n"
+  }
+]

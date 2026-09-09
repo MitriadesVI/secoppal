@@ -1,0 +1,9 @@
+baseline before: 403 passed in 58.68s
+M1_tail_only_detection: 101 failed, 249 passed in 43.74s
+M2_first_match_wins: 157 failed, 193 passed in 44.43s
+M3_composition_ignored_only_two_excluded_counted: 135 failed, 215 passed in 43.20s
+M6_two_admitted_states_are_representable: 14 failed, 336 passed in 41.95s
+M4_representable_ignores_universe_frontier: 45 failed, 305 passed in 41.89s
+M5_reader_drops_clause_ownership: 6 failed, 344 passed in 41.84s
+M7_occurrences_are_not_deduplicated: 7 failed, 46 passed in 16.97s
+M8_materializability_is_not_required: 12 failed, 41 passed in 15.63s

@@ -1,0 +1,56 @@
+{
+  "ruff": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "app/",
+      "tests/",
+      "scripts/"
+    ],
+    "exit_code": 0,
+    "stdout": "All checks passed!\n",
+    "stderr": ""
+  },
+  "lint_core": {
+    "command": [
+      "make",
+      "lint-core"
+    ],
+    "exit_code": 0,
+    "stdout": "app/core/ limpio\n",
+    "stderr": ""
+  },
+  "diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "runtime_tests_unchanged": {
+    "command": [
+      "git",
+      "diff",
+      "--exit-code",
+      "4a22efc",
+      "--",
+      "app/",
+      "tests/"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "runtime_delta": [
+    "app/core/contract_conditions.py",
+    "app/core/contract_universe_intent.py"
+  ],
+  "unchanged_lexicon_policy": {
+    "app/core/estado_families.py": true,
+    "app/core/contract_universe.py": true,
+    "app/core/query_router.py": true
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "baseline_before": "403 passed in 58.68s",
+  "baseline_before_exit": 0,
+  "baseline": "403 passed in 55.87s",
+  "baseline_exit": 0,
+  "every_mutated_file_restored": true,
+  "restored": {
+    "app/core/contract_conditions.py": true,
+    "app/core/contract_universe_intent.py": true
+  },
+  "killers": [
+    "tests/test_contract_universe_f2_1_symmetry.py",
+    "tests/test_contract_universe_f2_1_completeness.py",
+    "tests/test_cu_v11_audit_findings.py",
+    "tests/test_cu_v11_audit_f1_f5.py",
+    "tests/test_cu_f21_final_delta.py",
+    "tests/test_contract_universe_f2_2_materialization.py"
+  ],
+  "results": [
+    {
+      "mutation": "M1_tail_only_detection",
+      "file": "app/core/contract_universe_intent.py",
+      "intent": "Restores V1.1: a second condition is only seen in the tail after the match.",
+      "applied": true,
+      "exit_code": 1,
+      "summary": "101 failed, 249 passed in 43.74s",
+      "failed": 101,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "M2_first_match_wins",
+      "file": "app/core/contract_universe_intent.py",
+      "intent": "Pure first-match-wins: the first selectable state is executed, whatever else was asked.",
+      "applied": true,
+      "exit_code": 1,
+      "summary": "157 failed, 193 passed in 44.43s",
+      "failed": 157,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "M3_composition_ignored_only_two_excluded_counted",
+      "file": "app/core/contract_universe_intent.py",
+      "intent": "Only two adjacent excluded states count; an admitted one before them is dropped.",
+      "applied": true,
+      "exit_code": 1,
+      "summary": "135 failed, 215 passed in 43.20s",
+      "failed": 135,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "M6_two_admitted_states_are_representable",
+      "file": "app/core/contract_conditions.py",
+      "intent": "Two distinct admitted states count as representable again, as before the probe.",
+      "applied": true,
+      "exit_code": 1,
+      "summary": "14 failed, 336 passed in 41.95s",
+      "failed": 14,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "M4_representable_ignores_universe_frontier",
+      "file": "app/core/contract_conditions.py",
+      "intent": "Crossing the universe frontier (admitted + excluded) stops being a conflict.",
+      "applied": true,
+      "exit_code": 1,
+      "summary": "45 failed, 305 passed in 41.89s",
+      "failed": 45,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "M5_reader_drops_clause_ownership",
+      "file": "app/core/contract_conditions.py",
+      "intent": "Ownership guard removed: a word inside an object or a name counts as a condition.",
+      "applied": true,
+      "exit_code": 1,
+      "summary": "6 failed, 344 passed in 41.84s",
+      "failed": 6,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "M7_occurrences_are_not_deduplicated",
+      "file": "app/core/contract_universe_intent.py",
+      "intent": "Restore occurrence count: equivalent states trigger len(states)>1.",
+      "applied": true,
+      "exit_code": 1,
+      "summary": "7 failed, 46 passed in 16.97s",
+      "failed": 7,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "M8_materializability_is_not_required",
+      "file": "app/core/contract_universe_intent.py",
+      "intent": "Allow a representable composition without proof of its effective producer.",
+      "applied": true,
+      "exit_code": 1,
+      "summary": "12 failed, 41 passed in 15.63s",
+      "failed": 12,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    }
+  ]
+}

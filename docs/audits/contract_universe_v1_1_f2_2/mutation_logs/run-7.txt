@@ -1,0 +1,98 @@
+......................................FFFFFF............................ [ 20%]
+........................................................................ [ 41%]
+........................................................................ [ 61%]
+........................................................................ [ 82%]
+..............................................................           [100%]
+=================================== FAILURES ===================================
+_ test_a_word_inside_the_object_is_not_a_second_condition[contratos de custodia de borradores cancelados de archivo de la Alcald\xeda de Cartagena-False] _
+tests/test_contract_universe_f2_1_symmetry.py:149: in test_a_word_inside_the_object_is_not_a_second_condition
+    assert not result.get('needs_clarification'), result['response']
+E   AssertionError: No puedo representar esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar.
+E
+E     Puedo buscar de varias formas:
+E     1. Contratos mas recientes
+E     2. Contratos de mayor valor
+E     3. Contratos de mantenimiento vial
+E
+E     Cual camino quieres?
+E   assert not True
+E    +  where True = <built-in method get of dict object at 0x111a12780>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x111a12780> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'No pue... esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar.', ...}.get
+_ test_a_word_inside_the_object_is_not_a_second_condition[contratos de custodia de borradores cancelados de archivo de la Alcald\xeda de Cartagena-True] _
+tests/test_contract_universe_f2_1_symmetry.py:149: in test_a_word_inside_the_object_is_not_a_second_condition
+    assert not result.get('needs_clarification'), result['response']
+E   AssertionError: No puedo representar esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar.
+E
+E     Puedo buscar de varias formas:
+E     1. Contratos mas recientes
+E     2. Contratos de mayor valor
+E     3. Contratos de mantenimiento vial
+E
+E     Cual camino quieres?
+E   assert not True
+E    +  where True = <built-in method get of dict object at 0x11d1526c0>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11d1526c0> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'audit', ...}.get
+_ test_a_word_inside_the_object_is_not_a_second_condition[contratos de digitalizaci\xf3n de borradores y actas canceladas de la Alcald\xeda de Cartagena-False] _
+tests/test_contract_universe_f2_1_symmetry.py:149: in test_a_word_inside_the_object_is_not_a_second_condition
+    assert not result.get('needs_clarification'), result['response']
+E   AssertionError: No puedo representar esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar.
+E
+E     Puedo buscar de varias formas:
+E     1. Contratos mas recientes
+E     2. Contratos de mayor valor
+E     3. Contratos de mantenimiento vial
+E
+E     Cual camino quieres?
+E   assert not True
+E    +  where True = <built-in method get of dict object at 0x11d6d6180>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11d6d6180> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'No pue... esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar.', ...}.get
+_ test_a_word_inside_the_object_is_not_a_second_condition[contratos de digitalizaci\xf3n de borradores y actas canceladas de la Alcald\xeda de Cartagena-True] _
+tests/test_contract_universe_f2_1_symmetry.py:149: in test_a_word_inside_the_object_is_not_a_second_condition
+    assert not result.get('needs_clarification'), result['response']
+E   AssertionError: No puedo representar esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar.
+E
+E     Puedo buscar de varias formas:
+E     1. Contratos mas recientes
+E     2. Contratos de mayor valor
+E     3. Contratos de mantenimiento vial
+E
+E     Cual camino quieres?
+E   assert not True
+E    +  where True = <built-in method get of dict object at 0x11d7fea80>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11d7fea80> = {'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'audit', ...}.get
+______ test_a_word_inside_an_actor_name_is_not_a_second_condition[False] _______
+tests/test_contract_universe_f2_1_symmetry.py:167: in test_a_word_inside_an_actor_name_is_not_a_second_condition
+    assert not result.get('needs_clarification'), result['response']
+E   AssertionError: No puedo representar esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar.
+E
+E     Puedo buscar de varias formas:
+E     1. Contratos mas recientes
+E     2. Contratos de mayor valor
+E     3. Contratos de mantenimiento vial
+E
+E     Cual camino quieres?
+E   assert not True
+E    +  where True = <built-in method get of dict object at 0x11d6d6980>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11d6d6980> = {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'No puedo... esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar.', ...}.get
+_______ test_a_word_inside_an_actor_name_is_not_a_second_condition[True] _______
+tests/test_contract_universe_f2_1_symmetry.py:167: in test_a_word_inside_an_actor_name_is_not_a_second_condition
+    assert not result.get('needs_clarification'), result['response']
+E   AssertionError: No puedo representar esta composición completa de fuentes o estados. Aclara qué fuente y estado quieres consultar antes de ejecutar.
+E
+E     Puedo buscar de varias formas:
+E     1. Contratos mas recientes
+E     2. Contratos de mayor valor
+E     3. Contratos de mantenimiento vial
+E
+E     Cual camino quieres?
+E   assert not True
+E    +  where True = <built-in method get of dict object at 0x11bd866c0>('needs_clarification')
+E    +    where <built-in method get of dict object at 0x11bd866c0> = {'_continuation_owner': 'ACTOR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'audit', ...}.get
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_a_word_inside_the_object_is_not_a_second_condition[contratos de custodia de borradores cancelados de archivo de la Alcald\xeda de Cartagena-False]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_a_word_inside_the_object_is_not_a_second_condition[contratos de custodia de borradores cancelados de archivo de la Alcald\xeda de Cartagena-True]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_a_word_inside_the_object_is_not_a_second_condition[contratos de digitalizaci\xf3n de borradores y actas canceladas de la Alcald\xeda de Cartagena-False]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_a_word_inside_the_object_is_not_a_second_condition[contratos de digitalizaci\xf3n de borradores y actas canceladas de la Alcald\xeda de Cartagena-True]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_a_word_inside_an_actor_name_is_not_a_second_condition[False]
+FAILED tests/test_contract_universe_f2_1_symmetry.py::test_a_word_inside_an_actor_name_is_not_a_second_condition[True]
+6 failed, 344 passed in 41.84s

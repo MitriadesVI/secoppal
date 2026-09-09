@@ -1,0 +1,66 @@
+..................F..........FF                                          [100%]
+=================================== FAILURES ===================================
+_ test_equivalent_surfaces_in_both_orders[contratos-suspendidos-suspendida-Suspendido] _
+tests/test_contract_universe_f2_2_materialization.py:102: in test_equivalent_surfaces_in_both_orders
+    assert_effective(e, state)
+tests/test_contract_universe_f2_2_materialization.py:61: in assert_effective
+    assert not e['params'].get('objeto'), e
+E   AssertionError: {'clarification': False, 'params': {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe...icipio de cartagena', ...}, 'query': 'contratos suspendida y suspendidos de la Alcaldía de Cartagena', 'rows': [], ...}
+E   assert not ['suspendidos']
+E    +  where ['suspendidos'] = <built-in method get of dict object at 0x1138e9640>('objeto')
+E    +    where <built-in method get of dict object at 0x1138e9640> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'entidad': 'Municipio de cartagena', ...}.get
+_______________ test_property_repetition_preserves_single_filter _______________
+tests/test_contract_universe_f2_2_materialization.py:134: in test_property_repetition_preserves_single_filter
+    @given(st.sampled_from(VARIANTS), st.integers(min_value=2, max_value=4), st.booleans())
+                   ^^^
+tests/test_contract_universe_f2_2_materialization.py:142: in test_property_repetition_preserves_single_filter
+    assert_effective(e, state)
+tests/test_contract_universe_f2_2_materialization.py:61: in assert_effective
+    assert not e['params'].get('objeto'), e
+E   AssertionError: {'clarification': False, 'params': {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe...icipio de cartagena', ...}, 'query': 'contratos suspendida y suspendidos de la Alcaldía de Cartagena', 'rows': [], ...}
+E   assert not ['suspendidos']
+E    +  where ['suspendidos'] = <built-in method get of dict object at 0x11f995c40>('objeto')
+E    +    where <built-in method get of dict object at 0x11f995c40> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'entidad': 'Municipio de cartagena', ...}.get
+E   Failing test case: test_property_repetition_preserves_single_filter(
+E       case=('contratos', 'suspendidos', 'suspendida', 'Suspendido'),
+E       count=2,  # or any other generated value
+E       reverse=True,
+E   )
+E   Explanation:
+E       These lines were always and only run by failing test cases:
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/dialogue_policy.py:360
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/entity_resolver.py:119
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/feedback.py:209
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/feedback.py:626
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/formatter.py:204
+E           (and 19 more with settings.verbosity >= verbose)
+________ test_property_composition_executes_only_with_effective_filter _________
+tests/test_contract_universe_f2_2_materialization.py:147: in test_property_composition_executes_only_with_effective_filter
+    @given(st.sampled_from(STATES), st.sampled_from(['celebrados', 'firmados', 'suscritos']),
+                   ^^^
+tests/test_contract_universe_f2_2_materialization.py:159: in test_property_composition_executes_only_with_effective_filter
+    assert_effective(e, state)
+tests/test_contract_universe_f2_2_materialization.py:61: in assert_effective
+    assert not e['params'].get('objeto'), e
+E   AssertionError: {'clarification': False, 'params': {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe...nicipio de cartagena', ...}, 'query': 'contratos suscritos y suspendidos de la Alcaldía de Cartagena', 'rows': [], ...}
+E   assert not ['suscritos']
+E    +  where ['suscritos'] = <built-in method get of dict object at 0x12087a780>('objeto')
+E    +    where <built-in method get of dict object at 0x12087a780> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'entidad': 'Municipio de cartagena', ...}.get
+E   Failing test case: test_property_composition_executes_only_with_effective_filter(
+E       case=('suspendidos', 'Suspendido'),
+E       universe='suscritos',
+E       reverse=False,  # or any other generated value
+E   )
+E   Explanation:
+E       These lines were always and only run by failing test cases:
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/dialogue_policy.py:360
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/entity_resolver.py:119
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/formatter.py:204
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/formatter.py:211
+E           /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-f2-2/app/core/outcome.py:74
+E           (and 18 more with settings.verbosity >= verbose)
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_equivalent_surfaces_in_both_orders[contratos-suspendidos-suspendida-Suspendido]
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_property_repetition_preserves_single_filter
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_property_composition_executes_only_with_effective_filter
+3 failed, 28 passed in 11.77s

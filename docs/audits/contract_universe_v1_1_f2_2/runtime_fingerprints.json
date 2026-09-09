@@ -1,0 +1,12 @@
+{
+  "tested_sha": "4a22efc330101c3511c034a53cd02d4790bb192f",
+  "base": "b2fb22e276e17d812cb6545a453f92c95b83b0a0",
+  "files": {
+    "app/core/contract_conditions.py": "e3d940084a0da97e176b20f31283ac65ac60743df0aa24454a5ecad6369d41e1",
+    "app/core/contract_universe_intent.py": "deb0c3adadcffc3a1da0bc4667ab97235c5987c2356c68f61e24ebafa15c1692",
+    "app/core/estado_families.py": "f3c9c05d38fe7f12a08299c9a2b0d8657717577d9b1bc35383886fca49689d17",
+    "app/core/contract_universe.py": "5b0c73b91ceac6100201de1fb0e5f7396e8e5367ad04736460bc7771d0f29e11",
+    "tests/test_cu_f21_final_delta.py": "59e9c3a4e4ab4b3a117157da4473c9300de4c757a1e173b64750f350bb694f0d",
+    "tests/test_contract_universe_f2_2_materialization.py": "ad09d1f9f43fde9ff22bc06b68125ad2f4ed9087e5ca5b4a39e85137f2f836e1"
+  }
+}

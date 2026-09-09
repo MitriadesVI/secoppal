@@ -1,0 +1,297 @@
+{
+  "ruff": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "app/",
+      "tests/",
+      "scripts/"
+    ],
+    "exit_code": 0,
+    "stdout": "All checks passed!\n",
+    "stderr": ""
+  },
+  "semgrep": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+      "--config",
+      ".semgrep/secoppal-laws.yml",
+      "app/",
+      "--metrics=off"
+    ],
+    "exit_code": 0,
+    "stdout": "                    \n                    \n┌──────────────────┐\n│ 10 Code Findings │\n└──────────────────┘\n                         \n    app/core/formatter.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          173┆ try:\n          174┆     from app.core.relevance import RelevanceScorer\n          175┆     field = \"objeto_del_contrato\" if dataset_id == \"jbjy-vk9h\" else\n               \"nombre_del_procedimiento\"                                         \n          176┆     scored = RelevanceScorer().score_rows(topic_flat, out, field=field)\n          177┆     out = [r for r, _ in scored]\n          178┆ except Exception:\n          179┆     pass  # best-effort, igual que en normal_flow\n            ⋮┆----------------------------------------\n          718┆ try:\n          719┆     median_str = f\" (la mediana es {format_cop(vs['median'])})\"\n          720┆ except Exception:\n          721┆     pass\n                               \n    app/core/response_policy.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          508┆ try:\n          509┆     result = narrator.narrate(\n          510┆         rows=rows, query=query, channel=channel,\n          511┆         strict=True, universe_insights=insights, suggestions=None,\n          512┆     )\n          513┆     if result and not _contains_numeric_claim(result):\n          514┆         return result\n          515┆ except Exception:\n          516┆     pass\n            ⋮┆----------------------------------------\n          577┆ try:\n          578┆     median_str = f\" (la mediana es {format_cop(vs['median'])})\"\n          579┆ except Exception:\n          580┆     pass\n                                          \n    app/core/workflow/actions/execution.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          365┆ try:\n          366┆     soql = soql_builder.build(state[\"dataset_id\"], relaxed)\n          367┆     count_soql = soql_builder.build_count(state[\"dataset_id\"], relaxed)\n          368┆     total, results, _timings, _approx = _query_first_then_count(\n          369┆         secop_client, state[\"dataset_id\"], count_soql, soql\n          370┆     )\n          371┆     if results:\n          372┆         return _with_timing(\n          373┆             state,\n          374┆             \"degrade_ms\",\n             [hid 9 additional lines, adjust with --max-lines-per-finding] \n                                               \n    app/core/workflow/handlers/direct_lookup.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          371┆ try:\n          372┆     cards = deps.formatter.to_rows(\n          373┆         [dict(r)], ds,\n          374┆         {\"intent_type\": \"direct_lookup\", \"route_reason\": \"entity_ref_disambiguation\"},\n          375┆         reference_instant=reference_instant_utc,\n          376┆     )\n          377┆     if cards:\n          378┆         estado = _estado_visible(cards[0]) or estado\n          379┆         nota_estado = _estado_raw_nota(cards[0])\n          380┆ except Exception:\n             [hid 3 additional lines, adjust with --max-lines-per-finding] \n                                             \n    app/core/workflow/handlers/normal_flow.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          171┆ try:\n          172┆     from app.core.contextual_suggestions import compute_contextual_filters\n          173┆     computed = compute_contextual_filters(\n          174┆         raw_results,\n          175┆         result[\"dataset_id\"],\n          176┆         result.get(\"resolved_params\", {}),\n          177┆     )\n          178┆     result[\"contextual_filters\"] = computed\n          179┆ except Exception:\n          180┆     pass  # best-effort, never block the main flow\n                                            \n    app/core/workflow/handlers/pagination.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          186┆ try:\n          187┆     display_count = max(1, int(deps.formatter.max_results or 25))\n          188┆     if admitted_buffer is not None:\n          189┆         buffer = admitted_buffer\n          190┆         group = buffer.group\n          191┆         fetch_params = dict(buffer.query_params)\n          192┆         current_fp = buffer.query_fingerprint\n          193┆     elif requested_group:\n          194┆         group = requested_group\n          195┆         buffer = deps.conv_store.get_pagination_buffer(ctx.chat_id, group, None)\n             [hid 171 additional lines, adjust with --max-lines-per-finding] \n                                       \n    app/core/workflow/handlers/radar.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n          114┆ try:\n          115┆     total = run_radar(deps, store, radar).total\n          116┆ except Exception:\n          117┆     pass\n                                            \n    app/core/workflow/handlers/refinement.py\n   ❯❯❱ semgrep.except-exception-que-silencia\n          ❰❰ Blocking ❱❱\n          Un except que se traga la excepcion sin registrar nada. En un sistema cuyo defecto central es\n          devolver resultados incorrectos en silencio, esto es justo el patron que impide diagnosticar.\n          Registra o re-lanza.                                                                         \n                                                                                                       \n           93┆ try:\n           94┆     from app.core.contextual_suggestions import compute_contextual_filters\n           95┆     result[\"contextual_filters\"] = compute_contextual_filters(\n           96┆         results, ds_id, params,\n           97┆     )\n           98┆ except Exception:\n           99┆     pass\n\n",
+    "stderr": "               \n               \n┌─────────────┐\n│ Scan Status │\n└─────────────┘\n  Scanning 348 files tracked by git with 3 Code rules:\n  Scanning 331 files with 3 python rules.\n                \n                \n┌──────────────┐\n│ Scan Summary │\n└──────────────┘\n✅ Scan completed successfully.\n • Findings: 10 (10 blocking)\n • Rules run: 3\n • Targets scanned: 331\n • Parsed lines: ~100.0%\n • Scan skipped: \n   ◦ Files larger than  files 1.0 MB: 1\n • Scan was limited to files tracked by git\n • For a detailed list of skipped files and lines, run semgrep with the --verbose flag\nRan 3 rules on 331 files: 10 findings.\n"
+  },
+  "f2_1_symmetry": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_f2_1_symmetry.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": "..............................................                           [100%]\n46 passed in 5.35s\n",
+    "stderr": ""
+  },
+  "f2_1_completeness": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_f2_1_completeness.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 29%]\n........................................................................ [ 58%]\n........................................................................ [ 87%]\n................................                                         [100%]\n248 passed in 32.90s\n",
+    "stderr": ""
+  },
+  "auditor_findings_now_green": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_cu_v11_audit_findings.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": "........                                                                 [100%]\n8 passed in 1.47s\n",
+    "stderr": ""
+  },
+  "auditor_rest": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_cu_v11_audit_ports.py",
+      "tests/test_cu_v11_audit_f1_f5.py",
+      "tests/test_cu_v11_audit_aprobado.py",
+      "tests/test_cu_v11_audit_persistence.py",
+      "tests/test_cu_v11_audit_regressions.py",
+      "tests/test_cu_v11_audit_properties.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 18%]\n........................................................................ [ 36%]\n........................................................................ [ 55%]\n........................................................................ [ 73%]\n........................................................................ [ 92%]\n..............................                                           [100%]\n390 passed in 9.58s\n",
+    "stderr": ""
+  },
+  "remediation_85": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_remediation.py",
+      "tests/test_contract_universe_remediation_consumers.py",
+      "tests/test_contract_universe_remediation_properties.py",
+      "tests/test_contract_universe_remediation_legacy.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": "........................................................................ [ 84%]\n.............                                                            [100%]\n85 passed in 8.91s\n",
+    "stderr": ""
+  },
+  "author_targets": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_product.py",
+      "tests/test_contract_universe_consumers.py",
+      "tests/test_contract_universe_properties.py",
+      "tests/test_soql_builder.py",
+      "tests/test_soql_builder_phrase.py",
+      "tests/test_observer.py",
+      "tests/test_observer_partial.py",
+      "tests/test_observer_signals.py",
+      "tests/test_analytical_queries.py",
+      "tests/test_actor_profile.py",
+      "tests/test_actor_profile_scope.py",
+      "tests/test_actor_profile_render.py",
+      "tests/test_actor_profile_scope_conversation.py",
+      "tests/test_contract_invariants.py",
+      "tests/test_truth_layer_contract_signature.py",
+      "tests/test_entity_profile_frame_b_semantics.py",
+      "tests/test_entity_profile_frame_b_admission.py",
+      "tests/test_entity_profile_frame_catalog_parity.py",
+      "tests/test_module_size_limits.py",
+      "tests/test_entity_profile_frame_core.py",
+      "tests/test_entity_profile_frame_migration.py",
+      "tests/test_entity_profile_frame_properties.py",
+      "tests/test_entity_profile_semantic_corpus.py",
+      "tests/test_buyer_actor_independent_product.py",
+      "tests/test_buyer_actor_independent_boundaries.py",
+      "tests/test_entity_profile_source_plan.py",
+      "tests/test_radar_builder.py",
+      "tests/test_radar_runner.py",
+      "tests/test_query_router.py",
+      "tests/test_estado_families_integrity.py",
+      "tests/test_pagination_buffer.py",
+      "tests/test_pagination_buffer_lifecycle.py",
+      "tests/test_export_xlsx.py",
+      "tests/test_truth_layer_public_parity.py",
+      "tests/test_entity_profile_frame_b_integration.py",
+      "tests/test_entity_profile_frame_b_publication.py",
+      "tests/test_entity_profile_frame_evidence.py",
+      "tests/test_entity_profile_frame_b_properties.py",
+      "tests/test_entity_profile_frame_independent_contracts.py",
+      "tests/test_entity_profile_workflow.py",
+      "tests/test_entity_profile_conversation_scope.py",
+      "tests/test_entity_profile_queries.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": "........................................................................ [  5%]\n........................................................................ [ 11%]\n........................................................................ [ 17%]\n........................................................................ [ 23%]\n........................................................................ [ 29%]\n........................................................................ [ 35%]\n........................................................................ [ 41%]\n........................................................................ [ 47%]\n........................................................................ [ 53%]\n........................................................................ [ 59%]\n........................................................................ [ 65%]\n........................................................................ [ 70%]\n........................................................................ [ 76%]\n........................................................................ [ 82%]\n........................................................................ [ 88%]\n........................................................................ [ 94%]\n.................................................................        [100%]\n1217 passed in 72.57s (0:01:12)\n",
+    "stderr": ""
+  },
+  "frozen_43_literal": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_independent.py",
+      "tests/test_contract_universe_independent_consumers.py",
+      "tests/test_contract_universe_independent_legacy.py",
+      "tests/test_contract_universe_independent_safety.py",
+      "tests/test_module_size_limits.py",
+      "-q",
+      "--tb=no"
+    ],
+    "exit_code": 1,
+    "stdout": "FFFF..............FF.....FFF....F..........                              [100%]\n=========================== short test summary info ============================\nFAILED tests/test_contract_universe_independent.py::test_independent_sql_matrix[False-seed0]\nFAILED tests/test_contract_universe_independent.py::test_independent_sql_matrix[False-seed1]\nFAILED tests/test_contract_universe_independent.py::test_independent_sql_matrix[True-seed0]\nFAILED tests/test_contract_universe_independent.py::test_independent_sql_matrix[True-seed1]\nFAILED tests/test_contract_universe_independent.py::test_direct_record_does_not_leak_to_search\nFAILED tests/test_contract_universe_independent.py::test_radar_cancellation_event_and_digest\nFAILED tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[False]\nFAILED tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[True]\nFAILED tests/test_contract_universe_independent_consumers.py::test_materialized_dual_children_and_source_names[celebrated-24]\nFAILED tests/test_contract_universe_independent_legacy.py::test_real_base_conversation_requires_review\n10 failed, 33 passed in 5.60s\n",
+    "stderr": ""
+  },
+  "frozen_43_with_v1_aprobado_shim": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "-p",
+      "tests.cu_v1_policy_shim",
+      "tests/test_contract_universe_independent.py",
+      "tests/test_contract_universe_independent_consumers.py",
+      "tests/test_contract_universe_independent_legacy.py",
+      "tests/test_contract_universe_independent_safety.py",
+      "tests/test_module_size_limits.py",
+      "-q",
+      "--tb=no"
+    ],
+    "exit_code": 0,
+    "stdout": "...........................................                              [100%]\n43 passed in 5.52s\n",
+    "stderr": ""
+  },
+  "corpus": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "scripts/run_query_corpus.py",
+      "--mode",
+      "all"
+    ],
+    "exit_code": 0,
+    "stdout": "\nSummary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)\n",
+    "stderr": ""
+  },
+  "lint_core": {
+    "command": [
+      "make",
+      "lint-core"
+    ],
+    "exit_code": 0,
+    "stdout": "app/core/ limpio\n",
+    "stderr": ""
+  },
+  "diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "auditor_final_19": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_cu_f21_final_delta.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": "...................                                                      [100%]\n19 passed in 3.80s\n",
+    "stderr": ""
+  },
+  "f2_2_product_properties": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_f2_2_materialization.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout": "..................................                                       [100%]\n34 passed in 13.09s\n",
+    "stderr": ""
+  },
+  "size": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_module_size_limits.py",
+      "-q"
+    ],
+    "exit_code": 0,
+    "stdout": "..                                                                       [100%]\n2 passed in 0.12s\n",
+    "stderr": ""
+  }
+}

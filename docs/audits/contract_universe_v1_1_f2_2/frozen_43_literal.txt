@@ -1,0 +1,13 @@
+FFFF..............FF.....FFF....F..........                              [100%]
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_independent.py::test_independent_sql_matrix[False-seed0]
+FAILED tests/test_contract_universe_independent.py::test_independent_sql_matrix[False-seed1]
+FAILED tests/test_contract_universe_independent.py::test_independent_sql_matrix[True-seed0]
+FAILED tests/test_contract_universe_independent.py::test_independent_sql_matrix[True-seed1]
+FAILED tests/test_contract_universe_independent.py::test_direct_record_does_not_leak_to_search
+FAILED tests/test_contract_universe_independent.py::test_radar_cancellation_event_and_digest
+FAILED tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[False]
+FAILED tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[True]
+FAILED tests/test_contract_universe_independent_consumers.py::test_materialized_dual_children_and_source_names[celebrated-24]
+FAILED tests/test_contract_universe_independent_legacy.py::test_real_base_conversation_requires_review
+10 failed, 33 passed in 5.60s

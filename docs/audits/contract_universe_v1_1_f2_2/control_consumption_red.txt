@@ -1,0 +1,26 @@
+...............................FFF                                       [100%]
+=================================== FAILURES ===================================
+_________ test_composition_control_cannot_erase_an_intervening_object __________
+tests/test_contract_universe_f2_2_materialization.py:168: in test_composition_control_cannot_erase_an_intervening_object
+    assert 'mantenimiento' in ' '.join(e['params'].get('objeto') or []), e
+E   AssertionError: {'clarification': False, 'params': {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe...': 'elaboración de borradores de documentos y contratos de consultoría', 'documento_proveedor': '71000001', ...}], ...}
+E   assert 'mantenimiento' in ''
+E    +  where '' = <built-in method join of str object at 0x103219b68>((None or []))
+E    +    where <built-in method join of str object at 0x103219b68> = ' '.join
+E    +    and   None = <built-in method get of dict object at 0x11c8c8b80>('objeto')
+E    +      where <built-in method get of dict object at 0x11c8c8b80> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'entidad': 'Municipio de cartagena', ...}.get
+___ test_contract_gate_does_not_claim_a_process_only_composition[aprobados] ____
+tests/test_contract_universe_f2_2_materialization.py:175: in test_contract_gate_does_not_claim_a_process_only_composition
+    assert request(f'procesos {word} y {word} {TAIL}') is None
+E   AssertionError: assert UniverseRequest(universe=<ContractUniverse.CELEBRATED: 'celebrated'>, span=(9, 30), state=None, conflict=True) is None
+E    +  where UniverseRequest(universe=<ContractUniverse.CELEBRATED: 'celebrated'>, span=(9, 30), state=None, conflict=True) = <function request at 0x112131380>('procesos aprobados y aprobados de la Alcaldía de Cartagena')
+__ test_contract_gate_does_not_claim_a_process_only_composition[prorrogados] ___
+tests/test_contract_universe_f2_2_materialization.py:175: in test_contract_gate_does_not_claim_a_process_only_composition
+    assert request(f'procesos {word} y {word} {TAIL}') is None
+E   AssertionError: assert UniverseRequest(universe=<ContractUniverse.CELEBRATED: 'celebrated'>, span=(9, 34), state=None, conflict=True) is None
+E    +  where UniverseRequest(universe=<ContractUniverse.CELEBRATED: 'celebrated'>, span=(9, 34), state=None, conflict=True) = <function request at 0x112131380>('procesos prorrogados y prorrogados de la Alcaldía de Cartagena')
+=========================== short test summary info ============================
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_composition_control_cannot_erase_an_intervening_object
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_contract_gate_does_not_claim_a_process_only_composition[aprobados]
+FAILED tests/test_contract_universe_f2_2_materialization.py::test_contract_gate_does_not_claim_a_process_only_composition[prorrogados]
+3 failed, 31 passed in 13.07s
