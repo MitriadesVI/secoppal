@@ -1,6 +1,7 @@
 """Small SQL-evaluated source, reusing the corrected Buyer-Actor transport."""
 import re
 import socket
+import threading
 import json
 import os
 from pathlib import Path
@@ -31,7 +32,7 @@ def source(flow, monkeypatch, buyer, minimum):
     fields = flow.soql_builder.SPECS['p6dx-8zbt'].select_fields
     conn.execute('CREATE TABLE processes (' + ','.join(field + ' TEXT' for field in fields) + ')')
     original_query = flow.secop_client.query
-    def query(dataset, sql, *args, **kwargs):
+    def execute(dataset, sql, *args, **kwargs):
         if dataset != 'p6dx-8zbt':
             return original_query(dataset, sql, *args, **kwargs)
         flow.audit_trace['sql'].append({'dataset': dataset, 'soql': sql})
@@ -41,6 +42,14 @@ def source(flow, monkeypatch, buyer, minimum):
         except Exception as exc:
             flow.audit_trace['errors'].append(repr(exc))
             raise
+    source_lock = threading.RLock()
+    def query(dataset, sql, *args, **kwargs):
+        with source_lock:
+            return execute(dataset, sql, *args, **kwargs)
+    def count(*args, **kwargs):
+        rows = query(*args, **kwargs)
+        return int(next(iter(rows[0].values())))
+    monkeypatch.setattr(flow.secop_client, 'count', count)
     monkeypatch.setattr(flow.secop_client, 'query', query)
     monkeypatch.setattr(flow.secop_client, 'aggregate', query)
     conn.create_function('upper', 1, lambda x: x.upper() if x is not None else None)

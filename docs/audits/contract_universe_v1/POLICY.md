@@ -100,6 +100,8 @@ Las continuaciones contractuales antiguas y los planes Frame incompatibles
 requieren una nueva consulta. No se eliminan conversaciones ni archivos.
 Los cursores exclusivos de procesos conservan su versión y sus oráculos.
 Los radares anteriores no migran silenciosamente: requieren revisión.
+La conversión de un perfil legacy que ya acredita esta política conserva su
+universo explícito; el control Frame OFF → ON mantiene 35 registros de 2026.
 El descubrimiento del Radar excluye los estados no admitidos antes del límite;
 su seguimiento por ID conserva cambios de registros ya vigilados que salieron
 del universo, lo declara y no los suma al conteo contractual.

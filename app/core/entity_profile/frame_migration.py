@@ -133,12 +133,15 @@ def migrate_legacy_context(request: Any, params: dict) -> MigrationOutcome:
     if isinstance(state, str):
         return MigrationOutcome(MigrationStatus.INVALID_CONTEXT, reason=state)
 
+    from app.core.contract_universe import universe_from_params
+    universe = universe_from_params(params).value
     topic = legacy_topic(request)
     events = _events(request)
     selection = SourceSelection(requested=sources, origin=origin)
     predicates = {
         source: SourcePredicates(
             source=source,
+            contract_universe=universe if source is SourceKind.CONTRACTS else "celebrated",
             temporal=TemporalPredicate(
                 event=events.get(source, TemporalEventKind.NONE),
                 period=period,

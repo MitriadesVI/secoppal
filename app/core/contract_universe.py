@@ -87,3 +87,11 @@ def conflict_message(params: dict) -> str | None:
         return ('El estado solicitado queda fuera del universo de contratos celebrados. '
                 'Aclara si quieres conservar ese filtro de registros o consultar contratos celebrados.')
     return None
+
+
+def record_terms(response: str, universe) -> str:
+    """Render record metrics as records; retain official dataset source labels."""
+    if ContractUniverse(universe) is ContractUniverse.CELEBRATED:
+        return response
+    import re
+    return re.sub(r"\bcontratos\b", "registros", response).replace("Contrato reciente:", "Registro reciente:")

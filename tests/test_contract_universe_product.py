@@ -77,7 +77,7 @@ def test_frame_effective_plan_and_reload(tmp_path, monkeypatch, offline_universe
     try:
         result = say(flow, 'analiza contratos de alcaldia de cartagena por mas de 500 millones')
         assert result['route_reason'].startswith('entity_profile'), result
-        values = next(rows[0] for rows in flow.audit_trace['source_rows'] if rows and 'contract_count' in rows[0])
+        values = next(rows[0] for rows in flow.audit_trace['source_rows'] if rows and 'average_contract_value' in rows[0])
         assert values['contract_count'] == 8
         assert values['total_contract_value'] == 8 * (minimum + 100)
         assert 'Contratos celebrados' in result['response']
@@ -134,7 +134,7 @@ def test_explicit_frame_records_reload(tmp_path, monkeypatch, offline_universe):
             assert result['route_reason'].startswith('entity_profile'), result
             assert 'Registros de la fuente' in result['response']
             assert all("'Cancelado'" in c['soql'] for c in flow.audit_trace['sql']), flow.audit_trace
-            metric = next(rows[0] for rows in flow.audit_trace['source_rows'] if rows and 'contract_count' in rows[0])
+            metric = next(rows[0] for rows in flow.audit_trace['source_rows'] if rows and 'average_contract_value' in rows[0])
             assert metric['contract_count'] == (5 if text == 'solo 2026' else 10)
         finally:
             conn.close()
@@ -162,9 +162,28 @@ def test_entity_profile_frame_off_values(tmp_path, monkeypatch, offline_universe
     try:
         result = say(flow, 'analiza contratos de alcaldia de cartagena por mas de 500 millones')
         assert result['route_reason'].startswith('entity_profile'), result
-        values = next(rows[0] for rows in flow.audit_trace['source_rows'] if rows and 'contract_count' in rows[0])
+        values = next(rows[0] for rows in flow.audit_trace['source_rows'] if rows and 'average_contract_value' in rows[0])
         assert values['contract_count'] == 8
         assert values['total_contract_value'] == 4_000_000_800
         assert 'Contratos celebrados' in result['response']
     finally:
         conn.close()
+
+
+def test_current_record_profile_migration_keeps_universe(tmp_path, monkeypatch, offline_universe):
+    _, _, buyer, minimum = SEEDS[0]
+    index = index_at(tmp_path, [])
+    for enabled, text, expected in (
+        (False, 'analiza todos los registros del dataset de alcaldia de cartagena por mas de 500 millones', 63),
+        (True, 'solo 2026', 35),
+    ):
+        flow = workflow(tmp_path, monkeypatch, index, enabled)
+        conn = source(flow, monkeypatch, buyer, minimum)
+        try:
+            result = say(flow, text)
+            assert not result.get('needs_clarification'), result
+            rows = next(rows for rows in flow.audit_trace['source_rows'] if rows and 'average_contract_value' in rows[0])
+            assert rows[0]['contract_count'] == expected, result
+            assert 'Registros de la fuente' in result['response']
+        finally:
+            conn.close()

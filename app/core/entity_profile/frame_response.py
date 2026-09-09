@@ -128,9 +128,8 @@ def render_frame_profile(
     response = "\n\n".join(blocks)
     contract_plan = plan.source_plans.get(SourceKind.CONTRACTS)
     if contract_plan and contract_plan.predicates.contract_universe == "source_records":
-        import re
-        response = re.sub(r"\bcontratos\b", "registros", response)
-        response = response.replace("Contrato reciente:", "Registro reciente:")
+        from app.core.contract_universe import record_terms
+        response = record_terms(response, contract_plan.predicates.contract_universe)
     return response
 
 

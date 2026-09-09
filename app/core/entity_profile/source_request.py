@@ -134,6 +134,10 @@ def resolve_requested_sources(user_query: str, params: dict) -> SourceRequest:
     if asked_contracts:
         return SourceRequest(RequestedSources.CONTRACTS, SourceProvenance.EXPLICIT)
 
+    from app.core.contract_universe_intent import request
+    if request(user_query) is not None:
+        return SourceRequest(RequestedSources.CONTRACTS, SourceProvenance.EXPLICIT)
+
     scope = params.get("dataset_scope")
     if isinstance(scope, (list, tuple)) and len(set(scope)) >= 2:
         return SourceRequest(RequestedSources.BOTH, SourceProvenance.INHERITED)

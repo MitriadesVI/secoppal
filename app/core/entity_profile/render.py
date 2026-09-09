@@ -240,7 +240,11 @@ def render_entity_profile(profile: EntityProfile) -> str:
     blocks.extend(profile.warnings)
     if profile.focus == "overview":
         blocks.append(_next_steps(scope))
-    return "\n\n".join(blocks)
+    response = "\n\n".join(blocks)
+    if profile.plan and 'jbjy-vk9h' in profile.plan.executed_datasets:
+        from app.core.contract_universe import record_terms
+        response = record_terms(response, universe_from_params(contract_params))
+    return response
 
 
 def _scope_lines(scope) -> list[str]:

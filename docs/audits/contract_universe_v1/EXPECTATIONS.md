@@ -27,3 +27,13 @@ estimación nacional del reparto estado × fecha. La ordenación existente de
 filas sin fecha y la política general de deduplicación no se rediseñaron.
 Las advertencias Semgrep históricas siguen fuera del lote; no se convirtieron
 en un supuesto scan limpio. No se ejecuta la suite global.
+
+El control adicional de conversión de perfiles ya versionados entre Frame OFF y
+ON reprodujo 5 contratos cuando se esperaban 35 registros en 2026
+(`migration_red.txt`). Se corrigió la copia del universo en el adaptador, la
+fuente explícita de registros en V1.1 y la terminología del render. La fuente
+sintética serializa también sus consultas de procesos; el selector del test
+identifica el agregado global por `average_contract_value`, sin confundirlo
+con el conteo de un grupo de proveedores que puede terminar primero.
+El intento inicial atascado y la selección de un grupo de 55 proveedores no
+se usan como evidencia funcional. El control rojo válido es 5 frente a 35.
