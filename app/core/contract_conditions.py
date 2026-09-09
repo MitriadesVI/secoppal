@@ -144,6 +144,43 @@ class ConditionComposition:
         return not (excluded and CELEBRATED_UNIVERSE in self.denoted)
 
     @property
+    def materializable(self) -> bool:
+        """Composing cannot outrun the current producer's contractual filter.
+
+        INV-CONDITION-REPRESENTABLE-IMPLIES-MATERIALIZABLE: membership in the
+        celebrated catalog is not evidence of a filter. Ask the same resolver
+        the ordinary producer uses, requiring an effective contractual filter
+        containing the denoted state. A pre-existing family is not a union
+        invented from two conditions. Explicit excluded states remain owned by the
+        record adapter. Single-condition lexical gaps are a separate lane.
+        """
+        from app.core.estado_families import resolve_estado
+
+        if len(self.conditions) < 2:
+            return True
+        for condition in self.admitted:
+            value = denotes(condition.surface)
+            if value == CELEBRATED_UNIVERSE:
+                continue
+            resolution = resolve_estado(condition.surface, 'contratos')
+            if not resolution or value not in resolution['filters'].get('estado_contrato', ()):
+                return False
+        return True
+
+    def control_is_contiguous(self, text: str) -> bool:
+        """A successful scalar control cannot swallow intervening object text."""
+        if self.span is None:
+            return False
+        start, end = self.span
+        control = text[start:end]
+        spans = [(c.span[0] - start, c.span[1] - start) for c in self.conditions]
+        spans.extend(m.span() for m in _REQUEST_NOUN.finditer(control))
+        # General request framing also admits month/current-state words. Those
+        # retain their own pipeline spans; only bare joining syntax is erasable.
+        remainder = mask_consumed_spans(control, spans)
+        return re.fullmatch(r'(?:\s|[,;:]|\b(?:y|e|o|el|la|los|las)\b)*', remainder) is not None
+
+    @property
     def span(self) -> tuple[int, int] | None:
         """El tramo que cubre la composición completa, para consumir el control.
 

@@ -43,6 +43,10 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
     # Every condition the request states, read before any of them is selected.
     composition = read_conditions(normalized.text, occurrences=occurrences,
                                   protected=tuple(protected))
+    process_only = (occurrences and all(o.is_process for o in occurrences)
+                    and composition.lead is None)
+    composition_conflict = (not composition.representable
+                            or (not process_only and not composition.materializable))
     for occurrence in occurrences:
         if occurrence.is_process or any(a < occurrence.span[1] and occurrence.span[0] < b for a, b in protected):
             continue
@@ -67,12 +71,12 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
             span = normalized.to_original(match.span())
             if span is None:
                 continue
-            states = tuple(_state(t) for t in re.split(r'\s+y\s+', match.group('states'))) if state else ()
+            states = tuple(dict.fromkeys(_state(t) for t in re.split(r'\s+y\s+', match.group('states')))) if state else ()
             # The adapter transports one state inside one universe. A second
             # condition anywhere in the request — before the match, after it or
             # in another coordinated clause — is clarified, never dropped, and
             # the answer cannot depend on which of the two was written first.
-            conflict = len(states) > 1 or not composition.representable
+            conflict = len(states) > 1 or composition_conflict
             # The legacy record adapter cannot accredit a second source child.
             # Preserve the whole request as clarification, before either SQL job.
             conflict |= any(o.is_process for o in occurrences)
@@ -82,12 +86,31 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
                 span = whole if whole is not None else span
             return UniverseRequest(ContractUniverse.SOURCE_RECORDS, span,
                                    states[0] if len(states) == 1 else None, conflict)
-    if not composition.representable and composition.span is not None:
+    if composition_conflict and composition.span is not None:
         # No explicit-record pattern owns this request, but it still states an
         # incompatible composition: clarify rather than widen or execute half.
         span = normalized.to_original(composition.span)
         if span is not None:
             return UniverseRequest(ContractUniverse.CELEBRATED, span, conflict=True)
+    if (len(composition.conditions) > 1 and composition.admitted
+            and composition.span is not None
+            and composition.control_is_contiguous(normalized.text)
+            and (composition.lead is not None or occurrences)
+            and not any(o.is_process for o in occurrences)):
+        # All surfaces are accredited above. Transport the existing producer's
+        # scalar filter and consume the whole control, including equivalent
+        # variants and universe markers. Never synthesize a state or a union.
+        from app.core.contract_conditions import CELEBRATED_UNIVERSE, denotes
+        from app.core.estado_families import resolve_estado
+        resolved = [resolve_estado(c.surface, 'contratos') for c in composition.admitted
+                    if denotes(c.surface) != CELEBRATED_UNIVERSE]
+        filters = [r['filters']['estado_contrato'] for r in resolved
+                   if r and r['filters'].get('estado_contrato')]
+        scalar = all(len(values) == 1 for values in filters)
+        state = filters[0][0] if filters and scalar else None
+        span = normalized.to_original(composition.span)
+        if span is not None:
+            return UniverseRequest(ContractUniverse.CELEBRATED, span, state=state, conflict=not scalar)
     for occurrence in occurrences:
         if occurrence.is_process or any(a < occurrence.span[1] and occurrence.span[0] < b for a, b in protected):
             continue
