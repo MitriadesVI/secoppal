@@ -1,0 +1,14 @@
+{
+  "base": "70b2c3ab76ad6582e9fcedb67a96b046d8022e54",
+  "main": "c52d7eda355f44278164d4cb9803a199eec83486",
+  "runtime_parent": "3c323d5cad9b104f82aeb63e788bccbeae3796ed",
+  "worktree": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "branch": "fix/contract-universe-v1-1-integration-regression-r1",
+  "initial_status_porcelain": "",
+  "runtime_diff_parent_base": "",
+  "oracle_adjudication": "oracle_adjudication.txt",
+  "ruff": "0.16.4",
+  "semgrep": "1.176.0",
+  "hypothesis": "6.165.10",
+  "codegraph": "0.9.6; Node22; Not initialized; rg/direct inspection fallback; MCP not used"
+}

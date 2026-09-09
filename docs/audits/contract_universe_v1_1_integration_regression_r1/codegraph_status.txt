@@ -1,0 +1,6 @@
+[1m
+CodeGraph Status
+[0m
+[34mℹ[0m Project: /Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1
+[33m⚠[0m Not initialized
+[34mℹ[0m Run "codegraph init" to initialize

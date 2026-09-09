@@ -1,0 +1,11 @@
+{
+  "command": [
+    "make",
+    "lint-core"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 0,
+  "duration_seconds": 0.022830084002634976,
+  "stdout": "app/core/ limpio\n",
+  "stderr": ""
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-c",
+    "import hypothesis; print(hypothesis.__version__)"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 0,
+  "duration_seconds": 0.1205173329981335,
+  "stdout": "6.165.10\n",
+  "stderr": ""
+}

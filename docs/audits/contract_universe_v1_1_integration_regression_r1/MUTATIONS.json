@@ -1,0 +1,44 @@
+{
+  "M1": {
+    "killed": true,
+    "exit_code": 1,
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-c",
+      "import app.core.actor_pending_document as m\nm._is_default_universe_metadata = lambda key, value: False\n\nimport pytest,sys; raise SystemExit(pytest.main(sys.argv[1:]))",
+      "tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate",
+      "tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection",
+      "-q",
+      "--tb=short"
+    ],
+    "summary": "2 failed in 1.05s"
+  },
+  "M2": {
+    "killed": true,
+    "exit_code": 1,
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-c",
+      "import app.core.actor_pending_document as m\nm._is_default_universe_metadata = lambda key, value: key in {'contract_universe', 'contract_universe_version', 'estado', 'estado_contrato'}\n\nimport pytest,sys; raise SystemExit(pytest.main(sys.argv[1:]))",
+      "tests/test_actor_pending_system_metadata.py::test_intent_constraints_never_neutral",
+      "-q",
+      "--tb=short"
+    ],
+    "summary": "4 failed, 10 passed in 7.32s"
+  },
+  "M3": {
+    "killed": true,
+    "exit_code": 1,
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-c",
+      "import pathlib\nimport app.core.workflow.handlers.actor_selection as m\nsource=pathlib.Path(m.__file__).read_text()\nsource=source.replace('            original_params,\\n            identity,', \"            ({'dataset': 'contratos', 'dataset_explicit': False} if by_document else original_params),\\n            identity,\")\nsource=source.replace('original_query = str(pending.get(\"original_query\") or last_turn.user_query)', 'original_query = ctx.user_query if by_document else str(pending.get(\"original_query\") or last_turn.user_query)')\nexec(compile(source,m.__file__,'exec'),m.__dict__)\nimport pytest,sys\nraise SystemExit(pytest.main(sys.argv[1:]))\n",
+      "tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection",
+      "tests/test_actor_pending_document_selection.py::test_buyer_survives_explicit_document_selection",
+      "tests/test_actor_pending_document_selection.py::test_value_filter_survives_explicit_document_selection",
+      "-q",
+      "--tb=short"
+    ],
+    "summary": "3 failed in 1.26s"
+  }
+}

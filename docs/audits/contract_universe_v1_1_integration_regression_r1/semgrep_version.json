@@ -1,0 +1,11 @@
+{
+  "command": [
+    ".venv/bin/semgrep",
+    "--version"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 0,
+  "duration_seconds": 0.9833282079998753,
+  "stdout": "1.176.0\n",
+  "stderr": ""
+}

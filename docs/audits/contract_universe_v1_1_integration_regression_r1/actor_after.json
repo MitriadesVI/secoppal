@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_actor_pending_document_selection.py",
+    "tests/test_actor_pending_system_metadata.py",
+    "-q"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 0,
+  "duration_seconds": 36.63685649999752,
+  "stdout": ".............................................................            [100%]\n61 passed in 36.18s\n",
+  "stderr": ""
+}

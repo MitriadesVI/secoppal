@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-c",
+    "import app.core.actor_pending_document as m\nm._is_default_universe_metadata = lambda key, value: False\n\nimport pytest,sys; raise SystemExit(pytest.main(sys.argv[1:]))",
+    "tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate",
+    "tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 1,
+  "duration_seconds": 1.567617833003169,
+  "stdout": "FF                                                                       [100%]\n=================================== FAILURES ===================================\n____________ test_document_of_one_candidate_matches_that_candidate _____________\ntests/test_actor_pending_document_selection.py:113: in test_document_of_one_candidate_matches_that_candidate\n    assert selection.outcome == DOCUMENT_PENDING_MATCH\nE   AssertionError: assert 'NO_DOCUMENT' == 'MATCH'\nE     \nE     - MATCH\nE     + NO_DOCUMENT\n________________ test_year_survives_explicit_document_selection ________________\ntests/test_actor_pending_document_selection.py:184: in test_year_survives_explicit_document_selection\n    assert params[\"fecha_desde\"] == \"2025-01-01\"\n           ^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'fecha_desde'\n=========================== short test summary info ============================\nFAILED tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate\nFAILED tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection\n2 failed in 1.05s\n",
+  "stderr": ""
+}

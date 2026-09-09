@@ -1,0 +1,12 @@
+from cu_r1_run import *
+import xml.etree.ElementTree as ET
+old=json.loads((W/'docs/audits/contract_universe_v1_1_coordinator_gate/global_failures.json').read_text())
+ids=[x['classname'].replace('.','/')+'.py::'+x['name'] for x in old]
+run('previous_116',[P,'-m','pytest',*ids,'-q','--tb=short','--junitxml='+str(E/'previous_116.xml')])
+root=ET.parse(E/'previous_116.xml'); cases=root.findall('.//testcase'); failed=[x for x in cases if x.find('failure') is not None or x.find('error') is not None]
+d={'total_previous_failures':len(ids),'now_pass':sum(x.find('failure') is None and x.find('error') is None and x.find('skipped') is None for x in cases),'still_fail':len(failed),'nodeids_still_fail':[x.attrib['classname'].replace('.','/')+'.py::'+x.attrib['name'] for x in failed]}
+for name in ['PREVIOUS_116_REPLAY.json','previous_116_after_fix.json']:(E/name).write_text(json.dumps(d,indent=2))
+print(d,flush=True)
+gates=json.loads((W/'docs/audits/contract_universe_v1_1_coordinator_gate/focal_static_literal.json').read_text())
+for name,gate in gates.items():
+ if name not in ['ruff','semgrep','lint_core','size','diff_check','author_targets']: run(name,gate['command'])

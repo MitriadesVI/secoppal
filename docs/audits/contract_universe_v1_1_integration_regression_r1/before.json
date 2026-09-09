@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate",
+    "tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection",
+    "-q"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 1,
+  "duration_seconds": 4.895940999998857,
+  "stdout": "FF                                                                       [100%]\n=================================== FAILURES ===================================\n____________ test_document_of_one_candidate_matches_that_candidate _____________\n\n    def test_document_of_one_candidate_matches_that_candidate():\n        candidates = [\n            {\"document_type\": \"CC\", \"base_number\": \"70000001\", \"rank\": 1, \"observed_name\": \"A\"},\n            {\"document_type\": \"CC\", \"base_number\": \"70000003\", \"rank\": 2, \"observed_name\": \"B\"},\n        ]\n        selection = _match(CANDIDATE_2_DOCUMENT, candidates)\n>       assert selection.outcome == DOCUMENT_PENDING_MATCH\nE       AssertionError: assert 'NO_DOCUMENT' == 'MATCH'\nE         \nE         - MATCH\nE         + NO_DOCUMENT\n\ntests/test_actor_pending_document_selection.py:113: AssertionError\n________________ test_year_survives_explicit_document_selection ________________\n\ntmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-176/test_year_survives_explicit_do0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x114189940>\n\n    def test_year_survives_explicit_document_selection(tmp_path, monkeypatch):\n        workflow, calls = _workflow(tmp_path, monkeypatch)\n        first = workflow.run_query(f\"contratos del proveedor {NAME} en 2025\", chat_id=\"year\")\n        assert first[\"needs_clarification\"]\n        calls.clear()\n        selected = workflow.run_query(CANDIDATE_2_DOCUMENT, chat_id=\"year\")\n        params = selected[\"resolved_params\"]\n        assert selected[\"route_reason\"] == \"actor_profile\"\n        assert params[\"actor_scope\"][\"base_number\"] == \"70000003\"\n>       assert params[\"fecha_desde\"] == \"2025-01-01\"\n               ^^^^^^^^^^^^^^^^^^^^^\nE       KeyError: 'fecha_desde'\n\ntests/test_actor_pending_document_selection.py:184: KeyError\n=========================== short test summary info ============================\nFAILED tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate\nFAILED tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection\n2 failed in 1.60s\n",
+  "stderr": ""
+}

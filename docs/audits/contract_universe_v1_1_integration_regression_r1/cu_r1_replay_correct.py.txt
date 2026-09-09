@@ -1,0 +1,15 @@
+from cu_r1_run import *
+from pathlib import Path
+
+import shutil
+# Preserve first run, then align the replay to the coordinator's dialect plugin.
+for stem in ['previous_116.json','previous_116.txt','previous_116.xml','clusters.json','clusters_main.json','clusters_main.txt','clusters_main.xml','clusters_fix.json','clusters_fix.txt','clusters_fix.xml']:
+ shutil.copyfile(E/stem,E/('without_date_plugin_'+stem))
+s=Path('/tmp/cu_r1_gates.py').read_text().split('gates=json.loads')[0]
+s=s.replace("[P,'-m','pytest',*ids", "[P,'-m','pytest','-p','tests.contract_universe_sql_dates',*ids")
+exec(compile(s,'replay_correct','exec'))
+# Use an identical plugin loaded by absolute file in BOTH worktrees; no policy shim.
+Path('/tmp/cu_r1_dates_plugin.py').write_bytes((W/'tests/contract_universe_sql_dates.py').read_bytes())
+s=Path('/tmp/cu_r1_clusters.py').read_text()
+s=s.replace("[P,'-m','pytest',*ids", "[P,'-c',\"import sys; sys.path.insert(0,'/tmp'); import pytest; raise SystemExit(pytest.main(sys.argv[1:]))\",'-p','cu_r1_dates_plugin',*ids")
+exec(compile(s,'clusters_correct','exec'))

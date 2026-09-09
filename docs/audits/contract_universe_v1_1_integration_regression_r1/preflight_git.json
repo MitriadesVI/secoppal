@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-2",
+    "--format=fuller"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 0,
+  "duration_seconds": 0.015178625002590707,
+  "stdout": "commit 70b2c3ab76ad6582e9fcedb67a96b046d8022e54\nAuthor:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>\nAuthorDate: Wed Sep 9 12:09:07 2026 -0500\nCommit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>\nCommitDate: Wed Sep 9 12:09:07 2026 -0500\n\n    test(contracts): adjudicate V1.1 frozen oracles and record coordinator NO_GO\n\ncommit 3c323d5cad9b104f82aeb63e788bccbeae3796ed\nAuthor:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>\nAuthorDate: Wed Sep 9 08:06:10 2026 -0500\nCommit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>\nCommitDate: Wed Sep 9 08:06:10 2026 -0500\n\n    docs(contracts): close F2.2 with focal gates and eight mutation kills\n",
+  "stderr": ""
+}

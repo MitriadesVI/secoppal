@@ -1,0 +1,40 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_document_of_one_candidate_matches_that_candidate _____________
+
+    def test_document_of_one_candidate_matches_that_candidate():
+        candidates = [
+            {"document_type": "CC", "base_number": "70000001", "rank": 1, "observed_name": "A"},
+            {"document_type": "CC", "base_number": "70000003", "rank": 2, "observed_name": "B"},
+        ]
+        selection = _match(CANDIDATE_2_DOCUMENT, candidates)
+>       assert selection.outcome == DOCUMENT_PENDING_MATCH
+E       AssertionError: assert 'NO_DOCUMENT' == 'MATCH'
+E
+E         - MATCH
+E         + NO_DOCUMENT
+
+tests/test_actor_pending_document_selection.py:113: AssertionError
+________________ test_year_survives_explicit_document_selection ________________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-176/test_year_survives_explicit_do0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x114189940>
+
+    def test_year_survives_explicit_document_selection(tmp_path, monkeypatch):
+        workflow, calls = _workflow(tmp_path, monkeypatch)
+        first = workflow.run_query(f"contratos del proveedor {NAME} en 2025", chat_id="year")
+        assert first["needs_clarification"]
+        calls.clear()
+        selected = workflow.run_query(CANDIDATE_2_DOCUMENT, chat_id="year")
+        params = selected["resolved_params"]
+        assert selected["route_reason"] == "actor_profile"
+        assert params["actor_scope"]["base_number"] == "70000003"
+>       assert params["fecha_desde"] == "2025-01-01"
+               ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'fecha_desde'
+
+tests/test_actor_pending_document_selection.py:184: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate
+FAILED tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection
+2 failed in 1.60s

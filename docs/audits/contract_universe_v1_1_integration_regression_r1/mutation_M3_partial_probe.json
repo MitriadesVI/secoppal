@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-c",
+    "import app.core.workflow.handlers.actor_selection as m\noriginal=m.apply_actor_identity\ndef drop_frame(params, identity, **kwargs):\n    if kwargs.get('method') == 'explicit_document_pending_selection':\n        params = {k:v for k,v in params.items() if k not in {'fecha_desde','fecha_hasta','entidad_resolved','entidad','valor_min','valor_max'}}\n    return original(params, identity, **kwargs)\nm.apply_actor_identity=drop_frame\nimport pytest,sys\nraise SystemExit(pytest.main(sys.argv[1:]))\n",
+    "tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection",
+    "tests/test_actor_pending_document_selection.py::test_buyer_survives_explicit_document_selection",
+    "tests/test_actor_pending_document_selection.py::test_value_filter_survives_explicit_document_selection",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 1,
+  "duration_seconds": 1.7949407909982256,
+  "stdout": ".FF                                                                      [100%]\n=================================== FAILURES ===================================\n_______________ test_buyer_survives_explicit_document_selection ________________\ntests/test_actor_pending_document_selection.py:211: in test_buyer_survives_explicit_document_selection\n    assert params[\"entidad_resolved\"] == buyer\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'entidad_resolved'\n____________ test_value_filter_survives_explicit_document_selection ____________\ntests/test_actor_pending_document_selection.py:236: in test_value_filter_survives_explicit_document_selection\n    assert params[\"valor_min\"] == 100000000\n           ^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'valor_min'\n=========================== short test summary info ============================\nFAILED tests/test_actor_pending_document_selection.py::test_buyer_survives_explicit_document_selection\nFAILED tests/test_actor_pending_document_selection.py::test_value_filter_survives_explicit_document_selection\n2 failed, 1 passed in 1.32s\n",
+  "stderr": ""
+}

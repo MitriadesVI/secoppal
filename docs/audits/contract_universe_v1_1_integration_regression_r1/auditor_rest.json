@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_offline_guard",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_cu_v11_audit_ports.py",
+    "tests/test_cu_v11_audit_f1_f5.py",
+    "tests/test_cu_v11_audit_aprobado.py",
+    "tests/test_cu_v11_audit_persistence.py",
+    "tests/test_cu_v11_audit_regressions.py",
+    "tests/test_cu_v11_audit_properties.py",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 0,
+  "duration_seconds": 9.969558834000054,
+  "stdout": "........................................................................ [ 18%]\n........................................................................ [ 36%]\n........................................................................ [ 55%]\n........................................................................ [ 73%]\n........................................................................ [ 92%]\n..............................                                           [100%]\n390 passed in 9.40s\n",
+  "stderr": ""
+}

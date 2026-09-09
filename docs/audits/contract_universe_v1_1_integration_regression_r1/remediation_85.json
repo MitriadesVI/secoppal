@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_offline_guard",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_contract_universe_remediation.py",
+    "tests/test_contract_universe_remediation_consumers.py",
+    "tests/test_contract_universe_remediation_properties.py",
+    "tests/test_contract_universe_remediation_legacy.py",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 0,
+  "duration_seconds": 8.979187624998303,
+  "stdout": "........................................................................ [ 84%]\n.............                                                            [100%]\n85 passed in 8.52s\n",
+  "stderr": ""
+}

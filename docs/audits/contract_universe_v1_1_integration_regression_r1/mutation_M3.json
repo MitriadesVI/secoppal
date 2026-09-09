@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-c",
+    "import pathlib\nimport app.core.workflow.handlers.actor_selection as m\nsource=pathlib.Path(m.__file__).read_text()\nsource=source.replace('            original_params,\\n            identity,', \"            ({'dataset': 'contratos', 'dataset_explicit': False} if by_document else original_params),\\n            identity,\")\nsource=source.replace('original_query = str(pending.get(\"original_query\") or last_turn.user_query)', 'original_query = ctx.user_query if by_document else str(pending.get(\"original_query\") or last_turn.user_query)')\nexec(compile(source,m.__file__,'exec'),m.__dict__)\nimport pytest,sys\nraise SystemExit(pytest.main(sys.argv[1:]))\n",
+    "tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection",
+    "tests/test_actor_pending_document_selection.py::test_buyer_survives_explicit_document_selection",
+    "tests/test_actor_pending_document_selection.py::test_value_filter_survives_explicit_document_selection",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 1,
+  "duration_seconds": 1.7208178330001829,
+  "stdout": "FFF                                                                      [100%]\n=================================== FAILURES ===================================\n________________ test_year_survives_explicit_document_selection ________________\ntests/test_actor_pending_document_selection.py:184: in test_year_survives_explicit_document_selection\n    assert params[\"fecha_desde\"] == \"2025-01-01\"\n           ^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'fecha_desde'\n_______________ test_buyer_survives_explicit_document_selection ________________\ntests/test_actor_pending_document_selection.py:211: in test_buyer_survives_explicit_document_selection\n    assert params[\"entidad_resolved\"] == buyer\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'entidad_resolved'\n____________ test_value_filter_survives_explicit_document_selection ____________\ntests/test_actor_pending_document_selection.py:236: in test_value_filter_survives_explicit_document_selection\n    assert params[\"valor_min\"] == 100000000\n           ^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'valor_min'\n=========================== short test summary info ============================\nFAILED tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection\nFAILED tests/test_actor_pending_document_selection.py::test_buyer_survives_explicit_document_selection\nFAILED tests/test_actor_pending_document_selection.py::test_value_filter_survives_explicit_document_selection\n3 failed in 1.26s\n",
+  "stderr": ""
+}

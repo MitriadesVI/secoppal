@@ -1,0 +1,15 @@
+from cu_r1_run import *
+import xml.etree.ElementTree as ET
+from collections import defaultdict
+root=ET.parse(E/'previous_116.xml'); groups=defaultdict(list)
+for c in root.findall('.//testcase'):
+ if c.find('failure') is not None: groups[(c.get('classname'),c.get('name').split('[')[0])].append(c)
+ids=[v[0].get('classname').replace('.','/')+'.py::'+v[0].get('name') for v in groups.values()]
+for label,cwd in [('main',W.parent/'secoppal-contract-universe-r1-main-check'),('fix',W)]:
+ run('clusters_'+label,[P,'-m','pytest',*ids,'-q','--tb=short','--junitxml='+str(E/('clusters_'+label+'.xml'))],cwd)
+rows=[]
+main=ET.parse(E/'clusters_main.xml').findall('.//testcase'); fix=ET.parse(E/'clusters_fix.xml').findall('.//testcase')
+for (key,cs),a,b in zip(groups.items(),main,fix):
+ af=a.find('failure'); bf=b.find('failure')
+ rows.append(dict(cluster=list(key),count=len(cs),representative=cs[0].get('classname').replace('.','/')+'.py::'+cs[0].get('name'),main='PASS' if af is None else 'FAIL',fix='PASS' if bf is None else 'FAIL',main_failure=af.text if af is not None else None,fix_failure=bf.text if bf is not None else None))
+(E/'clusters.json').write_text(json.dumps(rows,indent=2));print([(r['cluster'],r['main'],r['fix']) for r in rows],flush=True)

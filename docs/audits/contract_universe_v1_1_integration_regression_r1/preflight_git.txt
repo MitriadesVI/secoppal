@@ -1,0 +1,15 @@
+commit 70b2c3ab76ad6582e9fcedb67a96b046d8022e54
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Wed Sep 9 12:09:07 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Wed Sep 9 12:09:07 2026 -0500
+
+    test(contracts): adjudicate V1.1 frozen oracles and record coordinator NO_GO
+
+commit 3c323d5cad9b104f82aeb63e788bccbeae3796ed
+Author:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+AuthorDate: Wed Sep 9 08:06:10 2026 -0500
+Commit:     Rodrigo Ortiz <rodrigoortiz@Mac.lan>
+CommitDate: Wed Sep 9 08:06:10 2026 -0500
+
+    docs(contracts): close F2.2 with focal gates and eight mutation kills

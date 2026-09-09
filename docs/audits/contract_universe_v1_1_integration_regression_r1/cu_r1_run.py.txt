@@ -1,0 +1,11 @@
+import subprocess,json,time,pathlib,sys
+W=pathlib.Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1')
+E=W/'docs/audits/contract_universe_v1_1_integration_regression_r1'
+P='/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python'
+def run(name,cmd,cwd=W):
+ t=time.monotonic(); r=subprocess.run(cmd,cwd=cwd,text=True,capture_output=True); d=dict(command=cmd,cwd=str(cwd),exit_code=r.returncode,duration_seconds=time.monotonic()-t,stdout=r.stdout,stderr=r.stderr); (E/(name+'.json')).write_text(json.dumps(d,indent=2)); (E/(name+'.txt')).write_text(r.stdout+r.stderr); print(name,r.returncode,(r.stdout+r.stderr)[-1600:],flush=True); return d
+if __name__=='__main__':
+ tests=['tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate','tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection']
+ for label,cwd in [('before',W),('main',W.parent/'secoppal-contract-universe-r1-main-check')]:
+  run(label,[P,'-m','pytest',*tests,'-q'],cwd)
+  run('params_'+label,[P,'-c','import json; from app.core.query_router import QueryRouter; print(json.dumps(QueryRouter().parse("CC 70000003").params,sort_keys=True,indent=2))'],cwd)

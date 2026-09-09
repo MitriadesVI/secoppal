@@ -1,0 +1,79 @@
+{
+  "main": {
+    "actor_resolution": "explicit_document",
+    "actor_scope": {
+      "base_number": "70000003",
+      "check_digit": null,
+      "document_type": "CC",
+      "identity_confidence": "declared",
+      "identity_reason_codes": [
+        "IDENTITY_CHECK_DIGIT_NOT_APPLICABLE",
+        "IDENTITY_TYPE_DECLARED"
+      ],
+      "raw_value": "70000003",
+      "requires_resolution": false,
+      "resolution_method": "explicit_document",
+      "role": "contractor"
+    },
+    "contratista": [
+      "70000003"
+    ],
+    "dataset": "contratos",
+    "dataset_explicit": false
+  },
+  "candidate_before": {
+    "actor_resolution": "explicit_document",
+    "actor_scope": {
+      "base_number": "70000003",
+      "check_digit": null,
+      "document_type": "CC",
+      "identity_confidence": "declared",
+      "identity_reason_codes": [
+        "IDENTITY_CHECK_DIGIT_NOT_APPLICABLE",
+        "IDENTITY_TYPE_DECLARED"
+      ],
+      "raw_value": "70000003",
+      "requires_resolution": false,
+      "resolution_method": "explicit_document",
+      "role": "contractor"
+    },
+    "contract_universe": "celebrated",
+    "contract_universe_version": "contract-universe-1.1",
+    "contratista": [
+      "70000003"
+    ],
+    "dataset": "contratos",
+    "dataset_explicit": false
+  },
+  "added": {
+    "contract_universe": "celebrated",
+    "contract_universe_version": "contract-universe-1.1"
+  },
+  "removed": {},
+  "changed": {},
+  "candidate_after": {
+    "actor_resolution": "explicit_document",
+    "actor_scope": {
+      "base_number": "70000003",
+      "check_digit": null,
+      "document_type": "CC",
+      "identity_confidence": "declared",
+      "identity_reason_codes": [
+        "IDENTITY_CHECK_DIGIT_NOT_APPLICABLE",
+        "IDENTITY_TYPE_DECLARED"
+      ],
+      "raw_value": "70000003",
+      "requires_resolution": false,
+      "resolution_method": "explicit_document",
+      "role": "contractor"
+    },
+    "contract_universe": "celebrated",
+    "contract_universe_version": "contract-universe-1.1",
+    "contratista": [
+      "70000003"
+    ],
+    "dataset": "contratos",
+    "dataset_explicit": false
+  },
+  "router_unchanged_by_fix": true
+}

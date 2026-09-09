@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-c",
+    "import json; from app.core.query_router import QueryRouter; print(json.dumps(QueryRouter().parse(\"CC 70000003\").params,sort_keys=True,indent=2))"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 0,
+  "duration_seconds": 0.3007613749978191,
+  "stdout": "{\n  \"actor_resolution\": \"explicit_document\",\n  \"actor_scope\": {\n    \"base_number\": \"70000003\",\n    \"check_digit\": null,\n    \"document_type\": \"CC\",\n    \"identity_confidence\": \"declared\",\n    \"identity_reason_codes\": [\n      \"IDENTITY_CHECK_DIGIT_NOT_APPLICABLE\",\n      \"IDENTITY_TYPE_DECLARED\"\n    ],\n    \"raw_value\": \"70000003\",\n    \"requires_resolution\": false,\n    \"resolution_method\": \"explicit_document\",\n    \"role\": \"contractor\"\n  },\n  \"contract_universe\": \"celebrated\",\n  \"contract_universe_version\": \"contract-universe-1.1\",\n  \"contratista\": [\n    \"70000003\"\n  ],\n  \"dataset\": \"contratos\",\n  \"dataset_explicit\": false\n}\n",
+  "stderr": ""
+}

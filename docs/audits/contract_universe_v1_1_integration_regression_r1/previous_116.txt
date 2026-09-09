@@ -1,0 +1,811 @@
+..................FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 62%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                             [100%]
+=================================== FAILURES ===================================
+_ test_inv_actor_mention_atomicity_name_plus_document_cannot_leak[qu\xe9 ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1] _
+tests/test_actor_routing.py:186: in test_inv_actor_mention_atomicity_name_plus_document_cannot_leak
+    assert params.get("objeto") is None
+E   AssertionError: assert ['asilo'] is None
+E    +  where ['asilo'] = <built-in method get of dict object at 0x11ceeccc0>('objeto')
+E    +    where <built-in method get of dict object at 0x11ceeccc0> = {'actor_conversation_construction': 'what_x_did_with_y', 'actor_conversation_operation': 'SET_ACTOR', 'actor_resolutio...erted_name': 'asilo de san antonio', 'base_number': '890102896', 'check_digit': '1', 'document_type': 'NIT', ...}, ...}.get
+_ test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto[qu\xe9 ha contratado FUNSOCOM] _
+tests/test_actor_routing.py:426: in test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto
+    assert not (tokens & {"fundacaribe", "funsocom"})
+E   AssertionError: assert not ({'funsocom'} & {'fundacaribe', 'funsocom'})
+____________ test_entity_profile_galapa_does_not_report_false_zero _____________
+tests/test_beta_entity_actor_conversation.py:80: in test_entity_profile_galapa_does_not_report_false_zero
+    assert "Se observan 0 contratos" not in result["response"]
+E   AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'
+E
+E     'Se observan 0 contratos' is contained here:
+E       ocesos]
+E       • Se observan 0 contratos por $0. [SECOP II Contratos]
+E       • Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]
+E       • Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]
+E
+E       Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes.
+_ test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos] _
+tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E     - entity_profile_suppliers
+E     + heuristic_only
+_ test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos] _
+tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E     - entity_profile_suppliers
+E     + heuristic_only
+_ test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos] _
+tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E     - entity_profile_suppliers
+E     + heuristic_only
+_ test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos] _
+tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
+    assert result["route_reason"] == "entity_profile_suppliers"
+E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
+E
+E     - entity_profile_suppliers
+E     + heuristic_only
+_________________________ test_seeds[cartagena-0-off] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11ce87a00>('violations')
+E    +    where <built-in method get of dict object at 0x11ce87a00> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+__________________________ test_seeds[cartagena-0-on] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11ea79cc0>('violations')
+E    +    where <built-in method get of dict object at 0x11ea79cc0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+_________________________ test_seeds[cartagena-1-off] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11cf0adc0>('violations')
+E    +    where <built-in method get of dict object at 0x11cf0adc0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+__________________________ test_seeds[cartagena-1-on] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x1202c4b80>('violations')
+E    +    where <built-in method get of dict object at 0x1202c4b80> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+_________________________ test_seeds[cartagena-3-off] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11f183d40>('violations')
+E    +    where <built-in method get of dict object at 0x11f183d40> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+__________________________ test_seeds[cartagena-3-on] __________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11ef6bcc0>('violations')
+E    +    where <built-in method get of dict object at 0x11ef6bcc0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+______________________ test_seeds[cartagena-missing-off] _______________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11cf0acc0>('violations')
+E    +    where <built-in method get of dict object at 0x11cf0acc0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+_______________________ test_seeds[cartagena-missing-on] _______________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x1202c6380>('violations')
+E    +    where <built-in method get of dict object at 0x1202c6380> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+____________________ test_seeds[cartagena-incompatible-off] ____________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11f40bdc0>('violations')
+E    +    where <built-in method get of dict object at 0x11f40bdc0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...9a49d7c95b01c944adf4081bd9dc5f4d"}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+____________________ test_seeds[cartagena-incompatible-on] _____________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}
+E     ', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11ee09c00>('violations')
+E    +    where <built-in method get of dict object at 0x11ee09c00> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...: null}, "execution_record": null}\n', ''], 'query': 'contratos de alcaldia de cartagena por mas de 500 millones', ...}.get
+________________________ test_seeds[barranquilla-0-off] ________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11cf08e00>('violations')
+E    +    where <built-in method get of dict object at 0x11cf08e00> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+________________________ test_seeds[barranquilla-0-on] _________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11d62a300>('violations')
+E    +    where <built-in method get of dict object at 0x11d62a300> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+________________________ test_seeds[barranquilla-1-off] ________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11e77bb00>('violations')
+E    +    where <built-in method get of dict object at 0x11e77bb00> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+________________________ test_seeds[barranquilla-1-on] _________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x120301100>('violations')
+E    +    where <built-in method get of dict object at 0x120301100> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+________________________ test_seeds[barranquilla-3-off] ________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11dcacb40>('violations')
+E    +    where <built-in method get of dict object at 0x11dcacb40> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+________________________ test_seeds[barranquilla-3-on] _________________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11f0ee140>('violations')
+E    +    where <built-in method get of dict object at 0x11f0ee140> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+_____________________ test_seeds[barranquilla-missing-off] _____________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11d603fc0>('violations')
+E    +    where <built-in method get of dict object at 0x11d603fc0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+_____________________ test_seeds[barranquilla-missing-on] ______________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11d810280>('violations')
+E    +    where <built-in method get of dict object at 0x11d810280> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+__________________ test_seeds[barranquilla-incompatible-off] ___________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11f1ee940>('violations')
+E    +    where <built-in method get of dict object at 0x11f1ee940> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...448639774a8e1ce47154bdd"}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+___________________ test_seeds[barranquilla-incompatible-on] ___________________
+tests/test_buyer_actor_role_arbitration_v1.py:163: in test_seeds
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}
+E     ', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11ef4dec0>('violations')
+E    +    where <built-in method get of dict object at 0x11ef4dec0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T..."execution_record": null}\n', ''], 'query': 'que ha contratado alcaldia de barranquilla por mas de 2000 millones', ...}.get
+_________________ test_reload_buyer_year_more[cartagena-False] _________________
+tests/test_buyer_actor_role_controls_v1.py:29: in test_reload_buyer_year_more
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11e726780>('violations')
+E    +    where <built-in method get of dict object at 0x11e726780> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}.get
+_________________ test_reload_buyer_year_more[cartagena-True] __________________
+tests/test_buyer_actor_role_controls_v1.py:29: in test_reload_buyer_year_more
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...r': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'reload', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11ea79c80>('violations')
+E    +    where <built-in method get of dict object at 0x11ea79c80> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...r': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'reload', ...}, 'source_rows': [[]], ...}.get
+_______________ test_reload_buyer_year_more[barranquilla-False] ________________
+tests/test_buyer_actor_role_controls_v1.py:29: in test_reload_buyer_year_more
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x10b788ec0>('violations')
+E    +    where <built-in method get of dict object at 0x10b788ec0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}.get
+________________ test_reload_buyer_year_more[barranquilla-True] ________________
+tests/test_buyer_actor_role_controls_v1.py:29: in test_reload_buyer_year_more
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...r': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'reload', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11fd262c0>('violations')
+E    +    where <built-in method get of dict object at 0x11fd262c0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...r': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'reload', ...}, 'source_rows': [[]], ...}.get
+_ test_orthogonal_variants[CONTRATOS DE LA ALCALD\xcdA DE CARTAGENA por mas de 500 millones-False] _
+tests/test_buyer_actor_role_controls_v1.py:85: in test_orthogonal_variants
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11fd33180>('violations')
+E    +    where <built-in method get of dict object at 0x11fd33180> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}.get
+_ test_orthogonal_variants[CONTRATOS DE LA ALCALD\xcdA DE CARTAGENA por mas de 500 millones-True] _
+tests/test_buyer_actor_role_controls_v1.py:85: in test_orthogonal_variants
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'variant', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11eb36200>('violations')
+E    +    where <built-in method get of dict object at 0x11eb36200> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'variant', ...}, 'source_rows': [[]], ...}.get
+_ test_orthogonal_variants[qu\xe9 ha contratado la alcald\xeda de Cartagena por mas de 500 millones-False] _
+tests/test_buyer_actor_role_controls_v1.py:85: in test_orthogonal_variants
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11ef6a9c0>('violations')
+E    +    where <built-in method get of dict object at 0x11ef6a9c0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}.get
+_ test_orthogonal_variants[qu\xe9 ha contratado la alcald\xeda de Cartagena por mas de 500 millones-True] _
+tests/test_buyer_actor_role_controls_v1.py:85: in test_orthogonal_variants
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'variant', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11f041940>('violations')
+E    +    where <built-in method get of dict object at 0x11f041940> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'variant', ...}, 'source_rows': [[]], ...}.get
+_ test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-False] _
+tests/test_buyer_actor_role_controls_v1.py:85: in test_orthogonal_variants
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...tinuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11ef80700>('violations')
+E    +    where <built-in method get of dict object at 0x11ef80700> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...tinuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, ...}.get
+_ test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-True] _
+tests/test_buyer_actor_role_controls_v1.py:85: in test_orthogonal_variants
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...{'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'variant', ...}, ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x120303c40>('violations')
+E    +    where <built-in method get of dict object at 0x120303c40> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...{'_continuation_owner': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'variant', ...}, ...}.get
+_ test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-False] _
+tests/test_buyer_actor_role_controls_v1.py:85: in test_orthogonal_variants
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11cecab00>('violations')
+E    +    where <built-in method get of dict object at 0x11cecab00> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...BULAR', 'analytical_intent': '', 'analytical_response': '', 'clarification_reason': '', ...}, 'source_rows': [[]], ...}.get
+_ test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-True] _
+tests/test_buyer_actor_role_controls_v1.py:85: in test_orthogonal_variants
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'variant', ...}, 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11dc64580>('violations')
+E    +    where <built-in method get of dict object at 0x11dc64580> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...': 'TABULAR', 'analytical_intent': '', 'analytical_response': '', 'chat_id': 'variant', ...}, 'source_rows': [[]], ...}.get
+____ test_existing_catalog_families[False-contratos de -alcaldia de galapa] ____
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...et_explicit': True, ...}, 'query': 'contratos de alcaldia de galapa por mas de 500 millones', 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11cf38f00>('violations')
+E    +    where <built-in method get of dict object at 0x11cf38f00> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...et_explicit': True, ...}, 'query': 'contratos de alcaldia de galapa por mas de 500 millones', 'source_rows': [[]], ...}.get
+___ test_existing_catalog_families[False-contratos de -alcaldia de baranoa] ____
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['request language as topic']
+E    +  where ['request language as topic'] = <built-in method get of dict object at 0x11ce6e980>('violations')
+E    +    where <built-in method get of dict object at 0x11ce6e980> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_existing_catalog_families[False-contratos de -universidad del atlantico] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...icit': True, ...}, 'query': 'contratos de universidad del atlantico por mas de 500 millones', 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11cd1af80>('violations')
+E    +    where <built-in method get of dict object at 0x11cd1af80> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...icit': True, ...}, 'query': 'contratos de universidad del atlantico por mas de 500 millones', 'source_rows': [[]], ...}.get
+_ test_existing_catalog_families[False-qu\xe9 ha contratado -alcaldia de galapa] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...licit': False, ...}, 'query': 'qué ha contratado alcaldia de galapa por mas de 500 millones', 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11d5b2d00>('violations')
+E    +    where <built-in method get of dict object at 0x11d5b2d00> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...licit': False, ...}, 'query': 'qué ha contratado alcaldia de galapa por mas de 500 millones', 'source_rows': [[]], ...}.get
+_ test_existing_catalog_families[False-qu\xe9 ha contratado -alcaldia de baranoa] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['request language as topic']
+E    +  where ['request language as topic'] = <built-in method get of dict object at 0x11d8bc2c0>('violations')
+E    +    where <built-in method get of dict object at 0x11d8bc2c0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_existing_catalog_families[False-qu\xe9 ha contratado -universidad del atlantico] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/... False, ...}, 'query': 'qué ha contratado universidad del atlantico por mas de 500 millones', 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11d7798c0>('violations')
+E    +    where <built-in method get of dict object at 0x11d7798c0> = {'effective_config': {'actor': True, 'frame': False, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/... False, ...}, 'query': 'qué ha contratado universidad del atlantico por mas de 500 millones', 'source_rows': [[]], ...}.get
+____ test_existing_catalog_families[True-contratos de -alcaldia de galapa] _____
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...et_explicit': True, ...}, 'query': 'contratos de alcaldia de galapa por mas de 500 millones', 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11d810280>('violations')
+E    +    where <built-in method get of dict object at 0x11d810280> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...et_explicit': True, ...}, 'query': 'contratos de alcaldia de galapa por mas de 500 millones', 'source_rows': [[]], ...}.get
+____ test_existing_catalog_families[True-contratos de -alcaldia de baranoa] ____
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['request language as topic']
+E    +  where ['request language as topic'] = <built-in method get of dict object at 0x11e4aa980>('violations')
+E    +    where <built-in method get of dict object at 0x11e4aa980> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_existing_catalog_families[True-contratos de -universidad del atlantico] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...icit': True, ...}, 'query': 'contratos de universidad del atlantico por mas de 500 millones', 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11dddb440>('violations')
+E    +    where <built-in method get of dict object at 0x11dddb440> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...icit': True, ...}, 'query': 'contratos de universidad del atlantico por mas de 500 millones', 'source_rows': [[]], ...}.get
+_ test_existing_catalog_families[True-qu\xe9 ha contratado -alcaldia de galapa] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...licit': False, ...}, 'query': 'qué ha contratado alcaldia de galapa por mas de 500 millones', 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x11e513740>('violations')
+E    +    where <built-in method get of dict object at 0x11e513740> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...licit': False, ...}, 'query': 'qué ha contratado alcaldia de galapa por mas de 500 millones', 'source_rows': [[]], ...}.get
+_ test_existing_catalog_families[True-qu\xe9 ha contratado -alcaldia de baranoa] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}
+E   assert not ['request language as topic']
+E    +  where ['request language as topic'] = <built-in method get of dict object at 0x11cc697c0>('violations')
+E    +    where <built-in method get of dict object at 0x11cc697c0> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T...lor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"}], ...}.get
+_ test_existing_catalog_families[True-qu\xe9 ha contratado -universidad del atlantico] _
+tests/test_buyer_actor_role_controls_v1.py:108: in test_existing_catalog_families
+    assert not trace.get("violations"), trace
+E   AssertionError: {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T... False, ...}, 'query': 'qué ha contratado universidad del atlantico por mas de 500 millones', 'source_rows': [[]], ...}
+E   assert not ['missing amount']
+E    +  where ['missing amount'] = <built-in method get of dict object at 0x115d4a300>('violations')
+E    +    where <built-in method get of dict object at 0x115d4a300> = {'effective_config': {'actor': True, 'frame': True, 'index': '/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T... False, ...}, 'query': 'qué ha contratado universidad del atlantico por mas de 500 millones', 'source_rows': [[]], ...}.get
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-FONDO FINANCIERO DISTRITAL DE SALUD] _
+tests/test_buyer_unit_integrity_p02.py:316: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert query == f"SELECT count(*) WHERE {field} = '{expected}'"
+E   assert "SELECT count...AL DE SALUD.'" == "SELECT count...AL DE SALUD.'"
+E
+E     - SELECT count(*) WHERE nombre_entidad = 'FONDO FINANCIERO DISTRITAL DE SALUD.'
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'FONDO FINANCIERO DISTRITAL DE SALUD.'
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MINISTERIO DE JUSTICIA Y DEL DERECHO] _
+tests/test_buyer_unit_integrity_p02.py:316: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert query == f"SELECT count(*) WHERE {field} = '{expected}'"
+E   assert "SELECT count...DEL DERECHO.'" == "SELECT count...DEL DERECHO.'"
+E
+E     - SELECT count(*) WHERE nombre_entidad = 'MINISTERIO DE JUSTICIA Y DEL DERECHO.'
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'MINISTERIO DE JUSTICIA Y DEL DERECHO.'
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE SOACHA] _
+tests/test_buyer_unit_integrity_p02.py:316: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert query == f"SELECT count(*) WHERE {field} = '{expected}'"
+E   assert "SELECT count...O DE SOACHA.'" == "SELECT count...O DE SOACHA.'"
+E
+E     - SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SOACHA.'
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'MUNICIPIO DE SOACHA.'
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE YOPAL] _
+tests/test_buyer_unit_integrity_p02.py:316: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert query == f"SELECT count(*) WHERE {field} = '{expected}'"
+E   assert "SELECT count...O DE YOPAL..'" == "SELECT count...O DE YOPAL..'"
+E
+E     - SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE YOPAL..'
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'MUNICIPIO DE YOPAL..'
+_ test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS P\xdaBLICOS] _
+tests/test_buyer_unit_integrity_p02.py:316: in test_verified_buyer_unit_soql_uses_exact_source_name
+    assert query == f"SELECT count(*) WHERE {field} = '{expected}'"
+E   assert "SELECT count...OS PÚBLICOS.'" == "SELECT count...OS PÚBLICOS.'"
+E
+E     - SELECT count(*) WHERE nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.'
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.'
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tema: mantenimiento, excepto interventoria.')
+E   assert 'estado actual' in 'tema: mantenimiento, excepto interventoria.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x11cf39330>()
+E    +    where <built-in method casefold of str object at 0x11cf39330> = 'Estado actual'.casefold
+E    +  and   'tema: mantenimiento, excepto interventoria.' = <built-in method casefold of str object at 0x11ee60870>()
+E    +    where <built-in method casefold of str object at 0x11ee60870> = 'Tema: mantenimiento, excepto interventoria.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Modalidad: Contratación directa, Contratación Directa (con ofertas).')
+E   assert 'estado actual' in 'modalidad: contratación directa, contratación directa (con ofertas).'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x11cf39330>()
+E    +    where <built-in method casefold of str object at 0x11cf39330> = 'Estado actual'.casefold
+E    +  and   'modalidad: contratación directa, contratación directa (con ofertas).' = <built-in method casefold of str object at 0x11e7c4cb0>()
+E    +    where <built-in method casefold of str object at 0x11e7c4cb0> = 'Modalidad: Contratación directa, Contratación Directa (con ofertas).'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tipo de contrato: obra.')
+E   assert 'estado actual' in 'tipo de contrato: obra.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x11cf39330>()
+E    +    where <built-in method casefold of str object at 0x11cf39330> = 'Estado actual'.casefold
+E    +  and   'tipo de contrato: obra.' = <built-in method casefold of str object at 0x11e50d3b0>()
+E    +    where <built-in method casefold of str object at 0x11e50d3b0> = 'Tipo de contrato: obra.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tema: mantenimiento o vias.')
+E   assert 'estado actual' in 'tema: mantenimiento o vias.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x11cf39330>()
+E    +    where <built-in method casefold of str object at 0x11cf39330> = 'Estado actual'.casefold
+E    +  and   'tema: mantenimiento o vias.' = <built-in method casefold of str object at 0x11d1cf640>()
+E    +    where <built-in method casefold of str object at 0x11d1cf640> = 'Tema: mantenimiento o vias.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Tema: mantenimiento y vias.')
+E   assert 'estado actual' in 'tema: mantenimiento y vias.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x11cf39330>()
+E    +    where <built-in method casefold of str object at 0x11cf39330> = 'Estado actual'.casefold
+E    +  and   'tema: mantenimiento y vias.' = <built-in method casefold of str object at 0x11e97f910>()
+E    +    where <built-in method casefold of str object at 0x11e97f910> = 'Tema: mantenimiento y vias.'.casefold
+_ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None] _
+tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
+    assert visible.casefold() in declared.casefold(), (marker, declared)
+E   AssertionError: ('estado_contrato', 'Valor: entre $100 millones y $500 millones.')
+E   assert 'estado actual' in 'valor: entre $100 millones y $500 millones.'
+E    +  where 'estado actual' = <built-in method casefold of str object at 0x11cf39330>()
+E    +    where <built-in method casefold of str object at 0x11cf39330> = 'Estado actual'.casefold
+E    +  and   'valor: entre $100 millones y $500 millones.' = <built-in method casefold of str object at 0x11e890750>()
+E    +    where <built-in method casefold of str object at 0x11e890750> = 'Valor: entre $100 millones y $500 millones.'.casefold
+_______________ test_firmados_mas_estado_explicito_usa_el_estado _______________
+tests/test_firmado_signed_semantics.py:59: in test_firmados_mas_estado_explicito_usa_el_estado
+    assert cerrados.get("estado") == "Cerrado"
+E   AssertionError: assert None == 'Cerrado'
+E    +  where None = <built-in method get of dict object at 0x11d5c68c0>('estado')
+E    +    where <built-in method get of dict object at 0x11d5c68c0> = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'dataset_explicit': True, ...}.get
+_________ test_change_dataset_cleans_incompatible_fields_before_apply __________
+tests/test_followup_mutations.py:98: in test_change_dataset_cleans_incompatible_fields_before_apply
+    assert trace["accepted_fields"] == ["dataset", "dataset_explicit"]
+E   AssertionError: assert ['contract_un...set_explicit'] == ['dataset', '...set_explicit']
+E
+E     At index 0 diff: 'contract_universe' != 'dataset'
+E     Left contains 2 more items, first extra item: 'dataset'
+E     Use -v to get more diff
+________ test_signed_closed_contracts_preserve_real_closed_state[False] ________
+tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+________ test_signed_closed_contracts_preserve_real_closed_state[True] _________
+tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
+    assert snap["after_plan"]["estado_family"] == "contrato_cerrado"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'estado_family'
+_____ test_dual_resolution_keeps_id_and_each_child_projects_independently ______
+tests/test_modality_pipeline_integration.py:348: in test_dual_resolution_keeps_id_and_each_child_projects_independently
+    assert contract_where == "1=0"
+E   assert "(upper(unacc...DO')) AND 1=0" == '1=0'
+E
+E     - 1=0
+E     + (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND 1=0
+_______ test_soql_canonical_clauses_zero_set_unknown_id_and_global_guard _______
+tests/test_modality_pipeline_integration.py:394: in test_soql_canonical_clauses_zero_set_unknown_id_and_global_guard
+    assert " WHERE 1=0 " in zero
+E   assert ' WHERE 1=0 ' in "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_d... 'SUSPENDIDO', 'PRORROGADO')) AND 1=0 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+_ test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n-golden0] _
+tests/test_modality_pipeline_integration.py:572: in test_no_modality_pre_post_golden_parity
+    assert query_fingerprint(parsed.params) == expected_fingerprint
+E   AssertionError: assert '55480b721e4b...1e0f75dc1a7a2' == '1084437227dc...3febc6ba87f4f'
+E
+E     - 1084437227dc22cc853225828a8a7996bb8f46ba7a1ce2eba5b3febc6ba87f4f
+E     + 55480b721e4badd24a04e560e90e0ff44a22ed4e3384219dc3f1e0f75dc1a7a2
+_ test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n del SENA-golden1] _
+tests/test_modality_pipeline_integration.py:572: in test_no_modality_pre_post_golden_parity
+    assert query_fingerprint(parsed.params) == expected_fingerprint
+E   AssertionError: assert '579279e6c7eb...af9bda3716fc0' == '2cc2481aa110...c563b1abe0a26'
+E
+E     - 2cc2481aa110cb9e4f2741466f290b07bccb156ec0a4259efa3c563b1abe0a26
+E     + 579279e6c7eb24803f72694ee4df768742d3963ef356c65617baf9bda3716fc0
+_ test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n en Barranquilla-golden3] _
+tests/test_modality_pipeline_integration.py:572: in test_no_modality_pre_post_golden_parity
+    assert query_fingerprint(parsed.params) == expected_fingerprint
+E   AssertionError: assert '438d1dffadaf...633f4774e5db9' == '49217e5c5721...dec72e1183978'
+E
+E     - 49217e5c57215bc84b71ad8ea9f50516a24afb272bb4a9f72cedec72e1183978
+E     + 438d1dffadaf70fb1d52f32926a81a833e7d2b2a08bd6a64c51633f4774e5db9
+_ test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n por m\xe1s de 500 millones-golden4] _
+tests/test_modality_pipeline_integration.py:572: in test_no_modality_pre_post_golden_parity
+    assert query_fingerprint(parsed.params) == expected_fingerprint
+E   AssertionError: assert 'bd50720f01f0...40822b9141379' == '9a8a07cfe52b...aad3658c460f5'
+E
+E     - 9a8a07cfe52b75ac9f5b7519bf8c0abbd86d47b2f0bd10e7e2caad3658c460f5
+E     + bd50720f01f01e4d117a936e8744ad9ddfce3e0a342ba4a75f840822b9141379
+_ test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n entre 2024 y 2025-golden5] _
+tests/test_modality_pipeline_integration.py:572: in test_no_modality_pre_post_golden_parity
+    assert query_fingerprint(parsed.params) == expected_fingerprint
+E   AssertionError: assert '360331eb1cc3...cc32482edbd00' == '8bc90f440f7b...2a6c45f9b8eb5'
+E
+E     - 8bc90f440f7bfda2938525825fd5f8b2e1bb5c0cf970d72050f2a6c45f9b8eb5
+E     + 360331eb1cc3545e12267dc5a7ce09a42582f54bd2446426803cc32482edbd00
+_ test_no_modality_pre_post_golden_parity[contratos en ejecuci\xf3n de alimentaci\xf3n-golden6] _
+tests/test_modality_pipeline_integration.py:572: in test_no_modality_pre_post_golden_parity
+    assert query_fingerprint(parsed.params) == expected_fingerprint
+E   AssertionError: assert '0e7c87f74612...8442017bd1a5b' == 'efe365c82546...d90519c889aef'
+E
+E     - efe365c825462125cec0541db2ed2b7040ebdaf3d71e86d5dedd90519c889aef
+E     + 0e7c87f746120a867a5b5274dcfe9ca1ab707b974c5ac7cb6298442017bd1a5b
+_ test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n de la regional SENA Bol\xedvar-golden9] _
+tests/test_modality_pipeline_integration.py:572: in test_no_modality_pre_post_golden_parity
+    assert query_fingerprint(parsed.params) == expected_fingerprint
+E   AssertionError: assert '50f01184d13c...3f8f06e491573' == 'a55f462444d8...1015ac2901bd1'
+E
+E     - a55f462444d86196ea012f4eb8ff5f0636b75a9d022b264f4c91015ac2901bd1
+E     + 50f01184d13c61dd3a689a0cfecb10e646db836cd5938dbb7bf3f8f06e491573
+_ test_no_modality_pre_post_golden_parity[contratos de manual de contrataci\xf3n en Barranquilla-golden10] _
+tests/test_modality_pipeline_integration.py:572: in test_no_modality_pre_post_golden_parity
+    assert query_fingerprint(parsed.params) == expected_fingerprint
+E   AssertionError: assert '0800d01191f6...d9b8fe976d367' == '41ac6afc1db8...bfd74f1246c00'
+E
+E     - 41ac6afc1db80deea8ee1ef09afda50255d110539a9adea424dbfd74f1246c00
+E     + 0800d01191f6b265073f4a2e12bd128675e1ca3ca113e225e0cd9b8fe976d367
+_ test_no_modality_pre_post_golden_parity[contratos del proveedor NIT 800.091.140-4-golden11] _
+tests/test_modality_pipeline_integration.py:572: in test_no_modality_pre_post_golden_parity
+    assert query_fingerprint(parsed.params) == expected_fingerprint
+E   AssertionError: assert 'f8387e057581...cc274d6387e80' == '32b6c4fad818...16dfd3308d669'
+E
+E     - 32b6c4fad81841570b88e3d38ca4824c733fa2ec63660e59b1a16dfd3308d669
+E     + f8387e05758189d4c0144fd201ef5fea5dc6b9ba870a42144abcc274d6387e80
+_ test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso] _
+tests/test_object_negation_soql.py:44: in test_generated_object_exclusion_is_null_safe_for_real_dataset_fields
+    assert where.startswith("NOT (")
+E   assert False
+E    +  where False = <built-in method startswith of str object at 0x11e647a50>('NOT (')
+E    +    where <built-in method startswith of str object at 0x11e647a50> = "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent...znegtest%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegtest%')), false))".startswith
+_ test_source_projection_is_exact_equality_never_like[UNIVERSIDAD DEL PAC\xcdFICO-by_dataset1] _
+tests/test_public_university_completion_r2fb.py:181: in test_source_projection_is_exact_equality_never_like
+    assert "unaccent" not in soql
+E   assert 'unaccent' not in "SELECT coun... PACIFICO//'"
+E
+E     'unaccent' is contained here:
+E       SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD DEL PACIFICO//'
+E     ?                              ++++++++
+_ test_source_projection_is_exact_equality_never_like[UNIVERSIDAD TECNOL\xd3GICA DEL CHOC\xd3 DIEGO LUIS C\xd3RDOBA-by_dataset3] _
+tests/test_public_university_completion_r2fb.py:181: in test_source_projection_is_exact_equality_never_like
+    assert "unaccent" not in soql
+E   assert 'unaccent' not in "SELECT coun...A DEL CHOCO'"
+E
+E     'unaccent' is contained here:
+E       SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD TECNOLOGICA DEL CHOCO'
+E     ?                              ++++++++
+_ test_source_projection_is_exact_and_preserves_canonical[UNIATLANTICO-by_dataset0] _
+tests/test_public_university_pilot_r2fa.py:169: in test_source_projection_is_exact_and_preserves_canonical
+    assert "unaccent" not in soql
+E   assert 'unaccent' not in "SELECT coun...l Atlántico'"
+E
+E     'unaccent' is contained here:
+E       SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'Universidad del Atlántico'
+E     ?                              ++++++++
+_ test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE C\xd3RDOBA-by_dataset1] _
+tests/test_public_university_pilot_r2fa.py:169: in test_source_projection_is_exact_and_preserves_canonical
+    assert "unaccent" not in soql
+E   assert 'unaccent' not in "SELECT coun... DE CORDOBA'"
+E
+E     'unaccent' is contained here:
+E       SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD DE CORDOBA'
+E     ?                              ++++++++
+_ test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE LA AMAZONIA-by_dataset2] _
+tests/test_public_university_pilot_r2fa.py:169: in test_source_projection_is_exact_and_preserves_canonical
+    assert "unaccent" not in soql
+E   assert 'unaccent' not in "SELECT coun...A (Entidad)'"
+E
+E     'unaccent' is contained here:
+E       SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD DE LA AMAZONIA (Entidad)'
+E     ?                              ++++++++
+_ test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCA\xd1A-by_dataset3] _
+tests/test_public_university_pilot_r2fa.py:169: in test_source_projection_is_exact_and_preserves_canonical
+    assert "unaccent" not in soql
+E   assert 'unaccent' not in "SELECT coun...A (ENTIDAD)'"
+E
+E     'unaccent' is contained here:
+E       SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)'
+E     ?                              ++++++++
+___________________ test_allow_global_opt_in_bypasses_guard ____________________
+tests/test_safe_soql.py:107: in test_allow_global_opt_in_bypasses_guard
+    assert " WHERE 1=1 " in soql
+E   assert ' WHERE 1=1 ' in "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_d...CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+_______________ test_fully_inapplicable_include_is_unsatisfiable _______________
+tests/test_safe_soql.py:177: in test_fully_inapplicable_include_is_unsatisfiable
+    assert " WHERE 1=0 " in soql
+E   assert ' WHERE 1=0 ' in "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_d... 'SUSPENDIDO', 'PRORROGADO')) AND 1=0 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CONTRALOR\xcdA GENERAL DE LA REP\xdaBLICA] _
+tests/test_source_name_projection_v1.py:196: in test_unbound_identity_is_byte_identical_to_pre
+    assert soql == expected
+E   assert "SELECT count...REPÚBLICA%'))" == "SELECT count...REPÚBLICA%'))"
+E
+E     - SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CONTRALORÍA GENERAL DE LA REPÚBLICA%'))
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CONTRALORÍA GENERAL DE LA REPÚBLICA%'))
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-AUDITOR\xcdA GENERAL DE LA REP\xdaBLICA] _
+tests/test_source_name_projection_v1.py:196: in test_unbound_identity_is_byte_identical_to_pre
+    assert soql == expected
+E   assert "SELECT count...REPÚBLICA%'))" == "SELECT count...REPÚBLICA%'))"
+E
+E     - SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%AUDITORÍA GENERAL DE LA REPÚBLICA%'))
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%AUDITORÍA GENERAL DE LA REPÚBLICA%'))
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-PROCURADUR\xcdA GENERAL DE LA NACI\xd3N] _
+tests/test_source_name_projection_v1.py:196: in test_unbound_identity_is_byte_identical_to_pre
+    assert soql == expected
+E   assert "SELECT count...LA NACIÓN%'))" == "SELECT count...LA NACIÓN%'))"
+E
+E     - SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%PROCURADURÍA GENERAL DE LA NACIÓN%'))
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%PROCURADURÍA GENERAL DE LA NACIÓN%'))
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-DEFENSOR\xcdA DEL PUEBLO] _
+tests/test_source_name_projection_v1.py:196: in test_unbound_identity_is_byte_identical_to_pre
+    assert soql == expected
+E   assert "SELECT count...EL PUEBLO%'))" == "SELECT count...EL PUEBLO%'))"
+E
+E     - SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEFENSORÍA DEL PUEBLO%'))
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEFENSORÍA DEL PUEBLO%'))
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CORPORACI\xd3N AUT\xd3NOMA REGIONAL DE CUNDINAMARCA] _
+tests/test_source_name_projection_v1.py:196: in test_unbound_identity_is_byte_identical_to_pre
+    assert soql == expected
+E   assert "SELECT count...DINAMARCA%'))" == "SELECT count...DINAMARCA%'))"
+E
+E     - SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CORPORACIÓN AUTÓNOMA REGIONAL DE CUNDINAMARCA%'))
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CORPORACIÓN AUTÓNOMA REGIONAL DE CUNDINAMARCA%'))
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-GOBERNACI\xd3N DE ANTIOQUIA] _
+tests/test_source_name_projection_v1.py:196: in test_unbound_identity_is_byte_identical_to_pre
+    assert soql == expected
+E   assert "SELECT count...ANTIOQUIA%'))" == "SELECT count...ANTIOQUIA%'))"
+E
+E     - SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GOBERNACIÓN DE ANTIOQUIA%'))
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GOBERNACIÓN DE ANTIOQUIA%'))
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-SERVICIO NACIONAL DE APRENDIZAJE] _
+tests/test_source_name_projection_v1.py:196: in test_unbound_identity_is_byte_identical_to_pre
+    assert soql == expected
+E   assert "SELECT count...RENDIZAJE%'))" == "SELECT count...RENDIZAJE%'))"
+E
+E     - SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SERVICIO NACIONAL DE APRENDIZAJE%'))
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SERVICIO NACIONAL DE APRENDIZAJE%'))
+_ test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-MUNICIPIO DE SOACHA.] _
+tests/test_source_name_projection_v1.py:196: in test_unbound_identity_is_byte_identical_to_pre
+    assert soql == expected
+E   assert "SELECT count...E SOACHA.%'))" == "SELECT count...E SOACHA.%'))"
+E
+E     - SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE SOACHA.%'))
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE SOACHA.%'))
+______________ test_dapre_projects_physical_name_in_both_datasets ______________
+tests/test_source_name_projection_v1.py:249: in test_dapre_projects_physical_name_in_both_datasets
+    assert builder.build_count(CONTRATOS, {"entidad_resolved": DAPRE_CANONICAL}) == (
+E   assert "SELECT count...dad = 'DAPRE'" == "SELECT count...dad = 'DAPRE'"
+E
+E     - SELECT count(*) WHERE nombre_entidad = 'DAPRE'
+E     + SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DAPRE'
+____________________ test_catalog_no_unexpected_duplicates _____________________
+tests/test_state_catalog.py:95: in test_catalog_no_unexpected_duplicates
+    assert key in _KNOWN_OVERLAPS, (
+E   AssertionError: Unexpected duplicate contratos:estado_contrato:Suspendido in families contrato_suspendido and no_procede
+E   assert 'contratos:estado_contrato:Suspendido' in {'procesos:estado_del_procedimiento:Aprobado', 'procesos:estado_del_procedimiento:En aprobación', 'procesos:estado_del_procedimiento:Seleccionado'}
+_______________ test_temporal_modules_have_no_runtime_consumers ________________
+tests/test_truth_layer_temporal.py:1314: in test_temporal_modules_have_no_runtime_consumers
+    assert consumers == []
+E   AssertionError: assert ['app/core/co...formatter.py'] == []
+E
+E     Left contains 2 more items, first extra item: 'app/core/contract_universe.py'
+E     Use -v to get more diff
+___________ test_export_preserves_source_amount_and_existing_columns ___________
+tests/test_value_sanity_reachability.py:195: in test_export_preserves_source_amount_and_existing_columns
+    payload = build_results_xlsx(
+app/core/export_xlsx.py:81: in build_results_xlsx
+    raise ValueError("El universo de esta exportación requiere revisión. Repite la búsqueda.")
+E   ValueError: El universo de esta exportación requiere revisión. Repite la búsqueda.
+=========================== short test summary info ============================
+FAILED tests/test_actor_routing.py::test_inv_actor_mention_atomicity_name_plus_document_cannot_leak[qu\xe9 ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1]
+FAILED tests/test_actor_routing.py::test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto[qu\xe9 ha contratado FUNSOCOM]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]
+FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-0-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-0-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-1-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-1-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-3-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-3-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-missing-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-missing-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-incompatible-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[cartagena-incompatible-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-0-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-0-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-1-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-1-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-3-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-3-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-missing-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-missing-on]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-incompatible-off]
+FAILED tests/test_buyer_actor_role_arbitration_v1.py::test_seeds[barranquilla-incompatible-on]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[cartagena-False]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[cartagena-True]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[barranquilla-False]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_reload_buyer_year_more[barranquilla-True]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[CONTRATOS DE LA ALCALD\xcdA DE CARTAGENA por mas de 500 millones-False]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[CONTRATOS DE LA ALCALD\xcdA DE CARTAGENA por mas de 500 millones-True]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[qu\xe9 ha contratado la alcald\xeda de Cartagena por mas de 500 millones-False]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[qu\xe9 ha contratado la alcald\xeda de Cartagena por mas de 500 millones-True]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-False]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de software de alcaldia de cartagena por mas de 500 millones-True]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-False]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_orthogonal_variants[contratos de alcaldia de cartagena por mas de 500 millones por mayor valor-True]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -alcaldia de galapa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -alcaldia de baranoa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-contratos de -universidad del atlantico]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\xe9 ha contratado -alcaldia de galapa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\xe9 ha contratado -alcaldia de baranoa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[False-qu\xe9 ha contratado -universidad del atlantico]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -alcaldia de galapa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -alcaldia de baranoa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-contratos de -universidad del atlantico]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\xe9 ha contratado -alcaldia de galapa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\xe9 ha contratado -alcaldia de baranoa]
+FAILED tests/test_buyer_actor_role_controls_v1.py::test_existing_catalog_families[True-qu\xe9 ha contratado -universidad del atlantico]
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-FONDO FINANCIERO DISTRITAL DE SALUD]
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MINISTERIO DE JUSTICIA Y DEL DERECHO]
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE SOACHA]
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE YOPAL]
+FAILED tests/test_buyer_unit_integrity_p02.py::test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS P\xdaBLICOS]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos por contratacion directa-None]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de obra-None]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected5]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos-injected6]
+FAILED tests/test_entity_profile_remediation_properties.py::test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos entre 100 y 500 millones-None]
+FAILED tests/test_firmado_signed_semantics.py::test_firmados_mas_estado_explicito_usa_el_estado
+FAILED tests/test_followup_mutations.py::test_change_dataset_cleans_incompatible_fields_before_apply
+FAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[False]
+FAILED tests/test_invariants_characterization.py::test_signed_closed_contracts_preserve_real_closed_state[True]
+FAILED tests/test_modality_pipeline_integration.py::test_dual_resolution_keeps_id_and_each_child_projects_independently
+FAILED tests/test_modality_pipeline_integration.py::test_soql_canonical_clauses_zero_set_unknown_id_and_global_guard
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n-golden0]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n del SENA-golden1]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n en Barranquilla-golden3]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n por m\xe1s de 500 millones-golden4]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n entre 2024 y 2025-golden5]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos en ejecuci\xf3n de alimentaci\xf3n-golden6]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n de la regional SENA Bol\xedvar-golden9]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de manual de contrataci\xf3n en Barranquilla-golden10]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos del proveedor NIT 800.091.140-4-golden11]
+FAILED tests/test_object_negation_soql.py::test_generated_object_exclusion_is_null_safe_for_real_dataset_fields[jbjy-vk9h-objeto_del_contrato-descripcion_del_proceso]
+FAILED tests/test_public_university_completion_r2fb.py::test_source_projection_is_exact_equality_never_like[UNIVERSIDAD DEL PAC\xcdFICO-by_dataset1]
+FAILED tests/test_public_university_completion_r2fb.py::test_source_projection_is_exact_equality_never_like[UNIVERSIDAD TECNOL\xd3GICA DEL CHOC\xd3 DIEGO LUIS C\xd3RDOBA-by_dataset3]
+FAILED tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIATLANTICO-by_dataset0]
+FAILED tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE C\xd3RDOBA-by_dataset1]
+FAILED tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD DE LA AMAZONIA-by_dataset2]
+FAILED tests/test_public_university_pilot_r2fa.py::test_source_projection_is_exact_and_preserves_canonical[UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCA\xd1A-by_dataset3]
+FAILED tests/test_safe_soql.py::test_allow_global_opt_in_bypasses_guard - ass...
+FAILED tests/test_safe_soql.py::test_fully_inapplicable_include_is_unsatisfiable
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CONTRALOR\xcdA GENERAL DE LA REP\xdaBLICA]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-AUDITOR\xcdA GENERAL DE LA REP\xdaBLICA]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-PROCURADUR\xcdA GENERAL DE LA NACI\xd3N]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-DEFENSOR\xcdA DEL PUEBLO]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-CORPORACI\xd3N AUT\xd3NOMA REGIONAL DE CUNDINAMARCA]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-GOBERNACI\xd3N DE ANTIOQUIA]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-SERVICIO NACIONAL DE APRENDIZAJE]
+FAILED tests/test_source_name_projection_v1.py::test_unbound_identity_is_byte_identical_to_pre[jbjy-vk9h-nombre_entidad-MUNICIPIO DE SOACHA.]
+FAILED tests/test_source_name_projection_v1.py::test_dapre_projects_physical_name_in_both_datasets
+FAILED tests/test_state_catalog.py::test_catalog_no_unexpected_duplicates - A...
+FAILED tests/test_truth_layer_temporal.py::test_temporal_modules_have_no_runtime_consumers
+FAILED tests/test_value_sanity_reachability.py::test_export_preserves_source_amount_and_existing_columns
+98 failed, 18 passed in 31.44s

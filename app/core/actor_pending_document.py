@@ -30,6 +30,7 @@ from app.core.actor_resolution import (
     METHOD_EXPLICIT_DOCUMENT,
     actor_resolution_method,
 )
+from app.core.contract_universe import ContractUniverse, POLICY_VERSION
 
 __all__ = [
     "DOCUMENT_PENDING_INCOMPATIBLE",
@@ -50,9 +51,9 @@ DOCUMENT_PENDING_INCOMPATIBLE = "INCOMPATIBLE"
 
 # Everything an explicit-document reply legitimately writes into a frame.  The
 # document promotes the dataset to ``contratos`` on its own, so those two keys
-# belong here too.  Any other populated key means the reply asked for
-# something else as well — a different year, a different dataset — and a
-# selection would have to silently discard it.
+# belong here too. Apart from validated default universe metadata, another
+# populated key means the reply asked for something else as well — a different
+# year, a different dataset — and a selection would have to silently discard it.
 _DOCUMENT_REPLY_KEYS = frozenset({
     "dataset",
     "dataset_explicit",
@@ -82,6 +83,18 @@ def _carries_content(value: object) -> bool:
     return True
 
 
+def _is_default_universe_metadata(key: str, value: object) -> bool:
+    """Recognize only the policy's derived defaults, never source authority.
+
+    Explicit universe requests also set dataset_explicit in apply_request;
+    that guard and the content check for states/errors remain mandatory.
+    Unknown versions and nondefault universes therefore fail closed.
+    """
+    return (
+        key == "contract_universe" and value == ContractUniverse.CELEBRATED.value
+    ) or (key == "contract_universe_version" and value == POLICY_VERSION)
+
+
 def explicit_document_identity(params: dict) -> IdentityKey | None:
     """The identity a *document-only* reply established, or ``None``.
 
@@ -101,7 +114,7 @@ def explicit_document_identity(params: dict) -> IdentityKey | None:
     if any(
         _carries_content(value)
         for key, value in params.items()
-        if key not in _DOCUMENT_REPLY_KEYS
+        if key not in _DOCUMENT_REPLY_KEYS and not _is_default_universe_metadata(key, value)
     ):
         return None
     scope = params.get("actor_scope")

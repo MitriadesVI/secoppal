@@ -1,0 +1,11 @@
+from cu_r1_run import *
+variants={
+'M1':("import app.core.actor_pending_document as m\nm._is_default_universe_metadata = lambda key, value: False\n",['test_document_of_one_candidate_matches_that_candidate','test_year_survives_explicit_document_selection']),
+'M2':("import app.core.actor_pending_document as m\nm._is_default_universe_metadata = lambda key, value: key in {'contract_universe', 'contract_universe_version', 'estado', 'estado_contrato'}\n",None),
+'M3':("import app.core.workflow.handlers.actor_selection as m\noriginal=m.apply_actor_identity\ndef drop_frame(params, identity, **kwargs):\n    if kwargs.get('method') == 'explicit_document_pending_selection':\n        params = {}\n    return original(params, identity, **kwargs)\nm.apply_actor_identity=drop_frame\n",['test_year_survives_explicit_document_selection','test_buyer_survives_explicit_document_selection','test_value_filter_survives_explicit_document_selection'])}
+results={}
+for name,(code,tests) in variants.items():
+ targets=['tests/test_actor_pending_document_selection.py::'+x for x in tests] if tests else ['tests/test_actor_pending_system_metadata.py::test_intent_constraints_never_neutral']
+ command=[P,'-c',code+'\nimport pytest,sys; raise SystemExit(pytest.main(sys.argv[1:]))',*targets,'-q','--tb=short']
+ d=run('mutation_'+name,command); results[name]={'killed':d['exit_code']==1 and 'failed' in d['stdout'] and 'ERROR collecting' not in d['stdout'],'exit_code':d['exit_code'],'command':command,'summary':d['stdout'].splitlines()[-1]}
+(E/'MUTATIONS.json').write_text(json.dumps(results,indent=2))

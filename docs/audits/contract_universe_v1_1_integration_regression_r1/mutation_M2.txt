@@ -1,0 +1,64 @@
+F.F...FF......                                                           [100%]
+=================================== FAILURES ===================================
+______________ test_intent_constraints_never_neutral[constraint0] ______________
+tests/test_actor_pending_system_metadata.py:55: in test_intent_constraints_never_neutral
+    @settings(derandomize=True, deadline=None)
+                   ^^^^^^^^^^^^^
+tests/test_actor_pending_system_metadata.py:60: in test_intent_constraints_never_neutral
+    assert match_pending_document(params, candidates).outcome == 'NO_DOCUMENT'
+E   AssertionError: assert 'MATCH' == 'NO_DOCUMENT'
+E
+E     - NO_DOCUMENT
+E     + MATCH
+E   Failing test case: test_intent_constraints_never_neutral(
+E       constraint=('contract_universe', 'source_records'),
+E       metadata={},
+E   )
+______________ test_intent_constraints_never_neutral[constraint2] ______________
+tests/test_actor_pending_system_metadata.py:55: in test_intent_constraints_never_neutral
+    @settings(derandomize=True, deadline=None)
+                   ^^^^^^^^^^^^^
+tests/test_actor_pending_system_metadata.py:60: in test_intent_constraints_never_neutral
+    assert match_pending_document(params, candidates).outcome == 'NO_DOCUMENT'
+E   AssertionError: assert 'MATCH' == 'NO_DOCUMENT'
+E
+E     - NO_DOCUMENT
+E     + MATCH
+E   Failing test case: test_intent_constraints_never_neutral(
+E       constraint=('contract_universe_version', 'unknown'),
+E       metadata={},
+E   )
+______________ test_intent_constraints_never_neutral[constraint6] ______________
+tests/test_actor_pending_system_metadata.py:55: in test_intent_constraints_never_neutral
+    @settings(derandomize=True, deadline=None)
+                   ^^^^^^^^^^^^^
+tests/test_actor_pending_system_metadata.py:60: in test_intent_constraints_never_neutral
+    assert match_pending_document(params, candidates).outcome == 'NO_DOCUMENT'
+E   AssertionError: assert 'MATCH' == 'NO_DOCUMENT'
+E
+E     - NO_DOCUMENT
+E     + MATCH
+E   Failing test case: test_intent_constraints_never_neutral(
+E       constraint=('estado_contrato', ['Cancelado']),
+E       metadata={},
+E   )
+______________ test_intent_constraints_never_neutral[constraint7] ______________
+tests/test_actor_pending_system_metadata.py:55: in test_intent_constraints_never_neutral
+    @settings(derandomize=True, deadline=None)
+                   ^^^^^^^^^^^^^
+tests/test_actor_pending_system_metadata.py:60: in test_intent_constraints_never_neutral
+    assert match_pending_document(params, candidates).outcome == 'NO_DOCUMENT'
+E   AssertionError: assert 'MATCH' == 'NO_DOCUMENT'
+E
+E     - NO_DOCUMENT
+E     + MATCH
+E   Failing test case: test_intent_constraints_never_neutral(
+E       constraint=('estado', ['Activo']),
+E       metadata={},
+E   )
+=========================== short test summary info ============================
+FAILED tests/test_actor_pending_system_metadata.py::test_intent_constraints_never_neutral[constraint0]
+FAILED tests/test_actor_pending_system_metadata.py::test_intent_constraints_never_neutral[constraint2]
+FAILED tests/test_actor_pending_system_metadata.py::test_intent_constraints_never_neutral[constraint6]
+FAILED tests/test_actor_pending_system_metadata.py::test_intent_constraints_never_neutral[constraint7]
+4 failed, 10 passed in 7.32s

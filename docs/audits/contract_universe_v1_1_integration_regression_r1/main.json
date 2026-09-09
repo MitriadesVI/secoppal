@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate",
+    "tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection",
+    "-q"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-r1-main-check",
+  "exit_code": 0,
+  "duration_seconds": 1.5142058750025171,
+  "stdout": "..                                                                       [100%]\n2 passed in 1.12s\n",
+  "stderr": ""
+}

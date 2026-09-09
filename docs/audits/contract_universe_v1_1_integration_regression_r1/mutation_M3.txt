@@ -1,0 +1,22 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________ test_year_survives_explicit_document_selection ________________
+tests/test_actor_pending_document_selection.py:184: in test_year_survives_explicit_document_selection
+    assert params["fecha_desde"] == "2025-01-01"
+           ^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'fecha_desde'
+_______________ test_buyer_survives_explicit_document_selection ________________
+tests/test_actor_pending_document_selection.py:211: in test_buyer_survives_explicit_document_selection
+    assert params["entidad_resolved"] == buyer
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'entidad_resolved'
+____________ test_value_filter_survives_explicit_document_selection ____________
+tests/test_actor_pending_document_selection.py:236: in test_value_filter_survives_explicit_document_selection
+    assert params["valor_min"] == 100000000
+           ^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'valor_min'
+=========================== short test summary info ============================
+FAILED tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection
+FAILED tests/test_actor_pending_document_selection.py::test_buyer_survives_explicit_document_selection
+FAILED tests/test_actor_pending_document_selection.py::test_value_filter_survives_explicit_document_selection
+3 failed in 1.26s

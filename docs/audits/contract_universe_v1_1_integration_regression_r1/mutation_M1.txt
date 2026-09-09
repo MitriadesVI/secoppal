@@ -1,0 +1,18 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_document_of_one_candidate_matches_that_candidate _____________
+tests/test_actor_pending_document_selection.py:113: in test_document_of_one_candidate_matches_that_candidate
+    assert selection.outcome == DOCUMENT_PENDING_MATCH
+E   AssertionError: assert 'NO_DOCUMENT' == 'MATCH'
+E
+E     - MATCH
+E     + NO_DOCUMENT
+________________ test_year_survives_explicit_document_selection ________________
+tests/test_actor_pending_document_selection.py:184: in test_year_survives_explicit_document_selection
+    assert params["fecha_desde"] == "2025-01-01"
+           ^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'fecha_desde'
+=========================== short test summary info ============================
+FAILED tests/test_actor_pending_document_selection.py::test_document_of_one_candidate_matches_that_candidate
+FAILED tests/test_actor_pending_document_selection.py::test_year_survives_explicit_document_selection
+2 failed in 1.05s

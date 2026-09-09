@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "3c323d5cad9b104f82aeb63e788bccbeae3796ed",
+    "70b2c3ab76ad6582e9fcedb67a96b046d8022e54",
+    "--",
+    "app",
+    "scripts"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-integration-r1",
+  "exit_code": 0,
+  "duration_seconds": 0.01081283399980748,
+  "stdout": "",
+  "stderr": ""
+}
