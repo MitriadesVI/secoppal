@@ -7,7 +7,7 @@
     "contract_universe": "celebrated",
     "contract_universe_version": "contract-universe-1"
   },
-  "conversation": "{\"turn_id\": \"991f8d03a1af\", \"timestamp\": \"2026-09-09T01:54:46.147308+00:00\", \"chat_id\": \"audit\", \"user_query\": \"contratos de alcaldia de cartagena por mas de 500 millones\", \"response\": \"Historical BASE search\", \"parsed_params\": {\"dataset\": \"contratos\", \"entidad_resolved\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"valor_min\": 500000000, \"contract_universe\": \"celebrated\", \"contract_universe_version\": \"contract-universe-1\"}, \"result_ids\": [\"BASE-ROW\"], \"trace_id\": \"\", \"suggestions\": [], \"outcome\": \"\", \"outcome_reason\": \"\", \"result_count\": 0, \"query_fingerprint\": \"\"}\n",
+  "conversation": "{\"turn_id\": \"9d941d25288a\", \"timestamp\": \"2026-09-09T02:03:14.770631+00:00\", \"chat_id\": \"audit\", \"user_query\": \"contratos de alcaldia de cartagena por mas de 500 millones\", \"response\": \"Historical BASE search\", \"parsed_params\": {\"dataset\": \"contratos\", \"entidad_resolved\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"valor_min\": 500000000, \"contract_universe\": \"celebrated\", \"contract_universe_version\": \"contract-universe-1\"}, \"result_ids\": [\"BASE-ROW\"], \"trace_id\": \"\", \"suggestions\": [], \"outcome\": \"\", \"outcome_reason\": \"\", \"result_count\": 0, \"query_fingerprint\": \"\"}\n",
   "buffer": {
     "query_fingerprint": "fdd8cddd56b84ea979a0fdcd82602ca9f1e96a416062fe10a2ea5aff99a3c92c",
     "group": "contratos",
@@ -33,13 +33,13 @@
     "source_cursor": 50,
     "source_candidate_total": 63,
     "validated_total_known": 1,
-    "created_at_utc": "2026-09-09T01:54:46.148001+00:00",
-    "expires_at_utc": "2026-09-09T02:09:46.148001+00:00",
+    "created_at_utc": "2026-09-09T02:03:14.771359+00:00",
+    "expires_at_utc": "2026-09-09T02:18:14.771359+00:00",
     "source_total_approximate": false
   },
   "frame": {
     "schema_version": 2,
-    "frame_id": "b856bd9d-d9b7-523f-9a92-e885a8b03cbe",
+    "frame_id": "789205b0-0945-5eb5-bdee-c3d07e5466a8",
     "revision": 1,
     "buyer_scope": {
       "kind": "BUYER_UNIT",
@@ -110,9 +110,9 @@
     }
   },
   "plan": {
-    "plan_id": "4fbdf1a6-9fa9-4dff-bff7-d92e026a4a74",
+    "plan_id": "5786cefc-83d2-4139-ace2-2ab5d9afce49",
     "frame_ref": [
-      "b856bd9d-d9b7-523f-9a92-e885a8b03cbe",
+      "789205b0-0945-5eb5-bdee-c3d07e5466a8",
       1
     ],
     "catalog_version": "entity-profile-frame-2-contract-universe-1",
@@ -214,11 +214,11 @@
     }
   },
   "execution_record": {
-    "plan_digest": "4bdfd92b870589f1414f600eef63aa4984ca51e6a44167f2a1cd4bf14adc0466",
+    "plan_digest": "7286bdf651ee5d68b95da3e2bf753e5a61b86db8cca216f176f83b9999bc9ad7",
     "authorized_plan": {
-      "plan_id": "b53b4c99-3b08-4599-9a2c-13a157c45419",
+      "plan_id": "0f589252-00f9-422c-a2bb-ae3abbf42dfb",
       "frame_ref": [
-        "f19430f1-ee6b-53cd-99f0-fd0eadfb6175",
+        "af5068e0-c844-5625-b100-548420040658",
         1
       ],
       "catalog_version": "entity-profile-frame-2-contract-universe-1",
@@ -321,7 +321,7 @@
     },
     "confirmed_frame": {
       "schema_version": 2,
-      "frame_id": "f19430f1-ee6b-53cd-99f0-fd0eadfb6175",
+      "frame_id": "af5068e0-c844-5625-b100-548420040658",
       "revision": 1,
       "buyer_scope": {
         "kind": "BUYER_UNIT",
@@ -392,10 +392,10 @@
       }
     },
     "schema_version": 1,
-    "record_id": "a0903736374b40ef",
-    "plan_id": "b53b4c99-3b08-4599-9a2c-13a157c45419",
+    "record_id": "3f8b19f89ebc4c2b",
+    "plan_id": "0f589252-00f9-422c-a2bb-ae3abbf42dfb",
     "frame_ref": [
-      "f19430f1-ee6b-53cd-99f0-fd0eadfb6175",
+      "af5068e0-c844-5625-b100-548420040658",
       1
     ],
     "catalog_version": "entity-profile-frame-2-contract-universe-1",

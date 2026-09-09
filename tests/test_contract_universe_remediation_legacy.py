@@ -89,3 +89,22 @@ def test_v1_export_requires_review(historical):
         build_results_xlsx(rows=[], query='histórico', resolved_params=historical['params'],
                            dataset_id='jbjy-vk9h', total_count=0)
     assert json.dumps(historical, sort_keys=True) == before
+
+
+def test_main_base_conversation_adjudicated(tmp_path, monkeypatch):
+    historical = json.loads(Path('docs/audits/contract_universe_v1_independent/base_serialized.json').read_text())
+    flow, conn = setup(tmp_path, monkeypatch, SEEDS[0][2], SEEDS[0][3])
+    path = tmp_path / 'conversations/audit.jsonl'
+    path.write_text(historical['conversation'])
+    original = path.read_bytes()
+    try:
+        result = say(flow, 'solo 2026')
+        capture(flow, 'BASE-conversation', result)
+        assert result['needs_clarification']
+        assert not flow.audit_trace['sql']
+        assert path.read_bytes().startswith(original)
+        fresh = say(flow, SEEDS[0][0])
+        assert fresh['total_count'] == 22
+        assert path.read_bytes().startswith(original)
+    finally:
+        conn.close()
