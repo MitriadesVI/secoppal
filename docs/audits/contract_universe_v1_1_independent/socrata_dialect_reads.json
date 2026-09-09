@@ -1,0 +1,51 @@
+{
+  "purpose": "Section 8: accredit the Socrata dialect for date_extract_y on jbjy-vk9h.fecha_de_firma. Read-only, bounded, no national sweep or count.",
+  "budget": "4 of 4 public reads used",
+  "observed_at": "2026-09-08",
+  "credentials": "none (anonymous public endpoint)",
+  "reads": [
+    {
+      "n": 1,
+      "url": "https://www.datos.gov.co/api/views/jbjy-vk9h.json",
+      "purpose": "column types",
+      "http_status": 200,
+      "finding": "dataset 'SECOP II - Contratos Electronicos'; fecha_de_firma dataTypeName=calendar_date (typed floating timestamp); estado_contrato dataTypeName=text"
+    },
+    {
+      "n": 2,
+      "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+      "params": {
+        "$select": "id_contrato,estado_contrato,fecha_de_firma",
+        "$where": "upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL",
+        "$limit": "1"
+      },
+      "http_status": 200,
+      "finding": "predicate accepted; row CO1.PCCNTR.1432296 / Aprobado / 2020-03-09T00:00:00.000 returned"
+    },
+    {
+      "n": 3,
+      "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+      "params": {
+        "$where": "upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NULL",
+        "$limit": "2"
+      },
+      "http_status": "000 (client timeout after 20s)",
+      "finding": "TIMEOUT. A timeout is not absence: this read accredits NOTHING about whether Aprobado rows without a usable date exist, nor about their count."
+    },
+    {
+      "n": 4,
+      "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+      "params": {
+        "$select": "id_contrato,estado_contrato,fecha_de_firma",
+        "$where": "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND id_contrato = 'CO1.PCCNTR.1432296'",
+        "$limit": "1"
+      },
+      "http_status": 200,
+      "finding": "the COMPLETE production predicate emitted by predicate() is accepted verbatim by the live source and admits the Aprobado+date row"
+    }
+  ],
+  "limits": [
+    "Two rows observed in total; no counts, no distribution, no national claim.",
+    "The 'Aprobado without usable date is excluded' half is accredited by the Python/SQL parity matrix and by the typed calendar_date semantics of the column, not by a live observation: read 3 timed out."
+  ]
+}

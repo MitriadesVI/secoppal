@@ -1,0 +1,155 @@
+{
+  "worktree_clean_after": true,
+  "dirty": "",
+  "results": [
+    {
+      "mutation": "NEW-1_lexical_global_match",
+      "file": "app/core/contract_universe_intent.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_f1_f5.py::test_f1_a_object_words_do_not_become_state",
+        "tests/test_cu_v11_audit_f1_f5.py::test_f1_counterproof_object_words_never_change_universe"
+      ],
+      "exit_code": 1,
+      "summary": "3 failed, 3 passed in 1.34s",
+      "failed": 3,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "NEW-2_params_become_source_records",
+      "file": "app/core/contract_universe_intent.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_f1_f5.py::test_f4_materialized_params_are_not_consent"
+      ],
+      "exit_code": 1,
+      "summary": "4 failed, 4 passed in 0.61s",
+      "failed": 4,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "NEW-3_global_record_terms",
+      "file": "app/core/entity_profile/render.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_f1_f5.py::test_f3_source_content_is_immutable"
+      ],
+      "exit_code": 1,
+      "summary": "1 failed, 3 passed in 1.10s",
+      "failed": 1,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "NEW-4_first_state_wins",
+      "file": "app/core/contract_universe_intent.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_f1_f5.py::test_f2_two_states_clarify_with_zero_sql"
+      ],
+      "exit_code": 1,
+      "summary": "2 failed in 0.84s",
+      "failed": 2,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "NEW-5_dual_veto_by_procesos",
+      "file": "app/core/contract_universe_intent.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_f1_f5.py::test_f5_a_dual_records_clarifies_without_any_child"
+      ],
+      "exit_code": 1,
+      "summary": "4 failed in 1.08s",
+      "failed": 4,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "NEW-6_aprobado_without_date_included",
+      "file": "app/core/contract_universe.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_aprobado.py::test_aprobado_requires_a_usable_date",
+        "tests/test_cu_v11_audit_aprobado.py::test_python_and_sql_agree"
+      ],
+      "exit_code": 1,
+      "summary": "12 failed, 141 passed in 0.23s",
+      "failed": 12,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "NEW-6b_aprobado_sql_without_date",
+      "file": "app/core/contract_universe.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_ports.py::test_port_independent_sql_matrix",
+        "tests/test_cu_v11_audit_aprobado.py::test_python_and_sql_agree"
+      ],
+      "exit_code": 1,
+      "summary": "10 failed, 138 passed in 1.20s",
+      "failed": 10,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "PRIOR-1_count_without_policy",
+      "file": "app/core/soql_builder.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_ports.py::test_port_independent_sql_matrix"
+      ],
+      "exit_code": 1,
+      "summary": "4 failed in 1.11s",
+      "failed": 4,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "PRIOR-2_frame_without_policy",
+      "file": "app/core/entity_profile/frame_predicates.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_ports.py::test_port_independent_sql_matrix",
+        "tests/test_cu_v11_audit_f1_f5.py::test_f5_b_ordinary_dual_executes_both_children"
+      ],
+      "exit_code": 1,
+      "summary": "2 failed, 6 passed in 1.57s",
+      "failed": 2,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "PRIOR-3_filter_after_limit",
+      "file": "app/core/soql_builder.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_ports.py::test_port_independent_sql_matrix"
+      ],
+      "exit_code": 1,
+      "summary": "4 failed in 1.11s",
+      "failed": 4,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    },
+    {
+      "mutation": "PRIOR-4_universe_lost_on_reload",
+      "file": "app/core/contract_universe.py",
+      "applied": true,
+      "killers": [
+        "tests/test_cu_v11_audit_persistence.py::test_v1_params_are_not_silently_reinterpreted",
+        "tests/test_cu_v11_audit_persistence.py::test_v1_conversation_is_preserved_and_a_fresh_search_still_works",
+        "tests/test_cu_v11_audit_ports.py::test_port_radar_cancellation_event_and_digest"
+      ],
+      "exit_code": 1,
+      "summary": "2 failed, 1 passed in 0.87s",
+      "failed": 2,
+      "errors": 0,
+      "killed_by_product_assertion": true
+    }
+  ]
+}

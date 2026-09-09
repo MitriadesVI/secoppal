@@ -1,0 +1,834 @@
+{
+  "candidate": "067b39770592640b5aef3898cbc99d8f82c59e0f",
+  "policy_version": "contract-universe-1",
+  "catalog_version": "entity-profile-frame-2-contract-universe-1",
+  "params": {
+    "dataset": "contratos",
+    "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+    "valor_min": 500000000,
+    "contract_universe": "celebrated",
+    "contract_universe_version": "contract-universe-1"
+  },
+  "conversation": "{\"turn_id\": \"26f257c5a0fa\", \"timestamp\": \"2026-09-09T02:39:08.939776+00:00\", \"chat_id\": \"audit\", \"user_query\": \"contratos de alcaldia de cartagena por mas de 500 millones\", \"response\": \"Historical V1 search\", \"parsed_params\": {\"dataset\": \"contratos\", \"entidad_resolved\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\", \"valor_min\": 500000000, \"contract_universe\": \"celebrated\", \"contract_universe_version\": \"contract-universe-1\"}, \"result_ids\": [\"V1-ROW\"], \"trace_id\": \"\", \"suggestions\": [], \"outcome\": \"\", \"outcome_reason\": \"\", \"result_count\": 0, \"query_fingerprint\": \"\"}\n",
+  "buffer": {
+    "query_fingerprint": "fdd8cddd56b84ea979a0fdcd82602ca9f1e96a416062fe10a2ea5aff99a3c92c",
+    "group": "contratos",
+    "dataset_id": "jbjy-vk9h",
+    "query_params": {
+      "dataset": "contratos",
+      "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "valor_min": 500000000,
+      "contract_universe": "celebrated",
+      "contract_universe_version": "contract-universe-1"
+    },
+    "candidate_buffer": [
+      {
+        "id_contrato": "V1-ROW"
+      }
+    ],
+    "validated_ranked_buffer": [
+      {
+        "id_contrato": "V1-ROW"
+      }
+    ],
+    "display_cursor": 1,
+    "source_cursor": 50,
+    "source_candidate_total": 63,
+    "validated_total_known": 1,
+    "created_at_utc": "2026-09-09T02:39:08.941762+00:00",
+    "expires_at_utc": "2026-09-09T02:54:08.941762+00:00",
+    "source_total_approximate": false
+  },
+  "frame": {
+    "schema_version": 2,
+    "frame_id": "48bff209-e7b5-5467-8dbf-7e2f9263a8eb",
+    "revision": 1,
+    "buyer_scope": {
+      "kind": "BUYER_UNIT",
+      "display_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "canonical_buyers": [
+        "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+      ],
+      "authority": "PRODUCT_BUYER_UNIT_RESOLUTION",
+      "authority_version": "1",
+      "group_id": null
+    },
+    "focus": "overview",
+    "source_selection": {
+      "requested": [
+        "CONTRACTS"
+      ],
+      "origin": "EXPLICIT"
+    },
+    "source_predicates": {
+      "CONTRACTS": {
+        "source": "CONTRACTS",
+        "temporal": {
+          "event": "NONE",
+          "period": {
+            "lower": null,
+            "upper": null,
+            "lower_inclusive": true,
+            "upper_inclusive": true,
+            "civil_reference": null,
+            "expression": null
+          },
+          "event_origin": "DEFAULT",
+          "period_origin": "DEFAULT"
+        },
+        "current_state": {
+          "predicates": []
+        },
+        "topic": {
+          "kind": "TRUE"
+        },
+        "modality": {
+          "include": [],
+          "exclude": []
+        },
+        "contract_type": {
+          "include": [],
+          "exclude": []
+        },
+        "value": {
+          "lower": "500000000",
+          "upper": null,
+          "magnitude": "valor del contrato",
+          "currency": "COP"
+        },
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1"
+      }
+    },
+    "provenance": {
+      "claim_ids": [
+        "source-1",
+        "value-1"
+      ],
+      "turn_ids": [
+        "t1"
+      ],
+      "authorities": []
+    }
+  },
+  "plan": {
+    "plan_id": "e3aee7d9-ef65-468e-90ee-da06c10ddc85",
+    "frame_ref": [
+      "48bff209-e7b5-5467-8dbf-7e2f9263a8eb",
+      1
+    ],
+    "catalog_version": "entity-profile-frame-2-contract-universe-1",
+    "focus": "overview",
+    "source_plans": {
+      "CONTRACTS": {
+        "source": "CONTRACTS",
+        "dataset_id": "jbjy-vk9h",
+        "predicates": {
+          "source": "CONTRACTS",
+          "temporal": {
+            "event": "NONE",
+            "period": {
+              "lower": null,
+              "upper": null,
+              "lower_inclusive": true,
+              "upper_inclusive": true,
+              "civil_reference": null,
+              "expression": null
+            },
+            "event_origin": "DEFAULT",
+            "period_origin": "DEFAULT"
+          },
+          "current_state": {
+            "predicates": []
+          },
+          "topic": {},
+          "modality": {
+            "include": [],
+            "exclude": []
+          },
+          "contract_type": {
+            "include": [],
+            "exclude": []
+          },
+          "value": {
+            "lower": "500000000",
+            "upper": null,
+            "magnitude": "valor del contrato",
+            "currency": "COP"
+          },
+          "contract_universe": "celebrated",
+          "contract_universe_version": "contract-universe-1"
+        },
+        "where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000",
+        "temporal_basis": "fecha_de_firma",
+        "value_magnitude": "valor del contrato",
+        "fingerprint": "source:CONTRACTS|event:NONE/period:UNBOUNDED|state:TRUE|topic:TRUE|modality:in:/ex:|contract_type:in:/ex:|value:500000000,:valor del contrato|universe:contract-universe-1:celebrated"
+      }
+    },
+    "jobs": [
+      {
+        "job_id": "contract_values@source:CONTR",
+        "call_id": "contract_values",
+        "aspect": "activity_values",
+        "source": "CONTRACTS",
+        "dataset_id": "jbjy-vk9h",
+        "operation": "aggregate",
+        "sql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000"
+      },
+      {
+        "job_id": "supplier_count@source:CONTR",
+        "call_id": "supplier_count",
+        "aspect": "suppliers",
+        "source": "CONTRACTS",
+        "dataset_id": "jbjy-vk9h",
+        "operation": "aggregate",
+        "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000 AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+      },
+      {
+        "job_id": "supplier_value@source:CONTR",
+        "call_id": "supplier_value",
+        "aspect": "suppliers",
+        "source": "CONTRACTS",
+        "dataset_id": "jbjy-vk9h",
+        "operation": "aggregate",
+        "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000 AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+      },
+      {
+        "job_id": "recent_contracts@source:CONTR",
+        "call_id": "recent_contracts",
+        "aspect": "recent",
+        "source": "CONTRACTS",
+        "dataset_id": "jbjy-vk9h",
+        "operation": "query",
+        "sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3"
+      }
+    ],
+    "limitations": [],
+    "buyer_scope": {
+      "kind": "BUYER_UNIT",
+      "display_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "canonical_buyers": [
+        "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+      ],
+      "authority": "PRODUCT_BUYER_UNIT_RESOLUTION",
+      "authority_version": "1",
+      "group_id": null
+    }
+  },
+  "execution_record": {
+    "plan_digest": "8a8e82409903a5829fa19a0eae4f7230fe7e80cc936af9b9ec896674d55f964d",
+    "authorized_plan": {
+      "plan_id": "cd8352ae-ea9c-4757-9609-1221e554f42d",
+      "frame_ref": [
+        "c2feed9d-ea64-5722-aec4-bfaf80a68d17",
+        1
+      ],
+      "catalog_version": "entity-profile-frame-2-contract-universe-1",
+      "focus": "overview",
+      "source_plans": {
+        "CONTRACTS": {
+          "source": "CONTRACTS",
+          "dataset_id": "jbjy-vk9h",
+          "predicates": {
+            "source": "CONTRACTS",
+            "temporal": {
+              "event": "NONE",
+              "period": {
+                "lower": null,
+                "upper": null,
+                "lower_inclusive": true,
+                "upper_inclusive": true,
+                "civil_reference": null,
+                "expression": null
+              },
+              "event_origin": "DEFAULT",
+              "period_origin": "DEFAULT"
+            },
+            "current_state": {
+              "predicates": []
+            },
+            "topic": {},
+            "modality": {
+              "include": [],
+              "exclude": []
+            },
+            "contract_type": {
+              "include": [],
+              "exclude": []
+            },
+            "value": {
+              "lower": "500000000",
+              "upper": null,
+              "magnitude": "valor del contrato",
+              "currency": "COP"
+            },
+            "contract_universe": "celebrated",
+            "contract_universe_version": "contract-universe-1"
+          },
+          "where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000",
+          "temporal_basis": "fecha_de_firma",
+          "value_magnitude": "valor del contrato",
+          "fingerprint": "source:CONTRACTS|event:NONE/period:UNBOUNDED|state:TRUE|topic:TRUE|modality:in:/ex:|contract_type:in:/ex:|value:500000000,:valor del contrato|universe:contract-universe-1:celebrated"
+        }
+      },
+      "jobs": [
+        {
+          "job_id": "contract_values@source:CONTR",
+          "call_id": "contract_values",
+          "aspect": "activity_values",
+          "source": "CONTRACTS",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "sql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000"
+        },
+        {
+          "job_id": "supplier_count@source:CONTR",
+          "call_id": "supplier_count",
+          "aspect": "suppliers",
+          "source": "CONTRACTS",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000 AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+        },
+        {
+          "job_id": "supplier_value@source:CONTR",
+          "call_id": "supplier_value",
+          "aspect": "suppliers",
+          "source": "CONTRACTS",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "aggregate",
+          "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000 AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5"
+        },
+        {
+          "job_id": "recent_contracts@source:CONTR",
+          "call_id": "recent_contracts",
+          "aspect": "recent",
+          "source": "CONTRACTS",
+          "dataset_id": "jbjy-vk9h",
+          "operation": "query",
+          "sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3"
+        }
+      ],
+      "limitations": [],
+      "buyer_scope": {
+        "kind": "BUYER_UNIT",
+        "display_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "canonical_buyers": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ],
+        "authority": "PRODUCT_BUYER_UNIT_RESOLUTION",
+        "authority_version": "1",
+        "group_id": null
+      }
+    },
+    "confirmed_frame": {
+      "schema_version": 2,
+      "frame_id": "c2feed9d-ea64-5722-aec4-bfaf80a68d17",
+      "revision": 1,
+      "buyer_scope": {
+        "kind": "BUYER_UNIT",
+        "display_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "canonical_buyers": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ],
+        "authority": "PRODUCT_BUYER_UNIT_RESOLUTION",
+        "authority_version": "1",
+        "group_id": null
+      },
+      "focus": "overview",
+      "source_selection": {
+        "requested": [
+          "CONTRACTS"
+        ],
+        "origin": "EXPLICIT"
+      },
+      "source_predicates": {
+        "CONTRACTS": {
+          "source": "CONTRACTS",
+          "temporal": {
+            "event": "NONE",
+            "period": {
+              "lower": null,
+              "upper": null,
+              "lower_inclusive": true,
+              "upper_inclusive": true,
+              "civil_reference": null,
+              "expression": null
+            },
+            "event_origin": "DEFAULT",
+            "period_origin": "DEFAULT"
+          },
+          "current_state": {
+            "predicates": []
+          },
+          "topic": {
+            "kind": "TRUE"
+          },
+          "modality": {
+            "include": [],
+            "exclude": []
+          },
+          "contract_type": {
+            "include": [],
+            "exclude": []
+          },
+          "value": {
+            "lower": "500000000",
+            "upper": null,
+            "magnitude": "valor del contrato",
+            "currency": "COP"
+          },
+          "contract_universe": "celebrated",
+          "contract_universe_version": "contract-universe-1"
+        }
+      },
+      "provenance": {
+        "claim_ids": [
+          "source-1",
+          "value-1"
+        ],
+        "turn_ids": [
+          "V1"
+        ],
+        "authorities": []
+      }
+    },
+    "schema_version": 1,
+    "record_id": "ce33c190b95c4e7b",
+    "plan_id": "cd8352ae-ea9c-4757-9609-1221e554f42d",
+    "frame_ref": [
+      "c2feed9d-ea64-5722-aec4-bfaf80a68d17",
+      1
+    ],
+    "catalog_version": "entity-profile-frame-2-contract-universe-1",
+    "focus": "overview",
+    "expected_sections": [
+      "activity",
+      "recent",
+      "suppliers",
+      "temporal",
+      "values"
+    ],
+    "not_requested_sections": [
+      "modalities"
+    ],
+    "limitations": [],
+    "calls": [
+      {
+        "job_id": "contract_values@source:CONTR",
+        "call_id": "contract_values",
+        "dataset_id": "jbjy-vk9h",
+        "predicate_fingerprint": "source:CONTRACTS|event:NONE/period:UNBOUNDED|state:TRUE|topic:TRUE|modality:in:/ex:|contract_type:in:/ex:|value:500000000,:valor del contrato|universe:contract-universe-1:celebrated",
+        "sql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000",
+        "status": "SUCCESS",
+        "attempted": true,
+        "metrics": [
+          {
+            "name": "contract_count",
+            "value": "63",
+            "status": "VALID"
+          },
+          {
+            "name": "total_contract_value",
+            "value": "31500000063",
+            "status": "VALID"
+          },
+          {
+            "name": "average_contract_value",
+            "value": "500000001.0",
+            "status": "VALID"
+          }
+        ]
+      },
+      {
+        "job_id": "supplier_count@source:CONTR",
+        "call_id": "supplier_count",
+        "dataset_id": "jbjy-vk9h",
+        "predicate_fingerprint": "source:CONTRACTS|event:NONE/period:UNBOUNDED|state:TRUE|topic:TRUE|modality:in:/ex:|contract_type:in:/ex:|value:500000000,:valor del contrato|universe:contract-universe-1:celebrated",
+        "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000 AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+        "status": "SUCCESS",
+        "attempted": true,
+        "metrics": [
+          {
+            "name": "documento_proveedor",
+            "value": "71000001",
+            "status": "VALID"
+          },
+          {
+            "name": "tipodocproveedor",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "supplier_name",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "contract_count",
+            "value": "62",
+            "status": "VALID"
+          },
+          {
+            "name": "total_contract_value",
+            "value": "31000000062",
+            "status": "VALID"
+          },
+          {
+            "name": "documento_proveedor",
+            "value": "71000999",
+            "status": "VALID"
+          },
+          {
+            "name": "tipodocproveedor",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "supplier_name",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "contract_count",
+            "value": "1",
+            "status": "VALID"
+          },
+          {
+            "name": "total_contract_value",
+            "value": "500000001",
+            "status": "VALID"
+          }
+        ]
+      },
+      {
+        "job_id": "supplier_value@source:CONTR",
+        "call_id": "supplier_value",
+        "dataset_id": "jbjy-vk9h",
+        "predicate_fingerprint": "source:CONTRACTS|event:NONE/period:UNBOUNDED|state:TRUE|topic:TRUE|modality:in:/ex:|contract_type:in:/ex:|value:500000000,:valor del contrato|universe:contract-universe-1:celebrated",
+        "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000 AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+        "status": "SUCCESS",
+        "attempted": true,
+        "metrics": [
+          {
+            "name": "documento_proveedor",
+            "value": "71000001",
+            "status": "VALID"
+          },
+          {
+            "name": "tipodocproveedor",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "supplier_name",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "contract_count",
+            "value": "62",
+            "status": "VALID"
+          },
+          {
+            "name": "total_contract_value",
+            "value": "31000000062",
+            "status": "VALID"
+          },
+          {
+            "name": "documento_proveedor",
+            "value": "71000999",
+            "status": "VALID"
+          },
+          {
+            "name": "tipodocproveedor",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "supplier_name",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "contract_count",
+            "value": "1",
+            "status": "VALID"
+          },
+          {
+            "name": "total_contract_value",
+            "value": "500000001",
+            "status": "VALID"
+          }
+        ]
+      },
+      {
+        "job_id": "recent_contracts@source:CONTR",
+        "call_id": "recent_contracts",
+        "dataset_id": "jbjy-vk9h",
+        "predicate_fingerprint": "source:CONTRACTS|event:NONE/period:UNBOUNDED|state:TRUE|topic:TRUE|modality:in:/ex:|contract_type:in:/ex:|value:500000000,:valor del contrato|universe:contract-universe-1:celebrated",
+        "sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%')) AND upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'APROBADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO') AND valor_del_contrato >= 500000000 ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+        "status": "SUCCESS",
+        "attempted": true,
+        "metrics": [
+          {
+            "name": "id_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "referencia_del_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "nombre_entidad",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "departamento",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "ciudad",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "objeto_del_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "descripcion_del_proceso",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "tipo_de_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "modalidad_de_contratacion",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "valor_del_contrato",
+            "value": "500000001",
+            "status": "VALID"
+          },
+          {
+            "name": "valor_facturado",
+            "value": "0",
+            "status": "VALID"
+          },
+          {
+            "name": "estado_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "fecha_de_firma",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "proveedor_adjudicado",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "documento_proveedor",
+            "value": "71000001",
+            "status": "VALID"
+          },
+          {
+            "name": "urlproceso",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "tipodocproveedor",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "id_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "referencia_del_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "nombre_entidad",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "departamento",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "ciudad",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "objeto_del_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "descripcion_del_proceso",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "tipo_de_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "modalidad_de_contratacion",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "valor_del_contrato",
+            "value": "500000001",
+            "status": "VALID"
+          },
+          {
+            "name": "valor_facturado",
+            "value": "0",
+            "status": "VALID"
+          },
+          {
+            "name": "estado_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "fecha_de_firma",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "proveedor_adjudicado",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "documento_proveedor",
+            "value": "71000001",
+            "status": "VALID"
+          },
+          {
+            "name": "urlproceso",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "tipodocproveedor",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "id_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "referencia_del_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "nombre_entidad",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "departamento",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "ciudad",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "objeto_del_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "descripcion_del_proceso",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "tipo_de_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "modalidad_de_contratacion",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "valor_del_contrato",
+            "value": "500000001",
+            "status": "VALID"
+          },
+          {
+            "name": "valor_facturado",
+            "value": "0",
+            "status": "VALID"
+          },
+          {
+            "name": "estado_contrato",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "fecha_de_firma",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "proveedor_adjudicado",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "documento_proveedor",
+            "value": "71000001",
+            "status": "VALID"
+          },
+          {
+            "name": "urlproceso",
+            "value": null,
+            "status": "INVALID"
+          },
+          {
+            "name": "tipodocproveedor",
+            "value": null,
+            "status": "INVALID"
+          }
+        ]
+      }
+    ]
+  },
+  "radar_query_frame_json": "{\"dataset\": \"contratos\", \"dataset_explicit\": false, \"scope\": {\"entidad_resolved\": \"ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS\"}, \"topic\": [], \"objeto_exclude\": [], \"modifiers\": {\"valor_min\": 500000000, \"contract_universe\": \"celebrated\", \"contract_universe_version\": \"contract-universe-1\"}, \"raw_params\": {\"objeto\": []}, \"intent_type\": \"new_search\"}"
+}

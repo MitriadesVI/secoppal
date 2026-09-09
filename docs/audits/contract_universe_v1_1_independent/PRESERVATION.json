@@ -1,0 +1,69 @@
+{
+  "base_main": "c52d7eda355f44278164d4cb9803a199eec83486",
+  "v1_candidate": "067b39770592640b5aef3898cbc99d8f82c59e0f",
+  "first_audit": "2fb9c6e2974803a8ae46b3fcc27257e200e4609d",
+  "v11_tested_sha": "8fc5643651d6a603d3bc3849369d9773ab55ea11",
+  "v11_final_head": "2e564d06a4f18a8ef4d3b5a1fa462000e21a00da",
+  "audit_branch": "audit/contract-universe-v1-1-independent",
+  "tested_sha_is_ancestor_of_head": true,
+  "delta_after_tested_sha": {
+    "files": 32,
+    "touches_app_tests_scripts": []
+  },
+  "runtime_changed_v1_to_v11": [
+    "app/core/contract_universe.py",
+    "app/core/contract_universe_intent.py",
+    "app/core/entity_profile/claim_adapters.py",
+    "app/core/entity_profile/frame_compiler.py",
+    "app/core/entity_profile/frame_response.py",
+    "app/core/entity_profile/render.py",
+    "app/core/entity_profile/universe_claims.py",
+    "app/core/query_router.py",
+    "app/core/truth_layer/contract_signature.py"
+  ],
+  "runtime_declared": [
+    "app/core/contract_universe.py",
+    "app/core/contract_universe_intent.py",
+    "app/core/entity_profile/claim_adapters.py",
+    "app/core/entity_profile/frame_compiler.py",
+    "app/core/entity_profile/frame_response.py",
+    "app/core/entity_profile/render.py",
+    "app/core/entity_profile/universe_claims.py",
+    "app/core/query_router.py",
+    "app/core/truth_layer/contract_signature.py"
+  ],
+  "runtime_matches_declaration": true,
+  "frozen_independent_tests": {
+    "tests/contract_universe_independent_base_generator.py": {
+      "sha256_first_audit": "f261cb35ff9ca01509117114b84a9bcddb0b6670128dfea58aea5650ea7ff0c2",
+      "sha256_v11_head": "f261cb35ff9ca01509117114b84a9bcddb0b6670128dfea58aea5650ea7ff0c2",
+      "identical": true
+    },
+    "tests/contract_universe_independent_support.py": {
+      "sha256_first_audit": "4bda61270f8cb4132b8f8546b210f62cbc236720860dec3a8e124212028fe5ea",
+      "sha256_v11_head": "4bda61270f8cb4132b8f8546b210f62cbc236720860dec3a8e124212028fe5ea",
+      "identical": true
+    },
+    "tests/test_contract_universe_independent.py": {
+      "sha256_first_audit": "63ed0c7ae42f9617d995cd0b920727c800609a2856b878854063e8da40723f59",
+      "sha256_v11_head": "63ed0c7ae42f9617d995cd0b920727c800609a2856b878854063e8da40723f59",
+      "identical": true
+    },
+    "tests/test_contract_universe_independent_consumers.py": {
+      "sha256_first_audit": "ba1311fa49117e02dbb90fd312a422d05f052b9aeec64f73b2333875bcd5b8b0",
+      "sha256_v11_head": "ba1311fa49117e02dbb90fd312a422d05f052b9aeec64f73b2333875bcd5b8b0",
+      "identical": true
+    },
+    "tests/test_contract_universe_independent_legacy.py": {
+      "sha256_first_audit": "23032541143a9b18eb6079b49b836b9cf48a1997639c996ee8a010c814c27259",
+      "sha256_v11_head": "23032541143a9b18eb6079b49b836b9cf48a1997639c996ee8a010c814c27259",
+      "identical": true
+    },
+    "tests/test_contract_universe_independent_safety.py": {
+      "sha256_first_audit": "506e17ceef55f7c48d8d409674e04fad18928175a2c33e58bc7f40c488c6a456",
+      "sha256_v11_head": "506e17ceef55f7c48d8d409674e04fad18928175a2c33e58bc7f40c488c6a456",
+      "identical": true
+    }
+  },
+  "all_frozen_identical": true
+}
