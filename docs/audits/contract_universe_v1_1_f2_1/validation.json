@@ -1,0 +1,293 @@
+{
+  "ruff": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "app/",
+      "tests/",
+      "scripts/"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "All checks passed!"
+    ],
+    "stderr_tail": []
+  },
+  "semgrep": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/semgrep",
+      "--config",
+      ".semgrep/secoppal-laws.yml",
+      "app/",
+      "--metrics=off"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "                                                                                                       ",
+      "           93┆ try:",
+      "           94┆     from app.core.contextual_suggestions import compute_contextual_filters",
+      "           95┆     result[\"contextual_filters\"] = compute_contextual_filters(",
+      "           96┆         results, ds_id, params,",
+      "           97┆     )",
+      "           98┆ except Exception:",
+      "           99┆     pass"
+    ],
+    "stderr_tail": [
+      "   ◦ Files larger than  files 1.0 MB: 1",
+      " • Scan was limited to files tracked by git",
+      " • For a detailed list of skipped files and lines, run semgrep with the --verbose flag",
+      "Ran 3 rules on 331 files: 10 findings."
+    ]
+  },
+  "f2_1_symmetry": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_f2_1_symmetry.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "..............................................                           [100%]",
+      "46 passed in 5.39s"
+    ],
+    "stderr_tail": []
+  },
+  "auditor_findings_now_green": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_cu_v11_audit_findings.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "........                                                                 [100%]",
+      "8 passed in 1.38s"
+    ],
+    "stderr_tail": []
+  },
+  "auditor_rest": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_cu_v11_audit_ports.py",
+      "tests/test_cu_v11_audit_f1_f5.py",
+      "tests/test_cu_v11_audit_aprobado.py",
+      "tests/test_cu_v11_audit_persistence.py",
+      "tests/test_cu_v11_audit_regressions.py",
+      "tests/test_cu_v11_audit_properties.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "........................................................................ [ 18%]",
+      "........................................................................ [ 36%]",
+      "........................................................................ [ 55%]",
+      "........................................................................ [ 73%]",
+      "........................................................................ [ 92%]",
+      "..............................                                           [100%]",
+      "390 passed in 9.28s"
+    ],
+    "stderr_tail": []
+  },
+  "remediation_85": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_remediation.py",
+      "tests/test_contract_universe_remediation_consumers.py",
+      "tests/test_contract_universe_remediation_properties.py",
+      "tests/test_contract_universe_remediation_legacy.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "........................................................................ [ 84%]",
+      ".............                                                            [100%]",
+      "85 passed in 8.73s"
+    ],
+    "stderr_tail": []
+  },
+  "author_targets": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_product.py",
+      "tests/test_contract_universe_consumers.py",
+      "tests/test_contract_universe_properties.py",
+      "tests/test_soql_builder.py",
+      "tests/test_soql_builder_phrase.py",
+      "tests/test_observer.py",
+      "tests/test_observer_partial.py",
+      "tests/test_observer_signals.py",
+      "tests/test_analytical_queries.py",
+      "tests/test_actor_profile.py",
+      "tests/test_actor_profile_scope.py",
+      "tests/test_actor_profile_render.py",
+      "tests/test_actor_profile_scope_conversation.py",
+      "tests/test_contract_invariants.py",
+      "tests/test_truth_layer_contract_signature.py",
+      "tests/test_entity_profile_frame_b_semantics.py",
+      "tests/test_entity_profile_frame_b_admission.py",
+      "tests/test_entity_profile_frame_catalog_parity.py",
+      "tests/test_module_size_limits.py",
+      "tests/test_entity_profile_frame_core.py",
+      "tests/test_entity_profile_frame_migration.py",
+      "tests/test_entity_profile_frame_properties.py",
+      "tests/test_entity_profile_semantic_corpus.py",
+      "tests/test_buyer_actor_independent_product.py",
+      "tests/test_buyer_actor_independent_boundaries.py",
+      "tests/test_entity_profile_source_plan.py",
+      "tests/test_radar_builder.py",
+      "tests/test_radar_runner.py",
+      "tests/test_query_router.py",
+      "tests/test_estado_families_integrity.py",
+      "tests/test_pagination_buffer.py",
+      "tests/test_pagination_buffer_lifecycle.py",
+      "tests/test_export_xlsx.py",
+      "tests/test_truth_layer_public_parity.py",
+      "tests/test_entity_profile_frame_b_integration.py",
+      "tests/test_entity_profile_frame_b_publication.py",
+      "tests/test_entity_profile_frame_evidence.py",
+      "tests/test_entity_profile_frame_b_properties.py",
+      "tests/test_entity_profile_frame_independent_contracts.py",
+      "tests/test_entity_profile_workflow.py",
+      "tests/test_entity_profile_conversation_scope.py",
+      "tests/test_entity_profile_queries.py",
+      "-q",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "........................................................................ [ 65%]",
+      "........................................................................ [ 70%]",
+      "........................................................................ [ 76%]",
+      "........................................................................ [ 82%]",
+      "........................................................................ [ 88%]",
+      "........................................................................ [ 94%]",
+      ".................................................................        [100%]",
+      "1217 passed in 71.35s (0:01:11)"
+    ],
+    "stderr_tail": []
+  },
+  "frozen_43_literal": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "tests/test_contract_universe_independent.py",
+      "tests/test_contract_universe_independent_consumers.py",
+      "tests/test_contract_universe_independent_legacy.py",
+      "tests/test_contract_universe_independent_safety.py",
+      "tests/test_module_size_limits.py",
+      "-q",
+      "--tb=no"
+    ],
+    "exit_code": 1,
+    "stdout_tail": [
+      "FAILED tests/test_contract_universe_independent.py::test_independent_sql_matrix[True-seed1]",
+      "FAILED tests/test_contract_universe_independent.py::test_direct_record_does_not_leak_to_search",
+      "FAILED tests/test_contract_universe_independent.py::test_radar_cancellation_event_and_digest",
+      "FAILED tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[False]",
+      "FAILED tests/test_contract_universe_independent_consumers.py::test_actor_name_state_word_has_no_universe_authority[True]",
+      "FAILED tests/test_contract_universe_independent_consumers.py::test_materialized_dual_children_and_source_names[celebrated-24]",
+      "FAILED tests/test_contract_universe_independent_legacy.py::test_real_base_conversation_requires_review",
+      "10 failed, 33 passed in 5.72s"
+    ],
+    "stderr_tail": []
+  },
+  "frozen_43_with_v1_aprobado_shim": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-p",
+      "tests.contract_universe_offline_guard",
+      "-p",
+      "tests.contract_universe_sql_dates",
+      "-p",
+      "tests.cu_v1_policy_shim",
+      "tests/test_contract_universe_independent.py",
+      "tests/test_contract_universe_independent_consumers.py",
+      "tests/test_contract_universe_independent_legacy.py",
+      "tests/test_contract_universe_independent_safety.py",
+      "tests/test_module_size_limits.py",
+      "-q",
+      "--tb=no"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "...........................................                              [100%]",
+      "43 passed in 5.38s"
+    ],
+    "stderr_tail": []
+  },
+  "corpus": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python",
+      "scripts/run_query_corpus.py",
+      "--mode",
+      "all"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "Summary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)"
+    ],
+    "stderr_tail": []
+  },
+  "lint_core": {
+    "command": [
+      "make",
+      "lint-core"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [
+      "app/core/ limpio"
+    ],
+    "stderr_tail": []
+  },
+  "diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout_tail": [],
+    "stderr_tail": []
+  }
+}

@@ -1,0 +1,320 @@
+{
+  "before_sha": "2e564d06a4f18a8ef4d3b5a1fa462000e21a00da",
+  "rows": [
+    {
+      "query": "registros celebrados y cancelados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": false,
+        "control": "cancelados "
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros celebrados y cancelados "
+      }
+    },
+    {
+      "query": "registros celebrados y borradores de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Borrador",
+        "conflict": false,
+        "control": "borradores "
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Borrador",
+        "conflict": true,
+        "control": "registros celebrados y borradores "
+      }
+    },
+    {
+      "query": "registros firmados y cancelados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": false,
+        "control": "cancelados "
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros firmados y cancelados "
+      }
+    },
+    {
+      "query": "registros suscritos y cancelados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": false,
+        "control": "cancelados "
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros suscritos y cancelados "
+      }
+    },
+    {
+      "query": "registros suspendidos y cancelados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": false,
+        "control": "cancelados "
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros suspendidos y cancelados "
+      }
+    },
+    {
+      "query": "registros aprobados y cancelados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": false,
+        "control": "cancelados "
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros aprobados y cancelados "
+      }
+    },
+    {
+      "query": "registros cancelados y borradores de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": null,
+        "conflict": true,
+        "control": "registros cancelados y borradores"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": null,
+        "conflict": true,
+        "control": "registros cancelados y borradores"
+      }
+    },
+    {
+      "query": "registros cancelados y celebrados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros cancelados"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros cancelados y celebrados"
+      }
+    },
+    {
+      "query": "registros borradores y celebrados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Borrador",
+        "conflict": true,
+        "control": "registros borradores"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Borrador",
+        "conflict": true,
+        "control": "registros borradores y celebrados"
+      }
+    },
+    {
+      "query": "registros cancelados y firmados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros cancelados"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros cancelados y firmados"
+      }
+    },
+    {
+      "query": "registros cancelados y suscritos de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": false,
+        "control": "registros cancelados"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros cancelados y suscritos"
+      }
+    },
+    {
+      "query": "registros cancelados y suspendidos de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros cancelados"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros cancelados y suspendidos"
+      }
+    },
+    {
+      "query": "registros cancelados y aprobados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros cancelados"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": true,
+        "control": "registros cancelados y aprobados"
+      }
+    },
+    {
+      "query": "registros borradores y cancelados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": null,
+        "conflict": true,
+        "control": "registros borradores y cancelados"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": null,
+        "conflict": true,
+        "control": "registros borradores y cancelados"
+      }
+    },
+    {
+      "query": "registros cancelados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": false,
+        "control": "registros cancelados"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Cancelado",
+        "conflict": false,
+        "control": "registros cancelados"
+      }
+    },
+    {
+      "query": "registros en borrador de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "Borrador",
+        "conflict": false,
+        "control": "registros en borrador"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "Borrador",
+        "conflict": false,
+        "control": "registros en borrador"
+      }
+    },
+    {
+      "query": "registros enviados al proveedor de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": "enviado Proveedor",
+        "conflict": false,
+        "control": "registros enviados al proveedor"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": "enviado Proveedor",
+        "conflict": false,
+        "control": "registros enviados al proveedor"
+      }
+    },
+    {
+      "query": "contratos celebrados de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "celebrated",
+        "state": null,
+        "conflict": false,
+        "control": ""
+      },
+      "after": {
+        "universe": "celebrated",
+        "state": null,
+        "conflict": false,
+        "control": ""
+      }
+    },
+    {
+      "query": "contratos suspendidos de la Alcaldía de Cartagena",
+      "before": null,
+      "after": null
+    },
+    {
+      "query": "todos los contratos de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "celebrated",
+        "state": null,
+        "conflict": false,
+        "control": ""
+      },
+      "after": {
+        "universe": "celebrated",
+        "state": null,
+        "conflict": false,
+        "control": ""
+      }
+    },
+    {
+      "query": "todos los registros del dataset de la Alcaldía de Cartagena",
+      "before": {
+        "universe": "source_records",
+        "state": null,
+        "conflict": false,
+        "control": "todos los registros del dataset"
+      },
+      "after": {
+        "universe": "source_records",
+        "state": null,
+        "conflict": false,
+        "control": "todos los registros del dataset"
+      }
+    },
+    {
+      "query": "contratos de elaboración de borradores de documentos de la Alcaldía de Cartagena",
+      "before": null,
+      "after": null
+    },
+    {
+      "query": "contratos de custodia de borradores cancelados de archivo de la Alcaldía de Cartagena",
+      "before": null,
+      "after": null
+    }
+  ]
+}

@@ -36,9 +36,13 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
     for surface in protected_surfaces:
         needle = normalize_with_offsets(surface).text
         protected.extend((m.start(), m.end()) for m in re.finditer(re.escape(needle), normalized.text) if needle)
+    from app.core.contract_conditions import read_conditions
     from app.core.entity_profile.clauses import split_clauses
     from app.core.source_occurrence import _is_request_framing, source_request_occurrences
     occurrences = source_request_occurrences(normalized.text)
+    # Every condition the request states, read before any of them is selected.
+    composition = read_conditions(normalized.text, occurrences=occurrences,
+                                  protected=tuple(protected))
     for occurrence in occurrences:
         if occurrence.is_process or any(a < occurrence.span[1] and occurrence.span[0] < b for a, b in protected):
             continue
@@ -64,19 +68,26 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
             if span is None:
                 continue
             states = tuple(_state(t) for t in re.split(r'\s+y\s+', match.group('states'))) if state else ()
-            # Multiple states require clarification until a complete typed union
-            # can be transported by both adapters. Never execute a first match.
-            conflict = len(states) > 1 or any(
-                re.match(r"\s+(?:celebrados?|firmados?|suscritos?)\b", normalized.text[o.span[1]:])
-                for o in occurrences if not o.is_process)
-            tail = normalized.text[match.end():]
-            conflict |= bool(re.match(
-                r'\s+y\s+(?:(?:registros?|contratos?)\s+)?(?:suspendidos?|prorrogados?|aprobados?|cerrados?|terminados?|celebrados?|firmados?)\b', tail))
+            # The adapter transports one state inside one universe. A second
+            # condition anywhere in the request — before the match, after it or
+            # in another coordinated clause — is clarified, never dropped, and
+            # the answer cannot depend on which of the two was written first.
+            conflict = len(states) > 1 or not composition.representable
             # The legacy record adapter cannot accredit a second source child.
             # Preserve the whole request as clarification, before either SQL job.
             conflict |= any(o.is_process for o in occurrences)
+            if conflict and composition.span is not None:
+                whole = normalized.to_original((min(match.start(), composition.span[0]),
+                                                max(match.end(), composition.span[1])))
+                span = whole if whole is not None else span
             return UniverseRequest(ContractUniverse.SOURCE_RECORDS, span,
                                    states[0] if len(states) == 1 else None, conflict)
+    if not composition.representable and composition.span is not None:
+        # No explicit-record pattern owns this request, but it still states an
+        # incompatible composition: clarify rather than widen or execute half.
+        span = normalized.to_original(composition.span)
+        if span is not None:
+            return UniverseRequest(ContractUniverse.CELEBRATED, span, conflict=True)
     for occurrence in occurrences:
         if occurrence.is_process or any(a < occurrence.span[1] and occurrence.span[0] < b for a, b in protected):
             continue
