@@ -1,0 +1,86 @@
+[
+  {
+    "file": "C05_C08.xml",
+    "raw_evidence": "C05_C08.xml.raw.json"
+  },
+  {
+    "file": "M1_exact_to_like.txt",
+    "raw_evidence": "M1_exact_to_like.txt.raw.json"
+  },
+  {
+    "file": "M1_exact_to_like.xml",
+    "raw_evidence": "M1_exact_to_like.xml.raw.json"
+  },
+  {
+    "file": "M1b_unbound_like_to_exact.xml",
+    "raw_evidence": "M1b_unbound_like_to_exact.xml.raw.json"
+  },
+  {
+    "file": "M2_remove_false.xml",
+    "raw_evidence": "M2_remove_false.xml.raw.json"
+  },
+  {
+    "file": "M3_remove_universe.xml",
+    "raw_evidence": "M3_remove_universe.xml.raw.json"
+  },
+  {
+    "file": "M4_fingerprint_collision.txt",
+    "raw_evidence": "M4_fingerprint_collision.txt.raw.json"
+  },
+  {
+    "file": "M4_fingerprint_collision.xml",
+    "raw_evidence": "M4_fingerprint_collision.xml.raw.json"
+  },
+  {
+    "file": "M5_remove_not.xml",
+    "raw_evidence": "M5_remove_not.xml.raw.json"
+  },
+  {
+    "file": "M5b_remove_null_safety.xml",
+    "raw_evidence": "M5b_remove_null_safety.xml.raw.json"
+  },
+  {
+    "file": "after_34.xml",
+    "raw_evidence": "after_34.xml.raw.json"
+  },
+  {
+    "file": "before_34.txt",
+    "raw_evidence": "before_34.txt.raw.json"
+  },
+  {
+    "file": "before_34.xml",
+    "raw_evidence": "before_34.xml.raw.json"
+  },
+  {
+    "file": "candidate_goldens.txt",
+    "raw_evidence": "candidate_goldens.txt.raw.json"
+  },
+  {
+    "file": "changed_modules.xml",
+    "raw_evidence": "changed_modules.xml.raw.json"
+  },
+  {
+    "file": "diff_check_before_log_format.txt",
+    "raw_evidence": "diff_check_before_log_format.txt.raw.json"
+  },
+  {
+    "file": "r3_properties.xml",
+    "raw_evidence": "r3_properties.xml.raw.json"
+  },
+  {
+    "file": "residual_54.txt",
+    "raw_evidence": "residual_54.txt.raw.json"
+  },
+  {
+    "file": "residual_54.xml",
+    "raw_evidence": "residual_54.xml.raw.json"
+  },
+  {
+    "file": "semgrep.txt",
+    "raw_evidence": "semgrep.txt.raw.json"
+  },
+  {
+    "file": "size.xml",
+    "raw_evidence": "size.xml.raw.json"
+  }
+]

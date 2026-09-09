@@ -25,6 +25,7 @@ cu_r3_mutations.py crea copias desechables desde cb02e08, superpone los tests de
 carril y ejecuta cada mutación por separado. Sus siete JUnit acreditan kills.
 cu_r3_report.py verifica evidencia SQL, resultados por nodeid y manifiesto runtime.
 
-Al reproducir sobre un commit cerrado, el overlay de cu_r3_mutations.py debe
-obtener archivos con git diff --name-only cb02e08, en lugar de sólo el diff sin
-commit; se conservan también los dos archivos nuevos explícitos del script.
+El overlay de cu_r3_mutations.py usa git diff --name-only cb02e08, de modo que
+funciona también sobre la entrega ya commiteada. Conserva los dos archivos nuevos
+explícitos. Las versiones TXT/XML de logs sólo eliminan whitespace terminal;
+la evidencia cruda de cada archivo afectado permanece en su *.raw.json.

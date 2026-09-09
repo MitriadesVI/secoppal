@@ -1,0 +1,280 @@
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M1_exact_to_like.txt:84: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M1_exact_to_like.xml:59: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.txt:7: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.txt:14: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.txt:21: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.txt:28: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.txt:35: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.txt:42: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.txt:49: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.txt:56: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.txt:63: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.xml:4: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.xml:9: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.xml:14: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.xml:19: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.xml:24: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.xml:29: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.xml:34: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.xml:39: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/M4_fingerprint_collision.xml:44: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:7: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:14: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:21: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:28: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:35: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:42: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:53: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:60: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:67: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:74: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:81: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:88: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:95: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:102: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:109: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:122: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:130: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:138: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:146: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:154: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:162: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:178: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:185: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:192: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:199: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:206: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:213: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:220: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:227: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.txt:234: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:4: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:9: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:14: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:19: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:24: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:29: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:36: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:41: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:46: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:51: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:56: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:61: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:66: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:71: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:76: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:85: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:91: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:97: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:103: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:109: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:115: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:125: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:130: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:135: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:140: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:145: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:150: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:155: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:160: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/before_34.xml:165: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/candidate_goldens.txt:7: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/candidate_goldens.txt:14: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/candidate_goldens.txt:21: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/candidate_goldens.txt:28: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/candidate_goldens.txt:35: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/candidate_goldens.txt:42: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/candidate_goldens.txt:49: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/candidate_goldens.txt:56: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/candidate_goldens.txt:63: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.txt:17: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.txt:23: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.txt:29: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.txt:36: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.txt:43: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.txt:50: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.txt:117: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.txt:140: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.xml:10: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.xml:16: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.xml:20: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.xml:25: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.xml:30: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.xml:35: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.xml:86: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/residual_54.xml:101: trailing whitespace.
++E
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:1: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:2: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:6: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:12: trailing whitespace.
++          Registra o re-lanza.
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:13: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:17: trailing whitespace.
++               "nombre_del_procedimiento"
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:27: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:33: trailing whitespace.
++          Registra o re-lanza.
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:34: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:49: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:55: trailing whitespace.
++          Registra o re-lanza.
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:56: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:67: trailing whitespace.
++             [hid 9 additional lines, adjust with --max-lines-per-finding]
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:68: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:74: trailing whitespace.
++          Registra o re-lanza.
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:75: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:86: trailing whitespace.
++             [hid 3 additional lines, adjust with --max-lines-per-finding]
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:87: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:93: trailing whitespace.
++          Registra o re-lanza.
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:94: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:105: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:111: trailing whitespace.
++          Registra o re-lanza.
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:112: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:123: trailing whitespace.
++             [hid 171 additional lines, adjust with --max-lines-per-finding]
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:124: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:130: trailing whitespace.
++          Registra o re-lanza.
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:131: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:136: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:142: trailing whitespace.
++          Registra o re-lanza.
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:143: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:152: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:153: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:159: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:160: trailing whitespace.
++
+docs/audits/contract_universe_v1_1_integration_r3_sql_oracles/semgrep.txt:169: trailing whitespace.
++ • Scan skipped:

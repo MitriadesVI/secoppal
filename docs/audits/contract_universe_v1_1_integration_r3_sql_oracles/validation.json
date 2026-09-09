@@ -341,11 +341,13 @@
       "command": [
         "git",
         "diff",
+        "--cached",
+        "cb02e08",
         "--check"
       ],
       "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles",
       "exit_code": 0,
-      "duration_seconds": 0.08407783300208393,
+      "duration_seconds": 0.018134041001758305,
       "stdout": "",
       "stderr": ""
     },
@@ -541,5 +543,6 @@
     "PYTHONHASHSEED": "0",
     "BURR_TELEMETRY_ENABLED": "false"
   },
-  "test_originals_main_base_identical": true
+  "test_originals_main_base_identical": true,
+  "log_presentation": "TXT/XML trim terminal whitespace; original bytes stored in *.raw.json; command JSON stdout/stderr remain literal"
 }

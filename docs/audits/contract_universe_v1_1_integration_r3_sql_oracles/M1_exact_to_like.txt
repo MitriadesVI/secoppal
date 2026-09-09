@@ -81,7 +81,7 @@ ______________ test_dapre_projects_physical_name_in_both_datasets ______________
 tests/test_source_name_projection_v1.py:248: in test_dapre_projects_physical_name_in_both_datasets
     assert builder.build_count(PROCESOS, {"entidad_resolved": DAPRE_CANONICAL}) == (
 E   assert "SELECT count... LIKE 'DAPRE'" == "SELECT count...dad = 'DAPRE'"
-E     
+E
 E     - SELECT count(*) WHERE entidad = 'DAPRE'
 E     ?                              ^^
 E     + SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'DAPRE'

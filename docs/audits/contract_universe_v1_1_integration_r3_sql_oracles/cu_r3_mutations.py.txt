@@ -4,7 +4,7 @@ ids=json.loads((E/'nodeids_34.json').read_text());clusters=json.loads((E/'cluste
 base=Path(tempfile.mkdtemp(prefix='cu-r3-mutations-'))
 archive=base/'base.tar'
 with archive.open('wb') as f:subprocess.run(['git','archive','cb02e08'],cwd=W,stdout=f,check=True)
-changed=subprocess.check_output(['git','diff','--name-only'],cwd=W,text=True).splitlines()+['tests/sql_oracle_properties.py','tests/test_contract_universe_r3_sql_oracles.py']
+changed=subprocess.check_output(['git','diff','cb02e08','--name-only'],cwd=W,text=True).splitlines()+['tests/sql_oracle_properties.py','tests/test_contract_universe_r3_sql_oracles.py']
 mutations=[
  ('M1_exact_to_like','app/core/soql_builder.py',"equalities = [f\"{field} = '{cls._escape(name)}'\" for name in names]","equalities = [f\"unaccent(UPPER({field})) LIKE '{cls._escape(name)}'\" for name in names]",['C09','C18','C19','C23']),
  ('M1b_unbound_like_to_exact','app/core/soql_builder.py','return self._accent_fold_like(spec.entity, self._escape(str(entidad_value)))','return self._exact_entity_clause(spec.entity, (str(entidad_value),))',['C22']),

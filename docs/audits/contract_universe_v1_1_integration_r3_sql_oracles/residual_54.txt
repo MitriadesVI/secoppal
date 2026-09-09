@@ -14,40 +14,40 @@ ____________ test_entity_profile_galapa_does_not_report_false_zero _____________
 tests/test_beta_entity_actor_conversation.py:80: in test_entity_profile_galapa_does_not_report_false_zero
     assert "Se observan 0 contratos" not in result["response"]
 E   AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'
-E     
+E
 E     'Se observan 0 contratos' is contained here:
 E       ocesos]
 E       • Se observan 0 contratos por $0. [SECOP II Contratos]
 E       • Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]
 E       • Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]
-E       
+E
 E       Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes.
 _ test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos] _
 tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
     assert result["route_reason"] == "entity_profile_suppliers"
 E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
-E     
+E
 E     - entity_profile_suppliers
 E     + heuristic_only
 _ test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos] _
 tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
     assert result["route_reason"] == "entity_profile_suppliers"
 E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
-E     
+E
 E     - entity_profile_suppliers
 E     + heuristic_only
 _ test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos] _
 tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
     assert result["route_reason"] == "entity_profile_suppliers"
 E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
-E     
+E
 E     - entity_profile_suppliers
 E     + heuristic_only
 _ test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos] _
 tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
     assert result["route_reason"] == "entity_profile_suppliers"
 E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
-E     
+E
 E     - entity_profile_suppliers
 E     + heuristic_only
 _ test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None] _
@@ -114,7 +114,7 @@ _________ test_change_dataset_cleans_incompatible_fields_before_apply __________
 tests/test_followup_mutations.py:98: in test_change_dataset_cleans_incompatible_fields_before_apply
     assert trace["accepted_fields"] == ["dataset", "dataset_explicit"]
 E   AssertionError: assert ['contract_un...set_explicit'] == ['dataset', '...set_explicit']
-E     
+E
 E     At index 0 diff: 'contract_universe' != 'dataset'
 E     Left contains 2 more items, first extra item: 'dataset'
 E     Use -v to get more diff
@@ -137,7 +137,7 @@ _______________ test_temporal_modules_have_no_runtime_consumers ________________
 tests/test_truth_layer_temporal.py:1314: in test_temporal_modules_have_no_runtime_consumers
     assert consumers == []
 E   AssertionError: assert ['app/core/co...formatter.py'] == []
-E     
+E
 E     Left contains 2 more items, first extra item: 'app/core/contract_universe.py'
 E     Use -v to get more diff
 ___________ test_export_preserves_source_amount_and_existing_columns ___________

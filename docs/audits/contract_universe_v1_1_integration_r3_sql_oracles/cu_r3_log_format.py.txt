@@ -1,0 +1,32 @@
+from cu_r3_run import *
+import hashlib
+run('diff_check_before_log_format',['git','diff','cb02e08','--check'])
+normalized=[]
+for p in sorted(E.iterdir()):
+ if p.suffix not in {'.txt','.xml'}:continue
+ raw=p.read_text();clean='\n'.join(line.rstrip() for line in raw.splitlines())
+ clean=clean.rstrip('\n')+'\n' if clean else ''
+ if raw==clean:continue
+ raw_path=p.with_name(p.name+'.raw.json')
+ raw_path.write_text(json.dumps({'path':p.name,'sha256':hashlib.sha256(raw.encode()).hexdigest(),'raw':raw},indent=2)+'\n')
+ p.write_text(clean)
+ normalized.append({'file':p.name,'raw_evidence':raw_path.name})
+(E/'log_presentation.json').write_text(json.dumps(normalized,indent=2)+'\n')
+p=E/'ADJUDICATION.md';s=p.read_text().replace('Salidas completas y comandos: `ruff.txt/json`, `semgrep.txt/json`,','Salidas completas y comandos: `ruff.txt/json`, `semgrep.txt/json`,');s+='''
+### Formato de evidencia
+
+El diff-check de toda la entrega encontró espacios finales en logs crudos de
+pytest al añadirlos a Git. Se conserva cada original afectado en
+`*.txt.raw.json` / `*.xml.raw.json`, con su SHA-256; las representaciones TXT/XML
+sólo eliminan espacios finales y líneas vacías terminales. Los JSON de comandos
+conservan stdout/stderr literales. `log_presentation.json` lista los archivos;
+`diff_check_before_log_format.json` conserva el diagnóstico anterior. El gate
+final compara la entrega completa contra cb02e08, incluidos los archivos añadidos.
+''';p.write_text(s)
+# Store the actual corrected reproducer overlay against base, valid after commit.
+p=E/'cu_r3_mutations.py.txt';s=p.read_text().replace("['git','diff','--name-only']","['git','diff','cb02e08','--name-only']");p.write_text(s)
+p=E/'REPRODUCE.md';s=p.read_text();start=s.index('Al reproducir sobre un commit cerrado,');s=s[:start]+'''El overlay de cu_r3_mutations.py usa git diff --name-only cb02e08, de modo que
+funciona también sobre la entrega ya commiteada. Conserva los dos archivos nuevos
+explícitos. Las versiones TXT/XML de logs sólo eliminan whitespace terminal;
+la evidencia cruda de cada archivo afectado permanece en su *.raw.json.
+''';p.write_text(s)

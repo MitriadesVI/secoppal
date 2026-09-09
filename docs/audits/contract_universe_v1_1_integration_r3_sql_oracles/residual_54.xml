@@ -7,32 +7,32 @@ E    +    where &lt;built-in method get of dict object at 0x11a096e40&gt; = {'ac
 E   AssertionError: assert not ({'funsocom'} &amp; {'fundacaribe', 'funsocom'})</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_galapa_does_not_report_false_zero" time="0.123"><failure message="AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'&#10;  &#10;  'Se observan 0 contratos' is contained here:&#10;    ocesos]&#10;    • Se observan 0 contratos por $0. [SECOP II Contratos]&#10;    • Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]&#10;    • Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]&#10;    &#10;    Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes.">tests/test_beta_entity_actor_conversation.py:80: in test_entity_profile_galapa_does_not_report_false_zero
     assert "Se observan 0 contratos" not in result["response"]
 E   AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'
-E     
+E
 E     'Se observan 0 contratos' is contained here:
 E       ocesos]
 E       • Se observan 0 contratos por $0. [SECOP II Contratos]
 E       • Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]
 E       • Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]
-E       
+E
 E       Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes.</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]" time="0.100"><failure message="AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'&#10;  &#10;  - entity_profile_suppliers&#10;  + heuristic_only">tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
     assert result["route_reason"] == "entity_profile_suppliers"
 E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
-E     
+E
 E     - entity_profile_suppliers
 E     + heuristic_only</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]" time="0.100"><failure message="AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'&#10;  &#10;  - entity_profile_suppliers&#10;  + heuristic_only">tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
     assert result["route_reason"] == "entity_profile_suppliers"
 E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
-E     
+E
 E     - entity_profile_suppliers
 E     + heuristic_only</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]" time="0.151"><failure message="AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'&#10;  &#10;  - entity_profile_suppliers&#10;  + heuristic_only">tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
     assert result["route_reason"] == "entity_profile_suppliers"
 E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
-E     
+E
 E     - entity_profile_suppliers
 E     + heuristic_only</failure></testcase><testcase classname="tests.test_beta_entity_actor_conversation" name="test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]" time="0.101"><failure message="AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'&#10;  &#10;  - entity_profile_suppliers&#10;  + heuristic_only">tests/test_beta_entity_actor_conversation.py:108: in test_entity_profile_supplier_followup_keeps_buyer
     assert result["route_reason"] == "entity_profile_suppliers"
 E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'
-E     
+E
 E     - entity_profile_suppliers
 E     + heuristic_only</failure></testcase><testcase classname="tests.test_buyer_unit_integrity_p02" name="test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-FONDO FINANCIERO DISTRITAL DE SALUD]" time="0.001" /><testcase classname="tests.test_buyer_unit_integrity_p02" name="test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MINISTERIO DE JUSTICIA Y DEL DERECHO]" time="0.001" /><testcase classname="tests.test_buyer_unit_integrity_p02" name="test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE SOACHA]" time="0.001" /><testcase classname="tests.test_buyer_unit_integrity_p02" name="test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-MUNICIPIO DE YOPAL]" time="0.001" /><testcase classname="tests.test_buyer_unit_integrity_p02" name="test_verified_buyer_unit_soql_uses_exact_source_name[jbjy-vk9h-UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS P\xdaBLICOS]" time="0.001" /><testcase classname="tests.test_entity_profile_remediation_properties" name="test_p17_every_material_filter_in_sql_is_declared_in_the_scope[contratos de mantenimiento excepto interventoria-None]" time="0.003"><failure message="AssertionError: ('estado_contrato', 'Tema: mantenimiento, excepto interventoria.')&#10;assert 'estado actual' in 'tema: mantenimiento, excepto interventoria.'&#10; +  where 'estado actual' = &lt;built-in method casefold of str object at 0x1101e8170&gt;()&#10; +    where &lt;built-in method casefold of str object at 0x1101e8170&gt; = 'Estado actual'.casefold&#10; +  and   'tema: mantenimiento, excepto interventoria.' = &lt;built-in method casefold of str object at 0x11aa730f0&gt;()&#10; +    where &lt;built-in method casefold of str object at 0x11aa730f0&gt; = 'Tema: mantenimiento, excepto interventoria.'.casefold">tests/test_entity_profile_remediation_properties.py:214: in test_p17_every_material_filter_in_sql_is_declared_in_the_scope
     assert visible.casefold() in declared.casefold(), (marker, declared)
@@ -83,7 +83,7 @@ E    +  where None = &lt;built-in method get of dict object at 0x110f1c080&gt;('
 E    +    where &lt;built-in method get of dict object at 0x110f1c080&gt; = {'contract_universe': 'celebrated', 'contract_universe_version': 'contract-universe-1.1', 'dataset': 'contratos', 'dataset_explicit': True, ...}.get</failure></testcase><testcase classname="tests.test_followup_mutations" name="test_change_dataset_cleans_incompatible_fields_before_apply" time="0.091"><failure message="AssertionError: assert ['contract_un...set_explicit'] == ['dataset', '...set_explicit']&#10;  &#10;  At index 0 diff: 'contract_universe' != 'dataset'&#10;  Left contains 2 more items, first extra item: 'dataset'&#10;  Use -v to get more diff">tests/test_followup_mutations.py:98: in test_change_dataset_cleans_incompatible_fields_before_apply
     assert trace["accepted_fields"] == ["dataset", "dataset_explicit"]
 E   AssertionError: assert ['contract_un...set_explicit'] == ['dataset', '...set_explicit']
-E     
+E
 E     At index 0 diff: 'contract_universe' != 'dataset'
 E     Left contains 2 more items, first extra item: 'dataset'
 E     Use -v to get more diff</failure></testcase><testcase classname="tests.test_invariants_characterization" name="test_signed_closed_contracts_preserve_real_closed_state[False]" time="0.091"><failure message="KeyError: 'estado_family'">tests/test_invariants_characterization.py:76: in test_signed_closed_contracts_preserve_real_closed_state
@@ -98,7 +98,7 @@ E   AssertionError: Unexpected duplicate contratos:estado_contrato:Suspendido in
 E   assert 'contratos:estado_contrato:Suspendido' in {'procesos:estado_del_procedimiento:Aprobado', 'procesos:estado_del_procedimiento:En aprobación', 'procesos:estado_del_procedimiento:Seleccionado'}</failure></testcase><testcase classname="tests.test_truth_layer_temporal" name="test_temporal_modules_have_no_runtime_consumers" time="0.020"><failure message="AssertionError: assert ['app/core/co...formatter.py'] == []&#10;  &#10;  Left contains 2 more items, first extra item: 'app/core/contract_universe.py'&#10;  Use -v to get more diff">tests/test_truth_layer_temporal.py:1314: in test_temporal_modules_have_no_runtime_consumers
     assert consumers == []
 E   AssertionError: assert ['app/core/co...formatter.py'] == []
-E     
+E
 E     Left contains 2 more items, first extra item: 'app/core/contract_universe.py'
 E     Use -v to get more diff</failure></testcase><testcase classname="tests.test_value_sanity_reachability" name="test_export_preserves_source_amount_and_existing_columns" time="0.001"><failure message="ValueError: El universo de esta exportación requiere revisión. Repite la búsqueda.">tests/test_value_sanity_reachability.py:195: in test_export_preserves_source_amount_and_existing_columns
     payload = build_results_xlsx(

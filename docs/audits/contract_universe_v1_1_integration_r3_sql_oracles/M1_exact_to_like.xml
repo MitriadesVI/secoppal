@@ -56,7 +56,7 @@ tests/sql_oracle_properties.py:54: in assert_identity
 E   AssertionError: SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)'</failure></testcase><testcase classname="tests.test_source_name_projection_v1" name="test_dapre_projects_physical_name_in_both_datasets" time="0.001"><failure message="assert &quot;SELECT count... LIKE 'DAPRE'&quot; == &quot;SELECT count...dad = 'DAPRE'&quot;&#10;  &#10;  - SELECT count(*) WHERE entidad = 'DAPRE'&#10;  ?                              ^^&#10;  + SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'DAPRE'&#10;  ?                       +++++++++++++++       ^^^^^^^">tests/test_source_name_projection_v1.py:248: in test_dapre_projects_physical_name_in_both_datasets
     assert builder.build_count(PROCESOS, {"entidad_resolved": DAPRE_CANONICAL}) == (
 E   assert "SELECT count... LIKE 'DAPRE'" == "SELECT count...dad = 'DAPRE'"
-E     
+E
 E     - SELECT count(*) WHERE entidad = 'DAPRE'
 E     ?                              ^^
 E     + SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE 'DAPRE'

@@ -132,3 +132,13 @@ No quedan pendientes dentro de R3. Suite global, resolución de los 20 restantes
 merge, push, deploy y restart no se ejecutaron y permanecen fuera de esta orden.
 Los tests heredados con salida histórica fija se ejecutaron conservando sus bytes
 previos; sus nuevas observaciones se copiaron a esta carpeta.
+
+### Formato de evidencia
+
+El diff-check de toda la entrega encontró espacios finales en logs crudos de
+pytest al añadirlos a Git. Se conserva cada original afectado en
+`*.txt.raw.json` / `*.xml.raw.json`, con su SHA-256; las representaciones TXT/XML
+sólo eliminan espacios finales y líneas vacías terminales. Los JSON de comandos
+conservan stdout/stderr literales. `log_presentation.json` lista los archivos;
+`diff_check_before_log_format.json` conserva el diagnóstico anterior. El gate
+final compara la entrega completa contra cb02e08, incluidos los archivos añadidos.

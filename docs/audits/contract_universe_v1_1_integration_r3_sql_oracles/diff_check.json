@@ -2,11 +2,13 @@
   "command": [
     "git",
     "diff",
+    "--cached",
+    "cb02e08",
     "--check"
   ],
   "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r3-sql-oracles",
   "exit_code": 0,
-  "duration_seconds": 0.08407783300208393,
+  "duration_seconds": 0.018134041001758305,
   "stdout": "",
   "stderr": ""
 }
