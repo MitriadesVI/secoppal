@@ -4,8 +4,9 @@ Se cerró exclusivamente el P1 restante de la segunda auditoría. Ninguna otra
 superficie acreditada cambió: F1, F3, F4, F5, Aprobado, persistencia, Radar,
 Actor, Frame y Buyer–Actor conservan su comportamiento y sus controles.
 
-**SHA probado:** se comunica completo en la entrega y se obtiene con
-`git rev-parse HEAD` en este worktree; el HEAD final añade sólo documentación.
+**SHA probado:** `c671cceec605975d5c09b91bed8f26b8dfc17ac7`.
+El HEAD final añade sólo esta línea de documentación; se comunica completo en la
+entrega y se obtiene con `git rev-parse HEAD` en este worktree.
 **Base de remediación:** `2e564d06a4f18a8ef4d3b5a1fa462000e21a00da`.
 **SHA probado anterior:** `8fc5643651d6a603d3bc3849369d9773ab55ea11`.
 **Segunda auditoría:** `298c79271e1a57ff57c1a841c05dd35d2a0a3b10`.
