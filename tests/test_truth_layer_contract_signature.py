@@ -67,7 +67,6 @@ def test_observed_signature_date_is_direct_and_raw_is_preserved() -> None:
         "Modificado",
         "Prorrogado",
         "cedido",
-        "Aprobado",
     ],
 )
 def test_post_signature_state_can_infer_signing_without_inventing_a_date(
@@ -160,3 +159,9 @@ def test_assessment_is_frozen_slotted_and_hashable() -> None:
     assert "__slots__" in type(assessment).__dict__
     assert "__dict__" not in type(assessment).__dict__
     assert isinstance(hash(assessment), int)
+
+
+def test_aprobado_without_date_is_indeterminate_v1_1():
+    assessment = resolve_contract_signature(_signals('Aprobado'))
+    assert assessment.signature_status == 'unknown'
+    assert assessment.signature_date_status == 'missing'

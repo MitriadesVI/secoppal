@@ -185,7 +185,8 @@ def collect_claims(
 
     sources = _source_claims(normalized, masked, turn_id, next_id)
     from app.core.entity_profile.universe_claims import add_universe_claims
-    add_universe_claims(user_query, normalized, sources, claims, issues, turn_id, next_id)
+    add_universe_claims(user_query, normalized, sources, claims, issues, turn_id, next_id,
+                        protected_surfaces=_buyer_surfaces(params))
     claims.extend(sources.values())
     if _SOURCE_OR.search(masked):
         issues.append(UnresolvedIssue(
@@ -429,11 +430,14 @@ def _state_claims(normalized, clauses, sources, turn_id, next_id):
         if source is None:
             continue
         family = detect_estado_family(clause.text, source.canonical_value.noun)
-        from app.core.contract_universe_intent import request
+        from app.core.contract_universe_intent import request, state_authorized
         universe_request = request(clause.text)
         if source.canonical_value is SourceKind.CONTRACTS and universe_request and universe_request.state:
             family = {"consumed_span": clause.text[slice(*universe_request.span)],
                       "filters": {"estado_contrato": [universe_request.state]}}
+        if family and not state_authorized(source.canonical_value.noun,
+                                            family['filters'].get('estado_contrato', ()), universe_request):
+            family = None
         if not family:
             continue
         token = str(family.get("consumed_span") or "")

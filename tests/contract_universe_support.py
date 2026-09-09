@@ -27,6 +27,8 @@ def offline_universe(monkeypatch):
 
 def source(flow, monkeypatch, buyer, minimum):
     conn = attach_source(flow, monkeypatch, buyer, minimum)
+    from tests.contract_universe_sql_dates import register_dates
+    register_dates(conn)
     template = dict(conn.execute('SELECT * FROM contracts LIMIT 1').fetchone())
     conn.execute('DELETE FROM contracts')
     fields = flow.soql_builder.SPECS['p6dx-8zbt'].select_fields

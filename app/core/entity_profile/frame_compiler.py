@@ -44,7 +44,7 @@ from app.core.entity_profile.frame_values import (
 )
 from app.core.entity_profile.immutability import deep_freeze
 
-CATALOG_VERSION = "entity-profile-frame-2-contract-universe-1"
+CATALOG_VERSION = "entity-profile-frame-2-contract-universe-1.1"
 
 PROFILE_QUERY_BUDGET = 6
 

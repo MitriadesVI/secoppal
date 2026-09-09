@@ -1,13 +1,13 @@
-"""Contract Universe V1: operational inclusion, independent of identity and dates.
+"""Contract Universe V1.1: operational inclusion, independent of identity.
 
-The allowlist is adjudicated in docs/audits/contract_universe_v1/. A date
+The allowlist is adjudicated in docs/audits/contract_universe_v1_1_remediation/. A date
 cannot rescue an excluded/unknown state; an admitted historical state needs
 no invented date. Native SECOP labels are not Socrata state literals.
 """
 from enum import Enum
 import unicodedata
 
-POLICY_VERSION = 'contract-universe-1'
+POLICY_VERSION = 'contract-universe-1.1'
 
 
 class ContractUniverse(str, Enum):
@@ -15,8 +15,8 @@ class ContractUniverse(str, Enum):
     SOURCE_RECORDS = 'source_records'
 
 
-# Aprobado is admitted operationally from the versioned catalog and bounded
-# public evidence. This does not assert universal legal perfection or a date.
+# Aprobado requires an observable usable date under the V1.1 adjudication.
+# The seven posterior states retain their existing policy independently of dates.
 CELEBRATED_STATES = (
     'En ejecución', 'Cerrado', 'Modificado', 'terminado',
     'Aprobado', 'cedido', 'Suspendido', 'Prorrogado',
@@ -33,8 +33,14 @@ def fold_state(value: object) -> str:
 
 def eligible(row: dict, universe=ContractUniverse.CELEBRATED) -> bool:
     universe = ContractUniverse(universe)
-    return (universe is ContractUniverse.SOURCE_RECORDS
-            or fold_state(row.get('estado_contrato')) in {fold_state(s) for s in CELEBRATED_STATES})
+    if universe is ContractUniverse.SOURCE_RECORDS:
+        return True
+    state = fold_state(row.get('estado_contrato'))
+    if state == 'APROBADO':
+        from app.core.truth_layer.temporal_value import parse_iso_text
+        value = row.get('fecha_de_firma')
+        return isinstance(value, str) and parse_iso_text(value)[1] is not None
+    return state in {fold_state(s) for s in CELEBRATED_STATES if s != 'Aprobado'}
 
 
 def universe_from_params(params: dict) -> ContractUniverse:
@@ -58,8 +64,10 @@ def stamp(params: dict) -> dict:
 def predicate(universe=ContractUniverse.CELEBRATED) -> str:
     if ContractUniverse(universe) is ContractUniverse.SOURCE_RECORDS:
         return ''
-    values = ', '.join("'" + fold_state(state) + "'" for state in CELEBRATED_STATES)
-    return f"upper(unaccent(trim(estado_contrato))) IN ({values})"
+    values = ', '.join("'" + fold_state(state) + "'" for state in CELEBRATED_STATES if state != 'Aprobado')
+    state = 'upper(unaccent(trim(estado_contrato)))'
+    return (f"({state} = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL "
+            f"OR {state} IN ({values}))")
 
 
 def label(universe=ContractUniverse.CELEBRATED) -> str:
@@ -81,17 +89,11 @@ def conflict_message(params: dict) -> str | None:
         return None
     if universe_from_params(params) is ContractUniverse.SOURCE_RECORDS:
         return None
-    states = params.get('estado_contrato') or params.get('estado') or ()
+    from app.core.estado_families import ESTADO_FAMILIES
+    family = ESTADO_FAMILIES.get(params.get('estado_family'), {}).get('contratos', {})
+    states = params.get('estado_contrato') or params.get('estado') or family.get('estado_contrato') or ()
     states = states if isinstance(states, (list, tuple)) else (states,)
     if any(fold_state(s) in {fold_state(v) for v in EXCLUDED_STATES} for s in states):
         return ('El estado solicitado queda fuera del universo de contratos celebrados. '
                 'Aclara si quieres conservar ese filtro de registros o consultar contratos celebrados.')
     return None
-
-
-def record_terms(response: str, universe) -> str:
-    """Render record metrics as records; retain official dataset source labels."""
-    if ContractUniverse(universe) is ContractUniverse.CELEBRATED:
-        return response
-    import re
-    return re.sub(r"\bcontratos\b", "registros", response).replace("Contrato reciente:", "Registro reciente:")

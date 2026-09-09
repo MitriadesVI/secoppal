@@ -29,7 +29,7 @@ from app.core.entity_profile.models import (
     ScopeType,
     SourceCalls,
 )
-from app.core.entity_profile.render import profile_fact_lines
+from app.core.entity_profile.render import profile_fact_lines, _contract_noun
 
 
 _TITLE_LABEL = {
@@ -124,12 +124,8 @@ def render_frame_profile(
     else:
         blocks.extend(profile.warnings)
     if plan.focus == "overview":
-        blocks.append(_NEXT_STEPS.get(planned, _NEXT_STEPS_BOTH))
+        blocks.append(_NEXT_STEPS.get(planned, _NEXT_STEPS_BOTH).replace('contratos', _contract_noun(profile) + 's'))
     response = "\n\n".join(blocks)
-    contract_plan = plan.source_plans.get(SourceKind.CONTRACTS)
-    if contract_plan and contract_plan.predicates.contract_universe == "source_records":
-        from app.core.contract_universe import record_terms
-        response = record_terms(response, contract_plan.predicates.contract_universe)
     return response
 
 

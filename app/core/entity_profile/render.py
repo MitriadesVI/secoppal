@@ -51,7 +51,24 @@ def _source(dataset_id: str) -> str:
     return _SOURCES.get(dataset_id, dataset_id)
 
 
+def _contract_noun(profile: EntityProfile) -> str:
+    """Choose generated labels from the executed plan before inserting source data."""
+    plan = profile.plan
+    if plan is not None:
+        if hasattr(plan, 'source_plans'):
+            from app.core.entity_profile.frame_values import SourceKind
+            contract = plan.source_plans.get(SourceKind.CONTRACTS)
+            records = contract and contract.predicates.contract_universe == 'source_records'
+        else:
+            contract = plan.plan_for('jbjy-vk9h')
+            records = contract and contract.params.get('contract_universe') == 'source_records'
+        if records:
+            return 'registro'
+    return 'contrato'
+
+
 def _overview(profile: EntityProfile) -> list[str]:
+    noun = _contract_noun(profile)
     lines: list[str] = []
     processes = profile.activity.fact("process_count")
     contracts = profile.activity.fact("contract_count")
@@ -63,7 +80,7 @@ def _overview(profile: EntityProfile) -> list[str]:
             f"[{_source('p6dx-8zbt')}]"
         )
     if contracts is not None:
-        sentence = f"• Se observan {int(contracts):,} contratos"
+        sentence = f"• Se observan {int(contracts):,} {noun}s"
         if total is not None:
             sentence += f" por {_money(total)}"
         if average is not None:
@@ -92,8 +109,8 @@ def _overview(profile: EntityProfile) -> list[str]:
     if by_count and section_ranking(profile.suppliers, 'count').accredited:
         supplier = by_count[0]
         lines.append(
-            f"• Principal contratista por número de contratos: "
-            f"{supplier.observed_name} ({_count(supplier.contract_count, 'contratos')}). "
+            f"• Principal contratista por número de {noun}s: "
+            f"{supplier.observed_name} ({_count(supplier.contract_count, noun + 's')}). "
             f"[{_source('jbjy-vk9h')}]"
         )
 
@@ -101,29 +118,29 @@ def _overview(profile: EntityProfile) -> list[str]:
     recent_contracts = profile.recent.fact("contracts") or ()
     if recent_processes:
         lines.append(
-            f"• Proceso reciente: {_short(recent_processes[0].title)}. "
+            f"• Proceso reciente: {recent_processes[0].title}. "
             f"[{_source('p6dx-8zbt')}]"
         )
     if recent_contracts:
         lines.append(
-            f"• Contrato reciente: {_short(recent_contracts[0].title)}. "
+            f"• {noun.capitalize()} reciente: {recent_contracts[0].title}. "
             f"[{_source('jbjy-vk9h')}]"
         )
     return lines[:8]
 
 
 def _supplier_lines(
-    title: str, suppliers: tuple[SupplierMetric, ...], metric: str, *, accredited: bool,
+    title: str, suppliers: tuple[SupplierMetric, ...], metric: str, *, accredited: bool, noun: str = "contrato",
 ) -> list[str]:
     if not suppliers:
         return []
     if not accredited:
-        label = 'valor' if metric == 'value' else 'número de contratos'
+        label = 'valor' if metric == 'value' else f'número de {noun}s'
         title = f"Proveedores observados; ranking por {label} no acreditado"
     lines = [title]
     for supplier in suppliers:
         value = (
-            _count(supplier.contract_count, "contratos")
+            _count(supplier.contract_count, noun + "s")
             if metric == "count"
             else _money(supplier.total_contract_value)
         )
@@ -137,18 +154,19 @@ def _recent_lines(title: str, rows: tuple[RecentRecord, ...]) -> list[str]:
     lines = [title]
     for row in rows:
         dated = f" ({row.date})" if row.date else ""
-        lines.append(f"• {_short(row.title)}{dated}")
+        lines.append(f"• {row.title}{dated}")
     return lines
 
 
 def _focused(profile: EntityProfile) -> list[str]:
+    noun = _contract_noun(profile)
     if profile.focus == "suppliers":
         return [
             *_supplier_lines(
-                "Principales contratistas por número de contratos",
+                f"Principales contratistas por número de {noun}s",
                 profile.suppliers.fact("top_by_contract_count") or (),
                 "count",
-                accredited=section_ranking(profile.suppliers, 'count').accredited,
+                accredited=section_ranking(profile.suppliers, 'count').accredited, noun=noun,
             ),
             *_supplier_lines(
                 "Principales contratistas por valor contratado",
@@ -168,14 +186,14 @@ def _focused(profile: EntityProfile) -> list[str]:
         average = profile.values.fact("average_contract_value")
         lines = []
         if total is not None:
-            lines.append(f"• Valor total reportado de contratos: {_money(total)}.")
+            lines.append(f"• Valor total reportado de {noun}s: {_money(total)}.")
         if average is not None:
-            lines.append(f"• Valor promedio reportado por contrato: {_money(average)}.")
+            lines.append(f"• Valor promedio reportado por {noun}: {_money(average)}.")
         return lines
     if profile.focus == "recent":
         return [
             *_recent_lines("Procesos recientes", profile.recent.fact("processes") or ()),
-            *_recent_lines("Contratos recientes", profile.recent.fact("contracts") or ()),
+            *_recent_lines(f"{noun.capitalize()}s recientes", profile.recent.fact("contracts") or ()),
         ]
     if profile.focus == "temporal":
         periods = profile.temporal.fact("periods") or ()
@@ -185,7 +203,7 @@ def _focused(profile: EntityProfile) -> list[str]:
             if period.process_count is not None:
                 parts.append(f"{period.process_count:,} procesos publicados")
             if period.contract_count is not None:
-                parts.append(_count(period.contract_count, "contratos"))
+                parts.append(_count(period.contract_count, noun + "s"))
             if period.contract_value is not None:
                 parts.append(_money(period.contract_value))
             lines.append(f"• {period.period}: {', '.join(parts)}.")
@@ -205,10 +223,6 @@ def profile_fact_lines(profile: EntityProfile) -> list[str]:
     return _overview(profile) if profile.focus == "overview" else _focused(profile)
 
 
-def _short(text: str, limit: int = 90) -> str:
-    text = " ".join(text.split())
-    return text if len(text) <= limit else f"{text[:limit - 3]}..."
-
 
 def render_entity_profile(profile: EntityProfile) -> str:
     """Render supported facts and name failed aspects without turning them into zero.
@@ -223,7 +237,7 @@ def render_entity_profile(profile: EntityProfile) -> str:
         f"{profile.identity.display_name.upper()} — {_period(profile)}"
     ]
     if scope:
-        blocks.extend(_scope_lines(scope))
+        blocks.extend(_scope_lines(scope, _contract_noun(profile)))
     if profile.plan and 'jbjy-vk9h' in profile.plan.executed_datasets:
         from app.core.contract_universe import label, universe_from_params
         contract_params = profile.plan.plan_for('jbjy-vk9h').params
@@ -239,15 +253,12 @@ def render_entity_profile(profile: EntityProfile) -> str:
         blocks.append("\n".join(facts))
     blocks.extend(profile.warnings)
     if profile.focus == "overview":
-        blocks.append(_next_steps(scope))
+        blocks.append(_next_steps(scope, _contract_noun(profile)))
     response = "\n\n".join(blocks)
-    if profile.plan and 'jbjy-vk9h' in profile.plan.executed_datasets:
-        from app.core.contract_universe import record_terms
-        response = record_terms(response, universe_from_params(contract_params))
     return response
 
 
-def _scope_lines(scope) -> list[str]:
+def _scope_lines(scope, noun="contrato") -> list[str]:
     lines = list(scope.basis_lines)
     if not lines and scope.period != "todo el histórico disponible":
         lines.append(f"Periodo: {scope.period}.")
@@ -257,17 +268,17 @@ def _scope_lines(scope) -> list[str]:
     if scope.narrowed:
         lines.append(
             "Esta vista sólo se puede responder sobre "
-            f"{_SCOPE_NOUN[scope.effective_sources]}."
+            f"{_SCOPE_NOUN[scope.effective_sources].replace('contratos', noun + 's')}."
         )
     return ["\n".join(lines)] if lines else []
 
 
-def _next_steps(scope) -> str:
+def _next_steps(scope, noun="contrato") -> str:
     """No se ofrece profundizar en una fuente que este perfil no cubre."""
     if scope is not None and scope.effective_sources is RequestedSources.CONTRACTS:
-        return "Puedes pedirme sus proveedores, valores o contratos recientes."
+        return f"Puedes pedirme sus proveedores, valores o {noun}s recientes."
     if scope is not None and scope.effective_sources is RequestedSources.PROCESSES:
         return "Puedes pedirme sus modalidades, evolución o procesos recientes."
     return (
-        "Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes."
+        f"Puedes pedirme sus proveedores, modalidades, evolución o {noun}s recientes."
     )

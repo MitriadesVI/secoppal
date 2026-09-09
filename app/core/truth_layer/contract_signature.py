@@ -60,7 +60,6 @@ _PRE_SIGNATURE_STATES = frozenset({"borrador", "en aprobacion", "enviado proveed
 _POST_SIGNATURE_STATES = frozenset(
     {
         "en ejecucion",
-        "aprobado",
         "suspendido",
         "terminado",
         "cerrado",

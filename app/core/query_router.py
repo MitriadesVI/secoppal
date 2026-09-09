@@ -273,8 +273,10 @@ class QueryRouter:
             ),
         )
         source_occurrences = source_request_occurrences(normalized)
-        from app.core.contract_universe_intent import request, apply_request
-        universe_request = request(user_query)
+        from app.core.contract_universe_intent import request, apply_request, state_authorized
+        universe_request = request(user_query, protected_surfaces=tuple(
+            user_query[a:b] for a, b in self.entity_resolver.proper_names.spans_in(user_query)
+        ) if self.entity_resolver else ())
         params: dict[str, object] = {}
         actor_conversation = ActorConversationInstruction()
         actor_relation_spans: tuple[str, ...] = ()
@@ -450,6 +452,9 @@ class QueryRouter:
             modality_result.masked_text,
             negation_binding.masked_spans,
         )
+        if universe_request and universe_request.span != (0, 0):
+            control = normalize_text(user_query[slice(*universe_request.span)])
+            scrubbed = scrubbed.replace(control, ' ', 1)
         temporal_resolution = resolve_temporal_scope(
             positive_text,
             today=clock,
@@ -856,6 +861,10 @@ class QueryRouter:
         #    The matched token is scrubbed so it doesn't leak into 'objeto'.
         from app.core.estado_families import detect_estado_family
         estado_family_result = detect_estado_family(scrubbed, str(params["dataset"]))
+        if estado_family_result and not state_authorized(
+            params['dataset'], estado_family_result['filters'].get('estado_contrato', ()), universe_request,
+        ):
+            estado_family_result = None
         if estado_family_result:
             for field, values in estado_family_result["filters"].items():
                 params[field] = values
@@ -912,6 +921,10 @@ class QueryRouter:
                 state_scan_text,
                 str(params["dataset"]),
             ):
+                if not state_authorized(params['dataset'], state_result['value'], universe_request):
+                    state_scan_text = re.sub(r"\b" + re.escape(state_result['source_text']) + r"\b",
+                                             " ", state_scan_text, flags=re.I)
+                    continue
                 if primary_state:
                     params["estado"] = state_result["value"]
                     if state_result.get("field"):
@@ -1076,11 +1089,6 @@ class QueryRouter:
         objeto_phrases, objeto_text = detect_phrases(source_owned_text)
         if objeto_phrases:
             params["objeto_phrases"] = objeto_phrases
-
-        if universe_request and universe_request.span != (0, 0):
-            control = normalize_text(user_query[slice(*universe_request.span)])
-            for token in control.split():
-                objeto_text = re.sub(rf"\b{re.escape(token)}\b", " ", objeto_text)
 
         # ── 12. Object terms (whatever remains after all extractions) ───
         object_terms = self._extract_object_terms(objeto_text)

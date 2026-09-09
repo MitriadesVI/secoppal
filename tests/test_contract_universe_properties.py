@@ -9,6 +9,8 @@ from app.core.contract_universe import (
 
 def database(rows):
     conn = sqlite3.connect(':memory:')
+    from tests.contract_universe_sql_dates import register_dates
+    register_dates(conn)
     conn.create_function('unaccent', 1, lambda x: None if x is None else ''.join(
         c for c in unicodedata.normalize('NFD', x) if not unicodedata.combining(c)))
     conn.create_function('upper', 1, lambda x: x.upper() if x is not None else None)
