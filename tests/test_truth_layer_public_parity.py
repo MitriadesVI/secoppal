@@ -195,7 +195,9 @@ M2_1_MODIFIED_FILE_SHA256 = {
     # Frame B/B.1 (20aea784, ff2a5844): transport result/revision/chat refs.
     # test_truth_layer_frame_guard_controls exercises actual UI helpers/chips
     # and valid/invalid reloads; Search/M2.1 oracles below remain unchanged.
-    "streamlit_app.py": "5d82284c3489ea57f1440248e32d1352c58e4314fcba94e8092dda2f906e879d",
+    # Executive UX V1: optional presentation transport/UI hook only.
+    # test_entity_profile_executive_ux_boundary restores the prior exact bytes.
+    "streamlit_app.py": "cc54f75b598544648b47629f4662aa78f6681e74f99149423fe9ee0aa95c6901",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried
@@ -231,7 +233,9 @@ BASELINE_FILE_SHA256 = {
     "app/core/phrase_ranking.py": "0a99c8f4ebc10dd71556f1796a40c9192404475831a424964871954bab598c5a",
     "app/core/workflow/dual_dataset.py": "17320c3e694de6d1a0c6bae0c749230b546373be4517428691e6620ed6cf1957",
     "app/core/workflow/handlers/refinement.py": "fe1a08d26550d5a39fb4fdddbcb40fd623b89e7ab09c634d0bba7a95db00e076",
-    "app/core/workflow/results.py": "b4e869d985dadcb50679a19aafda27d92ead18ef756d4833a0ad9e4100d51057",
+    # Executive UX V1: optional presentation transport/UI hook only.
+    # test_entity_profile_executive_ux_boundary restores the prior exact bytes.
+    "app/core/workflow/results.py": "5adc74aac2cf9da68597b67b88520733f273407bf291383b2dc97787b5683cfe",
     "app/main.py": "bad1f025e142301e036fd40d6dbde78077719850bfda45e45ff1ff0bf4dda282",
 }
 
@@ -264,8 +268,10 @@ SEARCH_SH1_MODIFIED_FILE_SHA256 = {
     # oráculo instrumentado test_buyer_execution_truth compara ejecución y
     # contexto asesor; pagination_buffer exige ausencia de la inyección en
     # ambos turnos. No cambian los oráculos de ranking/conteo/paginación.
+    # Executive UX V1 optional view transport; inverse-byte guard in
+    # test_entity_profile_executive_ux_boundary preserves the old contract.
     "app/core/workflow/handlers/normal_flow.py": (
-        "807b0e91cfda5351a5e271722d551bec7146213ccb80bf1362f638b05a1a78f6"
+        "7eb77c411ac03d9bbef20341bfc6e243bd43e1efde6c5da32157a252d24582cf"
     ),
 }
 
