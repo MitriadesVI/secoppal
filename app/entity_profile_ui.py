@@ -1,6 +1,7 @@
 """Small Streamlit renderer for the versioned Entity Profile overview view."""
 from __future__ import annotations
 
+from app.config import entity_profile_frame_enabled
 from app.core.entity_profile.presentation import (
     ENTITY_PROFILE_VIEW_KIND,
     ENTITY_PROFILE_VIEW_SCHEMA,
@@ -64,6 +65,8 @@ def render_entity_profile_view(st, view: object, *, action_reference: object = N
 
 
 def _render_actions(st, raw: object, reference: object) -> None:
+    if not entity_profile_frame_enabled():
+        return
     action_ids = presented_action_ids(raw)
     if not action_ids or type(reference) is not dict:
         return

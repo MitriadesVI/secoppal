@@ -144,6 +144,32 @@ def test_invalid_action_is_rejected_before_parser_or_external_routing(
     assert client.calls == []
 
 
+def test_direct_action_ignores_exact_divergent_buyer_period_seed_and_actor(frame_v12):
+    chat = Conversation("frame-action-exact-divergence")
+    first = chat.say("analiza la alcaldia de baranoa en 2026")
+    workflow, client = chat.workflow()
+    result = workflow.run_query(
+        "analiza la alcaldia de galapa en 2025",
+        chat_id=chat.chat_id,
+        seed_resolved_params={
+            "entidad_resolved": "MUNICIPIO DE GALAPA.",
+            "fecha_desde": "2025-01-01",
+            "fecha_hasta": "2025-12-31",
+        },
+        actor_candidate_selection={
+            "operation": "SELECT_ACTOR_CANDIDATE",
+            "candidate_rank": 1,
+            "pending_token": "forged",
+        },
+        profile_action_selection=_event("suppliers", _reference(first.result)),
+    )
+    assert result["route_reason"] == "entity_profile_suppliers"
+    assert len(client.calls) == 2
+    assert all("ALCALDIA MUNICIPAL DE BARANOA" in sql for _, _, sql in client.calls)
+    assert all("2026-01-01" in sql and "2026-12-31" in sql for _, _, sql in client.calls)
+    assert all("GALAPA" not in sql and "2025-01-01" not in sql for _, _, sql in client.calls)
+
+
 def test_corrupt_or_absent_envelope_is_never_an_action_authority():
     event = _event("suppliers", {
         "kind": "FRAME_ENVELOPE", "chat_id": "c", "result_id": "r",
