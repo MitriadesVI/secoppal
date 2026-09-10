@@ -1,0 +1,7 @@
+{
+  "inherited": 10,
+  "current": 10,
+  "new_by_content": [],
+  "gone_by_content": [],
+  "note": "compared by (file, rule, matched source text): an unrelated edit that shifts line numbers is not a new finding"
+}

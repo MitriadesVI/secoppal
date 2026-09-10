@@ -1,0 +1,8 @@
+{
+  "collected": 14383,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 34,
+  "duration_seconds": 795.626,
+  "literal_last_line": "14349 passed, 19 skipped, 15 xfailed in 796.04s (0:13:16)"
+}
