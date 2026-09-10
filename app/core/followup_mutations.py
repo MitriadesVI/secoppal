@@ -241,6 +241,7 @@ def _transition_clears(
 def _normalize_filter_for_dataset(
     accepted: dict[str, Any],
     previous: dict[str, Any],
+    text: str = "",
 ) -> dict[str, Any]:
     """Remap a state family parsed without context to the inherited dataset."""
     family_name = accepted.get("estado_family")
@@ -248,11 +249,25 @@ def _normalize_filter_for_dataset(
     if not family_name or dataset not in {"procesos", "contratos"}:
         return accepted
 
-    from app.core.estado_families import ESTADO_FAMILIES, rebase_family_to_dataset
+    from app.core.estado_families import (
+        ESTADO_FAMILIES, detect_estado_family, rebase_family_to_dataset,
+    )
 
     def _project(name: str) -> dict[str, list[str]]:
         declared = ESTADO_FAMILIES.get(name, {}).get(str(dataset), {})
         return {key: list(values) for key, values in declared.items() if values}
+
+    # A dataset-aware word answers to a different family on each lifecycle, and
+    # the isolated parse resolved it under the default dataset, not this
+    # conversation's. "y los suspendidos" over a contract search came back as
+    # ``no_procede`` — which DOES project on contracts, so the rebase below
+    # never ran — and delivered Cancelado to someone who asked for Suspendido.
+    # Re-reading the same words under the inherited dataset asks the one
+    # authority that knows both lifecycles.
+    if text:
+        reread = detect_estado_family(text, str(dataset))
+        if reread and reread["family"] != family_name:
+            family_name = reread["family"]
 
     filters = _project(str(family_name))
     if not filters:
@@ -306,7 +321,7 @@ def gate_delta(
             accepted[key] = value
 
     if policy.transition_cleanup == "normalize_filter_transition":
-        accepted = _normalize_filter_for_dataset(accepted, previous_params)
+        accepted = _normalize_filter_for_dataset(accepted, previous_params, text)
 
     clears = _transition_clears(policy, intent, text, previous_params, accepted)
     cleaned = dict(previous_params)

@@ -108,9 +108,12 @@ ESTADO_FAMILIES = {
             ],
         },
         "contratos": {
+            # Suspendido belongs to contrato_suspendido: under Contract
+            # Universe V1.1 a suspended contract is CELEBRATED, while a
+            # cancelled record is outside that universe. One family cannot
+            # hold both sides of that line.
             "estado_contrato": [
                 "Cancelado",
-                "Suspendido",
             ],
         },
     },
@@ -165,15 +168,12 @@ NATURAL_TO_FAMILY = {
     "seleccionado": "en_evaluacion",
     "aprobado": "en_evaluacion",
     # ── no_procede ──
-    "desierto": "no_procede",
-    "desierta": "no_procede",
+    # "desierto", "suspendido" and "revocado" are dataset-aware and live in
+    # DATASET_AWARE_FAMILY below; a single mapping cannot answer for both
+    # lifecycles.
     "cancelado": "no_procede",
     "cancelados": "no_procede",
     "cancelada": "no_procede",
-    "suspendido": "no_procede",
-    "suspendidos": "no_procede",
-    "suspendida": "no_procede",
-    "revocado": "no_procede",
 }
 
 
@@ -203,9 +203,28 @@ LIVENESS_TOKENS: tuple[str, ...] = (
     "disponible", "disponibles",
 )
 
+# Suspension is the same word on two axes: a process that stopped advancing
+# does not proceed, while a suspended CONTRACT was signed and is celebrated.
+# Projecting one onto the other put Suspendido in two contractual families at
+# once — the duplicate test_catalog_no_unexpected_duplicates reported.
+SUSPENSION_TOKENS: tuple[str, ...] = (
+    "suspendido", "suspendidos", "suspendida", "suspendidas",
+)
+
+# Outcomes only a PROCESS can have. A contract is never declared void for lack
+# of bidders, and revocation belongs to the award, not to the signed contract.
+# Absent a contractual reading, these project nothing rather than inventing a
+# state: a missing dataset key resolves to no family at all.
+PROCESS_ONLY_OUTCOME_TOKENS: tuple[str, ...] = (
+    "desierto", "desierta", "desiertos", "desiertas", "revocado",
+)
+
 DATASET_AWARE_FAMILY: dict[str, dict[str, str]] = {
-    token: {"procesos": "oferta_abierta", "contratos": "contrato_activo"}
-    for token in LIVENESS_TOKENS
+    **{token: {"procesos": "oferta_abierta", "contratos": "contrato_activo"}
+       for token in LIVENESS_TOKENS},
+    **{token: {"procesos": "no_procede", "contratos": "contrato_suspendido"}
+       for token in SUSPENSION_TOKENS},
+    **{token: {"procesos": "no_procede"} for token in PROCESS_ONLY_OUTCOME_TOKENS},
 }
 
 LIVENESS_FAMILY_BY_DATASET: dict[str, str] = {
@@ -309,9 +328,6 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
         dict with 'family', 'filters' (field→list[value]), 'consumed_span', or None.
     """
     token_lower = natural_token.lower().strip()
-    if dataset == "contratos" and token_lower in ("suspendido", "suspendidos", "suspendida", "suspendidas"):
-        return {"family": "contrato_suspendido", "filters": {"estado_contrato": ["Suspendido"]},
-                "consumed_span": natural_token}
 
     # Precedencia léxica: si el token NOMBRA un estado del dataset, ese estado
     # es la respuesta — la familia no lo ensancha.
