@@ -42,12 +42,43 @@ def test_text_that_is_not_a_date_is_not_usable(value, kind):
     assert observed_date_is_usable(value) is False, kind
 
 
-def test_the_boundary_comes_from_the_public_package_surface():
-    """No private resolver is reachable through this module."""
+def test_the_boundary_imports_only_the_public_package_surface():
+    """Every import in this module names the package root, never a resolver."""
+    import ast
+    import inspect
+
     import app.core.published_temporal_value as module
 
-    assert module.resolve_temporal_value.__module__.startswith("app.core.truth_layer")
-    assert not hasattr(module, "parse_iso_text")
+    tree = ast.parse(inspect.getsource(module))
+    imported = [
+        node.module for node in ast.walk(tree)
+        if isinstance(node, ast.ImportFrom) and node.module
+    ]
+    assert imported, "the boundary must import the layer, not re-implement it"
+    for name in imported:
+        if name.startswith("app.core.truth_layer"):
+            assert name == "app.core.truth_layer", name
+
+
+def test_asking_the_question_is_what_wakes_the_layer_not_importing_the_module():
+    """The layer stays dormant until a row is actually judged.
+
+    A module-level import here would wake it on every application start, which
+    test_normal_application_import_does_not_activate_truth_layer forbids.
+    """
+    import subprocess
+    import sys
+
+    code = (
+        "import sys; import app.core.published_temporal_value as m; "
+        "before = any(n.startswith('app.core.truth_layer') for n in sys.modules); "
+        "m.observed_date_is_usable('2026-08-01'); "
+        "after = any(n.startswith('app.core.truth_layer') for n in sys.modules); "
+        "print(before, after)"
+    )
+    out = subprocess.run([sys.executable, "-c", code], check=True,
+                         capture_output=True, text=True).stdout.strip()
+    assert out == "False True"
 
 
 @pytest.mark.parametrize("value, expected", [

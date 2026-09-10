@@ -7,8 +7,6 @@ no invented date. Native SECOP labels are not Socrata state literals.
 from enum import Enum
 import unicodedata
 
-from app.core.published_temporal_value import observed_date_is_usable
-
 POLICY_VERSION = 'contract-universe-1.1'
 
 
@@ -39,6 +37,7 @@ def eligible(row: dict, universe=ContractUniverse.CELEBRATED) -> bool:
         return True
     state = fold_state(row.get('estado_contrato'))
     if state == 'APROBADO':
+        from app.core.published_temporal_value import observed_date_is_usable
         value = row.get('fecha_de_firma')
         return isinstance(value, str) and observed_date_is_usable(value)
     return state in {fold_state(s) for s in CELEBRATED_STATES if s != 'Aprobado'}

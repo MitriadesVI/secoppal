@@ -361,7 +361,39 @@ def test_compatible_params_only_and_both_source_states_are_preserved():
         for source in SourceKind
     )
 
+    # The family named here must be the one that actually declares the value.
+    # Until the V1.1 closeout, "no_procede" held Suspendido for contracts too;
+    # now suspension is contrato_suspendido, because a suspended contract is
+    # celebrated while a cancelled record is outside that universe. The
+    # property under test is unchanged: a context whose family AGREES with its
+    # filter migrates and keeps the value.
     duplicate = migrate_legacy_context(
+        LEGACY_BASE,
+        {
+            **BUYER_PARAMS,
+            "estado": ["Suspendido"],
+            "estado_field": "estado_contrato",
+            "estado_contrato": ["Suspendido"],
+            "estado_family": "contrato_suspendido",
+        },
+    )
+    assert duplicate.status is MigrationStatus.MIGRATED
+    assert duplicate.frame.predicates_for(
+        SourceKind.CONTRACTS,
+    ).current_state.values == ("Suspendido",)
+
+
+def test_a_stored_context_whose_family_no_longer_holds_its_value_is_reviewed():
+    """The other half of the closeout, and it is not a silent migration.
+
+    A context persisted before the V1.1 catalog can carry estado_family
+    "no_procede" beside estado_contrato ["Suspendido"]. That pair is now a
+    contradiction — no_procede no longer declares Suspendido for contracts —
+    so the frame refuses it instead of quietly re-reading it as Cancelado,
+    which is the state the user did not ask for and the one the celebrated
+    universe excludes.
+    """
+    stale = migrate_legacy_context(
         LEGACY_BASE,
         {
             **BUYER_PARAMS,
@@ -371,10 +403,9 @@ def test_compatible_params_only_and_both_source_states_are_preserved():
             "estado_family": "no_procede",
         },
     )
-    assert duplicate.status is MigrationStatus.MIGRATED
-    assert duplicate.frame.predicates_for(
-        SourceKind.CONTRACTS,
-    ).current_state.values == ("Suspendido",)
+    assert stale.status is MigrationStatus.INVALID_CONTEXT
+    assert stale.reason == "STATE_FAMILY_CONFLICT"
+    assert stale.frame is None
 
 
 @pytest.mark.parametrize(

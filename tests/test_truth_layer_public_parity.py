@@ -52,7 +52,18 @@ M2_MODIFIED_FILE_SHA256 = {
     # or fingerprint, which test_m2_does_not_move_ranking_ordering_counts_or_
     # pagination bounds. tests/test_url_fallback_channel_parity.py pins the new
     # copy and proves the three channels take the SAME decision per row.
-    "app/core/formatter.py": "b28f2c9b03c7615be0d61e29b0ad776e8ee92a0efcb433e8be5a4a00e15f19b9",
+    # Contract Universe V1.1 final closeout re-pins it for a boundary change,
+    # not a behaviour one: _date_and_label asked whether a contractual date is
+    # really a date by importing a private Truth Layer resolver, which
+    # test_temporal_modules_have_no_runtime_consumers forbids. The question now
+    # goes through app/core/published_temporal_value.py, whose answer was
+    # measured identical to the previous one over civil dates, naive and
+    # offset-bearing timestamps, free text, blanks and impossible calendars
+    # (tests/test_published_temporal_value.py). Nothing else in the file moves:
+    # to_rows gains no field, no WHERE/ORDER/LIMIT, ranking, cursor or
+    # fingerprint is touched, and the import stays deferred so a normal
+    # application import still leaves the layer dormant.
+    "app/core/formatter.py": "90fc5a4160cf7b1e25cbda3d4b5fd60f7eb77326c5e721d625dfd8eb09e41718",
     # Money V2 / M7 adds a section gated strictly by valor_min/valor_max. The
     # no-money oracle below remains byte-identical and bounds that condition;
     # tests/test_money_presentation.py pins the authorized monetary divergence.

@@ -22,8 +22,6 @@ different question, with a different answer, and it belongs to them.
 """
 from __future__ import annotations
 
-from app.core.truth_layer import FieldObservation, resolve_temporal_value
-
 __all__ = ["observed_date_is_usable"]
 
 
@@ -33,5 +31,11 @@ def observed_date_is_usable(value: str) -> bool:
     A civil date, a naive timestamp and an offset-bearing instant all count.
     Unparseable text, an empty string and a local time that its own zone never
     had do not — none of them is a date, and none may be presented as one.
+
+    The import is deferred on purpose: the layer stays dormant until a row is
+    actually judged, and a normal application import must not wake it. That is
+    an architectural invariant with a test of its own.
     """
+    from app.core.truth_layer import FieldObservation, resolve_temporal_value
+
     return resolve_temporal_value(FieldObservation("observed", value)).is_valid
