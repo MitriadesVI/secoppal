@@ -488,15 +488,6 @@ class QueryRouter:
         consumed_spans.extend(modality_spans)
         actor_modifier_spans.extend(modality_spans)
 
-        # El intent se detectó antes para seleccionar dataset, pero se consume
-        # después del masking por offsets de M2.
-        if (
-            intent_config
-            and intent_span
-            and (intent_config.get("scrub_only") or "estado_family" in intent_config)
-        ):
-            scrubbed = scrubbed.replace(intent_span, " ", 1)
-
         # ── 1.d Contractual type/nature (independent from modality) ─────
         # A recognized contractual class owns its span before the catch-all
         # thematic extractor runs.  Projection is source-backed and dataset-
@@ -997,6 +988,22 @@ class QueryRouter:
                     re.escape(framing_span), " ", scrubbed, count=1,
                     flags=re.IGNORECASE,
                 )
+            scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
+
+        # Same rule for the intent marker, and for the same reason. The intent
+        # was read early to select the dataset, but its span is not always its
+        # own: an accredited Actor mention owns the WHOLE construction that
+        # names it — "que ha contratado ASILO DE SAN ANTONIO" is one span, not
+        # a marker plus a leftover. Consuming the marker first left the actor
+        # doors with a span they could no longer match, and the name survived
+        # into ``objeto`` and into the buyer gazetteer. The semantic effect
+        # (force_dataset) was applied at detection time and is unaffected.
+        if (
+            intent_config
+            and intent_span
+            and (intent_config.get("scrub_only") or "estado_family" in intent_config)
+        ):
+            scrubbed = scrubbed.replace(intent_span, " ", 1)
             scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
         # ── 10.5. City detection (before object terms) ────────────────────
