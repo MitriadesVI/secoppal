@@ -405,8 +405,10 @@ class Formatter:
             if val:
                 if dataset_id != "jbjy-vk9h":
                     return str(val), label
-                from app.core.truth_layer.temporal_value import parse_iso_text
-                if parse_iso_text(str(val))[1] is not None:
+                from app.core.published_temporal_value import (
+                    observed_date_is_usable,
+                )
+                if observed_date_is_usable(str(val)):
                     return str(val), label
         return "", ("Fecha de firma no publicada" if dataset_id == "jbjy-vk9h"
                     else "Pendiente de publicación")
