@@ -1,0 +1,18 @@
+{
+  "verdict": "CONTRACT_UNIVERSE_V1_1_INTEGRATED",
+  "main_before": "c52d7eda355f44278164d4cb9803a199eec83486",
+  "head_final": "c417e5e52066b542ee17188cdbbae56a48657ba8",
+  "fast_forward_only": true,
+  "merge_commits_created": 0,
+  "commits_integrated": 27,
+  "tracked_dirty": [],
+  "untracked_preexisting_count": 250,
+  "untracked_note": "250 untracked entries predate the merge and are unchanged by it; they are main's own working-tree files, not merge output",
+  "frame_default_enabled": false,
+  "policy_version": "contract-universe-1.1",
+  "pushed": false,
+  "deployed": false,
+  "restarted": false,
+  "main_after_fast_forward": "c417e5e52066b542ee17188cdbbae56a48657ba8",
+  "note_after_ff": "main is the fast-forward target plus one docs-only commit that records these SHAs in FINAL.md. Its own SHA is not pinned here: the commit contains this file, so pinning it would chase itself. It touches no runtime and no test."
+}

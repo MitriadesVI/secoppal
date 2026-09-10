@@ -98,6 +98,8 @@ declarar su propio valor.
 |---|---|
 | main antes | `c52d7eda355f44278164d4cb9803a199eec83486` |
 | HEAD final | `ded6ae4c09d3085b82c15c1945efcab5d446b73a` |
-| main después | (ver POSTFLIGHT.json) |
+| main después | `c417e5e52066b542ee17188cdbbae56a48657ba8` |
+| commits integrados | 27, cero merge commits |
+| untracked en main | 250, preexistentes e intactos — no son salida del merge |
 | modo | `--ff-only`, sin merge commit, squash, rebase ni cherry-pick |
 | push / deploy / restart | no |
