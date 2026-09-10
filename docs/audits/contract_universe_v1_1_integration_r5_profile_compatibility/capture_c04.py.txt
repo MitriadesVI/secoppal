@@ -1,0 +1,43 @@
+"""C04: diferencia entre el perfil real (P1) y el fixture manual (P3)."""
+from __future__ import annotations
+
+import copy
+import json
+
+from _env import bootstrap
+
+TMP = bootstrap()
+
+from app.core.entity_profile.turn import PROFILE_ACTIVE_PARAM  # noqa: E402
+from test_entity_profile_workflow import _workflow  # noqa: E402
+
+GALAPA = "MUNICIPIO DE GALAPA."
+QUERY = "cuales son sus mayores proveedores?"
+
+
+def run(previous_dataset):
+    workflow, client = _workflow()
+    first = workflow.run_query("analiza la alcaldia de galapa", chat_id="suppliers")
+    real = copy.deepcopy(first["resolved_params"])
+    params = {**first["resolved_params"], "dataset": previous_dataset}
+    workflow.conv_store.append_turn(
+        chat_id="suppliers", user_query="analiza la alcaldia de galapa",
+        response=first["response"], parsed_params=params,
+    )
+    client.calls.clear()
+    result = workflow.run_query(QUERY, chat_id="suppliers")
+    return {
+        "previous_dataset": previous_dataset,
+        "real_params": real,
+        "persisted_params": params,
+        "route_reason": result.get("route_reason"),
+        "entidad_resolved": result["resolved_params"].get("entidad_resolved"),
+        "profile_active": result["resolved_params"].get(PROFILE_ACTIVE_PARAM),
+        "response_head": result["response"][:400],
+        "calls": [(d, s[:200]) for _, d, s in client.calls],
+        "result_params": result["resolved_params"],
+    }
+
+
+out = {ds: run(ds) for ds in ("procesos", "contratos")}
+print(json.dumps(out, indent=2, ensure_ascii=False, default=str))

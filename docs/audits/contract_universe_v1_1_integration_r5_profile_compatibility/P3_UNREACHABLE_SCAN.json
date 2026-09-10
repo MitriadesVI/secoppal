@@ -1,0 +1,26 @@
+{
+  "turns_observed": 90,
+  "turns_with_dataset_contratos": 63,
+  "unsealed_contract_turns": [],
+  "contract_dataset_with_sources_BOTH": [],
+  "distinct_contract_shapes": [
+    [
+      "celebrated",
+      "contract-universe-1.1",
+      "CONTRACTS",
+      "EXPLICIT"
+    ],
+    [
+      "celebrated",
+      "contract-universe-1.1",
+      "CONTRACTS",
+      "INHERITED"
+    ],
+    [
+      "celebrated",
+      "contract-universe-1.1",
+      null,
+      null
+    ]
+  ]
+}

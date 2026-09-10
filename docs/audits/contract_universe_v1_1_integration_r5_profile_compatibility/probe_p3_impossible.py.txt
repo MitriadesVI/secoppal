@@ -1,0 +1,63 @@
+"""¿Puede la autoridad productiva persistir dataset=contratos sin sellar el universo?"""
+from __future__ import annotations
+
+import json
+
+from _env import bootstrap
+
+TMP = bootstrap()
+
+from test_entity_profile_workflow import _workflow  # noqa: E402
+
+QUERIES = [
+    "analiza la alcaldia de galapa",
+    "analiza la alcaldia de galapa solo contratos",
+    "analiza la alcaldia de galapa en 2026",
+    "analiza los contratos de la alcaldia de galapa",
+    "analiza la alcaldia de galapa por contratos de obra",
+    "perfil de la alcaldia de galapa",
+    "analizame la alcaldia de galapa",
+    "analiza la contratacion de la alcaldia de galapa",
+    "analiza la alcaldia de galapa solo procesos",
+    "analiza la alcaldia de baranoa",
+    "analiza la alcaldia de baranoa en 2026",
+    "analiza la alcaldia de baranoa solo contratos",
+    "analiza la alcaldia de baranoa contratos por mas de 100 millones",
+    "analiza la alcaldia de galapa contratos cancelados",
+    "analiza la alcaldia de galapa registros de la fuente",
+]
+FOLLOWUPS = ["y sus proveedores", "y por valor", "solo contratos", "y en 2026", "y sus modalidades"]
+
+rows = []
+for i, q in enumerate(QUERIES):
+    workflow, _ = _workflow()
+    chat = f"scan-{i}"
+    turns = [(q, workflow.run_query(q, chat_id=chat))]
+    for f in FOLLOWUPS:
+        turns.append((f, workflow.run_query(f, chat_id=chat)))
+    for text, r in turns:
+        p = r["resolved_params"]
+        state = p.get("_entity_profile_state") or {}
+        rows.append({
+            "opener": q, "turn": text,
+            "dataset": p.get("dataset"),
+            "universe": p.get("contract_universe"),
+            "version": p.get("contract_universe_version"),
+            "sources": (state.get("confirmed") or {}).get("sources"),
+            "provenance": (state.get("confirmed") or {}).get("sources_provenance"),
+            "profile_active": p.get("_entity_profile_active"),
+            "route": r.get("route_reason"),
+        })
+
+contract_rows = [r for r in rows if r["dataset"] == "contratos"]
+unsealed = [r for r in contract_rows if not r["version"]]
+both_with_contracts = [r for r in contract_rows if r["sources"] == "BOTH"]
+print(json.dumps({
+    "turns_observed": len(rows),
+    "turns_with_dataset_contratos": len(contract_rows),
+    "unsealed_contract_turns": unsealed,
+    "contract_dataset_with_sources_BOTH": both_with_contracts,
+    "distinct_contract_shapes": sorted({
+        (r["universe"], r["version"], r["sources"], r["provenance"]) for r in contract_rows
+    }, key=str),
+}, indent=2, ensure_ascii=False, default=str))

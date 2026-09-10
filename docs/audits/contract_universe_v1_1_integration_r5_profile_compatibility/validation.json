@@ -1,0 +1,132 @@
+{
+  "verdict": "ENTITY_PROFILE_CU_COMPATIBILITY_ADJUDICATED",
+  "base": "d37dfdd",
+  "base_full": "d37dfdd5a5e762887774afe4c4f91db4b2b02e44",
+  "branch": "codex/contract-universe-v1-1-r5-profile-compatibility",
+  "historical_main": "c52d7eda355f44278164d4cb9803a199eec83486",
+  "scope_clusters": [
+    "C03",
+    "C04"
+  ],
+  "adjudication": {
+    "OBSOLETE_FIXTURE": 1,
+    "INVALID_HISTORICAL_FIXTURE": 4,
+    "REAL_REGRESSION": 0,
+    "INCONCLUSIVE": 0
+  },
+  "runtime_files_changed": [],
+  "tests": {
+    "c03_c04_before": "5 failed, 4 passed in 2.64s",
+    "c03_c04_after": "5 passed in 1.84s",
+    "r5_controls": "14 passed in 3.34s",
+    "auditor_final_19": "19 passed in 4.03s",
+    "f2_2_product_properties": "34 passed in 12.83s",
+    "frozen_after": "43 passed in 6.09s",
+    "corpus": "Summary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)",
+    "C05_C08": "44 passed in 10.44s",
+    "R3_sql_oracles": "34 passed in 1.87s",
+    "r4_state_metadata": "16 passed in 2.65s",
+    "entity_profile_suites": "1074 passed in 62.78s (0:01:02)",
+    "size": "2 passed in 0.12s",
+    "residual_10": "5 failed, 5 passed in 2.13s"
+  },
+  "totals_are_overlapping": true,
+  "global_suite_run": false,
+  "tooling": {
+    "ruff": "ruff 0.16.4",
+    "semgrep": "1.176.0",
+    "python": "Python 3.14.7",
+    "codegraph": "MCP server failed to connect (CONNECTION_CLOSED); rg + direct reads used instead"
+  },
+  "static": {
+    "ruff": "All checks passed!",
+    "lint_core": "app/core/ limpio",
+    "diff_check": "clean",
+    "diff_check_cached": "clean"
+  },
+  "semgrep": {
+    "baseline": 10,
+    "current": 10,
+    "new": 0,
+    "gone": 0,
+    "all_finding_files_identical_to_base": true,
+    "limitations": []
+  },
+  "mutations": {
+    "M1": "killed_by_assertion",
+    "M2": "killed_by_assertion",
+    "M3": "killed_by_assertion",
+    "M4": "killed_by_assertion"
+  },
+  "residual": {
+    "before": 10,
+    "now_pass": 5,
+    "still_fail": 5,
+    "errors": 0,
+    "skipped": 0,
+    "clusters_still_present": [
+      "C01",
+      "C02",
+      "C24",
+      "C25",
+      "C26"
+    ],
+    "nodeids_still_fail": [
+      "tests/test_actor_routing.py::test_inv_actor_mention_atomicity_name_plus_document_cannot_leak[qu\\xe9 ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1]",
+      "tests/test_actor_routing.py::test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto[qu\\xe9 ha contratado FUNSOCOM]",
+      "tests/test_state_catalog.py::test_catalog_no_unexpected_duplicates",
+      "tests/test_truth_layer_temporal.py::test_temporal_modules_have_no_runtime_consumers",
+      "tests/test_value_sanity_reachability.py::test_export_preserves_source_amount_and_existing_columns"
+    ],
+    "nodeids_now_pass": [
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero",
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]",
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]",
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]",
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]"
+    ],
+    "results": {
+      "tests/test_actor_routing.py::test_inv_actor_mention_atomicity_name_plus_document_cannot_leak[qu\\xe9 ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1]": "failed",
+      "tests/test_actor_routing.py::test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto[qu\\xe9 ha contratado FUNSOCOM]": "failed",
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero": "passed",
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]": "passed",
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]": "passed",
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]": "passed",
+      "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]": "passed",
+      "tests/test_state_catalog.py::test_catalog_no_unexpected_duplicates": "failed",
+      "tests/test_truth_layer_temporal.py::test_temporal_modules_have_no_runtime_consumers": "failed",
+      "tests/test_value_sanity_reachability.py::test_export_preserves_source_amount_and_existing_columns": "failed"
+    }
+  },
+  "open_debt": [
+    {
+      "id": "ENTITY_PROFILE_SOURCE_RECORDS_INHERITANCE_DEBT",
+      "statement": "An explicit source_records profile does not carry that universe into the Entity Profile supplier view, which reverts to the celebrated default. The tabular route does carry it. The change is declared in the response, never silent.",
+      "preexisting_at_base": true,
+      "closable_within_r5_scope": false
+    }
+  ],
+  "gate_side_effects_reverted": [
+    "docs/audits/contract_universe_v1_1_f2_2/product_trace.jsonl",
+    "docs/audits/contract_universe_v1_1_f2_1_final/observations.jsonl"
+  ],
+  "limitations": [
+    "Global suite not run, by instruction; gate totals overlap.",
+    "The F2.2 and F2.1-final gates append to their own audit traces; those two files were restored to their d37dfdd content after the run.",
+    "main_behavior is not a measurement: app/core/contract_universe.py does not exist at c52d7ed, so these five nodeids have no observable counterpart there.",
+    "Codegraph MCP unavailable; no indexed impact claim."
+  ],
+  "merged": false,
+  "pushed": false,
+  "deployed": false,
+  "restarted": false,
+  "working_tree_entries": [
+    " M tests/test_beta_entity_actor_conversation.py",
+    "?? docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility/",
+    "?? tests/test_contract_universe_r5_profile_compatibility.py"
+  ],
+  "owned_test_sha256": {
+    "tests/test_beta_entity_actor_conversation.py": "144140f798487ed2a4785e1db3078f295d4d4a0d6f6ec8020bdff1efb74bb439",
+    "tests/test_contract_universe_r5_profile_compatibility.py": "54b85a209d48f32ff6aa1c183893cba3c9e907de8846f37e98cf87b1e26a6989"
+  }
+}

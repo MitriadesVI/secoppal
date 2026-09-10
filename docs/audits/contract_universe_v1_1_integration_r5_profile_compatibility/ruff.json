@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/.venv/bin/ruff",
+    "check",
+    "app/",
+    "tests/",
+    "scripts/"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility",
+  "exit_code": 0,
+  "duration_seconds": 0.10116137499426259,
+  "stdout": "All checks passed!\n",
+  "stderr": ""
+}

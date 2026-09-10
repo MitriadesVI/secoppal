@@ -1,0 +1,52 @@
+"""PROBE C04: followup de proveedores sobre un perfil contractual REAL (P2)."""
+from __future__ import annotations
+
+import json
+
+from _env import bootstrap
+
+TMP = bootstrap()
+
+from app.core.entity_profile.turn import PROFILE_ACTIVE_PARAM  # noqa: E402
+from test_entity_profile_workflow import _workflow  # noqa: E402
+
+GALAPA = "MUNICIPIO DE GALAPA."
+QUERIES = [
+    "cuales son sus mayores proveedores?",
+    "quienes son sus principales proveedores",
+    "quien tiene mas contratos",
+    "quienes contratan mas con esa entidad",
+]
+OPENERS = {
+    "procesos": "analiza la alcaldia de galapa",
+    "contratos": "analiza la alcaldia de galapa solo contratos",
+}
+
+out = []
+for previous_dataset, opener in OPENERS.items():
+    for query in QUERIES:
+        workflow, client = _workflow()
+        first = workflow.run_query(opener, chat_id="suppliers")
+        params = first["resolved_params"]
+        client.calls.clear()
+        result = workflow.run_query(query, chat_id="suppliers")
+        rp = result["resolved_params"]
+        checks = {
+            "route": result.get("route_reason") == "entity_profile_suppliers",
+            "buyer": rp.get("entidad_resolved") == GALAPA,
+            "profile_active": rp.get(PROFILE_ACTIVE_PARAM) is True,
+            "rank_count": "Principales contratistas por número" in result["response"],
+            "rank_value": "Principales contratistas por valor" in result["response"],
+            "two_calls": len(client.calls) == 2,
+            "only_contracts_dataset": all(d == "jbjy-vk9h" for _, d, _ in client.calls),
+            "buyer_in_soql": all(GALAPA in s for _, _, s in client.calls),
+        }
+        out.append({
+            "previous_dataset": previous_dataset, "opener": opener, "query": query,
+            "opener_dataset": params.get("dataset"),
+            "opener_universe": params.get("contract_universe"),
+            "opener_universe_version": params.get("contract_universe_version"),
+            "route_reason": result.get("route_reason"),
+            "checks": checks, "all_pass": all(checks.values()),
+        })
+print(json.dumps(out, indent=2, ensure_ascii=False, default=str))

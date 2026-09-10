@@ -1,0 +1,110 @@
+{
+  "mutants": [
+    {
+      "id": "M1",
+      "intent": "Restore contract rows with no state: C03 goes back to a false zero.",
+      "file": "tests/test_beta_entity_actor_conversation.py",
+      "targets": [
+        "tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero"
+      ],
+      "exit_code": 1,
+      "killed": true,
+      "killed_by_assertion": true,
+      "import_or_timeout_error": false,
+      "tail": [
+        "=================================== FAILURES ===================================",
+        "E   AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'",
+        "      ",
+        "      'Se observan 0 contratos' is contained here:",
+        "        ocesos]",
+        "        • Se observan 0 contratos por $0. [SECOP II Contratos]",
+        "        • Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]",
+        "        • Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]",
+        "        ",
+        "        Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+        "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/tests/test_beta_entity_actor_conversation.py:93: AssertionError: assert 'Se observan 0 contratos' not in 'MUNICIPIO D...s recientes.'",
+        "=========================== short test summary info ============================",
+        "FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero",
+        "1 failed in 1.08s"
+      ]
+    },
+    {
+      "id": "M2",
+      "intent": "A new search inherits the previous raw params: the prior Actor reaches the SoQL.",
+      "file": "app/core/followup_engine.py",
+      "targets": [
+        "tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero"
+      ],
+      "exit_code": 1,
+      "killed": true,
+      "killed_by_assertion": true,
+      "import_or_timeout_error": false,
+      "tail": [
+        "F                                                                        [100%]",
+        "=================================== FAILURES ===================================",
+        "E   AssertionError: assert 'Se observan 2 contratos' in 'El conjunto de procesos no publica quién contrata, así que ahí no puedo filtrar por ese NIT o cédula. ¿Busco su actividad en los contratos?'",
+        "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/tests/test_beta_entity_actor_conversation.py:96: AssertionError: assert 'Se observan 2 contratos' in 'El conjunto de procesos no publica quién contrata, así que ahí no puedo filtrar por ese NIT o cédula. ¿Busco su actividad en los contratos?'",
+        "=========================== short test summary info ============================",
+        "FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero",
+        "1 failed in 0.84s"
+      ]
+    },
+    {
+      "id": "M3",
+      "intent": "Break continuity of a valid contractual profile: every contract follow-up is reviewed.",
+      "file": "app/core/workflow/actions/planning.py",
+      "targets": [
+        "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer"
+      ],
+      "exit_code": 1,
+      "killed": true,
+      "killed_by_assertion": true,
+      "import_or_timeout_error": false,
+      "tail": [
+        "      - entity_profile_suppliers",
+        "      + heuristic_only",
+        "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/tests/test_beta_entity_actor_conversation.py:132: AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'",
+        "E   AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'",
+        "      ",
+        "      - entity_profile_suppliers",
+        "      + heuristic_only",
+        "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/tests/test_beta_entity_actor_conversation.py:132: AssertionError: assert 'heuristic_only' == 'entity_profile_suppliers'",
+        "=========================== short test summary info ============================",
+        "FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]",
+        "FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]",
+        "FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]",
+        "FAILED tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]",
+        "4 failed, 4 passed in 2.02s"
+      ]
+    },
+    {
+      "id": "M4",
+      "intent": "Silently accept an old or unstamped universe: nothing is sent to review.",
+      "file": "app/core/contract_universe.py",
+      "targets": [
+        "tests/test_contract_universe_r5_profile_compatibility.py::test_an_old_or_unstamped_contractual_profile_is_sent_to_review"
+      ],
+      "exit_code": 1,
+      "killed": true,
+      "killed_by_assertion": true,
+      "import_or_timeout_error": false,
+      "tail": [
+        "FF                                                                       [100%]",
+        "=================================== FAILURES ===================================",
+        "E   assert False is True",
+        "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/tests/test_contract_universe_r5_profile_compatibility.py:225: assert False is True",
+        "E   assert False is True",
+        "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/tests/test_contract_universe_r5_profile_compatibility.py:225: assert False is True",
+        "=========================== short test summary info ============================",
+        "FAILED tests/test_contract_universe_r5_profile_compatibility.py::test_an_old_or_unstamped_contractual_profile_is_sent_to_review[stored0]",
+        "FAILED tests/test_contract_universe_r5_profile_compatibility.py::test_an_old_or_unstamped_contractual_profile_is_sent_to_review[stored1]",
+        "2 failed in 1.20s"
+      ]
+    }
+  ],
+  "all_killed_by_assertion": true,
+  "restored_baseline": {
+    "exit_code": 0,
+    "summary": "23 passed in 5.02s"
+  }
+}

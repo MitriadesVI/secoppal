@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_module_size_limits.py",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility/size.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility",
+  "exit_code": 0,
+  "duration_seconds": 0.35296129200287396,
+  "stdout": "..                                                                       [100%]\n2 passed in 0.12s\n",
+  "stderr": ""
+}

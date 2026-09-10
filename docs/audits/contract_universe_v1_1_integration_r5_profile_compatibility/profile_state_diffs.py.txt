@@ -1,0 +1,77 @@
+"""P1 / P2 / P3: the three profile states compared field by field."""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from _env import bootstrap
+
+TMP = bootstrap()
+
+from test_entity_profile_workflow import _workflow  # noqa: E402
+
+E = Path("/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility"
+         "/docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility")
+
+P1_QUERY = "analiza la alcaldia de galapa"
+P2_QUERY = "analiza la alcaldia de galapa solo contratos"
+
+w1, _ = _workflow()
+p1 = w1.run_query(P1_QUERY, chat_id="p1")["resolved_params"]
+w2, _ = _workflow()
+p2 = w2.run_query(P2_QUERY, chat_id="p2")["resolved_params"]
+p3 = {**p1, "dataset": "contratos"}
+
+
+def confirmed(params):
+    return (params.get("_entity_profile_state") or {}).get("confirmed", {})
+
+
+def view(params):
+    from app.core.contract_universe import compatible
+    return {
+        "dataset": params.get("dataset"),
+        "contract_universe": params.get("contract_universe"),
+        "contract_universe_version": params.get("contract_universe_version"),
+        "contract_universe_compatible": compatible(params),
+        "_entity_profile_active": params.get("_entity_profile_active"),
+        "_entity_profile_focus": params.get("_entity_profile_focus"),
+        "_entity_profile_sources": params.get("_entity_profile_sources"),
+        "state_sources": confirmed(params).get("sources"),
+        "state_sources_provenance": confirmed(params).get("sources_provenance"),
+        "state_sources_origin": confirmed(params).get("sources_origin"),
+        "state_version": (params.get("_entity_profile_state") or {}).get("version"),
+        "entidad_resolved": params.get("entidad_resolved"),
+        "entidad_resolution_method": (params.get("entidad_resolution") or {}).get("method"),
+        "request_keys": sorted(params.get("_entity_profile_request") or {}),
+        "param_keys": sorted(params),
+    }
+
+
+views = {"P1_real_process_profile": view(p1),
+         "P2_real_contract_profile": view(p2),
+         "P3_test_fixture_hybrid": view(p3)}
+fields = sorted({k for v in views.values() for k in v})
+diffs = {f: {name: v.get(f) for name, v in views.items()}
+         for f in fields
+         if len({json.dumps(v.get(f), sort_keys=True, default=str) for v in views.values()}) > 1}
+
+payload = {
+    "openers": {"P1": P1_QUERY, "P2": P2_QUERY,
+                "P3": "P1's resolved_params with dataset overwritten to 'contratos'"},
+    "views": views,
+    "differing_fields": diffs,
+    "central_question": (
+        "Could SECOPPAL itself have produced P3? No. Every path that leaves "
+        "dataset='contratos' stamps the universe (contract_universe_intent."
+        "apply_request always ends in contract_universe.stamp), and the "
+        "contractual profile also declares CONTRACTS as its source. P3 carries "
+        "neither: no universe stamp, and BOTH as its confirmed source."
+    ),
+    "real_v1_artifact_for_contrast": json.loads(
+        Path("docs/audits/contract_universe_v1_1_independent/"
+             "v1_independent_artifacts.json").read_text())["params"],
+}
+(E / "PROFILE_STATE_DIFFS.json").write_text(
+    json.dumps(payload, indent=2, ensure_ascii=False, default=str) + "\n")
+print(json.dumps(diffs, indent=2, ensure_ascii=False, default=str)[:2000])

@@ -1,0 +1,91 @@
+[
+  {
+    "nodeid": "tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero",
+    "cluster": "C03",
+    "property": "A complete buyer mention switches the turn from Actor to Buyer: Galapa is the buyer, its two contracts are counted, and the previously selected actor reaches neither the parameters nor the emitted SoQL.",
+    "main_behavior": "Not measurable on main: app/core/contract_universe.py does not exist at c52d7ed, so no celebrated-universe predicate is emitted there and the fixture's stateless rows were never filtered.",
+    "candidate_behavior": "FAIL at d37dfdd. The four contract calls raise sqlite3.OperationalError 'no such function: date_extract_y', so the profile renders 'la fuente no respondió' instead of a count. With the dialect emulated but the rows still stateless, the answer becomes 'Se observan 0 contratos'.",
+    "root_cause": "The fixture predates Contract Universe V1.1 on two independent axes. (1) The emitted SoQL now calls date_extract_y, which the in-memory SQLite transport does not define — tests/contract_universe_sql_dates.py is the accredited emulation and the fixture did not use it. (2) The celebrated predicate requires evidence of membership, and every contract row was written with estado_contrato NULL. Neither is a product defect: both routing assertions the test owns pass once the rows are reachable.",
+    "classification": "OBSOLETE_FIXTURE",
+    "change": "tests/test_beta_entity_actor_conversation.py only: register_dates(conn) on the SQLite connection, estado_contrato=CELEBRATED_STATE on jbjy-vk9h rows, and quoted column names in the INSERT. Buyers, documents, values, dates, objects, the Actor decoy and the row count are unchanged; zero runtime files touched.",
+    "evidence": [
+      "c03_before.json",
+      "c03_probe.json",
+      "c03_c04_after.txt",
+      "MUTATIONS.json",
+      "FIXTURE_INTEGRITY.md"
+    ]
+  },
+  {
+    "nodeid": "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]",
+    "cluster": "C04",
+    "property": "A supplier follow-up over a persisted profile keeps the buyer, stays on the profile route, queries only jbjy-vk9h and renders both rankings — whichever dataset the previous profile was in.",
+    "main_behavior": "Not measurable on main: without Contract Universe there is no compatibility check on the persisted contractual context.",
+    "candidate_behavior": "FAIL at d37dfdd with route_reason 'heuristic_only' and the clarification 'La búsqueda contractual anterior requiere revisión de universo', emitted by app/core/workflow/actions/planning.py because compatible(previous) is False for a contract dataset.",
+    "root_cause": "The test built its contractual profile by copying a process profile's resolved_params and overwriting dataset='contratos'. From V1.1 on, a contractual profile always travels stamped (contract_universe + contract_universe_version) and declares CONTRACTS as its confirmed source; the hand-built dict has neither. Over 90 observed profile turns, 63 with dataset='contratos', not one was unstamped and not one carried sources='BOTH'. Even the real V1 artifact in docs/audits/contract_universe_v1_1_independent/ carries the stamp, with the older version value. P3 is a hybrid the product never persisted, so the fail-closed it triggers is the adjudicated policy — old artifacts do not migrate silently — not a regression.",
+    "classification": "INVALID_HISTORICAL_FIXTURE",
+    "change": "tests/test_beta_entity_actor_conversation.py only: PROFILE_OPENERS maps each dataset to the query that produces it ('analiza la alcaldia de galapa solo contratos' for contratos), the manual append_turn is dropped, and the test asserts the opener landed in the parametrized dataset and — for contratos — carries POLICY_VERSION.",
+    "evidence": [
+      "c04_before.json",
+      "c04_probe.json",
+      "PROFILE_STATE_DIFFS.json",
+      "c03_c04_after.txt",
+      "r5_controls.txt",
+      "MUTATIONS.json"
+    ]
+  },
+  {
+    "nodeid": "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]",
+    "cluster": "C04",
+    "property": "A supplier follow-up over a persisted profile keeps the buyer, stays on the profile route, queries only jbjy-vk9h and renders both rankings — whichever dataset the previous profile was in.",
+    "main_behavior": "Not measurable on main: without Contract Universe there is no compatibility check on the persisted contractual context.",
+    "candidate_behavior": "FAIL at d37dfdd with route_reason 'heuristic_only' and the clarification 'La búsqueda contractual anterior requiere revisión de universo', emitted by app/core/workflow/actions/planning.py because compatible(previous) is False for a contract dataset.",
+    "root_cause": "The test built its contractual profile by copying a process profile's resolved_params and overwriting dataset='contratos'. From V1.1 on, a contractual profile always travels stamped (contract_universe + contract_universe_version) and declares CONTRACTS as its confirmed source; the hand-built dict has neither. Over 90 observed profile turns, 63 with dataset='contratos', not one was unstamped and not one carried sources='BOTH'. Even the real V1 artifact in docs/audits/contract_universe_v1_1_independent/ carries the stamp, with the older version value. P3 is a hybrid the product never persisted, so the fail-closed it triggers is the adjudicated policy — old artifacts do not migrate silently — not a regression.",
+    "classification": "INVALID_HISTORICAL_FIXTURE",
+    "change": "tests/test_beta_entity_actor_conversation.py only: PROFILE_OPENERS maps each dataset to the query that produces it ('analiza la alcaldia de galapa solo contratos' for contratos), the manual append_turn is dropped, and the test asserts the opener landed in the parametrized dataset and — for contratos — carries POLICY_VERSION.",
+    "evidence": [
+      "c04_before.json",
+      "c04_probe.json",
+      "PROFILE_STATE_DIFFS.json",
+      "c03_c04_after.txt",
+      "r5_controls.txt",
+      "MUTATIONS.json"
+    ]
+  },
+  {
+    "nodeid": "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]",
+    "cluster": "C04",
+    "property": "A supplier follow-up over a persisted profile keeps the buyer, stays on the profile route, queries only jbjy-vk9h and renders both rankings — whichever dataset the previous profile was in.",
+    "main_behavior": "Not measurable on main: without Contract Universe there is no compatibility check on the persisted contractual context.",
+    "candidate_behavior": "FAIL at d37dfdd with route_reason 'heuristic_only' and the clarification 'La búsqueda contractual anterior requiere revisión de universo', emitted by app/core/workflow/actions/planning.py because compatible(previous) is False for a contract dataset.",
+    "root_cause": "The test built its contractual profile by copying a process profile's resolved_params and overwriting dataset='contratos'. From V1.1 on, a contractual profile always travels stamped (contract_universe + contract_universe_version) and declares CONTRACTS as its confirmed source; the hand-built dict has neither. Over 90 observed profile turns, 63 with dataset='contratos', not one was unstamped and not one carried sources='BOTH'. Even the real V1 artifact in docs/audits/contract_universe_v1_1_independent/ carries the stamp, with the older version value. P3 is a hybrid the product never persisted, so the fail-closed it triggers is the adjudicated policy — old artifacts do not migrate silently — not a regression.",
+    "classification": "INVALID_HISTORICAL_FIXTURE",
+    "change": "tests/test_beta_entity_actor_conversation.py only: PROFILE_OPENERS maps each dataset to the query that produces it ('analiza la alcaldia de galapa solo contratos' for contratos), the manual append_turn is dropped, and the test asserts the opener landed in the parametrized dataset and — for contratos — carries POLICY_VERSION.",
+    "evidence": [
+      "c04_before.json",
+      "c04_probe.json",
+      "PROFILE_STATE_DIFFS.json",
+      "c03_c04_after.txt",
+      "r5_controls.txt",
+      "MUTATIONS.json"
+    ]
+  },
+  {
+    "nodeid": "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]",
+    "cluster": "C04",
+    "property": "A supplier follow-up over a persisted profile keeps the buyer, stays on the profile route, queries only jbjy-vk9h and renders both rankings — whichever dataset the previous profile was in.",
+    "main_behavior": "Not measurable on main: without Contract Universe there is no compatibility check on the persisted contractual context.",
+    "candidate_behavior": "FAIL at d37dfdd with route_reason 'heuristic_only' and the clarification 'La búsqueda contractual anterior requiere revisión de universo', emitted by app/core/workflow/actions/planning.py because compatible(previous) is False for a contract dataset.",
+    "root_cause": "The test built its contractual profile by copying a process profile's resolved_params and overwriting dataset='contratos'. From V1.1 on, a contractual profile always travels stamped (contract_universe + contract_universe_version) and declares CONTRACTS as its confirmed source; the hand-built dict has neither. Over 90 observed profile turns, 63 with dataset='contratos', not one was unstamped and not one carried sources='BOTH'. Even the real V1 artifact in docs/audits/contract_universe_v1_1_independent/ carries the stamp, with the older version value. P3 is a hybrid the product never persisted, so the fail-closed it triggers is the adjudicated policy — old artifacts do not migrate silently — not a regression.",
+    "classification": "INVALID_HISTORICAL_FIXTURE",
+    "change": "tests/test_beta_entity_actor_conversation.py only: PROFILE_OPENERS maps each dataset to the query that produces it ('analiza la alcaldia de galapa solo contratos' for contratos), the manual append_turn is dropped, and the test asserts the opener landed in the parametrized dataset and — for contratos — carries POLICY_VERSION.",
+    "evidence": [
+      "c04_before.json",
+      "c04_probe.json",
+      "PROFILE_STATE_DIFFS.json",
+      "c03_c04_after.txt",
+      "r5_controls.txt",
+      "MUTATIONS.json"
+    ]
+  }
+]

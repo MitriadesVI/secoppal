@@ -1,0 +1,45 @@
+{
+  "base": "d37dfdd",
+  "base_full": "d37dfdd5a5e762887774afe4c4f91db4b2b02e44",
+  "base_subject": "fix(contracts): separate state provenance and universe metadata",
+  "branch": "codex/contract-universe-v1-1-r5-profile-compatibility",
+  "worktree": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility",
+  "main": "c52d7eda355f44278164d4cb9803a199eec83486",
+  "main_is_ancestor_of_base": true,
+  "worktree_clean_at_creation": true,
+  "r4_green": "tests/test_contract_universe_r4_state_metadata.py: 16 passed",
+  "residual_before": [
+    "tests/test_actor_routing.py::test_inv_actor_mention_atomicity_name_plus_document_cannot_leak[qu\\xe9 ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1]",
+    "tests/test_actor_routing.py::test_inv_no_topic_fallback_an_unresolved_name_does_not_fall_into_objeto[qu\\xe9 ha contratado FUNSOCOM]",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]",
+    "tests/test_state_catalog.py::test_catalog_no_unexpected_duplicates",
+    "tests/test_truth_layer_temporal.py::test_temporal_modules_have_no_runtime_consumers",
+    "tests/test_value_sanity_reachability.py::test_export_preserves_source_amount_and_existing_columns"
+  ],
+  "residual_before_count": 10,
+  "clusters_before": [
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "C24",
+    "C25",
+    "C26"
+  ],
+  "in_scope": [
+    "C03",
+    "C04"
+  ],
+  "out_of_scope": [
+    "C01",
+    "C02",
+    "C24",
+    "C25",
+    "C26"
+  ],
+  "red_reproduced_before_any_edit": "5 failed, 4 passed in 2.64s"
+}

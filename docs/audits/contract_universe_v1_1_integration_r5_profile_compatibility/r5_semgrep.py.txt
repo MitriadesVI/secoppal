@@ -1,0 +1,43 @@
+from pathlib import Path
+import json, os, subprocess, time
+W = Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility')
+E = W / 'docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility'
+ENV = {**os.environ, 'BURR_TELEMETRY_ENABLED': 'false'}
+
+def run(name, cmd):
+    t = time.monotonic()
+    r = subprocess.run(cmd, cwd=W, env=ENV, capture_output=True, text=True)
+    (E / (name + '.json')).write_text(json.dumps(dict(
+        command=cmd, cwd=str(W), exit_code=r.returncode,
+        duration_seconds=time.monotonic() - t, stdout=r.stdout, stderr=r.stderr,
+    ), indent=2) + '\n')
+    (E / (name + '.txt')).write_text(r.stdout + r.stderr)
+    return r
+
+semgrep = str(W / '.venv/bin/semgrep')
+run('semgrep', [semgrep, '--config', '.semgrep/secoppal-laws.yml', 'app/', '--metrics=off'])
+structured = run('semgrep_structured', [semgrep, '--config', '.semgrep/secoppal-laws.yml',
+                                        'app/', '--metrics=off', '--json'])
+report = json.loads(structured.stdout)
+findings = report['results']
+base = json.loads((Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata'
+                        '/docs/audits/contract_universe_v1_1_integration_r4_state_metadata'
+                        '/semgrep_final_structured.json')).read_text())
+baseline = json.loads(base['stdout'])['results']
+
+def key(f):
+    return (f['path'], f['check_id'], f['start']['line'], f['end']['line'])
+
+new = sorted(set(map(key, findings)) - set(map(key, baseline)))
+gone = sorted(set(map(key, baseline)) - set(map(key, findings)))
+identical = {}
+for path in sorted({f['path'] for f in findings}):
+    blob = subprocess.check_output(['git', 'show', 'd37dfdd:' + path], cwd=W)
+    identical[path] = (W / path).read_bytes() == blob
+payload = dict(inherited=len(baseline), current=len(findings), new=new, gone=gone,
+               finding_files_identical_to_base=identical,
+               all_finding_files_identical_to_base=all(identical.values()),
+               skipped=report.get('paths', {}).get('skipped', []))
+(E / 'SEMGREP_DELTA.json').write_text(json.dumps(payload, indent=2) + '\n')
+print(json.dumps({k: v for k, v in payload.items()
+                  if k != 'finding_files_identical_to_base'}, indent=2)[:1200])

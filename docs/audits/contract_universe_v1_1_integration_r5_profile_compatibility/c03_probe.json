@@ -1,0 +1,18 @@
+{
+  "state_used": "En ejecución",
+  "extra_state": null,
+  "checks": {
+    "selection_method": true,
+    "no_false_zero": true,
+    "two_contracts": true,
+    "intent_new_search": true,
+    "entidad_resolved": true,
+    "no_contratista": true,
+    "no_actor_scope": true,
+    "six_calls": true,
+    "no_actor_leak": true
+  },
+  "all_pass": true,
+  "response": "MUNICIPIO DE GALAPA. — actividad contractual\n\nContratos celebrados según las señales publicadas en SECOP.\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\n• Publicó 2 procesos en el periodo. [SECOP II Procesos]\n• Se observan 2 contratos por $200; promedio $100. [SECOP II Contratos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]\n• Principal contratista por valor: PROVEEDOR GALAPA ($200). [SECOP II Contratos]\n• Principal contratista por número de contratos: PROVEEDOR GALAPA (2 contratos). [SECOP II Contratos]\n• Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]\n• Contrato reciente: OBRA PÚBLICA. [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+  "calls": 6
+}

@@ -1,0 +1,59 @@
+"""C03: captura completa del perfil Galapa sobre el SqlProfileClient del test."""
+from __future__ import annotations
+
+import json
+import sys
+
+from _env import bootstrap
+
+TMP = bootstrap()
+
+from test_actor_conversation import _row, _workflow as actor_workflow  # noqa: E402
+from test_beta_entity_actor_conversation import GALAPA, SqlProfileClient  # noqa: E402
+
+
+class Recording(SqlProfileClient):
+    def __init__(self):
+        super().__init__()
+        self.outcomes = []
+
+    def _execute(self, dataset, soql):
+        try:
+            rows = super()._execute(dataset, soql)
+        except Exception as exc:  # noqa: BLE001 - captura de diagnóstico
+            self.outcomes.append({
+                "dataset": dataset, "soql": soql,
+                "error": f"{type(exc).__name__}: {exc}",
+            })
+            raise
+        self.outcomes.append({"dataset": dataset, "soql": soql, "rows": rows})
+        return rows
+
+    aggregate = _execute
+    query = _execute
+
+
+workflow = actor_workflow(TMP, [
+    _row("NIT", "900111222", "ACTOR ALFA", 9),
+    _row("NIT", "900333444", "ACTOR ALFA", 8),
+])
+workflow.run_query("busca proveedor ACTOR ALFA", chat_id="galapa")
+selected = workflow.run_query("2", chat_id="galapa")
+client = Recording()
+workflow.secop_client = client
+result = workflow.run_query("analizame la alcaldia de galapa", chat_id="galapa")
+
+payload = {
+    "selection_method": selected["resolved_params"].get("actor_resolution_method"),
+    "query": "analizame la alcaldia de galapa",
+    "response": result["response"],
+    "intent_type": result.get("intent_type"),
+    "route_reason": result.get("route_reason"),
+    "analytical_intent": result.get("analytical_intent"),
+    "query_plan": result.get("query_plan"),
+    "resolved_params": {k: v for k, v in result["resolved_params"].items()},
+    "calls": len(client.calls),
+    "outcomes": client.outcomes,
+    "expected_galapa": GALAPA,
+}
+print(json.dumps(payload, indent=2, ensure_ascii=False, default=str))

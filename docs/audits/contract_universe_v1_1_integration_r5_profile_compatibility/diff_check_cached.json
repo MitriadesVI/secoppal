@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility",
+  "exit_code": 0,
+  "duration_seconds": 0.014124417000857648,
+  "stdout": "",
+  "stderr": ""
+}

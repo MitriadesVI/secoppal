@@ -1,0 +1,227 @@
+{
+  "openers": {
+    "P1": "analiza la alcaldia de galapa",
+    "P2": "analiza la alcaldia de galapa solo contratos",
+    "P3": "P1's resolved_params with dataset overwritten to 'contratos'"
+  },
+  "views": {
+    "P1_real_process_profile": {
+      "dataset": "procesos",
+      "contract_universe": null,
+      "contract_universe_version": null,
+      "contract_universe_compatible": true,
+      "_entity_profile_active": true,
+      "_entity_profile_focus": "overview",
+      "_entity_profile_sources": "BOTH",
+      "state_sources": "BOTH",
+      "state_sources_provenance": "DEFAULT",
+      "state_sources_origin": "DEFAULT",
+      "state_version": 1,
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution_method": "rewrite_alcald[ií]a",
+      "request_keys": [
+        "event",
+        "focus",
+        "keeps_current_state",
+        "modality",
+        "sources",
+        "sources_origin",
+        "sources_provenance",
+        "temporal_claims",
+        "time_from",
+        "time_to",
+        "topic",
+        "unsupported_event",
+        "unsupported_events",
+        "value_max",
+        "value_min"
+      ],
+      "param_keys": [
+        "_entity_profile_active",
+        "_entity_profile_focus",
+        "_entity_profile_request",
+        "_entity_profile_sources",
+        "_entity_profile_state",
+        "dataset",
+        "entidad",
+        "entidad_resolution",
+        "entidad_resolved"
+      ]
+    },
+    "P2_real_contract_profile": {
+      "dataset": "contratos",
+      "contract_universe": "celebrated",
+      "contract_universe_version": "contract-universe-1.1",
+      "contract_universe_compatible": true,
+      "_entity_profile_active": true,
+      "_entity_profile_focus": "overview",
+      "_entity_profile_sources": "CONTRACTS",
+      "state_sources": "CONTRACTS",
+      "state_sources_provenance": "EXPLICIT",
+      "state_sources_origin": "EXPLICIT",
+      "state_version": 1,
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution_method": "rewrite_alcald[ií]a",
+      "request_keys": [
+        "event",
+        "focus",
+        "keeps_current_state",
+        "modality",
+        "sources",
+        "sources_origin",
+        "sources_provenance",
+        "temporal_claims",
+        "time_from",
+        "time_to",
+        "topic",
+        "unsupported_event",
+        "unsupported_events",
+        "value_max",
+        "value_min"
+      ],
+      "param_keys": [
+        "_entity_profile_active",
+        "_entity_profile_focus",
+        "_entity_profile_request",
+        "_entity_profile_sources",
+        "_entity_profile_state",
+        "contract_universe",
+        "contract_universe_version",
+        "dataset",
+        "entidad",
+        "entidad_resolution",
+        "entidad_resolved"
+      ]
+    },
+    "P3_test_fixture_hybrid": {
+      "dataset": "contratos",
+      "contract_universe": null,
+      "contract_universe_version": null,
+      "contract_universe_compatible": false,
+      "_entity_profile_active": true,
+      "_entity_profile_focus": "overview",
+      "_entity_profile_sources": "BOTH",
+      "state_sources": "BOTH",
+      "state_sources_provenance": "DEFAULT",
+      "state_sources_origin": "DEFAULT",
+      "state_version": 1,
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution_method": "rewrite_alcald[ií]a",
+      "request_keys": [
+        "event",
+        "focus",
+        "keeps_current_state",
+        "modality",
+        "sources",
+        "sources_origin",
+        "sources_provenance",
+        "temporal_claims",
+        "time_from",
+        "time_to",
+        "topic",
+        "unsupported_event",
+        "unsupported_events",
+        "value_max",
+        "value_min"
+      ],
+      "param_keys": [
+        "_entity_profile_active",
+        "_entity_profile_focus",
+        "_entity_profile_request",
+        "_entity_profile_sources",
+        "_entity_profile_state",
+        "dataset",
+        "entidad",
+        "entidad_resolution",
+        "entidad_resolved"
+      ]
+    }
+  },
+  "differing_fields": {
+    "_entity_profile_sources": {
+      "P1_real_process_profile": "BOTH",
+      "P2_real_contract_profile": "CONTRACTS",
+      "P3_test_fixture_hybrid": "BOTH"
+    },
+    "contract_universe": {
+      "P1_real_process_profile": null,
+      "P2_real_contract_profile": "celebrated",
+      "P3_test_fixture_hybrid": null
+    },
+    "contract_universe_compatible": {
+      "P1_real_process_profile": true,
+      "P2_real_contract_profile": true,
+      "P3_test_fixture_hybrid": false
+    },
+    "contract_universe_version": {
+      "P1_real_process_profile": null,
+      "P2_real_contract_profile": "contract-universe-1.1",
+      "P3_test_fixture_hybrid": null
+    },
+    "dataset": {
+      "P1_real_process_profile": "procesos",
+      "P2_real_contract_profile": "contratos",
+      "P3_test_fixture_hybrid": "contratos"
+    },
+    "param_keys": {
+      "P1_real_process_profile": [
+        "_entity_profile_active",
+        "_entity_profile_focus",
+        "_entity_profile_request",
+        "_entity_profile_sources",
+        "_entity_profile_state",
+        "dataset",
+        "entidad",
+        "entidad_resolution",
+        "entidad_resolved"
+      ],
+      "P2_real_contract_profile": [
+        "_entity_profile_active",
+        "_entity_profile_focus",
+        "_entity_profile_request",
+        "_entity_profile_sources",
+        "_entity_profile_state",
+        "contract_universe",
+        "contract_universe_version",
+        "dataset",
+        "entidad",
+        "entidad_resolution",
+        "entidad_resolved"
+      ],
+      "P3_test_fixture_hybrid": [
+        "_entity_profile_active",
+        "_entity_profile_focus",
+        "_entity_profile_request",
+        "_entity_profile_sources",
+        "_entity_profile_state",
+        "dataset",
+        "entidad",
+        "entidad_resolution",
+        "entidad_resolved"
+      ]
+    },
+    "state_sources": {
+      "P1_real_process_profile": "BOTH",
+      "P2_real_contract_profile": "CONTRACTS",
+      "P3_test_fixture_hybrid": "BOTH"
+    },
+    "state_sources_origin": {
+      "P1_real_process_profile": "DEFAULT",
+      "P2_real_contract_profile": "EXPLICIT",
+      "P3_test_fixture_hybrid": "DEFAULT"
+    },
+    "state_sources_provenance": {
+      "P1_real_process_profile": "DEFAULT",
+      "P2_real_contract_profile": "EXPLICIT",
+      "P3_test_fixture_hybrid": "DEFAULT"
+    }
+  },
+  "central_question": "Could SECOPPAL itself have produced P3? No. Every path that leaves dataset='contratos' stamps the universe (contract_universe_intent.apply_request always ends in contract_universe.stamp), and the contractual profile also declares CONTRACTS as its source. P3 carries neither: no universe stamp, and BOTH as its confirmed source.",
+  "real_v1_artifact_for_contrast": {
+    "dataset": "contratos",
+    "entidad_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+    "valor_min": 500000000,
+    "contract_universe": "celebrated",
+    "contract_universe_version": "contract-universe-1"
+  }
+}

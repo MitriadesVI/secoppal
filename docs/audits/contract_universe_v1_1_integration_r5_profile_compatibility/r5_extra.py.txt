@@ -1,0 +1,32 @@
+from pathlib import Path
+import json, os, subprocess, time
+W = Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility')
+E = W / 'docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility'
+P = str(W / '.venv/bin/python')
+ENV = {**os.environ, 'BURR_TELEMETRY_ENABLED': 'false'}
+
+def run(name, cmd, cwd=W):
+    t = time.monotonic()
+    r = subprocess.run(cmd, cwd=cwd, env=ENV, capture_output=True, text=True)
+    (E / (name + '.json')).write_text(json.dumps(dict(
+        command=cmd, cwd=str(cwd), exit_code=r.returncode,
+        duration_seconds=time.monotonic() - t, stdout=r.stdout, stderr=r.stderr,
+    ), indent=2) + '\n')
+    (E / (name + '.txt')).write_text(r.stdout + r.stderr)
+    out = (r.stdout + r.stderr).strip()
+    print(name, r.returncode, '|', (out.splitlines()[-1] if out else '')[:130], flush=True)
+    return r
+
+profile = sorted(str(p.relative_to(W)) for p in (W / 'tests').glob('test_entity_profile*.py'))
+profile += ['tests/test_beta_entity_actor_conversation.py',
+            'tests/test_contract_universe_r5_profile_compatibility.py',
+            'tests/test_followup_mutations.py', 'tests/test_actor_flag_off.py']
+run('entity_profile_suites', [P, '-m', 'pytest', '-p', 'tests.contract_universe_sql_dates',
+                              *profile, '-q', '--tb=short',
+                              '--junitxml=' + str(E / 'entity_profile_suites.xml')])
+run('lint_core', ['make', 'lint-core'])
+run('ruff', [str(W / '.venv/bin/ruff'), 'check', 'app/', 'tests/', 'scripts/'])
+run('diff_check', ['git', 'diff', '--check'])
+run('diff_check_cached', ['git', 'diff', '--cached', '--check'])
+run('ruff_version', [str(W / '.venv/bin/ruff'), '--version'])
+run('semgrep_version', [str(W / '.venv/bin/semgrep'), '--version'])

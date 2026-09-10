@@ -8,14 +8,18 @@ import unicodedata
 import pytest
 
 from app.config import Settings
+from app.core.contract_universe import POLICY_VERSION
 from app.core.entity_profile.turn import PROFILE_ACTIVE_PARAM
 from app.core.orchestrator import SecopalWorkflow
 from app.core.soql_builder import SoQLBuilder
 from test_actor_conversation import _row, _workflow as actor_workflow
 from test_entity_profile_workflow import WorkflowClient, _workflow
+from tests.contract_universe_sql_dates import register_dates
 
 
 GALAPA = "MUNICIPIO DE GALAPA."
+# Any of the celebrated states works; the profile never reads the label back.
+CELEBRATED_STATE = "En ejecución"
 
 
 class SqlProfileClient(WorkflowClient):
@@ -24,6 +28,14 @@ class SqlProfileClient(WorkflowClient):
     Tiny synthetic source, not a SECOP total: two Galapa contracts and a
     different buyer's contract for the previously selected actor. SQLite
     executes the real WHERE; no canned answer keyed to the expected route.
+
+    Two things the fixture owes the emitted SoQL, both adjudicated in
+    docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility/:
+    ``date_extract_y`` is SoQL dialect the transport must emulate, and a
+    contract row that carries no ``estado_contrato`` does not evidence
+    membership in the celebrated universe. Neither is a claim about state
+    semantics — that lives in the Contract Universe suites; here they only
+    keep the rows reachable so the routing assertions can be observed.
     """
 
     def _execute(self, dataset, soql):
@@ -37,6 +49,7 @@ class SqlProfileClient(WorkflowClient):
                 c for c in unicodedata.normalize("NFD", value or "")
                 if not unicodedata.combining(c)
             ))
+            register_dates(conn)
             conn.execute("CREATE TABLE records (" + ",".join(
                 f'"{field}" {"REAL" if field == spec.value else "TEXT"}'
                 for field in sorted(fields)
@@ -48,6 +61,8 @@ class SqlProfileClient(WorkflowClient):
                     spec.modality: "Contratación directa",
                     ("id_contrato" if dataset == "jbjy-vk9h" else "id_del_proceso"): str(index),
                 }
+                if dataset == "jbjy-vk9h":
+                    row[spec.state] = CELEBRATED_STATE
                 if spec.contractor_document:
                     row.update({
                         spec.contractor_document: "900333444" if index == 2 else "900111222",
@@ -55,7 +70,7 @@ class SqlProfileClient(WorkflowClient):
                         spec.contractor: "ACTOR ALFA" if index == 2 else "PROVEEDOR GALAPA",
                     })
                 conn.execute(
-                    "INSERT INTO records (" + ",".join(row) + ") VALUES ("
+                    "INSERT INTO records (" + ",".join(f'"{key}"' for key in row) + ") VALUES ("
                     + ",".join("?" for _ in row) + ")", tuple(row.values()),
                 )
             select, separator, rest = soql.partition(" WHERE ")
@@ -87,6 +102,18 @@ def test_entity_profile_galapa_does_not_report_false_zero(tmp_path):
     assert all("900333444" not in soql for _, _, soql in client.calls)
 
 
+# A persisted profile can sit in either dataset, and both must keep the buyer.
+# The contractual one is opened by the query that produces it, not by editing
+# ``dataset`` on a process profile: from Contract Universe V1.1 on, a
+# contractual profile always travels stamped with its universe, so a hand-built
+# dict without that stamp is a shape the product never persisted. Adjudicated
+# in docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility/.
+PROFILE_OPENERS = {
+    "procesos": "analiza la alcaldia de galapa",
+    "contratos": "analiza la alcaldia de galapa solo contratos",
+}
+
+
 @pytest.mark.parametrize("previous_dataset", ["procesos", "contratos"])
 @pytest.mark.parametrize("query", [
     "cuales son sus mayores proveedores?",
@@ -96,13 +123,10 @@ def test_entity_profile_galapa_does_not_report_false_zero(tmp_path):
 ])
 def test_entity_profile_supplier_followup_keeps_buyer(previous_dataset, query):
     workflow, client = _workflow()
-    first = workflow.run_query("analiza la alcaldia de galapa", chat_id="suppliers")
-    # Historical persisted profiles can be in either dataset; both must work.
-    params = {**first["resolved_params"], "dataset": previous_dataset}
-    workflow.conv_store.append_turn(
-        chat_id="suppliers", user_query="analiza la alcaldia de galapa",
-        response=first["response"], parsed_params=params,
-    )
+    first = workflow.run_query(PROFILE_OPENERS[previous_dataset], chat_id="suppliers")
+    assert first["resolved_params"]["dataset"] == previous_dataset
+    if previous_dataset == "contratos":
+        assert first["resolved_params"]["contract_universe_version"] == POLICY_VERSION
     client.calls.clear()
     result = workflow.run_query(query, chat_id="suppliers")
     assert result["route_reason"] == "entity_profile_suppliers"

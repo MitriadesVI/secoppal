@@ -1,0 +1,171 @@
+{
+  "selection_method": "user_selected_candidate",
+  "query": "analizame la alcaldia de galapa",
+  "response": "MUNICIPIO DE GALAPA. — actividad contractual\n\nContratos celebrados según las señales publicadas en SECOP.\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\n• Publicó 2 procesos en el periodo. [SECOP II Procesos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (100%). [SECOP II Procesos]\n• Proceso reciente: OBRA PÚBLICA. [SECOP II Procesos]\n\nNo pude calcular la actividad en este momento; la fuente no respondió.\n\nNo pude calcular los valores contractuales en este momento; la fuente no respondió.\n\nNo pude calcular los proveedores en este momento; la fuente no respondió.\n\nNo pude calcular la actividad reciente en este momento; la fuente no respondió.\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+  "intent_type": "new_search",
+  "route_reason": "entity_profile_overview",
+  "analytical_intent": "entity_profile",
+  "query_plan": {
+    "should_execute": true,
+    "params": {
+      "dataset": "procesos",
+      "entidad": "Municipio de galapa",
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution": {
+        "value": "MUNICIPIO DE GALAPA.",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de galapa",
+          "resolution_method": "exact"
+        }
+      },
+      "objeto": [
+        "analizame"
+      ]
+    },
+    "missing_slots": [],
+    "risk_flags": [],
+    "clarification_question": null,
+    "reason": "valid_query",
+    "signals": []
+  },
+  "resolved_params": {
+    "dataset": "procesos",
+    "entidad": "Municipio de galapa",
+    "entidad_resolved": "MUNICIPIO DE GALAPA.",
+    "entidad_resolution": {
+      "value": "MUNICIPIO DE GALAPA.",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de galapa",
+        "resolution_method": "exact"
+      }
+    },
+    "_entity_profile_active": true,
+    "_entity_profile_focus": "overview",
+    "_entity_profile_state": {
+      "version": 1,
+      "confirmed": {
+        "focus": "overview",
+        "sources": "BOTH",
+        "sources_provenance": "DEFAULT",
+        "sources_origin": "DEFAULT",
+        "time_from": null,
+        "time_to": null,
+        "event": "NONE",
+        "temporal_claims": [],
+        "unsupported_event": null,
+        "unsupported_events": [],
+        "keeps_current_state": true,
+        "topic": [],
+        "modality": [],
+        "value_min": null,
+        "value_max": null
+      },
+      "pending": null,
+      "pending_question": null
+    },
+    "_entity_profile_request": {
+      "focus": "overview",
+      "sources": "BOTH",
+      "sources_provenance": "DEFAULT",
+      "sources_origin": "DEFAULT",
+      "time_from": null,
+      "time_to": null,
+      "event": "NONE",
+      "temporal_claims": [],
+      "unsupported_event": null,
+      "unsupported_events": [],
+      "keeps_current_state": true,
+      "topic": [],
+      "modality": [],
+      "value_min": null,
+      "value_max": null
+    },
+    "_entity_profile_sources": "BOTH"
+  },
+  "calls": 6,
+  "outcomes": [
+    {
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+      "rows": [
+        {
+          "modalidad_de_contratacion": "Contratación directa",
+          "process_count": 2
+        }
+      ]
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%'))",
+      "error": "OperationalError: no such function: date_extract_y"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+      "error": "OperationalError: no such function: date_extract_y"
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+      "error": "OperationalError: no such function: date_extract_y"
+    },
+    {
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+      "rows": [
+        {
+          "id_del_proceso": "0",
+          "referencia_del_proceso": null,
+          "entidad": "MUNICIPIO DE GALAPA.",
+          "departamento_entidad": null,
+          "ciudad_entidad": null,
+          "nombre_del_procedimiento": "OBRA PÚBLICA",
+          "descripci_n_del_procedimiento": null,
+          "tipo_de_contrato": null,
+          "modalidad_de_contratacion": "Contratación directa",
+          "precio_base": 100.0,
+          "estado_de_apertura_del_proceso": null,
+          "estado_del_procedimiento": null,
+          "fase": null,
+          "estado_resumen": null,
+          "fecha_de_publicacion_del": "2026-08-01T00:00:00.000",
+          "fecha_de_recepcion_de": null,
+          "urlproceso": null
+        },
+        {
+          "id_del_proceso": "1",
+          "referencia_del_proceso": null,
+          "entidad": "MUNICIPIO DE GALAPA.",
+          "departamento_entidad": null,
+          "ciudad_entidad": null,
+          "nombre_del_procedimiento": "OBRA PÚBLICA",
+          "descripci_n_del_procedimiento": null,
+          "tipo_de_contrato": null,
+          "modalidad_de_contratacion": "Contratación directa",
+          "precio_base": 100.0,
+          "estado_de_apertura_del_proceso": null,
+          "estado_del_procedimiento": null,
+          "fase": null,
+          "estado_resumen": null,
+          "fecha_de_publicacion_del": "2026-08-01T00:00:00.000",
+          "fecha_de_recepcion_de": null,
+          "urlproceso": null
+        }
+      ]
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+      "error": "OperationalError: no such function: date_extract_y"
+    }
+  ],
+  "expected_galapa": "MUNICIPIO DE GALAPA."
+}

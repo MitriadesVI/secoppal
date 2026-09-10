@@ -1,0 +1,94 @@
+from pathlib import Path
+import hashlib, json, subprocess
+
+W = Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility')
+E = W / 'docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility'
+
+
+def summary(name):
+    text = (E / (name + '.txt')).read_text().strip()
+    return text.splitlines()[-1] if text else ''
+
+
+owned = ['tests/test_beta_entity_actor_conversation.py',
+         'tests/test_contract_universe_r5_profile_compatibility.py']
+runtime = subprocess.run(['git', 'diff', '--name-only', 'd37dfdd', '--', 'app/'],
+                         cwd=W, capture_output=True, text=True).stdout.split()
+changed = subprocess.run(['git', 'status', '--porcelain'], cwd=W,
+                         capture_output=True, text=True).stdout.splitlines()
+changed = [line for line in changed if not line.startswith('?? data/')
+           and 'Icon' not in line]
+semgrep = json.loads((E / 'SEMGREP_DELTA.json').read_text())
+mutations = json.loads((E / 'MUTATIONS.json').read_text())
+residual = json.loads((E / 'RESIDUAL_10_AFTER_R5.json').read_text())
+
+validation = dict(
+    verdict='ENTITY_PROFILE_CU_COMPATIBILITY_ADJUDICATED',
+    base='d37dfdd',
+    base_full=subprocess.run(['git', 'rev-parse', 'd37dfdd'], cwd=W,
+                             capture_output=True, text=True).stdout.strip(),
+    branch='codex/contract-universe-v1-1-r5-profile-compatibility',
+    historical_main='c52d7eda355f44278164d4cb9803a199eec83486',
+    scope_clusters=['C03', 'C04'],
+    adjudication={'OBSOLETE_FIXTURE': 1, 'INVALID_HISTORICAL_FIXTURE': 4,
+                  'REAL_REGRESSION': 0, 'INCONCLUSIVE': 0},
+    runtime_files_changed=runtime,
+    tests={
+        'c03_c04_before': '5 failed, 4 passed in 2.64s',
+        'c03_c04_after': summary('c03_c04_after'),
+        'r5_controls': summary('r5_controls'),
+        'auditor_final_19': summary('auditor_final_19'),
+        'f2_2_product_properties': summary('f2_2_product_properties'),
+        'frozen_after': summary('frozen_after'),
+        'corpus': summary('corpus'),
+        'C05_C08': summary('C05_C08'),
+        'R3_sql_oracles': summary('R3_sql_oracles'),
+        'r4_state_metadata': summary('r4_state_metadata'),
+        'entity_profile_suites': summary('entity_profile_suites'),
+        'size': summary('size'),
+        'residual_10': summary('residual_10'),
+    },
+    totals_are_overlapping=True,
+    global_suite_run=False,
+    tooling={'ruff': summary('ruff_version'), 'semgrep': summary('semgrep_version'),
+             'python': subprocess.run([str(W / '.venv/bin/python'), '--version'],
+                                      capture_output=True, text=True).stdout.strip(),
+             'codegraph': 'MCP server failed to connect (CONNECTION_CLOSED); rg + direct reads used instead'},
+    static={'ruff': summary('ruff'), 'lint_core': summary('lint_core'),
+            'diff_check': summary('diff_check') or 'clean',
+            'diff_check_cached': summary('diff_check_cached') or 'clean'},
+    semgrep={'baseline': semgrep['inherited'], 'current': semgrep['current'],
+             'new': len(semgrep['new']), 'gone': len(semgrep['gone']),
+             'all_finding_files_identical_to_base':
+                 semgrep['all_finding_files_identical_to_base'],
+             'limitations': semgrep['skipped']},
+    mutations={m['id']: ('killed_by_assertion' if m['killed_by_assertion']
+                         else 'survived') for m in mutations['mutants']},
+    residual=residual,
+    open_debt=[{
+        'id': 'ENTITY_PROFILE_SOURCE_RECORDS_INHERITANCE_DEBT',
+        'statement': ('An explicit source_records profile does not carry that universe '
+                      'into the Entity Profile supplier view, which reverts to the '
+                      'celebrated default. The tabular route does carry it. The change '
+                      'is declared in the response, never silent.'),
+        'preexisting_at_base': True,
+        'closable_within_r5_scope': False,
+    }],
+    gate_side_effects_reverted=['docs/audits/contract_universe_v1_1_f2_2/product_trace.jsonl',
+                                'docs/audits/contract_universe_v1_1_f2_1_final/observations.jsonl'],
+    limitations=[
+        'Global suite not run, by instruction; gate totals overlap.',
+        'The F2.2 and F2.1-final gates append to their own audit traces; those two files were restored to their d37dfdd content after the run.',
+        'main_behavior is not a measurement: app/core/contract_universe.py does not '
+        'exist at c52d7ed, so these five nodeids have no observable counterpart there.',
+        'Codegraph MCP unavailable; no indexed impact claim.',
+    ],
+    merged=False, pushed=False, deployed=False, restarted=False,
+    working_tree_entries=changed,
+    owned_test_sha256={f: hashlib.sha256((W / f).read_bytes()).hexdigest() for f in owned},
+)
+(E / 'validation.json').write_text(json.dumps(validation, indent=2, ensure_ascii=False) + '\n')
+print(json.dumps({k: validation[k] for k in
+                  ('verdict', 'adjudication', 'runtime_files_changed', 'mutations',
+                   'semgrep', 'static', 'working_tree_entries')},
+                 indent=2, ensure_ascii=False))

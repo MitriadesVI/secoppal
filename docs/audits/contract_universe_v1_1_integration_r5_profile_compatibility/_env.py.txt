@@ -1,0 +1,25 @@
+"""Aislamiento de persistencia equivalente al conftest, para scripts de captura."""
+from __future__ import annotations
+
+import os
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path("/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility")
+
+
+def bootstrap() -> Path:
+    tmp = Path(tempfile.mkdtemp(prefix="cu-r5-"))
+    os.environ["SECOP_FEEDBACK_PATH"] = str(tmp / "feedback.jsonl")
+    os.environ["SECOP_FEEDBACK_DB_PATH"] = str(tmp / "secoppal.db")
+    os.environ["CONVERSATION_STORE_DIR"] = str(tmp / "conversations")
+    os.environ["SECOPPAL_ACTOR_PROFILE_ENABLED"] = "true"
+    os.environ["SECOP_ACTOR_ALIAS_INDEX_PATH"] = str(tmp / "no_actor_index.sqlite")
+    for path in (str(ROOT), str(ROOT / "tests")):
+        if path not in sys.path:
+            sys.path.insert(0, path)
+    from app.config import get_settings
+
+    get_settings.cache_clear()
+    return tmp

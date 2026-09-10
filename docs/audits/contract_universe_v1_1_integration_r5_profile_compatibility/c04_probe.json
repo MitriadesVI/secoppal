@@ -1,0 +1,162 @@
+[
+  {
+    "previous_dataset": "procesos",
+    "opener": "analiza la alcaldia de galapa",
+    "query": "cuales son sus mayores proveedores?",
+    "opener_dataset": "procesos",
+    "opener_universe": null,
+    "opener_universe_version": null,
+    "route_reason": "entity_profile_suppliers",
+    "checks": {
+      "route": true,
+      "buyer": true,
+      "profile_active": true,
+      "rank_count": true,
+      "rank_value": true,
+      "two_calls": true,
+      "only_contracts_dataset": true,
+      "buyer_in_soql": true
+    },
+    "all_pass": true
+  },
+  {
+    "previous_dataset": "procesos",
+    "opener": "analiza la alcaldia de galapa",
+    "query": "quienes son sus principales proveedores",
+    "opener_dataset": "procesos",
+    "opener_universe": null,
+    "opener_universe_version": null,
+    "route_reason": "entity_profile_suppliers",
+    "checks": {
+      "route": true,
+      "buyer": true,
+      "profile_active": true,
+      "rank_count": true,
+      "rank_value": true,
+      "two_calls": true,
+      "only_contracts_dataset": true,
+      "buyer_in_soql": true
+    },
+    "all_pass": true
+  },
+  {
+    "previous_dataset": "procesos",
+    "opener": "analiza la alcaldia de galapa",
+    "query": "quien tiene mas contratos",
+    "opener_dataset": "procesos",
+    "opener_universe": null,
+    "opener_universe_version": null,
+    "route_reason": "entity_profile_suppliers",
+    "checks": {
+      "route": true,
+      "buyer": true,
+      "profile_active": true,
+      "rank_count": true,
+      "rank_value": true,
+      "two_calls": true,
+      "only_contracts_dataset": true,
+      "buyer_in_soql": true
+    },
+    "all_pass": true
+  },
+  {
+    "previous_dataset": "procesos",
+    "opener": "analiza la alcaldia de galapa",
+    "query": "quienes contratan mas con esa entidad",
+    "opener_dataset": "procesos",
+    "opener_universe": null,
+    "opener_universe_version": null,
+    "route_reason": "entity_profile_suppliers",
+    "checks": {
+      "route": true,
+      "buyer": true,
+      "profile_active": true,
+      "rank_count": true,
+      "rank_value": true,
+      "two_calls": true,
+      "only_contracts_dataset": true,
+      "buyer_in_soql": true
+    },
+    "all_pass": true
+  },
+  {
+    "previous_dataset": "contratos",
+    "opener": "analiza la alcaldia de galapa solo contratos",
+    "query": "cuales son sus mayores proveedores?",
+    "opener_dataset": "contratos",
+    "opener_universe": "celebrated",
+    "opener_universe_version": "contract-universe-1.1",
+    "route_reason": "entity_profile_suppliers",
+    "checks": {
+      "route": true,
+      "buyer": true,
+      "profile_active": true,
+      "rank_count": true,
+      "rank_value": true,
+      "two_calls": true,
+      "only_contracts_dataset": true,
+      "buyer_in_soql": true
+    },
+    "all_pass": true
+  },
+  {
+    "previous_dataset": "contratos",
+    "opener": "analiza la alcaldia de galapa solo contratos",
+    "query": "quienes son sus principales proveedores",
+    "opener_dataset": "contratos",
+    "opener_universe": "celebrated",
+    "opener_universe_version": "contract-universe-1.1",
+    "route_reason": "entity_profile_suppliers",
+    "checks": {
+      "route": true,
+      "buyer": true,
+      "profile_active": true,
+      "rank_count": true,
+      "rank_value": true,
+      "two_calls": true,
+      "only_contracts_dataset": true,
+      "buyer_in_soql": true
+    },
+    "all_pass": true
+  },
+  {
+    "previous_dataset": "contratos",
+    "opener": "analiza la alcaldia de galapa solo contratos",
+    "query": "quien tiene mas contratos",
+    "opener_dataset": "contratos",
+    "opener_universe": "celebrated",
+    "opener_universe_version": "contract-universe-1.1",
+    "route_reason": "entity_profile_suppliers",
+    "checks": {
+      "route": true,
+      "buyer": true,
+      "profile_active": true,
+      "rank_count": true,
+      "rank_value": true,
+      "two_calls": true,
+      "only_contracts_dataset": true,
+      "buyer_in_soql": true
+    },
+    "all_pass": true
+  },
+  {
+    "previous_dataset": "contratos",
+    "opener": "analiza la alcaldia de galapa solo contratos",
+    "query": "quienes contratan mas con esa entidad",
+    "opener_dataset": "contratos",
+    "opener_universe": "celebrated",
+    "opener_universe_version": "contract-universe-1.1",
+    "route_reason": "entity_profile_suppliers",
+    "checks": {
+      "route": true,
+      "buyer": true,
+      "profile_active": true,
+      "rank_count": true,
+      "rank_value": true,
+      "two_calls": true,
+      "only_contracts_dataset": true,
+      "buyer_in_soql": true
+    },
+    "all_pass": true
+  }
+]

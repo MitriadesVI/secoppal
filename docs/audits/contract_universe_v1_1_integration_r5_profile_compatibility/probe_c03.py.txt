@@ -1,0 +1,104 @@
+"""PROBE C03 en copia desechable: emular date_extract_y + estado en filas contractuales."""
+from __future__ import annotations
+
+import json
+import sqlite3
+import sys
+import unicodedata
+
+from _env import bootstrap
+
+TMP = bootstrap()
+
+from app.core.soql_builder import SoQLBuilder  # noqa: E402
+from test_actor_conversation import _row, _workflow as actor_workflow  # noqa: E402
+from test_entity_profile_workflow import WorkflowClient  # noqa: E402
+from tests.contract_universe_sql_dates import register_dates  # noqa: E402
+
+GALAPA = "MUNICIPIO DE GALAPA."
+STATE = sys.argv[1] if len(sys.argv) > 1 else "En ejecución"
+EXTRA = sys.argv[2] if len(sys.argv) > 2 else ""
+
+
+class ProbeClient(WorkflowClient):
+    def __init__(self):
+        super().__init__()
+        self.outcomes = []
+
+    def _execute(self, dataset, soql):
+        self._record("source", dataset, soql)
+        spec = SoQLBuilder.SPECS[dataset]
+        fields = set(spec.select_fields) | {spec.contractor_document_type}
+        fields.discard(None)
+        with sqlite3.connect(":memory:") as conn:
+            conn.row_factory = sqlite3.Row
+            conn.create_function("unaccent", 1, lambda value: "".join(
+                c for c in unicodedata.normalize("NFD", value or "")
+                if not unicodedata.combining(c)
+            ))
+            register_dates(conn)
+            conn.execute("CREATE TABLE records (" + ",".join(
+                f'"{field}" {"REAL" if field == spec.value else "TEXT"}'
+                for field in sorted(fields)
+            ) + ")")
+            buyers = [GALAPA, GALAPA, "OTRO COMPRADOR"]
+            states = [STATE, STATE, STATE]
+            if EXTRA and dataset == "jbjy-vk9h":
+                buyers.append(GALAPA)
+                states.append(EXTRA)
+            for index, (buyer, state) in enumerate(zip(buyers, states)):
+                row = {
+                    spec.entity: buyer, spec.object_name: "OBRA PÚBLICA",
+                    spec.date: "2026-08-01T00:00:00.000", spec.value: 100,
+                    spec.modality: "Contratación directa",
+                    ("id_contrato" if dataset == "jbjy-vk9h" else "id_del_proceso"): str(index),
+                }
+                if dataset == "jbjy-vk9h":
+                    row["estado_contrato"] = state
+                if spec.contractor_document:
+                    row.update({
+                        spec.contractor_document: "900333444" if index == 2 else "900111222",
+                        spec.contractor_document_type: "NIT",
+                        spec.contractor: "ACTOR ALFA" if index == 2 else "PROVEEDOR GALAPA",
+                    })
+                conn.execute(
+                    "INSERT INTO records (" + ",".join(f'"{k}"' for k in row) + ") VALUES ("
+                    + ",".join("?" for _ in row) + ")", tuple(row.values()),
+                )
+            select, separator, rest = soql.partition(" WHERE ")
+            assert separator, soql
+            rows = [dict(r) for r in conn.execute(select + " FROM records WHERE " + rest)]
+        self.outcomes.append({"dataset": dataset, "soql": soql, "rows": rows})
+        return rows
+
+    aggregate = _execute
+    query = _execute
+
+
+workflow = actor_workflow(TMP, [
+    _row("NIT", "900111222", "ACTOR ALFA", 9),
+    _row("NIT", "900333444", "ACTOR ALFA", 8),
+])
+workflow.run_query("busca proveedor ACTOR ALFA", chat_id="galapa")
+selected = workflow.run_query("2", chat_id="galapa")
+client = ProbeClient()
+workflow.secop_client = client
+result = workflow.run_query("analizame la alcaldia de galapa", chat_id="galapa")
+
+checks = {
+    "selection_method": selected["resolved_params"].get("actor_resolution_method") == "user_selected_candidate",
+    "no_false_zero": "Se observan 0 contratos" not in result["response"],
+    "two_contracts": "Se observan 2 contratos" in result["response"],
+    "intent_new_search": result["intent_type"] == "new_search",
+    "entidad_resolved": result["resolved_params"].get("entidad_resolved") == GALAPA,
+    "no_contratista": not result["resolved_params"].get("contratista"),
+    "no_actor_scope": not result["resolved_params"].get("actor_scope"),
+    "six_calls": len(client.calls) == 6,
+    "no_actor_leak": all("900333444" not in soql for _, _, soql in client.calls),
+}
+print(json.dumps({
+    "state_used": STATE, "extra_state": EXTRA or None,
+    "checks": checks, "all_pass": all(checks.values()),
+    "response": result["response"],
+    "calls": len(client.calls),
+}, indent=2, ensure_ascii=False))

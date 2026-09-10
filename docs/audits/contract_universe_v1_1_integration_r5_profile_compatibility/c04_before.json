@@ -1,0 +1,377 @@
+{
+  "procesos": {
+    "previous_dataset": "procesos",
+    "real_params": {
+      "dataset": "procesos",
+      "entidad": "Municipio de galapa",
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution": {
+        "value": "MUNICIPIO DE GALAPA.",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de galapa",
+          "resolution_method": "exact"
+        }
+      },
+      "_entity_profile_active": true,
+      "_entity_profile_focus": "overview",
+      "_entity_profile_state": {
+        "version": 1,
+        "confirmed": {
+          "focus": "overview",
+          "sources": "BOTH",
+          "sources_provenance": "DEFAULT",
+          "sources_origin": "DEFAULT",
+          "time_from": null,
+          "time_to": null,
+          "event": "NONE",
+          "temporal_claims": [],
+          "unsupported_event": null,
+          "unsupported_events": [],
+          "keeps_current_state": true,
+          "topic": [],
+          "modality": [],
+          "value_min": null,
+          "value_max": null
+        },
+        "pending": null,
+        "pending_question": null
+      },
+      "_entity_profile_request": {
+        "focus": "overview",
+        "sources": "BOTH",
+        "sources_provenance": "DEFAULT",
+        "sources_origin": "DEFAULT",
+        "time_from": null,
+        "time_to": null,
+        "event": "NONE",
+        "temporal_claims": [],
+        "unsupported_event": null,
+        "unsupported_events": [],
+        "keeps_current_state": true,
+        "topic": [],
+        "modality": [],
+        "value_min": null,
+        "value_max": null
+      },
+      "_entity_profile_sources": "BOTH"
+    },
+    "persisted_params": {
+      "dataset": "procesos",
+      "entidad": "Municipio de galapa",
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution": {
+        "value": "MUNICIPIO DE GALAPA.",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de galapa",
+          "resolution_method": "exact"
+        }
+      },
+      "_entity_profile_active": true,
+      "_entity_profile_focus": "overview",
+      "_entity_profile_state": {
+        "version": 1,
+        "confirmed": {
+          "focus": "overview",
+          "sources": "BOTH",
+          "sources_provenance": "DEFAULT",
+          "sources_origin": "DEFAULT",
+          "time_from": null,
+          "time_to": null,
+          "event": "NONE",
+          "temporal_claims": [],
+          "unsupported_event": null,
+          "unsupported_events": [],
+          "keeps_current_state": true,
+          "topic": [],
+          "modality": [],
+          "value_min": null,
+          "value_max": null
+        },
+        "pending": null,
+        "pending_question": null
+      },
+      "_entity_profile_request": {
+        "focus": "overview",
+        "sources": "BOTH",
+        "sources_provenance": "DEFAULT",
+        "sources_origin": "DEFAULT",
+        "time_from": null,
+        "time_to": null,
+        "event": "NONE",
+        "temporal_claims": [],
+        "unsupported_event": null,
+        "unsupported_events": [],
+        "keeps_current_state": true,
+        "topic": [],
+        "modality": [],
+        "value_min": null,
+        "value_max": null
+      },
+      "_entity_profile_sources": "BOTH"
+    },
+    "route_reason": "entity_profile_suppliers",
+    "entidad_resolved": "MUNICIPIO DE GALAPA.",
+    "profile_active": true,
+    "response_head": "MUNICIPIO DE GALAPA. — SECOP II Contratos\n\nEsta vista sólo se puede responder sobre contratos.\n\nContratos celebrados según las señales publicadas en SECOP.\n\nTerritorio: Galapa, Atlántico (DIVIPOLA 08296).\n\nPrincipales contratistas por número de contratos\n• PROVEEDOR FRECUENTE SAS: 3 contratos\nPrincipales contratistas por valor contratado\n• PROVEEDOR MAYOR SAS: $700 millones",
+    "calls": [
+      [
+        "jbjy-vk9h",
+        "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE (upper(unaccent(trim(estado_"
+      ],
+      [
+        "jbjy-vk9h",
+        "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE (upper(unaccent(trim(estado_"
+      ]
+    ],
+    "result_params": {
+      "dataset": "procesos",
+      "entidad": "Municipio de galapa",
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution": {
+        "value": "MUNICIPIO DE GALAPA.",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de galapa",
+          "resolution_method": "exact"
+        }
+      },
+      "contract_universe": "celebrated",
+      "contract_universe_version": "contract-universe-1.1",
+      "_entity_profile_focus": "suppliers",
+      "_entity_profile_active": true,
+      "_entity_profile_state": {
+        "version": 1,
+        "confirmed": {
+          "focus": "suppliers",
+          "sources": "BOTH",
+          "sources_provenance": "INHERITED",
+          "sources_origin": "DEFAULT",
+          "time_from": null,
+          "time_to": null,
+          "event": "NONE",
+          "temporal_claims": [],
+          "unsupported_event": null,
+          "unsupported_events": [],
+          "keeps_current_state": true,
+          "topic": [],
+          "modality": [],
+          "value_min": null,
+          "value_max": null
+        },
+        "pending": null,
+        "pending_question": null
+      },
+      "_entity_profile_request": {
+        "focus": "suppliers",
+        "sources": "BOTH",
+        "sources_provenance": "INHERITED",
+        "sources_origin": "DEFAULT",
+        "time_from": null,
+        "time_to": null,
+        "event": "NONE",
+        "temporal_claims": [],
+        "unsupported_event": null,
+        "unsupported_events": [],
+        "keeps_current_state": true,
+        "topic": [],
+        "modality": [],
+        "value_min": null,
+        "value_max": null
+      },
+      "_entity_profile_sources": "BOTH"
+    }
+  },
+  "contratos": {
+    "previous_dataset": "contratos",
+    "real_params": {
+      "dataset": "procesos",
+      "entidad": "Municipio de galapa",
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution": {
+        "value": "MUNICIPIO DE GALAPA.",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de galapa",
+          "resolution_method": "exact"
+        }
+      },
+      "_entity_profile_active": true,
+      "_entity_profile_focus": "overview",
+      "_entity_profile_state": {
+        "version": 1,
+        "confirmed": {
+          "focus": "overview",
+          "sources": "BOTH",
+          "sources_provenance": "DEFAULT",
+          "sources_origin": "DEFAULT",
+          "time_from": null,
+          "time_to": null,
+          "event": "NONE",
+          "temporal_claims": [],
+          "unsupported_event": null,
+          "unsupported_events": [],
+          "keeps_current_state": true,
+          "topic": [],
+          "modality": [],
+          "value_min": null,
+          "value_max": null
+        },
+        "pending": null,
+        "pending_question": null
+      },
+      "_entity_profile_request": {
+        "focus": "overview",
+        "sources": "BOTH",
+        "sources_provenance": "DEFAULT",
+        "sources_origin": "DEFAULT",
+        "time_from": null,
+        "time_to": null,
+        "event": "NONE",
+        "temporal_claims": [],
+        "unsupported_event": null,
+        "unsupported_events": [],
+        "keeps_current_state": true,
+        "topic": [],
+        "modality": [],
+        "value_min": null,
+        "value_max": null
+      },
+      "_entity_profile_sources": "BOTH"
+    },
+    "persisted_params": {
+      "dataset": "contratos",
+      "entidad": "Municipio de galapa",
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution": {
+        "value": "MUNICIPIO DE GALAPA.",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de galapa",
+          "resolution_method": "exact"
+        }
+      },
+      "_entity_profile_active": true,
+      "_entity_profile_focus": "overview",
+      "_entity_profile_state": {
+        "version": 1,
+        "confirmed": {
+          "focus": "overview",
+          "sources": "BOTH",
+          "sources_provenance": "DEFAULT",
+          "sources_origin": "DEFAULT",
+          "time_from": null,
+          "time_to": null,
+          "event": "NONE",
+          "temporal_claims": [],
+          "unsupported_event": null,
+          "unsupported_events": [],
+          "keeps_current_state": true,
+          "topic": [],
+          "modality": [],
+          "value_min": null,
+          "value_max": null
+        },
+        "pending": null,
+        "pending_question": null
+      },
+      "_entity_profile_request": {
+        "focus": "overview",
+        "sources": "BOTH",
+        "sources_provenance": "DEFAULT",
+        "sources_origin": "DEFAULT",
+        "time_from": null,
+        "time_to": null,
+        "event": "NONE",
+        "temporal_claims": [],
+        "unsupported_event": null,
+        "unsupported_events": [],
+        "keeps_current_state": true,
+        "topic": [],
+        "modality": [],
+        "value_min": null,
+        "value_max": null
+      },
+      "_entity_profile_sources": "BOTH"
+    },
+    "route_reason": "heuristic_only",
+    "entidad_resolved": "MUNICIPIO DE GALAPA.",
+    "profile_active": true,
+    "response_head": "La búsqueda contractual anterior requiere revisión de universo. Repite la consulta completa.\n\nPuedo buscar de varias formas:\n1. Contratos mas recientes\n2. Contratos de mayor valor\n3. Contratos de mantenimiento vial\n\nCual camino quieres?",
+    "calls": [],
+    "result_params": {
+      "dataset": "contratos",
+      "entidad": "Municipio de galapa",
+      "entidad_resolved": "MUNICIPIO DE GALAPA.",
+      "entidad_resolution": {
+        "value": "MUNICIPIO DE GALAPA.",
+        "method": "rewrite_alcald[ií]a",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {
+          "rewritten_from": "alcaldia de galapa",
+          "resolution_method": "exact"
+        }
+      },
+      "_entity_profile_active": true,
+      "_entity_profile_focus": "overview",
+      "_entity_profile_state": {
+        "version": 1,
+        "confirmed": {
+          "focus": "overview",
+          "sources": "BOTH",
+          "sources_provenance": "DEFAULT",
+          "sources_origin": "DEFAULT",
+          "time_from": null,
+          "time_to": null,
+          "event": "NONE",
+          "temporal_claims": [],
+          "unsupported_event": null,
+          "unsupported_events": [],
+          "keeps_current_state": true,
+          "topic": [],
+          "modality": [],
+          "value_min": null,
+          "value_max": null
+        },
+        "pending": null,
+        "pending_question": null
+      },
+      "_entity_profile_request": {
+        "focus": "overview",
+        "sources": "BOTH",
+        "sources_provenance": "DEFAULT",
+        "sources_origin": "DEFAULT",
+        "time_from": null,
+        "time_to": null,
+        "event": "NONE",
+        "temporal_claims": [],
+        "unsupported_event": null,
+        "unsupported_events": [],
+        "keeps_current_state": true,
+        "topic": [],
+        "modality": [],
+        "value_min": null,
+        "value_max": null
+      },
+      "_entity_profile_sources": "BOTH"
+    }
+  }
+}

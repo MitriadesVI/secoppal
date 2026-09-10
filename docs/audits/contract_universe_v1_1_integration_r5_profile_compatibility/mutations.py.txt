@@ -1,0 +1,93 @@
+"""R5 mutation runner: each mutant must be killed by an assertion, not an error."""
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path("/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility")
+PY_BIN = str(ROOT / ".venv/bin/python")
+
+C03 = "tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero"
+C04 = "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer"
+R5 = "tests/test_contract_universe_r5_profile_compatibility.py"
+
+MUTANTS = [
+    {
+        "id": "M1",
+        "intent": "Restore contract rows with no state: C03 goes back to a false zero.",
+        "file": "tests/test_beta_entity_actor_conversation.py",
+        "old": '                if dataset == "jbjy-vk9h":\n                    row[spec.state] = CELEBRATED_STATE\n',
+        "new": "",
+        "targets": [C03],
+    },
+    {
+        "id": "M2",
+        "intent": "A new search inherits the previous raw params: the prior Actor reaches the SoQL.",
+        "file": "app/core/followup_engine.py",
+        "old": '    raw = dict(curr.raw_params)\n    raw.pop("offset", None)',
+        "new": '    raw = {**prev.raw_params, **curr.raw_params}\n    raw.pop("offset", None)',
+        "targets": [C03],
+    },
+    {
+        "id": "M3",
+        "intent": "Break continuity of a valid contractual profile: every contract follow-up is reviewed.",
+        "file": "app/core/workflow/actions/planning.py",
+        "old": '    if (state.get("followup_intent_type") not in (None, "", "new_search", "reset_context")\n            and not compatible(previous) and params.get("dataset") == "contratos"',
+        "new": '    if (state.get("followup_intent_type") not in (None, "", "new_search", "reset_context")\n            and params.get("dataset") == "contratos"',
+        "targets": [C04],
+    },
+    {
+        "id": "M4",
+        "intent": "Silently accept an old or unstamped universe: nothing is sent to review.",
+        "file": "app/core/contract_universe.py",
+        "old": "    return (params.get('contract_universe_version') == POLICY_VERSION\n            and params.get('contract_universe') in {u.value for u in ContractUniverse})",
+        "new": "    return True",
+        "targets": [f"{R5}::test_an_old_or_unstamped_contractual_profile_is_sent_to_review"],
+    },
+]
+
+
+def run(targets):
+    proc = subprocess.run(
+        [PY_BIN, "-m", "pytest", *targets, "-p", "no:randomly", "-q", "--tb=line"],
+        cwd=ROOT, capture_output=True, text=True, timeout=900,
+    )
+    return proc.returncode, proc.stdout + proc.stderr
+
+
+results = []
+for mutant in MUTANTS:
+    path = ROOT / mutant["file"]
+    original = path.read_text()
+    assert mutant["old"] in original, mutant["id"]
+    path.write_text(original.replace(mutant["old"], mutant["new"], 1))
+    assert path.read_text() != original, mutant["id"]
+    try:
+        code, output = run(mutant["targets"])
+    finally:
+        path.write_text(original)
+    tail = output.strip().splitlines()[-14:]
+    killed_by_assertion = "AssertionError" in output or "\nE   assert" in output
+    broken = any(token in output for token in ("ImportError", "ModuleNotFoundError",
+                                               "SyntaxError", "CollectionError",
+                                               "errors during collection", "Timeout"))
+    results.append({
+        "id": mutant["id"], "intent": mutant["intent"], "file": mutant["file"],
+        "targets": mutant["targets"], "exit_code": code,
+        "killed": code != 0, "killed_by_assertion": killed_by_assertion and not broken,
+        "import_or_timeout_error": broken, "tail": tail,
+    })
+    print(mutant["id"], "killed" if code != 0 else "SURVIVED",
+          "| by assertion:", killed_by_assertion and not broken)
+
+baseline_code, baseline_out = run([C03, C04, R5])
+payload = {
+    "mutants": results,
+    "all_killed_by_assertion": all(r["killed_by_assertion"] for r in results),
+    "restored_baseline": {"exit_code": baseline_code,
+                          "summary": baseline_out.strip().splitlines()[-1]},
+}
+Path(sys.argv[1]).write_text(json.dumps(payload, indent=2, ensure_ascii=False))
+print(json.dumps({k: v for k, v in payload.items() if k != "mutants"}, indent=2))

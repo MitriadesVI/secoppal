@@ -1,0 +1,94 @@
+"""R5 focal gates: same commands as R4, run against the R5 worktree."""
+from pathlib import Path
+import json, os, subprocess, time, xml.etree.ElementTree as ET
+
+W = Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility')
+E = W / 'docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility'
+R4 = Path('/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r4-state-metadata'
+          '/docs/audits/contract_universe_v1_1_integration_r4_state_metadata')
+P = str(W / '.venv/bin/python')
+ENV = {**os.environ, 'BURR_TELEMETRY_ENABLED': 'false'}
+
+
+def run(name, cmd, cwd=W):
+    t = time.monotonic()
+    r = subprocess.run(cmd, cwd=cwd, env=ENV, capture_output=True, text=True)
+    (E / (name + '.json')).write_text(json.dumps(dict(
+        command=cmd, cwd=str(cwd), exit_code=r.returncode,
+        duration_seconds=time.monotonic() - t, stdout=r.stdout, stderr=r.stderr,
+    ), indent=2) + '\n')
+    (E / (name + '.txt')).write_text(r.stdout + r.stderr)
+    summary = (r.stdout + r.stderr).strip().splitlines()[-1] if (r.stdout + r.stderr).strip() else ''
+    print(name, r.returncode, '|', summary[:120], flush=True)
+    return r
+
+
+def pytest(name, ids, extra=()):
+    return run(name, [P, '-m', 'pytest', '-p', 'tests.contract_universe_sql_dates',
+                      *ids, '-q', '--tb=short', *extra,
+                      '--junitxml=' + str(E / (name + '.xml'))])
+
+
+def ids_from(r4_name):
+    cmd = json.load(open(R4 / (r4_name + '.json')))['command']
+    return [a for a in cmd if a.startswith('tests/')]
+
+
+C03 = 'tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero'
+C04 = 'tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer'
+C04_IDS = [f'{C04}[{q}-contratos]' for q in (
+    'cuales son sus mayores proveedores?', 'quienes son sus principales proveedores',
+    'quien tiene mas contratos', 'quienes contratan mas con esa entidad')]
+
+pytest('c03_c04_after', [C03, *C04_IDS])
+pytest('r5_controls', ['tests/test_contract_universe_r5_profile_compatibility.py'])
+run('auditor_final_19', [P, '-m', 'pytest', '-p', 'tests.contract_universe_offline_guard',
+                         '-p', 'tests.contract_universe_sql_dates',
+                         'tests/test_cu_f21_final_delta.py', '-q', '--tb=short',
+                         '--junitxml=' + str(E / 'auditor_final_19.xml')])
+run('f2_2_product_properties', [P, '-m', 'pytest', '-p', 'tests.contract_universe_offline_guard',
+                                '-p', 'tests.contract_universe_sql_dates',
+                                'tests/test_contract_universe_f2_2_materialization.py',
+                                '-q', '--tb=short',
+                                '--junitxml=' + str(E / 'f2_2_product_properties.xml')])
+run('frozen_after', [P, '-m', 'pytest', '-p', 'tests.contract_universe_offline_guard',
+                     '-p', 'tests.contract_universe_sql_dates',
+                     'tests/test_contract_universe_independent.py',
+                     'tests/test_contract_universe_independent_consumers.py',
+                     'tests/test_contract_universe_independent_legacy.py',
+                     'tests/test_contract_universe_independent_safety.py',
+                     'tests/test_module_size_limits.py', '-q', '--tb=short',
+                     '--junitxml=' + str(E / 'frozen_after.xml')])
+pytest('C05_C08', ids_from('C05_C08'))
+pytest('R3_sql_oracles', ids_from('R3_sql_oracles'))
+pytest('r4_state_metadata', ['tests/test_contract_universe_r4_state_metadata.py'])
+pytest('size', ['tests/test_module_size_limits.py'])
+run('corpus', [P, 'scripts/run_query_corpus.py', '--mode', 'all'])
+
+residual = json.load(open(R4 / 'RESIDUAL_20_AFTER_R4.json'))['nodeids_still_fail']
+assert len(residual) == 10
+(E / 'preflight' / 'residual_10_nodeids.json').write_text(
+    json.dumps(residual, indent=2) + '\n')
+pytest('residual_10', residual)
+
+clusters = json.load(open(E / 'preflight' / 'clusters.json'))
+statuses = {}
+for case in ET.parse(E / 'residual_10.xml').iter('testcase'):
+    node = case.attrib['classname'].replace('.', '/') + '.py::' + case.attrib['name']
+    statuses[node] = ('failed' if case.find('failure') is not None
+                      else 'error' if case.find('error') is not None
+                      else 'skipped' if case.find('skipped') is not None else 'passed')
+still = [n for n, v in statuses.items() if v == 'failed']
+report = dict(
+    before=10, now_pass=list(statuses.values()).count('passed'), still_fail=len(still),
+    errors=list(statuses.values()).count('error'),
+    skipped=list(statuses.values()).count('skipped'),
+    clusters_still_present=sorted({clusters[n] for n in still if n in clusters}),
+    nodeids_still_fail=still,
+    nodeids_now_pass=[n for n, v in statuses.items() if v == 'passed'],
+    results=statuses,
+)
+(E / 'RESIDUAL_10_AFTER_R5.json').write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps({k: report[k] for k in
+                  ('before', 'now_pass', 'still_fail', 'errors', 'skipped',
+                   'clusters_still_present')}, indent=2))

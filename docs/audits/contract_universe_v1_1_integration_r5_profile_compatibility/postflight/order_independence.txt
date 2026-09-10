@@ -1,0 +1,5 @@
+=== orden inverso (r5 primero) ===
+................................                                         [100%]
+32 passed in 5.80s
+=== cada nodeid aislado ===
+32 nodeids aislados; fallos: []

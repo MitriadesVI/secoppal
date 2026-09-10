@@ -1,0 +1,18 @@
+{
+  "inherited": 10,
+  "current": 10,
+  "new": [],
+  "gone": [],
+  "finding_files_identical_to_base": {
+    "app/core/formatter.py": true,
+    "app/core/response_policy.py": true,
+    "app/core/workflow/actions/execution.py": true,
+    "app/core/workflow/handlers/direct_lookup.py": true,
+    "app/core/workflow/handlers/normal_flow.py": true,
+    "app/core/workflow/handlers/pagination.py": true,
+    "app/core/workflow/handlers/radar.py": true,
+    "app/core/workflow/handlers/refinement.py": true
+  },
+  "all_finding_files_identical_to_base": true,
+  "skipped": []
+}

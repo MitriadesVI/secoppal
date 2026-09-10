@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "tests.contract_universe_sql_dates",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_galapa_does_not_report_false_zero",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[cuales son sus mayores proveedores?-contratos]",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes son sus principales proveedores-contratos]",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quien tiene mas contratos-contratos]",
+    "tests/test_beta_entity_actor_conversation.py::test_entity_profile_supplier_followup_keeps_buyer[quienes contratan mas con esa entidad-contratos]",
+    "-q",
+    "--tb=short",
+    "--junitxml=/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility/docs/audits/contract_universe_v1_1_integration_r5_profile_compatibility/c03_c04_after.xml"
+  ],
+  "cwd": "/Users/rodrigoortiz/Documents/secoppal-contract-universe-v1-1-r5-profile-compatibility",
+  "exit_code": 0,
+  "duration_seconds": 2.3693524169939337,
+  "stdout": ".....                                                                    [100%]\n5 passed in 1.84s\n",
+  "stderr": ""
+}
