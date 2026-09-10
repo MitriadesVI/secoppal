@@ -160,6 +160,7 @@ def build_application(
             followup_mutation={},
             analytical_response="",
             analytical_intent="",
+            entity_profile_view=None,
             timings_ms={},
         )
         .with_entrypoint("parse_query")

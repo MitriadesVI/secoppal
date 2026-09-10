@@ -136,6 +136,7 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         "followup_mutation": state.get("followup_mutation", {}),
         "analytical_intent": state.get("analytical_intent", ""),
         "analytical_response": state.get("analytical_response", ""),
+        "entity_profile_view": state.get("entity_profile_view"),
         "clarification_reason": state.get("clarification_reason", ""),
         "total_count_approximate": state.get("total_count_approximate", False),
         # H4 — contrato de orden + telemetría del fallback degradado.

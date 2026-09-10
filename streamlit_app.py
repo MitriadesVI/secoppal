@@ -10,6 +10,9 @@ from datetime import datetime, timedelta, timezone
 import extra_streamlit_components as stx
 import streamlit as st
 
+from app.entity_profile_ui import (
+    render_entity_profile_content,
+)
 from app.core.actor_candidate_ui import actor_candidate_options
 from app.core.export_xlsx import build_results_xlsx, export_filename, xlsx_mime_type
 from app.core.formatter import _estado_raw_nota
@@ -471,7 +474,18 @@ def _assistant_history_item(result: dict, *, query: str = "") -> dict:
         "actor_candidates": [
             option.as_dict() for option in actor_candidate_options(resolved_params)
         ],
+        "entity_profile_view": result.get("entity_profile_view"),
     }
+
+
+def _render_assistant_content(item: dict) -> None:
+    """Prefer the structured overview and keep profile Markdown currency safe."""
+    view = item.get("entity_profile_view")
+    route_reason = item.get("debug", {}).get("route_reason", "")
+    render_entity_profile_content(
+        st, view, item["content"],
+        is_profile=route_reason.startswith("entity_profile_"),
+    )
 
 
 def _render_excel_export(item: dict, history_idx: int) -> None:
@@ -1755,7 +1769,7 @@ with tab_buscar:
             continue
 
         with st.chat_message("assistant"):
-            st.markdown(item["content"])
+            _render_assistant_content(item)
 
             if idx == _last_assistant_idx and item.get("actor_candidates"):
                 _render_actor_candidates(item["actor_candidates"], idx)

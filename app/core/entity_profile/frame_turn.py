@@ -36,7 +36,9 @@ from app.core.entity_profile.frame import BuyerScope, EntityProfileFrame
 from app.core.entity_profile.frame_alternatives import capability_alternatives
 from app.core.entity_profile.frame_compiler import PlanStatus, ProfilePlan, compile_profile
 from app.core.entity_profile.frame_response import render_frame_profile
+from app.core.entity_profile.frame_response import build_profile_sections
 from app.core.entity_profile.frame_runner import ProfileEvidence, execute_plan
+from app.core.entity_profile.presentation import project_entity_profile
 from app.core.entity_profile.patch import EntityProfilePatch, apply_patch
 from app.core.entity_profile.pending_resolution import PendingOutcome, resolve_pending
 from app.core.entity_profile.profile_state import (
@@ -88,6 +90,7 @@ class ProfileTurnOutcome:
     plan: ProfilePlan | None = None
     evidence: ProfileEvidence | None = None
     record: ExecutionRecord | None = None
+    profile_view: dict | None = None
     issues: tuple[str, ...] = ()
 
     @property
@@ -241,12 +244,14 @@ def _compile_and_execute(
     plan = decision.plan
     evidence = execute_plan(plan, secop_client)
     record = build_execution_record(plan, evidence, candidate)
+    profile = build_profile_sections(candidate, plan, evidence, soql_builder)
     return ProfileTurnOutcome(
         TurnKind.ANSWER,
-        render_frame_profile(candidate, plan, evidence, soql_builder),
+        render_frame_profile(candidate, plan, evidence, soql_builder, profile=profile),
         state.confirm(candidate),
         f"entity_profile_{plan.focus}",
         frame=candidate, plan=plan, evidence=evidence, record=record,
+        profile_view=project_entity_profile(profile),
     )
 
 

@@ -81,6 +81,7 @@ def _result(outcome: ProfileTurnOutcome) -> dict:
         "profile_planned_jobs": outcome.planned_jobs,
         "profile_attempted_calls": outcome.attempted_calls,
         "profile_issues": list(outcome.issues),
+        "entity_profile_view": outcome.profile_view,
     })
     return result
 

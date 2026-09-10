@@ -6,6 +6,10 @@ from typing import Any
 from burr.core import State
 
 from app.core.entity_profile.assembler import build_entity_profile
+from app.core.entity_profile.presentation import (
+    ENTITY_PROFILE_VIEW_KEY,
+    project_entity_profile,
+)
 from app.core.entity_profile.render import render_entity_profile
 from app.core.entity_profile.turn import EntityProfileTurn
 from app.core.workflow.helpers import _with_timing
@@ -65,6 +69,7 @@ def run_entity_profile_turn(
         "latency_by_aspect": profile.source_calls.latency_by_aspect,
         "total_latency_ms": profile.source_calls.total_latency_ms,
         "profile": profile,
+        ENTITY_PROFILE_VIEW_KEY: project_entity_profile(profile),
     }
 
 
@@ -98,6 +103,7 @@ def entity_profile_state(
             needs_clarification=True,
             clarification_reason=outcome["clarification_reason"],
             analytical_response="",
+            entity_profile_view=None,
             analytical_intent=ENTITY_PROFILE_INTENT,
             soql_query="",
             route_reason=outcome["route_reason"],
@@ -115,6 +121,7 @@ def entity_profile_state(
         needs_clarification=False,
         clarification_reason="",
         analytical_response=outcome.get("response", ""),
+        entity_profile_view=outcome.get(ENTITY_PROFILE_VIEW_KEY),
         analytical_intent=ENTITY_PROFILE_INTENT,
         soql_query="",
         route_reason=outcome.get("route_reason", "entity_profile_error"),

@@ -58,7 +58,7 @@ from app.core.workflow.actions.entity_profile import (
 ACTOR_PROFILE_INTENT = "actor_profile"
 
 
-@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "resolved_params", "timings_ms"])
+@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "entity_profile_view", "route_reason", "resolved_params", "timings_ms"])
 def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
     """Execute SECOP count + query with graceful error handling.
     On timeout for heavy ordering queries, retry without ordering_signal.
@@ -69,7 +69,9 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
         state.get("user_query", ""), state.get("resolved_params", {}),
     )
     params = profile_turn.params
-    state = state.update(resolved_params=params)
+    # A Burr state may be reused by callers. A non-profile turn cannot inherit
+    # presentation from an earlier profile result.
+    state = state.update(resolved_params=params, entity_profile_view=None)
 
     # ── Ruta analítica (aggregate_sum) ─────────────────────────────
     # Si maybe_handle_analytical_query atiende la consulta, NO se ejecuta el

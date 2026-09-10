@@ -6,7 +6,13 @@ from app.core.entity_profile.effective_scope import (
     build_effective_scope,
     scope_filter_lines,
 )
-from app.core.entity_profile.models import EntityProfile, RecentRecord, SupplierMetric
+from app.core.entity_profile.models import (
+    CONTRACT_DATASET,
+    PROCESS_DATASET,
+    EntityProfile,
+    RecentRecord,
+    SupplierMetric,
+)
 from app.core.entity_profile.source_request import RequestedSources
 from app.core.entity_profile.supplier_rankings import section_ranking
 
@@ -282,3 +288,16 @@ def _next_steps(scope, noun="contrato") -> str:
     return (
         f"Puedes pedirme sus proveedores, modalidades, evolución o {noun}s recientes."
     )
+
+
+def profile_next_steps(profile: EntityProfile) -> str:
+    """Expose the existing next-step copy to non-text presentation."""
+    noun = _contract_noun(profile)
+    if hasattr(profile.plan, "source_plans"):
+        datasets = {source.dataset_id for source in profile.plan.planned_sources}
+        if datasets == {CONTRACT_DATASET}:
+            return f"Puedes pedirme sus proveedores, valores o {noun}s recientes."
+        if datasets == {PROCESS_DATASET}:
+            return "Puedes pedirme sus modalidades, evolución o procesos recientes."
+        return f"Puedes pedirme sus proveedores, modalidades, evolución o {noun}s recientes."
+    return _next_steps(build_effective_scope(profile), noun)

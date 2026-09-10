@@ -63,6 +63,7 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "trace_id",
     "narrated",
     "followup_mutation",
+    "entity_profile_view",
     # Optional / per-branch additions documented in the constructor
     # signatures below.
     "contextual_filters",
@@ -153,6 +154,7 @@ class WorkflowResult(TypedDict, total=False):
     trace_id: str
     narrated: bool
     followup_mutation: dict
+    entity_profile_view: dict | None
     contextual_filters: dict
     total_count_approximate: bool
     risk_flag_timeout: bool

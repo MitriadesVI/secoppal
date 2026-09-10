@@ -99,9 +99,9 @@ def build_profile_sections(
 
 def render_frame_profile(
     frame: EntityProfileFrame, plan: ProfilePlan, evidence: ProfileEvidence,
-    soql_builder,
+    soql_builder, *, profile: EntityProfile | None = None,
 ) -> str:
-    profile = build_profile_sections(frame, plan, evidence, soql_builder)
+    profile = profile or build_profile_sections(frame, plan, evidence, soql_builder)
     scope = build_compiled_scope(plan)
     planned = frozenset(scope.planned_sources)
     blocks: list[str] = [
