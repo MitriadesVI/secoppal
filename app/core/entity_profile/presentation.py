@@ -34,6 +34,21 @@ _SOURCE_LABELS = {
 }
 
 
+def attach_published_actions(view: object, sources: object) -> bool:
+    """Add controls only after the caller accredited publication and sources."""
+    if not isinstance(view, dict) or view.get("focus") != "overview":
+        return False
+    if not isinstance(sources, (set, frozenset, tuple, list)):
+        return False
+    from app.core.entity_profile.executive_actions import project_actions
+
+    actions = project_actions(sources)
+    if not actions:
+        return False
+    view["actions"] = actions
+    return True
+
+
 def project_entity_profile(profile: EntityProfile) -> dict:
     """Project display fields without parsing text or deriving new metrics."""
     noun = _contract_noun(profile)
@@ -222,6 +237,7 @@ def _universe(profile: EntityProfile, noun: str) -> dict | None:
 
 
 __all__ = [
+    "attach_published_actions",
     "ENTITY_PROFILE_VIEW_KEY",
     "ENTITY_PROFILE_VIEW_KIND",
     "ENTITY_PROFILE_VIEW_SCHEMA",

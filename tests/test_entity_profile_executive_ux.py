@@ -89,6 +89,7 @@ def test_assistant_history_keeps_view_across_json_rerun():
         "actor_candidate_options": actor_candidate_options,
         "_clean_resolved": lambda value: value,
         "_continuation_ref": lambda _value: None,
+        "_profile_action_ref": lambda _value: None,
     }
     exec(compile(ast.Module(body=[function], type_ignores=[]), "streamlit_app.py", "exec"), namespace)
     view = _overview()

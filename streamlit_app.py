@@ -445,6 +445,25 @@ def _continuation_ref(result: dict) -> dict | None:
     return reference
 
 
+def _profile_action_ref(result: dict) -> dict | None:
+    """Opaque identity exists only for a published Frame result with actions."""
+    view = result.get("entity_profile_view")
+    if not isinstance(view, dict) or not view.get("actions"):
+        return None
+    chat_id, result_id = result.get("chat_id"), result.get("result_id")
+    revision = result.get("conversation_revision")
+    if type(chat_id) is not str or not chat_id or type(result_id) is not str or not result_id:
+        return None
+    if type(revision) is not int or revision < 1:
+        return None
+    return {
+        "kind": "FRAME_ENVELOPE",
+        "chat_id": chat_id,
+        "result_id": result_id,
+        "conversation_revision": revision,
+    }
+
+
 def _assistant_history_item(result: dict, *, query: str = "") -> dict:
     """Build one rerun-stable assistant item, including safe actor controls."""
     resolved_params = result.get("resolved_params", {})
@@ -475,6 +494,7 @@ def _assistant_history_item(result: dict, *, query: str = "") -> dict:
             option.as_dict() for option in actor_candidate_options(resolved_params)
         ],
         "entity_profile_view": result.get("entity_profile_view"),
+        "profile_action_ref": _profile_action_ref(result),
     }
 
 
@@ -485,6 +505,7 @@ def _render_assistant_content(item: dict) -> None:
     render_entity_profile_content(
         st, view, item["content"],
         is_profile=route_reason.startswith("entity_profile_"),
+        action_reference=item.get("profile_action_ref"),
     )
 
 
@@ -1835,10 +1856,15 @@ with tab_escritorio:
 incoming_query: str | None = None
 seed_resolved_params: dict | None = None
 actor_selection_event: dict | None = None
+profile_action_event: dict | None = None
 
 if getattr(st.session_state, "_pending_actor_selection", None):
     actor_selection_event = st.session_state._pending_actor_selection
     del st.session_state._pending_actor_selection
+
+if getattr(st.session_state, "_pending_profile_action", None):
+    profile_action_event = st.session_state._pending_profile_action
+    del st.session_state._pending_profile_action
 
 # Pending refinement from filter bar
 if hasattr(st.session_state, "_pending_refinement") and st.session_state._pending_refinement:
@@ -1903,6 +1929,21 @@ if actor_selection_event:
             user_identity=user_identity,
         )
     st.session_state.history.append(_assistant_history_item(result))
+    st.rerun()
+
+if profile_action_event:
+    user_identity = _current_user_identity()
+    with st.spinner("Consultando SECOP..."):
+        result = workflow.select_entity_profile_action(
+            profile_action_event.get("action_id"),
+            profile_action_event.get("reference"),
+            channel="streamlit",
+            chat_id=st.session_state.chat_id,
+            user_identity=user_identity,
+        )
+    phrase = result.get("profile_action_phrase", "Acción de perfil")
+    st.session_state.history.append({"role": "user", "content": phrase})
+    st.session_state.history.append(_assistant_history_item(result, query=phrase))
     st.rerun()
 
 if incoming_query:
