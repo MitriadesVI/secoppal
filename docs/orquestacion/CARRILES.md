@@ -1,11 +1,68 @@
 # Carriles de trabajo paralelo
 
-**Actualizado:** 2026-09-05 (Entity Analysis / Competition Sources epoch)
+**Actualizado:** 2026-09-10 (Entity Profile Executive UX V1.1 Frame ON only)
 **Orquestador:** agente coordinador en el worktree principal.
 
 Este archivo es la autoridad sobre propiedad, fronteras y recursos compartidos
 del epoch. Los agentes trabajan en worktrees separados y no pueden ampliar su
 carril por cuenta propia.
+
+---
+
+## Executive UX V1.1 — FRAME ON only (2026-09-10)
+
+- Rama: `codex/entity-profile-executive-ux-v1-1-frame-on`.
+- Worktree: `/Users/rodrigoortiz/Documents/secoppal-entity-profile-executive-ux-v1-1-frame-on`.
+- Base exacta: `e75759545c971ea754b89e7bb688083b2c26a3c0`.
+- Plan: `METIS-EP-EXEC-V1.1-FRAME-ON-TRUST-01`.
+- Política: `FRAME_OFF_NO_NEW_CAPABILITIES`.
+- Candidate anterior `f9f260ea32299cfb7015304b290e495895e1e815`:
+  `SUPERSEDED_FOR_PRODUCT_SCOPE`; se preserva como evidencia y no se
+  cherry-pickea completo.
+
+### Propiedad exclusiva
+
+```text
+app/core/entity_profile/executive_actions.py              (nuevo)
+app/core/workflow/profile_action_admission.py             (nuevo, Frame envelope only)
+app/core/entity_profile/presentation.py
+app/core/orchestrator.py
+app/core/workflow/context.py
+app/core/workflow/admission.py
+app/core/workflow/turn_coordination.py
+app/entity_profile_ui.py
+streamlit_app.py
+tests/test_entity_profile_executive_actions.py             (nuevo)
+tests/test_entity_profile_action_admission.py              (nuevo)
+tests/test_entity_profile_action_properties.py             (nuevo)
+tests/test_entity_profile_action_ui_boundary.py            (nuevo)
+tests/test_entity_profile_executive_ux.py
+tests/test_entity_profile_executive_ux_boundary.py
+tests/test_entity_profile_frame_b_admission.py
+tests/test_entity_profile_frame_b_integration.py
+tests/test_entity_profile_workflow.py                      (sólo no-regresión OFF V1)
+```
+
+### Fronteras vinculantes
+
+- Actions y referencias ejecutables sólo existen con Frame ON y publicación
+  acreditada. Frame OFF conserva V1 y no muestra botones V1.1.
+- Tras admisión, la semántica ejecutable proviene sólo del catálogo servidor
+  y del Frame confirmado referenciado. Texto, params, seeds y selecciones
+  paralelas no aportan autoridad.
+- La rama de acción es exclusiva antes de reset/parser y no puede caer a
+  `_dispatch`, Radar, paginación, Actor ni flujo legacy.
+- No se tocan `conversation_store.py`, `Turn`, `LEGACY_REFERENCE`,
+  `_validate_legacy`, follow-up legacy, parsing/execution legacy, QueryRouter,
+  `query_plan.py`, configuración productiva ni locks.
+- Si `profile_route.py`, `frame_turn.py`, persistencia o un archivo no listado
+  resultan necesarios, ARES se detiene y devuelve a HERA.
+- No merge, push, deploy, restart, activación de Frame ni suite global.
+
+### Zona compartida
+
+`docs/orquestacion/CARRILES.md` sólo lo edita HERA. ARES no modifica otros
+archivos compartidos.
 
 ---
 
