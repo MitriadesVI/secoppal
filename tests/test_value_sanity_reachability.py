@@ -11,6 +11,7 @@ from hypothesis import given, settings, strategies as st
 from openpyxl import load_workbook
 
 from app.core.direct_lookup import build_entity_ref_soql
+from app.core.contract_universe import POLICY_VERSION, ContractUniverse, stamp
 from app.core.export_xlsx import build_results_xlsx
 from app.core.formatter import Formatter
 from app.core.radar.follows import fetch_current_rows_by_keys
@@ -29,6 +30,10 @@ BASE_FIELDS = (
     "fecha_de_firma", "proveedor_adjudicado", "documento_proveedor", "urlproceso",
 )
 PARAMS = {"departamento_resolved": "ATLANTICO", "ordering_signal": "valor_desc"}
+# A contractual export carries its universe. PARAMS predates Contract Universe
+# and is kept verbatim for the SoQL comparisons above; the export ones are
+# stamped by the production authority rather than by hand-written strings.
+EXPORT_PARAMS = stamp({**PARAMS, "dataset": "contratos"})
 
 
 def _payload(value="344398000000", billed="2108000000"):
@@ -193,7 +198,8 @@ def test_radar_follow_projection_preserves_identity_value_and_snapshot():
 def test_export_preserves_source_amount_and_existing_columns():
     _, row = _search(_payload())
     payload = build_results_xlsx(
-        rows=[row], query="contratos", resolved_params=PARAMS, dataset_id=CONTRACTS,
+        rows=[row], query="contratos", resolved_params=EXPORT_PARAMS,
+        dataset_id=CONTRACTS,
     )
     workbook = load_workbook(BytesIO(payload))
     sheet = workbook["Resultados"]
@@ -202,3 +208,40 @@ def test_export_preserves_source_amount_and_existing_columns():
         "Referencia", "Título / objeto", "Entidad", "Contratista", "Valor (COP)",
         "Estado", "Fecha", "Tipo de fecha", "Enlace SECOP",
     )
+
+
+# ── Contract Universe accreditation on the export path ────────────────────
+# build_results_xlsx refuses a contractual export whose universe is not
+# accredited. That protection is the product's, not the fixture's: these pin
+# both sides of it so a future fixture cannot be "fixed" by weakening it.
+
+
+def test_the_export_fixture_is_stamped_by_the_production_authority():
+    assert EXPORT_PARAMS["contract_universe"] == ContractUniverse.CELEBRATED.value
+    assert EXPORT_PARAMS["contract_universe_version"] == POLICY_VERSION
+
+
+@pytest.mark.parametrize("universe", [u.value for u in ContractUniverse])
+def test_any_accredited_universe_at_the_current_version_exports(universe):
+    _, row = _search(_payload())
+    payload = build_results_xlsx(
+        rows=[row], query="contratos", dataset_id=CONTRACTS,
+        resolved_params={**EXPORT_PARAMS, "contract_universe": universe},
+    )
+    assert load_workbook(BytesIO(payload))["Resultados"]["E2"].value == 344_398_000_000
+
+
+@pytest.mark.parametrize("broken, why", [
+    ({"contract_universe_version": None}, "no version at all"),
+    ({"contract_universe_version": "contract-universe-1"}, "a superseded version"),
+    ({"contract_universe": "whatever"}, "an unknown universe"),
+])
+def test_an_unaccredited_contractual_export_fails_closed(broken, why):
+    _, row = _search(_payload())
+    params = {**EXPORT_PARAMS}
+    params.update(broken)
+    params = {key: value for key, value in params.items() if value is not None}
+    with pytest.raises(ValueError, match="universo"):
+        build_results_xlsx(rows=[row], query="contratos", dataset_id=CONTRACTS,
+                           resolved_params=params)
+
