@@ -8,10 +8,12 @@ import pytest
 from app.core.query_text_consumption import compact_whitespace, mask_consumed_spans
 from app.core.text_lineage import (
     DescendantKind,
+    LINEAGE_VERSION,
     LineageMismatchError,
     OriginKind,
     PartitionReceipt,
     Proof,
+    SegmentKind,
     TextLineageDraft,
     normalize_query_with_lineage,
     sha256_text,
@@ -97,7 +99,8 @@ def test_consumed_occurrence_cannot_resurrect_as_identical_survivor() -> None:
     second = view.descendants_of_raw_span(11, 19, **_credentials(view))
     assert seam == "y con vial"
     assert first.kind is DescendantKind.NO_SURVIVING_DESCENDANT
-    assert second.kind is DescendantKind.EXACT_DESCENDANT
+    # V1.1 receipts the same-surface whitespace MERGE as a real transform.
+    assert second.kind is DescendantKind.TRANSFORMED_DESCENDANT
     assert seam[slice(*second.seam_intervals[0])] == "con vial"
 
 
@@ -214,3 +217,146 @@ def test_partition_rejects_malformed_or_duplicate_input_ranges(
             stage="invalid-partition",
             operation="CORRECT",
         )
+    assert draft.current_text == "ab"
+    assert draft.seal("ab").events == ()
+
+
+def test_same_surface_mask_retires_origin_and_emits_equal_hash_event() -> None:
+    draft = TextLineageDraft("a b", request_id="same-mask")
+    masked = mask_consumed_spans(
+        draft.current_text,
+        ((1, 2),),
+        lineage=draft,
+        stage="space-mask",
+    )
+    view = draft.seal(masked)
+
+    assert view.lineage_version == LINEAGE_VERSION == "TEXT_LINEAGE_V1_1"
+    assert view.descendants_of_raw_span(1, 2, **_credentials(view)).kind is (
+        DescendantKind.NO_SURVIVING_DESCENDANT
+    )
+    inverse = view.origin_of_seam_span(1, 2, **_credentials(view))
+    assert inverse.kind is OriginKind.INSERTED
+    assert len(view.events) == 1
+    assert view.events[0].input_sha256 == view.events[0].output_sha256
+    assert view.segments[1].kind is SegmentKind.INSERTED
+    assert view.segments[1].placeholder is True
+
+
+def test_delete_then_insert_same_surface_creates_new_identity_in_one_event() -> None:
+    draft = TextLineageDraft("ab", request_id="delete-insert")
+    receipts = (
+        PartitionReceipt((0, 2), (0, 0), "ab", "", "DELETE", Proof.EXACT),
+        PartitionReceipt((2, 2), (0, 2), "", "ab", "INSERT", Proof.EXACT),
+    )
+    draft.apply_partition(
+        "ab",
+        receipts,
+        stage="delete-insert",
+        operation="REPLACE",
+    )
+    view = draft.seal("ab")
+
+    assert view.descendants_of_raw_span(0, 2, **_credentials(view)).kind is (
+        DescendantKind.NO_SURVIVING_DESCENDANT
+    )
+    assert view.origin_of_seam_span(0, 2, **_credentials(view)).kind is (
+        OriginKind.INSERTED
+    )
+    assert len(view.events) == 1
+    assert view.events[0].input_sha256 == view.events[0].output_sha256
+
+
+def test_all_keep_partition_preserves_origin_without_event() -> None:
+    draft = TextLineageDraft("ab", request_id="all-keep")
+    receipts = (
+        PartitionReceipt((0, 1), (0, 1), "a", "a", "KEEP", Proof.EXACT),
+        PartitionReceipt((1, 2), (1, 2), "b", "b", "KEEP", Proof.EXACT),
+    )
+
+    draft.apply_partition("ab", receipts, stage="keep", operation="KEEP")
+    view = draft.seal("ab")
+    assert view.events == ()
+    assert view.descendants_of_raw_span(0, 2, **_credentials(view)).kind is (
+        DescendantKind.EXACT_DESCENDANT
+    )
+
+
+@pytest.mark.parametrize("operation", ["CORRECT", "MERGE", "NORMALIZE"])
+def test_same_surface_causal_transform_derives_origin_and_emits_event(
+    operation: str,
+) -> None:
+    draft = TextLineageDraft("ab", request_id=f"same-{operation}")
+    receipts = (
+        PartitionReceipt(
+            (0, 2),
+            (0, 2),
+            "ab",
+            "ab",
+            operation,
+            Proof.WHOLE_SEGMENT_ONLY,
+        ),
+    )
+
+    draft.apply_partition("ab", receipts, stage="same-surface", operation=operation)
+    view = draft.seal("ab")
+    assert view.descendants_of_raw_span(0, 2, **_credentials(view)).kind is (
+        DescendantKind.TRANSFORMED_DESCENDANT
+    )
+    assert len(view.events) == 1
+    assert view.events[0].input_sha256 == view.events[0].output_sha256
+
+
+def test_same_surface_replace_is_rejected_atomically() -> None:
+    draft = TextLineageDraft("ab", request_id="same-replace")
+    receipts = (
+        PartitionReceipt(
+            (0, 2),
+            (0, 2),
+            "ab",
+            "ab",
+            "REPLACE",
+            Proof.EXACT,
+        ),
+    )
+
+    with pytest.raises(ValueError, match="distinct input and output"):
+        draft.apply_partition(
+            "ab",
+            receipts,
+            stage="same-replace",
+            operation="REPLACE",
+        )
+    assert draft.current_text == "ab"
+    view = draft.seal("ab")
+    assert view.events == ()
+    assert view.tombstones == ()
+
+
+def test_distinct_replace_retires_input_and_inserts_output() -> None:
+    draft = TextLineageDraft("ab", request_id="distinct-replace")
+    receipts = (
+        PartitionReceipt(
+            (0, 2),
+            (0, 2),
+            "ab",
+            "cd",
+            "REPLACE",
+            Proof.EXACT,
+        ),
+    )
+    draft.apply_partition(
+        "cd",
+        receipts,
+        stage="distinct-replace",
+        operation="REPLACE",
+    )
+    view = draft.seal("cd")
+
+    assert view.descendants_of_raw_span(0, 2, **_credentials(view)).kind is (
+        DescendantKind.NO_SURVIVING_DESCENDANT
+    )
+    assert view.origin_of_seam_span(0, 2, **_credentials(view)).kind is (
+        OriginKind.INSERTED
+    )
+    assert len(view.events) == 1

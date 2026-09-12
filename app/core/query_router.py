@@ -551,6 +551,8 @@ class QueryRouter:
                 flags=re.IGNORECASE,
                 lineage=lineage,
                 stage="actor_relation",
+                operation="MASK",
+                proof=Proof.EXACT,
             )
         scrubbed = compact_whitespace(
             scrubbed,
@@ -609,7 +611,7 @@ class QueryRouter:
                 " ",
                 lineage=lineage,
                 stage="year_stripping",
-                operation="DELETE",
+                operation="MASK",
                 proof=Proof.EXACT,
             )
         scrubbed = compact_whitespace(
@@ -1759,7 +1761,7 @@ class QueryRouter:
                     " ",
                     lineage=lineage,
                     stage="actor_asserted_name",
-                    operation="DELETE",
+                    operation="MASK",
                     proof=Proof.EXACT,
                 )
         for span in reference.consumed_spans:
@@ -1770,7 +1772,7 @@ class QueryRouter:
                 flags=re.IGNORECASE,
                 lineage=lineage,
                 stage="actor_document_context",
-                operation="DELETE",
+                operation="MASK",
                 proof=Proof.EXACT,
             )
         return scrubbed
@@ -1838,7 +1840,7 @@ class QueryRouter:
                 " ",
                 lineage=lineage,
                 stage="actor_document",
-                operation="DELETE",
+                operation="MASK",
                 proof=Proof.EXACT,
             )
         return replace_regex(
@@ -1848,7 +1850,7 @@ class QueryRouter:
             flags=re.IGNORECASE,
             lineage=lineage,
             stage="actor_document_marker",
-            operation="DELETE",
+            operation="MASK",
             proof=Proof.EXACT,
         )
 

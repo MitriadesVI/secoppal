@@ -13,7 +13,18 @@ from enum import Enum
 from typing import Iterable
 
 
-LINEAGE_VERSION = "TEXT_LINEAGE_V1"
+LINEAGE_VERSION = "TEXT_LINEAGE_V1_1"
+
+_PARTITION_OPERATIONS = frozenset({
+    "KEEP",
+    "MASK",
+    "DELETE",
+    "INSERT",
+    "REPLACE",
+    "CORRECT",
+    "MERGE",
+    "NORMALIZE",
+})
 
 
 class SegmentKind(str, Enum):
@@ -407,8 +418,12 @@ class TextLineageDraft:
         if start < 0 or end <= start or end > len(input_text):
             raise ValueError(f"invalid mutation span {(start, end)!r}")
         output_text = f"{input_text[:start]}{replacement}{input_text[end:]}"
-        if output_text == input_text:
+        if operation == "KEEP":
+            if output_text != input_text:
+                raise ValueError("KEEP cannot change text")
             return input_text
+        if operation == "REPLACE" and input_text[start:end] == replacement:
+            raise ValueError("same-surface REPLACE cannot preserve old identity")
         before, inside, after = self._cut(start, end)
         effective_proof = _weakest_proof(proof, inside)
         origins = _merged(
@@ -431,23 +446,24 @@ class TextLineageDraft:
                 kind=SegmentKind.CONSUMED,
                 proof=effective_proof,
                 transformation_id=transformation_id,
-                placeholder=placeholder,
+                placeholder=operation == "MASK" or placeholder,
             ))
         emitted: list[LineageSegment] = []
         if replacement:
+            is_placeholder = operation == "MASK" or placeholder
             emitted.append(LineageSegment(
                 segment_id=f"derived:{transformation_id}",
                 text=replacement,
                 current_span=None,
-                original_intervals=() if placeholder else origins,
+                original_intervals=() if is_placeholder else origins,
                 kind=(
                     SegmentKind.INSERTED
-                    if placeholder or not origins
+                    if is_placeholder or not origins
                     else SegmentKind.DERIVED_FROM_ORIGINAL
                 ),
                 proof=effective_proof,
                 transformation_id=transformation_id,
-                placeholder=placeholder,
+                placeholder=is_placeholder,
             ))
         self._pieces = [*before, *emitted, *after]
         return output_text
@@ -461,11 +477,15 @@ class TextLineageDraft:
         operation: str,
     ) -> str:
         input_text = self.current_text
+        if not isinstance(output_text, str):
+            raise ValueError("partition output must be str")
         receipts = tuple(receipts)
         input_cursor = output_cursor = 0
         new_pieces: list[LineageSegment] = []
         pending: list[tuple[PartitionReceipt, list[LineageSegment]]] = []
         for receipt in receipts:
+            if not isinstance(receipt, PartitionReceipt):
+                raise ValueError("partition entries must be PartitionReceipt values")
             input_span = _validate_partition_span(
                 receipt.input_span,
                 len(input_text),
@@ -482,6 +502,41 @@ class TextLineageDraft:
                 raise LineageMismatchError("partition input receipt does not match parser text")
             if output_text[slice(*output_span)] != receipt.output_text:
                 raise LineageMismatchError("partition output receipt does not match parser text")
+            if receipt.operation not in _PARTITION_OPERATIONS:
+                raise ValueError(f"unsupported partition operation: {receipt.operation!r}")
+            if not isinstance(receipt.proof, Proof):
+                raise ValueError("partition proof must be a Proof value")
+            if not isinstance(receipt.input_text, str) or not isinstance(
+                receipt.output_text,
+                str,
+            ):
+                raise ValueError("partition receipt text must be str")
+            input_length = input_span[1] - input_span[0]
+            output_length = output_span[1] - output_span[0]
+            if receipt.operation == "KEEP" and receipt.input_text != receipt.output_text:
+                raise ValueError("KEEP receipt cannot change text")
+            if receipt.operation == "MASK" and (
+                input_length == 0 or output_length == 0
+            ):
+                raise ValueError("MASK receipt requires input and placeholder output")
+            if receipt.operation == "DELETE" and (
+                input_length == 0 or output_length != 0
+            ):
+                raise ValueError("DELETE receipt requires input and no output")
+            if receipt.operation == "INSERT" and (
+                input_length != 0 or output_length == 0
+            ):
+                raise ValueError("INSERT receipt requires no input and inserted output")
+            if receipt.operation == "REPLACE" and (
+                input_length == 0
+                or output_length == 0
+                or receipt.input_text == receipt.output_text
+            ):
+                raise ValueError("REPLACE receipt requires distinct input and output")
+            if receipt.operation in {"CORRECT", "MERGE", "NORMALIZE"} and (
+                input_length == 0 and output_length == 0
+            ):
+                raise ValueError(f"{receipt.operation} receipt cannot be empty")
             _, pieces, _ = (
                 self._cut(*input_span)
                 if input_span[1] > input_span[0]
@@ -492,7 +547,7 @@ class TextLineageDraft:
             output_cursor = output_span[1]
         if input_cursor != len(input_text) or output_cursor != len(output_text):
             raise LineageMismatchError("partition receipts do not cover the transformation")
-        if input_text == output_text:
+        if all(receipt.operation == "KEEP" for receipt in receipts):
             return input_text
         transformation_id = self._append_event(
             stage=stage,
@@ -505,11 +560,23 @@ class TextLineageDraft:
         for receipt, pieces in pending:
             origins = _merged(origin for piece in pieces for origin in piece.original_intervals)
             effective_proof = _weakest_proof(receipt.proof, pieces)
-            if receipt.operation == "KEEP" and receipt.input_text == receipt.output_text:
+            if receipt.operation == "KEEP":
                 new_pieces.extend(pieces)
                 continue
+            consumes_origin = receipt.operation in {"MASK", "DELETE", "REPLACE"}
+            if consumes_origin and origins:
+                self._tombstones.append(LineageSegment(
+                    segment_id=f"consumed:{transformation_id}:{receipt.input_span[0]}",
+                    text=receipt.input_text,
+                    current_span=None,
+                    original_intervals=origins,
+                    kind=SegmentKind.CONSUMED,
+                    proof=effective_proof,
+                    transformation_id=transformation_id,
+                    placeholder=receipt.operation == "MASK",
+                ))
             if not receipt.output_text:
-                if origins:
+                if origins and not consumes_origin:
                     self._tombstones.append(LineageSegment(
                         segment_id=f"consumed:{transformation_id}:{receipt.input_span[0]}",
                         text=receipt.input_text,
@@ -520,16 +587,20 @@ class TextLineageDraft:
                         transformation_id=transformation_id,
                     ))
                 continue
+            inserted = receipt.operation in {"MASK", "INSERT", "REPLACE"}
             new_pieces.append(LineageSegment(
                 segment_id=f"derived:{transformation_id}:{receipt.output_span[0]}",
                 text=receipt.output_text,
                 current_span=None,
-                original_intervals=origins,
+                original_intervals=() if inserted else origins,
                 kind=(
-                    SegmentKind.DERIVED_FROM_ORIGINAL if origins else SegmentKind.INSERTED
+                    SegmentKind.INSERTED
+                    if inserted or not origins
+                    else SegmentKind.DERIVED_FROM_ORIGINAL
                 ),
                 proof=effective_proof,
                 transformation_id=transformation_id,
+                placeholder=receipt.operation == "MASK",
             ))
         self._pieces = new_pieces
         return output_text

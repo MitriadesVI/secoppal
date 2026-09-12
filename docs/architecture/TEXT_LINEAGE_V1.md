@@ -1,4 +1,4 @@
-# TEXT_LINEAGE_V1
+# TEXT_LINEAGE_V1.1
 
 ## Problema causal
 
@@ -9,7 +9,7 @@ textos, pero no prueban la relación entre sus intervalos.
 
 ## Representación
 
-V1 usa `SEGMENT_LEDGER_WITH_CAUSAL_RECEIPTS`, sólo en memoria y por request. El
+V1.1 usa `SEGMENT_LEDGER_WITH_CAUSAL_RECEIPTS`, sólo en memoria y por request. El
 ledger conserva el texto y SHA-256 raw, el texto y SHA-256 actual, segmentos
 `ORIGINAL`, `DERIVED_FROM_ORIGINAL` e `INSERTED`, y tombstones `CONSUMED`.
 Cada mutación real añade un evento inmutable enlazado al hash del evento previo.
@@ -29,12 +29,12 @@ matching posterior para reconstruir provenance.
 | `correct_query` | CORRECT/COMPACT | receipts de tokens y whitespace del mismo loop |
 | modalidad | MASK | offsets del resolver, placeholder no semántico |
 | negación | MASK | `masked_spans`, tombstone exacto |
-| universo contractual | REPLACE | la ocurrencia elegida por la mutación legacy se receipt-a en ese instante |
+| universo contractual | MASK | la ocurrencia elegida por la mutación legacy se consume en ese instante |
 | temporal | MASK | span de la autoridad temporal aplicado sin corregir el comportamiento legacy |
-| relación de actor | REPLACE/COMPACT | match de la mutación y compactación causal |
+| relación de actor | MASK/COMPACT | match de la mutación y compactación causal |
 | tipo contractual | MASK/COMPACT | receipts de matches reales del resolver |
-| documento/NIT | DELETE | matches reales de identificador y marcador |
-| año residual | DELETE | matches reales del loop legacy |
+| documento/NIT | MASK | matches reales de identificador y marcador |
+| año residual | MASK | matches reales del loop legacy |
 | whitespace | MERGE/DELETE | espacio nuevo derivado del run completo; vecinos conservan identidad |
 
 El ledger se sella inmediatamente antes de `interpret_control_language`. Las
@@ -52,6 +52,14 @@ mutaciones posteriores no forman parte de este seam.
 - `request_id`, hash raw y hash del seam deben coincidir o la consulta falla
   cerrada.
 - El mismo surface en otra ocurrencia nunca acredita identidad.
+
+Una partition se valida completa antes de mutar. Si todos sus receipts son
+`KEEP`, conserva los segmentos y no emite evento. Cualquier receipt causal
+produce exactamente un evento global, incluso cuando los hashes de entrada y
+salida coinciden. `MASK` y `DELETE` retiran el origen; `INSERT` nunca lo hereda;
+`REPLACE` retira el origen y crea texto insertado; `CORRECT`, `MERGE` y
+`NORMALIZE` conservan origen derivado. Un `REPLACE` con la misma superficie se
+rechaza atómicamente: debe expresarse con la causa real.
 
 `QueryRouter.parse(..., text_lineage_request_id=...)` activa observación de
 forma keyword-only. Sin ese argumento no crea trace. El trace vuelve en

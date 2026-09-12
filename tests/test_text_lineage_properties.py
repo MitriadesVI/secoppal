@@ -4,7 +4,14 @@ from hypothesis import given, strategies as st
 
 from app.core.query_text_consumption import compact_whitespace, mask_consumed_spans
 from app.core.query_router import QueryRouter
-from app.core.text_lineage import DescendantKind, SegmentKind, TextLineageDraft
+from app.core.text_lineage import (
+    DescendantKind,
+    OriginKind,
+    PartitionReceipt,
+    Proof,
+    SegmentKind,
+    TextLineageDraft,
+)
 
 
 WORDS = st.sampled_from(("parques", "viales", "mantenimiento", "aseo"))
@@ -101,3 +108,62 @@ def test_every_noninserted_descendant_has_a_real_raw_origin(
         for segment in view.segments
     )
     assert all(tombstone.original_intervals for tombstone in view.tombstones)
+
+
+@given(word=st.text(alphabet="abcdef", min_size=1, max_size=20))
+def test_same_surface_delete_insert_never_reuses_old_identity(word: str) -> None:
+    draft = TextLineageDraft(word, request_id="property-delete-insert")
+    length = len(word)
+    receipts = (
+        PartitionReceipt((0, length), (0, 0), word, "", "DELETE", Proof.EXACT),
+        PartitionReceipt((length, length), (0, length), "", word, "INSERT", Proof.EXACT),
+    )
+    draft.apply_partition(
+        word,
+        receipts,
+        stage="property-delete-insert",
+        operation="REPLACE",
+    )
+    view = draft.seal(word)
+
+    assert view.descendants_of_raw_span(0, length, **_credentials(view)).kind is (
+        DescendantKind.NO_SURVIVING_DESCENDANT
+    )
+    assert view.origin_of_seam_span(0, length, **_credentials(view)).kind is (
+        OriginKind.INSERTED
+    )
+    assert len(view.events) == 1
+
+
+@given(
+    word=st.text(alphabet="abcdef", min_size=1, max_size=20),
+    operation=st.sampled_from(("CORRECT", "MERGE", "NORMALIZE")),
+)
+def test_same_surface_causal_operations_remain_transformed(
+    word: str,
+    operation: str,
+) -> None:
+    draft = TextLineageDraft(word, request_id="property-same-transform")
+    length = len(word)
+    receipts = (
+        PartitionReceipt(
+            (0, length),
+            (0, length),
+            word,
+            word,
+            operation,
+            Proof.WHOLE_SEGMENT_ONLY,
+        ),
+    )
+    draft.apply_partition(
+        word,
+        receipts,
+        stage="property-same-transform",
+        operation=operation,
+    )
+    view = draft.seal(word)
+
+    assert view.descendants_of_raw_span(0, length, **_credentials(view)).kind is (
+        DescendantKind.TRANSFORMED_DESCENDANT
+    )
+    assert len(view.events) == 1

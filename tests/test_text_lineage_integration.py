@@ -8,7 +8,7 @@ import pytest
 from app.core.query_plan import compute_query_plan
 from app.core.query_router import QueryRouter
 from app.core.soql_builder import SoQLBuilder
-from app.core.text_lineage import DescendantKind
+from app.core.text_lineage import DescendantKind, OriginKind
 
 
 TODAY = date(2026, 9, 12)
@@ -199,6 +199,27 @@ def test_consumed_universe_is_a_tombstone_not_a_space_descendant() -> None:
     assert trace.current_text == "dame de parques"
     assert answer.kind is DescendantKind.NO_SURVIVING_DESCENDANT
     assert answer.seam_intervals == ()
+
+
+def test_actor_relation_is_consumed_and_its_space_is_inserted() -> None:
+    raw = "contrato de jose cantillo,con alcaldia de barranquilla?"
+    off, on = _parse_pair(raw)
+    trace = on.text_lineage
+    assert trace is not None
+
+    assert off.params == on.params
+    assert trace.current_text == "contrato de jose cantillo, ?"
+    assert _answer(on, raw, 26, 54).kind is (
+        DescendantKind.NO_SURVIVING_DESCENDANT
+    )
+    inverse = trace.origin_of_seam_span(
+        26,
+        27,
+        request_id=f"trace:{raw}",
+        raw_sha256=trace.raw_sha256,
+        seam_sha256=trace.current_sha256,
+    )
+    assert inverse.kind is OriginKind.INSERTED
 
 
 @pytest.mark.parametrize("raw", ["\ud800parques", "parques\udfff"])
