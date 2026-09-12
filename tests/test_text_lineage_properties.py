@@ -15,6 +15,16 @@ from app.core.text_lineage import (
 
 
 WORDS = st.sampled_from(("parques", "viales", "mantenimiento", "aseo"))
+KNOWN_ENVELOPES = (
+    "KEEP",
+    "MASK",
+    "DELETE",
+    "INSERT",
+    "REPLACE",
+    "CORRECT",
+    "MERGE",
+    "NORMALIZE",
+)
 
 
 def _credentials(view):
@@ -167,3 +177,75 @@ def test_same_surface_causal_operations_remain_transformed(
         DescendantKind.TRANSFORMED_DESCENDANT
     )
     assert len(view.events) == 1
+
+
+@given(
+    word=st.text(alphabet="abcdef", min_size=1, max_size=20),
+    envelope=st.sampled_from(tuple(value for value in KNOWN_ENVELOPES if value != "MASK")),
+    proof=st.sampled_from(tuple(Proof)),
+)
+def test_mask_receipt_never_crosses_an_incompatible_envelope(
+    word: str,
+    envelope: str,
+    proof: Proof,
+) -> None:
+    draft = TextLineageDraft(word, request_id="property-envelope")
+    length = len(word)
+    receipt = PartitionReceipt(
+        (0, length),
+        (0, length),
+        word,
+        word,
+        "MASK",
+        proof,
+    )
+    before = draft.seal(word)
+
+    try:
+        draft.apply_partition(
+            word,
+            (receipt,),
+            stage="property-envelope",
+            operation=envelope,
+        )
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("incompatible MASK envelope accepted")
+
+    assert draft.seal(word) == before
+
+
+@given(
+    word=st.text(alphabet="abc", min_size=1, max_size=20),
+    envelope=st.sampled_from(KNOWN_ENVELOPES),
+)
+def test_repeated_all_keep_partition_accepts_every_known_envelope_without_event(
+    word: str,
+    envelope: str,
+) -> None:
+    draft = TextLineageDraft(word, request_id="property-all-keep")
+    receipts = tuple(
+        PartitionReceipt(
+            (index, index + 1),
+            (index, index + 1),
+            char,
+            char,
+            "KEEP",
+            Proof.EXACT,
+        )
+        for index, char in enumerate(word)
+    )
+
+    draft.apply_partition(
+        word,
+        receipts,
+        stage="property-all-keep",
+        operation=envelope,
+    )
+    view = draft.seal(word)
+
+    assert view.events == ()
+    assert view.descendants_of_raw_span(0, len(word), **_credentials(view)).kind is (
+        DescendantKind.EXACT_DESCENDANT
+    )

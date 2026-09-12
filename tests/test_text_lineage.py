@@ -1,11 +1,16 @@
 from __future__ import annotations
 
-from dataclasses import FrozenInstanceError
+from dataclasses import asdict, FrozenInstanceError
 import hashlib
+import json
 
 import pytest
 
-from app.core.query_text_consumption import compact_whitespace, mask_consumed_spans
+from app.core.query_text_consumption import (
+    compact_whitespace,
+    mask_consumed_spans,
+    replace_text_span,
+)
 from app.core.text_lineage import (
     DescendantKind,
     LINEAGE_VERSION,
@@ -161,6 +166,15 @@ def test_events_are_immutable_and_hash_chained() -> None:
         for index, event in enumerate(view.events)
     )
     assert view.event_chain_head == view.events[-1].event_sha256
+    previous = "0" * 64
+    for event in view.events:
+        payload = asdict(event)
+        event_hash = payload.pop("event_sha256")
+        assert payload["previous_event_sha256"] == previous
+        assert event_hash == hashlib.sha256(
+            json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest()
+        previous = event_hash
     with pytest.raises(FrozenInstanceError):
         view.events[0].stage = "tampered"  # type: ignore[misc]
 
@@ -360,3 +374,210 @@ def test_distinct_replace_retires_input_and_inserts_output() -> None:
         OriginKind.INSERTED
     )
     assert len(view.events) == 1
+
+
+@pytest.mark.parametrize("path", ["direct", "wrapper"])
+def test_distinct_replace_span_retires_input_and_inserts_output(path: str) -> None:
+    draft = TextLineageDraft("ab", request_id=f"replace-{path}")
+    if path == "direct":
+        output = draft.replace_span(
+            0,
+            2,
+            "cd",
+            stage="replace",
+            operation="REPLACE",
+            proof=Proof.EXACT,
+        )
+    else:
+        output = replace_text_span(
+            "ab",
+            (0, 2),
+            "cd",
+            lineage=draft,
+            stage="replace",
+            operation="REPLACE",
+            proof=Proof.EXACT,
+        )
+    view = draft.seal(output)
+
+    assert view.descendants_of_raw_span(0, 2, **_credentials(view)).kind is (
+        DescendantKind.NO_SURVIVING_DESCENDANT
+    )
+    assert view.origin_of_seam_span(0, 2, **_credentials(view)).kind is (
+        OriginKind.INSERTED
+    )
+    assert len(view.tombstones) == 1
+    assert view.segments[0].original_intervals == ()
+    assert view.segments[0].kind is SegmentKind.INSERTED
+
+
+@pytest.mark.parametrize("envelope", ["KEEP", "DELETE", "MYSTERY", None])
+def test_incompatible_partition_envelope_is_rejected_atomically(
+    envelope: object,
+) -> None:
+    draft = TextLineageDraft("ab", request_id="bad-envelope")
+    receipt = PartitionReceipt(
+        (0, 2),
+        (0, 2),
+        "ab",
+        "ab",
+        "MASK",
+        Proof.EXACT,
+    )
+    before = draft.seal("ab")
+
+    with pytest.raises(ValueError, match="partition envelope|incompatible"):
+        draft.apply_partition(
+            "ab",
+            (receipt,),
+            stage="bad-envelope",
+            operation=envelope,  # type: ignore[arg-type]
+        )
+
+    assert draft.seal("ab") == before
+
+
+@pytest.mark.parametrize(
+    "envelope",
+    ["KEEP", "MASK", "DELETE", "INSERT", "REPLACE", "CORRECT", "MERGE", "NORMALIZE"],
+)
+def test_all_keep_validates_known_envelope_and_emits_no_event(envelope: str) -> None:
+    draft = TextLineageDraft("ab", request_id=f"all-keep-{envelope}")
+    receipt = PartitionReceipt((0, 2), (0, 2), "ab", "ab", "KEEP", Proof.EXACT)
+
+    draft.apply_partition("ab", (receipt,), stage="all-keep", operation=envelope)
+
+    assert draft.seal("ab").events == ()
+
+
+@pytest.mark.parametrize("envelope", ["MYSTERY", None])
+def test_all_keep_rejects_unknown_envelope_before_fast_path(envelope: object) -> None:
+    draft = TextLineageDraft("ab", request_id="all-keep-unknown")
+    receipt = PartitionReceipt((0, 2), (0, 2), "ab", "ab", "KEEP", Proof.EXACT)
+    before = draft.seal("ab")
+
+    with pytest.raises(ValueError, match="unsupported partition envelope"):
+        draft.apply_partition(
+            "ab",
+            (receipt,),
+            stage="all-keep",
+            operation=envelope,  # type: ignore[arg-type]
+        )
+
+    assert draft.seal("ab") == before
+
+
+def _single_partition_event(*, receipt_operation: str, proof: Proof):
+    draft = TextLineageDraft("ab", request_id="manifest")
+    receipt = PartitionReceipt(
+        (0, 2),
+        (0, 2),
+        "ab",
+        "cd",
+        receipt_operation,
+        proof,
+    )
+    draft.apply_partition("cd", (receipt,), stage="manifest", operation="CORRECT")
+    return draft.seal("cd").events[0]
+
+
+def test_event_hash_commits_receipt_operation_and_proof() -> None:
+    corrected = _single_partition_event(
+        receipt_operation="CORRECT",
+        proof=Proof.EXACT,
+    )
+    merged = _single_partition_event(
+        receipt_operation="MERGE",
+        proof=Proof.EXACT,
+    )
+    weaker = _single_partition_event(
+        receipt_operation="CORRECT",
+        proof=Proof.WHOLE_SEGMENT_ONLY,
+    )
+
+    assert corrected.input_sha256 == merged.input_sha256 == weaker.input_sha256
+    assert corrected.output_sha256 == merged.output_sha256 == weaker.output_sha256
+    assert corrected.receipt_manifest_sha256 != merged.receipt_manifest_sha256
+    assert corrected.receipt_manifest_sha256 != weaker.receipt_manifest_sha256
+    assert corrected.event_sha256 != merged.event_sha256
+    assert corrected.event_sha256 != weaker.event_sha256
+
+
+def test_replace_span_synthetic_manifest_matches_equivalent_partition() -> None:
+    direct = TextLineageDraft("ab", request_id="direct-manifest")
+    direct.replace_span(
+        0,
+        2,
+        "cd",
+        stage="replace",
+        operation="REPLACE",
+        proof=Proof.EXACT,
+    )
+    partition = TextLineageDraft("ab", request_id="partition-manifest")
+    partition.apply_partition(
+        "cd",
+        (
+            PartitionReceipt(
+                (0, 2),
+                (0, 2),
+                "ab",
+                "cd",
+                "REPLACE",
+                Proof.EXACT,
+            ),
+        ),
+        stage="replace",
+        operation="REPLACE",
+    )
+
+    assert direct.seal("cd").events[0].receipt_manifest_sha256 == (
+        partition.seal("cd").events[0].receipt_manifest_sha256
+    )
+
+
+@pytest.mark.parametrize(
+    ("output", "receipts", "envelope"),
+    [
+        (
+            "b",
+            (
+                PartitionReceipt((0, 1), (0, 0), "a", "", "DELETE", Proof.EXACT),
+                PartitionReceipt((1, 2), (0, 1), "b", "b", "KEEP", Proof.EXACT),
+            ),
+            "REPLACE",
+        ),
+        (
+            "xy",
+            (
+                PartitionReceipt((0, 1), (0, 1), "a", "x", "REPLACE", Proof.EXACT),
+                PartitionReceipt((1, 2), (1, 1), "b", "", "DELETE", Proof.EXACT),
+                PartitionReceipt((2, 2), (1, 2), "", "y", "INSERT", Proof.EXACT),
+            ),
+            "REPLACE",
+        ),
+        (
+            "ab",
+            (
+                PartitionReceipt((0, 2), (0, 2), "ab", "ab", "NORMALIZE", Proof.EXACT),
+            ),
+            "CORRECT",
+        ),
+    ],
+)
+def test_out_of_table_partition_combinations_are_rejected_atomically(
+    output: str,
+    receipts: tuple[PartitionReceipt, ...],
+    envelope: str,
+) -> None:
+    draft = TextLineageDraft("ab", request_id="out-of-table")
+    before = draft.seal("ab")
+
+    with pytest.raises(ValueError, match="incompatible"):
+        draft.apply_partition(
+            output,
+            receipts,
+            stage="out-of-table",
+            operation=envelope,
+        )
+
+    assert draft.seal("ab") == before

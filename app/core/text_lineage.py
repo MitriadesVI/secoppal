@@ -26,6 +26,16 @@ _PARTITION_OPERATIONS = frozenset({
     "NORMALIZE",
 })
 
+_PARTITION_ENVELOPE_OPERATIONS = {
+    "KEEP": frozenset(),
+    "MASK": frozenset({"MASK"}),
+    "DELETE": frozenset({"DELETE"}),
+    "INSERT": frozenset({"INSERT"}),
+    "CORRECT": frozenset({"CORRECT", "MERGE", "DELETE"}),
+    "MERGE": frozenset({"MERGE", "DELETE"}),
+    "NORMALIZE": frozenset({"NORMALIZE"}),
+}
+
 
 class SegmentKind(str, Enum):
     ORIGINAL = "ORIGINAL"
@@ -93,6 +103,7 @@ class LineageEvent:
     output_sha256: str
     affected_input_intervals: tuple[tuple[int, int], ...]
     affected_output_intervals: tuple[tuple[int, int], ...]
+    receipt_manifest_sha256: str
     previous_event_sha256: str
     event_sha256: str
 
@@ -154,6 +165,51 @@ def _weakest_proof(base: Proof, pieces: Iterable[LineageSegment]) -> Proof:
     if Proof.WHOLE_SEGMENT_ONLY in proofs:
         return Proof.WHOLE_SEGMENT_ONLY
     return Proof.EXACT
+
+
+def _receipt_manifest_sha256(
+    receipts: Iterable[tuple[PartitionReceipt, bool]],
+) -> str:
+    manifest = [
+        {
+            "input_span": receipt.input_span,
+            "output_span": receipt.output_span,
+            "input_sha256": sha256_text(receipt.input_text),
+            "output_sha256": sha256_text(receipt.output_text),
+            "operation": receipt.operation,
+            "proof": receipt.proof.value,
+            "placeholder": placeholder,
+        }
+        for receipt, placeholder in receipts
+    ]
+    return hashlib.sha256(
+        json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
+def _validate_partition_envelope(
+    operation: object,
+    receipts: tuple[PartitionReceipt, ...],
+) -> None:
+    if operation not in _PARTITION_OPERATIONS:
+        raise ValueError(f"unsupported partition envelope: {operation!r}")
+    causal_operations = {
+        receipt.operation for receipt in receipts if receipt.operation != "KEEP"
+    }
+    if not causal_operations:
+        return
+    if operation == "REPLACE":
+        valid = causal_operations == {"REPLACE"} or causal_operations == {
+            "DELETE",
+            "INSERT",
+        }
+    else:
+        valid = causal_operations <= _PARTITION_ENVELOPE_OPERATIONS[operation]
+    if not valid:
+        raise ValueError(
+            f"partition operations {sorted(causal_operations)!r} "
+            f"are incompatible with {operation!r} envelope"
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -384,6 +440,7 @@ class TextLineageDraft:
         output_text: str,
         input_intervals: Iterable[tuple[int, int]],
         output_intervals: Iterable[tuple[int, int]],
+        receipt_manifest_sha256: str,
     ) -> str:
         sequence = len(self._events) + 1
         previous = self._events[-1].event_sha256 if self._events else "0" * 64
@@ -395,6 +452,7 @@ class TextLineageDraft:
             "output_sha256": sha256_text(output_text),
             "affected_input_intervals": _merged(input_intervals),
             "affected_output_intervals": _merged(output_intervals),
+            "receipt_manifest_sha256": receipt_manifest_sha256,
             "previous_event_sha256": previous,
         }
         event_hash = hashlib.sha256(
@@ -418,6 +476,10 @@ class TextLineageDraft:
         if start < 0 or end <= start or end > len(input_text):
             raise ValueError(f"invalid mutation span {(start, end)!r}")
         output_text = f"{input_text[:start]}{replacement}{input_text[end:]}"
+        if operation not in _PARTITION_OPERATIONS:
+            raise ValueError(f"unsupported mutation operation: {operation!r}")
+        if not isinstance(proof, Proof):
+            raise ValueError("mutation proof must be a Proof value")
         if operation == "KEEP":
             if output_text != input_text:
                 raise ValueError("KEEP cannot change text")
@@ -429,6 +491,15 @@ class TextLineageDraft:
         origins = _merged(
             origin for piece in inside for origin in piece.original_intervals
         )
+        effective_placeholder = operation == "MASK" or placeholder
+        receipt = PartitionReceipt(
+            input_span=(start, end),
+            output_span=(start, start + len(replacement)),
+            input_text=input_text[start:end],
+            output_text=replacement,
+            operation=operation,
+            proof=proof,
+        )
         transformation_id = self._append_event(
             stage=stage,
             operation=operation,
@@ -436,8 +507,11 @@ class TextLineageDraft:
             output_text=output_text,
             input_intervals=((start, end),),
             output_intervals=((start, start + len(replacement)),) if replacement else (),
+            receipt_manifest_sha256=_receipt_manifest_sha256(
+                ((receipt, effective_placeholder),)
+            ),
         )
-        if operation in {"MASK", "DELETE"} and origins:
+        if operation in {"MASK", "DELETE", "REPLACE"} and origins:
             self._tombstones.append(LineageSegment(
                 segment_id=f"consumed:{transformation_id}",
                 text=input_text[start:end],
@@ -446,24 +520,24 @@ class TextLineageDraft:
                 kind=SegmentKind.CONSUMED,
                 proof=effective_proof,
                 transformation_id=transformation_id,
-                placeholder=operation == "MASK" or placeholder,
+                placeholder=effective_placeholder,
             ))
         emitted: list[LineageSegment] = []
         if replacement:
-            is_placeholder = operation == "MASK" or placeholder
+            inserted = operation == "REPLACE" or effective_placeholder
             emitted.append(LineageSegment(
                 segment_id=f"derived:{transformation_id}",
                 text=replacement,
                 current_span=None,
-                original_intervals=() if is_placeholder else origins,
+                original_intervals=() if inserted else origins,
                 kind=(
                     SegmentKind.INSERTED
-                    if is_placeholder or not origins
+                    if inserted or not origins
                     else SegmentKind.DERIVED_FROM_ORIGINAL
                 ),
                 proof=effective_proof,
                 transformation_id=transformation_id,
-                placeholder=is_placeholder,
+                placeholder=effective_placeholder,
             ))
         self._pieces = [*before, *emitted, *after]
         return output_text
@@ -547,6 +621,7 @@ class TextLineageDraft:
             output_cursor = output_span[1]
         if input_cursor != len(input_text) or output_cursor != len(output_text):
             raise LineageMismatchError("partition receipts do not cover the transformation")
+        _validate_partition_envelope(operation, receipts)
         if all(receipt.operation == "KEEP" for receipt in receipts):
             return input_text
         transformation_id = self._append_event(
@@ -556,6 +631,9 @@ class TextLineageDraft:
             output_text=output_text,
             input_intervals=(receipt.input_span for receipt in receipts),
             output_intervals=(receipt.output_span for receipt in receipts if receipt.output_text),
+            receipt_manifest_sha256=_receipt_manifest_sha256(
+                (receipt, receipt.operation == "MASK") for receipt in receipts
+            ),
         )
         for receipt, pieces in pending:
             origins = _merged(origin for piece in pieces for origin in piece.original_intervals)
