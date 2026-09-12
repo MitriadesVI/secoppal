@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import FrozenInstanceError
+import hashlib
 
 import pytest
 
@@ -9,8 +10,11 @@ from app.core.text_lineage import (
     DescendantKind,
     LineageMismatchError,
     OriginKind,
+    PartitionReceipt,
+    Proof,
     TextLineageDraft,
     normalize_query_with_lineage,
+    sha256_text,
 )
 from app.utils.spell_correction import correct_query_with_receipts
 
@@ -156,3 +160,57 @@ def test_events_are_immutable_and_hash_chained() -> None:
     assert view.event_chain_head == view.events[-1].event_sha256
     with pytest.raises(FrozenInstanceError):
         view.events[0].stage = "tampered"  # type: ignore[misc]
+
+
+def test_surrogate_safe_hash_preserves_ordinary_sha256_contract() -> None:
+    ordinary = "contratos de parques"
+
+    assert sha256_text(ordinary) == hashlib.sha256(ordinary.encode("utf-8")).hexdigest()
+    assert sha256_text("\ud800parques") == sha256_text("\ud800parques")
+    assert sha256_text("parques\udfff") != sha256_text("\ud800parques")
+
+
+@pytest.mark.parametrize("span", [(False, True), (0.0, 1.0)])
+@pytest.mark.parametrize("api", ["descendants_of_raw_span", "origin_of_seam_span"])
+def test_lineage_query_apis_reject_non_integer_spans(
+    span: tuple[object, object],
+    api: str,
+) -> None:
+    view = TextLineageDraft("ab", request_id="typed-bounds").seal("ab")
+
+    with pytest.raises(ValueError, match="indices must be integers"):
+        getattr(view, api)(*span, **_credentials(view))
+
+
+@pytest.mark.parametrize(
+    "receipts",
+    [
+        (
+            PartitionReceipt((0, 2), (0, 2), "ab", "ab", "KEEP", Proof.EXACT),
+            PartitionReceipt((2, 0), (2, 2), "", "", "KEEP", Proof.EXACT),
+            PartitionReceipt((0, 2), (2, 4), "ab", "AB", "CORRECT", Proof.WHOLE_SEGMENT_ONLY),
+        ),
+        (PartitionReceipt((False, 1), (0, 1), "a", "a", "KEEP", Proof.EXACT),),
+        (PartitionReceipt((0.0, 1.0), (0, 1), "a", "a", "KEEP", Proof.EXACT),),
+        (PartitionReceipt((0, 3), (0, 2), "ab", "ab", "KEEP", Proof.EXACT),),
+        (PartitionReceipt((0, 1), (False, 1), "a", "a", "KEEP", Proof.EXACT),),
+        (PartitionReceipt((0, 1), (1, 0), "a", "", "DELETE", Proof.EXACT),),
+        (PartitionReceipt((0, 2), (0, 3), "ab", "ab", "KEEP", Proof.EXACT),),
+        (
+            PartitionReceipt((0, 1), (0, 1), "a", "a", "KEEP", Proof.EXACT),
+            PartitionReceipt((0, 2), (1, 3), "ab", "bB", "CORRECT", Proof.WHOLE_SEGMENT_ONLY),
+        ),
+    ],
+)
+def test_partition_rejects_malformed_or_duplicate_input_ranges(
+    receipts: tuple[PartitionReceipt, ...],
+) -> None:
+    draft = TextLineageDraft("ab", request_id="partition-bounds")
+
+    with pytest.raises((ValueError, LineageMismatchError)):
+        draft.apply_partition(
+            "abAB" if len(receipts) == 3 else "ab",
+            receipts,
+            stage="invalid-partition",
+            operation="CORRECT",
+        )

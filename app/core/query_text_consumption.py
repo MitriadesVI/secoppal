@@ -131,6 +131,9 @@ def replace_first_literal(
     *,
     lineage: TextLineageDraft | None = None,
     stage: str,
+    operation: str = "REPLACE",
+    proof: Proof = Proof.WHOLE_SEGMENT_ONLY,
+    placeholder: bool = False,
 ) -> str:
     """Preserve ``str.replace(..., 1)`` and receipt its chosen occurrence."""
     start = text.find(old)
@@ -142,7 +145,9 @@ def replace_first_literal(
         replacement,
         lineage=lineage,
         stage=stage,
-        operation="REPLACE",
+        operation=operation,
+        proof=proof,
+        placeholder=placeholder,
     )
 
 

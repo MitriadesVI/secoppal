@@ -99,7 +99,27 @@ class OriginAnswer:
 
 
 def sha256_text(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+    return hashlib.sha256(text.encode("utf-8", errors="surrogatepass")).hexdigest()
+
+
+def _validate_query_span(start: object, end: object, length: int, label: str) -> None:
+    if any(isinstance(value, bool) or not isinstance(value, int) for value in (start, end)):
+        raise ValueError(f"{label} span indices must be integers")
+    if start < 0 or end <= start or end > length:
+        raise ValueError(f"{label} span is outside the authenticated text")
+
+
+def _validate_partition_span(span: object, length: int, label: str) -> tuple[int, int]:
+    if isinstance(span, (str, bytes)) or not isinstance(span, (tuple, list)):
+        raise ValueError(f"{label} span must be a pair of integers")
+    if len(span) != 2:
+        raise ValueError(f"{label} span must have exactly two indices")
+    start, end = span
+    if any(isinstance(value, bool) or not isinstance(value, int) for value in (start, end)):
+        raise ValueError(f"{label} span indices must be integers")
+    if start < 0 or end < start or end > length:
+        raise ValueError(f"{label} span is outside its transformation text")
+    return start, end
 
 
 def _merged(intervals: Iterable[tuple[int, int]]) -> tuple[tuple[int, int], ...]:
@@ -166,8 +186,7 @@ class TextLineageView:
             raw_sha256=raw_sha256,
             seam_sha256=seam_sha256,
         )
-        if start < 0 or end <= start or end > len(self.raw_text):
-            raise ValueError("raw span is outside the authenticated request")
+        _validate_query_span(start, end, len(self.raw_text), "raw")
         target = (start, end)
         live = [
             segment
@@ -234,8 +253,7 @@ class TextLineageView:
             raw_sha256=raw_sha256,
             seam_sha256=seam_sha256,
         )
-        if start < 0 or end <= start or end > len(self.current_text):
-            raise ValueError("seam span is outside the authenticated CONTROL text")
+        _validate_query_span(start, end, len(self.current_text), "seam")
         selected = [
             segment
             for segment in self.segments
@@ -448,16 +466,30 @@ class TextLineageDraft:
         new_pieces: list[LineageSegment] = []
         pending: list[tuple[PartitionReceipt, list[LineageSegment]]] = []
         for receipt in receipts:
-            if receipt.input_span[0] != input_cursor or receipt.output_span[0] != output_cursor:
+            input_span = _validate_partition_span(
+                receipt.input_span,
+                len(input_text),
+                "partition input",
+            )
+            output_span = _validate_partition_span(
+                receipt.output_span,
+                len(output_text),
+                "partition output",
+            )
+            if input_span[0] != input_cursor or output_span[0] != output_cursor:
                 raise LineageMismatchError("partition receipts are not contiguous")
-            if input_text[slice(*receipt.input_span)] != receipt.input_text:
+            if input_text[slice(*input_span)] != receipt.input_text:
                 raise LineageMismatchError("partition input receipt does not match parser text")
-            if output_text[slice(*receipt.output_span)] != receipt.output_text:
+            if output_text[slice(*output_span)] != receipt.output_text:
                 raise LineageMismatchError("partition output receipt does not match parser text")
-            _, pieces, _ = self._cut(*receipt.input_span) if receipt.input_span[1] > receipt.input_span[0] else ([], [], [])
+            _, pieces, _ = (
+                self._cut(*input_span)
+                if input_span[1] > input_span[0]
+                else ([], [], [])
+            )
             pending.append((receipt, pieces))
-            input_cursor = receipt.input_span[1]
-            output_cursor = receipt.output_span[1]
+            input_cursor = input_span[1]
+            output_cursor = output_span[1]
         if input_cursor != len(input_text) or output_cursor != len(output_text):
             raise LineageMismatchError("partition receipts do not cover the transformation")
         if input_text == output_text:

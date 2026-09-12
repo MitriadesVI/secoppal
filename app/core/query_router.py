@@ -516,6 +516,9 @@ class QueryRouter:
                 " ",
                 lineage=lineage,
                 stage="contract_universe",
+                operation="MASK",
+                proof=Proof.EXACT,
+                placeholder=True,
             )
         temporal_resolution = resolve_temporal_scope(
             positive_text,

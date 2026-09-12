@@ -189,6 +189,27 @@ def test_known_universe_then_temporal_offset_behavior_is_preserved() -> None:
     assert str(off_error.value) == str(on_error.value)
 
 
+def test_consumed_universe_is_a_tombstone_not_a_space_descendant() -> None:
+    raw = "dame contratos cancelados de parques"
+    _off, parsed = _parse_pair(raw)
+    trace = parsed.text_lineage
+    assert trace is not None
+
+    answer = _answer(parsed, raw, 5, 25)
+    assert trace.current_text == "dame de parques"
+    assert answer.kind is DescendantKind.NO_SURVIVING_DESCENDANT
+    assert answer.seam_intervals == ()
+
+
+@pytest.mark.parametrize("raw", ["\ud800parques", "parques\udfff"])
+def test_lineage_observer_preserves_lone_surrogate_parser_result(raw: str) -> None:
+    off, on = _parse_pair(raw)
+
+    assert off.params["objeto"] == ["parques"]
+    assert on.params == off.params
+    assert on.text_lineage is not None
+
+
 def test_opt_in_preserves_invalid_query_exception() -> None:
     router = QueryRouter()
 
