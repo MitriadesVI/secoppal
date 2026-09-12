@@ -28,9 +28,12 @@ HERA opera con la skill `hera`; HADES con la skill `hades`; ARTEMISA con la skil
 `artemisa`. Esta policy define el qué (triggers, outputs, gates); las skills
 definen el cómo (pasos, método).
 
-ARTEMISA se invoca cuando `BUG_REPRODUCED=YES` y `ROOT_CAUSE_LOCATION=UNKNOWN`
-(o `REGRESSION_FOUND=YES` y `FIRST_BAD_TRANSITION=UNKNOWN`): localiza la primera
-transición rota y es read-only, sin implementar el fix.
+ARTEMISA se invoca cuando `BUG_REPRODUCED=YES` y `EXPECTED_BEHAVIOR_KNOWN=YES` y
+`ROOT_CAUSE_LOCATION=UNKNOWN` (o `REGRESSION_FOUND=YES` y
+`EXPECTED_BEHAVIOR_KNOWN=YES` y `FIRST_BAD_TRANSITION=UNKNOWN`): localiza la
+primera transición rota y es read-only, sin implementar el fix. Si
+`EXPECTED_BEHAVIOR_KNOWN=NO`: `ARTEMISA_REQUIRED=NO` y HERA adjudica (METIS si
+falta definir el comportamiento correcto; HADES si el framing es dudoso).
 
 Antes de escribir, la cápsula de misión debe contener:
 
