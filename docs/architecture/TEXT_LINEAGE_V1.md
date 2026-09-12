@@ -1,4 +1,4 @@
-# TEXT_LINEAGE_V1.1
+# TEXT_LINEAGE_V1.2
 
 ## Problema causal
 
@@ -9,14 +9,18 @@ textos, pero no prueban la relación entre sus intervalos.
 
 ## Representación
 
-V1.1 usa `SEGMENT_LEDGER_WITH_CAUSAL_RECEIPTS`, sólo en memoria y por request. El
+V1.2 usa `SEGMENT_LEDGER_WITH_CAUSAL_RECEIPTS`, sólo en memoria y por request. El
 ledger conserva el texto y SHA-256 raw, el texto y SHA-256 actual, segmentos
 `ORIGINAL`, `DERIVED_FROM_ORIGINAL` e `INSERTED`, y tombstones `CONSUMED`.
 Cada mutación real añade un evento inmutable enlazado al hash del evento previo.
-Los proofs son `exact`, `whole-segment-only` o `unproven`.
+El evento compromete su schema, el manifiesto canónico de receipts y su digest,
+el digest del estado posterior y el evento previo. Los proofs son `exact`,
+`whole-segment-only` o `unproven`.
 
-Las mutaciones de texto que alcanzan el seam pasan por primitivas que producen
-el string y actualizan el ledger con los mismos offsets. El corrector emite
+Las mutaciones de texto que alcanzan el seam pasan por un único reducer puro en
+`text_lineage_reducer.py`. `replace_span`, `replace_text_span` y
+`apply_partition` son adapters hacia ese reducer; no contienen otra matriz ni
+otra implementación de estado. El corrector emite
 receipts por token desde su propio loop. El resolver de tipo contractual emite
 receipts desde el match que realiza cada consumo. No existe replay de parser ni
 matching posterior para reconstruir provenance.
@@ -53,13 +57,35 @@ mutaciones posteriores no forman parte de este seam.
   cerrada.
 - El mismo surface en otra ocurrencia nunca acredita identidad.
 
-Una partition se valida completa antes de mutar. Si todos sus receipts son
-`KEEP`, conserva los segmentos y no emite evento. Cualquier receipt causal
-produce exactamente un evento global, incluso cuando los hashes de entrada y
-salida coinciden. `MASK` y `DELETE` retiran el origen; `INSERT` nunca lo hereda;
-`REPLACE` retira el origen y crea texto insertado; `CORRECT`, `MERGE` y
-`NORMALIZE` conservan origen derivado. Un `REPLACE` con la misma superficie se
-rechaza atómicamente: debe expresarse con la causa real.
+Una partition se valida y canonicaliza completa antes de reducir sobre estado
+temporal; sólo después se asigna el nuevo ledger. Un error deja piezas,
+tombstones e historia byte-idénticos. Receipts `KEEP` positivos preservan texto;
+padding `KEEP` vacío es neutral y no entra al manifiesto. Cualquier receipt
+causal produce exactamente un evento global, incluso cuando los hashes de
+entrada y salida coinciden.
+
+| Operación | Forma y efecto |
+|---|---|
+| `KEEP` | input/output positivos e iguales; conserva identidad |
+| `MASK` | input/output positivos; consume origen y emite placeholder `INSERTED` |
+| `DELETE` | input positivo, output vacío; consume origen |
+| `INSERT` | input vacío, output positivo; emite `INSERTED` sin origen |
+| `REPLACE` | input/output positivos y distintos; consume y emite `INSERTED` |
+| `CORRECT`, `MERGE`, `NORMALIZE` | input/output positivos; conserva origen derivado |
+
+El envelope acepta sólo su operación homónima, salvo `REPLACE` como receipts
+`REPLACE` o como conjunto `DELETE` + `INSERT`, `CORRECT` como subconjunto de
+`CORRECT`/`MERGE`/`DELETE`, `MERGE` como `MERGE`/`DELETE`, y `NORMALIZE` como
+`NORMALIZE`/`DELETE`. `KEEP` puede acompañar zonas intactas. Nombres desconocidos
+o con casing distinto fallan antes del fast-path all-KEEP. `MASK` canonicaliza
+`placeholder=True`; todas las demás operaciones usan `False`, y un valor
+explícito contradictorio o no booleano se rechaza.
+
+`TextLineageView.verify_integrity()` reproduce cada evento desde el raw mediante
+el mismo reducer puro y compara manifiesto, hashes, cadena, digest de estado,
+segmentos y tombstones. `seal()` ejecuta esa verificación y se niega a devolver
+una vista inconsistente. El replay usa receipts ya acreditados: no vuelve a
+ejecutar el parser ni busca superficies.
 
 `QueryRouter.parse(..., text_lineage_request_id=...)` activa observación de
 forma keyword-only. Sin ese argumento no crea trace. El trace vuelve en

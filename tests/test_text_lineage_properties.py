@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from hypothesis import given, strategies as st
 
-from app.core.query_text_consumption import compact_whitespace, mask_consumed_spans
+from app.core.query_text_consumption import (
+    compact_whitespace,
+    mask_consumed_spans,
+    replace_text_span,
+)
 from app.core.query_router import QueryRouter
 from app.core.text_lineage import (
     DescendantKind,
@@ -249,3 +253,61 @@ def test_repeated_all_keep_partition_accepts_every_known_envelope_without_event(
     assert view.descendants_of_raw_span(0, len(word), **_credentials(view)).kind is (
         DescendantKind.EXACT_DESCENDANT
     )
+
+
+@given(
+    operation=st.sampled_from(("MASK", "REPLACE", "CORRECT", "MERGE", "NORMALIZE")),
+    path=st.sampled_from(("direct", "wrapper", "partition")),
+    cardinality=st.integers(min_value=1, max_value=5),
+)
+def test_operation_path_and_multievent_cardinality_share_one_reducer(
+    operation: str,
+    path: str,
+    cardinality: int,
+) -> None:
+    draft = TextLineageDraft("ab", request_id="property-reducer")
+    current = "ab"
+    for _ in range(cardinality):
+        output = (
+            "cd" if current == "ab" else "ab"
+        ) if operation == "REPLACE" else current
+        if path == "direct":
+            current = draft.replace_span(
+                0,
+                len(current),
+                output,
+                stage="property-reducer",
+                operation=operation,
+                proof=Proof.EXACT,
+            )
+        elif path == "wrapper":
+            current = replace_text_span(
+                current,
+                (0, len(current)),
+                output,
+                lineage=draft,
+                stage="property-reducer",
+                operation=operation,
+                proof=Proof.EXACT,
+            )
+        else:
+            current = draft.apply_partition(
+                output,
+                (
+                    PartitionReceipt(
+                        (0, len(current)),
+                        (0, len(output)),
+                        current,
+                        output,
+                        operation,
+                        Proof.EXACT,
+                    ),
+                ),
+                stage="property-reducer",
+                operation=operation,
+            )
+
+    view = draft.seal(current)
+    assert len(view.events) == cardinality
+    assert [event.sequence for event in view.events] == list(range(1, cardinality + 1))
+    view.verify_integrity()

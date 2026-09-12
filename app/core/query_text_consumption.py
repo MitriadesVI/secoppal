@@ -13,7 +13,7 @@ from dataclasses import dataclass
 import re
 from typing import TYPE_CHECKING
 
-from app.core.text_lineage import Proof
+from app.core.text_lineage import PLACEHOLDER_UNSET, Proof
 
 if TYPE_CHECKING:
     from app.core.text_lineage import TextLineageDraft
@@ -63,14 +63,11 @@ def replace_text_span(
     stage: str = "text_replacement",
     operation: str = "REPLACE",
     proof: Proof = Proof.WHOLE_SEGMENT_ONLY,
-    placeholder: bool = False,
+    placeholder: object = PLACEHOLDER_UNSET,
 ) -> str:
     """Apply one exact current-text mutation and its causal receipt."""
     start, end = _validate_span(span, len(text))
     output = f"{text[:start]}{replacement}{text[end:]}"
-    semantic_placeholder = placeholder or (
-        operation in {"DELETE", "MASK"} and bool(replacement) and replacement.isspace()
-    )
     if lineage is not None:
         if lineage.current_text != text:
             raise ValueError("lineage current text does not match mutation input")
@@ -81,7 +78,7 @@ def replace_text_span(
             stage=stage,
             operation=operation,
             proof=proof,
-            placeholder=semantic_placeholder,
+            placeholder=placeholder,
         )
         if recorded != output:
             raise ValueError("lineage mutation diverged from parser mutation")
@@ -133,7 +130,7 @@ def replace_first_literal(
     stage: str,
     operation: str = "REPLACE",
     proof: Proof = Proof.WHOLE_SEGMENT_ONLY,
-    placeholder: bool = False,
+    placeholder: object = PLACEHOLDER_UNSET,
 ) -> str:
     """Preserve ``str.replace(..., 1)`` and receipt its chosen occurrence."""
     start = text.find(old)

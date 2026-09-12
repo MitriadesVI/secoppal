@@ -1,0 +1,549 @@
+"""Pure validator, reducer, and replay verifier for TEXT_LINEAGE_V1_2."""
+from __future__ import annotations
+
+import hashlib
+import json
+from collections import Counter
+from dataclasses import dataclass, replace
+from typing import Iterable, TYPE_CHECKING
+
+from app.core.text_lineage import (
+    CanonicalReceipt,
+    LINEAGE_EVENT_SCHEMA,
+    LINEAGE_VERSION,
+    LineageEvent,
+    LineageMismatchError,
+    LineageOperation,
+    LineageSegment,
+    PartitionReceipt,
+    PLACEHOLDER_UNSET,
+    Proof,
+    SegmentKind,
+    sha256_text,
+)
+
+if TYPE_CHECKING:
+    from app.core.text_lineage import TextLineageView
+
+
+_ENVELOPE_CAUSES = {
+    LineageOperation.KEEP: frozenset(),
+    LineageOperation.MASK: frozenset({LineageOperation.MASK}),
+    LineageOperation.DELETE: frozenset({LineageOperation.DELETE}),
+    LineageOperation.INSERT: frozenset({LineageOperation.INSERT}),
+    LineageOperation.CORRECT: frozenset({
+        LineageOperation.CORRECT,
+        LineageOperation.MERGE,
+        LineageOperation.DELETE,
+    }),
+    LineageOperation.MERGE: frozenset({
+        LineageOperation.MERGE,
+        LineageOperation.DELETE,
+    }),
+    LineageOperation.NORMALIZE: frozenset({
+        LineageOperation.NORMALIZE,
+        LineageOperation.DELETE,
+    }),
+}
+
+
+@dataclass(frozen=True, slots=True)
+class ReducerState:
+    request_id: str
+    raw_sha256: str
+    current_text: str
+    pieces: tuple[LineageSegment, ...]
+    tombstones: tuple[LineageSegment, ...]
+    events: tuple[LineageEvent, ...]
+
+
+def initial_state(raw_text: str, *, request_id: str) -> ReducerState:
+    return ReducerState(
+        request_id=request_id,
+        raw_sha256=sha256_text(raw_text),
+        current_text=raw_text,
+        pieces=(
+            LineageSegment(
+                segment_id="raw:0",
+                text=raw_text,
+                current_span=None,
+                original_intervals=((0, len(raw_text)),),
+                kind=SegmentKind.ORIGINAL,
+                proof=Proof.EXACT,
+                transformation_id="raw",
+            ),
+        )
+        if raw_text
+        else (),
+        tombstones=(),
+        events=(),
+    )
+
+
+def _operation(value: object, label: str) -> LineageOperation:
+    if isinstance(value, LineageOperation):
+        return value
+    if not isinstance(value, str) or value not in LineageOperation.__members__:
+        raise ValueError(f"unsupported {label}: {value!r}")
+    return LineageOperation[value]
+
+
+def _span(value: object, length: int, label: str) -> tuple[int, int]:
+    if isinstance(value, (str, bytes)) or not isinstance(value, (tuple, list)):
+        raise ValueError(f"{label} span must be a pair of integers")
+    if len(value) != 2:
+        raise ValueError(f"{label} span must have exactly two indices")
+    start, end = value
+    if any(isinstance(index, bool) or not isinstance(index, int) for index in (start, end)):
+        raise ValueError(f"{label} span indices must be integers")
+    if start < 0 or end < start or end > length:
+        raise ValueError(f"{label} span is outside its transformation text")
+    return start, end
+
+
+def _canonical_placeholder(receipt: object, operation: LineageOperation) -> bool:
+    expected = operation is LineageOperation.MASK
+    supplied = receipt.placeholder
+    if supplied is PLACEHOLDER_UNSET:
+        return expected
+    if type(supplied) is not bool:
+        raise ValueError("receipt placeholder must be an exact bool when supplied")
+    if supplied is not expected:
+        raise ValueError(
+            f"receipt placeholder {supplied!r} contradicts {operation.value} semantics"
+        )
+    return supplied
+
+
+def _validate_shape(receipt: CanonicalReceipt) -> bool:
+    input_length = receipt.input_span[1] - receipt.input_span[0]
+    output_length = receipt.output_span[1] - receipt.output_span[0]
+    operation = receipt.operation
+    if operation is LineageOperation.KEEP:
+        if input_length == output_length == 0:
+            if receipt.input_text or receipt.output_text:
+                raise ValueError("zero-width KEEP padding must have empty text")
+            return False
+        if input_length == 0 or output_length == 0 or receipt.input_text != receipt.output_text:
+            raise ValueError("KEEP receipt requires equal non-empty input and output")
+    elif operation is LineageOperation.MASK:
+        if input_length == 0 or output_length == 0:
+            raise ValueError("MASK receipt requires input and placeholder output")
+    elif operation is LineageOperation.DELETE:
+        if input_length == 0 or output_length != 0:
+            raise ValueError("DELETE receipt requires input and no output")
+    elif operation is LineageOperation.INSERT:
+        if input_length != 0 or output_length == 0:
+            raise ValueError("INSERT receipt requires no input and inserted output")
+    elif operation is LineageOperation.REPLACE:
+        if (
+            input_length == 0
+            or output_length == 0
+            or receipt.input_text == receipt.output_text
+        ):
+            raise ValueError(
+                "REPLACE receipt requires distinct input and output with non-empty spans"
+            )
+    elif input_length == 0 or output_length == 0:
+        raise ValueError(f"{operation.value} receipt requires input and output")
+    return True
+
+
+def _validate_envelope(
+    envelope: LineageOperation,
+    receipts: tuple[CanonicalReceipt, ...],
+) -> None:
+    causes = {receipt.operation for receipt in receipts if receipt.operation is not LineageOperation.KEEP}
+    if not causes:
+        return
+    if envelope is LineageOperation.REPLACE:
+        valid = causes == {LineageOperation.REPLACE} or causes == {
+            LineageOperation.DELETE,
+            LineageOperation.INSERT,
+        }
+    else:
+        valid = causes <= _ENVELOPE_CAUSES[envelope]
+    if not valid:
+        values = sorted(operation.value for operation in causes)
+        raise ValueError(
+            f"partition operations {values!r} are incompatible with "
+            f"{envelope.value!r} envelope"
+        )
+
+
+def canonicalize_partition(
+    input_text: str,
+    output_text: str,
+    receipts: Iterable[PartitionReceipt | CanonicalReceipt],
+    *,
+    operation: object,
+) -> tuple[LineageOperation, tuple[CanonicalReceipt, ...]]:
+    """Validate the full package and detach it from every caller-owned value."""
+    if not isinstance(output_text, str):
+        raise ValueError("partition output must be str")
+    envelope = _operation(operation, "partition envelope")
+    raw_receipts = tuple(receipts)
+    canonical: list[CanonicalReceipt] = []
+    input_cursor = output_cursor = 0
+    for receipt in raw_receipts:
+        if not isinstance(receipt, (PartitionReceipt, CanonicalReceipt)):
+            raise ValueError("partition entries must be receipt values")
+        if not isinstance(receipt.input_text, str) or not isinstance(receipt.output_text, str):
+            raise ValueError("partition receipt text must be str")
+        input_span = _span(receipt.input_span, len(input_text), "partition input")
+        output_span = _span(receipt.output_span, len(output_text), "partition output")
+        if input_span[0] != input_cursor or output_span[0] != output_cursor:
+            raise LineageMismatchError("partition receipts are not contiguous")
+        if input_text[slice(*input_span)] != receipt.input_text:
+            raise LineageMismatchError("partition input receipt does not match parser text")
+        if output_text[slice(*output_span)] != receipt.output_text:
+            raise LineageMismatchError("partition output receipt does not match parser text")
+        receipt_operation = _operation(receipt.operation, "partition operation")
+        if not isinstance(receipt.proof, Proof):
+            raise ValueError("partition proof must be a Proof value")
+        detached = CanonicalReceipt(
+            input_span=tuple(input_span),
+            output_span=tuple(output_span),
+            input_text=str(receipt.input_text),
+            output_text=str(receipt.output_text),
+            operation=receipt_operation,
+            proof=receipt.proof,
+            placeholder=_canonical_placeholder(receipt, receipt_operation),
+        )
+        if _validate_shape(detached):
+            canonical.append(detached)
+        input_cursor = input_span[1]
+        output_cursor = output_span[1]
+    if input_cursor != len(input_text) or output_cursor != len(output_text):
+        raise LineageMismatchError("partition receipts do not cover the transformation")
+    result = tuple(canonical)
+    _validate_envelope(envelope, result)
+    return envelope, result
+
+
+def _split_piece(
+    piece: LineageSegment,
+    offset: int,
+) -> tuple[LineageSegment, LineageSegment]:
+    left_text, right_text = piece.text[:offset], piece.text[offset:]
+    if (
+        len(piece.original_intervals) == 1
+        and piece.proof is Proof.EXACT
+        and len(piece.text) == piece.original_intervals[0][1] - piece.original_intervals[0][0]
+    ):
+        origin_start, origin_end = piece.original_intervals[0]
+        left_origins = ((origin_start, origin_start + offset),)
+        right_origins = ((origin_start + offset, origin_end),)
+        proof = Proof.EXACT
+    else:
+        left_origins = right_origins = piece.original_intervals
+        proof = Proof.UNPROVEN
+    return (
+        replace(piece, text=left_text, original_intervals=left_origins, proof=proof),
+        replace(piece, text=right_text, original_intervals=right_origins, proof=proof),
+    )
+
+
+def _cut(
+    pieces: tuple[LineageSegment, ...],
+    start: int,
+    end: int,
+) -> tuple[LineageSegment, ...]:
+    inside: list[LineageSegment] = []
+    cursor = 0
+    for piece in pieces:
+        piece_start, piece_end = cursor, cursor + len(piece.text)
+        cursor = piece_end
+        if piece_end <= start or piece_start >= end:
+            continue
+        current = piece
+        if piece_start < start:
+            _, current = _split_piece(current, start - piece_start)
+            piece_start = start
+        if piece_end > end:
+            current, _ = _split_piece(current, end - piece_start)
+        inside.append(current)
+    return tuple(inside)
+
+
+def _merged(intervals: Iterable[tuple[int, int]]) -> tuple[tuple[int, int], ...]:
+    result: list[tuple[int, int]] = []
+    for start, end in sorted(set(intervals)):
+        if result and start <= result[-1][1]:
+            result[-1] = (result[-1][0], max(result[-1][1], end))
+        else:
+            result.append((start, end))
+    return tuple(result)
+
+
+def _proof(base: Proof, pieces: tuple[LineageSegment, ...]) -> Proof:
+    has_origin = any(piece.original_intervals for piece in pieces)
+    has_originless = any(not piece.original_intervals for piece in pieces)
+    proofs = {base, *(piece.proof for piece in pieces)}
+    if has_origin and has_originless or Proof.UNPROVEN in proofs:
+        return Proof.UNPROVEN
+    if Proof.WHOLE_SEGMENT_ONLY in proofs:
+        return Proof.WHOLE_SEGMENT_ONLY
+    return Proof.EXACT
+
+
+def _receipt_payload(receipt: CanonicalReceipt) -> dict[str, object]:
+    return {
+        "input_span": receipt.input_span,
+        "output_span": receipt.output_span,
+        "input_sha256": sha256_text(receipt.input_text),
+        "output_sha256": sha256_text(receipt.output_text),
+        "operation": receipt.operation.value,
+        "proof": receipt.proof.value,
+        "placeholder": receipt.placeholder,
+    }
+
+
+def receipt_manifest_sha256(receipts: tuple[CanonicalReceipt, ...]) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            [_receipt_payload(receipt) for receipt in receipts],
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def _segment_payload(segment: LineageSegment) -> tuple[object, ...]:
+    return (
+        segment.segment_id,
+        sha256_text(segment.text),
+        segment.current_span,
+        segment.original_intervals,
+        segment.kind.value,
+        segment.proof.value,
+        segment.transformation_id,
+        segment.placeholder,
+    )
+
+
+def state_sha256(
+    request_id: str,
+    raw_sha256: str,
+    current_text: str,
+    pieces: tuple[LineageSegment, ...],
+    tombstones: tuple[LineageSegment, ...],
+) -> str:
+    payload = (
+        request_id,
+        raw_sha256,
+        sha256_text(current_text),
+        tuple(_segment_payload(piece) for piece in pieces),
+        tuple(_segment_payload(piece) for piece in tombstones),
+    )
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
+def _event_hash(event: LineageEvent) -> str:
+    payload = (
+        event.schema,
+        event.sequence,
+        event.stage,
+        event.operation.value,
+        event.input_sha256,
+        event.output_sha256,
+        event.affected_input_intervals,
+        event.affected_output_intervals,
+        tuple(_receipt_payload(receipt) for receipt in event.receipt_manifest),
+        event.receipt_manifest_sha256,
+        event.post_state_sha256,
+        event.previous_event_sha256,
+    )
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
+def reduce_partition(
+    state: ReducerState,
+    output_text: str,
+    receipts: Iterable[PartitionReceipt | CanonicalReceipt],
+    *,
+    stage: str,
+    operation: object,
+) -> ReducerState:
+    """Return the next state; the supplied state is never mutated."""
+    if not isinstance(stage, str) or not stage:
+        raise ValueError("lineage stage must be a non-empty string")
+    envelope, manifest = canonicalize_partition(
+        state.current_text,
+        output_text,
+        receipts,
+        operation=operation,
+    )
+    if all(receipt.operation is LineageOperation.KEEP for receipt in manifest):
+        return state
+
+    manifest_sha256 = receipt_manifest_sha256(manifest)
+    sequence = len(state.events) + 1
+    transformation_id = f"{sequence}:{manifest_sha256[:16]}"
+    ordinal = 0
+
+    def next_id(kind: str) -> str:
+        nonlocal ordinal
+        ordinal += 1
+        return f"{kind}:{sequence}:{manifest_sha256[:16]}:{ordinal}"
+
+    new_pieces: list[LineageSegment] = []
+    tombstones = list(state.tombstones)
+    for receipt in manifest:
+        pieces = (
+            _cut(state.pieces, *receipt.input_span)
+            if receipt.input_span[0] < receipt.input_span[1]
+            else ()
+        )
+        origins = _merged(
+            origin for piece in pieces for origin in piece.original_intervals
+        )
+        proof = _proof(receipt.proof, pieces)
+        if receipt.operation is LineageOperation.KEEP:
+            new_pieces.extend(pieces)
+            continue
+        consumes = receipt.operation in {
+            LineageOperation.MASK,
+            LineageOperation.DELETE,
+            LineageOperation.REPLACE,
+        }
+        if consumes and origins:
+            tombstones.append(LineageSegment(
+                segment_id=next_id("tombstone"),
+                text=receipt.input_text,
+                current_span=None,
+                original_intervals=origins,
+                kind=SegmentKind.CONSUMED,
+                proof=proof,
+                transformation_id=transformation_id,
+                placeholder=receipt.placeholder,
+            ))
+        if not receipt.output_text:
+            continue
+        inserted = receipt.operation in {
+            LineageOperation.MASK,
+            LineageOperation.INSERT,
+            LineageOperation.REPLACE,
+        }
+        new_pieces.append(LineageSegment(
+            segment_id=next_id("segment"),
+            text=receipt.output_text,
+            current_span=None,
+            original_intervals=() if inserted else origins,
+            kind=(
+                SegmentKind.INSERTED
+                if inserted or not origins
+                else SegmentKind.DERIVED_FROM_ORIGINAL
+            ),
+            proof=proof,
+            transformation_id=transformation_id,
+            placeholder=receipt.placeholder,
+        ))
+    id_counts = Counter(piece.segment_id for piece in new_pieces)
+    pieces_tuple = tuple(
+        replace(piece, segment_id=next_id("segment"))
+        if id_counts[piece.segment_id] > 1
+        else piece
+        for piece in new_pieces
+    )
+    tombstones_tuple = tuple(tombstones)
+    post_state_sha256 = state_sha256(
+        state.request_id,
+        state.raw_sha256,
+        output_text,
+        pieces_tuple,
+        tombstones_tuple,
+    )
+    previous = state.events[-1].event_sha256 if state.events else "0" * 64
+    event = LineageEvent(
+        schema=LINEAGE_EVENT_SCHEMA,
+        sequence=sequence,
+        stage=stage,
+        operation=envelope,
+        input_sha256=sha256_text(state.current_text),
+        output_sha256=sha256_text(output_text),
+        affected_input_intervals=_merged(
+            receipt.input_span for receipt in manifest if receipt.input_text
+        ),
+        affected_output_intervals=_merged(
+            receipt.output_span for receipt in manifest if receipt.output_text
+        ),
+        receipt_manifest=manifest,
+        receipt_manifest_sha256=manifest_sha256,
+        post_state_sha256=post_state_sha256,
+        previous_event_sha256=previous,
+        event_sha256="",
+    )
+    event = replace(event, event_sha256=_event_hash(event))
+    return ReducerState(
+        request_id=state.request_id,
+        raw_sha256=state.raw_sha256,
+        current_text=output_text,
+        pieces=pieces_tuple,
+        tombstones=tombstones_tuple,
+        events=(*state.events, event),
+    )
+
+
+def sealed_segments(pieces: tuple[LineageSegment, ...]) -> tuple[LineageSegment, ...]:
+    cursor = 0
+    result: list[LineageSegment] = []
+    for piece in pieces:
+        span = (cursor, cursor + len(piece.text))
+        result.append(replace(piece, current_span=span))
+        cursor = span[1]
+    return tuple(result)
+
+
+def verify_view_integrity(view: TextLineageView) -> None:
+    """Replay raw history through this reducer and compare every sealed field."""
+    if view.lineage_version != LINEAGE_VERSION:
+        raise LineageMismatchError("unsupported lineage version")
+    if not isinstance(view.request_id, str) or not view.request_id:
+        raise LineageMismatchError("invalid lineage request identity")
+    if view.raw_sha256 != sha256_text(view.raw_text):
+        raise LineageMismatchError("raw text hash is invalid")
+    state = initial_state(view.raw_text, request_id=view.request_id)
+    try:
+        for expected in view.events:
+            if expected.schema != LINEAGE_EVENT_SCHEMA:
+                raise LineageMismatchError("event schema is invalid")
+            output_text = "".join(receipt.output_text for receipt in expected.receipt_manifest)
+            state = reduce_partition(
+                state,
+                output_text,
+                expected.receipt_manifest,
+                stage=expected.stage,
+                operation=expected.operation,
+            )
+            if state.events[-1] != expected:
+                raise LineageMismatchError("event replay diverged from sealed history")
+    except (AttributeError, TypeError, ValueError) as exc:
+        if isinstance(exc, LineageMismatchError):
+            raise
+        raise LineageMismatchError("event history cannot be replayed") from exc
+    if state.current_text != view.current_text:
+        raise LineageMismatchError("replayed text diverged from sealed text")
+    if view.current_sha256 != sha256_text(view.current_text):
+        raise LineageMismatchError("sealed text hash is invalid")
+    if state.events != view.events:
+        raise LineageMismatchError("replayed events diverged from sealed history")
+    if sealed_segments(state.pieces) != view.segments:
+        raise LineageMismatchError("replayed segments diverged from sealed state")
+    if state.tombstones != view.tombstones:
+        raise LineageMismatchError("replayed tombstones diverged from sealed state")
+    expected_head = state.events[-1].event_sha256 if state.events else "0" * 64
+    if view.event_chain_head != expected_head:
+        raise LineageMismatchError("event chain head is invalid")
+    if view.state_sha256 != state_sha256(
+        state.request_id,
+        state.raw_sha256,
+        state.current_text,
+        state.pieces,
+        state.tombstones,
+    ):
+        raise LineageMismatchError("sealed state digest is invalid")

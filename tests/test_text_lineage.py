@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import asdict, FrozenInstanceError
+from dataclasses import FrozenInstanceError
 import hashlib
 import json
 
@@ -104,7 +104,7 @@ def test_consumed_occurrence_cannot_resurrect_as_identical_survivor() -> None:
     second = view.descendants_of_raw_span(11, 19, **_credentials(view))
     assert seam == "y con vial"
     assert first.kind is DescendantKind.NO_SURVIVING_DESCENDANT
-    # V1.1 receipts the same-surface whitespace MERGE as a real transform.
+    # Same-surface whitespace MERGE remains a real causal transform.
     assert second.kind is DescendantKind.TRANSFORMED_DESCENDANT
     assert seam[slice(*second.seam_intervals[0])] == "con vial"
 
@@ -168,13 +168,37 @@ def test_events_are_immutable_and_hash_chained() -> None:
     assert view.event_chain_head == view.events[-1].event_sha256
     previous = "0" * 64
     for event in view.events:
-        payload = asdict(event)
-        event_hash = payload.pop("event_sha256")
-        assert payload["previous_event_sha256"] == previous
-        assert event_hash == hashlib.sha256(
+        manifest = tuple(
+            {
+                "input_span": receipt.input_span,
+                "output_span": receipt.output_span,
+                "input_sha256": sha256_text(receipt.input_text),
+                "output_sha256": sha256_text(receipt.output_text),
+                "operation": receipt.operation.value,
+                "proof": receipt.proof.value,
+                "placeholder": receipt.placeholder,
+            }
+            for receipt in event.receipt_manifest
+        )
+        payload = (
+            event.schema,
+            event.sequence,
+            event.stage,
+            event.operation.value,
+            event.input_sha256,
+            event.output_sha256,
+            event.affected_input_intervals,
+            event.affected_output_intervals,
+            manifest,
+            event.receipt_manifest_sha256,
+            event.post_state_sha256,
+            event.previous_event_sha256,
+        )
+        assert event.previous_event_sha256 == previous
+        assert event.event_sha256 == hashlib.sha256(
             json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
         ).hexdigest()
-        previous = event_hash
+        previous = event.event_sha256
     with pytest.raises(FrozenInstanceError):
         view.events[0].stage = "tampered"  # type: ignore[misc]
 
@@ -245,7 +269,7 @@ def test_same_surface_mask_retires_origin_and_emits_equal_hash_event() -> None:
     )
     view = draft.seal(masked)
 
-    assert view.lineage_version == LINEAGE_VERSION == "TEXT_LINEAGE_V1_1"
+    assert view.lineage_version == LINEAGE_VERSION == "TEXT_LINEAGE_V1_2"
     assert view.descendants_of_raw_span(1, 2, **_credentials(view)).kind is (
         DescendantKind.NO_SURVIVING_DESCENDANT
     )
