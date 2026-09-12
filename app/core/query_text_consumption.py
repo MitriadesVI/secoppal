@@ -13,7 +13,7 @@ from dataclasses import dataclass
 import re
 from typing import TYPE_CHECKING
 
-from app.core.text_lineage import PLACEHOLDER_UNSET, Proof
+from app.core.text_lineage import LineageOperation, PLACEHOLDER_UNSET, Proof
 
 if TYPE_CHECKING:
     from app.core.text_lineage import TextLineageDraft
@@ -23,22 +23,20 @@ Span = tuple[int, int]
 
 def _validate_span(span: object, text_len: int) -> Span:
     """Valida forma y límites de un span; devuelve ``(start, end)`` normalizado."""
-    if isinstance(span, (str, bytes)) or not isinstance(span, (tuple, list)):
-        raise ValueError(f"span con forma inválida: {span!r}")
+    if type(span) not in (tuple, list):
+        raise ValueError("span con forma inválida")
     if len(span) != 2:
-        raise ValueError(f"span debe tener exactamente 2 elementos: {span!r}")
+        raise ValueError("span debe tener exactamente 2 elementos")
     start, end = span
     for label, value in (("start", start), ("end", end)):
-        if isinstance(value, bool):
-            raise ValueError(f"{label} bool no es un índice válido: {span!r}")
-        if not isinstance(value, int):
-            raise ValueError(f"{label} debe ser int: {span!r}")
+        if type(value) is not int:
+            raise ValueError(f"{label} debe ser un int exacto")
     if start < 0:
-        raise ValueError(f"start negativo: {span!r}")
+        raise ValueError("start negativo")
     if end > text_len:
-        raise ValueError(f"end fuera de rango (> len(text)={text_len}): {span!r}")
+        raise ValueError("end fuera de rango")
     if end <= start:
-        raise ValueError(f"end debe ser > start: {span!r}")
+        raise ValueError("end debe ser > start")
     return (start, end)
 
 
@@ -66,6 +64,25 @@ def replace_text_span(
     placeholder: object = PLACEHOLDER_UNSET,
 ) -> str:
     """Apply one exact current-text mutation and its causal receipt."""
+    if type(text) is not str:
+        raise ValueError("text must be an exact str")
+    if type(replacement) is not str:
+        raise ValueError("replacement must be str")
+    if type(span) not in (tuple, list):
+        raise ValueError("span must be an exact tuple or list")
+    if lineage is not None:
+        from app.core.text_lineage import TextLineageDraft
+
+        if type(lineage) is not TextLineageDraft:
+            raise ValueError("lineage must be an exact TextLineageDraft")
+        if type(stage) is not str:
+            raise ValueError("stage must be an exact str")
+        if type(operation) not in (str, LineageOperation):
+            raise ValueError("operation must be an exact str or LineageOperation")
+        if type(proof) is not Proof:
+            raise ValueError("proof must be an exact Proof")
+        if placeholder is not PLACEHOLDER_UNSET and type(placeholder) is not bool:
+            raise ValueError("placeholder must be unset or an exact bool")
     start, end = _validate_span(span, len(text))
     output = f"{text[:start]}{replacement}{text[end:]}"
     if lineage is not None:

@@ -84,7 +84,7 @@ def _operation(value: object, label: str) -> LineageOperation:
     if type(value) is LineageOperation:
         return value
     if type(value) is not str or value not in LineageOperation.__members__:
-        raise ValueError(f"unsupported {label}: {value!r}")
+        raise ValueError(f"unsupported {label}")
     return LineageOperation[value]
 
 
@@ -109,10 +109,34 @@ def _canonical_placeholder(receipt: object, operation: LineageOperation) -> bool
     if type(supplied) is not bool:
         raise ValueError("receipt placeholder must be an exact bool when supplied")
     if supplied is not expected:
-        raise ValueError(
-            f"receipt placeholder {supplied!r} contradicts {operation.value} semantics"
-        )
+        raise ValueError("receipt placeholder contradicts operation semantics")
     return supplied
+
+
+def _canonical_receipt(
+    receipt: object,
+    *,
+    input_length: int,
+    output_length: int,
+) -> CanonicalReceipt:
+    if type(receipt) not in (PartitionReceipt, CanonicalReceipt):
+        raise ValueError("partition entries must be exact receipt values")
+    if type(receipt.input_text) is not str or type(receipt.output_text) is not str:
+        raise ValueError("partition receipt text must be an exact str")
+    input_span = _span(receipt.input_span, input_length, "partition input")
+    output_span = _span(receipt.output_span, output_length, "partition output")
+    receipt_operation = _operation(receipt.operation, "partition operation")
+    if type(receipt.proof) is not Proof:
+        raise ValueError("partition proof must be an exact Proof value")
+    return CanonicalReceipt(
+        input_span=tuple(input_span),
+        output_span=tuple(output_span),
+        input_text=receipt.input_text,
+        output_text=receipt.output_text,
+        operation=receipt_operation,
+        proof=receipt.proof,
+        placeholder=_canonical_placeholder(receipt, receipt_operation),
+    )
 
 
 def _validate_shape(receipt: CanonicalReceipt) -> bool:
@@ -179,39 +203,35 @@ def canonicalize_partition(
     operation: object,
 ) -> tuple[LineageOperation, tuple[CanonicalReceipt, ...]]:
     """Validate the full package and detach it from every caller-owned value."""
+    if type(input_text) is not str:
+        raise ValueError("partition input must be an exact str")
     if type(output_text) is not str:
-        raise ValueError("partition output must be str")
+        raise ValueError("partition output must be an exact str")
     envelope = _operation(operation, "partition envelope")
+    if type(receipts) not in (tuple, list):
+        raise ValueError("partition receipts must be an exact tuple or list")
     raw_receipts = tuple(receipts)
+    detached_receipts = tuple(
+        _canonical_receipt(
+            receipt,
+            input_length=len(input_text),
+            output_length=len(output_text),
+        )
+        for receipt in raw_receipts
+    )
     canonical: list[CanonicalReceipt] = []
     input_cursor = output_cursor = 0
-    for receipt in raw_receipts:
-        if type(receipt) not in (PartitionReceipt, CanonicalReceipt):
-            raise ValueError("partition entries must be receipt values")
-        if type(receipt.input_text) is not str or type(receipt.output_text) is not str:
-            raise ValueError("partition receipt text must be str")
-        input_span = _span(receipt.input_span, len(input_text), "partition input")
-        output_span = _span(receipt.output_span, len(output_text), "partition output")
+    for receipt in detached_receipts:
+        input_span = receipt.input_span
+        output_span = receipt.output_span
         if input_span[0] != input_cursor or output_span[0] != output_cursor:
             raise LineageMismatchError("partition receipts are not contiguous")
         if input_text[slice(*input_span)] != receipt.input_text:
             raise LineageMismatchError("partition input receipt does not match parser text")
         if output_text[slice(*output_span)] != receipt.output_text:
             raise LineageMismatchError("partition output receipt does not match parser text")
-        receipt_operation = _operation(receipt.operation, "partition operation")
-        if type(receipt.proof) is not Proof:
-            raise ValueError("partition proof must be a Proof value")
-        detached = CanonicalReceipt(
-            input_span=tuple(input_span),
-            output_span=tuple(output_span),
-            input_text=receipt.input_text,
-            output_text=receipt.output_text,
-            operation=receipt_operation,
-            proof=receipt.proof,
-            placeholder=_canonical_placeholder(receipt, receipt_operation),
-        )
-        if _validate_shape(detached):
-            canonical.append(detached)
+        if _validate_shape(receipt):
+            canonical.append(receipt)
         input_cursor = input_span[1]
         output_cursor = output_span[1]
     if input_cursor != len(input_text) or output_cursor != len(output_text):
@@ -361,6 +381,122 @@ def _event_hash(event: LineageEvent) -> str:
     ).hexdigest()
 
 
+def _strict_reducer_segment(
+    segment: object,
+    *,
+    label: str,
+    tombstone: bool,
+) -> LineageSegment:
+    if type(segment) is not LineageSegment:
+        raise LineageMismatchError(f"{label} must be a LineageSegment")
+    _strict_string(segment.segment_id, f"{label}.segment_id", nonempty=True)
+    _strict_string(segment.text, f"{label}.text", nonempty=True)
+    _strict_string(
+        segment.transformation_id,
+        f"{label}.transformation_id",
+        nonempty=True,
+    )
+    if segment.current_span is not None:
+        raise LineageMismatchError(f"{label}.current_span must be absent in reducer state")
+    if type(segment.kind) is not SegmentKind or type(segment.proof) is not Proof:
+        raise LineageMismatchError(f"{label} enum fields have invalid nominal types")
+    if type(segment.placeholder) is not bool:
+        raise LineageMismatchError(f"{label}.placeholder must be an exact bool")
+    if tombstone and segment.kind is not SegmentKind.CONSUMED:
+        raise LineageMismatchError(f"{label} is not a canonical tombstone")
+    if not tombstone and segment.kind is SegmentKind.CONSUMED:
+        raise LineageMismatchError(f"{label} exposes a consumed live segment")
+    _strict_intervals(
+        segment.original_intervals,
+        f"{label}.original_intervals",
+        allow_empty=False,
+    )
+    return segment
+
+
+def _validate_reducer_state(state: object) -> ReducerState:
+    if type(state) is not ReducerState:
+        raise ValueError("state must be an exact ReducerState")
+    _strict_string(state.request_id, "state.request_id", nonempty=True)
+    _strict_digest(state.raw_sha256, "state.raw_sha256")
+    _strict_string(state.current_text, "state.current_text")
+    if type(state.pieces) is not tuple:
+        raise LineageMismatchError("state.pieces must be an exact tuple")
+    if type(state.tombstones) is not tuple:
+        raise LineageMismatchError("state.tombstones must be an exact tuple")
+    if type(state.events) is not tuple:
+        raise LineageMismatchError("state.events must be an exact tuple")
+
+    pieces = tuple(
+        _strict_reducer_segment(piece, label=f"state.pieces[{index}]", tombstone=False)
+        for index, piece in enumerate(state.pieces)
+    )
+    tombstones = tuple(
+        _strict_reducer_segment(
+            tombstone,
+            label=f"state.tombstones[{index}]",
+            tombstone=True,
+        )
+        for index, tombstone in enumerate(state.tombstones)
+    )
+    if "".join(piece.text for piece in pieces) != state.current_text:
+        raise LineageMismatchError("state pieces do not cover current text")
+    segment_ids = tuple(segment.segment_id for segment in (*pieces, *tombstones))
+    if len(segment_ids) != len(set(segment_ids)):
+        raise LineageMismatchError("state segment identifiers must be unique")
+
+    previous = "0" * 64
+    expected_input_sha256 = state.raw_sha256
+    for index, event in enumerate(state.events):
+        typed = _strict_event(event, index)
+        if typed.schema != LINEAGE_EVENT_SCHEMA:
+            raise LineageMismatchError(f"events[{index}].schema is unsupported")
+        if typed.previous_event_sha256 != previous:
+            raise LineageMismatchError(f"events[{index}] breaks the event chain")
+        input_text = "".join(
+            receipt.input_text for receipt in typed.receipt_manifest
+        )
+        output_text = "".join(
+            receipt.output_text for receipt in typed.receipt_manifest
+        )
+        _, canonical_manifest = canonicalize_partition(
+            input_text,
+            output_text,
+            typed.receipt_manifest,
+            operation=typed.operation,
+        )
+        if canonical_manifest != typed.receipt_manifest:
+            raise LineageMismatchError(f"events[{index}] manifest is not canonical")
+        if (
+            typed.input_sha256 != expected_input_sha256
+            or typed.input_sha256 != sha256_text(input_text)
+            or typed.output_sha256 != sha256_text(output_text)
+        ):
+            raise LineageMismatchError(f"events[{index}] text digest chain is invalid")
+        if typed.receipt_manifest_sha256 != receipt_manifest_sha256(
+            typed.receipt_manifest
+        ):
+            raise LineageMismatchError(f"events[{index}] manifest digest is invalid")
+        if typed.event_sha256 != _event_hash(typed):
+            raise LineageMismatchError(f"events[{index}] digest is invalid")
+        previous = typed.event_sha256
+        expected_input_sha256 = typed.output_sha256
+    if state.events:
+        if expected_input_sha256 != sha256_text(state.current_text):
+            raise LineageMismatchError("state current text breaks the event chain")
+        if state.events[-1].post_state_sha256 != state_sha256(
+            state.request_id,
+            state.raw_sha256,
+            state.current_text,
+            pieces,
+            tombstones,
+        ):
+            raise LineageMismatchError("state digest does not match its latest event")
+    elif state != initial_state(state.current_text, request_id=state.request_id):
+        raise LineageMismatchError("eventless reducer state is not canonical")
+    return state
+
+
 def reduce_partition(
     state: ReducerState,
     output_text: str,
@@ -370,13 +506,19 @@ def reduce_partition(
     operation: object,
 ) -> ReducerState:
     """Return the next state; the supplied state is never mutated."""
+    if type(state) is not ReducerState:
+        raise ValueError("state must be an exact ReducerState")
+    if type(output_text) is not str:
+        raise ValueError("partition output must be an exact str")
     if type(stage) is not str or not stage:
         raise ValueError("lineage stage must be a non-empty string")
+    envelope = _operation(operation, "partition envelope")
+    state = _validate_reducer_state(state)
     envelope, manifest = canonicalize_partition(
         state.current_text,
         output_text,
         receipts,
-        operation=operation,
+        operation=envelope,
     )
     if all(receipt.operation is LineageOperation.KEEP for receipt in manifest):
         return state

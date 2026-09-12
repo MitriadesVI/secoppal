@@ -22,6 +22,12 @@ from app.core.text_lineage import (
     normalize_query_with_lineage,
     sha256_text,
 )
+from app.core.text_lineage_reducer import (
+    ReducerState,
+    canonicalize_partition,
+    initial_state,
+    reduce_partition,
+)
 
 
 def _credentials(view):
@@ -917,3 +923,224 @@ def test_request_and_credential_string_subclasses_fail_closed() -> None:
     credentials["request_id"] = _ChangedStr("request")
     with pytest.raises(LineageMismatchError, match="exact strings"):
         view.descendants_of_raw_span(0, 2, **credentials)
+
+
+class _ExplosiveStr(str):
+    def __getitem__(self, key):
+        raise AssertionError("hostile __getitem__ ran")
+
+    def __eq__(self, other):
+        raise AssertionError("hostile __eq__ ran")
+
+    def __ne__(self, other):
+        raise AssertionError("hostile __ne__ ran")
+
+    def __str__(self):
+        raise AssertionError("hostile __str__ ran")
+
+    def __hash__(self):
+        raise AssertionError("hostile __hash__ ran")
+
+    def encode(self, *args, **kwargs):
+        raise AssertionError("hostile encode ran")
+
+
+class _ExplosiveTuple(tuple):
+    def __len__(self):
+        raise AssertionError("hostile tuple __len__ ran")
+
+
+class _ExplosiveList(list):
+    def __iter__(self):
+        raise AssertionError("hostile list __iter__ ran")
+
+
+def _correct_receipt(
+    *,
+    input_text: object = "ab",
+    output_text: object = "cd",
+    input_span: object = (0, 2),
+) -> PartitionReceipt:
+    return PartitionReceipt(
+        input_span,  # type: ignore[arg-type]
+        (0, 2),
+        input_text,  # type: ignore[arg-type]
+        output_text,  # type: ignore[arg-type]
+        "CORRECT",
+        Proof.EXACT,
+    )
+
+
+def test_canonicalize_rejects_hostile_input_text_before_hooks() -> None:
+    with pytest.raises(ValueError, match="input must be an exact str"):
+        canonicalize_partition(
+            _ExplosiveStr("ab"),
+            "cd",
+            (_correct_receipt(),),
+            operation="CORRECT",
+        )
+
+
+@pytest.mark.parametrize("kind", ["tuple", "list"])
+def test_canonicalize_rejects_span_subclasses_before_hooks(kind: str) -> None:
+    span = _ExplosiveTuple((0, 2)) if kind == "tuple" else _ExplosiveList([0, 2])
+
+    with pytest.raises(ValueError, match="pair of integers"):
+        canonicalize_partition(
+            "ab",
+            "cd",
+            (_correct_receipt(input_span=span),),
+            operation="CORRECT",
+        )
+
+
+def test_canonicalize_validates_late_receipt_before_matching_any_text() -> None:
+    first = PartitionReceipt((1, 2), (0, 1), "b", "c", "CORRECT", Proof.EXACT)
+    late = _correct_receipt(output_text=_ExplosiveStr("cd"))
+
+    with pytest.raises(ValueError, match="receipt text must be an exact str"):
+        canonicalize_partition("ab", "cd", (first, late), operation="CORRECT")
+
+
+def test_canonicalize_exact_tuple_and_list_receipts_are_identical() -> None:
+    receipt = _correct_receipt()
+
+    from_tuple = canonicalize_partition("ab", "cd", (receipt,), operation="CORRECT")
+    from_list = canonicalize_partition("ab", "cd", [receipt], operation="CORRECT")
+
+    assert from_tuple == from_list
+
+
+def test_canonicalize_rejects_receipt_collection_subclass_before_iteration() -> None:
+    receipts = _ExplosiveList([_correct_receipt()])
+
+    with pytest.raises(ValueError, match="exact tuple or list"):
+        canonicalize_partition("ab", "cd", receipts, operation="CORRECT")
+
+
+def test_reduce_partition_rejects_state_subclass_without_access() -> None:
+    class StateSubclass(ReducerState):
+        pass
+
+    state = initial_state("ab", request_id="state-subclass")
+    hostile = StateSubclass(
+        state.request_id,
+        state.raw_sha256,
+        state.current_text,
+        state.pieces,
+        state.tombstones,
+        state.events,
+    )
+
+    with pytest.raises(ValueError, match="exact ReducerState"):
+        reduce_partition(
+            hostile,
+            "cd",
+            (_correct_receipt(),),
+            stage="boundary",
+            operation="CORRECT",
+        )
+
+
+@pytest.mark.parametrize("field", ["pieces", "tombstones", "events"])
+def test_reduce_partition_rejects_internal_collection_subclasses_before_hooks(
+    field: str,
+) -> None:
+    state = initial_state("ab", request_id="hostile-collection")
+    state = replace(state, **{field: _ExplosiveTuple(getattr(state, field))})
+
+    with pytest.raises(LineageMismatchError, match="exact tuple"):
+        reduce_partition(
+            state,
+            "cd",
+            (_correct_receipt(),),
+            stage="boundary",
+            operation="CORRECT",
+        )
+
+
+@pytest.mark.parametrize("boundary", ["output", "stage", "envelope"])
+def test_reduce_partition_rejects_hostile_call_strings_before_hooks(
+    boundary: str,
+) -> None:
+    state = initial_state("ab", request_id="hostile-call")
+    output: object = "cd"
+    stage: object = "boundary"
+    envelope: object = "CORRECT"
+    if boundary == "output":
+        output = _ExplosiveStr("cd")
+    elif boundary == "stage":
+        stage = _ExplosiveStr("boundary")
+    else:
+        envelope = _ExplosiveStr("CORRECT")
+
+    with pytest.raises(ValueError):
+        reduce_partition(
+            state,
+            output,  # type: ignore[arg-type]
+            (_correct_receipt(),),
+            stage=stage,  # type: ignore[arg-type]
+            operation=envelope,
+        )
+
+
+@pytest.mark.parametrize("boundary", ["current_text", "piece_text", "event_stage"])
+def test_reduce_partition_rejects_nested_hostile_strings_before_hooks(
+    boundary: str,
+) -> None:
+    state = initial_state("ab", request_id="nested-hostile")
+    if boundary == "current_text":
+        state = replace(state, current_text=_ExplosiveStr("ab"))
+    elif boundary == "piece_text":
+        state = replace(
+            state,
+            pieces=(replace(state.pieces[0], text=_ExplosiveStr("ab")),),
+        )
+    else:
+        state = reduce_partition(
+            state,
+            "cd",
+            (_correct_receipt(),),
+            stage="first",
+            operation="CORRECT",
+        )
+        state = replace(
+            state,
+            events=(replace(state.events[0], stage=_ExplosiveStr("first")),),
+        )
+
+    with pytest.raises(LineageMismatchError, match="exact string"):
+        reduce_partition(
+            state,
+            "cd",
+            (_correct_receipt(),),
+            stage="boundary",
+            operation="CORRECT",
+        )
+
+
+def test_late_hostile_receipt_preserves_history_byte_for_byte() -> None:
+    draft = TextLineageDraft("ab", request_id="hostile-history")
+    draft.replace_span(0, 2, "ef", stage="prior", operation="CORRECT")
+    before = _snapshot(draft)
+
+    with pytest.raises(ValueError, match="receipt text must be an exact str"):
+        draft.apply_partition(
+            "cd",
+            (
+                PartitionReceipt((0, 1), (0, 1), "e", "c", "CORRECT", Proof.EXACT),
+                PartitionReceipt(
+                    (1, 2),
+                    (1, 2),
+                    "f",
+                    _ExplosiveStr("d"),
+                    "CORRECT",
+                    Proof.EXACT,
+                ),
+            ),
+            stage="hostile-late",
+            operation="CORRECT",
+        )
+
+    assert _snapshot(draft) == before
+    draft.seal("ef").verify_integrity()
