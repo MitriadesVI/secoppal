@@ -15,7 +15,9 @@ Cada trabajo se delimita con cinco autoridades concretas:
 4. `SCOPE`: paths permitidos y protegidos; un finding no lo amplía.
 5. `CANDIDATE`: SHA congelado, estado Git y evidencia que se auditan.
 
-La petición actual manda sobre la política del repo; ésta manda sobre defaults.
+Dentro de las leyes duras de seguridad del producto y del repo, la petición
+actual manda sobre la política del repo; ésta manda sobre defaults. Ninguna
+petición puede relajar esas leyes duras.
 La historia es evidencia, no autoridad operativa presente. HERA coordina el
 estado; CÁSTOR inventaría; PÓLUX falsifica; METIS cierra arquitectura y contrato;
 ARES implementa; HERMES diseña la verificación; ZEUS audita en contexto fresco;
@@ -179,6 +181,14 @@ HERA adjudica cada finding antes de enviarlo a implementación:
 - `ORACLE_PROBLEM`: detiene la decisión.
 - `TOOLING_PROBLEM`: corrige o degrada la evidencia, no el producto.
 - `REFUTED`: no produce cambio.
+
+ZEUS busca ángulos y bordes plausibles e intenta falsificar el candidate, pero
+es falible. Todo finding debe aportar evidencia y un contraejemplo concretos;
+ni su severidad ni el esfuerzo o modelo usado lo convierten en verdad. HERA lo
+adjudica como `LOCAL_DEFECT`, `DESIGN_GAP` u otra clase, y puede declararlo
+`REFUTED`.
+La especulación implausible o sin evidencia no otorga autoridad para cambiar
+código.
 
 `DESIGN_REOPEN` es monotónico durante una misión. Incrementa por cambios de
 autoridad, omisión, composición, invariante, arquitectura o definición de la
