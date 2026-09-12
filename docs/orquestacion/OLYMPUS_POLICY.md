@@ -23,6 +23,9 @@ estado; CÁSTOR inventaría; PÓLUX falsifica; METIS cierra arquitectura y contr
 ARES implementa; HERMES diseña la verificación; ZEUS audita en contexto fresco;
 HADES rediagnostica loops; CLÍO conserva conocimiento durable.
 
+HERA opera con la skill `hera`; HADES con la skill `hades`. Esta policy define el
+qué (triggers, outputs, gates); las skills definen el cómo (pasos, método).
+
 Antes de escribir, la cápsula de misión debe contener:
 
 ```text
@@ -125,6 +128,22 @@ el gate emite literalmente `CONTRACT_INCOMPLETE=YES` y después
 `CONTRACT_INCOMPLETE=NO`. ARES no descubre arquitectura: una premisa falsa
 exige `STOP + ESCALATE`.
 
+### Framing Gate
+
+Antes de METIS/ARES en `COMPLEX`/`HIGH_RISK`, HERA evalúa cinco preguntas sin
+resolverlas en profundidad — sólo determina si el framing está acreditado:
+
+```text
+A. CAUSALITY          ¿mecanismo causal reproducido o aún hipótesis?
+B. CAPACITY           ¿la palanca tiene headroom para cerrar el hueco?
+C. PRODUCT ORACLE     ¿el gate mide producto o sólo su propio test?
+D. CONTRARY EVIDENCE  ¿hay evidencia que contradiga la tesis?
+E. CHEAP DISCRIMINATOR ¿hay una medición barata que invalide el arco?
+```
+
+Outputs: `FRAMING_CONFIDENT`, `CHEAP_MEASUREMENT_FIRST`,
+`HADES_CHALLENGE_REQUIRED`, `THESIS_REFUTED`, `HUMAN_DECISION_REQUIRED`.
+
 ## 4. Router dinámico y provenance
 
 El modelo solicitado se deriva de:
@@ -192,8 +211,9 @@ código.
 
 `DESIGN_REOPEN` es monotónico durante una misión. Incrementa por cambios de
 autoridad, omisión, composición, invariante, arquitectura o definición de la
-feature; no por typos, errores Git ni tests faltantes de una regla decidida. No
-se reinicia con un commit, candidate o agente nuevo.
+feature; no por typos, errores Git, tooling mishaps, worktree accidental, oracle
+maintenance ni tests faltantes de una regla decidida. No se reinicia con un
+commit, candidate o agente nuevo.
 
 Con `DESIGN_REOPEN >= 2`:
 
@@ -208,6 +228,16 @@ HADES busca el supuesto común y clasifica `BAD_IMPLEMENTATION`, `BAD_CONTRACT`,
 `BAD_ORACLE`, `MISSING_PRODUCT_DECISION`, `AUTHORITY_GAP` o
 `WRONG_FEATURE_BOUNDARY`. Sus outcomes válidos son `REPLAN`,
 `HUMAN_DECISION_REQUIRED`, `ABANDON` y `SIMPLIFY`; no produce el tercer parche.
+
+HADES opera en dos modos: `HADES_CHALLENGE` (antes de implementar, cuando el
+framing es dudoso y existe al menos una señal — `CAUSALITY_UNPROVEN`,
+`LEVER_HEADROOM_UNKNOWN`, `PRODUCT_ORACLE_WEAK`, `CONTRARY_EVIDENCE_EXISTS`,
+`CHEAP_DISCRIMINATOR_AVAILABLE`, `MULTIPLE_SYMPTOMS_MAY_SHARE_CAUSE`,
+`HIGH_DOWNSTREAM_COST` o `PREVIOUS_LOOP_HISTORY`) y `HADES_REFRAME` (tras
+`DESIGN_REOPEN >= 2` o colapso de la explicación causal). HADES es read-only:
+no implementa, no modifica candidate, no arregla bugs. Tras
+`CONFIRM`/`MATIZE`/`REFUTE`, HERA adjudica y ARES implementa; sólo una
+autorización humana explícita permite a HADES escribir.
 
 ## 6. Candidate, passport y ADR
 
@@ -250,6 +280,24 @@ Toda evidencia distingue `EXPECTED`, `PROVISIONAL_ORACLE`,
 
 La falta de autoridad para `PROCEED` no prueba la conclusión opuesta. Outcomes
 válidos: `PROCEED`, `STOP`, `INCONCLUSIVE`, `HUMAN_DECISION_REQUIRED`.
+
+### Integración, failure attribution y audit inheritance
+
+La integración sigue `TOPOLOGY → GATES → FAILURE_ATTRIBUTION →
+[ONE_LOCAL_REPAIR] → FREEZE → [GLOBAL_RETRY] → FINAL_PREFLIGHT → PROMOTION`.
+`TOPOLOGY` clasifica `FF_READY`, `MAIN_DRIFT_DISJOINT`, `MAIN_DRIFT_OVERLAP`,
+`SEMANTIC_CONFLICT` o `UNKNOWN_TOPOLOGY`. El drift puramente
+documental/tooling/disjoint se resuelve sin human gate cuando la intención de
+integrar es explícita, no cambia semántica productiva, no reescribe historia y
+preserva el candidate original; el human gate se reserva para conflicto
+semántico/authority/scope/historia.
+
+Los fallos se atribuyen por `nodeid` a `BASELINE_EXISTING`, `CANDIDATE_DELTA` o
+`UNKNOWN`, reproduciendo subsets exactos contra baseline/main; no se repiten
+suites globales por conteos. La reparación acotada es `LOCAL_REPAIR_BUDGET=1`
+con una segunda reparación global sólo si focales/estáticos pasan; no hay
+tercera automática. La auditoría se hereda: si un feature ya fue auditado y la
+nueva delta es sólo topología/docs/fixture, se audita sólo la nueva delta.
 
 ## 8. Métricas y detector de repetición
 
