@@ -9,8 +9,14 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
+from app.core.query_text_consumption import compact_whitespace, replace_text_span
 from app.core.semantic_dimensions import SemanticDimension
+from app.core.text_lineage import PartitionReceipt, Proof
+
+if TYPE_CHECKING:
+    from app.core.text_lineage import TextLineageDraft
 
 
 STRUCTURED_EXACT = "STRUCTURED_EXACT"
@@ -38,6 +44,7 @@ class ContractTypeInterpretation:
     include_ids: tuple[str, ...] = ()
     consumed_spans: tuple[str, ...] = ()
     residual_text: str = ""
+    mutation_receipts: tuple[PartitionReceipt, ...] = ()
     dimension: SemanticDimension = SemanticDimension.CONTRACT_TYPE_OR_NATURE
 
     @property
@@ -108,7 +115,12 @@ _PATTERNS: tuple[_Pattern, ...] = (
 )
 
 
-def resolve_contract_types(text: str) -> ContractTypeInterpretation:
+def resolve_contract_types(
+    text: str,
+    *,
+    lineage: TextLineageDraft | None = None,
+    emit_receipts: bool = False,
+) -> ContractTypeInterpretation:
     """Resolve non-overlapping contractual-class spans and scrub them.
 
     The caller supplies normalized text.  Matching remains accent-tolerant for
@@ -117,14 +129,41 @@ def resolve_contract_types(text: str) -> ContractTypeInterpretation:
     residual = str(text or "")
     include: list[str] = []
     consumed: list[str] = []
+    receipts: list[PartitionReceipt] = []
     for spec in _PATTERNS:
         while match := spec.regex.search(residual):
             include.append(spec.canonical_id)
             consumed.append(match.group(0))
-            residual = f"{residual[:match.start()]} {residual[match.end():]}"
-    residual = re.sub(r"\s+", " ", residual).strip()
+            before = residual
+            residual = replace_text_span(
+                residual,
+                match.span(),
+                " ",
+                lineage=lineage,
+                stage="contract_type",
+                operation="MASK",
+                proof=Proof.EXACT,
+                placeholder=True,
+            )
+            if emit_receipts:
+                receipts.append(PartitionReceipt(
+                    input_span=match.span(),
+                    output_span=(match.start(), match.start() + 1),
+                    input_text=match.group(0),
+                    output_text=" ",
+                    operation="MASK",
+                    proof=Proof.EXACT,
+                ))
+            if before == residual:
+                raise RuntimeError("contract type mutation made no progress")
+    residual = compact_whitespace(
+        residual,
+        lineage=lineage,
+        stage="contract_type_whitespace",
+    )
     return ContractTypeInterpretation(
         include_ids=tuple(dict.fromkeys(include)),
         consumed_spans=tuple(consumed),
         residual_text=residual,
+        mutation_receipts=tuple(receipts),
     )

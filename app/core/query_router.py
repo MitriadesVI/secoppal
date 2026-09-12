@@ -66,7 +66,13 @@ from app.core.negation_binding import (
 )
 from app.core.negation_policy import apply_negation_policy
 from app.core.modality_parser_integration import resolve_parser_modality
-from app.core.query_text_consumption import mask_consumed_spans
+from app.core.query_text_consumption import (
+    compact_whitespace,
+    mask_consumed_spans,
+    replace_first_literal,
+    replace_regex,
+    replace_text_span,
+)
 from app.core.source_occurrence import (
     is_source_word,
     mask_source_requests,
@@ -82,7 +88,13 @@ from app.utils.money import (
     smmlv_to_cop,
 )
 from app.data.smmlv import current_colombian_year, smmlv_cop
-from app.utils.spell_correction import correct_query
+from app.core.text_lineage import (
+    Proof,
+    TextLineageDraft,
+    TextLineageView,
+    normalize_query_with_lineage,
+)
+from app.utils.spell_correction import correct_query, correct_query_with_receipts
 
 import logging
 
@@ -242,6 +254,7 @@ class ParsedQuery:
     contract_type_interpretation: ContractTypeInterpretation | None = None
     negation_requests: tuple[NegationRequest, ...] = ()
     positive_text: str = ""
+    text_lineage: TextLineageView | None = None
 
 
 class QueryRouter:
@@ -261,17 +274,50 @@ class QueryRouter:
             entity_resolver = _ER(self._DEFAULT_ALIAS_DB)
         self.entity_resolver = entity_resolver
 
-    def parse(self, user_query: str, *, today: Date | None = None) -> ParsedQuery:
+    def parse(
+        self,
+        user_query: str,
+        *,
+        today: Date | None = None,
+        text_lineage_request_id: str | None = None,
+    ) -> ParsedQuery:
         clock = civil_today(today)
-        normalized = normalize_text(user_query)
+        if not isinstance(user_query, str):
+            # Preserve the canonical normalizer's public exception in opt-in
+            # mode instead of letting observability become a new input oracle.
+            normalize_text(user_query)
+        lineage = (
+            TextLineageDraft(user_query, request_id=text_lineage_request_id)
+            if text_lineage_request_id is not None
+            else None
+        )
+        normalized = (
+            normalize_query_with_lineage(user_query, lineage)
+            if lineage is not None
+            else normalize_text(user_query)
+        )
         from app.core.municipal_territory import get_municipal_territories
         municipal_geography = get_municipal_territories()
-        normalized = correct_query(
-            normalized, protected_spans=(
-                *municipal_geography.name_spans(normalized),
-                *protected_money_spans(normalized),
-            ),
+        correction_protected_spans = (
+            *municipal_geography.name_spans(normalized),
+            *protected_money_spans(normalized),
         )
+        if lineage is None:
+            normalized = correct_query(
+                normalized,
+                protected_spans=correction_protected_spans,
+            )
+        else:
+            normalized = correct_query_with_receipts(
+                normalized,
+                protected_spans=correction_protected_spans,
+                receipt_sink=lambda output, receipts: lineage.apply_partition(
+                    output,
+                    receipts,
+                    stage="spell_correction",
+                    operation="CORRECT",
+                ),
+            ).text
         source_occurrences = source_request_occurrences(normalized)
         from app.core.contract_universe_intent import request, apply_request, state_authorized
         universe_request = request(user_query, protected_surfaces=tuple(
@@ -449,12 +495,28 @@ class QueryRouter:
             ):
                 params.pop(key, None)
         scrubbed = mask_consumed_spans(
-            modality_result.masked_text,
+            normalized,
+            modality_result.interpretation.consumed_spans,
+            lineage=lineage,
+            stage="modality",
+        )
+        if scrubbed != modality_result.masked_text:
+            raise RuntimeError("lineage modality mutation diverged from parser output")
+        scrubbed = mask_consumed_spans(
+            scrubbed,
             negation_binding.masked_spans,
+            lineage=lineage,
+            stage="negation",
         )
         if universe_request and universe_request.span != (0, 0):
             control = normalize_text(user_query[slice(*universe_request.span)])
-            scrubbed = scrubbed.replace(control, ' ', 1)
+            scrubbed = replace_first_literal(
+                scrubbed,
+                control,
+                " ",
+                lineage=lineage,
+                stage="contract_universe",
+            )
         temporal_resolution = resolve_temporal_scope(
             positive_text,
             today=clock,
@@ -464,6 +526,8 @@ class QueryRouter:
             scrubbed = mask_consumed_spans(
                 scrubbed,
                 (temporal_resolution.span,),
+                lineage=lineage,
+                stage="temporal",
             )
             consumed_spans.append(temporal_resolution.phrase)
 
@@ -476,11 +540,20 @@ class QueryRouter:
                 self._seed_actor_conversation(actor_conversation, params)
             )
         for relation_span in actor_relation_spans:
-            scrubbed = re.sub(
-                re.escape(relation_span), " ", scrubbed, count=1,
+            scrubbed = replace_regex(
+                scrubbed,
+                re.escape(relation_span),
+                " ",
+                count=1,
                 flags=re.IGNORECASE,
+                lineage=lineage,
+                stage="actor_relation",
             )
-        scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
+        scrubbed = compact_whitespace(
+            scrubbed,
+            lineage=lineage,
+            stage="pre_contract_type_whitespace",
+        )
         modality_spans = [
             normalized[start:end]
             for start, end in modality_result.interpretation.consumed_spans
@@ -492,7 +565,11 @@ class QueryRouter:
         # A recognized contractual class owns its span before the catch-all
         # thematic extractor runs.  Projection is source-backed and dataset-
         # aware; this layer only emits canonical class IDs.
-        contract_type_result = resolve_contract_types(scrubbed)
+        contract_type_result = resolve_contract_types(
+            scrubbed,
+            lineage=lineage,
+            emit_receipts=lineage is not None,
+        )
         if contract_type_result.include_ids:
             params["contract_type_include"] = list(
                 contract_type_result.include_ids
@@ -504,7 +581,12 @@ class QueryRouter:
         # ── 1.5. NIT detection (shape-based, before year/amount stripping) ──
         # Detecta NITs colombianos por forma antes de cualquier otra extracción
         # para que no sean confundidos con años ni montos.
-        scrubbed = self._consume_actor_document(positive_text, scrubbed, params)
+        scrubbed = self._consume_actor_document(
+            positive_text,
+            scrubbed,
+            params,
+            lineage=lineage,
+        )
 
         # ── 2. Dates (regex — reliable for numbers) ─────────────────────
         date_params = self._temporal_params(temporal_resolution)
@@ -518,8 +600,20 @@ class QueryRouter:
             re.IGNORECASE,
         )
         for m in re.finditer(_year_re, scrubbed):
-            scrubbed = re.sub(rf"\b{re.escape(m.group(0))}\b", " ", scrubbed)
-        scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
+            scrubbed = replace_regex(
+                scrubbed,
+                rf"\b{re.escape(m.group(0))}\b",
+                " ",
+                lineage=lineage,
+                stage="year_stripping",
+                operation="DELETE",
+                proof=Proof.EXACT,
+            )
+        scrubbed = compact_whitespace(
+            scrubbed,
+            lineage=lineage,
+            stage="pre_control_whitespace",
+        )
 
         # ── 4. Control language (ordering + command/intent verbs) ───────
         # CONTROL vs CONTENT: a command about how to present or navigate the
@@ -527,6 +621,7 @@ class QueryRouter:
         # the criterion ("mayor valor") and leaving the command around it
         # ("ordenados por") shipped LIKE '%ordenados%' to SECOP and returned
         # zero rows. The control authority owns the whole span.
+        text_lineage = lineage.seal(scrubbed) if lineage is not None else None
         protected_names = (
             self.entity_resolver.proper_names.spans_in(scrubbed)
             if self.entity_resolver else []
@@ -1141,6 +1236,7 @@ class QueryRouter:
             contract_type_interpretation=contract_type_result,
             negation_requests=negation_requests,
             positive_text=positive_text,
+            text_lineage=text_lineage,
         )
 
     # ─── Helper methods (only for non-entity extractions) ───────────────
@@ -1578,7 +1674,12 @@ class QueryRouter:
     # objeto no lo nombra, y se le atribuyen los de terceros que sí.
 
     def _consume_actor_document(
-        self, normalized: str, scrubbed: str, params: dict,
+        self,
+        normalized: str,
+        scrubbed: str,
+        params: dict,
+        *,
+        lineage: TextLineageDraft | None = None,
     ) -> str:
         """Extrae el documento del actor y devuelve el texto ya sin él.
 
@@ -1597,7 +1698,7 @@ class QueryRouter:
             if not nit_variants:
                 return scrubbed
             params["contratista"] = nit_variants
-            return self._scrub_identifier_spans(scrubbed)
+            return self._scrub_identifier_spans(scrubbed, lineage=lineage)
 
         reference = reference_from_document(match.group(0).strip(), normalized)
         if reference is None:
@@ -1643,16 +1744,31 @@ class QueryRouter:
         if not params.get("dataset_explicit"):
             params["dataset"] = DATASET_CONTRATOS
 
-        scrubbed = self._scrub_identifier_spans(scrubbed)
+        scrubbed = self._scrub_identifier_spans(scrubbed, lineage=lineage)
         # Consume the atomic role/name span before its shorter role marker;
         # otherwise removing "proveedor" first would make the full span
         # impossible to match and leave the asserted name behind as a topic.
         if asserted_actor is not None:
             for span in asserted_actor.consumed_spans:
-                scrubbed = scrubbed.replace(span, " ")
+                scrubbed = replace_regex(
+                    scrubbed,
+                    re.escape(span),
+                    " ",
+                    lineage=lineage,
+                    stage="actor_asserted_name",
+                    operation="DELETE",
+                    proof=Proof.EXACT,
+                )
         for span in reference.consumed_spans:
-            scrubbed = re.sub(
-                rf"\b{re.escape(span)}\b", " ", scrubbed, flags=re.IGNORECASE,
+            scrubbed = replace_regex(
+                scrubbed,
+                rf"\b{re.escape(span)}\b",
+                " ",
+                flags=re.IGNORECASE,
+                lineage=lineage,
+                stage="actor_document_context",
+                operation="DELETE",
+                proof=Proof.EXACT,
             )
         return scrubbed
 
@@ -1697,20 +1813,41 @@ class QueryRouter:
         )
 
     @staticmethod
-    def _scrub_identifier_spans(scrubbed: str) -> str:
+    def _scrub_identifier_spans(
+        scrubbed: str,
+        *,
+        lineage: TextLineageDraft | None = None,
+    ) -> str:
         """Quita del texto los spans aceptados como identificador.
 
         Solo esos: una consulta puede traer NIT y monto a la vez, y el monto
         debe seguir visible para el paso 9.
         """
-        scrubbed = _NIT_SHAPE_RE.sub(
-            lambda candidate: (
-                " " if _number_role(scrubbed, candidate) == "identifier"
-                else candidate.group(0)
-            ),
+        identifier_spans = [
+            candidate.span()
+            for candidate in _NIT_SHAPE_RE.finditer(scrubbed)
+            if _number_role(scrubbed, candidate) == "identifier"
+        ]
+        for span in reversed(identifier_spans):
+            scrubbed = replace_text_span(
+                scrubbed,
+                span,
+                " ",
+                lineage=lineage,
+                stage="actor_document",
+                operation="DELETE",
+                proof=Proof.EXACT,
+            )
+        return replace_regex(
             scrubbed,
+            r"\bnit\b",
+            " ",
+            flags=re.IGNORECASE,
+            lineage=lineage,
+            stage="actor_document_marker",
+            operation="DELETE",
+            proof=Proof.EXACT,
         )
-        return re.sub(r"\bnit\b", " ", scrubbed, flags=re.IGNORECASE)
 
     def _detect_named_actor(
         self,

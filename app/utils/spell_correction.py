@@ -6,8 +6,10 @@ contratación pública terms.
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
 import re
+from typing import Callable
 
 import yaml
 from rapidfuzz.distance import DamerauLevenshtein
@@ -20,6 +22,7 @@ from app.data.estados import (
     ESTADO_SYNONYMS,
 )
 from app.data.stopwords import STOPWORDS
+from app.core.text_lineage import PartitionReceipt, Proof
 from app.utils.money import normalize_text
 
 _MODALITY_LEXICON_PATH = (
@@ -289,6 +292,99 @@ def _correct_word(word: str) -> str:
     return matches[0] if len(matches) == 1 else word
 
 
+@dataclass(frozen=True, slots=True)
+class SpellCorrectionResult:
+    text: str
+    receipts: tuple[PartitionReceipt, ...]
+
+
+ReceiptSink = Callable[[str, tuple[PartitionReceipt, ...]], None]
+
+
+def _correct_query_result(
+    text: str,
+    *,
+    protected_spans: tuple[tuple[int, int], ...],
+    emit_receipts: bool,
+) -> SpellCorrectionResult:
+    from app.core.query_text_consumption import shield_spans_with_origins
+
+    shielded = shield_spans_with_origins(text, protected_spans)
+    tokens: list[tuple[tuple[int, int], str]] = []
+    for match in re.finditer(r"\S+", shielded.text):
+        origins = {
+            origin
+            for index in range(match.start(), match.end())
+            for origin in shielded.original_intervals[index]
+        }
+        if not origins:
+            continue
+        input_span = (min(start for start, _ in origins), max(end for _, end in origins))
+        corrected = _correct_word(_clean_token(match.group(0)))
+        for marker, original in shielded.replacements.items():
+            corrected = corrected.replace(marker, original)
+        tokens.append((input_span, corrected))
+
+    corrected_text = " ".join(token for _, token in tokens)
+    if not emit_receipts:
+        return SpellCorrectionResult(corrected_text, ())
+
+    receipts: list[PartitionReceipt] = []
+    input_cursor = output_cursor = 0
+    for index, (input_span, corrected) in enumerate(tokens):
+        gap_output = "" if index == 0 else " "
+        gap_input = text[input_cursor:input_span[0]]
+        receipts.append(PartitionReceipt(
+            input_span=(input_cursor, input_span[0]),
+            output_span=(output_cursor, output_cursor + len(gap_output)),
+            input_text=gap_input,
+            output_text=gap_output,
+            operation=(
+                "KEEP" if gap_input == gap_output else "MERGE" if gap_output else "DELETE"
+            ),
+            proof=Proof.EXACT if gap_input == gap_output else Proof.WHOLE_SEGMENT_ONLY,
+        ))
+        output_cursor += len(gap_output)
+        original = text[slice(*input_span)]
+        receipts.append(PartitionReceipt(
+            input_span=input_span,
+            output_span=(output_cursor, output_cursor + len(corrected)),
+            input_text=original,
+            output_text=corrected,
+            operation="KEEP" if original == corrected else "CORRECT",
+            proof=Proof.EXACT if original == corrected else Proof.WHOLE_SEGMENT_ONLY,
+        ))
+        input_cursor = input_span[1]
+        output_cursor += len(corrected)
+    tail = text[input_cursor:]
+    receipts.append(PartitionReceipt(
+        input_span=(input_cursor, len(text)),
+        output_span=(output_cursor, output_cursor),
+        input_text=tail,
+        output_text="",
+        operation="KEEP" if not tail else "DELETE",
+        proof=Proof.EXACT,
+    ))
+    return SpellCorrectionResult(corrected_text, tuple(receipts))
+
+
+def correct_query_with_receipts(
+    text: str,
+    *,
+    protected_spans: tuple[tuple[int, int], ...] = (),
+    receipt_sink: ReceiptSink | None = None,
+) -> SpellCorrectionResult:
+    """Correct once and expose the token receipts emitted by that same loop."""
+    result = _correct_query_result(
+        text,
+        protected_spans=protected_spans,
+        emit_receipts=True,
+    )
+    if receipt_sink is not None:
+        receipt_sink(result.text, result.receipts)
+    return result
+
+
 def correct_query(text: str, *, protected_spans: tuple[tuple[int, int], ...] = ()) -> str:
     """Correct typos in a query string against the procurement vocabulary.
 
@@ -304,21 +400,8 @@ def correct_query(text: str, *, protected_spans: tuple[tuple[int, int], ...] = (
     Returns:
         Query string with typos corrected.
     """
-    if protected_spans:
-        from app.core.query_text_consumption import shield_spans
-        masked, replacements = shield_spans(text, protected_spans)
-        corrected_text = correct_query(masked)
-        for marker, original in replacements.items():
-            corrected_text = corrected_text.replace(marker, original)
-        return corrected_text
-    tokens = text.split()
-    corrected: list[str] = []
-
-    for token in tokens:
-        # Step 1: Clean garbage chars (e.g. 'servid=cios' → 'servicios')
-        cleaned = _clean_token(token)
-
-        # Step 2: Correct the cleaned token
-        corrected.append(_correct_word(cleaned))
-
-    return " ".join(corrected)
+    return _correct_query_result(
+        text,
+        protected_spans=protected_spans,
+        emit_receipts=False,
+    ).text
