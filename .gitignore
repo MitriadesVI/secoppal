@@ -50,9 +50,5 @@ data/telegram_*.db-shm
 data/conversations/st_email_*.jsonl
 data/conversations/st_email_*.pagination.json
 
-# Herramienta de indexación de terceros, clonada dentro del árbol
-/codegraph/
-.codegraph/daemon.pid
-
 # Checkpoints de ejecución del piloto semántico (regenerables desde su semilla)
 semantic_pilot_v1/**/checkpoints/
