@@ -19,12 +19,18 @@ Dentro de las leyes duras de seguridad del producto y del repo, la petición
 actual manda sobre la política del repo; ésta manda sobre defaults. Ninguna
 petición puede relajar esas leyes duras.
 La historia es evidencia, no autoridad operativa presente. HERA coordina el
-estado; CÁSTOR inventaría; PÓLUX falsifica; METIS cierra arquitectura y contrato;
-ARES implementa; HERMES diseña la verificación; ZEUS audita en contexto fresco;
-HADES rediagnostica loops; CLÍO conserva conocimiento durable.
+estado; CÁSTOR inventaría; PÓLUX falsifica; ARTEMISA localiza causalmente la
+primera transición rota de un bug reproducido; METIS cierra arquitectura y
+contrato; ARES implementa; HERMES diseña la verificación; ZEUS audita en contexto
+fresco; HADES rediagnostica loops; CLÍO conserva conocimiento durable.
 
-HERA opera con la skill `hera`; HADES con la skill `hades`. Esta policy define el
-qué (triggers, outputs, gates); las skills definen el cómo (pasos, método).
+HERA opera con la skill `hera`; HADES con la skill `hades`; ARTEMISA con la skill
+`artemisa`. Esta policy define el qué (triggers, outputs, gates); las skills
+definen el cómo (pasos, método).
+
+ARTEMISA se invoca cuando `BUG_REPRODUCED=YES` y `ROOT_CAUSE_LOCATION=UNKNOWN`
+(o `REGRESSION_FOUND=YES` y `FIRST_BAD_TRANSITION=UNKNOWN`): localiza la primera
+transición rota y es read-only, sin implementar el fix.
 
 Antes de escribir, la cápsula de misión debe contener:
 
