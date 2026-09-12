@@ -1,10 +1,12 @@
 """Small Streamlit renderer for the versioned Entity Profile overview view."""
 from __future__ import annotations
 
+from app.config import entity_profile_frame_enabled
 from app.core.entity_profile.presentation import (
     ENTITY_PROFILE_VIEW_KIND,
     ENTITY_PROFILE_VIEW_SCHEMA,
 )
+from app.core.entity_profile.executive_actions import presented_action_ids
 
 
 _SOURCE_INFO = {
@@ -20,9 +22,10 @@ def escape_entity_profile_markdown(text: str) -> str:
 
 def render_entity_profile_content(
     st, view: object, content: str, *, is_profile: bool,
+    action_reference: object = None,
 ) -> None:
     """Render a view or its profile-only currency-safe textual fallback."""
-    if render_entity_profile_view(st, view):
+    if render_entity_profile_view(st, view, action_reference=action_reference):
         return
     st.markdown(
         escape_entity_profile_markdown(content)
@@ -30,7 +33,7 @@ def render_entity_profile_content(
     )
 
 
-def render_entity_profile_view(st, view: object) -> bool:
+def render_entity_profile_view(st, view: object, *, action_reference: object = None) -> bool:
     """Render a supported overview; return False for canonical-text fallback."""
     if not _supported(view):
         return False
@@ -50,6 +53,7 @@ def render_entity_profile_view(st, view: object) -> bool:
     _render_modalities(st, view.get("modalities"))
     _render_suppliers(st, view.get("suppliers"))
     _render_recent(st, view.get("recent"))
+    _render_actions(st, view.get("actions"), action_reference)
     _render_scope(st, view)
     warnings = view.get("warnings")
     for warning in warnings if isinstance(warnings, (list, tuple)) else ():
@@ -58,6 +62,27 @@ def render_entity_profile_view(st, view: object) -> bool:
     if isinstance(view.get("next_steps"), str) and view["next_steps"]:
         st.caption(_escape_text(view["next_steps"]))
     return True
+
+
+def _render_actions(st, raw: object, reference: object) -> None:
+    if not entity_profile_frame_enabled():
+        return
+    action_ids = presented_action_ids(raw)
+    if not action_ids or type(reference) is not dict:
+        return
+    labels = {item["id"]: item["label"] for item in raw}
+    columns = st.columns(len(action_ids))
+    for column, action_id in zip(columns, action_ids, strict=True):
+        if column.button(
+            labels[action_id],
+            key=f"profile_action_{reference.get('result_id', 'missing')}_{action_id}",
+            use_container_width=True,
+        ):
+            st.session_state._pending_profile_action = {
+                "action_id": action_id,
+                "reference": dict(reference),
+            }
+            st.rerun()
 
 
 def _supported(view: object) -> bool:

@@ -43,6 +43,7 @@ class HandlerContext:
     user_identity: dict[str, Any] | None = None
     seed_resolved_params: dict | None = None
     actor_candidate_selection: dict[str, Any] | None = None
+    profile_action_selection: dict[str, Any] | None = None
     tabular_referent: Any = None
     export_search_params: dict | None = None
     publication_required: bool = False

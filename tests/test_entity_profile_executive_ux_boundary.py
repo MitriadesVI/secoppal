@@ -18,10 +18,25 @@ def test_streamlit_divergence_is_only_profile_history_and_render_hook():
     additions = (
         "from app.entity_profile_ui import (\n    render_entity_profile_content,\n)\n",
         '        "entity_profile_view": result.get("entity_profile_view"),\n',
+        '        "profile_action_ref": _profile_action_ref(result),\n',
+        "profile_action_event: dict | None = None\n",
     )
     for addition in additions:
         assert text.count(addition) == 1
         text = text.replace(addition, "", 1)
+    start = text.index("def _profile_action_ref(")
+    end = text.index("def _assistant_history_item(", start)
+    text = text[:start] + text[end:]
+    pending = '''if getattr(st.session_state, "_pending_profile_action", None):
+    profile_action_event = st.session_state._pending_profile_action
+    del st.session_state._pending_profile_action
+
+'''
+    assert text.count(pending) == 1
+    text = text.replace(pending, "", 1)
+    start = text.index("if profile_action_event:")
+    end = text.index("if incoming_query:", start)
+    text = text[:start] + text[end:]
     start = text.index("def _render_assistant_content(")
     end = text.index("def _render_excel_export(", start)
     text = text[:start] + text[end:]

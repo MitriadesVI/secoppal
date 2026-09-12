@@ -164,6 +164,7 @@ class SecopalWorkflow:
         user_identity: dict[str, Any] | None = None,
         seed_resolved_params: dict | None = None,
         actor_candidate_selection: dict[str, Any] | None = None,
+        profile_action_selection: dict[str, Any] | None = None,
         today: Date | None = None,
         run_started_at: float | None = None,
     ) -> "HandlerContext":
@@ -180,6 +181,7 @@ class SecopalWorkflow:
             "user_identity": user_identity,
             "seed_resolved_params": seed_resolved_params,
             "actor_candidate_selection": actor_candidate_selection,
+            "profile_action_selection": profile_action_selection,
         }
         if run_started_at is not None:
             kwargs["run_started_at"] = run_started_at
@@ -195,6 +197,7 @@ class SecopalWorkflow:
         user_identity: dict[str, Any] | None = None,
         seed_resolved_params: dict | None = None,
         actor_candidate_selection: dict[str, Any] | None = None,
+        profile_action_selection: dict[str, Any] | None = None,
         today: Date | None = None,
     ) -> dict:
         """Dispatch a request through the handler chain.
@@ -221,6 +224,7 @@ class SecopalWorkflow:
             user_identity=user_identity,
             seed_resolved_params=seed_resolved_params,
             actor_candidate_selection=actor_candidate_selection,
+            profile_action_selection=profile_action_selection,
             today=today,
             run_started_at=time.perf_counter(),
         )
@@ -303,6 +307,36 @@ class SecopalWorkflow:
                 "pending_token": pending_token,
             },
         )
+
+    def select_entity_profile_action(
+        self,
+        action_id: object,
+        reference: object,
+        *,
+        channel: str = "whatsapp",
+        chat_id: str | None = None,
+        user_identity: dict[str, Any] | None = None,
+    ) -> dict:
+        """Submit opaque UI identity; only admission may materialize meaning."""
+        from app.core.entity_profile.executive_actions import action_for_id
+        from app.core.workflow.profile_action_admission import PROFILE_ACTION_EVENT_VERSION
+
+        result = self.run_query(
+            "Acción de perfil",
+            channel=channel,
+            chat_id=chat_id,
+            user_identity=user_identity,
+            profile_action_selection={
+                "schema_version": PROFILE_ACTION_EVENT_VERSION,
+                "action_id": action_id,
+                "reference": reference,
+            },
+        )
+        action = action_for_id(action_id)
+        result["profile_action_phrase"] = (
+            action.phrase if action else "Acción de perfil no disponible"
+        )
+        return result
 
     def _admit_and_dispatch(
         self, ctx: HandlerContext, seed_resolved_params: dict | None,

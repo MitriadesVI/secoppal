@@ -9,6 +9,26 @@ from app.core.workflow.continuity_staging import stage_continuity
 
 
 def coordinate_turn(workflow, ctx, seed):
+    if ctx.profile_action_selection is not None:
+        if not entity_profile_frame_enabled() or not ctx.chat_id:
+            from app.core.workflow.results import empty_result
+
+            return empty_result(
+                response=(
+                    "Esta acción requiere un perfil Frame publicado y vigente. "
+                    "Abre el perfil ejecutivo y vuelve a elegirla."
+                ),
+                route_reason="admission_profile_action_frame_required",
+                needs_clarification=True,
+            )
+        store = workflow.conv_store
+        lock = conversation_lock(
+            store._envelope_path_for(ctx.chat_id).with_suffix('.turn'), timeout=120,
+        )
+        with lock:
+            reservation = store.reserve_turn(ctx.chat_id)
+            with stage_continuity(store, reservation):
+                return _execute(workflow, ctx, None, reservation)
     if is_reset_command(ctx.user_query):
         return workflow._dispatch(ctx, None)
     if not entity_profile_frame_enabled():
@@ -57,7 +77,19 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
         today=ctx.today,
         read=reservation.previous if reservation else None,
         actor_candidate_selection=ctx.actor_candidate_selection,
+        profile_action_selection=ctx.profile_action_selection,
     )
+
+    if ctx.profile_action_selection is not None:
+        return _execute_profile_action(
+            workflow, replace(
+                ctx,
+                user_query=admitted.effective_user_query,
+                seed_resolved_params=None,
+                actor_candidate_selection=None,
+                publication_required=True,
+            ), admitted, reservation,
+        )
 
     # La referencia de continuación es de la ADMISIÓN: ya cumplió su
     # función y no puede seguir viaje hacia el builder como si fuera un
@@ -145,7 +177,7 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
         return result
 
     if outcome is not None:
-        publish(
+        published = publish(
             deps, reservation, result,
             user_query=ctx.user_query,
             profile_state=outcome.state,
@@ -157,6 +189,7 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
                 )
             ),
         )
+        _attach_published_actions(result, outcome, published.published)
         return result
 
     from app.core.entity_profile.profile_state import ProfileConversationState
@@ -171,3 +204,76 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
         contract=delegated_contract(reservation, result, deps.conv_store) if reservation else None,
     )
     return result
+
+
+def _execute_profile_action(workflow, ctx, admitted, reservation):
+    """Exclusive action lane: profile route or clarification, never fallback."""
+    from app.core.workflow.admission_rules import AdmissionRoute
+    from app.core.workflow.profile_route import run_profile_route
+    from app.core.workflow.results import empty_result
+    from app.core.workflow.turn_publication import (
+        preserved_contract,
+        profile_contract,
+        publish,
+    )
+
+    deps = workflow.deps
+    if admitted.route is AdmissionRoute.CLARIFY:
+        result = empty_result(
+            response=admitted.decision.response,
+            route_reason=f"admission_{admitted.decision.reason}",
+            needs_clarification=True,
+        )
+        result["trace_id"] = deps.feedback.log_trace(
+            ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
+        )
+        if admitted.contract:
+            publish(
+                deps, reservation, result, user_query=ctx.user_query,
+                profile_state=admitted.profile_state,
+                contract=preserved_contract(reservation, admitted.contract),
+                execution_record=reservation.previous.envelope.execution_record,
+                preserve_generation=True,
+            )
+        return result
+
+    routed = run_profile_route(
+        deps, ctx,
+        params=admitted.params,
+        state=admitted.profile_state,
+        turn_id=reservation.turn_id,
+    )
+    if routed is None:
+        result = empty_result(
+            response="No pude aplicar esta acción al perfil vigente. Abre el perfil y vuelve a intentarlo.",
+            route_reason="admission_profile_action_route_unavailable",
+            needs_clarification=True,
+        )
+        result["trace_id"] = deps.feedback.log_trace(
+            ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
+        )
+        return result
+    result, outcome = routed.result, routed.outcome
+    result["trace_id"] = deps.feedback.log_trace(
+        ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
+    )
+    published = publish(
+        deps, reservation, result,
+        user_query=ctx.user_query,
+        profile_state=outcome.state,
+        contract=profile_contract(reservation, outcome),
+        execution_record=(outcome.record.to_dict() if outcome.record else None),
+    )
+    _attach_published_actions(result, outcome, published.published)
+    return result
+
+
+def _attach_published_actions(result, outcome, published):
+    if not published or outcome.record is None:
+        return
+    from app.core.entity_profile.presentation import attach_published_actions
+
+    attach_published_actions(
+        result.get("entity_profile_view"),
+        {call.dataset_id for call in outcome.record.calls},
+    )

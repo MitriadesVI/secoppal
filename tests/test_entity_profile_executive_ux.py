@@ -89,6 +89,7 @@ def test_assistant_history_keeps_view_across_json_rerun():
         "actor_candidate_options": actor_candidate_options,
         "_clean_resolved": lambda value: value,
         "_continuation_ref": lambda _value: None,
+        "_profile_action_ref": lambda _value: None,
     }
     exec(compile(ast.Module(body=[function], type_ignores=[]), "streamlit_app.py", "exec"), namespace)
     view = _overview()
@@ -111,6 +112,44 @@ def test_frame_on_uses_same_view_contract(frame_v12):
     ]
     assert {source["id"] for source in view["sources"]} == {"p6dx-8zbt", "jbjy-vk9h"}
     assert all(not line.startswith("Fuentes: ") for line in view["scope"])
+
+
+def test_published_on_history_hides_actions_after_server_config_turns_off(
+    frame_v12, monkeypatch,
+):
+    from app.config import get_settings
+
+    result = Conversation("executive-ux-render-gate").say(
+        "analiza la alcaldia de baranoa en 2026",
+    ).result
+    history = json.loads(json.dumps({
+        "entity_profile_view": result["entity_profile_view"],
+        "profile_action_ref": {
+            "kind": "FRAME_ENVELOPE",
+            "chat_id": result["chat_id"],
+            "result_id": result["result_id"],
+            "conversation_revision": result["conversation_revision"],
+        },
+    }, ensure_ascii=False))
+
+    rendered_on = FakeStreamlit()
+    assert render_entity_profile_view(
+        rendered_on,
+        history["entity_profile_view"],
+        action_reference=history["profile_action_ref"],
+    )
+    assert len([call for call in rendered_on.calls if call[0] == "button"]) == 4
+
+    monkeypatch.setenv("SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED", "false")
+    get_settings.cache_clear()
+    rendered_off = FakeStreamlit()
+    assert render_entity_profile_view(
+        rendered_off,
+        history["entity_profile_view"],
+        action_reference=history["profile_action_ref"],
+    )
+    assert not [call for call in rendered_off.calls if call[0] == "button"]
+    assert [call for call in rendered_off.calls if call[0] == "subheader"]
 
 
 def test_projector_bounds_recent_title_without_losing_full_text():

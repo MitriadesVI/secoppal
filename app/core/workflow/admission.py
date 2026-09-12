@@ -39,6 +39,10 @@ from app.core.workflow.continuation import (
     ContinuationError,
     ContinuationOwner,
 )
+from app.core.workflow.profile_action_admission import (
+    TrustedProfileAction,
+    admit_profile_action,
+)
 
 if TYPE_CHECKING:
     from app.core.workflow.deps import WorkflowDeps
@@ -54,6 +58,8 @@ class AdmittedTurn:
     envelope_status: EnvelopeStatus
     conversation_revision: int
     params: dict
+    effective_user_query: str
+    trusted_profile_action: TrustedProfileAction | None = None
 
     @property
     def route(self) -> AdmissionRoute:
@@ -120,6 +126,7 @@ def admit(
     today: Date | None = None,
     read: EnvelopeRead | None = None,
     actor_candidate_selection: dict | None = None,
+    profile_action_selection: dict | None = None,
 ) -> AdmittedTurn:
     """Carga el contrato publicado, clasifica y devuelve UNA decisión.
 
@@ -129,6 +136,44 @@ def admit(
     """
     read = read if read is not None else _load(deps, chat_id)
     profile_state, contract, status = _restore(read)
+    if profile_action_selection is not None:
+        action = admit_profile_action(
+            profile_action_selection,
+            chat_id=chat_id,
+            read=read,
+            state=profile_state,
+            contract=contract,
+        )
+        if action.trusted is None:
+            decision = AdmissionDecision(
+                AdmissionRoute.CLARIFY, action.reason, InputShape.TEXT,
+                ContinuationOwner.NONE, action.response,
+            )
+            return _finish_admission(
+                decision=decision,
+                profile_state=profile_state,
+                contract=contract,
+                status=status,
+                revision=read.revision,
+                params={},
+                effective_user_query="",
+            )
+        effective_query = action.trusted.phrase
+        params = deps.query_router.parse(effective_query, today=today).params
+        decision = AdmissionDecision(
+            AdmissionRoute.PROFILE, "profile_action", InputShape.TEXT,
+            ContinuationOwner.ENTITY_PROFILE,
+        )
+        return _finish_admission(
+            decision=decision,
+            profile_state=profile_state,
+            contract=contract,
+            status=status,
+            revision=read.revision,
+            params=params,
+            effective_user_query=effective_query,
+            trusted=action.trusted,
+        )
     if read.usable and read.envelope.chat_id != chat_id:
         profile_state, contract, status = ProfileConversationState(), None, EnvelopeStatus.CORRUPT
     params = deps.query_router.parse(user_query, today=today).params
@@ -170,13 +215,30 @@ def admit(
         decision = AdmissionDecision(AdmissionRoute.CLARIFY, "foreign_chat_reference",
                                      InputShape.SEED_REFINEMENT, ContinuationOwner.NONE,
                                      "Ese filtro pertenece a otra conversación.")
+    return _finish_admission(
+        decision=decision,
+        profile_state=profile_state,
+        contract=contract,
+        status=status,
+        revision=read.revision,
+        params=params,
+        effective_user_query=user_query,
+    )
+
+
+def _finish_admission(
+    *, decision, profile_state, contract, status, revision, params,
+    effective_user_query, trusted=None,
+) -> AdmittedTurn:
     application = build_admission(decision)
     *_, final = application.run(halt_after=list(_TERMINALS))
     if final["route"] != decision.route.value:
         raise RuntimeError("admission graph disagreed with its own decision")
     return AdmittedTurn(
         decision=decision, profile_state=profile_state, contract=contract,
-        envelope_status=status, conversation_revision=read.revision, params=params,
+        envelope_status=status, conversation_revision=revision, params=params,
+        effective_user_query=effective_user_query,
+        trusted_profile_action=trusted,
     )
 
 
