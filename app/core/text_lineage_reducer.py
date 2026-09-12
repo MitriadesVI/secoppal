@@ -81,20 +81,20 @@ def initial_state(raw_text: str, *, request_id: str) -> ReducerState:
 
 
 def _operation(value: object, label: str) -> LineageOperation:
-    if isinstance(value, LineageOperation):
+    if type(value) is LineageOperation:
         return value
-    if not isinstance(value, str) or value not in LineageOperation.__members__:
+    if type(value) is not str or value not in LineageOperation.__members__:
         raise ValueError(f"unsupported {label}: {value!r}")
     return LineageOperation[value]
 
 
 def _span(value: object, length: int, label: str) -> tuple[int, int]:
-    if isinstance(value, (str, bytes)) or not isinstance(value, (tuple, list)):
+    if type(value) not in (tuple, list):
         raise ValueError(f"{label} span must be a pair of integers")
     if len(value) != 2:
         raise ValueError(f"{label} span must have exactly two indices")
     start, end = value
-    if any(isinstance(index, bool) or not isinstance(index, int) for index in (start, end)):
+    if any(type(index) is not int for index in (start, end)):
         raise ValueError(f"{label} span indices must be integers")
     if start < 0 or end < start or end > length:
         raise ValueError(f"{label} span is outside its transformation text")
@@ -179,16 +179,16 @@ def canonicalize_partition(
     operation: object,
 ) -> tuple[LineageOperation, tuple[CanonicalReceipt, ...]]:
     """Validate the full package and detach it from every caller-owned value."""
-    if not isinstance(output_text, str):
+    if type(output_text) is not str:
         raise ValueError("partition output must be str")
     envelope = _operation(operation, "partition envelope")
     raw_receipts = tuple(receipts)
     canonical: list[CanonicalReceipt] = []
     input_cursor = output_cursor = 0
     for receipt in raw_receipts:
-        if not isinstance(receipt, (PartitionReceipt, CanonicalReceipt)):
+        if type(receipt) not in (PartitionReceipt, CanonicalReceipt):
             raise ValueError("partition entries must be receipt values")
-        if not isinstance(receipt.input_text, str) or not isinstance(receipt.output_text, str):
+        if type(receipt.input_text) is not str or type(receipt.output_text) is not str:
             raise ValueError("partition receipt text must be str")
         input_span = _span(receipt.input_span, len(input_text), "partition input")
         output_span = _span(receipt.output_span, len(output_text), "partition output")
@@ -199,13 +199,13 @@ def canonicalize_partition(
         if output_text[slice(*output_span)] != receipt.output_text:
             raise LineageMismatchError("partition output receipt does not match parser text")
         receipt_operation = _operation(receipt.operation, "partition operation")
-        if not isinstance(receipt.proof, Proof):
+        if type(receipt.proof) is not Proof:
             raise ValueError("partition proof must be a Proof value")
         detached = CanonicalReceipt(
             input_span=tuple(input_span),
             output_span=tuple(output_span),
-            input_text=str(receipt.input_text),
-            output_text=str(receipt.output_text),
+            input_text=receipt.input_text,
+            output_text=receipt.output_text,
             operation=receipt_operation,
             proof=receipt.proof,
             placeholder=_canonical_placeholder(receipt, receipt_operation),
@@ -370,7 +370,7 @@ def reduce_partition(
     operation: object,
 ) -> ReducerState:
     """Return the next state; the supplied state is never mutated."""
-    if not isinstance(stage, str) or not stage:
+    if type(stage) is not str or not stage:
         raise ValueError("lineage stage must be a non-empty string")
     envelope, manifest = canonicalize_partition(
         state.current_text,
@@ -499,14 +499,218 @@ def sealed_segments(pieces: tuple[LineageSegment, ...]) -> tuple[LineageSegment,
     return tuple(result)
 
 
+def _strict_string(value: object, label: str, *, nonempty: bool = False) -> None:
+    if type(value) is not str or nonempty and not value:
+        raise LineageMismatchError(f"{label} must be an exact string")
+
+
+def _strict_digest(value: object, label: str) -> None:
+    _strict_string(value, label)
+    if len(value) != 64 or any(char not in "0123456789abcdef" for char in value):
+        raise LineageMismatchError(f"{label} is not a canonical SHA-256 digest")
+
+
+def _strict_interval(
+    value: object,
+    label: str,
+    *,
+    allow_empty: bool,
+    upper_bound: int | None = None,
+) -> tuple[int, int]:
+    if type(value) is not tuple or len(value) != 2:
+        raise LineageMismatchError(f"{label} must be an immutable interval")
+    start, end = value
+    if type(start) is not int or type(end) is not int:
+        raise LineageMismatchError(f"{label} bounds must be exact integers")
+    if start < 0 or end < start or not allow_empty and start == end:
+        raise LineageMismatchError(f"{label} bounds are invalid")
+    if upper_bound is not None and end > upper_bound:
+        raise LineageMismatchError(f"{label} exceeds its authenticated text")
+    return start, end
+
+
+def _strict_intervals(
+    value: object,
+    label: str,
+    *,
+    allow_empty: bool,
+    upper_bound: int | None = None,
+) -> None:
+    if type(value) is not tuple:
+        raise LineageMismatchError(f"{label} must be an immutable interval tuple")
+    for index, interval in enumerate(value):
+        _strict_interval(
+            interval,
+            f"{label}[{index}]",
+            allow_empty=allow_empty,
+            upper_bound=upper_bound,
+        )
+
+
+def _strict_segment(
+    segment: object,
+    *,
+    label: str,
+    raw_length: int,
+    current_length: int,
+    tombstone: bool,
+) -> LineageSegment:
+    if type(segment) is not LineageSegment:
+        raise LineageMismatchError(f"{label} must be a LineageSegment")
+    _strict_string(segment.segment_id, f"{label}.segment_id", nonempty=True)
+    _strict_string(segment.text, f"{label}.text", nonempty=True)
+    _strict_string(
+        segment.transformation_id,
+        f"{label}.transformation_id",
+        nonempty=True,
+    )
+    if type(segment.kind) is not SegmentKind or type(segment.proof) is not Proof:
+        raise LineageMismatchError(f"{label} enum fields have invalid nominal types")
+    if type(segment.placeholder) is not bool:
+        raise LineageMismatchError(f"{label}.placeholder must be an exact bool")
+    _strict_intervals(
+        segment.original_intervals,
+        f"{label}.original_intervals",
+        allow_empty=False,
+        upper_bound=raw_length,
+    )
+    if tombstone:
+        if segment.current_span is not None or segment.kind is not SegmentKind.CONSUMED:
+            raise LineageMismatchError(f"{label} is not a canonical tombstone")
+    else:
+        _strict_interval(
+            segment.current_span,
+            f"{label}.current_span",
+            allow_empty=False,
+            upper_bound=current_length,
+        )
+        if segment.kind is SegmentKind.CONSUMED:
+            raise LineageMismatchError(f"{label} exposes a consumed live segment")
+    return segment
+
+
+def _strict_receipt(receipt: object, label: str) -> CanonicalReceipt:
+    if type(receipt) is not CanonicalReceipt:
+        raise LineageMismatchError(f"{label} must be a CanonicalReceipt")
+    _strict_interval(receipt.input_span, f"{label}.input_span", allow_empty=True)
+    _strict_interval(receipt.output_span, f"{label}.output_span", allow_empty=True)
+    _strict_string(receipt.input_text, f"{label}.input_text")
+    _strict_string(receipt.output_text, f"{label}.output_text")
+    if type(receipt.operation) is not LineageOperation or type(receipt.proof) is not Proof:
+        raise LineageMismatchError(f"{label} enum fields have invalid nominal types")
+    if type(receipt.placeholder) is not bool:
+        raise LineageMismatchError(f"{label}.placeholder must be an exact bool")
+    return receipt
+
+
+def _strict_event(event: object, index: int) -> LineageEvent:
+    label = f"events[{index}]"
+    if type(event) is not LineageEvent:
+        raise LineageMismatchError(f"{label} must be a LineageEvent")
+    _strict_string(event.schema, f"{label}.schema", nonempty=True)
+    _strict_string(event.stage, f"{label}.stage", nonempty=True)
+    if type(event.sequence) is not int or event.sequence != index + 1:
+        raise LineageMismatchError(f"{label}.sequence must be its exact integer ordinal")
+    if type(event.operation) is not LineageOperation:
+        raise LineageMismatchError(f"{label}.operation has an invalid nominal type")
+    for field in (
+        "input_sha256",
+        "output_sha256",
+        "receipt_manifest_sha256",
+        "post_state_sha256",
+        "previous_event_sha256",
+        "event_sha256",
+    ):
+        _strict_digest(getattr(event, field), f"{label}.{field}")
+    _strict_intervals(
+        event.affected_input_intervals,
+        f"{label}.affected_input_intervals",
+        allow_empty=False,
+    )
+    _strict_intervals(
+        event.affected_output_intervals,
+        f"{label}.affected_output_intervals",
+        allow_empty=False,
+    )
+    if type(event.receipt_manifest) is not tuple or not event.receipt_manifest:
+        raise LineageMismatchError(f"{label}.receipt_manifest must be a non-empty tuple")
+    for receipt_index, receipt in enumerate(event.receipt_manifest):
+        _strict_receipt(receipt, f"{label}.receipt_manifest[{receipt_index}]")
+    return event
+
+
+def _strict_view(view: TextLineageView) -> tuple[LineageSegment, ...]:
+    for field in (
+        "request_id",
+        "raw_text",
+        "raw_sha256",
+        "current_text",
+        "current_sha256",
+        "lineage_version",
+        "event_chain_head",
+        "state_sha256",
+    ):
+        _strict_string(getattr(view, field), field, nonempty=field == "request_id")
+    for field in (
+        "raw_sha256",
+        "current_sha256",
+        "event_chain_head",
+        "state_sha256",
+    ):
+        _strict_digest(getattr(view, field), field)
+    if type(view.segments) is not tuple or type(view.tombstones) is not tuple:
+        raise LineageMismatchError("sealed segments and tombstones must be tuples")
+    if type(view.events) is not tuple:
+        raise LineageMismatchError("sealed events must be a tuple")
+    pieces: list[LineageSegment] = []
+    cursor = 0
+    for index, segment in enumerate(view.segments):
+        typed = _strict_segment(
+            segment,
+            label=f"segments[{index}]",
+            raw_length=len(view.raw_text),
+            current_length=len(view.current_text),
+            tombstone=False,
+        )
+        if typed.current_span[0] != cursor:
+            raise LineageMismatchError("sealed segment spans are not contiguous")
+        cursor = typed.current_span[1]
+        pieces.append(replace(typed, current_span=None))
+    if (
+        cursor != len(view.current_text)
+        or "".join(segment.text for segment in view.segments) != view.current_text
+    ):
+        raise LineageMismatchError("sealed segments do not cover current text")
+    for index, tombstone in enumerate(view.tombstones):
+        _strict_segment(
+            tombstone,
+            label=f"tombstones[{index}]",
+            raw_length=len(view.raw_text),
+            current_length=len(view.current_text),
+            tombstone=True,
+        )
+    for index, event in enumerate(view.events):
+        _strict_event(event, index)
+    return tuple(pieces)
+
+
 def verify_view_integrity(view: TextLineageView) -> None:
     """Replay raw history through this reducer and compare every sealed field."""
+    presented_pieces = _strict_view(view)
     if view.lineage_version != LINEAGE_VERSION:
         raise LineageMismatchError("unsupported lineage version")
-    if not isinstance(view.request_id, str) or not view.request_id:
-        raise LineageMismatchError("invalid lineage request identity")
     if view.raw_sha256 != sha256_text(view.raw_text):
         raise LineageMismatchError("raw text hash is invalid")
+    if view.current_sha256 != sha256_text(view.current_text):
+        raise LineageMismatchError("sealed text hash is invalid")
+    if view.state_sha256 != state_sha256(
+        view.request_id,
+        view.raw_sha256,
+        view.current_text,
+        presented_pieces,
+        view.tombstones,
+    ):
+        raise LineageMismatchError("presented state digest is invalid")
     state = initial_state(view.raw_text, request_id=view.request_id)
     try:
         for expected in view.events:
@@ -528,8 +732,6 @@ def verify_view_integrity(view: TextLineageView) -> None:
         raise LineageMismatchError("event history cannot be replayed") from exc
     if state.current_text != view.current_text:
         raise LineageMismatchError("replayed text diverged from sealed text")
-    if view.current_sha256 != sha256_text(view.current_text):
-        raise LineageMismatchError("sealed text hash is invalid")
     if state.events != view.events:
         raise LineageMismatchError("replayed events diverged from sealed history")
     if sealed_segments(state.pieces) != view.segments:

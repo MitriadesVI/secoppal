@@ -721,3 +721,199 @@ def test_surrogate_safe_reducer_and_replay() -> None:
 
     assert output == "\ud800cd"
     view.verify_integrity()
+
+
+class _ChangedStr(str):
+    def __str__(self) -> str:
+        return "ZZ"
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "request_id",
+        "raw_text",
+        "raw_sha256",
+        "current_text",
+        "current_sha256",
+        "lineage_version",
+        "event_chain_head",
+        "state_sha256",
+    ],
+)
+def test_view_rejects_equal_str_subclasses_for_every_string_field(field: str) -> None:
+    view = _integrity_view()
+    modified = replace(view, **{field: _ChangedStr(getattr(view, field))})
+
+    with pytest.raises(LineageMismatchError, match="exact string"):
+        modified.verify_integrity()
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("schema", _ChangedStr(LINEAGE_EVENT_SCHEMA)),
+        ("sequence", True),
+        ("stage", _ChangedStr("parity")),
+        ("operation", "MASK"),
+        ("input_sha256", _ChangedStr("0" * 64)),
+        ("output_sha256", _ChangedStr("0" * 64)),
+        ("affected_input_intervals", ((False, 2),)),
+        ("affected_output_intervals", ((0, True),)),
+        ("receipt_manifest", []),
+        ("receipt_manifest_sha256", _ChangedStr("0" * 64)),
+        ("post_state_sha256", _ChangedStr("0" * 64)),
+        ("previous_event_sha256", _ChangedStr("0" * 64)),
+        ("event_sha256", _ChangedStr("0" * 64)),
+    ],
+)
+def test_event_rejects_nominally_equal_or_bool_typed_fields(
+    field: str,
+    value: object,
+) -> None:
+    view = _integrity_view()
+    event = replace(view.events[0], **{field: value})
+
+    with pytest.raises(LineageMismatchError):
+        replace(view, events=(event,)).verify_integrity()
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("input_span", (False, 2)),
+        ("output_span", (0, True)),
+        ("input_text", _ChangedStr("ab")),
+        ("output_text", _ChangedStr("  ")),
+        ("operation", "MASK"),
+        ("proof", "exact"),
+        ("placeholder", 1),
+    ],
+)
+def test_manifest_rejects_nominally_equal_typed_fields(
+    field: str,
+    value: object,
+) -> None:
+    view = _integrity_view()
+    event = view.events[0]
+    receipt = replace(event.receipt_manifest[0], **{field: value})
+    modified_event = replace(event, receipt_manifest=(receipt,))
+
+    with pytest.raises(LineageMismatchError):
+        replace(view, events=(modified_event,)).verify_integrity()
+
+
+@pytest.mark.parametrize(
+    ("collection", "field", "value"),
+    [
+        ("segments", "kind", "INSERTED"),
+        ("segments", "proof", "exact"),
+        ("segments", "placeholder", 0),
+        ("segments", "current_span", (False, 2)),
+        ("segments", "original_intervals", ((False, 1),)),
+        ("tombstones", "kind", "CONSUMED"),
+        ("tombstones", "proof", "exact"),
+        ("tombstones", "placeholder", 1),
+        ("tombstones", "current_span", (0, 1)),
+        ("tombstones", "original_intervals", ((0, True),)),
+    ],
+)
+def test_state_segments_reject_equal_string_enums_and_bool_ints(
+    collection: str,
+    field: str,
+    value: object,
+) -> None:
+    view = _integrity_view()
+    values = getattr(view, collection)
+    modified = replace(view, **{collection: (replace(values[0], **{field: value}),)})
+
+    with pytest.raises(LineageMismatchError):
+        modified.verify_integrity()
+
+
+@pytest.mark.parametrize(
+    "boundary",
+    ["output", "input_text", "output_text", "stage", "envelope", "operation"],
+)
+def test_str_subclass_partition_boundaries_reject_with_history_rollback(
+    boundary: str,
+) -> None:
+    draft = TextLineageDraft("ab", request_id="subclass-boundary")
+    draft.replace_span(0, 2, "ef", stage="prior", operation="CORRECT")
+    before = _snapshot(draft)
+    output: object = "cd"
+    input_text: object = "ef"
+    output_text: object = "cd"
+    stage: object = "next"
+    envelope: object = "CORRECT"
+    operation: object = "CORRECT"
+    if boundary == "output":
+        output = _ChangedStr("cd")
+    elif boundary == "input_text":
+        input_text = _ChangedStr("ef")
+    elif boundary == "output_text":
+        output_text = _ChangedStr("cd")
+    elif boundary == "stage":
+        stage = _ChangedStr("next")
+    elif boundary == "envelope":
+        envelope = _ChangedStr("CORRECT")
+    else:
+        operation = _ChangedStr("CORRECT")
+    receipt = PartitionReceipt(
+        (0, 2),
+        (0, 2),
+        input_text,  # type: ignore[arg-type]
+        output_text,  # type: ignore[arg-type]
+        operation,  # type: ignore[arg-type]
+        Proof.EXACT,
+    )
+
+    with pytest.raises(ValueError):
+        draft.apply_partition(
+            output,  # type: ignore[arg-type]
+            (receipt,),
+            stage=stage,  # type: ignore[arg-type]
+            operation=envelope,  # type: ignore[arg-type]
+        )
+
+    assert _snapshot(draft) == before
+
+
+@pytest.mark.parametrize("path", ["direct", "wrapper"])
+def test_str_subclass_replacement_rejects_with_path_parity(path: str) -> None:
+    draft = TextLineageDraft("ab", request_id=f"subclass-{path}")
+    before = _snapshot(draft)
+
+    with pytest.raises(ValueError, match="replacement must be str"):
+        if path == "direct":
+            draft.replace_span(
+                0,
+                2,
+                _ChangedStr("cd"),
+                stage="subclass",
+                operation="CORRECT",
+            )
+        else:
+            replace_text_span(
+                "ab",
+                (0, 2),
+                _ChangedStr("cd"),
+                lineage=draft,
+                stage="subclass",
+                operation="CORRECT",
+            )
+
+    assert _snapshot(draft) == before
+
+
+def test_request_and_credential_string_subclasses_fail_closed() -> None:
+    with pytest.raises(ValueError, match="raw_text must be str"):
+        TextLineageDraft(_ChangedStr("ab"), request_id="raw")
+    with pytest.raises(ValueError, match="request_id must be non-empty"):
+        TextLineageDraft("ab", request_id=_ChangedStr("request"))
+
+    view = TextLineageDraft("ab", request_id="request").seal("ab")
+    credentials = _credentials(view)
+    credentials["request_id"] = _ChangedStr("request")
+    with pytest.raises(LineageMismatchError, match="exact strings"):
+        view.descendants_of_raw_span(0, 2, **credentials)

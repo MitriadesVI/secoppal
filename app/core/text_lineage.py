@@ -139,7 +139,7 @@ def sha256_text(text: str) -> str:
 
 
 def _validate_query_span(start: object, end: object, length: int, label: str) -> None:
-    if any(isinstance(value, bool) or not isinstance(value, int) for value in (start, end)):
+    if any(type(value) is not int for value in (start, end)):
         raise ValueError(f"{label} span indices must be integers")
     if start < 0 or end <= start or end > length:
         raise ValueError(f"{label} span is outside the authenticated text")
@@ -223,6 +223,8 @@ class TextLineageView:
         raw_sha256: str,
         seam_sha256: str,
     ) -> None:
+        if any(type(value) is not str for value in (request_id, raw_sha256, seam_sha256)):
+            raise LineageMismatchError("lineage credentials must be exact strings")
         if request_id != self.request_id:
             raise LineageMismatchError("request_id does not match this trace")
         if raw_sha256 != self.raw_sha256:
@@ -373,9 +375,9 @@ class TextLineageDraft:
     """Mutable request-local builder; ``seal`` returns the immutable view."""
 
     def __init__(self, raw_text: str, *, request_id: str):
-        if not isinstance(raw_text, str):
+        if type(raw_text) is not str:
             raise ValueError("raw_text must be str")
-        if not isinstance(request_id, str) or not request_id:
+        if type(request_id) is not str or not request_id:
             raise ValueError("request_id must be non-empty")
         from app.core.text_lineage_reducer import initial_state
 
@@ -403,11 +405,11 @@ class TextLineageDraft:
         placeholder: object = PLACEHOLDER_UNSET,
     ) -> str:
         input_text = self.current_text
-        if any(isinstance(value, bool) or not isinstance(value, int) for value in (start, end)):
+        if any(type(value) is not int for value in (start, end)):
             raise ValueError("mutation span indices must be integers")
         if start < 0 or end <= start or end > len(input_text):
             raise ValueError(f"invalid mutation span {(start, end)!r}")
-        if not isinstance(replacement, str):
+        if type(replacement) is not str:
             raise ValueError("replacement must be str")
         output_text = f"{input_text[:start]}{replacement}{input_text[end:]}"
         receipts = (
