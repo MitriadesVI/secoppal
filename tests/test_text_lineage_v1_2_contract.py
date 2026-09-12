@@ -19,6 +19,7 @@ from app.core.text_lineage import (
     Proof,
     SegmentKind,
     TextLineageDraft,
+    TextLineageView,
     normalize_query_with_lineage,
     sha256_text,
 )
@@ -27,6 +28,8 @@ from app.core.text_lineage_reducer import (
     canonicalize_partition,
     initial_state,
     reduce_partition,
+    sealed_segments,
+    state_sha256,
 )
 
 
@@ -537,6 +540,43 @@ def _manifest_digest(event) -> str:
         }
         for receipt in event.receipt_manifest
     ]
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
+def _independent_event_digest(event) -> str:
+    def text_digest(text: str) -> str:
+        return hashlib.sha256(
+            text.encode("utf-8", errors="surrogatepass")
+        ).hexdigest()
+
+    manifest = tuple(
+        {
+            "input_span": receipt.input_span,
+            "output_span": receipt.output_span,
+            "input_sha256": text_digest(receipt.input_text),
+            "output_sha256": text_digest(receipt.output_text),
+            "operation": receipt.operation.value,
+            "proof": receipt.proof.value,
+            "placeholder": receipt.placeholder,
+        }
+        for receipt in event.receipt_manifest
+    )
+    payload = (
+        event.schema,
+        event.sequence,
+        event.stage,
+        event.operation.value,
+        event.input_sha256,
+        event.output_sha256,
+        event.affected_input_intervals,
+        event.affected_output_intervals,
+        manifest,
+        event.receipt_manifest_sha256,
+        event.post_state_sha256,
+        event.previous_event_sha256,
+    )
     return hashlib.sha256(
         json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     ).hexdigest()
@@ -1144,3 +1184,125 @@ def test_late_hostile_receipt_preserves_history_byte_for_byte() -> None:
 
     assert _snapshot(draft) == before
     draft.seal("ef").verify_integrity()
+
+
+def _advance_state(
+    state: ReducerState,
+    output_text: str,
+    *,
+    stage: str,
+) -> ReducerState:
+    input_text = state.current_text
+    receipt = PartitionReceipt(
+        (0, len(input_text)),
+        (0, len(output_text)),
+        input_text,
+        output_text,
+        "CORRECT",
+        Proof.EXACT,
+    )
+    return reduce_partition(
+        state,
+        output_text,
+        (receipt,),
+        stage=stage,
+        operation="CORRECT",
+    )
+
+
+def _view_from_state(state: ReducerState, *, raw_text: str) -> TextLineageView:
+    return TextLineageView(
+        request_id=state.request_id,
+        raw_text=raw_text,
+        raw_sha256=state.raw_sha256,
+        current_text=state.current_text,
+        current_sha256=sha256_text(state.current_text),
+        lineage_version=LINEAGE_VERSION,
+        segments=sealed_segments(state.pieces),
+        tombstones=state.tombstones,
+        events=state.events,
+        event_chain_head=state.events[-1].event_sha256,
+        state_sha256=state_sha256(
+            state.request_id,
+            state.raw_sha256,
+            state.current_text,
+            state.pieces,
+            state.tombstones,
+        ),
+    )
+
+
+def _assert_forged_state_is_rejected_atomically(state: ReducerState) -> None:
+    before = pickle.dumps(state)
+
+    with pytest.raises(LineageMismatchError, match="canonical replay"):
+        _advance_state(state, "gh", stage="third")
+
+    assert pickle.dumps(state) == before
+
+
+def test_rehashed_affected_intervals_history_cannot_be_extended() -> None:
+    original = _advance_state(
+        initial_state("ab", request_id="forged-intervals"),
+        "cd",
+        stage="first",
+    )
+    changed = replace(
+        original.events[0],
+        affected_input_intervals=((0, 1),),
+    )
+    changed = replace(changed, event_sha256=_independent_event_digest(changed))
+    attacked = replace(original, events=(changed,))
+
+    _assert_forged_state_is_rejected_atomically(attacked)
+    extended = _advance_state(original, "ef", stage="second")
+    assert len(extended.events) == 2
+    _view_from_state(extended, raw_text="ab").verify_integrity()
+
+
+def test_rehashed_historical_post_state_cannot_be_extended() -> None:
+    first = _advance_state(
+        initial_state("ab", request_id="forged-post-state"),
+        "cd",
+        stage="first",
+    )
+    original = _advance_state(first, "ef", stage="second")
+    changed_first = replace(original.events[0], post_state_sha256="f" * 64)
+    changed_first = replace(
+        changed_first,
+        event_sha256=_independent_event_digest(changed_first),
+    )
+    changed_second = replace(
+        original.events[1],
+        previous_event_sha256=changed_first.event_sha256,
+    )
+    changed_second = replace(
+        changed_second,
+        event_sha256=_independent_event_digest(changed_second),
+    )
+    attacked = replace(original, events=(changed_first, changed_second))
+
+    _assert_forged_state_is_rejected_atomically(attacked)
+
+
+def test_rehashed_attacked_view_is_rejected_by_shared_replay() -> None:
+    state = _advance_state(
+        initial_state("ab", request_id="forged-view"),
+        "cd",
+        stage="first",
+    )
+    original = _view_from_state(state, raw_text="ab")
+    changed = replace(
+        original.events[0],
+        affected_input_intervals=((0, 1),),
+    )
+    changed = replace(changed, event_sha256=_independent_event_digest(changed))
+    attacked = replace(
+        original,
+        events=(changed,),
+        event_chain_head=changed.event_sha256,
+    )
+
+    original.verify_integrity()
+    with pytest.raises(LineageMismatchError, match="canonical replay"):
+        attacked.verify_integrity()

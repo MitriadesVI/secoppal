@@ -381,145 +381,15 @@ def _event_hash(event: LineageEvent) -> str:
     ).hexdigest()
 
 
-def _strict_reducer_segment(
-    segment: object,
-    *,
-    label: str,
-    tombstone: bool,
-) -> LineageSegment:
-    if type(segment) is not LineageSegment:
-        raise LineageMismatchError(f"{label} must be a LineageSegment")
-    _strict_string(segment.segment_id, f"{label}.segment_id", nonempty=True)
-    _strict_string(segment.text, f"{label}.text", nonempty=True)
-    _strict_string(
-        segment.transformation_id,
-        f"{label}.transformation_id",
-        nonempty=True,
-    )
-    if segment.current_span is not None:
-        raise LineageMismatchError(f"{label}.current_span must be absent in reducer state")
-    if type(segment.kind) is not SegmentKind or type(segment.proof) is not Proof:
-        raise LineageMismatchError(f"{label} enum fields have invalid nominal types")
-    if type(segment.placeholder) is not bool:
-        raise LineageMismatchError(f"{label}.placeholder must be an exact bool")
-    if tombstone and segment.kind is not SegmentKind.CONSUMED:
-        raise LineageMismatchError(f"{label} is not a canonical tombstone")
-    if not tombstone and segment.kind is SegmentKind.CONSUMED:
-        raise LineageMismatchError(f"{label} exposes a consumed live segment")
-    _strict_intervals(
-        segment.original_intervals,
-        f"{label}.original_intervals",
-        allow_empty=False,
-    )
-    return segment
-
-
-def _validate_reducer_state(state: object) -> ReducerState:
-    if type(state) is not ReducerState:
-        raise ValueError("state must be an exact ReducerState")
-    _strict_string(state.request_id, "state.request_id", nonempty=True)
-    _strict_digest(state.raw_sha256, "state.raw_sha256")
-    _strict_string(state.current_text, "state.current_text")
-    if type(state.pieces) is not tuple:
-        raise LineageMismatchError("state.pieces must be an exact tuple")
-    if type(state.tombstones) is not tuple:
-        raise LineageMismatchError("state.tombstones must be an exact tuple")
-    if type(state.events) is not tuple:
-        raise LineageMismatchError("state.events must be an exact tuple")
-
-    pieces = tuple(
-        _strict_reducer_segment(piece, label=f"state.pieces[{index}]", tombstone=False)
-        for index, piece in enumerate(state.pieces)
-    )
-    tombstones = tuple(
-        _strict_reducer_segment(
-            tombstone,
-            label=f"state.tombstones[{index}]",
-            tombstone=True,
-        )
-        for index, tombstone in enumerate(state.tombstones)
-    )
-    if "".join(piece.text for piece in pieces) != state.current_text:
-        raise LineageMismatchError("state pieces do not cover current text")
-    segment_ids = tuple(segment.segment_id for segment in (*pieces, *tombstones))
-    if len(segment_ids) != len(set(segment_ids)):
-        raise LineageMismatchError("state segment identifiers must be unique")
-
-    previous = "0" * 64
-    expected_input_sha256 = state.raw_sha256
-    for index, event in enumerate(state.events):
-        typed = _strict_event(event, index)
-        if typed.schema != LINEAGE_EVENT_SCHEMA:
-            raise LineageMismatchError(f"events[{index}].schema is unsupported")
-        if typed.previous_event_sha256 != previous:
-            raise LineageMismatchError(f"events[{index}] breaks the event chain")
-        input_text = "".join(
-            receipt.input_text for receipt in typed.receipt_manifest
-        )
-        output_text = "".join(
-            receipt.output_text for receipt in typed.receipt_manifest
-        )
-        _, canonical_manifest = canonicalize_partition(
-            input_text,
-            output_text,
-            typed.receipt_manifest,
-            operation=typed.operation,
-        )
-        if canonical_manifest != typed.receipt_manifest:
-            raise LineageMismatchError(f"events[{index}] manifest is not canonical")
-        if (
-            typed.input_sha256 != expected_input_sha256
-            or typed.input_sha256 != sha256_text(input_text)
-            or typed.output_sha256 != sha256_text(output_text)
-        ):
-            raise LineageMismatchError(f"events[{index}] text digest chain is invalid")
-        if typed.receipt_manifest_sha256 != receipt_manifest_sha256(
-            typed.receipt_manifest
-        ):
-            raise LineageMismatchError(f"events[{index}] manifest digest is invalid")
-        if typed.event_sha256 != _event_hash(typed):
-            raise LineageMismatchError(f"events[{index}] digest is invalid")
-        previous = typed.event_sha256
-        expected_input_sha256 = typed.output_sha256
-    if state.events:
-        if expected_input_sha256 != sha256_text(state.current_text):
-            raise LineageMismatchError("state current text breaks the event chain")
-        if state.events[-1].post_state_sha256 != state_sha256(
-            state.request_id,
-            state.raw_sha256,
-            state.current_text,
-            pieces,
-            tombstones,
-        ):
-            raise LineageMismatchError("state digest does not match its latest event")
-    elif state != initial_state(state.current_text, request_id=state.request_id):
-        raise LineageMismatchError("eventless reducer state is not canonical")
-    return state
-
-
-def reduce_partition(
+def _apply_canonical_partition(
     state: ReducerState,
     output_text: str,
-    receipts: Iterable[PartitionReceipt | CanonicalReceipt],
+    manifest: tuple[CanonicalReceipt, ...],
     *,
     stage: str,
-    operation: object,
+    envelope: LineageOperation,
 ) -> ReducerState:
-    """Return the next state; the supplied state is never mutated."""
-    if type(state) is not ReducerState:
-        raise ValueError("state must be an exact ReducerState")
-    if type(output_text) is not str:
-        raise ValueError("partition output must be an exact str")
-    if type(stage) is not str or not stage:
-        raise ValueError("lineage stage must be a non-empty string")
-    envelope = _operation(operation, "partition envelope")
-    state = _validate_reducer_state(state)
-    envelope, manifest = canonicalize_partition(
-        state.current_text,
-        output_text,
-        receipts,
-        operation=envelope,
-    )
+    """Apply one canonical transition to an already accredited state."""
     if all(receipt.operation is LineageOperation.KEEP for receipt in manifest):
         return state
 
@@ -628,6 +498,144 @@ def reduce_partition(
         pieces=pieces_tuple,
         tombstones=tombstones_tuple,
         events=(*state.events, event),
+    )
+
+
+def _strict_reducer_segment(
+    segment: object,
+    *,
+    label: str,
+    tombstone: bool,
+) -> LineageSegment:
+    if type(segment) is not LineageSegment:
+        raise LineageMismatchError(f"{label} must be a LineageSegment")
+    _strict_string(segment.segment_id, f"{label}.segment_id", nonempty=True)
+    _strict_string(segment.text, f"{label}.text", nonempty=True)
+    _strict_string(
+        segment.transformation_id,
+        f"{label}.transformation_id",
+        nonempty=True,
+    )
+    if segment.current_span is not None:
+        raise LineageMismatchError(f"{label}.current_span must be absent in reducer state")
+    if type(segment.kind) is not SegmentKind or type(segment.proof) is not Proof:
+        raise LineageMismatchError(f"{label} enum fields have invalid nominal types")
+    if type(segment.placeholder) is not bool:
+        raise LineageMismatchError(f"{label}.placeholder must be an exact bool")
+    if tombstone and segment.kind is not SegmentKind.CONSUMED:
+        raise LineageMismatchError(f"{label} is not a canonical tombstone")
+    if not tombstone and segment.kind is SegmentKind.CONSUMED:
+        raise LineageMismatchError(f"{label} exposes a consumed live segment")
+    _strict_intervals(
+        segment.original_intervals,
+        f"{label}.original_intervals",
+        allow_empty=False,
+    )
+    return segment
+
+
+def _validate_reducer_state(state: object) -> ReducerState:
+    if type(state) is not ReducerState:
+        raise ValueError("state must be an exact ReducerState")
+    _strict_string(state.request_id, "state.request_id", nonempty=True)
+    _strict_digest(state.raw_sha256, "state.raw_sha256")
+    _strict_string(state.current_text, "state.current_text")
+    if type(state.pieces) is not tuple:
+        raise LineageMismatchError("state.pieces must be an exact tuple")
+    if type(state.tombstones) is not tuple:
+        raise LineageMismatchError("state.tombstones must be an exact tuple")
+    if type(state.events) is not tuple:
+        raise LineageMismatchError("state.events must be an exact tuple")
+
+    pieces = tuple(
+        _strict_reducer_segment(piece, label=f"state.pieces[{index}]", tombstone=False)
+        for index, piece in enumerate(state.pieces)
+    )
+    tombstones = tuple(
+        _strict_reducer_segment(
+            tombstone,
+            label=f"state.tombstones[{index}]",
+            tombstone=True,
+        )
+        for index, tombstone in enumerate(state.tombstones)
+    )
+    if "".join(piece.text for piece in pieces) != state.current_text:
+        raise LineageMismatchError("state pieces do not cover current text")
+    segment_ids = tuple(segment.segment_id for segment in (*pieces, *tombstones))
+    if len(segment_ids) != len(set(segment_ids)):
+        raise LineageMismatchError("state segment identifiers must be unique")
+
+    for index, event in enumerate(state.events):
+        _strict_event(event, index)
+
+    if not state.events:
+        if state != initial_state(state.current_text, request_id=state.request_id):
+            raise LineageMismatchError("eventless reducer state is not canonical")
+        return state
+
+    first_event = state.events[0]
+    raw_text = "".join(
+        receipt.input_text for receipt in first_event.receipt_manifest
+    )
+    if sha256_text(raw_text) != state.raw_sha256:
+        raise LineageMismatchError("first event does not cover authenticated raw text")
+    replayed = initial_state(raw_text, request_id=state.request_id)
+    for index, expected in enumerate(state.events):
+        output_text = "".join(
+            receipt.output_text for receipt in expected.receipt_manifest
+        )
+        envelope, manifest = canonicalize_partition(
+            replayed.current_text,
+            output_text,
+            expected.receipt_manifest,
+            operation=expected.operation,
+        )
+        advanced = _apply_canonical_partition(
+            replayed,
+            output_text,
+            manifest,
+            stage=expected.stage,
+            envelope=envelope,
+        )
+        if len(advanced.events) != len(replayed.events) + 1:
+            raise LineageMismatchError(f"events[{index}] is not a state transition")
+        if advanced.events[-1] != expected:
+            raise LineageMismatchError(f"events[{index}] diverges from canonical replay")
+        replayed = advanced
+    if replayed != state:
+        raise LineageMismatchError("replayed history diverges from reducer state")
+    return state
+
+
+def reduce_partition(
+    state: ReducerState,
+    output_text: str,
+    receipts: Iterable[PartitionReceipt | CanonicalReceipt],
+    *,
+    stage: str,
+    operation: object,
+) -> ReducerState:
+    """Return the next state; the supplied state is never mutated."""
+    if type(state) is not ReducerState:
+        raise ValueError("state must be an exact ReducerState")
+    if type(output_text) is not str:
+        raise ValueError("partition output must be an exact str")
+    if type(stage) is not str or not stage:
+        raise ValueError("lineage stage must be a non-empty string")
+    envelope = _operation(operation, "partition envelope")
+    state = _validate_reducer_state(state)
+    envelope, manifest = canonicalize_partition(
+        state.current_text,
+        output_text,
+        receipts,
+        operation=envelope,
+    )
+    return _apply_canonical_partition(
+        state,
+        output_text,
+        manifest,
+        stage=stage,
+        envelope=envelope,
     )
 
 
@@ -853,21 +861,15 @@ def verify_view_integrity(view: TextLineageView) -> None:
         view.tombstones,
     ):
         raise LineageMismatchError("presented state digest is invalid")
-    state = initial_state(view.raw_text, request_id=view.request_id)
     try:
-        for expected in view.events:
-            if expected.schema != LINEAGE_EVENT_SCHEMA:
-                raise LineageMismatchError("event schema is invalid")
-            output_text = "".join(receipt.output_text for receipt in expected.receipt_manifest)
-            state = reduce_partition(
-                state,
-                output_text,
-                expected.receipt_manifest,
-                stage=expected.stage,
-                operation=expected.operation,
-            )
-            if state.events[-1] != expected:
-                raise LineageMismatchError("event replay diverged from sealed history")
+        state = _validate_reducer_state(ReducerState(
+            request_id=view.request_id,
+            raw_sha256=view.raw_sha256,
+            current_text=view.current_text,
+            pieces=presented_pieces,
+            tombstones=view.tombstones,
+            events=view.events,
+        ))
     except (AttributeError, TypeError, ValueError) as exc:
         if isinstance(exc, LineageMismatchError):
             raise
