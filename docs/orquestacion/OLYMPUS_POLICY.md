@@ -44,11 +44,13 @@ versión y operaciones soportadas cuando se puedan observar. Una herramienta
 opcional ausente degrada el plan; no bloquea la misión ni justifica una larga
 reparación. No se inventan capacidades ni acceso externo.
 
-Usa Graft/tgrep para topología o búsqueda sólo cuando el preflight demuestre que
-están disponibles y la operación aplica. Los fallbacks obligatorios son `rg`,
-`git grep`, lectura focal y `git log`/`git blame`. Para verdad fresca o ausencia
-tras una mutación, usa una lectura fresh. Semgrep busca patrones prohibidos,
-Hypothesis prueba invariantes combinatorias y pytest comportamiento ejecutado.
+Usa Graft para topología, callers, dependencias y blast radius. Usa tgrep para
+literales, regex, ocurrencias y discovery. Para verdad fresca o probar ausencia
+tras una mutación, usa `rg` o `tgrep --fresh`. Estas preferencias sólo aplican
+cuando el preflight acredita la herramienta y la operación; los fallbacks
+obligatorios son `rg`, `git grep`, lectura focal y `git log`/`git blame`.
+Semgrep busca patrones prohibidos, Hypothesis prueba invariantes combinatorias y
+pytest comportamiento ejecutado.
 
 ## 3. Preflight cognitivo
 
@@ -111,12 +113,15 @@ OMISSION_DEFINED = YES|NO
 CONFLICT_DEFINED = YES|NO
 INVARIANTS_DEFINED = YES|NO
 COUNTEREXAMPLES_READY = YES|NO
+CONTRACT_INCOMPLETE = YES|NO
 ARES_AUTHORIZED = YES|NO
 ```
 
 Si hay un material unknown, un authority gap o cualquier respuesta `NO`,
-`ARES_AUTHORIZED=NO`. ARES no descubre arquitectura: una premisa falsa exige
-`STOP + ESCALATE`.
+el gate emite literalmente `CONTRACT_INCOMPLETE=YES` y después
+`ARES_AUTHORIZED=NO`. Sólo cuando todos están cerrados emite
+`CONTRACT_INCOMPLETE=NO`. ARES no descubre arquitectura: una premisa falsa
+exige `STOP + ESCALATE`.
 
 ## 4. Router dinámico y provenance
 

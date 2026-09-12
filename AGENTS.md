@@ -68,10 +68,12 @@ ocultan ni se arreglan fuera de scope; se informa `BASELINE`, `CANDIDATE` y
 ## Herramientas y ADR
 
 Descubre disponibilidad y operaciones antes de confiar en herramientas
-auxiliares. Para navegación estructural usa Graft o tgrep sólo cuando estén
-disponibles y sean adecuados; los fallbacks son `rg`, `git grep`, lectura focal
-y `git log`/`git blame`. Semgrep verifica leyes del repo, Hypothesis invariantes
-y pytest comportamiento ejecutado.
+auxiliares. Para topología, callers, dependencias y blast radius usa Graft; para
+literales, regex, ocurrencias y discovery usa tgrep. Para verdad fresca o probar
+ausencia tras una mutación usa `rg` o `tgrep --fresh`. Estas preferencias sólo
+aplican cuando la herramienta y la operación están disponibles; los fallbacks
+son `rg`, `git grep`, lectura focal y `git log`/`git blame`. Semgrep verifica
+leyes del repo, Hypothesis invariantes y pytest comportamiento ejecutado.
 
 El número de un ADR sale del máximo global. Ningún worker asigna números en
 paralelo: HERA serializa la asignación final, salvo que exista y se use un
