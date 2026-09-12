@@ -17,12 +17,17 @@ APP = Path(__file__).parents[1] / 'streamlit_app.py'
 def ui_code():
     """Execute the actual helpers/chip block without launching Streamlit."""
     tree = ast.parse(APP.read_text())
-    names = {'_clean_resolved', '_continuation_ref', '_assistant_history_item'}
+    names = {
+        '_clean_resolved',
+        '_continuation_ref',
+        '_profile_action_ref',
+        '_assistant_history_item',
+    }
     functions = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name in names]
     blocks = [node for node in tree.body if isinstance(node, ast.If)
               and any(isinstance(part, ast.Attribute) and part.attr == '_pending_refinement'
                       for part in ast.walk(node.test))]
-    assert len(functions) == 3 and len(blocks) == 1
+    assert len(functions) == 4 and len(blocks) == 1
     namespace = {'actor_candidate_options': actor_candidate_options}
     exec(compile(ast.Module(body=functions, type_ignores=[]), str(APP), 'exec'), namespace)
     return namespace, compile(ast.Module(body=blocks, type_ignores=[]), str(APP), 'exec')

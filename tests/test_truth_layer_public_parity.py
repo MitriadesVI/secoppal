@@ -195,9 +195,9 @@ M2_1_MODIFIED_FILE_SHA256 = {
     # Frame B/B.1 (20aea784, ff2a5844): transport result/revision/chat refs.
     # test_truth_layer_frame_guard_controls exercises actual UI helpers/chips
     # and valid/invalid reloads; Search/M2.1 oracles below remain unchanged.
-    # Executive UX V1: optional presentation transport/UI hook only.
-    # test_entity_profile_executive_ux_boundary restores the prior exact bytes.
-    "streamlit_app.py": "cc54f75b598544648b47629f4662aa78f6681e74f99149423fe9ee0aa95c6901",
+    # Executive UX V1.1 re-pins this consumer for Frame-ON profile actions;
+    # the executive UX boundary and profile-action UI boundary tests bound it.
+    "streamlit_app.py": "84ce0fbc5e25f5c70f7e67297051f19c5107d50105c465d31217070803db9b53",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried
