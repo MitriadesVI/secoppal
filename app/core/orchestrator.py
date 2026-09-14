@@ -26,6 +26,10 @@ from app.core.workflow.deps import WorkflowDeps
 from app.core.workflow.handlers.direct_lookup import handle_direct_lookup
 from app.core.workflow.handlers.actor_selection import handle_actor_selection
 from app.core.workflow.handlers.normal_flow import handle_normal_flow
+from app.core.workflow.handlers.natural_alpha import (
+    handle_natural_alpha, multi_job_result, observed_deps,
+)
+from app.core.natural_alpha.budget import legacy_budget
 from app.core.workflow.handlers.pagination import handle_pagination
 from app.core.workflow.handlers.radar import handle_radar_command
 from app.core.workflow.handlers.refinement import handle_refinement
@@ -84,6 +88,7 @@ class SecopalWorkflow:
 
     def __init__(self, settings: Settings):
         self.settings = settings
+        self.natural_alpha_provider = None  # lazy in eligible turns; injectable in tests
         self.entity_resolver = EntityResolver(settings.secop_alias_db_path)
         self.query_router = QueryRouter(entity_resolver=self.entity_resolver)
         self.actor_name_resolver = ActorNameResolver(settings.secop_actor_alias_index_path)
@@ -370,7 +375,12 @@ class SecopalWorkflow:
                 }.get(handler, "NONE")
                 return res
 
-        result = handle_normal_flow(self.deps, ctx)
+        deps = self.deps
+        observation = handle_natural_alpha(deps, ctx, self.natural_alpha_provider)
+        if observation is not None and observation.terminal:
+            return multi_job_result(deps, ctx, observation)
+        with legacy_budget(observation is not None):
+            result = handle_normal_flow(observed_deps(deps, observation), ctx)
         params = result.get("resolved_params") or {}
         result["_continuation_owner"] = "ACTOR" if params.get("actor_scope") or params.get("actor_pending") else "TABULAR"
         return result

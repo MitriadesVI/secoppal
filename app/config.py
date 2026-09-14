@@ -81,6 +81,14 @@ class Settings(BaseSettings):
         default=False, alias="SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED",
     )
 
+    # Natural Alpha observes human jobs; the existing runtime keeps execution.
+    secoppal_natural_alpha_mode: str = Field(default="off", alias="SECOPPAL_NATURAL_ALPHA_MODE")
+    secoppal_natural_alpha_email: str | None = Field(default=None, alias="SECOPPAL_NATURAL_ALPHA_EMAIL")
+    secoppal_natural_alpha_timeout_seconds: float = Field(
+        default=10.0, gt=0, le=45, allow_inf_nan=False,
+        alias="SECOPPAL_NATURAL_ALPHA_TIMEOUT_SECONDS",
+    )
+
     # ── Transporte Socrata (SODA3_TRANSPORT_V1) ──────────────────────────────
     # `soda3`   = transporte productivo default validado.
     # `classic` = rollback explicito sobre sodapy y GET /resource/.

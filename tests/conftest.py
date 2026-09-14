@@ -17,6 +17,7 @@ def isolate_runtime_persistence(monkeypatch, tmp_path):
     monkeypatch.setenv("SECOP_FEEDBACK_PATH", str(tmp_path / "feedback.jsonl"))
     monkeypatch.setenv("SECOP_FEEDBACK_DB_PATH", str(tmp_path / "secoppal.db"))
     monkeypatch.setenv("CONVERSATION_STORE_DIR", str(tmp_path / "conversations"))
+    monkeypatch.setenv("SECOPPAL_NATURAL_ALPHA_MODE", "off")
     yield
     assert set((ROOT / "data" / "conversations").glob("*.pagination.json")) == project_sidecars
 

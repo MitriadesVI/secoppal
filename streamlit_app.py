@@ -466,6 +466,9 @@ def _profile_action_ref(result: dict) -> dict | None:
 
 def _assistant_history_item(result: dict, *, query: str = "") -> dict:
     """Build one rerun-stable assistant item, including safe actor controls."""
+    from app.core.natural_alpha.presentation import project
+
+    alpha_view = project(result)
     resolved_params = result.get("resolved_params", {})
     debug_payload = {
         "route_reason": result.get("route_reason", ""),
@@ -477,6 +480,7 @@ def _assistant_history_item(result: dict, *, query: str = "") -> dict:
         "results_count": len(result.get("results", [])),
     }
     return {
+        **({"natural_alpha": alpha_view} if alpha_view else {}),
         "role": "assistant",
         "content": result.get("response", ""),
         "query": query,
@@ -500,6 +504,9 @@ def _assistant_history_item(result: dict, *, query: str = "") -> dict:
 
 def _render_assistant_content(item: dict) -> None:
     """Prefer the structured overview and keep profile Markdown currency safe."""
+    from app.core.natural_alpha.presentation import render
+
+    render(st, item.get("natural_alpha"), settings=get_settings(), identity=_current_user_identity())
     view = item.get("entity_profile_view")
     route_reason = item.get("debug", {}).get("route_reason", "")
     render_entity_profile_content(

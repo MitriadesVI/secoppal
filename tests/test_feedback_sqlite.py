@@ -8,6 +8,49 @@ from app.core.feedback import ensure_feedback_schema
 from scripts.migrate_feedback_sqlite import ensure_workspace_items_schema, main as migrate_main
 
 
+def test_natural_alpha_migration_existing_database_and_rating(tmp_path):
+    from app.core.feedback import SCHEMA_SQL
+    from app.core.natural_alpha.models import GroundedJob, Observation
+    from app.core.natural_alpha.telemetry import TRACE_COLUMNS
+
+    db = tmp_path / "old.db"
+    with sqlite3.connect(db) as conn:
+        # The pre-Alpha CREATE statement remains unchanged; additions migrate.
+        conn.executescript(SCHEMA_SQL)
+        assert not set(TRACE_COLUMNS) & {row[1] for row in conn.execute("PRAGMA table_info(traces)")}
+        conn.execute("INSERT INTO traces (trace_id, timestamp, channel, user_query, trace_json) "
+                     "VALUES ('old', '2026', 'streamlit', 'legacy', '{\"trace_id\": \"old\"}')")
+    store = FeedbackStore(tmp_path / "traces.jsonl", db_path=db)
+    FeedbackStore(tmp_path / "traces.jsonl", db_path=db)
+    observation = Observation("alpha", "MATCHED", (GroundedJob("SEARCH", "CONTRACTS", 0, 5),), 1, 12.5)
+    workflow_result = _workflow_result(**observation.metadata())
+    workflow_result["natural_alpha_jobs"][0]["evidence_quote"] = "do not duplicate private text"
+    trace_id = store.log_trace("consulta", "streamlit", workflow_result)
+    assert store.rate(trace_id, 1)
+    rows = _db_rows(db, "SELECT * FROM traces ORDER BY trace_id")
+    assert len(rows) == 2
+    old = next(row for row in rows if row["trace_id"] == "old")
+    assert old["trace_json"] == '{"trace_id": "old"}'
+    assert all(old[name] is None for name in TRACE_COLUMNS)
+    alpha = next(row for row in rows if row["trace_id"] == trace_id)
+    assert alpha["natural_alpha_provider_calls"] == 1
+    assert alpha["rating"] == 1
+    assert json.loads(alpha["natural_alpha_jobs"]) == [
+        {"action": "SEARCH", "aspect": "CONTRACTS", "evidence_interval": [0, 5]},
+    ]
+    assert "do not duplicate" not in alpha["trace_json"]
+    assert "do not duplicate" not in store.path.read_text()
+    assert len(_db_rows(db, "SELECT * FROM schema_migrations WHERE name = 'natural_alpha_v1'")) == 1
+
+
+def test_natural_alpha_off_has_no_trace_metadata(tmp_path):
+    store = FeedbackStore(tmp_path / "traces.jsonl")
+    trace_id = store.log_trace("consulta", "streamlit", _workflow_result())
+    trace = next(row for row in store.get_recent() if row["trace_id"] == trace_id)
+    assert not any(key.startswith("natural_alpha_") for key in trace)
+    assert "natural_alpha" not in store.path.read_text()
+
+
 def _workflow_result(**overrides):
     result = {
         "parsed_params": {"dataset": "procesos"},

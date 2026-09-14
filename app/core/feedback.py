@@ -38,6 +38,9 @@ from pathlib import Path
 from typing import Any
 
 from app.core.db import connect_sqlite
+from app.core.natural_alpha.telemetry import (
+    TRACE_COLUMNS as NATURAL_ALPHA_COLUMNS, sqlite_values, trace_metadata,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -169,6 +172,7 @@ TRACE_COLUMNS = (
     "trace_json",
     "source",
     "migrated_at",
+    *NATURAL_ALPHA_COLUMNS,
 )
 
 
@@ -210,6 +214,7 @@ class FeedbackStore:
         )
 
         trace = {
+            **trace_metadata(workflow_result),
             **actor_resolution_trace(
                 workflow_result.get("resolved_params") or workflow_result.get("parsed_params") or {}
             ),
@@ -606,6 +611,22 @@ class FeedbackStore:
 
 def ensure_feedback_schema(conn: sqlite3.Connection) -> None:
     conn.executescript(SCHEMA_SQL)
+    # executescript closes any previous transaction. Serialize the additive
+    # migration so concurrent store constructors cannot both add a column.
+    conn.execute("BEGIN IMMEDIATE")
+    try:
+        columns = {row[1] for row in conn.execute("PRAGMA table_info(traces)")}
+        for name, declaration in NATURAL_ALPHA_COLUMNS.items():
+            if name not in columns:
+                conn.execute(f"ALTER TABLE traces ADD COLUMN {name} {declaration}")
+        conn.execute(
+            "INSERT OR IGNORE INTO schema_migrations (name, applied_at) VALUES (?, ?)",
+            ("natural_alpha_v1", datetime.now(timezone.utc).isoformat()),
+        )
+        conn.commit()
+    except sqlite3.Error:
+        conn.rollback()
+        raise
 
 
 def _safe_serialize(obj: Any) -> Any:
@@ -646,6 +667,7 @@ def _trace_to_row(
         total_ms = (trace.get("timings_ms", {}) or {}).get("total_ms")
     return {
         "trace_id": str(trace.get("trace_id", "")),
+        **sqlite_values(trace),
         "timestamp": str(trace.get("timestamp") or datetime.now(timezone.utc).isoformat()),
         "user_id": user_id,
         "channel": str(trace.get("channel", "")),

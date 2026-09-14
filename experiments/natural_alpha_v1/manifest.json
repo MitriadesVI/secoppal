@@ -1,0 +1,17 @@
+{
+  "contract": "natural-alpha-v1-a0-a1",
+  "frozen_before_live": true,
+  "timeout_seconds": 10,
+  "sha256": {
+    "app/core/natural_alpha/catalog.py": "8c22ba767fddc26465078689e226427b4afd6bca88670e4c680cbd75b6e14cf2",
+    "app/core/natural_alpha/prompt.py": "da4016a8a47d521923efde1d61ebec72d67dd94f484a03f0e29e2eb8e05ab3e2",
+    "app/core/natural_alpha/models.py": "4b87a7661f1f17a7109c4deea616020f3ae36d0685ec1947a1896fc93a7fef1f",
+    "app/core/natural_alpha/grounding.py": "f945de8e391dadc714f62e1c43c294736ebd84a181dc66ee02af7f31ee8fbd70",
+    "app/core/natural_alpha/provider.py": "1176135791fe5677c1f6130a27141fc2cdf84629575cb4de7945f7fa1d69ae16",
+    "experiments/natural_alpha_v1/corpus.json": "d241d1d3e16e505df76667b3d6a322d203cf4f16788ef362a35ae1db0309df14",
+    "experiments/natural_alpha_v1/gold.json": "aa81dca6dec823cbf4fe2073a9f07e9e07929cfb21fd7cd1eeb4473979f9155e",
+    "experiments/natural_alpha_v1/evaluation.py": "a6820ea815b196c9d5bb5e3e99d48ccbb9555ff992fa81a6eb456b02ccaeeb3c",
+    "experiments/natural_alpha_v1/replay.py": "44197325bce3cd05dd633d12e39d8e9ba78d44322b13003b7ce17b92729ff2ba",
+    "scripts/run_natural_alpha_v1.py": "2c103539a627a092150a60d02b596ca8c70288cc50e917e8778ca71d261ae635"
+  }
+}
