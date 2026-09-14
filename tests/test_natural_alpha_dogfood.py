@@ -56,7 +56,7 @@ def _database(tmp_path, rows, *, latency=True):
 
 def _directory_witness(directory):
     return {path.name: (hashlib.sha256(path.read_bytes()).hexdigest(), path.stat().st_size,
-                        path.stat().st_mtime_ns, path.stat().st_ino)
+                        path.stat().st_mtime_ns, path.stat().st_ctime_ns, path.stat().st_ino)
             for path in directory.iterdir()}
 
 
@@ -247,6 +247,175 @@ def test_wal_source_without_shm_is_never_opened_or_given_new_sidecars(tmp_path):
         assert _directory_witness(source) == before
 
 
+def test_database_symlink_is_rejected_instead_of_resolved(tmp_path):
+    db = _database(tmp_path, [_row("foreign-through-db-link")])
+    alias = tmp_path / "alias.sqlite"
+    alias.symlink_to(db)
+    with patch.object(sqlite3, "connect", wraps=sqlite3.connect) as connect:
+        with pytest.raises(DogfoodReportError, match="SNAPSHOT_SOURCE_NOT_REGULAR"):
+            result = report_dogfood(alias, email=EMAIL, since=SINCE, checkpoint=1)
+            pytest.fail(f"symlink admitted: {result['window_end']}")
+    connect.assert_not_called()
+
+
+def test_foreign_wal_symlink_cannot_inject_rows_into_the_selected_database(tmp_path):
+    own = tmp_path / "own"
+    own.mkdir()
+    db = _database(own, [_row("OWN")])
+    other = tmp_path / "foreign"
+    other.mkdir()
+    foreign = other / "foreign.sqlite"
+    shutil.copyfile(db, foreign)
+    with closing(sqlite3.connect(db)) as setup:
+        setup.execute("PRAGMA journal_mode=WAL")
+    with closing(sqlite3.connect(foreign)) as writer:
+        writer.execute("PRAGMA journal_mode=WAL")
+        writer.execute("UPDATE traces SET trace_id='FOREIGN-DECOY'")
+        writer.commit()
+        assert report_dogfood(foreign, email=EMAIL, since=SINCE, checkpoint=1)["window_end"]["trace_id"] == "FOREIGN-DECOY"
+        alias = Path(str(db) + "-wal")
+        alias.symlink_to(Path(str(foreign) + "-wal"))
+        before = _directory_witness(own), _directory_witness(other)
+        with patch.object(sqlite3, "connect", wraps=sqlite3.connect) as connect:
+            with pytest.raises(DogfoodReportError, match="SNAPSHOT_SOURCE_NOT_REGULAR"):
+                result = report_dogfood(db, email=EMAIL, since=SINCE, checkpoint=1)
+                pytest.fail(f"foreign WAL admitted: {result['window_end']}")
+        connect.assert_not_called()
+        assert (_directory_witness(own), _directory_witness(other)) == before
+
+
+def test_source_uses_one_nofollow_descriptor_and_never_path_copyfile(cohort, monkeypatch):
+    original_open = os.open
+    opened = []
+    copied_descriptors = []
+    copy = dogfood._copy_from_descriptor
+
+    def open_file(path, flags, *args, **kwargs):
+        descriptor = original_open(path, flags, *args, **kwargs)
+        if Path(path) == cohort:
+            opened.append((descriptor, flags))
+        return descriptor
+
+    def copy_descriptor(path, source, destination):
+        copied_descriptors.append(source.fileno())
+        return copy(path, source, destination)
+
+    monkeypatch.setattr(os, "open", open_file)
+    monkeypatch.setattr(dogfood, "_copy_from_descriptor", copy_descriptor)
+    with patch.object(shutil, "copyfile", side_effect=AssertionError("source path must not be reopened")):
+        result = report_dogfood(cohort, email=EMAIL, since=SINCE)
+    assert result["reached_seam"] == 5
+    assert len(opened) == 1 and copied_descriptors == [opened[0][0]]
+    if hasattr(os, "O_NOFOLLOW"):
+        assert opened[0][1] & os.O_NOFOLLOW
+    with pytest.raises(OSError):
+        os.fstat(opened[0][0])
+
+
+@pytest.mark.parametrize("without_nofollow", [False, True])
+def test_symlink_inserted_between_lstat_and_open_is_rejected_before_reading(cohort, monkeypatch, without_nofollow):
+    if without_nofollow:
+        monkeypatch.delattr(os, "O_NOFOLLOW", raising=False)
+    original_open = os.open
+    parked = cohort.with_suffix(".parked")
+    changed = False
+
+    def open_file(path, flags, *args, **kwargs):
+        nonlocal changed
+        if Path(path) == cohort and not changed:
+            changed = True
+            cohort.rename(parked)
+            cohort.symlink_to(parked)
+        return original_open(path, flags, *args, **kwargs)
+
+    monkeypatch.setattr(os, "open", open_file)
+    with patch.object(dogfood, "_fingerprint", wraps=dogfood._fingerprint) as fingerprint:
+        with patch.object(sqlite3, "connect") as connect:
+            with pytest.raises(DogfoodReportError, match="SNAPSHOT_SOURCE_NOT_REGULAR"):
+                report_dogfood(cohort, email=EMAIL, since=SINCE)
+    assert changed
+    fingerprint.assert_not_called()
+    connect.assert_not_called()
+
+
+def test_regular_inode_replacement_between_lstat_and_open_forces_retry(cohort, monkeypatch):
+    original_open = os.open
+    parked = cohort.with_suffix(".parked")
+    opens = 0
+
+    def open_file(path, flags, *args, **kwargs):
+        nonlocal opens
+        if Path(path) == cohort:
+            opens += 1
+            if opens == 1:
+                cohort.rename(parked)
+                shutil.copyfile(parked, cohort)
+                assert cohort.lstat().st_ino != parked.lstat().st_ino
+        return original_open(path, flags, *args, **kwargs)
+
+    monkeypatch.setattr(os, "open", open_file)
+    result = report_dogfood(cohort, email=EMAIL, since=SINCE)
+    assert result["reached_seam"] == 5
+    assert opens == 2
+
+
+@pytest.mark.parametrize("event", ["replace", "disappear", "symlink"])
+def test_path_changed_after_copy_is_not_accepted_as_the_accredited_source(cohort, monkeypatch, event):
+    copy = dogfood._copy_from_descriptor
+    files = dogfood._source_files
+    parked = cohort.with_suffix(".parked")
+    destinations = []
+
+    def source_files(path):
+        if event == "disappear" and parked.exists() and not cohort.exists():
+            parked.rename(cohort)  # The fabricated source returns for the retry.
+        return files(path)
+
+    def copy_descriptor(path, source, destination):
+        copied = copy(path, source, destination)
+        destinations.append(destination)
+        if len(destinations) == 1:
+            cohort.rename(parked)
+            if event == "replace":
+                shutil.copyfile(parked, cohort)
+            elif event == "symlink":
+                cohort.symlink_to(parked)
+        return copied
+
+    monkeypatch.setattr(dogfood, "_source_files", source_files)
+    monkeypatch.setattr(dogfood, "_copy_from_descriptor", copy_descriptor)
+    with patch.object(sqlite3, "connect", wraps=sqlite3.connect) as connect:
+        if event == "symlink":
+            with pytest.raises(DogfoodReportError, match="SNAPSHOT_SOURCE_NOT_REGULAR"):
+                report_dogfood(cohort, email=EMAIL, since=SINCE)
+            connect.assert_not_called()
+            assert len(destinations) == 1
+        else:
+            assert report_dogfood(cohort, email=EMAIL, since=SINCE)["reached_seam"] == 5
+            connect.assert_called_once()
+            assert len(destinations) == 2
+    assert all(not destination.parent.exists() for destination in destinations)
+
+
+@pytest.mark.parametrize("member,kind", [("db", "directory"), ("db", "fifo"), ("wal", "directory")])
+def test_non_regular_source_members_fail_explicitly_before_sqlite(tmp_path, member, kind):
+    if member == "wal":
+        db = _database(tmp_path, [_row("own")])
+        target = Path(str(db) + "-wal")
+    else:
+        db = target = tmp_path / "not-regular.sqlite"
+    if kind == "fifo":
+        if not hasattr(os, "mkfifo"):
+            pytest.skip("FIFO is unavailable on this platform")
+        os.mkfifo(target)
+    else:
+        target.mkdir()
+    with patch.object(sqlite3, "connect") as connect:
+        with pytest.raises(DogfoodReportError, match="SNAPSHOT_SOURCE_NOT_REGULAR"):
+            report_dogfood(db, email=EMAIL, since=SINCE)
+    connect.assert_not_called()
+
+
 @pytest.mark.parametrize("event", ["appears", "disappears"])
 def test_wal_membership_change_retries_and_keeps_committed_rows(tmp_path, monkeypatch, event):
     db = _database(tmp_path, [_row("first")])
@@ -257,14 +426,14 @@ def test_wal_membership_change_retries_and_keeps_committed_rows(tmp_path, monkey
             writer.execute("UPDATE traces SET trace_id='wal-only'")
             writer.commit()
         assert wal.exists() is (event == "disappears")
-        copyfile = shutil.copyfile
+        copy_from_descriptor = dogfood._copy_from_descriptor
         destinations = []
         changed = False
         after_writer = None
 
-        def copy(source, destination):
+        def copy(source, descriptor, destination):
             nonlocal changed, after_writer
-            copyfile(source, destination)
+            copied = copy_from_descriptor(source, descriptor, destination)
             destinations.append(destination)
             if not changed:
                 changed = True
@@ -274,8 +443,9 @@ def test_wal_membership_change_retries_and_keeps_committed_rows(tmp_path, monkey
                 else:
                     writer.close()  # Checkpoints and removes this fabricated WAL.
                 after_writer = _directory_witness(tmp_path)
+            return copied
 
-        monkeypatch.setattr(shutil, "copyfile", copy)
+        monkeypatch.setattr(dogfood, "_copy_from_descriptor", copy)
         original = sqlite3.connect
         connections = []
 
@@ -295,11 +465,11 @@ def test_wal_membership_change_retries_and_keeps_committed_rows(tmp_path, monkey
 
 @pytest.mark.parametrize("fault", ["source_metadata", "copied_bytes"])
 def test_three_unstable_copies_fail_closed_without_sqlite_or_leaked_temporaries(cohort, monkeypatch, fault):
-    copyfile = shutil.copyfile
+    copy_from_descriptor = dogfood._copy_from_descriptor
     destinations = []
 
-    def copy(source, destination):
-        copyfile(source, destination)
+    def copy(source, descriptor, destination):
+        copied = copy_from_descriptor(source, descriptor, destination)
         destinations.append(destination)
         if fault == "source_metadata":
             stamp = source.stat()
@@ -307,8 +477,9 @@ def test_three_unstable_copies_fail_closed_without_sqlite_or_leaked_temporaries(
         else:
             with destination.open("ab") as output:
                 output.write(b"fabricated torn copy")
+        return copied
 
-    monkeypatch.setattr(shutil, "copyfile", copy)
+    monkeypatch.setattr(dogfood, "_copy_from_descriptor", copy)
     with patch.object(sqlite3, "connect") as connect:
         with pytest.raises(DogfoodReportError, match="SNAPSHOT_UNSTABLE"):
             report_dogfood(cohort, email=EMAIL, since=SINCE)

@@ -81,8 +81,14 @@ bytes de DB y WAL, si existe, en un directorio temporal privado. No copia SHM.
 Antes y después de copiar deben coincidir el conjunto DB/WAL, sus hashes
 SHA-256 calculados por streaming y sus testigos de device, inode, tamaño,
 mtime y ctime; los hashes de las copias deben coincidir con los del origen.
-Si aparece o desaparece WAL o cambia un testigo, repite desde un temporal
-nuevo, con un máximo de tres intentos. La inestabilidad persistente falla como
+DB y WAL deben ser archivos regulares, nunca symlinks. Se liga el `lstat` del
+path con un descriptor abierto mediante `O_NOFOLLOW` cuando está disponible;
+`fstat` debe conservar device, inode, tipo y metadata acreditados antes,
+durante y después de leer. La copia procede de esos descriptores retenidos,
+sin reabrir el path origen. Symlinks y archivos no regulares fallan
+explícitamente, no producen un reporte vacío.
+Si aparece o desaparece WAL o cambia un testigo de archivo regular, repite desde
+un temporal nuevo, con un máximo de tres intentos. La inestabilidad persistente falla como
 `SNAPSHOT_UNSTABLE`; no se entrega un reporte de una copia dudosa. La presencia
 de cualquier rollback journal se rechaza conservadoramente, incluso si parece
 inactivo: el reporte no intenta recuperar ni interpretar ese journal.
@@ -90,8 +96,10 @@ inactivo: el reporte no intenta recuperar ni interpretar ese journal.
 Sólo la copia verificada se abre mediante URI `mode=ro`; SQLite puede crear su
 propio SHM dentro del temporal. El directorio y sus sidecars se eliminan al
 terminar, tanto en éxito como en error. Ninguna conexión SQLite recibe el path
-origen, ni se crean o modifican sus DB/WAL/SHM. Verifica las columnas necesarias
-y falla explícitamente si faltan. No construye Settings, no migra la DB, no
+origen. El reporte no cambia bytes, tamaño, mtime o ctime del origen ni crea o
+modifica sus sidecars. Leer bytes puede actualizar atime según el filesystem;
+no se garantiza atime ni inmutabilidad absoluta de metadata. Verifica las columnas
+necesarias y falla explícitamente si faltan. No construye Settings, no migra la DB, no
 escribe un reporte en disco y no selecciona texto de consultas. Esto corrige
 la premisa insuficiente de que `mode=ro` por sí solo impedía efectos sobre SHM.
 

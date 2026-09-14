@@ -1,12 +1,12 @@
 """Read-only scoped dogfood coverage; host trace metadata is the only oracle."""
 from collections import Counter
-from contextlib import closing
+from contextlib import ExitStack, closing, contextmanager
 from datetime import datetime, timezone
+import errno
 import hashlib
 import math
 import os
 from pathlib import Path
-import shutil
 import sqlite3
 import stat
 from statistics import fmean
@@ -53,24 +53,55 @@ def _columns(conn):
 
 
 def _stamp(info):
-    return info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns
+    return info.st_dev, info.st_ino, info.st_mode, info.st_size, info.st_mtime_ns, info.st_ctime_ns
 
 
-def _fingerprint(path):
-    before = path.stat()
-    if not stat.S_ISREG(before.st_mode):
+def _regular_stat(path):
+    info = path.lstat()
+    if not stat.S_ISREG(info.st_mode):
         raise DogfoodReportError("SNAPSHOT_SOURCE_NOT_REGULAR")
-    digest = hashlib.sha256()
-    with path.open("rb") as source:
-        if _stamp(os.fstat(source.fileno())) != _stamp(before):
-            raise _SnapshotChanged
-        while chunk := source.read(1024 * 1024):
-            digest.update(chunk)
-        if _stamp(os.fstat(source.fileno())) != _stamp(before):
-            raise _SnapshotChanged
-    if _stamp(path.stat()) != _stamp(before):
+    return info
+
+
+def _check_descriptor(path, source):
+    current = _regular_stat(path)
+    if _stamp(os.fstat(source.fileno())) != _stamp(current):
         raise _SnapshotChanged
-    return _stamp(before), digest.digest()
+    return _stamp(current)
+
+
+@contextmanager
+def _open_regular(path):
+    before = _stamp(_regular_stat(path))
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+    try:
+        descriptor = os.open(path, flags)
+    except OSError as exc:
+        if exc.errno == errno.ELOOP:
+            raise DogfoodReportError("SNAPSHOT_SOURCE_NOT_REGULAR") from exc
+        raise
+    with os.fdopen(descriptor, "rb") as source:
+        if _check_descriptor(path, source) != before:
+            raise _SnapshotChanged
+        yield source
+        if _check_descriptor(path, source) != before:
+            raise _SnapshotChanged
+
+
+def _fingerprint(path, source, output=None):
+    """Hash an accredited descriptor, optionally copying those exact bytes."""
+    before = _check_descriptor(path, source)
+    digest = hashlib.sha256()
+    source.seek(0)
+    while chunk := source.read(1024 * 1024):
+        if _check_descriptor(path, source) != before:
+            raise _SnapshotChanged
+        digest.update(chunk)
+        if output is not None:
+            output.write(chunk)
+    if _check_descriptor(path, source) != before:
+        raise _SnapshotChanged
+    return before, digest.digest()
 
 
 def _source_files(path):
@@ -93,24 +124,28 @@ def _source_files(path):
     return files
 
 
-def _source_fingerprints(path):
-    files = _source_files(path)
-    fingerprints = {suffix: _fingerprint(source) for suffix, source in files.items()}
-    if files != _source_files(path):
-        raise _SnapshotChanged
-    return fingerprints
+def _copy_from_descriptor(path, source, destination):
+    with destination.open("wb") as output:
+        return _fingerprint(path, source, output)
 
 
 def _stable_snapshot(path, destination):
-    before = _source_fingerprints(path)
-    for suffix, expected in before.items():
-        copied = Path(str(destination) + suffix)
-        shutil.copyfile(Path(str(path) + suffix), copied)
-        actual = _fingerprint(copied)
-        if actual[1] != expected[1]:
+    files = _source_files(path)
+    with ExitStack() as stack:
+        sources = {suffix: stack.enter_context(_open_regular(source)) for suffix, source in files.items()}
+        before = {suffix: _fingerprint(files[suffix], source) for suffix, source in sources.items()}
+        if files != _source_files(path):
             raise _SnapshotChanged
-    if _source_fingerprints(path) != before:
-        raise _SnapshotChanged
+        for suffix, expected in before.items():
+            copied = Path(str(destination) + suffix)
+            if _copy_from_descriptor(files[suffix], sources[suffix], copied) != expected:
+                raise _SnapshotChanged
+            with _open_regular(copied) as copy:
+                if _fingerprint(copied, copy)[1] != expected[1]:
+                    raise _SnapshotChanged
+        after = {suffix: _fingerprint(files[suffix], source) for suffix, source in sources.items()}
+        if after != before or files != _source_files(path):
+            raise _SnapshotChanged
 
 
 def _read_snapshot(path, email):
@@ -136,7 +171,8 @@ def _read_snapshot(path, email):
 
 def _read(db: Path, email: str):
     try:
-        path = db.expanduser().resolve(strict=True)
+        path = db.expanduser().absolute()
+        _regular_stat(path)
         for _ in range(3):
             with TemporaryDirectory(prefix="natural-alpha-dogfood-") as directory:
                 snapshot = Path(directory) / "feedback.sqlite"

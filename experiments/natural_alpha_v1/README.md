@@ -79,15 +79,22 @@ It makes a stable byte snapshot of the DB and its WAL, when present, in an
 automatically removed temporary directory; SHM is never copied. Streaming
 SHA-256 fingerprints and device/inode/size/mtime/ctime witnesses must agree
 before and after copying, the DB/WAL file set must remain unchanged, and copied
-bytes must match their source digests. Appearance/disappearance of WAL or a
-changed witness retries from a fresh temporary directory, at most three times;
-continued instability fails explicitly as `SNAPSHOT_UNSTABLE`. A rollback
-journal's presence is conservatively rejected, including apparently idle ones.
+bytes must match their source digests. DB and WAL must be regular files, not
+symlinks. `lstat` is bound to an open descriptor with `O_NOFOLLOW` where supported;
+descriptor device/inode/type and metadata are rechecked before, during and after
+streaming. Copies come from those retained descriptors, never a reopened source
+path. Symlinks and non-regular files fail explicitly, not as empty reports.
+Appearance/disappearance of WAL or a changed regular-file witness retries from
+a fresh temporary directory, at most three times; continued instability fails
+explicitly as `SNAPSHOT_UNSTABLE`. A rollback journal's presence is conservatively
+rejected, including apparently idle ones.
 
 Only the verified temporary copy is opened with SQLite `mode=ro`. SQLite may
 create its own SHM there; cleanup removes the copy and all its sidecars on
-success or error. No source DB/WAL/SHM is created, migrated or written. The
-report requires the trace/identity/Alpha columns and fails explicitly if they
+success or error. The report does not change source bytes, size, mtime or ctime,
+and does not create or modify source sidecars. Reading may update atime depending
+on the filesystem: atime and absolute metadata immutability are not guaranteed.
+The report requires the trace/identity/Alpha columns and fails explicitly if they
 are missing. It prints JSON to stdout. Email and raw query are not included;
 raw query is never selected.
 `--review-queue` adds only trace ID, timestamp, host route/status and rating.
