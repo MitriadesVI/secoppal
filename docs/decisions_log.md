@@ -4641,3 +4641,25 @@ listados por caso, y la asimetría `with_timeout` / `derived_for_timeout` en
 
 [Recibo de integración](audits/buyer_actor_role_v1_coordinator_gate/integration/INTEGRATION.md).
 [Gate, adjudicación y límites](audits/buyer_actor_role_v1_coordinator_gate/round2/COORDINATOR_GATE.md).
+
+## ADR-096: Natural Alpha — dogfood acotado al seam
+
+**Fecha:** 2026-09-13. **Estado:** `ACCEPT_SCOPED_DOGFOOD`; preparación en rama,
+sin activación, merge, push ni reinicio.
+
+La decisión humana limita el dogfood a Rodrigo autenticado en Streamlit y a los
+turnos que alcanzan Natural Alpha antes de `normal_flow`. Los fast paths quedan
+excluidos intencionalmente y Profile provisionalmente, con gap de cobertura
+medido por ruta host. No hay garantía global multi-job ni cambio de autoridad
+de QueryRouter, QueryPlan, SoQL o del runtime legacy single-job.
+
+El checkpoint requiere 50 turnos que alcanzaron Alpha. La ventana incluye todos
+los traces del email/canal desde el inicio hasta ese turno, ordenados por
+timestamp y trace ID; el denominador general y la cobertura se informan aparte.
+Utilidad usa sólo ratings observados dentro del carril Alpha y es `null` sin
+valoraciones. El reporte SQLite es de sólo lectura y no expone email o raw
+query. C06 `FOLLOW/RUN` permanece como límite conocido del modelo, sin ajustar
+los artefactos congelados.
+
+Documentar no activa. Rollback: `SECOPPAL_NATURAL_ALPHA_MODE=off`.
+[Decisión completa](decisions/2026-09-13_ADR-096_natural-alpha-scoped-dogfood.md).

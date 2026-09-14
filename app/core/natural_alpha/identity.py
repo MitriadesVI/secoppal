@@ -8,6 +8,7 @@ _SEAL = object()
 class _Receipt:
     normalized_email: str
     seal: object
+    owner_id: int
 
 
 class _StreamlitIdentity(dict):
@@ -29,7 +30,7 @@ def issue_streamlit_identity(identity: dict, account: dict | None, *, auth_enabl
     if not normalized or normalized != account_email.strip().lower():
         return identity
     sealed = _StreamlitIdentity(identity)
-    sealed._receipt = _Receipt(normalized, _SEAL)
+    sealed._receipt = _Receipt(normalized, _SEAL, id(sealed))
     return sealed
 
 
@@ -39,6 +40,8 @@ def authenticated_email(identity: object) -> str | None:
         return None
     receipt = getattr(identity, "_receipt", None)
     if type(receipt) is not _Receipt or receipt.seal is not _SEAL:
+        return None
+    if type(receipt.owner_id) is not int or receipt.owner_id != id(identity):
         return None
     if identity.get("channel") != "streamlit" or identity.get("is_anonymous") is not False:
         return None

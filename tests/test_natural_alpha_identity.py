@@ -1,5 +1,6 @@
 """Only the current authenticated Streamlit account can mint Alpha admission."""
 import ast
+from copy import copy, deepcopy
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -105,6 +106,19 @@ def test_serialized_or_plain_receipt_claim_grants_no_authority(mutation):
     provider.observe.assert_not_called()
 
 
+@pytest.mark.parametrize("clone", [copy, deepcopy, dict, lambda value: json.loads(json.dumps(value))])
+def test_identity_receipt_is_bound_to_the_emitted_object(clone):
+    identity = issue_streamlit_identity(dict(IDENTITY), {"email": "alpha@example.test"}, auth_enabled=True)
+    assert eligible(config(), "streamlit", identity)
+    copied = clone(identity)
+    assert copied == identity
+    assert copied is not identity
+    provider = Mock()
+    assert observe(config(), "busca", "streamlit", copied, provider) is None
+    provider.observe.assert_not_called()
+    assert eligible(config(), "streamlit", identity)
+
+
 def test_nominal_identity_and_seal_are_checked_before_overloadable_operations():
     from app.core.natural_alpha.identity import _Receipt, _StreamlitIdentity
 
@@ -121,7 +135,7 @@ def test_nominal_identity_and_seal_are_checked_before_overloadable_operations():
             raise AssertionError("nominal subtype must not be inspected")
 
     forged = _StreamlitIdentity(dict(IDENTITY))
-    forged._receipt = _Receipt("alpha@example.test", EqualSeal())
+    forged._receipt = _Receipt("alpha@example.test", EqualSeal(), id(forged))
     for candidate in (Foreign(IDENTITY), Subtype(IDENTITY), forged):
         assert not eligible(config(), "streamlit", candidate)
 

@@ -144,6 +144,30 @@ def test_publication_failure_raises_specific_error_and_preserves_prior_envelope(
     assert len(flow.feedback.get_recent()) == 2
 
 
+def test_publication_recovery_error_preserves_cause_and_cannot_return_alpha_success(make_flow, monkeypatch):
+    from app.core.workflow.publication_io import PublicationRecoveryError
+
+    flow = make_flow("off")
+    _frame_on(monkeypatch)
+    run(flow, chat_id="recovery-failure")
+    before = flow.conv_store.load_envelope("recovery-failure")
+    assert before.usable
+    flow.settings.secoppal_natural_alpha_mode = "alpha"
+    flow.natural_alpha_provider.observe.return_value = ProviderResult(MULTI, provider_calls=1)
+    flow.secop_client.calls.clear()
+    failure = PublicationRecoveryError("fabricated recovery failure")
+    publisher = Mock(side_effect=failure)
+    monkeypatch.setattr(flow.conv_store, "publish_turn", publisher)
+    with pytest.raises(NaturalAlphaPublicationError) as caught:
+        run(flow, MULTI_RAW, chat_id="recovery-failure")
+    assert caught.value.__cause__ is failure
+    publisher.assert_called_once()
+    flow.natural_alpha_provider.observe.assert_called_once()
+    assert not flow.secop_client.calls
+    assert flow.conv_store.load_envelope("recovery-failure").envelope == before.envelope
+    assert len(flow.feedback.get_recent()) == 2
+
+
 def test_signal_requires_object_identity_and_exact_route_and_is_always_consumed(monkeypatch):
     from app.core.natural_alpha import terminal_publication as terminal
 

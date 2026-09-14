@@ -1,5 +1,6 @@
 """Private Alpha terminal receipt; publish NONE without returning a reference."""
 from app.core.entity_profile.profile_state import ProfileConversationState
+from app.core.workflow.publication_io import PublicationRecoveryError
 from app.core.workflow.turn_publication import delegated_contract, publish
 
 _SIGNAL_KEY = "_natural_alpha_terminal_publication"
@@ -25,12 +26,15 @@ def publish_if_terminal(deps, ctx, reservation, result: dict) -> bool:
     # copy private while the existing envelope replaces the previous owner.
     scratch = dict(result)
     scratch["_continuation_owner"] = "NONE"
-    published = publish(
-        deps, reservation, scratch, user_query=ctx.user_query,
-        profile_state=ProfileConversationState(),
-        contract=delegated_contract(reservation, scratch, deps.conv_store),
-        execution_record=None,
-    )
+    try:
+        published = publish(
+            deps, reservation, scratch, user_query=ctx.user_query,
+            profile_state=ProfileConversationState(),
+            contract=delegated_contract(reservation, scratch, deps.conv_store),
+            execution_record=None,
+        )
+    except PublicationRecoveryError as exc:
+        raise NaturalAlphaPublicationError("NATURAL_ALPHA_TERMINAL_PUBLICATION_FAILED") from exc
     if not published.published:
         raise NaturalAlphaPublicationError("NATURAL_ALPHA_TERMINAL_PUBLICATION_FAILED")
     return True
