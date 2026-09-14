@@ -75,6 +75,15 @@ candidate freeze, independent review and the decision on 50 real dogfood turns.
 ```
 
 The CLI does not construct Settings or open the source path with SQLite.
+The authenticated operator must pass the trusted local feedback store via
+`--db`; its directory and pre-existing files must not be controlled by a local
+adversary. Descriptor binding and the verified snapshot guarantee consistent
+acquisition and no source writes or new source sidecars. They do not
+authenticate the provenance of regular bytes already present: compatible
+hardlinks and byte copies are indistinguishable without an external authority.
+Resistance to a malicious local filesystem is a separate design requirement
+for store ownership/ACLs or authenticated store evidence, not a link-count
+check in this reporter.
 It makes a stable byte snapshot of the DB and its WAL, when present, in an
 automatically removed temporary directory; SHM is never copied. Streaming
 SHA-256 fingerprints and device/inode/size/mtime/ctime witnesses must agree

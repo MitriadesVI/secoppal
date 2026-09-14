@@ -78,6 +78,15 @@ con evidencia; el reporte no los infiere del rating o de la ausencia de errores.
 y `--since` con zona horaria; `--checkpoint` permite un tamaño distinto para
 pruebas o revisiones. Nunca abre el origen con SQLite: crea una snapshot de
 bytes de DB y WAL, si existe, en un directorio temporal privado. No copia SHM.
+El operador autenticado debe seleccionar con `--db` el almacén local de
+feedback confiable; su directorio y sus archivos preexistentes no pueden estar
+bajo control adversarial. La snapshot acredita adquisición consistente y
+ausencia de escrituras o sidecars nuevos en el origen, pero no autentica la
+procedencia de bytes regulares que ya estaban allí. Hardlinks y copias de bytes
+compatibles son indistinguibles sin una autoridad externa. Resistir un sistema
+de archivos local adversarial sería un requisito nuevo: exigiría una frontera
+de autoridad del store —por ejemplo ownership/ACL y evidencia autenticada— y
+una decisión de diseño separada; no se simula rechazando sólo hardlinks.
 Antes y después de copiar deben coincidir el conjunto DB/WAL, sus hashes
 SHA-256 calculados por streaming y sus testigos de device, inode, tamaño,
 mtime y ctime; los hashes de las copias deben coincidir con los del origen.
