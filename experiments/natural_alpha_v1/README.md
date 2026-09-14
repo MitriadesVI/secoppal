@@ -114,8 +114,21 @@ inclusively (`--checkpoint`, default 50). Until N is reached, it includes all
 available selected traces and `checkpoint_ready=false`. Later turns do not
 enter a completed checkpoint. `window_end` identifies its last trace/time.
 
-`eligible_turns_window` is the general trace denominator; `reached_seam` counts
-mode alpha + recorded eligibility 1 + present status. `coverage_gap`,
+Each eligible `run_query` turn opens one opaque host receipt before admission
+and `coordinate_turn`. Its first trace — or one trace-only record when no route
+traced — carries `natural_alpha_coverage_turn_id` and the host class
+`REACHED_ALPHA`, `PROFILE_BYPASS`, `CONTROL_BYPASS`, `FAST_PATH_BYPASS`,
+`OTHER_BYPASS` or `UNACCREDITED`, assigned from the seam witness, structured UI
+inputs and result witnesses, never from query text. Later legacy traces of the
+same turn count as `secondary_traces_window`. Only a confirmed SQLite commit
+credits a turn; a JSONL append does not. A missing commit logs
+`natural_alpha_coverage_persistence_failed stop_dogfood=true` and writes no
+replacement trace: stop the dogfood. `UNACCREDITED` must be 0.
+
+`traffic_turns_window` counts turns; `natural_work_turns_window` is the language
+denominator (REACHED_ALPHA + FAST_PATH + PROFILE + OTHER); controls are separate
+and `eligible_turns_window` adds them. `reached_seam` counts mode alpha +
+recorded eligibility 1 + nominal status agreeing with the receipt. `coverage_gap`,
 `coverage_rate` and exact `excluded_by_route` expose Profile/fast-path gaps
 without interpreting Spanish or changing routing. Ratings, utility and latency
 statistics concern reached-Alpha turns only. Utility divides positive by rated

@@ -4,6 +4,7 @@ from copy import copy
 from app.core.natural_alpha.admission import observe
 from app.core.natural_alpha.catalog import LABELS
 from app.core.natural_alpha.terminal_publication import mark_terminal_publication
+from app.core.natural_alpha.turn_receipt import note_seam_reached
 from app.core.workflow.results import empty_result
 
 
@@ -28,7 +29,10 @@ def attach_observation(result, observation):
 
 
 def handle_natural_alpha(deps, ctx, provider=None):
-    return observe(deps.settings, ctx.user_query, ctx.channel, ctx.user_identity, provider)
+    observation = observe(deps.settings, ctx.user_query, ctx.channel, ctx.user_identity, provider)
+    if observation is not None:
+        note_seam_reached(deps.feedback)  # The turn receipt's only seam witness.
+    return observation
 
 
 def observed_deps(deps, observation):

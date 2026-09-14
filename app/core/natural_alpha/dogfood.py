@@ -160,19 +160,16 @@ def _read_snapshot(path, email):
         conn.create_function("normalized_email", 1, _email, deterministic=True)
         latency = "t.natural_alpha_latency_ms" if "natural_alpha_latency_ms" in columns else "NULL"
         total = "t.total_ms" if "total_ms" in columns else "NULL"
-        # Extract only explicit coverage/provenance fields, never raw trace JSON.
+        # Extract only explicit host coverage fields, never raw trace JSON.
         fields = {
             "coverage_class": "$.natural_alpha_coverage_class",
             "coverage_excluded_route": "$.natural_alpha_excluded_by_route",
-            "profile_planned_jobs": "$.timings_ms.entity_profile_planned_jobs",
-            "profile_attempted_calls": "$.timings_ms.entity_profile_calls_total",
+            "coverage_turn_id": "$.natural_alpha_coverage_turn_id",
         }
-        projection = []
-        for alias, json_path in fields.items():
-            value = f"json_extract(t.trace_json, '{json_path}')" if "trace_json" in columns else "NULL"
-            if alias.startswith("profile_") and "trace_json" in columns:
-                value = f"CASE WHEN json_type(t.trace_json, '{json_path}') IN ('integer', 'real') THEN {value} END"
-            projection.append(f"{value} AS {alias}")
+        projection = [
+            (f"json_extract(t.trace_json, '{json_path}')" if "trace_json" in columns else "NULL") + f" AS {alias}"
+            for alias, json_path in fields.items()
+        ]
         rows = conn.execute(
             f"""SELECT t.trace_id, t.timestamp, t.route_reason, t.rating,
                            t.natural_alpha_mode, t.natural_alpha_eligible, t.natural_alpha_status,

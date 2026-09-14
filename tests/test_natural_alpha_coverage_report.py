@@ -18,6 +18,11 @@ def _bypass(trace_id, route, **kwargs):
                 natural_alpha_eligible=None, natural_alpha_status=None, **kwargs)
 
 
+def _receipted(row, classification, turn="turn"):
+    row.update(coverage_class=classification, coverage_excluded_route=row["route_reason"], coverage_turn_id=turn)
+    return row
+
+
 def test_sqlite_checkpoint_fifty_reached_not_fifty_traffic_and_control_is_separate(tmp_path):
     db = _database(tmp_path, [
         _bypass("control", "reset"), _bypass("fast", "radar_list"),
@@ -31,17 +36,14 @@ def test_sqlite_checkpoint_fifty_reached_not_fifty_traffic_and_control_is_separa
         conn.execute("ALTER TABLE traces ADD COLUMN trace_json TEXT DEFAULT '{}'")
         for trace_id, classification, route in (("control", "CONTROL_BYPASS", "reset"),
                                                 ("fast", "FAST_PATH_BYPASS", "radar_list"),
+                                                ("profile", "PROFILE_BYPASS", "entity_profile_overview"),
                                                 ("other", "OTHER_BYPASS", "unmapped_host_route")):
             conn.execute("UPDATE traces SET trace_json=? WHERE trace_id=?", (json.dumps({
                 "natural_alpha_coverage_class": classification,
                 "natural_alpha_excluded_by_route": route,
+                "natural_alpha_coverage_turn_id": f"turn-{trace_id}",
                 "user_query": "PRIVATE MUST NOT BE SELECTED",
             }), trace_id))
-        conn.execute("UPDATE traces SET trace_json=? WHERE trace_id='profile'", (json.dumps({
-            "natural_alpha_coverage_class": "PROFILE_BYPASS",
-            "natural_alpha_excluded_by_route": "entity_profile_overview",
-            "timings_ms": {"entity_profile_planned_jobs": 4.0, "entity_profile_calls_total": 2.0},
-        }),))
     before = db.read_bytes()
     report = report_dogfood(db, email=EMAIL, since=SINCE)
     assert report["checkpoint_ready"]
@@ -50,6 +52,7 @@ def test_sqlite_checkpoint_fifty_reached_not_fifty_traffic_and_control_is_separa
     assert report["fast_path_bypass"] == report["profile_bypass"] == report["other_bypass"] == report["control_bypass"] == 1
     assert report["traffic_turns_window"] == report["eligible_turns_window"] == 54
     assert report["natural_work_turns_window"] == 53
+    assert report["secondary_traces_window"] == 0
     assert report["coverage_gap"] == 3 and report["coverage_rate"] == 50 / 53
     assert report["control_by_route"] == {"reset": 1}
     assert report["excluded_by_route"] == {"reset": 1, "radar_list": 1, "entity_profile_overview": 1, "unmapped_host_route": 1}
@@ -58,15 +61,21 @@ def test_sqlite_checkpoint_fifty_reached_not_fifty_traffic_and_control_is_separa
     assert "PRIVATE" not in json.dumps(report) and EMAIL not in json.dumps(report)
 
 
-def test_profile_requires_positive_preseam_witness_and_real_alpha_wins():
+def test_recorded_class_requires_a_turn_receipt_and_must_agree_with_alpha_columns():
     row = _bypass("profile", "entity_profile_overview")
     assert classify_coverage(row) == "UNACCREDITED"
     row.update(coverage_class="PROFILE_BYPASS", coverage_excluded_route=row["route_reason"])
-    assert classify_coverage(row) == "UNACCREDITED"
-    row.update(profile_planned_jobs=4.0, profile_attempted_calls=2.0)
+    assert classify_coverage(row) == "UNACCREDITED"  # No turn receipt.
+    row.update(coverage_turn_id="turn")
     assert classify_coverage(row) == "PROFILE_BYPASS"
     row.update(natural_alpha_mode="alpha", natural_alpha_eligible=1, natural_alpha_status="MATCHED")
+    assert classify_coverage(row) == "UNACCREDITED"  # A bypass class cannot carry Alpha evidence.
+    row.update(coverage_class="REACHED_ALPHA", coverage_excluded_route=None)
     assert classify_coverage(row) == "REACHED_ALPHA"
+    row.update(coverage_turn_id=None)
+    assert classify_coverage(row) == "UNACCREDITED"
+    legacy = _row("pre-receipt")
+    assert classify_coverage(legacy) == "REACHED_ALPHA"
 
 
 @pytest.mark.parametrize("route", ["direct_lookup_id", "direct_lookup_url", "pagination_more", "refinement", "suggestion"])
@@ -98,9 +107,9 @@ def test_no_other_string_can_complete_a_checkpoint(status):
 
 
 @pytest.mark.parametrize("mode", [None, "off", "shadow", "alpha"])
-def test_route_and_profile_timings_do_not_prove_dogfood_eligibility(mode):
+def test_route_alone_does_not_prove_dogfood_eligibility(mode):
     row = _bypass("history", "entity_profile_overview")
-    row.update(natural_alpha_mode=mode, profile_planned_jobs=4.0, profile_attempted_calls=2.0)
+    row.update(natural_alpha_mode=mode)
     summary = coverage_summary([row])
     assert summary["profile_bypass"] == summary["natural_work_turns_window"] == 0
     assert summary["unaccredited_by_route"] == {"entity_profile_overview": 1}
@@ -109,8 +118,7 @@ def test_route_and_profile_timings_do_not_prove_dogfood_eligibility(mode):
 @pytest.mark.parametrize("field,value", [("natural_alpha_mode", "shadow"), ("natural_alpha_mode", "off"),
                                          ("natural_alpha_eligible", 0), ("natural_alpha_status", "FOREIGN")])
 def test_contradictory_alpha_fields_do_not_borrow_a_bypass_receipt(field, value):
-    row = _bypass("contradiction", "direct_lookup_id")
-    row.update(coverage_class="FAST_PATH_BYPASS", coverage_excluded_route=row["route_reason"])
+    row = _receipted(_bypass("contradiction", "direct_lookup_id"), "FAST_PATH_BYPASS")
     row[field] = value
     assert coverage_summary([row])["natural_work_turns_window"] == 0
 
@@ -124,24 +132,35 @@ def test_foreign_status_cannot_complete_the_sqlite_checkpoint(tmp_path):
     assert report["natural_work_turns_window"] == 49
 
 
-def test_fake_reached_metadata_and_unknown_route_do_not_create_checkpoint_volume():
+@pytest.mark.parametrize("classification,excluded", [
+    ("REACHED_ALPHA", "unknown"), ("CONTROL_BYPASS", "reset"), ("INVENTED_BYPASS", "unknown"), (7, "unknown"),
+])
+def test_fake_or_mismatched_recorded_classes_do_not_create_volume(classification, excluded):
     row = _bypass("fake", "unknown")
-    row.update(coverage_class="REACHED_ALPHA", coverage_excluded_route="unknown")
+    row.update(coverage_class=classification, coverage_excluded_route=excluded, coverage_turn_id="turn")
     assert classify_coverage(row) == "UNACCREDITED"
-    row.update(coverage_class="CONTROL_BYPASS", coverage_excluded_route="reset")
-    assert classify_coverage(row) == "UNACCREDITED"
+
+
+def test_secondary_trace_of_a_classified_turn_is_inventoried_not_counted():
+    primary = _receipted(_bypass("primary", "entity_profile_overview"), "PROFILE_BYPASS", turn="t1")
+    secondary = _bypass("secondary", "heuristic_only", coverage_turn_id="t1")
+    orphan = _bypass("orphan", "heuristic_only", coverage_turn_id="t2")  # Its primary never persisted.
+    borrowed = _row("borrowed", coverage_turn_id="t1")  # Alpha columns cannot hide as secondary.
+    summary = coverage_summary([primary, secondary, orphan, borrowed])
+    assert summary["secondary_traces_window"] == 1
+    assert summary["traffic_turns_window"] == 3
+    assert summary["profile_bypass"] == 1 and summary["reached_alpha"] == 0
+    assert summary["unaccredited_turns_window"] == 2
 
 
 @given(st.lists(st.sampled_from((*LANGUAGE_CLASSES, "CONTROL_BYPASS")), max_size=80))
 def test_coverage_partition_never_counts_controls_in_language_opportunities(classes):
     rows = []
-    for classification in classes:
-        row = _row("a") if classification == "REACHED_ALPHA" else _bypass("b", "unknown")
-        if classification == "PROFILE_BYPASS":
-            row.update(route_reason="entity_profile_overview", profile_planned_jobs=0.0, profile_attempted_calls=0.0,
-                       coverage_class=classification, coverage_excluded_route="entity_profile_overview")
-        elif classification != "REACHED_ALPHA":
-            row.update(coverage_class=classification, coverage_excluded_route="unknown")
+    for index, classification in enumerate(classes):
+        if classification == "REACHED_ALPHA":
+            row = _row("a", coverage_class=classification, coverage_turn_id=f"t{index}")
+        else:
+            row = _receipted(_bypass("b", "unknown"), classification, turn=f"t{index}")
         rows.append(row)
     report = coverage_summary(rows)
     counts = Counter(classes)

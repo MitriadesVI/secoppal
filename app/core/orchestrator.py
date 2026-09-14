@@ -30,8 +30,7 @@ from app.core.workflow.handlers.natural_alpha import (
     handle_natural_alpha, multi_job_result, observed_deps,
 )
 from app.core.natural_alpha.budget import legacy_budget
-from app.core.natural_alpha.coverage import ensure_alpha_coverage_trace
-from app.core.natural_alpha.coverage_context import coverage_scope
+from app.core.natural_alpha.turn_receipt import finalize_turn, turn_scope
 from app.core.workflow.handlers.pagination import handle_pagination
 from app.core.workflow.handlers.radar import handle_radar_command
 from app.core.workflow.handlers.refinement import handle_refinement
@@ -235,7 +234,13 @@ class SecopalWorkflow:
             today=today,
             run_started_at=time.perf_counter(),
         )
+        # One coverage receipt spans the whole turn, including coordinate_turn.
+        with turn_scope(self.settings, self.feedback, ctx) as receipt:
+            result = self._run_turn(ctx, seed_resolved_params)
+            finalize_turn(receipt, self.feedback, ctx, result)
+        return result
 
+    def _run_turn(self, ctx: HandlerContext, seed_resolved_params: dict | None) -> dict:
         # Etapa 5: la recolección de telemetría es por-turno = por-run_query. begin
         # aquí + end en finally garantiza el cierre del ContextVar en TODA salida
         # (early return de cualquier handler, excepción). El attach es CENTRALIZADO:
@@ -355,11 +360,10 @@ class SecopalWorkflow:
     def _dispatch(self, ctx: HandlerContext, seed_resolved_params: dict | None) -> dict:
         """Chain of responsibility — first non-None handler result wins."""
         if seed_resolved_params:
-            with coverage_scope(self.deps, ctx):
-                res = handle_refinement(self.deps, ctx, seed_resolved_params)
-                if res is not None:
-                    res["_continuation_owner"] = "TABULAR"
-                    return ensure_alpha_coverage_trace(self.deps, ctx, res)
+            res = handle_refinement(self.deps, ctx, seed_resolved_params)
+            if res is not None:
+                res["_continuation_owner"] = "TABULAR"
+                return res
             # If the refinement guard failed (no scope/topic), fall through.
 
         for handler in (
@@ -370,17 +374,13 @@ class SecopalWorkflow:
             handle_suggestion_selection,
             handle_direct_lookup,
         ):
-            classification = "CONTROL_BYPASS" if handler is handle_reset or (
-                handler is handle_actor_selection and ctx.actor_candidate_selection is not None
-            ) else "FAST_PATH_BYPASS"
-            with coverage_scope(self.deps, ctx, excluded_route_class=classification):
-                res = handler(self.deps, ctx)
-                if res is not None:
-                    res["_continuation_owner"] = {
-                        handle_actor_selection: "ACTOR", handle_radar_command: "RADAR",
-                        handle_pagination: "TABULAR", handle_suggestion_selection: "TABULAR",
-                    }.get(handler, "NONE")
-                    return ensure_alpha_coverage_trace(self.deps, ctx, res, excluded_route_class=classification)
+            res = handler(self.deps, ctx)
+            if res is not None:
+                res["_continuation_owner"] = {
+                    handle_actor_selection: "ACTOR", handle_radar_command: "RADAR",
+                    handle_pagination: "TABULAR", handle_suggestion_selection: "TABULAR",
+                }.get(handler, "NONE")
+                return res
 
         deps = self.deps
         observation = handle_natural_alpha(deps, ctx, self.natural_alpha_provider)
