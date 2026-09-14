@@ -197,7 +197,13 @@ M2_1_MODIFIED_FILE_SHA256 = {
     # and valid/invalid reloads; Search/M2.1 oracles below remain unchanged.
     # Executive UX V1.1 re-pins this consumer for Frame-ON profile actions;
     # the executive UX boundary and profile-action UI boundary tests bound it.
-    "streamlit_app.py": "84ce0fbc5e25f5c70f7e67297051f19c5107d50105c465d31217070803db9b53",
+    # Natural Alpha A0-A1 (70cab9c) adds only its projection import/call,
+    # optional history metadata and render import/call. The inverse-byte guard
+    # in test_entity_profile_executive_ux_boundary removes those exact blocks
+    # and restores the complete pre-Alpha 84ce0fbc file before the older guard.
+    # test_natural_alpha_presentation bounds eligibility and host-only display;
+    # test_natural_alpha_runtime keeps OFF/legacy execution parity explicit.
+    "streamlit_app.py": "7fdd7d65bcd4149a45a7a19f1909a8f94eef90344a7253886c8b8e739c54827a",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

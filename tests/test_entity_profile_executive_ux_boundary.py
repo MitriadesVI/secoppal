@@ -1,6 +1,41 @@
-"""Bound the two deliberate presentation-only public-file repins."""
+"""Bound the explicitly authorized profile and Alpha UI additions by exact bytes."""
 from pathlib import Path
 import hashlib
+
+import pytest
+
+
+def _pre_alpha_streamlit(text: str) -> str:
+    additions = (
+        "    from app.core.natural_alpha.presentation import project\n\n"
+        "    alpha_view = project(result)\n",
+        '        **({"natural_alpha": alpha_view} if alpha_view else {}),\n',
+        "    from app.core.natural_alpha.presentation import render\n\n"
+        '    render(st, item.get("natural_alpha"), settings=get_settings(), identity=_current_user_identity())\n',
+    )
+    for addition in additions:
+        assert text.count(addition) == 1
+        text = text.replace(addition, "", 1)
+    # The full pre-Alpha file at 4bde6992, before stripping the profile hooks.
+    # This also bounds edits inside functions the historical guard removes.
+    assert hashlib.sha256(text.encode()).hexdigest() == (
+        "84ce0fbc5e25f5c70f7e67297051f19c5107d50105c465d31217070803db9b53"
+    )
+    return text
+
+
+@pytest.mark.parametrize("original,replacement", [
+    ("    alpha_view = project(result)\n", "    alpha_view = project({})\n"),
+    ('        **({"natural_alpha": alpha_view} if alpha_view else {}),\n',
+     '        **({"natural_alpha": alpha_view} if alpha_view else {}),\n' * 2),
+    ('    view = item.get("entity_profile_view")\n',
+     '    st.write("unapproved")\n    view = item.get("entity_profile_view")\n'),
+])
+def test_alpha_inverse_byte_guard_rejects_unapproved_ui_changes(original, replacement):
+    text = Path("streamlit_app.py").read_text()
+    assert text.count(original) == 1
+    with pytest.raises(AssertionError):
+        _pre_alpha_streamlit(text.replace(original, replacement, 1))
 
 
 def test_results_divergence_is_only_optional_presentation_key():
@@ -14,7 +49,7 @@ def test_results_divergence_is_only_optional_presentation_key():
 
 
 def test_streamlit_divergence_is_only_profile_history_and_render_hook():
-    text = Path("streamlit_app.py").read_text()
+    text = _pre_alpha_streamlit(Path("streamlit_app.py").read_text())
     additions = (
         "from app.entity_profile_ui import (\n    render_entity_profile_content,\n)\n",
         '        "entity_profile_view": result.get("entity_profile_view"),\n',
