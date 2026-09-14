@@ -587,13 +587,21 @@ def _current_user_identity() -> dict:
     name = (st.session_state.get("user_name") or "").strip()
     if email:
         channel_user_key = f"email:{email}"
-        return {
+        identity = {
             "channel": "streamlit",
             "channel_user_key": channel_user_key,
             "name": name or None,
             "email": email,
             "is_anonymous": False,
         }
+        from app.core.natural_alpha.identity import issue_streamlit_identity
+
+        account = globals().get("_account")
+        if account is None or account is not st.session_state.get("account"):
+            return identity
+        return issue_streamlit_identity(
+            identity, account, auth_enabled=get_settings().secoppal_auth_enabled,
+        )
 
     anon_id = st.session_state.anonymous_user_id
     return {

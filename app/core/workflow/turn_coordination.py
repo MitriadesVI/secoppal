@@ -152,6 +152,11 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
     else:
         result = workflow._dispatch(ctx, dispatch_seed)
 
+    from app.core.natural_alpha.terminal_publication import publish_if_terminal
+
+    if publish_if_terminal(deps, ctx, reservation, result):
+        return result
+
     if admitted.route is not AdmissionRoute.DELEGATED:
         # Las rutas que la admisión atiende por su cuenta no pasan por
         # ningún handler, así que su traza se registra aquí. NO se añade un

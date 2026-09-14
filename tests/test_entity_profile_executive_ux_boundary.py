@@ -12,10 +12,20 @@ def _pre_alpha_streamlit(text: str) -> str:
         '        **({"natural_alpha": alpha_view} if alpha_view else {}),\n',
         "    from app.core.natural_alpha.presentation import render\n\n"
         '    render(st, item.get("natural_alpha"), settings=get_settings(), identity=_current_user_identity())\n',
+        "        from app.core.natural_alpha.identity import issue_streamlit_identity\n\n"
+        '        account = globals().get("_account")\n'
+        '        if account is None or account is not st.session_state.get("account"):\n'
+        "            return identity\n"
+        "        return issue_streamlit_identity(\n"
+        "            identity, account, auth_enabled=get_settings().secoppal_auth_enabled,\n"
+        "        )\n",
     )
     for addition in additions:
         assert text.count(addition) == 1
         text = text.replace(addition, "", 1)
+    binding = '        identity = {\n            "channel": "streamlit",\n'
+    assert text.count(binding) == 1
+    text = text.replace(binding, '        return {\n            "channel": "streamlit",\n', 1)
     # The full pre-Alpha file at 4bde6992, before stripping the profile hooks.
     # This also bounds edits inside functions the historical guard removes.
     assert hashlib.sha256(text.encode()).hexdigest() == (
@@ -30,6 +40,8 @@ def _pre_alpha_streamlit(text: str) -> str:
      '        **({"natural_alpha": alpha_view} if alpha_view else {}),\n' * 2),
     ('    view = item.get("entity_profile_view")\n',
      '    st.write("unapproved")\n    view = item.get("entity_profile_view")\n'),
+    ('        if account is None or account is not st.session_state.get("account"):\n',
+     '        if False:\n'),
 ])
 def test_alpha_inverse_byte_guard_rejects_unapproved_ui_changes(original, replacement):
     text = Path("streamlit_app.py").read_text()

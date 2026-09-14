@@ -3,9 +3,11 @@ import time
 import uuid
 
 from .grounding import validate_and_ground
+from .identity import authenticated_email
 from .models import Observation
 from .prompt import provider_request
 from .provider import DeepSeekResponsesProvider, Provider
+from .uniqueness import validate_job_uniqueness
 
 
 def mode(settings) -> str:
@@ -16,12 +18,10 @@ def mode(settings) -> str:
 def eligible(settings, channel: str, identity: dict | None) -> bool:
     if settings.secoppal_auth_enabled is not True or channel != "streamlit":
         return False
-    if type(identity) is not dict or identity.get("is_anonymous") is not False:
-        return False
-    email = identity.get("email")
+    email = authenticated_email(identity)
     allowlist = settings.secoppal_natural_alpha_email
-    return (type(email) is str and type(allowlist) is str and bool(allowlist.strip())
-            and email.strip().lower() == allowlist.strip().lower())
+    return (email is not None and type(allowlist) is str and bool(allowlist.strip())
+            and email == allowlist.strip().lower())
 
 
 def observe(settings, raw: str, channel: str, identity: dict | None,
@@ -46,6 +46,7 @@ def observe(settings, raw: str, channel: str, identity: dict | None,
                            latency_ms=latency, fallback_reason=response.error)
     try:
         jobs = validate_and_ground(raw, response.payload)
+        validate_job_uniqueness(jobs)
     except (ValueError, TypeError):
         return Observation(selected_mode, "INVALID", provider_calls=response.provider_calls,
                            latency_ms=latency, fallback_reason="INVALID_PROPOSAL")

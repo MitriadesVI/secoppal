@@ -8,6 +8,7 @@ from hypothesis import given, strategies as st
 from app.config import Settings
 from app.core.natural_alpha.admission import eligible, observe
 from app.core.natural_alpha.grounding import ground_exact, validate_and_ground
+from app.core.natural_alpha.identity import issue_streamlit_identity
 from app.core.natural_alpha.prompt import provider_request
 from app.core.natural_alpha.provider import DeepSeekResponsesProvider, ProviderResult
 
@@ -22,7 +23,10 @@ def config(**overrides):
                     secoppal_natural_alpha_email="alpha@example.test", **overrides)
 
 
-IDENTITY = {"email": " ALPHA@EXAMPLE.TEST ", "is_anonymous": False}
+IDENTITY = issue_streamlit_identity(
+    {"email": " ALPHA@EXAMPLE.TEST ", "is_anonymous": False, "channel": "streamlit"},
+    {"email": "alpha@example.test"}, auth_enabled=True,
+)
 
 
 @pytest.mark.parametrize("mode", ["off", "typo", "ALPHA", " alpha ", ""])

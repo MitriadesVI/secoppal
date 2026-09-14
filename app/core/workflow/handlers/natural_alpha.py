@@ -3,6 +3,7 @@ from copy import copy
 
 from app.core.natural_alpha.admission import observe
 from app.core.natural_alpha.catalog import LABELS
+from app.core.natural_alpha.terminal_publication import mark_terminal_publication
 from app.core.workflow.results import empty_result
 
 
@@ -52,5 +53,8 @@ def multi_job_result(deps, ctx, observation):
     result["trace_id"] = deps.feedback.log_trace(
         ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
     )
-    # A trace is sufficient. No pending plan or legacy conversation params.
+    if ctx.publication_required:
+        mark_terminal_publication(result)
+    # No pending plan or legacy conversation params. The coordinator consumes
+    # the private marker after this one trace and before any public projection.
     return result

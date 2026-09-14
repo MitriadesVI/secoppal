@@ -23,6 +23,7 @@ MULTI = json.dumps({"jobs": [
     {"action": "SEARCH", "aspect": "CONTRACTS", "evidence_quote": "busca contratos", "occurrence": 1},
     {"action": "ANALYZE", "aspect": "TOTAL_VALUE", "evidence_quote": "dime cuánto suman", "occurrence": 1},
 ]})
+DUPLICATE = json.dumps({"jobs": json.loads(payload())["jobs"] * 2})
 
 
 class SqlSource:
@@ -146,6 +147,7 @@ def run(flow, raw=RAW, **kwargs):
     ("alpha", ProviderResult(payload("NOT IN RAW"), provider_calls=1)),
     ("alpha", ProviderResult(payload(action="OTHER", aspect="OTHER"), provider_calls=1)),
     ("alpha", ProviderResult('{"jobs": []}', provider_calls=1)),
+    ("alpha", ProviderResult(DUPLICATE, provider_calls=1)),
 ])
 def test_legacy_material_parity_and_single_trace(make_flow, mode, response):
     baseline, candidate = make_flow("off"), make_flow(mode, response)
@@ -183,6 +185,9 @@ def test_legacy_material_parity_and_single_trace(make_flow, mode, response):
         candidate.natural_alpha_provider.observe.assert_called_once()
         assert traces[0]["natural_alpha_status"] == after["natural_alpha_status"]
         assert traces[0]["natural_alpha_legacy_route_reason"] == after["route_reason"]
+        if response.payload == DUPLICATE:
+            assert after["natural_alpha_status"] == "INVALID"
+            assert after["natural_alpha_jobs"] == []
 
 
 @pytest.mark.parametrize("frame", [False, True])

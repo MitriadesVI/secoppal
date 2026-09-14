@@ -203,7 +203,10 @@ M2_1_MODIFIED_FILE_SHA256 = {
     # and restores the complete pre-Alpha 84ce0fbc file before the older guard.
     # test_natural_alpha_presentation bounds eligibility and host-only display;
     # test_natural_alpha_runtime keeps OFF/legacy execution parity explicit.
-    "streamlit_app.py": "7fdd7d65bcd4149a45a7a19f1909a8f94eef90344a7253886c8b8e739c54827a",
+    # Alpha R3 seals only the current authenticated account identity. The same
+    # inverse-byte guard removes the exact issuer seam and restores 84ce0fbc;
+    # test_natural_alpha_identity proves /chat spoofing and stale accounts fail.
+    "streamlit_app.py": "26f19892520370a14e49182309631b6168540af1c13f5d7ab9c1d4aa1fedd162",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried
