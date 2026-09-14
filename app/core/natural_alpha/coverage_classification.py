@@ -10,6 +10,8 @@ REACHED_ALPHA = "REACHED_ALPHA"
 BYPASS_CLASSES = frozenset({"PROFILE_BYPASS", "CONTROL_BYPASS", "FAST_PATH_BYPASS", "OTHER_BYPASS"})
 COVERAGE_CLASSES = frozenset({REACHED_ALPHA, "UNACCREDITED", *BYPASS_CLASSES})
 PROFILE_ACTION, ACTOR_CANDIDATE = "profile_action_selection", "actor_candidate_selection"
+SEEDED_REFINEMENT = "seed_resolved_params"  # UI filter chips send pre-resolved params.
+STRUCTURED_INPUTS = (PROFILE_ACTION, ACTOR_CANDIDATE, SEEDED_REFINEMENT)
 _ALPHA_FIELDS = ("natural_alpha_mode", "natural_alpha_eligible", "natural_alpha_status")
 # Routes minted by the explicit dispatcher handlers before the seam.
 _FAST_PATH_PREFIXES = ("radar_", "pagination_", "suggestion", "direct_lookup_", "actor_selection_")
@@ -27,7 +29,8 @@ def classify_turn(*, seam_reached: bool, structured: frozenset, result: dict) ->
         return "UNACCREDITED"  # Alpha evidence without the seam witness.
     if PROFILE_ACTION in structured or _profile_lane(result):
         return "PROFILE_BYPASS"
-    if ACTOR_CANDIDATE in structured or route == "reset" or route.startswith("admission_"):
+    if (ACTOR_CANDIDATE in structured or SEEDED_REFINEMENT in structured
+            or route == "reset" or route.startswith("admission_")):
         return "CONTROL_BYPASS"
     if route.startswith(_FAST_PATH_PREFIXES) or route in _FAST_PATH_ROUTES:
         return "FAST_PATH_BYPASS"

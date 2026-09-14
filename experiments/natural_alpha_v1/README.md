@@ -129,6 +129,20 @@ replacement trace: stop the dogfood. A turn that raises logs
 `coverage_gap`/`coverage_rate`, `checkpoint_ready=false`, and the CLI exits 3
 after printing. Valid Alpha columns without a receipt are never reached samples.
 
+Structured UI inputs (profile action, actor candidate selection and seeded
+refinement chips via `seed_resolved_params`) are controls, not language work,
+unless the turn reached Alpha. FAST_PATH uses a closed list of host route
+families: an unlisted pre-seam route is still accredited, as `OTHER_BYPASS`.
+
+Before validating a checkpoint the operator must:
+
+1. confirm the application logs for the window contain no
+   `natural_alpha_coverage_persistence_failed` and no
+   `natural_alpha_coverage_turn_aborted`; such turns are absent from SQLite and
+   the report cannot see them;
+2. run the report with `--since` later than the deploy/activation of this
+   version; earlier traces carry no receipt and make the window fail closed.
+
 `traffic_turns_window` counts turns; `natural_work_turns_window` is the language
 denominator (REACHED_ALPHA + FAST_PATH + PROFILE + OTHER); controls are separate
 and `eligible_turns_window` adds them. `reached_seam` counts mode alpha +

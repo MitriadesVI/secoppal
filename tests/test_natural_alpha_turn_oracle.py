@@ -52,6 +52,8 @@ def _steps(flow):
         ("radar_list", "FAST_PATH_BYPASS", False, False, say("mis radares", "legacy")),
         ("radar_run", "FAST_PATH_BYPASS", False, False, say("ejecutar radar Mantenimiento", "legacy")),
         ("direct_lookup", "FAST_PATH_BYPASS", False, False, say("CO1.BDOS.123456", "legacy")),
+        ("seeded_refinement", "CONTROL_BYPASS", False, False, say(
+            "🎚️ Mantenimiento", "legacy", seed_resolved_params={"dataset": "procesos", "objeto": ["mantenimiento"]})),
         ("actor_structured_selection", "CONTROL_BYPASS", False, False, select_actor),
         ("reset", "CONTROL_BYPASS", False, False, say("/reset", "legacy")),
         ("profile_post_seam", "REACHED_ALPHA", False, True, say(PROFILE_RAW, "profile-post")),

@@ -161,6 +161,8 @@ def test_reached_alpha_requires_both_seam_witness_and_valid_metadata(store, seam
     (frozenset(), {"route_reason": "entity_profile_overview", "analytical_intent": "entity_profile",
                    "profile_planned_jobs": 4.0, "profile_attempted_calls": True}, "OTHER_BYPASS"),
     (frozenset({"actor_candidate_selection"}), {"route_reason": "actor_selection_stale"}, "CONTROL_BYPASS"),
+    (frozenset({"seed_resolved_params"}), {"route_reason": "refinement"}, "CONTROL_BYPASS"),
+    (frozenset({"seed_resolved_params", "profile_action_selection"}), {"route_reason": "refinement"}, "PROFILE_BYPASS"),
     (frozenset(), {"route_reason": "admission_invalid_tabular_cursor"}, "CONTROL_BYPASS"),
     (frozenset(), {"route_reason": "reset"}, "CONTROL_BYPASS"),
     (frozenset(), {"route_reason": "actor_selection_seed"}, "FAST_PATH_BYPASS"),

@@ -13,7 +13,7 @@ from threading import current_thread
 import uuid
 
 from .admission import eligible, mode
-from .coverage_classification import ACTOR_CANDIDATE, BYPASS_CLASSES, PROFILE_ACTION, classify_turn
+from .coverage_classification import BYPASS_CLASSES, STRUCTURED_INPUTS, classify_turn
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +57,7 @@ def turn_scope(settings, store, ctx):
     receipt = None
     if mode(settings) == "alpha" and eligible(settings, ctx.channel, ctx.user_identity):
         receipt = TurnReceipt(store, frozenset(
-            name for name in (PROFILE_ACTION, ACTOR_CANDIDATE) if getattr(ctx, name) is not None
+            name for name in STRUCTURED_INPUTS if getattr(ctx, name) is not None
         ))
     # Even an ineligible nested turn must mask an eligible outer one.
     token = _CURRENT.set(receipt)
