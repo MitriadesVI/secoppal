@@ -12,6 +12,8 @@ import stat
 from statistics import fmean
 from tempfile import TemporaryDirectory
 
+from .coverage_report import coverage_summary, is_reached_alpha as _reached
+
 
 class DogfoodReportError(ValueError):
     """Explicit input/schema/data failure, never a fabricated zero report."""
@@ -158,10 +160,23 @@ def _read_snapshot(path, email):
         conn.create_function("normalized_email", 1, _email, deterministic=True)
         latency = "t.natural_alpha_latency_ms" if "natural_alpha_latency_ms" in columns else "NULL"
         total = "t.total_ms" if "total_ms" in columns else "NULL"
+        # Extract only explicit coverage/provenance fields, never raw trace JSON.
+        fields = {
+            "coverage_class": "$.natural_alpha_coverage_class",
+            "coverage_excluded_route": "$.natural_alpha_excluded_by_route",
+            "profile_planned_jobs": "$.timings_ms.entity_profile_planned_jobs",
+            "profile_attempted_calls": "$.timings_ms.entity_profile_calls_total",
+        }
+        projection = []
+        for alias, json_path in fields.items():
+            value = f"json_extract(t.trace_json, '{json_path}')" if "trace_json" in columns else "NULL"
+            if alias.startswith("profile_") and "trace_json" in columns:
+                value = f"CASE WHEN json_type(t.trace_json, '{json_path}') IN ('integer', 'real') THEN {value} END"
+            projection.append(f"{value} AS {alias}")
         rows = conn.execute(
             f"""SELECT t.trace_id, t.timestamp, t.route_reason, t.rating,
                            t.natural_alpha_mode, t.natural_alpha_eligible, t.natural_alpha_status,
-                           {latency} AS alpha_latency, {total} AS turn_latency
+                           {latency} AS alpha_latency, {total} AS turn_latency, {', '.join(projection)}
                     FROM traces AS t JOIN users AS u ON u.user_id = t.user_id
                     WHERE t.channel = ? AND normalized_email(u.email) = ?
                     ORDER BY t.timestamp, t.trace_id""", ("streamlit", email),
@@ -184,11 +199,6 @@ def _read(db: Path, email: str):
         raise DogfoodReportError("SNAPSHOT_UNSTABLE")
     except (OSError, sqlite3.Error) as exc:
         raise DogfoodReportError("DATABASE_READ_FAILED") from exc
-
-
-def _reached(row):
-    return (row["natural_alpha_mode"] == "alpha" and row["natural_alpha_eligible"] == 1
-            and type(row["natural_alpha_status"]) is str and bool(row["natural_alpha_status"]))
 
 
 def _latency(rows, field):
@@ -234,7 +244,6 @@ def report_dogfood(db: Path | str, *, email: str, since: str, checkpoint: int = 
             scoped.append(row)
         if len(scoped) == checkpoint:
             break
-    excluded = Counter(row["route_reason"] for row in window if not _reached(row))
     statuses = Counter(row["natural_alpha_status"] for row in scoped)
     positive = sum(row["rating"] == 1 for row in scoped)
     negative = sum(row["rating"] == 0 for row in scoped)
@@ -245,9 +254,8 @@ def report_dogfood(db: Path | str, *, email: str, since: str, checkpoint: int = 
         "since": start.isoformat(), "checkpoint_target": checkpoint,
         "checkpoint_ready": reached == checkpoint,
         "window_end": {key: window[-1][key] for key in ("trace_id", "timestamp")} if window else None,
-        "eligible_turns_window": total, "reached_seam": reached, "coverage_gap": total - reached,
-        "coverage_rate": reached / total if total else None,
-        "excluded_by_route": dict(sorted(excluded.items())), "alpha_status_counts": dict(sorted(statuses.items())),
+        "eligible_turns_window": total, "reached_seam": reached, **coverage_summary(window),
+        "alpha_status_counts": dict(sorted(statuses.items())),
         "blocked": statuses["MULTI_JOB_BLOCKED"], "invalid": statuses["INVALID"],
         "provider_errors": statuses["PROVIDER_ERROR"],
         "alpha_ratings": {"rated": rated, "positive": positive, "negative": negative,

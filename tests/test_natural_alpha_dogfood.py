@@ -98,8 +98,11 @@ def test_window_extends_to_nth_reached_seam_and_excludes_later_turns(cohort):
     assert result["window_end"] == {"trace_id": "a7", "timestamp": "2026-09-13T00:07:00+00:00"}
     assert result["eligible_turns_window"] == 8
     assert result["reached_seam"] == 3
-    assert result["coverage_gap"] == 5
-    assert result["coverage_rate"] == 3 / 8
+    assert result["coverage_gap"] == 4
+    assert result["coverage_rate"] == 3 / 7
+    assert result["traffic_turns_window"] == 8
+    assert result["natural_work_turns_window"] == 7
+    assert result["control_bypass"] == 1
     assert result["excluded_by_route"] == {
         "entity_profile_overview": 1, "reset": 1, "not_eligible": 1, "shadow_route": 1, "missing_status": 1,
     }
@@ -120,7 +123,7 @@ def test_checkpoint_not_ready_uses_all_available_scoped_turns(cohort):
     assert not result["checkpoint_ready"]
     assert result["eligible_turns_window"] == 11
     assert result["reached_seam"] == 5
-    assert result["coverage_gap"] == 6
+    assert result["coverage_gap"] == 5
     assert result["provider_errors"] == 1
     assert result["excluded_by_route"]["entity_profile_suppliers"] == 1
     assert result["alpha_ratings"]["utility_rate"] == 2 / 3

@@ -51,6 +51,33 @@ def test_natural_alpha_off_has_no_trace_metadata(tmp_path):
     assert "natural_alpha" not in store.path.read_text()
 
 
+def test_coverage_keeps_schema_and_existing_trace_fields_without_classification(tmp_path):
+    store = FeedbackStore(tmp_path / "traces.jsonl")
+    before_schema = [tuple(row) for row in _db_rows(store.db_path, "PRAGMA table_info(traces)")]
+    base = store.log_trace("same", "streamlit", _workflow_result(route_reason="radar_list"))
+    covered = store.log_trace("same", "streamlit", _workflow_result(
+        route_reason="radar_list", natural_alpha_coverage_class="FAST_PATH_BYPASS",
+        natural_alpha_excluded_by_route="radar_list", natural_alpha_status="SKIPPED",
+        natural_alpha_private_payload="MUST NOT COPY", arbitrary_extra="MUST NOT COPY",
+    ))
+    rows = {row["trace_id"]: dict(row) for row in _db_rows(store.db_path, "SELECT * FROM traces")}
+    before, after = json.loads(rows[base]["trace_json"]), json.loads(rows[covered]["trace_json"])
+    assert after.pop("natural_alpha_coverage_class") == "FAST_PATH_BYPASS"
+    assert after.pop("natural_alpha_excluded_by_route") == "radar_list"
+    for trace in (before, after):
+        trace.pop("trace_id")
+        trace.pop("timestamp")
+    assert json.dumps(before, sort_keys=True) == json.dumps(after, sort_keys=True)
+    for row in rows.values():
+        row.pop("trace_id")
+        row.pop("timestamp")
+        row.pop("trace_json")
+    assert rows[base] == rows[covered]
+    assert rows[covered]["natural_alpha_status"] is None
+    assert before_schema == [tuple(row) for row in _db_rows(store.db_path, "PRAGMA table_info(traces)")]
+    assert "MUST NOT COPY" not in store.path.read_text()
+
+
 def _workflow_result(**overrides):
     result = {
         "parsed_params": {"dataset": "procesos"},

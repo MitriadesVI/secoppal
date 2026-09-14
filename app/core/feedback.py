@@ -38,6 +38,7 @@ from pathlib import Path
 from typing import Any
 
 from app.core.db import connect_sqlite
+from app.core.natural_alpha.coverage_metadata import coverage_metadata
 from app.core.natural_alpha.telemetry import (
     TRACE_COLUMNS as NATURAL_ALPHA_COLUMNS, sqlite_values, trace_metadata,
 )
@@ -215,6 +216,7 @@ class FeedbackStore:
 
         trace = {
             **trace_metadata(workflow_result),
+            **coverage_metadata(workflow_result),
             **actor_resolution_trace(
                 workflow_result.get("resolved_params") or workflow_result.get("parsed_params") or {}
             ),

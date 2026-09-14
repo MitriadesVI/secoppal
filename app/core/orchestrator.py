@@ -30,6 +30,7 @@ from app.core.workflow.handlers.natural_alpha import (
     handle_natural_alpha, multi_job_result, observed_deps,
 )
 from app.core.natural_alpha.budget import legacy_budget
+from app.core.natural_alpha.coverage import ensure_alpha_coverage_trace
 from app.core.workflow.handlers.pagination import handle_pagination
 from app.core.workflow.handlers.radar import handle_radar_command
 from app.core.workflow.handlers.refinement import handle_refinement
@@ -356,7 +357,7 @@ class SecopalWorkflow:
             res = handle_refinement(self.deps, ctx, seed_resolved_params)
             if res is not None:
                 res["_continuation_owner"] = "TABULAR"
-                return res
+                return ensure_alpha_coverage_trace(self.deps, ctx, res)
             # If the refinement guard failed (no scope/topic), fall through.
 
         for handler in (
@@ -373,7 +374,12 @@ class SecopalWorkflow:
                     handle_actor_selection: "ACTOR", handle_radar_command: "RADAR",
                     handle_pagination: "TABULAR", handle_suggestion_selection: "TABULAR",
                 }.get(handler, "NONE")
-                return res
+                return ensure_alpha_coverage_trace(
+                    self.deps, ctx, res,
+                    excluded_route_class=("CONTROL_BYPASS" if handler is handle_reset or (
+                        handler is handle_actor_selection and ctx.actor_candidate_selection is not None
+                    ) else "FAST_PATH_BYPASS"),
+                )
 
         deps = self.deps
         observation = handle_natural_alpha(deps, ctx, self.natural_alpha_provider)

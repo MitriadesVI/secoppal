@@ -230,4 +230,6 @@ def test_actual_fast_paths_never_call_provider(make_flow, raw, kwargs, route):
     result = run(flow, raw, chat_id="fast", **kwargs)
     assert result["route_reason"].startswith(route)
     flow.natural_alpha_provider.observe.assert_not_called()
-    assert not any(key.startswith("natural_alpha_") for key in result)
+    assert {key for key in result if key.startswith("natural_alpha_")} <= {
+        "natural_alpha_coverage_class", "natural_alpha_excluded_by_route",
+    }
