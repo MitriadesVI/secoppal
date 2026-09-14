@@ -74,10 +74,22 @@ candidate freeze, independent review and the decision on 50 real dogfood turns.
 /Users/rodrigoortiz/Documents/secoppal/.venv/bin/python scripts/report_natural_alpha_dogfood.py --db /explicit/path/secoppal.db --email allowed@example.test --since 2026-09-13T00:00:00-05:00
 ```
 
-The CLI does not construct Settings or create/migrate/write the DB. It opens
-the explicit path with SQLite `mode=ro`, requires the trace/identity/Alpha
-columns and reports an explicit error if they are missing. It prints JSON to
-stdout. Email and raw query are not included; raw query is never selected.
+The CLI does not construct Settings or open the source path with SQLite.
+It makes a stable byte snapshot of the DB and its WAL, when present, in an
+automatically removed temporary directory; SHM is never copied. Streaming
+SHA-256 fingerprints and device/inode/size/mtime/ctime witnesses must agree
+before and after copying, the DB/WAL file set must remain unchanged, and copied
+bytes must match their source digests. Appearance/disappearance of WAL or a
+changed witness retries from a fresh temporary directory, at most three times;
+continued instability fails explicitly as `SNAPSHOT_UNSTABLE`. A rollback
+journal's presence is conservatively rejected, including apparently idle ones.
+
+Only the verified temporary copy is opened with SQLite `mode=ro`. SQLite may
+create its own SHM there; cleanup removes the copy and all its sidecars on
+success or error. No source DB/WAL/SHM is created, migrated or written. The
+report requires the trace/identity/Alpha columns and fails explicitly if they
+are missing. It prints JSON to stdout. Email and raw query are not included;
+raw query is never selected.
 `--review-queue` adds only trace ID, timestamp, host route/status and rating.
 
 The window includes the selected email's Streamlit traces from `--since`,

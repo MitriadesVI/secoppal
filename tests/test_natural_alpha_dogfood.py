@@ -1,17 +1,22 @@
 """Synthetic SQLite coverage oracle, with scope decoys and write witnesses."""
+from contextlib import closing
 from datetime import datetime, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
+import shutil
 import sqlite3
 import subprocess
 import sys
 from unittest.mock import patch
+from urllib.parse import unquote, urlsplit
 
 from hypothesis import given, strategies as st
 import pytest
 
 from app.core.natural_alpha.dogfood import DogfoodReportError, report_dogfood
+from app.core.natural_alpha import dogfood
 
 EMAIL = "alpha@example.test"
 SINCE = "2026-09-13T00:00:00+00:00"
@@ -47,6 +52,20 @@ def _database(tmp_path, rows, *, latency=True):
                          + ",".join("?" for _ in fields) + ")",
                          [[row[field] for field in fields] for row in rows])
     return db
+
+
+def _directory_witness(directory):
+    return {path.name: (hashlib.sha256(path.read_bytes()).hexdigest(), path.stat().st_size,
+                        path.stat().st_mtime_ns, path.stat().st_ino)
+            for path in directory.iterdir()}
+
+
+def _temporary_sqlite_path(uri):
+    parsed = urlsplit(uri)
+    assert parsed.scheme == "file" and parsed.query == "mode=ro"
+    path = Path(unquote(parsed.path))
+    assert path.parent.name.startswith("natural-alpha-dogfood-")
+    return path
 
 
 @pytest.fixture
@@ -149,7 +168,9 @@ def test_read_only_uri_and_database_hash_mtime_are_preserved(cohort, monkeypatch
     monkeypatch.setattr(sqlite3, "connect", connect)
     report_dogfood(cohort, email=EMAIL, since=SINCE)
     assert len(observed) == 1
-    assert observed[0][0] == cohort.resolve().as_uri() + "?mode=ro"
+    temporary = _temporary_sqlite_path(observed[0][0])
+    assert temporary != cohort.resolve()
+    assert not temporary.parent.exists()
     assert observed[0][1] == {"uri": True}
     assert all(statement.lstrip().split()[0] in {"PRAGMA", "BEGIN", "SELECT"} for statement in statements)
     assert not any("user_query" in statement for statement in statements)
@@ -170,7 +191,7 @@ def test_missing_schema_and_missing_database_fail_without_creation(tmp_path):
     assert not missing.exists()
 
 
-def test_read_only_report_sees_committed_wal_rows_without_changing_database_files(tmp_path):
+def test_read_only_report_sees_committed_wal_rows_without_changing_database_files(tmp_path, monkeypatch):
     db = _database(tmp_path, [_row("first")])
     with sqlite3.connect(db) as writer:
         assert writer.execute("PRAGMA journal_mode=WAL").fetchone()[0] == "wal"
@@ -181,15 +202,172 @@ def test_read_only_report_sees_committed_wal_rows_without_changing_database_file
         writer.commit()
         wal = Path(str(db) + "-wal")
         assert wal.exists()
-        files = {path.name for path in tmp_path.iterdir()}
-        before = {path: (hashlib.sha256(path.read_bytes()).hexdigest(), path.stat().st_mtime_ns)
-                  for path in (db, wal)}
+        shm = Path(str(db) + "-shm")
+        assert shm.exists()
+        before = _directory_witness(tmp_path)
+        original = sqlite3.connect
+        connections = []
+
+        def connect(database, **kwargs):
+            connections.append(database)
+            temporary = _temporary_sqlite_path(database)
+            assert set(path.name for path in temporary.parent.iterdir()) == {
+                "feedback.sqlite", "feedback.sqlite-wal",
+            }
+            return original(database, **kwargs)
+
+        monkeypatch.setattr(sqlite3, "connect", connect)
         result = report_dogfood(db, email=EMAIL, since=SINCE, checkpoint=2)
         assert result["checkpoint_ready"] and result["reached_seam"] == 2
         assert result["window_end"]["trace_id"] == "wal-only"
-        assert {path.name for path in tmp_path.iterdir()} == files
-        for path in (db, wal):
-            assert (hashlib.sha256(path.read_bytes()).hexdigest(), path.stat().st_mtime_ns) == before[path]
+        assert _directory_witness(tmp_path) == before
+        assert len(connections) == 1
+        temporary = _temporary_sqlite_path(connections[0])
+        assert temporary != db.resolve()
+        assert not temporary.parent.exists()
+
+
+def test_wal_source_without_shm_is_never_opened_or_given_new_sidecars(tmp_path):
+    fixture = tmp_path / "writer"
+    fixture.mkdir()
+    db = _database(fixture, [_row("first")])
+    source = tmp_path / "source"
+    source.mkdir()
+    copied_db = source / "source.sqlite"
+    with sqlite3.connect(db) as writer:
+        writer.execute("PRAGMA journal_mode=WAL")
+        writer.execute("UPDATE traces SET trace_id='wal-only'")
+        writer.commit()
+        shutil.copyfile(db, copied_db)
+        shutil.copyfile(Path(str(db) + "-wal"), Path(str(copied_db) + "-wal"))
+        before = _directory_witness(source)
+        assert set(before) == {"source.sqlite", "source.sqlite-wal"}
+        result = report_dogfood(copied_db, email=EMAIL, since=SINCE, checkpoint=1)
+        assert result["window_end"]["trace_id"] == "wal-only"
+        assert _directory_witness(source) == before
+
+
+@pytest.mark.parametrize("event", ["appears", "disappears"])
+def test_wal_membership_change_retries_and_keeps_committed_rows(tmp_path, monkeypatch, event):
+    db = _database(tmp_path, [_row("first")])
+    wal = Path(str(db) + "-wal")
+    with closing(sqlite3.connect(db)) as writer:
+        writer.execute("PRAGMA journal_mode=WAL")
+        if event == "disappears":
+            writer.execute("UPDATE traces SET trace_id='wal-only'")
+            writer.commit()
+        assert wal.exists() is (event == "disappears")
+        copyfile = shutil.copyfile
+        destinations = []
+        changed = False
+        after_writer = None
+
+        def copy(source, destination):
+            nonlocal changed, after_writer
+            copyfile(source, destination)
+            destinations.append(destination)
+            if not changed:
+                changed = True
+                if event == "appears":
+                    writer.execute("UPDATE traces SET trace_id='wal-only'")
+                    writer.commit()
+                else:
+                    writer.close()  # Checkpoints and removes this fabricated WAL.
+                after_writer = _directory_witness(tmp_path)
+
+        monkeypatch.setattr(shutil, "copyfile", copy)
+        original = sqlite3.connect
+        connections = []
+
+        def connect(database, **kwargs):
+            connections.append(_temporary_sqlite_path(database))
+            return original(database, **kwargs)
+
+        monkeypatch.setattr(sqlite3, "connect", connect)
+        result = report_dogfood(db, email=EMAIL, since=SINCE, checkpoint=1)
+        assert result["window_end"]["trace_id"] == "wal-only"
+        attempts = {path.parent for path in destinations}
+        assert len(attempts) == 2
+        assert all(not path.exists() for path in attempts)
+        assert len(connections) == 1
+        assert _directory_witness(tmp_path) == after_writer
+
+
+@pytest.mark.parametrize("fault", ["source_metadata", "copied_bytes"])
+def test_three_unstable_copies_fail_closed_without_sqlite_or_leaked_temporaries(cohort, monkeypatch, fault):
+    copyfile = shutil.copyfile
+    destinations = []
+
+    def copy(source, destination):
+        copyfile(source, destination)
+        destinations.append(destination)
+        if fault == "source_metadata":
+            stamp = source.stat()
+            os.utime(source, ns=(stamp.st_atime_ns, stamp.st_mtime_ns + 1_000_000))
+        else:
+            with destination.open("ab") as output:
+                output.write(b"fabricated torn copy")
+
+    monkeypatch.setattr(shutil, "copyfile", copy)
+    with patch.object(sqlite3, "connect") as connect:
+        with pytest.raises(DogfoodReportError, match="SNAPSHOT_UNSTABLE"):
+            report_dogfood(cohort, email=EMAIL, since=SINCE)
+    connect.assert_not_called()
+    assert len(destinations) == 3
+    assert all(not path.parent.exists() for path in destinations)
+
+
+def test_active_rollback_journal_is_rejected_without_touching_source(tmp_path):
+    db = _database(tmp_path, [_row("committed")])
+    with closing(sqlite3.connect(db)) as writer:
+        writer.execute("UPDATE traces SET trace_id='uncommitted'")
+        journal = Path(str(db) + "-journal")
+        assert journal.stat().st_size > 0
+        before = _directory_witness(tmp_path)
+        with patch.object(sqlite3, "connect") as connect:
+            with pytest.raises(DogfoodReportError, match="SNAPSHOT_ROLLBACK_JOURNAL_PRESENT"):
+                report_dogfood(db, email=EMAIL, since=SINCE)
+        connect.assert_not_called()
+        assert _directory_witness(tmp_path) == before
+
+
+def test_temporaries_are_removed_on_schema_failure_and_source_reads_are_streamed(tmp_path, monkeypatch):
+    db = tmp_path / "legacy.sqlite"
+    with closing(sqlite3.connect(db)) as conn:
+        conn.execute("CREATE TABLE users (user_id TEXT, email TEXT)")
+        conn.commit()
+    original = dogfood.TemporaryDirectory
+    directories = []
+
+    def temporary(**kwargs):
+        directory = original(**kwargs)
+        directories.append(Path(directory.name))
+        return directory
+
+    monkeypatch.setattr(dogfood, "TemporaryDirectory", temporary)
+    with patch.object(Path, "read_bytes", side_effect=AssertionError("must stream source hashes")):
+        with pytest.raises(DogfoodReportError, match="MISSING_COLUMNS:traces"):
+            report_dogfood(db, email=EMAIL, since=SINCE)
+    assert len(directories) == 1
+    assert all(not path.exists() for path in directories)
+
+
+@given(st.lists(st.booleans(), min_size=3, max_size=3))
+def test_snapshot_retry_budget_queries_only_the_first_stable_copy(stable_attempts):
+    effects = [None if stable else dogfood._SnapshotChanged() for stable in stable_attempts]
+    with patch.object(dogfood, "_stable_snapshot", side_effect=effects) as snapshot:
+        with patch.object(dogfood, "_read_snapshot", return_value=[]) as query:
+            if any(stable_attempts):
+                assert dogfood._read(Path(__file__), EMAIL) == []
+                expected = stable_attempts.index(True) + 1
+                query.assert_called_once()
+            else:
+                with pytest.raises(DogfoodReportError, match="SNAPSHOT_UNSTABLE"):
+                    dogfood._read(Path(__file__), EMAIL)
+                expected = 3
+                query.assert_not_called()
+    assert snapshot.call_count == expected
+    assert all(not call.args[1].parent.exists() for call in snapshot.call_args_list)
 
 
 def test_missing_alpha_column_is_an_explicit_schema_failure(tmp_path):

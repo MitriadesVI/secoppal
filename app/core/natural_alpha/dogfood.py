@@ -2,14 +2,23 @@
 from collections import Counter
 from contextlib import closing
 from datetime import datetime, timezone
+import hashlib
 import math
+import os
 from pathlib import Path
+import shutil
 import sqlite3
+import stat
 from statistics import fmean
+from tempfile import TemporaryDirectory
 
 
 class DogfoodReportError(ValueError):
     """Explicit input/schema/data failure, never a fabricated zero report."""
+
+
+class _SnapshotChanged(Exception):
+    """A source/copy witness changed; retry without querying the copy."""
 
 
 _REQUIRED = {
@@ -43,27 +52,100 @@ def _columns(conn):
     return columns["traces"]
 
 
-def _read(db: Path, email: str):
+def _stamp(info):
+    return info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns
+
+
+def _fingerprint(path):
+    before = path.stat()
+    if not stat.S_ISREG(before.st_mode):
+        raise DogfoodReportError("SNAPSHOT_SOURCE_NOT_REGULAR")
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        if _stamp(os.fstat(source.fileno())) != _stamp(before):
+            raise _SnapshotChanged
+        while chunk := source.read(1024 * 1024):
+            digest.update(chunk)
+        if _stamp(os.fstat(source.fileno())) != _stamp(before):
+            raise _SnapshotChanged
+    if _stamp(path.stat()) != _stamp(before):
+        raise _SnapshotChanged
+    return _stamp(before), digest.digest()
+
+
+def _source_files(path):
+    # Conservatively reject even an apparently idle rollback journal: recovery
+    # needs SQLite authority that this source reader deliberately never acquires.
     try:
-        path = db.expanduser().resolve(strict=True)
-        uri = path.as_uri() + "?mode=ro"
-        with closing(sqlite3.connect(uri, uri=True)) as conn:
-            conn.row_factory = sqlite3.Row
-            conn.execute("PRAGMA query_only=ON")
-            conn.execute("BEGIN")
-            columns = _columns(conn)
-            conn.create_function("normalized_email", 1, _email, deterministic=True)
-            latency = "t.natural_alpha_latency_ms" if "natural_alpha_latency_ms" in columns else "NULL"
-            total = "t.total_ms" if "total_ms" in columns else "NULL"
-            rows = conn.execute(
-                f"""SELECT t.trace_id, t.timestamp, t.route_reason, t.rating,
+        Path(str(path) + "-journal").lstat()
+    except FileNotFoundError:
+        pass
+    else:
+        raise DogfoodReportError("SNAPSHOT_ROLLBACK_JOURNAL_PRESENT")
+    files = {"": path}
+    wal = Path(str(path) + "-wal")
+    try:
+        wal.lstat()
+    except FileNotFoundError:
+        pass
+    else:
+        files["-wal"] = wal
+    return files
+
+
+def _source_fingerprints(path):
+    files = _source_files(path)
+    fingerprints = {suffix: _fingerprint(source) for suffix, source in files.items()}
+    if files != _source_files(path):
+        raise _SnapshotChanged
+    return fingerprints
+
+
+def _stable_snapshot(path, destination):
+    before = _source_fingerprints(path)
+    for suffix, expected in before.items():
+        copied = Path(str(destination) + suffix)
+        shutil.copyfile(Path(str(path) + suffix), copied)
+        actual = _fingerprint(copied)
+        if actual[1] != expected[1]:
+            raise _SnapshotChanged
+    if _source_fingerprints(path) != before:
+        raise _SnapshotChanged
+
+
+def _read_snapshot(path, email):
+    # SQLite may create/update SHM in this disposable directory, never at source.
+    with closing(sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)) as conn:
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA query_only=ON")
+        conn.execute("BEGIN")
+        columns = _columns(conn)
+        conn.create_function("normalized_email", 1, _email, deterministic=True)
+        latency = "t.natural_alpha_latency_ms" if "natural_alpha_latency_ms" in columns else "NULL"
+        total = "t.total_ms" if "total_ms" in columns else "NULL"
+        rows = conn.execute(
+            f"""SELECT t.trace_id, t.timestamp, t.route_reason, t.rating,
                            t.natural_alpha_mode, t.natural_alpha_eligible, t.natural_alpha_status,
                            {latency} AS alpha_latency, {total} AS turn_latency
                     FROM traces AS t JOIN users AS u ON u.user_id = t.user_id
                     WHERE t.channel = ? AND normalized_email(u.email) = ?
                     ORDER BY t.timestamp, t.trace_id""", ("streamlit", email),
-            ).fetchall()
-            return [dict(row) for row in rows]
+        ).fetchall()
+        return [dict(row) for row in rows]
+
+
+def _read(db: Path, email: str):
+    try:
+        path = db.expanduser().resolve(strict=True)
+        for _ in range(3):
+            with TemporaryDirectory(prefix="natural-alpha-dogfood-") as directory:
+                snapshot = Path(directory) / "feedback.sqlite"
+                try:
+                    _stable_snapshot(path, snapshot)
+                except (_SnapshotChanged, FileNotFoundError):
+                    continue
+                return _read_snapshot(snapshot, email)
+        raise DogfoodReportError("SNAPSHOT_UNSTABLE")
     except (OSError, sqlite3.Error) as exc:
         raise DogfoodReportError("DATABASE_READ_FAILED") from exc
 

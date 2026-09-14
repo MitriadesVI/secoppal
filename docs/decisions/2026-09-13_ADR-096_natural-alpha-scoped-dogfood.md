@@ -76,9 +76,24 @@ con evidencia; el reporte no los infiere del rating o de la ausencia de errores.
 
 `scripts/report_natural_alpha_dogfood.py` recibe explícitamente `--db`, `--email`
 y `--since` con zona horaria; `--checkpoint` permite un tamaño distinto para
-pruebas o revisiones. Abre SQLite mediante URI `mode=ro`, verifica las columnas
-necesarias y falla explícitamente si faltan. No construye Settings, no migra la
-DB, no escribe un reporte en disco y no selecciona texto de consultas.
+pruebas o revisiones. Nunca abre el origen con SQLite: crea una snapshot de
+bytes de DB y WAL, si existe, en un directorio temporal privado. No copia SHM.
+Antes y después de copiar deben coincidir el conjunto DB/WAL, sus hashes
+SHA-256 calculados por streaming y sus testigos de device, inode, tamaño,
+mtime y ctime; los hashes de las copias deben coincidir con los del origen.
+Si aparece o desaparece WAL o cambia un testigo, repite desde un temporal
+nuevo, con un máximo de tres intentos. La inestabilidad persistente falla como
+`SNAPSHOT_UNSTABLE`; no se entrega un reporte de una copia dudosa. La presencia
+de cualquier rollback journal se rechaza conservadoramente, incluso si parece
+inactivo: el reporte no intenta recuperar ni interpretar ese journal.
+
+Sólo la copia verificada se abre mediante URI `mode=ro`; SQLite puede crear su
+propio SHM dentro del temporal. El directorio y sus sidecars se eliminan al
+terminar, tanto en éxito como en error. Ninguna conexión SQLite recibe el path
+origen, ni se crean o modifican sus DB/WAL/SHM. Verifica las columnas necesarias
+y falla explícitamente si faltan. No construye Settings, no migra la DB, no
+escribe un reporte en disco y no selecciona texto de consultas. Esto corrige
+la premisa insuficiente de que `mode=ro` por sí solo impedía efectos sobre SHM.
 
 La salida incluye status counts, bloqueos, inválidos, errores, ratings y media /
 p95 de latencias observadas en el carril Alpha. El p95 usa rango más cercano.
