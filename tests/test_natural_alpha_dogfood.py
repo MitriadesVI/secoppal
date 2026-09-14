@@ -96,14 +96,16 @@ def test_window_extends_to_nth_reached_seam_and_excludes_later_turns(cohort):
     result = report_dogfood(cohort, email=" ALPHA@EXAMPLE.TEST ", since=SINCE, checkpoint=3)
     assert result["checkpoint_ready"]
     assert result["window_end"] == {"trace_id": "a7", "timestamp": "2026-09-13T00:07:00+00:00"}
-    assert result["eligible_turns_window"] == 8
+    assert result["eligible_turns_window"] == 3
     assert result["reached_seam"] == 3
-    assert result["coverage_gap"] == 4
-    assert result["coverage_rate"] == 3 / 7
+    assert result["coverage_gap"] == 0
+    assert result["coverage_rate"] == 1
     assert result["traffic_turns_window"] == 8
-    assert result["natural_work_turns_window"] == 7
-    assert result["control_bypass"] == 1
-    assert result["excluded_by_route"] == {
+    assert result["natural_work_turns_window"] == 3
+    assert result["control_bypass"] == 0
+    assert result["unaccredited_turns_window"] == 5
+    assert result["excluded_by_route"] == {}
+    assert result["unaccredited_by_route"] == {
         "entity_profile_overview": 1, "reset": 1, "not_eligible": 1, "shadow_route": 1, "missing_status": 1,
     }
     assert result["alpha_status_counts"] == {"MATCHED": 1, "MULTI_JOB_BLOCKED": 1, "INVALID": 1}
@@ -121,11 +123,12 @@ def test_checkpoint_not_ready_uses_all_available_scoped_turns(cohort):
     result = report_dogfood(cohort, email=EMAIL, since=SINCE)
     assert result["checkpoint_target"] == 50
     assert not result["checkpoint_ready"]
-    assert result["eligible_turns_window"] == 11
+    assert result["eligible_turns_window"] == 5
+    assert result["traffic_turns_window"] == 11
     assert result["reached_seam"] == 5
-    assert result["coverage_gap"] == 5
+    assert result["coverage_gap"] == 0
     assert result["provider_errors"] == 1
-    assert result["excluded_by_route"]["entity_profile_suppliers"] == 1
+    assert result["unaccredited_by_route"]["entity_profile_suppliers"] == 1
     assert result["alpha_ratings"]["utility_rate"] == 2 / 3
     assert result["alpha_latency_ms"]["avg"] == 250
 
@@ -615,8 +618,10 @@ def test_window_partition_and_cutoff_invariants(reached_flags, checkpoint):
     with patch("app.core.natural_alpha.dogfood._read", return_value=rows):
         result = report_dogfood("synthetic-unused-path", email=EMAIL, since=SINCE, checkpoint=checkpoint)
     expected_reached = sum(reached_flags[:cutoff])
-    assert result["eligible_turns_window"] == cutoff
+    assert result["traffic_turns_window"] == cutoff
+    assert result["eligible_turns_window"] == expected_reached
+    assert result["unaccredited_turns_window"] == cutoff - expected_reached
     assert result["reached_seam"] == expected_reached
-    assert result["coverage_gap"] + expected_reached == cutoff
+    assert result["coverage_gap"] == 0
     assert result["checkpoint_ready"] is (len(positions) >= checkpoint)
-    assert result["coverage_rate"] == (expected_reached / cutoff if cutoff else None)
+    assert result["coverage_rate"] == (1 if expected_reached else None)

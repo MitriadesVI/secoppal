@@ -52,14 +52,22 @@ def test_natural_alpha_off_has_no_trace_metadata(tmp_path):
 
 
 def test_coverage_keeps_schema_and_existing_trace_fields_without_classification(tmp_path):
+    from types import SimpleNamespace
+    from app.core.natural_alpha.coverage_context import coverage_scope
+    from app.core.workflow.context import HandlerContext
+    from tests.test_natural_alpha_contract import IDENTITY
+
     store = FeedbackStore(tmp_path / "traces.jsonl")
+    deps = SimpleNamespace(feedback=store, settings=SimpleNamespace(secoppal_natural_alpha_mode="alpha",
+                           secoppal_auth_enabled=True, secoppal_natural_alpha_email=IDENTITY["email"]))
+    ctx = HandlerContext(user_query="same", channel="streamlit", user_identity=IDENTITY)
     before_schema = [tuple(row) for row in _db_rows(store.db_path, "PRAGMA table_info(traces)")]
-    base = store.log_trace("same", "streamlit", _workflow_result(route_reason="radar_list"))
-    covered = store.log_trace("same", "streamlit", _workflow_result(
-        route_reason="radar_list", natural_alpha_coverage_class="FAST_PATH_BYPASS",
-        natural_alpha_excluded_by_route="radar_list", natural_alpha_status="SKIPPED",
-        natural_alpha_private_payload="MUST NOT COPY", arbitrary_extra="MUST NOT COPY",
-    ))
+    base = store.log_trace("same", "streamlit", _workflow_result(route_reason="radar_list"), user_identity=IDENTITY)
+    with coverage_scope(deps, ctx):
+        covered = store.log_trace("same", "streamlit", _workflow_result(
+            route_reason="radar_list", natural_alpha_status="SKIPPED",
+            natural_alpha_private_payload="MUST NOT COPY", arbitrary_extra="MUST NOT COPY",
+        ), user_identity=IDENTITY)
     rows = {row["trace_id"]: dict(row) for row in _db_rows(store.db_path, "SELECT * FROM traces")}
     before, after = json.loads(rows[base]["trace_json"]), json.loads(rows[covered]["trace_json"])
     assert after.pop("natural_alpha_coverage_class") == "FAST_PATH_BYPASS"

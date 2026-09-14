@@ -1,5 +1,6 @@
 """Coverage is trace-only: real winning handlers keep their original effects."""
 from copy import deepcopy
+import sqlite3
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
@@ -97,7 +98,7 @@ def test_ineligible_or_outside_dogfood_is_exact_noop(make_flow, kind):
 def test_feedback_failure_does_not_change_a_completed_handler(make_flow, caplog):
     flow = make_flow("alpha")
     deps = flow.deps
-    deps.feedback = Mock(log_trace=Mock(side_effect=OSError("PRIVATE EXCEPTION TEXT")))
+    deps.feedback = Mock(log_coverage_trace=Mock(side_effect=OSError("PRIVATE EXCEPTION TEXT")))
     result = {"route_reason": "reset", "response": "unchanged"}
     ctx = HandlerContext(user_query="private", channel="streamlit", user_identity=IDENTITY)
     assert ensure_alpha_coverage_trace(deps, ctx, result) is result
@@ -120,6 +121,7 @@ def test_existing_handler_trace_and_append_counts_are_not_duplicated(make_flow, 
                                             }},
                                         ])
         before = len(flow.feedback.get_recent())
+        before_jsonl = flow.feedback.path.read_text() if flow.feedback.path.exists() else ""
         flow.settings.secoppal_natural_alpha_mode = "alpha" if candidate else "off"
         raw = {"direct_lookup": "CO1.BDOS.123456", "pagination": "muestrame mas",
                "refinement": "refinar", "suggestion": "1"}[handler]
@@ -127,9 +129,18 @@ def test_existing_handler_trace_and_append_counts_are_not_duplicated(make_flow, 
         with patch.object(flow.conv_store, "append_turn", wraps=flow.conv_store.append_turn) as append:
             result = run(flow, raw, chat_id="existing", **kwargs)
         assert len(flow.feedback.get_recent()) - before == 1
+        if flow.feedback.jsonl_dual_write:
+            jsonl = flow.feedback.path.read_text()
+            assert jsonl.startswith(before_jsonl)
+            assert len(jsonl.splitlines()) == len(before_jsonl.splitlines()) + 1
         assert not COVERAGE_KEYS & result.keys()
+        trace = next(item for item in flow.feedback.get_recent() if item["trace_id"] == result["trace_id"])
+        assert bool(COVERAGE_KEYS & trace.keys()) is candidate
+        if candidate:
+            assert trace["natural_alpha_coverage_class"] == "FAST_PATH_BYPASS"
+            assert trace["natural_alpha_excluded_by_route"] == result["route_reason"]
         report = report_dogfood(flow.feedback.db_path, email=IDENTITY["email"], since="2000-01-01T00:00:00+00:00")
-        assert report["fast_path_bypass"] >= 1
+        assert report["fast_path_bypass"] == int(candidate)
         flow.natural_alpha_provider.observe.assert_not_called()
         outputs.append({key: result.get(key) for key in (
             "response", "route_reason", "parsed_params", "resolved_params", "soql_query", "results", "total_count",
@@ -209,3 +220,43 @@ def test_successful_actor_selection_delegates_one_trace_without_coverage_duplica
         append.assert_called_once()
         flow.natural_alpha_provider.observe.assert_not_called()
     assert delegated == ["original", "original"]
+
+
+@pytest.mark.parametrize("failure", ["disabled", "sqlite_error"])
+def test_total_sink_failure_cannot_publish_a_coverage_trace_id(make_flow, monkeypatch, failure):
+    flow = make_flow("alpha")
+    flow.feedback.jsonl_dual_write = False
+    if failure == "disabled":
+        flow.feedback.sqlite_enabled = False
+    else:
+        monkeypatch.setattr(flow.feedback, "_connect", Mock(side_effect=sqlite3.OperationalError("sink failed")))
+    result = {"route_reason": "reset", "response": "unchanged"}
+    ctx = HandlerContext(user_query="/reset", channel="streamlit", user_identity=IDENTITY)
+    assert ensure_alpha_coverage_trace(flow.deps, ctx, result, excluded_route_class="CONTROL_BYPASS") is result
+
+
+@pytest.mark.parametrize("kind", ["off", "shadow", "plain_identity", "wrong_email", "auth_off"])
+def test_existing_trace_has_no_receipt_outside_eligible_alpha(make_flow, kind):
+    flow = make_flow(kind if kind in {"off", "shadow"} else "alpha")
+    identity = IDENTITY
+    if kind == "plain_identity":
+        identity = dict(IDENTITY)
+    elif kind == "wrong_email":
+        flow.settings.secoppal_natural_alpha_email = "other@example.test"
+    elif kind == "auth_off":
+        flow.settings.secoppal_auth_enabled = False
+    result = flow.run_query("CO1.BDOS.123456", channel="streamlit", user_identity=identity)
+    traces = flow.feedback.get_recent()
+    assert len(traces) == 1 and traces[0]["trace_id"] == result["trace_id"]
+    assert not COVERAGE_KEYS & traces[0].keys()
+    assert not COVERAGE_KEYS & result.keys()
+    flow.natural_alpha_provider.observe.assert_not_called()
+
+
+@pytest.mark.parametrize("route", [None, "", True, 7, {}, []])
+def test_invalid_route_does_not_create_an_unreceipted_trace(make_flow, route):
+    flow = make_flow("alpha")
+    result = {"route_reason": route, "response": "unchanged"}
+    ctx = HandlerContext(user_query="same", channel="streamlit", user_identity=IDENTITY)
+    assert ensure_alpha_coverage_trace(flow.deps, ctx, result) is result
+    assert not flow.feedback.get_recent()

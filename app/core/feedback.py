@@ -38,7 +38,9 @@ from pathlib import Path
 from typing import Any
 
 from app.core.db import connect_sqlite
-from app.core.natural_alpha.coverage_metadata import coverage_metadata
+from app.core.natural_alpha.coverage_context import (
+    confirm_persistence, consume_receipt, current_receipt,
+)
 from app.core.natural_alpha.telemetry import (
     TRACE_COLUMNS as NATURAL_ALPHA_COLUMNS, sqlite_values, trace_metadata,
 )
@@ -213,10 +215,11 @@ class FeedbackStore:
             workflow_result.get("suggestions")
             or workflow_result.get("timeout_suggestions")
         )
+        receipt = consume_receipt(self, user_query, channel, user_identity, workflow_result)
 
         trace = {
             **trace_metadata(workflow_result),
-            **coverage_metadata(workflow_result),
+            **(receipt.metadata if receipt is not None else {}),
             **actor_resolution_trace(
                 workflow_result.get("resolved_params") or workflow_result.get("parsed_params") or {}
             ),
@@ -255,6 +258,7 @@ class FeedbackStore:
 
         if self.jsonl_dual_write:
             self._append(trace)
+            confirm_persistence(receipt, trace_id)
         if self.sqlite_enabled:
             try:
                 with self._connect() as conn:
@@ -266,9 +270,21 @@ class FeedbackStore:
                         source="app",
                         has_suggestions=has_suggestions,
                     )
-            except sqlite3.Error:
-                logger.exception("failed to write feedback trace to sqlite trace_id=%s", trace_id)
+                confirm_persistence(receipt, trace_id)
+            except sqlite3.Error as exc:
+                if receipt is not None:
+                    logger.warning("natural_alpha_coverage_sqlite_failed error_type=%s", type(exc).__name__)
+                else:
+                    logger.exception("failed to write feedback trace to sqlite trace_id=%s", trace_id)
         return trace_id
+
+    def log_coverage_trace(self, user_query, channel, workflow_result, user_identity=None) -> str | None:
+        """Trace-only caller: return an ID only after at least one sink confirms."""
+        receipt = current_receipt(self, user_query, channel, user_identity)
+        if receipt is None or receipt.consumed:
+            return None
+        trace_id = self.log_trace(user_query, channel, workflow_result, user_identity=user_identity)
+        return trace_id if receipt.persisted_trace_id == trace_id else None
 
     def rate(self, trace_id: str, rating: int, comment: str | None = None) -> bool:
         """
