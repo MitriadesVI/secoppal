@@ -103,6 +103,12 @@ def confirm_sqlite(claim: TraceClaim | None, store) -> None:
         claim.receipt.sqlite_persisted = True
 
 
+def abort_turn(receipt: TurnReceipt | None, store) -> None:
+    """A turn that raised has no result to classify: signal it, invent nothing."""
+    if receipt is not None and receipt.owned_here(store) and not receipt.sqlite_persisted:
+        logger.error("natural_alpha_coverage_turn_aborted turn_id=%s stop_dogfood=true", receipt.turn_id)
+
+
 def finalize_turn(receipt: TurnReceipt | None, store, ctx, result: dict) -> None:
     """Write at most one trace-only record; never retry or disguise a failure."""
     if receipt is None or not receipt.owned_here(store):

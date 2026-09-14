@@ -33,7 +33,6 @@ def test_sqlite_checkpoint_fifty_reached_not_fifty_traffic_and_control_is_separa
         _bypass("decoy-before", "reset", timestamp="2026-09-12T23:00:00+00:00"),
     ])
     with sqlite3.connect(db) as conn:
-        conn.execute("ALTER TABLE traces ADD COLUMN trace_json TEXT DEFAULT '{}'")
         for trace_id, classification, route in (("control", "CONTROL_BYPASS", "reset"),
                                                 ("fast", "FAST_PATH_BYPASS", "radar_list"),
                                                 ("profile", "PROFILE_BYPASS", "entity_profile_overview"),
@@ -74,8 +73,10 @@ def test_recorded_class_requires_a_turn_receipt_and_must_agree_with_alpha_column
     assert classify_coverage(row) == "REACHED_ALPHA"
     row.update(coverage_turn_id=None)
     assert classify_coverage(row) == "UNACCREDITED"
-    legacy = _row("pre-receipt")
-    assert classify_coverage(legacy) == "REACHED_ALPHA"
+    # Valid Alpha columns without any receipt are never a reached sample.
+    unreceipted = _row("pre-receipt", coverage_class=None, coverage_turn_id=None)
+    assert not is_reached_alpha(unreceipted)
+    assert classify_coverage(unreceipted) == "UNACCREDITED"
 
 
 @pytest.mark.parametrize("route", ["direct_lookup_id", "direct_lookup_url", "pagination_more", "refinement", "suggestion"])
@@ -144,13 +145,18 @@ def test_fake_or_mismatched_recorded_classes_do_not_create_volume(classification
 def test_secondary_trace_of_a_classified_turn_is_inventoried_not_counted():
     primary = _receipted(_bypass("primary", "entity_profile_overview"), "PROFILE_BYPASS", turn="t1")
     secondary = _bypass("secondary", "heuristic_only", coverage_turn_id="t1")
+    # A legacy re-trace of the same result may repeat that turn's Alpha columns.
+    alpha_secondary = _row("alpha-secondary", coverage_class=None, coverage_turn_id="t1")
     orphan = _bypass("orphan", "heuristic_only", coverage_turn_id="t2")  # Its primary never persisted.
-    borrowed = _row("borrowed", coverage_turn_id="t1")  # Alpha columns cannot hide as secondary.
-    summary = coverage_summary([primary, secondary, orphan, borrowed])
-    assert summary["secondary_traces_window"] == 1
-    assert summary["traffic_turns_window"] == 3
+    summary = coverage_summary([primary, secondary, alpha_secondary, orphan])
+    assert not is_reached_alpha(alpha_secondary)
+    assert summary["secondary_traces_window"] == 2
+    assert summary["traffic_turns_window"] == 2
     assert summary["profile_bypass"] == 1 and summary["reached_alpha"] == 0
-    assert summary["unaccredited_turns_window"] == 2
+    assert summary["unaccredited_turns_window"] == 1
+    assert not summary["accounting_valid"]
+    assert summary["coverage_gap"] is None and summary["coverage_rate"] is None
+    assert coverage_summary([primary, secondary, alpha_secondary])["accounting_valid"]
 
 
 @given(st.lists(st.sampled_from((*LANGUAGE_CLASSES, "CONTROL_BYPASS")), max_size=80))

@@ -123,7 +123,11 @@ inputs and result witnesses, never from query text. Later legacy traces of the
 same turn count as `secondary_traces_window`. Only a confirmed SQLite commit
 credits a turn; a JSONL append does not. A missing commit logs
 `natural_alpha_coverage_persistence_failed stop_dogfood=true` and writes no
-replacement trace: stop the dogfood. `UNACCREDITED` must be 0.
+replacement trace: stop the dogfood. A turn that raises logs
+`natural_alpha_coverage_turn_aborted stop_dogfood=true`. `UNACCREDITED` must be
+0: the report fails closed with `accounting_valid=false`, null
+`coverage_gap`/`coverage_rate`, `checkpoint_ready=false`, and the CLI exits 3
+after printing. Valid Alpha columns without a receipt are never reached samples.
 
 `traffic_turns_window` counts turns; `natural_work_turns_window` is the language
 denominator (REACHED_ALPHA + FAST_PATH + PROFILE + OTHER); controls are separate

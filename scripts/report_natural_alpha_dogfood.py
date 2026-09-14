@@ -15,7 +15,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, epilog=(
         "Language denominator: REACHED_ALPHA + FAST_PATH_BYPASS + PROFILE_BYPASS + OTHER_BYPASS. "
         "CONTROL_BYPASS is separate. The checkpoint counts only REACHED_ALPHA. "
-        "excluded_by_route inventories all bypass traffic, including controls."
+        "excluded_by_route inventories all bypass traffic, including controls. "
+        "Exit 3 when accounting_valid is false (any UNACCREDITED turn): stop the dogfood."
     ))
     parser.add_argument("--db", type=Path, required=True)
     parser.add_argument("--email", required=True)
@@ -30,7 +31,7 @@ def main(argv=None):
         print(json.dumps({"error": str(exc)}), file=sys.stderr)
         return 2
     print(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False))
-    return 0
+    return 0 if report["accounting_valid"] else 3
 
 
 if __name__ == "__main__":

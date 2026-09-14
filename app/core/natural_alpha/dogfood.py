@@ -214,8 +214,8 @@ def report_dogfood(db: Path | str, *, email: str, since: str, checkpoint: int = 
     """Freeze the window inclusively at the Nth Alpha-seam turn, if reached.
 
     The Streamlit/email cohort is traffic, not evidence of dogfood eligibility.
-    Eligibility requires a host coverage receipt or valid recorded Alpha metadata;
-    only the latter proves that a turn reached the Alpha seam.
+    Eligibility requires a host turn receipt; a reached turn also needs valid
+    recorded Alpha metadata agreeing with it. Unaccredited turns fail closed.
     Timestamps are compared chronologically in UTC, then by trace_id. No query
     text is read. All utility and latency metrics below concern reached turns.
     """
@@ -248,11 +248,13 @@ def report_dogfood(db: Path | str, *, email: str, since: str, checkpoint: int = 
     unrated = sum(row["rating"] is None for row in scoped)
     rated = positive + negative
     reached = len(scoped)
+    coverage = coverage_summary(window)
     result = {
         "since": start.isoformat(), "checkpoint_target": checkpoint,
-        "checkpoint_ready": reached == checkpoint,
+        # Volume alone is not readiness: unaccredited turns block the checkpoint.
+        "checkpoint_ready": reached == checkpoint and coverage["accounting_valid"],
         "window_end": {key: window[-1][key] for key in ("trace_id", "timestamp")} if window else None,
-        "reached_seam": reached, **coverage_summary(window),
+        "reached_seam": reached, **coverage,
         "alpha_status_counts": dict(sorted(statuses.items())),
         "blocked": statuses["MULTI_JOB_BLOCKED"], "invalid": statuses["INVALID"],
         "provider_errors": statuses["PROVIDER_ERROR"],

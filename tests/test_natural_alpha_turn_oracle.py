@@ -8,9 +8,12 @@ from collections import Counter
 import logging
 import sqlite3
 
+from unittest.mock import patch
+
 import pytest
 
 from app.config import get_settings
+from app.core.workflow import profile_route
 from app.core.natural_alpha.dogfood import report_dogfood
 from app.core.natural_alpha.provider import ProviderResult
 from app.core.radar.store import RadarStore
@@ -32,6 +35,12 @@ def _steps(flow):
         return flow.select_actor_candidate(1, "stale-token", channel="streamlit", chat_id="legacy",
                                            user_identity=IDENTITY)
 
+    def profile_fallback():
+        # Forces the reachable legacy branch where PROFILE admission finds no
+        # profile owner, dispatches to the seam and then re-traces the result.
+        with patch.object(profile_route, "run_profile_turn", return_value=None):
+            return run(flow, PROFILE_RAW, chat_id="profile-fallback")
+
     def profile_action():
         return flow.select_entity_profile_action("unknown-action", {"opaque": "reference"}, channel="streamlit",
                                                  chat_id="profile-pre", user_identity=IDENTITY)
@@ -48,6 +57,7 @@ def _steps(flow):
         ("profile_post_seam", "REACHED_ALPHA", False, True, say(PROFILE_RAW, "profile-post")),
         ("profile_pre_seam", "PROFILE_BYPASS", True, True, say(PROFILE_RAW, "profile-pre")),
         ("profile_action", "PROFILE_BYPASS", True, True, profile_action),
+        ("profile_admission_fallback", "REACHED_ALPHA", True, True, profile_fallback),
         ("clarify_pre_seam", "CONTROL_BYPASS", True, False, say("muestrame mas", "clarify")),
         ("multi_alpha", "REACHED_ALPHA", False, False, say(MULTI_RAW, "multi")),
     ]
@@ -90,7 +100,7 @@ def _effects(flow):
     # The "multi" chat is excluded: skipping its legacy turn is the authorized
     # Alpha effect, covered by test_natural_alpha_runtime.
     history = {chat: [(turn.user_query, turn.response, turn.parsed_params) for turn in flow.conv_store.get_history(chat)]
-               for chat in ("legacy", "profile-post", "profile-pre", "clarify")}
+               for chat in ("legacy", "profile-post", "profile-pre", "profile-fallback", "clarify")}
     envelopes = {}
     for chat in ("profile-pre", "clarify"):
         read = flow.conv_store.load_envelope(chat)
@@ -126,8 +136,9 @@ def test_every_eligible_turn_persists_exactly_one_hand_labelled_class(make_flow,
     assert not [record for record in caplog.records if "natural_alpha_coverage" in record.getMessage()]
 
     report = report_dogfood(candidate.feedback.db_path, email=IDENTITY["email"], since="2000-01-01T00:00:00+00:00")
-    assert report["unaccredited_turns_window"] == 0
+    assert report["unaccredited_turns_window"] == 0 and report["accounting_valid"]
     assert report["traffic_turns_window"] == len(alpha)
+    assert any(len(turn["rows"]) > 1 for turn in alpha)  # The secondary-trace branch was exercised.
     for name in ("REACHED_ALPHA", "PROFILE_BYPASS", "CONTROL_BYPASS", "FAST_PATH_BYPASS", "OTHER_BYPASS"):
         assert report[name.lower()] == expected[name], name
     assert report["secondary_traces_window"] == sum(len(turn["rows"]) - 1 for turn in alpha)

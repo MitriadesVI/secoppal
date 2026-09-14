@@ -31,7 +31,22 @@ def _row(trace_id, minute=0, **overrides):
            "natural_alpha_status": "MATCHED", "natural_alpha_latency_ms": None,
            "total_ms": None, "user_query": "PRIVATE RAW QUERY alpha@example.test"}
     row.update(overrides)
+    if row["natural_alpha_mode"] == "alpha" and "coverage_class" not in overrides:
+        # Alpha samples carry the host turn receipt the report requires.
+        row.update(coverage_class="REACHED_ALPHA", coverage_turn_id=trace_id)
     return row
+
+
+_COVERAGE_JSON = {"coverage_class": "natural_alpha_coverage_class", "coverage_turn_id": "natural_alpha_coverage_turn_id",
+                  "coverage_excluded_route": "natural_alpha_excluded_by_route"}
+
+
+def _insert(conn, rows, fields):
+    names = [*fields, "trace_json"]
+    conn.executemany("INSERT INTO traces (" + ",".join(names) + ") VALUES (" + ",".join("?" for _ in names) + ")",
+                     [[row[field] for field in fields] + [json.dumps({
+                         key: row[alias] for alias, key in _COVERAGE_JSON.items() if row.get(alias) is not None
+                     })] for row in rows])
 
 
 def _database(tmp_path, rows, *, latency=True):
@@ -46,11 +61,8 @@ def _database(tmp_path, rows, *, latency=True):
                    "natural_alpha_eligible INTEGER", "natural_alpha_status TEXT", "user_query TEXT"]
         if latency:
             columns += ["natural_alpha_latency_ms REAL", "total_ms REAL"]
-        conn.execute("CREATE TABLE traces (" + ",".join(columns) + ")")
-        fields = [column.split()[0] for column in columns]
-        conn.executemany("INSERT INTO traces (" + ",".join(fields) + ") VALUES ("
-                         + ",".join("?" for _ in fields) + ")",
-                         [[row[field] for field in fields] for row in rows])
+        conn.execute("CREATE TABLE traces (" + ",".join(columns) + ", trace_json TEXT)")
+        _insert(conn, rows, [column.split()[0] for column in columns])
     return db
 
 
@@ -94,12 +106,13 @@ def cohort(tmp_path):
 
 def test_window_extends_to_nth_reached_seam_and_excludes_later_turns(cohort):
     result = report_dogfood(cohort, email=" ALPHA@EXAMPLE.TEST ", since=SINCE, checkpoint=3)
-    assert result["checkpoint_ready"]
+    # Volume is reached, but five unaccredited turns fail the accounting closed.
+    assert not result["checkpoint_ready"] and not result["accounting_valid"]
     assert result["window_end"] == {"trace_id": "a7", "timestamp": "2026-09-13T00:07:00+00:00"}
     assert result["eligible_turns_window"] == 3
     assert result["reached_seam"] == 3
-    assert result["coverage_gap"] == 0
-    assert result["coverage_rate"] == 1
+    assert result["coverage_gap"] is None
+    assert result["coverage_rate"] is None
     assert result["traffic_turns_window"] == 8
     assert result["natural_work_turns_window"] == 3
     assert result["control_bypass"] == 0
@@ -126,7 +139,7 @@ def test_checkpoint_not_ready_uses_all_available_scoped_turns(cohort):
     assert result["eligible_turns_window"] == 5
     assert result["traffic_turns_window"] == 11
     assert result["reached_seam"] == 5
-    assert result["coverage_gap"] == 0
+    assert result["coverage_gap"] is None
     assert result["provider_errors"] == 1
     assert result["unaccredited_by_route"]["entity_profile_suppliers"] == 1
     assert result["alpha_ratings"]["utility_rate"] == 2 / 3
@@ -202,9 +215,7 @@ def test_read_only_report_sees_committed_wal_rows_without_changing_database_file
     with sqlite3.connect(db) as writer:
         assert writer.execute("PRAGMA journal_mode=WAL").fetchone()[0] == "wal"
         row = _row("wal-only", 1)
-        fields = list(row)
-        writer.execute("INSERT INTO traces (" + ",".join(fields) + ") VALUES ("
-                       + ",".join("?" for _ in fields) + ")", list(row.values()))
+        _insert(writer, [row], [field for field in row if not field.startswith("coverage_")])
         writer.commit()
         wal = Path(str(db) + "-wal")
         assert wal.exists()
@@ -599,8 +610,14 @@ def test_cli_is_read_only_and_redacted(cohort, tmp_path):
     completed = subprocess.run([
         sys.executable, str(SCRIPT), "--db", str(cohort), "--email", EMAIL,
         "--since", SINCE, "--checkpoint", "3",
-    ], cwd=tmp_path, check=True, capture_output=True, text=True)
+    ], cwd=tmp_path, capture_output=True, text=True)
+    # Unaccredited turns: the report still prints, but the command fails closed.
+    assert completed.returncode == 3
     assert json.loads(completed.stdout)["reached_seam"] == 3
+    (tmp_path / "clean").mkdir()
+    clean = _database(tmp_path / "clean", [_row("only-alpha")])
+    assert subprocess.run([sys.executable, str(SCRIPT), "--db", str(clean), "--email", EMAIL, "--since", SINCE],
+                          cwd=tmp_path, capture_output=True, text=True).returncode == 0
     assert EMAIL not in completed.stdout + completed.stderr
     assert "PRIVATE RAW QUERY" not in completed.stdout
     assert (cohort.read_bytes(), cohort.stat().st_mtime_ns) == before
@@ -622,6 +639,8 @@ def test_window_partition_and_cutoff_invariants(reached_flags, checkpoint):
     assert result["eligible_turns_window"] == expected_reached
     assert result["unaccredited_turns_window"] == cutoff - expected_reached
     assert result["reached_seam"] == expected_reached
-    assert result["coverage_gap"] == 0
-    assert result["checkpoint_ready"] is (len(positions) >= checkpoint)
-    assert result["coverage_rate"] == (1 if expected_reached else None)
+    valid = cutoff == expected_reached
+    assert result["accounting_valid"] is valid
+    assert result["coverage_gap"] == (0 if valid else None)
+    assert result["checkpoint_ready"] is (len(positions) >= checkpoint and valid)
+    assert result["coverage_rate"] == (1 if expected_reached and valid else None)

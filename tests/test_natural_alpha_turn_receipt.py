@@ -230,6 +230,21 @@ def test_finalizer_does_not_disguise_a_trace_it_did_not_observe(store, caplog):
     assert "natural_alpha_coverage_unaccredited_trace" in caplog.text
 
 
+def test_aborted_turn_signals_stop_without_inventing_a_trace(make_flow, monkeypatch, caplog):
+    from app.core import orchestrator
+
+    caplog.set_level(logging.ERROR)
+    flow = make_flow("alpha")
+    monkeypatch.setattr(orchestrator, "handle_normal_flow", Mock(side_effect=RuntimeError("legacy failed")))
+    with pytest.raises(RuntimeError, match="legacy failed"):
+        run(flow, chat_id="aborted")
+    flow.natural_alpha_provider.observe.assert_called_once()
+    assert not flow.feedback.get_recent()
+    messages = [record.getMessage() for record in caplog.records if "natural_alpha_coverage" in record.getMessage()]
+    assert len(messages) == 1 and "natural_alpha_coverage_turn_aborted" in messages[0]
+    assert "stop_dogfood=true" in messages[0]
+
+
 @pytest.mark.parametrize("raw", ["/reset", "CO1.BDOS.123456"])
 def test_runtime_sqlite_failure_keeps_legacy_result_and_writes_nothing_extra(make_flow, monkeypatch, caplog, raw):
     caplog.set_level(logging.ERROR)

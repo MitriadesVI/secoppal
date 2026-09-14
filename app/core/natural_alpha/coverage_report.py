@@ -17,12 +17,10 @@ def _valid_alpha(row):
 
 
 def is_reached_alpha(row):
-    # A turn receipt must agree; rows before receipts carry neither field.
+    # Valid Alpha columns alone are not enough: the turn receipt must agree.
     recorded, turn = row.get("coverage_class"), row.get("coverage_turn_id")
-    return _valid_alpha(row) and (
-        (type(recorded) is str and recorded == REACHED_ALPHA and type(turn) is str)
-        or (recorded is None and turn is None)
-    )
+    return (_valid_alpha(row) and type(recorded) is str and recorded == REACHED_ALPHA
+            and type(turn) is str)
 
 
 def classify_coverage(row):
@@ -41,10 +39,10 @@ def classify_coverage(row):
 
 
 def _secondary(row, classified_turns):
-    # A later legacy trace of a turn whose first trace carried the class.
+    # A later legacy trace of a turn whose first trace carried the class. It may
+    # repeat that turn's Alpha columns; it is never a turn or a reached sample.
     turn = row.get("coverage_turn_id")
-    return (row.get("coverage_class") is None and type(turn) is str and turn in classified_turns
-            and all(row.get(key) is None for key in _ALPHA_FIELDS))
+    return row.get("coverage_class") is None and type(turn) is str and turn in classified_turns
 
 
 def coverage_summary(window):
@@ -58,7 +56,10 @@ def coverage_summary(window):
                        if classification not in ("REACHED_ALPHA", "UNACCREDITED"))
     controls = Counter(row["route_reason"] for row, classification in classified if classification == "CONTROL_BYPASS")
     unaccredited = Counter(row["route_reason"] for row, classification in classified if classification == "UNACCREDITED")
+    # Fail closed: any unaccredited turn invalidates the headline accounting.
+    valid = counts["UNACCREDITED"] == 0
     return {
+        "accounting_valid": valid,
         **{name.lower(): counts[name] for name in (*LANGUAGE_CLASSES, "CONTROL_BYPASS")},
         "traffic_turns_window": len(turns), "secondary_traces_window": len(window) - len(turns),
         "natural_work_turns_window": linguistic,
@@ -66,8 +67,8 @@ def coverage_summary(window):
         "unaccredited_turns_window": counts["UNACCREDITED"],
         "unaccredited_by_route": dict(sorted(unaccredited.items())),
         "language_coverage_classes": list(LANGUAGE_CLASSES),
-        "coverage_gap": linguistic - counts["REACHED_ALPHA"],
-        "coverage_rate": counts["REACHED_ALPHA"] / linguistic if linguistic else None,
+        "coverage_gap": linguistic - counts["REACHED_ALPHA"] if valid else None,
+        "coverage_rate": counts["REACHED_ALPHA"] / linguistic if valid and linguistic else None,
         # Only positively accredited bypasses; unknown historical/off traffic
         # is inventoried separately and never inflates language opportunity.
         "excluded_by_route": dict(sorted(excluded.items())), "control_by_route": dict(sorted(controls.items())),

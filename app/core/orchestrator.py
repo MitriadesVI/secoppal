@@ -30,7 +30,7 @@ from app.core.workflow.handlers.natural_alpha import (
     handle_natural_alpha, multi_job_result, observed_deps,
 )
 from app.core.natural_alpha.budget import legacy_budget
-from app.core.natural_alpha.turn_receipt import finalize_turn, turn_scope
+from app.core.natural_alpha.turn_receipt import abort_turn, finalize_turn, turn_scope
 from app.core.workflow.handlers.pagination import handle_pagination
 from app.core.workflow.handlers.radar import handle_radar_command
 from app.core.workflow.handlers.refinement import handle_refinement
@@ -236,7 +236,11 @@ class SecopalWorkflow:
         )
         # One coverage receipt spans the whole turn, including coordinate_turn.
         with turn_scope(self.settings, self.feedback, ctx) as receipt:
-            result = self._run_turn(ctx, seed_resolved_params)
+            try:
+                result = self._run_turn(ctx, seed_resolved_params)
+            except BaseException:
+                abort_turn(receipt, self.feedback)
+                raise
             finalize_turn(receipt, self.feedback, ctx, result)
         return result
 
