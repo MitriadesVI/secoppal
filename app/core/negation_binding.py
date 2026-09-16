@@ -14,6 +14,7 @@ from dataclasses import dataclass, replace
 from enum import Enum
 from typing import Iterable, Mapping, Pattern
 
+from app.core import actor_negation_group
 from app.core.control_language import command_boundary
 from app.core.negation_markers import (
     NegativeMarker,
@@ -133,21 +134,6 @@ _ACTOR_ROLE_BEFORE_RE = re.compile(
     r"\b(?:proveedor|contratista)(?:\s+adjudicado)?"
     r"(?P<contrast>\s+pero)?\s*$",
     re.IGNORECASE,
-)
-_ACTOR_DOCUMENT_TYPE_PATTERN = (
-    r"(?:nit|c[eé]dulas?|c\.c\.|cc|documento(?:\s+de\s+identidad)?)"
-)
-_ACTOR_DOCUMENT_PREFIX_RE = re.compile(
-    r"(?P<mention>\b(?:(?:de|del|al|el|la|los|las)\s+)?(?:"
-    r"(?:proveedor|contratista|adjudicatario)(?:\s+adjudicado)?"
-    rf"(?:\s*(?:[,:(\-]\s*)?(?:(?:identificado\s+)?con|"
-    rf"n(?:umero|ro)?\.?)?\s*{_ACTOR_DOCUMENT_TYPE_PATTERN})?"
-    rf"|{_ACTOR_DOCUMENT_TYPE_PATTERN}"
-    r")\s*)$",
-    re.IGNORECASE,
-)
-_ACTOR_DOCUMENT_VALUE_RE = re.compile(
-    r"(?:\d{1,3}(?:[.\- ]\d{3}){1,3}(?:[.\- ]\d)?|\d{5,11})"
 )
 _TIME_RE = re.compile(
     r"\b(?:20\d{2}|enero|febrero|marzo|abril|mayo|junio|julio|agosto|"
@@ -330,73 +316,6 @@ def _actor_contrast_start(text: str, marker: NegativeMarker) -> int | None:
     return prefix_start + match.start("contrast")
 
 
-def _actor_document_boundary(
-    text: str,
-    *,
-    marker: NegativeMarker,
-    target_end: int,
-    document_spans: tuple[tuple[int, int], ...],
-) -> tuple[int, int, bool] | None:
-    """Locate an accredited document mention without interpreting identity.
-
-    The supplied coordinates come from the router's existing numeric
-    authority.  This helper may only expand left over immediate actor/type
-    markers.  It returns whether the marker-to-mention gap is purely
-    grammatical; no document value or type leaves this structural seam.
-    """
-    candidates = [
-        span for span in document_spans
-        if marker.end <= span[0] < span[1] <= target_end
-    ]
-    if not candidates:
-        return None
-    document_start, document_end = min(candidates)
-    prefix = text[marker.end:document_start]
-    match = _ACTOR_DOCUMENT_PREFIX_RE.search(prefix)
-    mention_start = (
-        marker.end + match.start("mention")
-        if match is not None
-        else document_start
-    )
-    gap = text[marker.end:mention_start]
-    return mention_start, document_end, bool(_ONLY_ACTOR_GAP_RE.fullmatch(gap))
-
-
-def _validated_actor_document_spans(
-    text: str,
-    spans: Iterable[tuple[int, int]],
-) -> tuple[tuple[int, int], ...]:
-    """Keep only exact document-shaped spans in these text coordinates.
-
-    Callers still own numeric/identity authority.  This is a defensive seam:
-    stale, partial, foreign, or out-of-bounds coordinates cannot turn an
-    arbitrary word into an ACTOR request when ``bind_negations`` is called
-    directly.
-    """
-    valid: set[tuple[int, int]] = set()
-    for span in spans:
-        if (
-            not isinstance(span, tuple)
-            or len(span) != 2
-            or any(isinstance(value, bool) or not isinstance(value, int) for value in span)
-        ):
-            continue
-        start, end = span
-        if not 0 <= start < end <= len(text):
-            continue
-        if start and (text[start - 1].isdigit() or text[start - 1] in ".-"):
-            continue
-        if end < len(text) and (text[end].isdigit() or text[end] in ".-"):
-            continue
-        value = text[start:end]
-        if _ACTOR_DOCUMENT_VALUE_RE.fullmatch(value) is None:
-            continue
-        digits = re.sub(r"\D", "", value)
-        if 5 <= len(digits) <= 11:
-            valid.add(span)
-    return tuple(sorted(valid))
-
-
 def _target_end(text: str, marker: NegativeMarker, next_marker_start: int) -> tuple[int, tuple[int, int] | None]:
     end = next_marker_start
     local = text[marker.end:end]
@@ -495,7 +414,9 @@ def bind_negations(
 ) -> NegationBinding:
     """Bind every resolvable external marker and isolate its governed text."""
     modality = tuple(sorted(modality_spans))
-    actor_documents = _validated_actor_document_spans(text, actor_document_spans)
+    actor_documents = actor_negation_group.validate_document_spans(
+        text, actor_document_spans,
+    )
     protected = (
         *modality,
         *tuple(protected_spans),
@@ -513,24 +434,27 @@ def bind_negations(
         # referencia del sello de estado: da igual cómo acabe repartido, nada
         # de aquí dentro puede llegar al extractor positivo de estado.
         raw_end, sino_span = _target_end(text, marker, next_start)
-        actor_boundary = _actor_document_boundary(
+        actor_group = actor_negation_group.locate_group(
             text,
-            marker=marker,
-            target_end=next_start,
+            marker_end=marker.end,
+            limit=next_start,
             document_spans=actor_documents,
+            grammatical_gap=_ONLY_ACTOR_GAP_RE,
         )
         actor_target = False
-        if actor_boundary is not None:
-            actor_start, document_end, actor_target = actor_boundary
-            # A grammatical gap means the marker governs the atomic actor
-            # mention.  A free constituent means it governs that constituent
-            # and must stop before the independent positive actor.
+        actor_atoms: tuple[actor_negation_group.ActorAtom, ...] = ()
+        if actor_group is not None:
+            actor_target = actor_group.governed
+            # A grammatical gap means the marker governs the actor collection.
+            # A free constituent means it governs that constituent and must
+            # stop before the independent positive actor.
             if actor_target:
-                raw_end = document_end
+                actor_atoms = actor_group.atoms
+                raw_end = actor_group.end
                 if text[raw_end:raw_end + 1] == ")":
                     raw_end += 1
             else:
-                raw_end = min(raw_end, actor_start)
+                raw_end = min(raw_end, actor_group.start)
         governed_regions.append((marker.end, raw_end, marker))
         modality_targets = _modality_targets(text, marker, modality)
         if modality_targets:
@@ -576,6 +500,19 @@ def bind_negations(
                 pieces.append((cursor, split_start, None if not pieces else "ni"))
                 cursor = split_end
             pieces.append((cursor, end, None if not pieces else "ni"))
+        elif len(actor_atoms) > 1:
+            # Emisión plural: un actor negado, un request. Un único request con
+            # la colección entera como valor enmascararía a los dos actores
+            # —correcto— pero negaría un valor compuesto que ninguna autoridad
+            # puede resolver, y la aclaración nombraría ese blob en lugar de
+            # los actores. El usuario dejaría de ver que B fue entendido.
+            for position, atom in enumerate(actor_atoms):
+                last = position == len(actor_atoms) - 1
+                pieces.append((
+                    raw_start if not position else atom.mention_start,
+                    end if last else atom.document_end,
+                    None if not position else "actor_group",
+                ))
         else:
             pieces.append((raw_start, end, None))
 
@@ -656,6 +593,25 @@ def _request_field(
     request: NegationRequest | Mapping[str, object], field: str,
 ) -> object:
     return getattr(request, field) if isinstance(request, NegationRequest) else request.get(field)
+
+
+def _dimension_value(request: NegationRequest | Mapping[str, object]) -> str:
+    raw = _request_field(request, "dimension")
+    return raw.value if isinstance(raw, NegationDimension) else str(raw or "")
+
+
+def _list_values(requests: Iterable[NegationRequest | Mapping[str, object]]) -> str:
+    """Enumerate the requested values in reading order, without repeating."""
+    listed: list[str] = []
+    for request in requests:
+        value = str(_request_field(request, "value") or "").strip()
+        if value and value not in listed:
+            listed.append(f"'{value}'")
+    if len(listed) <= 1:
+        return listed[0] if listed else "esos valores"
+    # "excluir a X y Y": el verbo ya es negativo, así que el enlace es
+    # copulativo. "ni" pediría un contexto negado ("no quiero X ni Y").
+    return f"{', '.join(listed[:-1])} y {listed[-1]}"
 
 
 def blocking_negation_reason(
@@ -739,6 +695,18 @@ def negation_clarification_question(
     }
     if len(blocked) == 1 and dimension in messages:
         return messages[dimension]
+    if len(blocked) > 1 and all(
+        _dimension_value(item) == NegationDimension.ACTOR.value for item in blocked
+    ):
+        # Una colección bajo un mismo marcador se aclara entera. Nombrar sólo
+        # al primero le diría al usuario que los demás no fueron entendidos,
+        # que es exactamente lo que este sprint dejó de ser cierto.
+        listed = _list_values(blocked)
+        return (
+            f"Entendí que quieres excluir a los proveedores o contratistas "
+            f"{listed}, pero todavía no puedo ejecutar esas exclusiones con "
+            "precisión."
+        )
     dimensions = sorted({
         raw.value if isinstance(raw, NegationDimension) else str(raw or "")
         for raw in (_request_field(item, "dimension") for item in blocked)

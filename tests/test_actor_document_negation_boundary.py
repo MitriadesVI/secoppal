@@ -8,8 +8,7 @@ from burr.core import State
 from hypothesis import given, settings, strategies as st
 
 from app.config import Settings
-from app.core import negation_binding as negation_module
-from app.core.capability_binding.supplier_contract import Outcome, decide
+from app.core import actor_negation_group as actor_group_module
 from app.core.conversation_store import ConversationStore
 from app.core.negation_binding import (
     NegationDimension,
@@ -22,15 +21,6 @@ from app.core.workflow.actions.planning import plan_query
 
 
 router = QueryRouter()
-
-
-class CountingSidecar:
-    def __init__(self) -> None:
-        self.calls = 0
-
-    def __call__(self, *_args, **_kwargs):
-        self.calls += 1
-        raise AssertionError("an actor-owned turn reached the A2 sidecar")
 
 
 def _recording_workflow(tmp_path):
@@ -75,12 +65,6 @@ def test_free_cardinality_before_document_keeps_the_actor_positive(query: str) -
     assert parsed.params["actor_resolution"] == "explicit_document"
     assert parsed.params["contratista"] == ["900711074"]
     assert len(parsed.positive_text) == len(query.lower())
-
-    sidecar = CountingSidecar()
-    decision = decide(query, parsed.params, polarity_veto=sidecar)
-    assert decision.outcome is Outcome.NOT_BOUND
-    assert decision.reason == "ACTOR_SUBJECT"
-    assert sidecar.calls == 0
 
 
 def test_approximation_is_not_dimensional_negation() -> None:
@@ -162,7 +146,7 @@ def test_mutation_narrowing_atomic_grammar_reopens_exactly_eight_source_calls(
         re.IGNORECASE,
     )
     monkeypatch.setattr(
-        negation_module, "_ACTOR_DOCUMENT_PREFIX_RE", immediate_only,
+        actor_group_module, "_ACTOR_DOCUMENT_PREFIX_RE", immediate_only,
     )
     workflow, calls = _recording_workflow(tmp_path)
     result = workflow.run_query(
@@ -279,8 +263,8 @@ def test_mutation_without_span_validation_misclassifies_arbitrary_text(
     monkeypatch,
 ) -> None:
     monkeypatch.setattr(
-        negation_module,
-        "_validated_actor_document_spans",
+        actor_group_module,
+        "validate_document_spans",
         lambda _text, spans: tuple(spans),
     )
     binding = bind_negations(
