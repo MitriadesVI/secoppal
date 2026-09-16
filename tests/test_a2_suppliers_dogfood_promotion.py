@@ -310,8 +310,69 @@ def test_a_lying_sidecar_can_only_reach_the_deferred_route(x2_cases, params):
     assert closed == [], closed
 
 
+# Two quantities, one of them bounding the claim. The host would hand the model
+# only the claim's own number, so deferring the turn asks about one while the
+# person wrote two. x2 K41.
+COMPETING_CARDINALS = (
+    "seis o cinco proveedores de la alcaldía de Barranquilla",
+    "cuatro y cinco proveedores de la alcaldía de Barranquilla",
+)
+
+
+@pytest.mark.parametrize("text", COMPETING_CARDINALS)
+def test_a_competing_quantity_is_never_deferred(params, text):
+    """The model must not arbitrate between two numbers it was shown one of."""
+    from app.core.capability_binding.supplier_semantics import quantity_refs
+
+    evidence = assess_supplier_request(text)
+    assert len(quantity_refs(text, evidence)) == 1, "only one quantity is ever handed over"
+    sidecar = CountingSidecar(
+        VetoVerdict(VetoOutcome.CONFIRMED, "POSITIVE", relation="EXACT", relation_value=5),
+    )
+    decision = decide(text, params(text), polarity_veto=sidecar)
+    assert decision.outcome is Outcome.CLARIFY
+    assert decision.reason == "UNSUPPORTED_CARDINALITY"
+    assert sidecar.calls == 0
+
+
+def test_an_invented_quantity_reference_blocks_an_otherwise_executable_turn(params, monkeypatch):
+    """A pointer at a number the host never sent is a breach, not a detail.
+
+    The turn is one the grammar already accredits, so without this check the
+    malformed answer would be waved through instead of blocking.
+    """
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
+    monkeypatch.setattr(wiring, "get_settings", lambda: Settings(
+        _env_file=None, deepseek_api_key="k"))
+    monkeypatch.setattr(wiring, "classify", lambda *a, **k: {
+        "mentions": [{"quote": "proveedores", "occurrence": 1, "polarity": "POSITIVE"}],
+        "cardinality": {"quantity_ref": 99, "relation": "EXACT"},
+    })
+    text = "cuales son los 5 proveedores de la alcaldía de Barranquilla"
+    assert assess_supplier_request(text).authorization is Authorization.EXECUTABLE
+    decision = decide(text, params(text), polarity_veto=wiring.configured_polarity_veto())
+    assert decision.outcome is Outcome.CLARIFY
+    assert decision.reason == "POLARITY_SIDECAR_UNAVAILABLE"
+
+
+def test_an_unsolicited_cardinality_claim_blocks(params, monkeypatch):
+    """Nothing was asked, so an answer about a quantity is not silently dropped."""
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
+    monkeypatch.setattr(wiring, "get_settings", lambda: Settings(
+        _env_file=None, deepseek_api_key="k"))
+    monkeypatch.setattr(wiring, "classify", lambda *a, **k: {
+        "mentions": [{"quote": "proveedores", "occurrence": 1, "polarity": "POSITIVE"}],
+        "cardinality": {"quantity_ref": 1, "relation": "EXACT"},
+    })
+    text = "proveedores de la alcaldía de Barranquilla"
+    assert assess_supplier_request(text).cardinality.quantity_spans == ()
+    decision = decide(text, params(text), polarity_veto=wiring.configured_polarity_veto())
+    assert decision.outcome is Outcome.CLARIFY
+    assert decision.reason == "POLARITY_SIDECAR_UNAVAILABLE"
+
+
 def test_every_guarded_surface_is_closed_to_a_lying_sidecar(params):
-    for text in (*AMBIGUOUS_CARDINALS, *SEGMENT_BOUNDARY_CARDINALS):
+    for text in (*AMBIGUOUS_CARDINALS, *SEGMENT_BOUNDARY_CARDINALS, *COMPETING_CARDINALS):
         sidecar = CountingSidecar(
             VetoVerdict(VetoOutcome.CONFIRMED, "POSITIVE", relation="EXACT", relation_value=5),
         )
