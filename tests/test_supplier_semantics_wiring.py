@@ -13,10 +13,9 @@ from datetime import date
 import pytest
 
 from app.config import (
-    Settings,
     SupplierPolaritySidecarConfig,
     SupplierPolaritySidecarState,
-    get_settings,
+    get_supplier_semantics_settings,
 )
 from app.core.capability_binding import supplier_semantics_wiring as wiring
 from app.core.capability_binding.supplier_contract import Outcome, decide
@@ -40,43 +39,21 @@ def accredited(router):
 
 @pytest.fixture(autouse=True)
 def _clear_settings_cache():
-    get_settings.cache_clear()
+    get_supplier_semantics_settings.cache_clear()
     yield
-    get_settings.cache_clear()
+    get_supplier_semantics_settings.cache_clear()
 
 
 def test_the_flag_is_off_by_default():
-    assert Settings().secoppal_a2_supplier_polarity_sidecar_enabled is False
+    from app.config import SupplierSemanticsSettings
+
+    assert SupplierSemanticsSettings(_env_file=None).enabled is False
 
 
 def test_off_wires_no_veto_at_all(monkeypatch):
     monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _disabled)
     monkeypatch.setattr(wiring, "classify", _never_called)
     assert wiring.configured_polarity_veto() is None
-
-
-def test_explicit_off_survives_real_settings_failure(monkeypatch):
-    from app import config
-
-    monkeypatch.setenv("SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED", "false")
-
-    def boom():
-        raise RuntimeError("broken .env")
-
-    monkeypatch.setattr(config, "get_settings", boom)
-    assert wiring.configured_polarity_veto() is None
-
-
-def test_lowercase_on_survives_unrelated_settings_validation_error(monkeypatch):
-    from app import config
-
-    monkeypatch.delenv("SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED", raising=False)
-    monkeypatch.setenv("secoppal_a2_supplier_polarity_sidecar_enabled", "true")
-    monkeypatch.setenv("SECOP_TIMEOUT_SECONDS", "not-an-integer")
-    config.get_settings.cache_clear()
-    snapshot = config.supplier_polarity_sidecar_config()
-    assert snapshot.state is SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE
-    assert snapshot.detail == "CONFIGURATION_UNAVAILABLE"
 
 
 def test_on_without_a_credential_wires_unavailable(monkeypatch):
@@ -118,6 +95,14 @@ def test_on_with_a_credential_lets_a_positive_through(monkeypatch, accredited):
 def test_a_provider_that_returns_nothing_blocks(monkeypatch, accredited):
     monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _enabled)
     monkeypatch.setattr(wiring, "classify", lambda *a, **k: None)
+    decision = decide(QUERY, accredited, polarity_veto=wiring.configured_polarity_veto())
+    assert decision.outcome is Outcome.CLARIFY
+    assert decision.reason == "POLARITY_SIDECAR_UNAVAILABLE"
+
+
+def test_a_provider_exception_is_normalized_to_unavailable(monkeypatch, accredited):
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _enabled)
+    monkeypatch.setattr(wiring, "classify", lambda *a, **k: (_ for _ in ()).throw(TimeoutError()))
     decision = decide(QUERY, accredited, polarity_veto=wiring.configured_polarity_veto())
     assert decision.outcome is Outcome.CLARIFY
     assert decision.reason == "POLARITY_SIDECAR_UNAVAILABLE"

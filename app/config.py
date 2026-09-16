@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-import os
 from dataclasses import dataclass
 from enum import Enum
 from functools import lru_cache
 from pathlib import Path
+from typing import Annotated
 
-from pydantic import Field
+from pydantic import Field, TypeAdapter, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -96,17 +96,6 @@ class Settings(BaseSettings):
     secoppal_a2_suppliers_binding_enabled: bool = Field(
         default=False, alias="SECOPPAL_A2_SUPPLIERS_BINDING_ENABLED",
     )
-    # A2 polarity sidecar: a second, dedicated call classifies the polarity of
-    # each supplier mention the host already found. It can only withhold
-    # EXECUTE, never grant it, so with this off the contract behaves as V1.
-    secoppal_a2_supplier_polarity_sidecar_enabled: bool = Field(
-        default=False, alias="SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED",
-    )
-    secoppal_a2_supplier_polarity_timeout_seconds: float = Field(
-        default=8.0, gt=0, le=45, allow_inf_nan=False,
-        alias="SECOPPAL_A2_SUPPLIER_POLARITY_TIMEOUT_SECONDS",
-    )
-
     # ── Transporte Socrata (SODA3_TRANSPORT_V1) ──────────────────────────────
     # `soda3`   = transporte productivo default validado.
     # `classic` = rollback explicito sobre sodapy y GET /resource/.
@@ -161,43 +150,67 @@ class SupplierPolaritySidecarConfig:
     detail: str = ""
 
 
-_TRUE_ENV_VALUES = frozenset({"1", "true", "t", "yes", "y", "on"})
-_SIDECAR_FLAG_ENV = "SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED"
+_SIDECAR_TIMEOUT = TypeAdapter(
+    Annotated[float, Field(gt=0, le=45, allow_inf_nan=False)]
+)
 
 
-def _sidecar_requested_by_environment() -> bool:
-    expected = _SIDECAR_FLAG_ENV.casefold()
-    return any(
-        value.strip().lower() in _TRUE_ENV_VALUES
-        for key, value in os.environ.items()
-        if key.casefold() == expected
+class SupplierSemanticsSettings(BaseSettings):
+    """Canonical, isolated authority for the A2 supplier sidecar."""
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+        populate_by_name=True,
     )
+
+    enabled: bool = Field(
+        default=False, alias="SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED",
+    )
+    api_key: str | None = Field(default=None, alias="DEEPSEEK_API_KEY")
+    model: str = Field(default="deepseek-chat", alias="DEEPSEEK_MODEL")
+    timeout_seconds: float | str = Field(
+        default=8.0, alias="SECOPPAL_A2_SUPPLIER_POLARITY_TIMEOUT_SECONDS",
+    )
+
+    @model_validator(mode="after")
+    def validate_enabled_prerequisites(self) -> SupplierSemanticsSettings:
+        if not self.enabled:
+            return self
+        if not self.api_key or not self.api_key.strip():
+            raise ValueError("missing sidecar credential")
+        if not self.model.strip():
+            raise ValueError("empty sidecar model")
+        self.timeout_seconds = _SIDECAR_TIMEOUT.validate_python(self.timeout_seconds)
+        return self
+
+
+@lru_cache(maxsize=1)
+def get_supplier_semantics_settings(
+    _env_file: str | Path | None = ".env",
+) -> SupplierSemanticsSettings:
+    return SupplierSemanticsSettings(_env_file=_env_file)
 
 
 def supplier_polarity_sidecar_config() -> SupplierPolaritySidecarConfig:
     """Load the sidecar once, preserving ON-but-unavailable as its own state."""
     try:
-        settings = get_settings()
+        settings = get_supplier_semantics_settings()
     except Exception:  # pragma: no cover - configuración rota
-        if _sidecar_requested_by_environment():
-            return SupplierPolaritySidecarConfig(
-                SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE,
-                detail="CONFIGURATION_UNAVAILABLE",
-            )
-        return SupplierPolaritySidecarConfig(SupplierPolaritySidecarState.DISABLED)
-
-    if not settings.secoppal_a2_supplier_polarity_sidecar_enabled:
-        return SupplierPolaritySidecarConfig(SupplierPolaritySidecarState.DISABLED)
-    if not settings.deepseek_api_key:
         return SupplierPolaritySidecarConfig(
             SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE,
-            detail="MISSING_CREDENTIAL",
+            detail="CONFIGURATION_UNAVAILABLE",
         )
+
+    if not settings.enabled:
+        return SupplierPolaritySidecarConfig(SupplierPolaritySidecarState.DISABLED)
     return SupplierPolaritySidecarConfig(
         SupplierPolaritySidecarState.ENABLED,
-        api_key=settings.deepseek_api_key,
-        model=settings.deepseek_model,
-        timeout_seconds=settings.secoppal_a2_supplier_polarity_timeout_seconds,
+        api_key=settings.api_key,
+        model=settings.model,
+        timeout_seconds=float(settings.timeout_seconds),
     )
 
 

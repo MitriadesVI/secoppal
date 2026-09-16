@@ -17,15 +17,19 @@ import pathlib
 import socket
 from collections import Counter
 from datetime import date
+from functools import lru_cache
 from unittest.mock import Mock
 
 import pytest
 
+from app import config
 from app.config import (
     Settings,
     SupplierPolaritySidecarConfig,
     SupplierPolaritySidecarState,
+    SupplierSemanticsSettings,
     get_settings,
+    get_supplier_semantics_settings,
 )
 from app.core.capability_binding import supplier_semantics_wiring as wiring
 from app.core.capability_binding.dogfood_telemetry import (
@@ -133,10 +137,18 @@ def params(router):
 
 
 @pytest.fixture(autouse=True)
-def _clear_settings_cache():
+def _clear_settings_cache(monkeypatch):
     get_settings.cache_clear()
+    get_supplier_semantics_settings.cache_clear()
+
+    @lru_cache(maxsize=1)
+    def isolated_sidecar_settings():
+        return SupplierSemanticsSettings(_env_file=None)
+
+    monkeypatch.setattr(config, "get_supplier_semantics_settings", isolated_sidecar_settings)
     yield
     get_settings.cache_clear()
+    get_supplier_semantics_settings.cache_clear()
 
 
 def _payload(quote):
@@ -516,7 +528,7 @@ def test_a_multi_job_proposal_never_binds():
 
 def test_the_binding_flag_is_off_by_default():
     assert Settings(_env_file=None).secoppal_a2_suppliers_binding_enabled is False
-    assert Settings(_env_file=None).secoppal_a2_supplier_polarity_sidecar_enabled is False
+    assert SupplierSemanticsSettings(_env_file=None).enabled is False
 
 
 def test_binding_requires_the_flag():

@@ -43,10 +43,13 @@ def configured_polarity_veto() -> PolarityVeto | None:
     ) -> VetoVerdict:
         if not refs:
             return VetoVerdict(VetoOutcome.UNAVAILABLE, "UNKNOWN", "NO_REFS")
-        payload = classify(
-            user_query, refs, quantities,
-            api_key=api_key, model=model, timeout_seconds=timeout,
-        )
+        try:
+            payload = classify(
+                user_query, refs, quantities,
+                api_key=api_key, model=model, timeout_seconds=timeout,
+            )
+        except Exception:  # pragma: no cover - provider normally normalizes this
+            payload = None
         if payload is None:
             return VetoVerdict(VetoOutcome.UNAVAILABLE, "UNKNOWN", "PROVIDER_UNAVAILABLE")
         return adjudicate(refs, payload, quantities)
