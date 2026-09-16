@@ -162,6 +162,16 @@ class SupplierPolaritySidecarConfig:
 
 
 _TRUE_ENV_VALUES = frozenset({"1", "true", "t", "yes", "y", "on"})
+_SIDECAR_FLAG_ENV = "SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED"
+
+
+def _sidecar_requested_by_environment() -> bool:
+    expected = _SIDECAR_FLAG_ENV.casefold()
+    return any(
+        value.strip().lower() in _TRUE_ENV_VALUES
+        for key, value in os.environ.items()
+        if key.casefold() == expected
+    )
 
 
 def supplier_polarity_sidecar_config() -> SupplierPolaritySidecarConfig:
@@ -169,8 +179,7 @@ def supplier_polarity_sidecar_config() -> SupplierPolaritySidecarConfig:
     try:
         settings = get_settings()
     except Exception:  # pragma: no cover - configuración rota
-        raw = os.getenv("SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED", "")
-        if raw.strip().lower() in _TRUE_ENV_VALUES:
+        if _sidecar_requested_by_environment():
             return SupplierPolaritySidecarConfig(
                 SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE,
                 detail="CONFIGURATION_UNAVAILABLE",

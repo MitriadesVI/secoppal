@@ -215,6 +215,23 @@ def test_real_config_failure_while_sidecar_is_on_is_unavailable(
     assert flow.secop_client.calls == []
 
 
+def test_lowercase_sidecar_on_with_validation_error_has_zero_source_calls(
+    make_flow, monkeypatch,
+):
+    from app import config
+
+    text = "proveedores de la alcaldía de Barranquilla"
+    flow = make_flow(text)
+    monkeypatch.delenv("SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED", raising=False)
+    monkeypatch.setenv("secoppal_a2_supplier_polarity_sidecar_enabled", "true")
+    monkeypatch.setenv("SECOP_TIMEOUT_SECONDS", "not-an-integer")
+    config.get_settings.cache_clear()
+    result = _run(flow, text)
+    assert result["route_reason"] == "a2_suppliers_polarity_sidecar_unavailable"
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+
+
 @pytest.mark.parametrize("failure", ["missing_credential", "config_error", "provider_unavailable"])
 def test_sidecar_on_but_unavailable_clarifies_without_source_calls(
     make_flow, monkeypatch, failure,

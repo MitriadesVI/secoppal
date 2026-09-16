@@ -67,6 +67,18 @@ def test_explicit_off_survives_real_settings_failure(monkeypatch):
     assert wiring.configured_polarity_veto() is None
 
 
+def test_lowercase_on_survives_unrelated_settings_validation_error(monkeypatch):
+    from app import config
+
+    monkeypatch.delenv("SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED", raising=False)
+    monkeypatch.setenv("secoppal_a2_supplier_polarity_sidecar_enabled", "true")
+    monkeypatch.setenv("SECOP_TIMEOUT_SECONDS", "not-an-integer")
+    config.get_settings.cache_clear()
+    snapshot = config.supplier_polarity_sidecar_config()
+    assert snapshot.state is SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE
+    assert snapshot.detail == "CONFIGURATION_UNAVAILABLE"
+
+
 def test_on_without_a_credential_wires_unavailable(monkeypatch):
     monkeypatch.setattr(wiring, "classify", _never_called)
     monkeypatch.setattr(
