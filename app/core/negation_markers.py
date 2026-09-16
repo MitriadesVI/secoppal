@@ -39,6 +39,9 @@ ANTI_NEGATION_PATTERNS = (
 # changing the vocabulary imported by modality itself.
 DIMENSIONAL_ANTI_NEGATION_PATTERNS = (
     *ANTI_NEGATION_PATTERNS,
+    # Approximation, not exclusion.  The normalizer removes the accent before
+    # this layer runs, but keeping both forms also protects direct callers.
+    "mas o menos", "más o menos",
     # Existing modality follow-up controls; their marker mutates a prior
     # filter and does not negate the following lexical value generically.
     "sin filtro de modalidad", "sin modalidad",

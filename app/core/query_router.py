@@ -458,11 +458,17 @@ class QueryRouter:
             for amount_text in preliminary_amount_texts
             for match in re.finditer(re.escape(amount_text), normalized)
         })
+        actor_document_match = self._find_identifier_span(normalized)
         negation_binding = bind_negations(
             normalized,
             city_pattern=_CITY_PATTERN_RE,
             modality_spans=modality_result.interpretation.consumed_spans,
             protected_spans=preliminary_amount_spans,
+            actor_document_spans=(
+                (actor_document_match.span(),)
+                if actor_document_match is not None
+                else ()
+            ),
         )
         positive_text = negation_binding.masked_text
         # Unsupported negation must not erase a monetary request before its

@@ -134,6 +134,14 @@ _ACTOR_ROLE_BEFORE_RE = re.compile(
     r"(?P<contrast>\s+pero)?\s*$",
     re.IGNORECASE,
 )
+_ACTOR_DOCUMENT_PREFIX_RE = re.compile(
+    r"(?P<mention>\b(?:(?:de|del|al|el|la|los|las)\s+)?(?:"
+    r"(?:proveedor|contratista|adjudicatario)(?:\s+adjudicado)?"
+    r"(?:\s+(?:nit|c[eé]dulas?|c\.c\.|cc|documento(?:\s+de\s+identidad)?))?"
+    r"|(?:nit|c[eé]dulas?|c\.c\.|cc|documento(?:\s+de\s+identidad)?)"
+    r")\s*(?:n(?:umero|ro)?\.?\s*)?)$",
+    re.IGNORECASE,
+)
 _TIME_RE = re.compile(
     r"\b(?:20\d{2}|enero|febrero|marzo|abril|mayo|junio|julio|agosto|"
     r"septiembre|octubre|noviembre|diciembre)\b",
@@ -200,6 +208,9 @@ _LEADING_GRAMMAR_RE = re.compile(
 )
 _ONLY_GRAMMAR_RE = re.compile(
     rf"^(?:(?:{_GRAMMAR_ALTERNATION})\s*)*$", re.IGNORECASE,
+)
+_ONLY_ACTOR_GAP_RE = re.compile(
+    rf"^(?:(?:{_GRAMMAR_ALTERNATION})\b|[\s,()\-])*$", re.IGNORECASE,
 )
 
 
@@ -312,6 +323,38 @@ def _actor_contrast_start(text: str, marker: NegativeMarker) -> int | None:
     return prefix_start + match.start("contrast")
 
 
+def _actor_document_boundary(
+    text: str,
+    *,
+    marker: NegativeMarker,
+    target_end: int,
+    document_spans: tuple[tuple[int, int], ...],
+) -> tuple[int, int, bool] | None:
+    """Locate an accredited document mention without interpreting identity.
+
+    The supplied coordinates come from the router's existing numeric
+    authority.  This helper may only expand left over immediate actor/type
+    markers.  It returns whether the marker-to-mention gap is purely
+    grammatical; no document value or type leaves this structural seam.
+    """
+    candidates = [
+        span for span in document_spans
+        if marker.end <= span[0] < span[1] <= target_end
+    ]
+    if not candidates:
+        return None
+    document_start, document_end = min(candidates)
+    prefix = text[marker.end:document_start]
+    match = _ACTOR_DOCUMENT_PREFIX_RE.search(prefix)
+    mention_start = (
+        marker.end + match.start("mention")
+        if match is not None
+        else document_start
+    )
+    gap = text[marker.end:mention_start]
+    return mention_start, document_end, bool(_ONLY_ACTOR_GAP_RE.fullmatch(gap))
+
+
 def _target_end(text: str, marker: NegativeMarker, next_marker_start: int) -> tuple[int, tuple[int, int] | None]:
     end = next_marker_start
     local = text[marker.end:end]
@@ -406,9 +449,11 @@ def bind_negations(
     city_pattern: Pattern[str],
     modality_spans: Iterable[tuple[int, int]] = (),
     protected_spans: Iterable[tuple[int, int]] = (),
+    actor_document_spans: Iterable[tuple[int, int]] = (),
 ) -> NegationBinding:
     """Bind every resolvable external marker and isolate its governed text."""
     modality = tuple(sorted(modality_spans))
+    actor_documents = tuple(sorted(actor_document_spans))
     protected = (
         *modality,
         *tuple(protected_spans),
@@ -426,6 +471,19 @@ def bind_negations(
         # referencia del sello de estado: da igual cómo acabe repartido, nada
         # de aquí dentro puede llegar al extractor positivo de estado.
         raw_end, sino_span = _target_end(text, marker, next_start)
+        actor_boundary = _actor_document_boundary(
+            text,
+            marker=marker,
+            target_end=raw_end,
+            document_spans=actor_documents,
+        )
+        actor_target = False
+        if actor_boundary is not None:
+            actor_start, document_end, actor_target = actor_boundary
+            # A grammatical gap means the marker governs the atomic actor
+            # mention.  A free constituent means it governs that constituent
+            # and must stop before the independent positive actor.
+            raw_end = document_end if actor_target else actor_start
         governed_regions.append((marker.end, raw_end, marker))
         modality_targets = _modality_targets(text, marker, modality)
         if modality_targets:
@@ -448,13 +506,16 @@ def bind_negations(
         raw_start = marker.end
         if not text[raw_start:end].strip(" ,"):
             continue
-        dimension, governed_end = _classify_target(
-            text,
-            marker=marker,
-            target_start=raw_start,
-            target_end=end,
-            city_pattern=city_pattern,
-        )
+        if actor_target:
+            dimension, governed_end = NegationDimension.ACTOR, end
+        else:
+            dimension, governed_end = _classify_target(
+                text,
+                marker=marker,
+                target_start=raw_start,
+                target_end=end,
+                city_pattern=city_pattern,
+            )
         end = governed_end
         if end <= raw_start or not text[raw_start:end].strip(" ,"):
             continue
