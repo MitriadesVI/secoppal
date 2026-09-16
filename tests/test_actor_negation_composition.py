@@ -194,6 +194,25 @@ def test_a_preposition_opens_a_positive_constituent_without_punctuation() -> Non
     assert parsed.params["actor_scope"]["base_number"] == POSITIVE
 
 
+# ── La colección no depende de qué marcador la abrió ─────────────────────
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "contratos sin proveedor NIT 900711074 ni proveedor NIT 830053105",
+        "contratos excepto proveedor NIT 900711074 ni proveedor NIT 830053105",
+        "contratos salvo el proveedor NIT 900711074 y el proveedor NIT 830053105",
+        "contratos donde el proveedor no sea NIT 900711074 ni NIT 830053105",
+        "contratos donde el proveedor pero no NIT 900711074 ni NIT 830053105",
+    ],
+)
+def test_every_negative_marker_governs_the_whole_collection(query: str) -> None:
+    parsed = router.parse(query)
+
+    assert _negated_numbers(parsed) == [NEGATED_A, NEGATED_C]
+    _assert_never_positive(parsed, NEGATED_A, NEGATED_C)
+
+
 # ── Aclaración: la colección entera, no su primer elemento ───────────────
 
 def test_the_clarification_names_every_negated_actor() -> None:
