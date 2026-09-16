@@ -13,13 +13,14 @@ ALIASES = {
     "DEEPSEEK_MODEL",
     "SECOPPAL_A2_SUPPLIER_POLARITY_TIMEOUT_SECONDS",
 }
+GENERIC_NAMES = {"ENABLED", "API_KEY", "MODEL", "TIMEOUT_SECONDS"}
 
 
 @pytest.fixture(autouse=True)
 def _isolated_cache(monkeypatch):
-    for alias in ALIASES:
-        monkeypatch.delenv(alias, raising=False)
-        monkeypatch.delenv(alias.lower(), raising=False)
+    for name in ALIASES | GENERIC_NAMES:
+        monkeypatch.delenv(name, raising=False)
+        monkeypatch.delenv(name.lower(), raising=False)
     getter = config.get_supplier_semantics_settings
     getter.cache_clear()
     yield
@@ -33,8 +34,76 @@ def _env_file(tmp_path, **values):
 
 
 def test_settings_have_exactly_the_four_authorized_aliases():
-    assert {field.alias for field in SupplierSemanticsSettings.model_fields.values()} == ALIASES
+    fields = SupplierSemanticsSettings.model_fields.values()
+    assert {field.alias for field in fields} == ALIASES
     assert len(SupplierSemanticsSettings.model_fields) == 4
+    assert SupplierSemanticsSettings.model_config["populate_by_name"] is False
+    assert all(field.validation_alias == field.alias for field in fields)
+
+
+def test_generic_environment_names_cannot_activate_or_change_prerequisites(monkeypatch):
+    monkeypatch.setenv("ENABLED", "true")
+    monkeypatch.setenv("API_KEY", "foreign-key")
+    monkeypatch.setenv("MODEL", "foreign-model")
+    monkeypatch.setenv("TIMEOUT_SECONDS", "2")
+    settings = SupplierSemanticsSettings(_env_file=None)
+    assert settings.enabled is False
+    assert settings.api_key is None
+    assert settings.model == "deepseek-chat"
+    assert settings.timeout_seconds == 8.0
+
+
+def test_generic_dotenv_names_cannot_activate_or_change_prerequisites(tmp_path):
+    env_file = _env_file(
+        tmp_path,
+        ENABLED="true",
+        API_KEY="foreign-key",
+        MODEL="foreign-model",
+        TIMEOUT_SECONDS="2",
+    )
+    settings = SupplierSemanticsSettings(_env_file=env_file)
+    assert settings.enabled is False
+    assert settings.api_key is None
+    assert settings.model == "deepseek-chat"
+    assert settings.timeout_seconds == 8.0
+
+
+def test_generic_environment_names_cannot_block_or_replace_canonical_dotenv(
+    tmp_path, monkeypatch,
+):
+    env_file = _env_file(
+        tmp_path,
+        SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED="true",
+        DEEPSEEK_API_KEY="file-key",
+        DEEPSEEK_MODEL="file-model",
+        SECOPPAL_A2_SUPPLIER_POLARITY_TIMEOUT_SECONDS="3.5",
+    )
+    monkeypatch.setenv("ENABLED", "false")
+    monkeypatch.setenv("API_KEY", "foreign-key")
+    monkeypatch.setenv("MODEL", "foreign-model")
+    monkeypatch.setenv("TIMEOUT_SECONDS", "2")
+    settings = SupplierSemanticsSettings(_env_file=env_file)
+    assert (settings.enabled, settings.api_key, settings.model, settings.timeout_seconds) == (
+        True, "file-key", "file-model", 3.5,
+    )
+
+
+def test_mixed_case_canonical_environment_aliases_override_dotenv(tmp_path, monkeypatch):
+    env_file = _env_file(
+        tmp_path,
+        SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED="false",
+        DEEPSEEK_API_KEY="file-key",
+        DEEPSEEK_MODEL="file-model",
+        SECOPPAL_A2_SUPPLIER_POLARITY_TIMEOUT_SECONDS="8",
+    )
+    monkeypatch.setenv("SeCoPpAl_A2_SuPpLiEr_PoLaRiTy_SiDeCaR_EnAbLeD", "true")
+    monkeypatch.setenv("dEePsEeK_aPi_KeY", "environment-key")
+    monkeypatch.setenv("DeEpSeEk_MoDeL", "environment-model")
+    monkeypatch.setenv("sEcOpPaL_A2_sUpPlIeR_pOlArItY_tImEoUt_SeCoNdS", "2.5")
+    settings = SupplierSemanticsSettings(_env_file=env_file)
+    assert (settings.enabled, settings.api_key, settings.model, settings.timeout_seconds) == (
+        True, "environment-key", "environment-model", 2.5,
+    )
 
 
 def test_omitted_flag_is_off_without_validating_inactive_prerequisites(tmp_path, monkeypatch):
