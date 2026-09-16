@@ -507,10 +507,19 @@ def bind_negations(
             # puede resolver, y la aclaración nombraría ese blob en lugar de
             # los actores. El usuario dejaría de ver que B fue entendido.
             for position, atom in enumerate(actor_atoms):
-                last = position == len(actor_atoms) - 1
+                piece_start = raw_start if not position else atom.mention_start
+                piece_end = atom.document_end
+                if position == len(actor_atoms) - 1:
+                    # El alcance cierra sobre un ")" que puede pertenecer a un
+                    # átomo anterior: un paréntesis que abrió en el primero no
+                    # cierra en el último. El valor sigue al paréntesis, no al
+                    # alcance.
+                    candidate = text[piece_start:end]
+                    if candidate.count(")") <= candidate.count("("):
+                        piece_end = end
                 pieces.append((
-                    raw_start if not position else atom.mention_start,
-                    end if last else atom.document_end,
+                    piece_start,
+                    piece_end,
                     None if not position else "actor_group",
                 ))
         else:
@@ -603,9 +612,11 @@ def _dimension_value(request: NegationRequest | Mapping[str, object]) -> str:
 def _list_values(requests: Iterable[NegationRequest | Mapping[str, object]]) -> str:
     """Enumerate the requested values in reading order, without repeating."""
     listed: list[str] = []
+    seen: set[str] = set()
     for request in requests:
         value = str(_request_field(request, "value") or "").strip()
-        if value and value not in listed:
+        if value and value not in seen:
+            seen.add(value)
             listed.append(f"'{value}'")
     if len(listed) <= 1:
         return listed[0] if listed else "esos valores"
@@ -697,10 +708,12 @@ def negation_clarification_question(
         return messages[dimension]
     if len(blocked) > 1 and all(
         _dimension_value(item) == NegationDimension.ACTOR.value for item in blocked
-    ):
-        # Una colección bajo un mismo marcador se aclara entera. Nombrar sólo
-        # al primero le diría al usuario que los demás no fueron entendidos,
-        # que es exactamente lo que este sprint dejó de ser cierto.
+    ) and len({_request_field(item, "marker_start") for item in blocked}) == 1:
+        # Una colección bajo UN MISMO marcador se aclara entera: nombrar sólo
+        # al primero diría que los demás no fueron entendidos. La identidad
+        # del marcador es parte de la condición, no del comentario: dos
+        # marcadores distintos son dos exclusiones, y su mensaje es el de
+        # abajo, como siempre.
         listed = _list_values(blocked)
         return (
             f"Entendí que quieres excluir a los proveedores o contratistas "

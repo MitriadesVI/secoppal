@@ -26,6 +26,7 @@ from app.core.actor_negation_group import ActorAtom, ActorNegationGroup
 from app.core.conversation_store import ConversationStore
 from app.core.negation_binding import (
     NegationDimension,
+    NegationRequest,
     NegationVerdict,
     bind_negations,
     negation_clarification_question,
@@ -381,7 +382,7 @@ _DOCUMENTS = (
     chosen=st.lists(
         st.sampled_from(_DOCUMENTS), min_size=1, max_size=3, unique_by=lambda item: item[1],
     ),
-    coordinator=st.sampled_from((" ni ", " y ", ", ")),
+    coordinator=st.sampled_from((" ni ", " y ", " o ", ", ")),
     role=st.sampled_from(("proveedor", "contratista", "el proveedor")),
     with_positive=st.booleans(),
 )
@@ -410,21 +411,143 @@ def test_any_ordered_collection_stays_negated_and_separate(
     assert all(number in question for number in numbers)
 
 
-# ── Frontera declarada: garantía limitada, no ausencia de defecto ─────────
+def test_the_first_request_carries_its_structural_mention() -> None:
+    """El primer átomo empieza donde empieza el marcador, no en el número."""
+    parsed = router.parse(
+        "contratos sin proveedor NIT 900711074 ni proveedor NIT 830053105"
+    )
+    requests = _actor_requests(parsed)
+
+    assert requests[0].value == "proveedor nit 900711074"
+    assert requests[1].value == "proveedor nit 830053105"
+
+
+def test_two_markers_are_two_exclusions_not_one_collection() -> None:
+    """La colección es de UN marcador; dos marcadores no se funden."""
+    parsed = router.parse(
+        "contratos sin proveedor NIT 900711074 sin proveedor NIT 830053105"
+    )
+    requests = _actor_requests(parsed)
+    assert len({request.marker_start for request in requests}) == 2
+
+    question = negation_clarification_question(parsed.negation_requests)
+    assert "proveedores o contratistas" not in question
+    assert "no puedo ejecutarlas juntas" in question
+
+
+def test_a_mixed_blocked_set_is_never_read_as_an_actor_collection() -> None:
+    """El mensaje de colección exige que TODO lo bloqueado sea ACTOR.
+
+    Se construye a mano porque un solo marcador que reparta ACTOR y otra
+    dimensión no es alcanzable hoy desde el router; el contrato de la función
+    no puede depender de esa suerte.
+    """
+    def request(dimension: NegationDimension, value: str) -> NegationRequest:
+        return NegationRequest(
+            dimension=dimension, value=value, value_start=0, value_end=1,
+            marker="sin", marker_start=10, marker_end=13,
+            verdict=NegationVerdict.CLARIFY,
+        )
+
+    question = negation_clarification_question([
+        request(NegationDimension.ACTOR, "proveedor nit 900711074"),
+        request(NegationDimension.CITY, "cali"),
+    ])
+
+    assert "proveedores o contratistas" not in question
+    assert "cali" not in question
+
+
+def test_a_repeated_actor_is_named_once() -> None:
+    parsed = router.parse(
+        "contratos sin proveedor NIT 900711074 ni proveedor NIT 900711074"
+    )
+    question = negation_clarification_question(parsed.negation_requests)
+
+    assert question.count(NEGATED_A) == 1
+
+
+def test_a_closing_parenthesis_belongs_to_the_atom_that_opened_it() -> None:
+    parsed = router.parse(
+        "contratos sin proveedor NIT 900711074 (proveedor NIT 830053105)"
+    )
+    for request in _actor_requests(parsed):
+        assert request.value.count(")") == request.value.count("(")
+
+
+@pytest.mark.parametrize(
+    "spans",
+    [
+        ((True, 10),),
+        ((1, 10),),
+    ],
+)
+def test_booleans_are_not_coordinates(spans) -> None:
+    """`True == 1`: sin el guard de bool, un span booleano acredita texto.
+
+    Se prueba en el módulo dueño porque `bind_negations` nunca deja llegar un
+    span que empiece antes del marcador; ahí el guard es inobservable.
+    """
+    text = "a900711074 contratos"
+    validated = actor_group_module.validate_document_spans(text, spans)
+    assert validated == (() if isinstance(spans[0][0], bool) else ((1, 10),))
+
+
+# ── Frontera declarada: el residuo es un vocabulario, no dos casos ───────
 #
-# La colección se reconoce cuando el marcador gobierna actores. Quedan dos
-# superficies donde un actor sigue reapareciendo como positivo bajo un
-# marcador negativo. Ninguna es una regresión —se reproducen igual en la base
-# de esta rama— y ninguna se arregla aquí: el rol plural es vocabulario y la
-# segunda cruza a BUYER. Se congelan `strict` para que quien las cierre tenga
-# que venir a este archivo a declararlo.
+# La colección se reconoce cuando el marcador gobierna actores Y el enlace
+# está en un conjunto enumerado. Los dos enumerados son el residuo:
+#
+#   ROL      `contratistas` abre colección y `proveedores` no. La diferencia
+#            no es la pluralidad: el normalizador lematiza el primero y no el
+#            segundo. `adjudicatarios` tampoco.
+#   ENLACE   `ni`, `y`, `o` continúan la colección. `tampoco`, `ademas de`,
+#            `e`, `u` y un artículo suelto ante el número (`ni el 79482763`)
+#            no, y el actor que sigue reaparece como positivo.
+#
+# El peor caso NO se queda en aclarar: EJECUTA con la polaridad invertida.
+# "contratos sin proveedores NIT 900711074 ni 79482763" resuelve
+# contratista=['900711074'] y sale a la fuente; el usuario pidió excluir a
+# dos proveedores y recibe los contratos del primero. Es la familia que
+# ADR-069 prohíbe, y ningún vocabulario más la cierra: cerrarla pide un sello
+# de polaridad sobre el alcance del marcador, como `_seal_negated_state` hace
+# con STATE. Queda fuera de este foundation a propósito.
+#
+# Todo lo de abajo reproduce igual en la base de esta rama y en main.
 
 @pytest.mark.xfail(
     strict=True,
-    reason="FRONTERA: el rol plural no abre colección; el actor sobrevive positivo",
+    reason=(
+        "FRONTERA: un rol que el normalizador no lematiza no abre colección; "
+        "el actor negado reaparece positivo Y el turno ejecuta"
+    ),
 )
-def test_a_plural_role_still_loses_its_actors() -> None:
+def test_an_unlemmatized_role_still_inverts_the_polarity() -> None:
     parsed = router.parse("contratos sin proveedores NIT 900711074 ni 79482763")
+    _assert_never_positive(parsed, NEGATED_A, NEGATED_B)
+
+
+def test_a_lemmatized_plural_role_does_open_a_collection() -> None:
+    """La pluralidad no es la causa del hueco de arriba; la lematización sí."""
+    parsed = router.parse(
+        "contratos sin contratistas NIT 900711074 ni NIT 830053105"
+    )
+    assert _negated_numbers(parsed) == [NEGATED_A, NEGATED_C]
+    _assert_never_positive(parsed, NEGATED_A, NEGATED_C)
+
+
+@pytest.mark.parametrize(
+    "linker",
+    [" tampoco ", " ademas de ", " e ", " u ", " ni el "],
+)
+@pytest.mark.xfail(
+    strict=True,
+    reason="FRONTERA: enlace fuera del conjunto enumerado; el actor que sigue revive",
+)
+def test_an_unenumerated_linker_still_loses_the_next_actor(linker: str) -> None:
+    parsed = router.parse(
+        f"contratos sin proveedor NIT 900711074{linker}79482763"
+    )
     _assert_never_positive(parsed, NEGATED_A, NEGATED_B)
 
 
