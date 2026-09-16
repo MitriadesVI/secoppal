@@ -458,16 +458,14 @@ class QueryRouter:
             for amount_text in preliminary_amount_texts
             for match in re.finditer(re.escape(amount_text), normalized)
         })
-        actor_document_match = self._find_identifier_span(normalized)
+        actor_document_matches = self._find_identifier_spans(normalized)
         negation_binding = bind_negations(
             normalized,
             city_pattern=_CITY_PATTERN_RE,
             modality_spans=modality_result.interpretation.consumed_spans,
             protected_spans=preliminary_amount_spans,
-            actor_document_spans=(
-                (actor_document_match.span(),)
-                if actor_document_match is not None
-                else ()
+            actor_document_spans=tuple(
+                match.span() for match in actor_document_matches
             ),
         )
         positive_text = negation_binding.masked_text
@@ -1908,6 +1906,15 @@ class QueryRouter:
         return scrubbed
 
     @staticmethod
+    def _find_identifier_spans(normalized_query: str) -> tuple[re.Match[str], ...]:
+        """All numeric spans accredited as identifiers in source coordinates."""
+        return tuple(
+            candidate
+            for candidate in _NIT_SHAPE_RE.finditer(normalized_query)
+            if _number_role(normalized_query, candidate) == "identifier"
+        )
+
+    @staticmethod
     def _find_identifier_span(normalized_query: str) -> "re.Match[str] | None":
         """Primer span con forma de identificador que ADR-059 no lee como monto.
 
@@ -1917,14 +1924,7 @@ class QueryRouter:
         no los dígitos ya limpios: es el separador lo que distingue un DV
         declarado por la fuente de una hipótesis del módulo 11.
         """
-        return next(
-            (
-                candidate
-                for candidate in _NIT_SHAPE_RE.finditer(normalized_query)
-                if _number_role(normalized_query, candidate) == "identifier"
-            ),
-            None,
-        )
+        return next(iter(QueryRouter._find_identifier_spans(normalized_query)), None)
 
     def _extract_nit(self, normalized_query: str) -> list[str] | None:
         """Detecta NITs colombianos por forma y retorna variantes base + con DV.

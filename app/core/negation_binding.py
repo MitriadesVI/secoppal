@@ -134,13 +134,20 @@ _ACTOR_ROLE_BEFORE_RE = re.compile(
     r"(?P<contrast>\s+pero)?\s*$",
     re.IGNORECASE,
 )
+_ACTOR_DOCUMENT_TYPE_PATTERN = (
+    r"(?:nit|c[eé]dulas?|c\.c\.|cc|documento(?:\s+de\s+identidad)?)"
+)
 _ACTOR_DOCUMENT_PREFIX_RE = re.compile(
     r"(?P<mention>\b(?:(?:de|del|al|el|la|los|las)\s+)?(?:"
     r"(?:proveedor|contratista|adjudicatario)(?:\s+adjudicado)?"
-    r"(?:\s+(?:nit|c[eé]dulas?|c\.c\.|cc|documento(?:\s+de\s+identidad)?))?"
-    r"|(?:nit|c[eé]dulas?|c\.c\.|cc|documento(?:\s+de\s+identidad)?)"
-    r")\s*(?:n(?:umero|ro)?\.?\s*)?)$",
+    rf"(?:\s*(?:[,:(\-]\s*)?(?:(?:identificado\s+)?con|"
+    rf"n(?:umero|ro)?\.?)?\s*{_ACTOR_DOCUMENT_TYPE_PATTERN})?"
+    rf"|{_ACTOR_DOCUMENT_TYPE_PATTERN}"
+    r")\s*)$",
     re.IGNORECASE,
+)
+_ACTOR_DOCUMENT_VALUE_RE = re.compile(
+    r"(?:\d{1,3}(?:[.\- ]\d{3}){1,3}(?:[.\- ]\d)?|\d{5,11})"
 )
 _TIME_RE = re.compile(
     r"\b(?:20\d{2}|enero|febrero|marzo|abril|mayo|junio|julio|agosto|"
@@ -355,6 +362,41 @@ def _actor_document_boundary(
     return mention_start, document_end, bool(_ONLY_ACTOR_GAP_RE.fullmatch(gap))
 
 
+def _validated_actor_document_spans(
+    text: str,
+    spans: Iterable[tuple[int, int]],
+) -> tuple[tuple[int, int], ...]:
+    """Keep only exact document-shaped spans in these text coordinates.
+
+    Callers still own numeric/identity authority.  This is a defensive seam:
+    stale, partial, foreign, or out-of-bounds coordinates cannot turn an
+    arbitrary word into an ACTOR request when ``bind_negations`` is called
+    directly.
+    """
+    valid: set[tuple[int, int]] = set()
+    for span in spans:
+        if (
+            not isinstance(span, tuple)
+            or len(span) != 2
+            or any(isinstance(value, bool) or not isinstance(value, int) for value in span)
+        ):
+            continue
+        start, end = span
+        if not 0 <= start < end <= len(text):
+            continue
+        if start and (text[start - 1].isdigit() or text[start - 1] in ".-"):
+            continue
+        if end < len(text) and (text[end].isdigit() or text[end] in ".-"):
+            continue
+        value = text[start:end]
+        if _ACTOR_DOCUMENT_VALUE_RE.fullmatch(value) is None:
+            continue
+        digits = re.sub(r"\D", "", value)
+        if 5 <= len(digits) <= 11:
+            valid.add(span)
+    return tuple(sorted(valid))
+
+
 def _target_end(text: str, marker: NegativeMarker, next_marker_start: int) -> tuple[int, tuple[int, int] | None]:
     end = next_marker_start
     local = text[marker.end:end]
@@ -453,7 +495,7 @@ def bind_negations(
 ) -> NegationBinding:
     """Bind every resolvable external marker and isolate its governed text."""
     modality = tuple(sorted(modality_spans))
-    actor_documents = tuple(sorted(actor_document_spans))
+    actor_documents = _validated_actor_document_spans(text, actor_document_spans)
     protected = (
         *modality,
         *tuple(protected_spans),
@@ -474,7 +516,7 @@ def bind_negations(
         actor_boundary = _actor_document_boundary(
             text,
             marker=marker,
-            target_end=raw_end,
+            target_end=next_start,
             document_spans=actor_documents,
         )
         actor_target = False
@@ -483,7 +525,12 @@ def bind_negations(
             # A grammatical gap means the marker governs the atomic actor
             # mention.  A free constituent means it governs that constituent
             # and must stop before the independent positive actor.
-            raw_end = document_end if actor_target else actor_start
+            if actor_target:
+                raw_end = document_end
+                if text[raw_end:raw_end + 1] == ")":
+                    raw_end += 1
+            else:
+                raw_end = min(raw_end, actor_start)
         governed_regions.append((marker.end, raw_end, marker))
         modality_targets = _modality_targets(text, marker, modality)
         if modality_targets:
