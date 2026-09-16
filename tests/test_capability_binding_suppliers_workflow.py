@@ -67,8 +67,9 @@ def make_flow(tmp_path, monkeypatch):
         flow = SecopalWorkflow(settings)
         flow.conv_store = ConversationStore(root / "conversations")
         flow.secop_client = RecordingSource()
+        quote = "proveedores" if "proveedores" in text else text[:20]
         flow.natural_alpha_provider = Mock(observe=Mock(
-            return_value=ProviderResult(_payload(text[:20]), provider_calls=1)))
+            return_value=ProviderResult(_payload(quote), provider_calls=1)))
         return flow
 
     yield build
@@ -105,16 +106,23 @@ def test_injected_supplier_job_without_witness_keeps_baseline_route(make_flow):
 @pytest.mark.parametrize("text", [
     "sin proveedores de la alcaldía de Barranquilla",
     "no sus proveedores de la alcaldía de Barranquilla",
-    "proveedores no de la alcaldía de Barranquilla",
     "excluye los 5 proveedores de la alcaldía de Barranquilla",
 ])
-def test_non_positive_supplier_witness_keeps_baseline_route_and_calls(make_flow, text):
+def test_non_positive_supplier_witness_clarifies_without_source_calls(make_flow, text):
     flow = make_flow(text)
-    baseline = make_flow(text, enabled=False)
     result = _run(flow, text)
-    baseline_result = _run(baseline, text)
-    assert result["route_reason"] == baseline_result["route_reason"]
-    assert Counter(flow.secop_client.calls) == Counter(baseline.secop_client.calls)
+    assert result["route_reason"] == "a2_suppliers_intent_witness_not_positive"
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+
+
+def test_mixed_supplier_witness_clarifies_without_source_calls(make_flow):
+    text = "proveedores y sin contratistas de la alcaldía de Barranquilla"
+    flow = make_flow(text)
+    result = _run(flow, text)
+    assert result["route_reason"] == "a2_suppliers_intent_witness_not_positive"
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
 
 
 def test_buyer_plus_geography_clarifies_before_supplier_calls(make_flow):
@@ -154,6 +162,93 @@ def test_residual_topic_clarifies_with_zero_source_calls(make_flow):
     assert flow.secop_client.calls == []
     # The clarification names what it could not accredit instead of dropping it.
     assert "«obras»" in result["response"]
+
+
+@pytest.mark.parametrize("text", [
+    "proveedores de educación de la Secretaría de Educación de Cali",
+    "proveedores de educación de educación de la Secretaría de Educación de Cali",
+])
+def test_repeated_buyer_word_does_not_accredit_topic_occurrence(make_flow, text):
+    flow = make_flow(text)
+    result = _run(flow, text)
+    assert result["route_reason"] == "a2_suppliers_unaccredited_residual"
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+
+
+@pytest.mark.parametrize("failure", ["missing_credential", "config_error", "provider_unavailable"])
+def test_sidecar_on_but_unavailable_clarifies_without_source_calls(
+    make_flow, monkeypatch, failure,
+):
+    from app.core.capability_binding import supplier_semantics_wiring as wiring
+
+    class MissingCredential:
+        deepseek_api_key = None
+        deepseek_model = "deepseek-chat"
+        secoppal_a2_supplier_polarity_timeout_seconds = 8.0
+
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
+    if failure == "config_error":
+        def broken_settings():
+            raise RuntimeError("broken configuration")
+
+        monkeypatch.setattr(wiring, "get_settings", broken_settings)
+    else:
+        settings = MissingCredential()
+        if failure == "provider_unavailable":
+            settings.deepseek_api_key = "test-key"
+            monkeypatch.setattr(wiring, "classify", lambda *args, **kwargs: None)
+        monkeypatch.setattr(wiring, "get_settings", lambda: settings)
+    text = "proveedores de la alcaldía de Barranquilla"
+    flow = make_flow(text)
+    result = _run(flow, text)
+    assert result["route_reason"] == "a2_suppliers_polarity_sidecar_unavailable"
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+
+
+def test_actor_cardinal_turn_keeps_actor_profile_ownership(make_flow):
+    text = "5 proveedores en adelante del proveedor NIT 900711074"
+    flow = make_flow(text)
+    result = _run(flow, text)
+    assert result["route_reason"] == "actor_profile"
+    assert result["resolved_params"]["actor_scope"]["base_number"] == "900711074"
+    assert flow.secop_client.calls
+
+
+def test_actor_document_turn_keeps_actor_profile_ownership(make_flow):
+    text = "proveedor NIT 900711074"
+    flow = make_flow(text)
+    result = _run(flow, text)
+    assert result["route_reason"] == "actor_profile"
+    assert result["resolved_params"]["actor_scope"]["base_number"] == "900711074"
+    assert flow.secop_client.calls
+
+
+def test_named_and_fuzzy_actor_turns_remain_actor_owned(make_flow, tmp_path):
+    from tests.actor_prefix_fixtures import resolver_for
+
+    exact = "proveedor Fundacaribe"
+    exact_flow = make_flow(exact)
+    exact_flow.actor_name_resolver = resolver_for(
+        tmp_path / "exact-actors.sqlite",
+        [("NIT", "900711074", "FUNDACARIBE")],
+    )
+    exact_result = _run(exact_flow, exact)
+    assert exact_result["route_reason"] == "actor_profile"
+    assert exact_flow.secop_client.calls
+
+    fuzzy = "proveedor Fundacarib"
+    fuzzy_flow = make_flow(fuzzy)
+    fuzzy_flow.actor_name_resolver = resolver_for(
+        tmp_path / "fuzzy-actors.sqlite",
+        [("NIT", "900711074", "FUNDACARIBE")],
+    )
+    fuzzy_result = _run(fuzzy_flow, fuzzy)
+    assert fuzzy_result["needs_clarification"] is True
+    assert fuzzy_result["resolved_params"]["actor_resolution_status"] == "CANDIDATES"
+    assert not fuzzy_result["route_reason"].startswith("a2_suppliers")
+    assert fuzzy_flow.secop_client.calls == []
 
 
 def test_flag_off_keeps_legacy_ownership(make_flow):

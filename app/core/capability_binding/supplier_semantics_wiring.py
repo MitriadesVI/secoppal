@@ -1,9 +1,9 @@
 """Where the flag, the credential and the provider meet the pure contract.
 
 Kept apart from both sides: the contract never imports a network client, and
-the provider never reads configuration. Anything missing here -- flag off, no
-credential, unreadable settings -- yields ``None``, and a contract with no veto
-is the V1 contract, unchanged.
+the provider never reads configuration. Flag OFF alone yields ``None`` and
+preserves the V1 contract. Flag ON always yields a veto: missing configuration,
+credential, or provider becomes an explicit ``UNAVAILABLE`` verdict.
 """
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ from app.core.capability_binding.supplier_semantics import (
 
 
 def configured_polarity_veto() -> PolarityVeto | None:
-    """The wired veto, or ``None`` when the sidecar is not configured to run."""
+    """The wired veto, or ``None`` only when the sidecar is explicitly off."""
     if not supplier_polarity_sidecar_enabled():
         return None
     try:
@@ -29,9 +29,9 @@ def configured_polarity_veto() -> PolarityVeto | None:
         model = settings.deepseek_model
         timeout = settings.secoppal_a2_supplier_polarity_timeout_seconds
     except Exception:  # pragma: no cover - configuración rota
-        return None
+        return _unavailable("CONFIGURATION_UNAVAILABLE")
     if not api_key:
-        return None
+        return _unavailable("MISSING_CREDENTIAL")
 
     def veto(
         user_query: str,
@@ -47,5 +47,16 @@ def configured_polarity_veto() -> PolarityVeto | None:
         if payload is None:
             return VetoVerdict(VetoOutcome.UNAVAILABLE, "UNKNOWN", "PROVIDER_UNAVAILABLE")
         return adjudicate(refs, payload, quantities)
+
+    return veto
+
+
+def _unavailable(detail: str) -> PolarityVeto:
+    def veto(
+        user_query: str,
+        refs: tuple[MentionRef, ...],
+        quantities: tuple[QuantityRef, ...] = (),
+    ) -> VetoVerdict:
+        return VetoVerdict(VetoOutcome.UNAVAILABLE, "UNKNOWN", detail)
 
     return veto

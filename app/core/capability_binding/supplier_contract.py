@@ -180,10 +180,19 @@ def decide(
         a2_sidecar_status="NOT_WIRED",
         a2_rescued_by_sidecar=False,
     )
+    # Actor Profile owns the subject before SUPPLIERS may interpret polarity,
+    # cardinality, or any other guard.  Those guards describe the requested
+    # supplier list; they cannot take ownership from an identified actor.
+    if _actor_subject(params):
+        return _not_bound("ACTOR_SUBJECT", record)
     if not evidence.mentions:
         return _not_bound("INTENT_WITNESS_MISSING", record)
     if evidence.polarity is not Polarity.POSITIVE:
-        return _not_bound("INTENT_WITNESS_NOT_POSITIVE", record)
+        return _clarify("INTENT_WITNESS_NOT_POSITIVE", (
+            "Entendí una mención negativa, mixta o incierta de proveedores y no voy a "
+            "convertirla en una búsqueda positiva. ¿Quieres ver los proveedores de la "
+            "entidad?"
+        ), (evidence.polarity.value,), record)
     # DOGFOOD_CARDINAL_AMBIGUITY_GUARD: the x2 surfaces that opened an
     # executable route are refused here, before the sidecar is asked, so the
     # turn costs zero sidecar calls and zero source calls. It only blocks.
@@ -223,9 +232,6 @@ def decide(
             f"contratos y por valor. Pediste {requested}; no voy a responder otra cantidad "
             f"en silencio. ¿Te sirven los {SUPPLIER_LIMIT} principales?"
         ), (requested,), record)
-
-    if _actor_subject(params):
-        return _not_bound("ACTOR_SUBJECT", record)
 
     accounting = account(user_query, params, supplier_evidence=evidence)
     # A structured dimension the capability cannot apply is named first: its own

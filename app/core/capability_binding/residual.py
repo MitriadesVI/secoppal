@@ -82,6 +82,17 @@ def _surface_spans(text: str, surfaces: tuple[str, ...]) -> list[tuple[int, int]
     return spans
 
 
+def _literal_spans(text: str, surface: str) -> tuple[tuple[int, int], ...]:
+    """Locate whole literal occurrences without granting by shared vocabulary."""
+    tokens = _WORD.findall(normalize_text(surface))
+    if not tokens:
+        return ()
+    pattern = re.compile(
+        rf"(?<![a-z0-9ñ]){'\\s+'.join(map(re.escape, tokens))}(?![a-z0-9ñ])",
+    )
+    return tuple(match.span() for match in pattern.finditer(text))
+
+
 def _inside(span: tuple[int, int], spans) -> bool:
     return any(a <= span[0] and span[1] <= b for a, b in spans if a is not None)
 
@@ -102,20 +113,23 @@ def account(
     temporal = resolve_temporal_scope(free, today=civil_today(today))
     territory = get_municipal_territories().name_spans(free)
 
-    accounted: set[str] = set()
-    for surface in buyer_surfaces(params):
-        accounted |= _words(surface)
-    for occurrence in source_request_occurrences(free):
-        accounted |= _words(occurrence.surface)
+    accounted_spans: list[tuple[int, int]] = list(buyer_spans)
+    accounted_spans.extend(
+        occurrence.span for occurrence in source_request_occurrences(free)
+    )
     supplier_spans = tuple(span.normalized for span in supplier_evidence.consumed_spans)
-    for start, end in (*criterion, *supplier_spans, *territory):
-        accounted |= _words(free[start:end])
+    accounted_spans.extend((*criterion, *supplier_spans, *territory))
     for consumed in control.consumed_spans:
-        accounted |= _words(consumed)
+        accounted_spans.extend(_literal_spans(free, consumed))
 
     unaccredited = [
         group[0] for group in topic_groups(profile_query_params(params))
-        if not any(_words(v) and _words(v) <= accounted for v in group)
+        if not any(
+            occurrences
+            and all(_inside(occurrence, accounted_spans) for occurrence in occurrences)
+            for variant in group
+            if (occurrences := _literal_spans(text, variant))
+        )
     ]
     protected = [
         *(span.normalized for span in supplier_evidence.cardinality.quantity_spans),

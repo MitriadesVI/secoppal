@@ -67,6 +67,17 @@ def test_a_real_topic_blocks_instead_of_widening_the_universe(router, text, term
     assert term in decision.detail
 
 
+@pytest.mark.parametrize("text", [
+    "proveedores de educación de la Secretaría de Educación de Cali",
+    "proveedores de educación de educación de la Secretaría de Educación de Cali",
+])
+def test_topic_requires_its_own_accredited_occurrence(router, text):
+    decision = _decide(router, text)
+    assert decision.outcome is Outcome.CLARIFY
+    assert decision.reason == "UNACCREDITED_RESIDUAL"
+    assert "educacion" in decision.detail
+
+
 @pytest.mark.parametrize("text,reason", [
     ("dame los 10 proveedores de la alcaldía de Soledad", "UNSUPPORTED_CARDINALITY"),
     ("top 20 proveedores de la alcaldía de Galapa", "UNSUPPORTED_CARDINALITY"),
@@ -104,13 +115,21 @@ def test_missing_supplier_witness_is_not_bound(router):
     ("no sus proveedores", Polarity.NEGATED),
     ("proveedores no", Polarity.UNKNOWN),
 ])
-def test_non_positive_supplier_witness_is_not_bound(router, text, polarity):
+def test_non_positive_supplier_witness_clarifies(router, text, polarity):
     query = f"{text} de la alcaldía de Barranquilla"
     assert assess_supplier_request(query).polarity is polarity
     decision = _decide(router, query)
     assert (decision.outcome, decision.reason) == (
-        Outcome.NOT_BOUND, "INTENT_WITNESS_NOT_POSITIVE",
+        Outcome.CLARIFY, "INTENT_WITNESS_NOT_POSITIVE",
     )
+
+
+def test_actor_subject_precedes_supplier_polarity_and_cardinality_guards(router):
+    text = "5 proveedores en adelante del proveedor NIT 900711074"
+    params = router.parse(text, today=TODAY).params
+    assert params["actor_scope"]["base_number"] == "900711074"
+    decision = decide(text, params)
+    assert (decision.outcome, decision.reason) == (Outcome.NOT_BOUND, "ACTOR_SUBJECT")
 
 
 @settings(max_examples=24, deadline=None)

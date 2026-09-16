@@ -716,11 +716,19 @@ def test_a_turn_the_contract_hands_back_still_leaves_a_receipt(make_flow):
 # ── the legacy path must be untouched where the contract does not own it ─────
 
 @pytest.mark.parametrize("text", [
-    "analiza la alcaldía de Barranquilla",
     "sin proveedores de la alcaldía de Barranquilla",
     "no quiero proveedores de la alcaldía de Barranquilla",
 ])
-def test_an_unbound_turn_matches_the_flag_off_baseline(make_flow, text):
+def test_a_non_positive_bound_turn_clarifies_without_source_calls(make_flow, text):
+    flow = make_flow(text)
+    result = _run(flow, text)
+    assert result["route_reason"] == "a2_suppliers_intent_witness_not_positive"
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+
+
+def test_a_missing_witness_turn_matches_the_flag_off_baseline(make_flow):
+    text = "analiza la alcaldía de Barranquilla"
     flow = make_flow(text)
     baseline = make_flow(text, enabled=False)
     result = _run(flow, text)

@@ -50,21 +50,25 @@ def test_off_wires_no_veto_at_all(monkeypatch):
     assert wiring.configured_polarity_veto() is None
 
 
-def test_on_without_a_credential_wires_no_veto(monkeypatch):
+def test_on_without_a_credential_wires_unavailable(monkeypatch):
     monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
     monkeypatch.setattr(wiring, "classify", _never_called)
     monkeypatch.setattr(wiring, "get_settings", lambda: _settings(api_key=None))
-    assert wiring.configured_polarity_veto() is None
+    veto = wiring.configured_polarity_veto()
+    assert veto is not None
+    assert veto(QUERY, (MentionRef("proveedores", 1),)).outcome is VetoOutcome.UNAVAILABLE
 
 
-def test_unreadable_settings_wire_no_veto(monkeypatch):
+def test_unreadable_settings_wire_unavailable(monkeypatch):
     monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
 
     def boom():
         raise RuntimeError("broken .env")
 
     monkeypatch.setattr(wiring, "get_settings", boom)
-    assert wiring.configured_polarity_veto() is None
+    veto = wiring.configured_polarity_veto()
+    assert veto is not None
+    assert veto(QUERY, (MentionRef("proveedores", 1),)).outcome is VetoOutcome.UNAVAILABLE
 
 
 def test_on_with_a_credential_wires_a_veto_that_blocks_a_negative(monkeypatch, accredited):
