@@ -59,13 +59,29 @@ ACTOR_PROFILE_INTENT = "actor_profile"
 
 
 @action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "entity_profile_view", "route_reason", "resolved_params", "timings_ms"])
-def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
+def execute_query(
+    state: State, secop_client: SecopClient, soql_builder: SoQLBuilder,
+    capability_binding: str | None = None,
+) -> State:
     """Execute SECOP count + query with graceful error handling.
     On timeout for heavy ordering queries, retry without ordering_signal.
     Guards against WHERE 1=1 — requires at least one scope/topic filter.
     """
     start_total = time.perf_counter()
-    profile_turn = classify_entity_profile_turn(
+    from app.core.capability_binding.workflow_hook import bound_profile_turn
+
+    bound = bound_profile_turn(
+        capability_binding, state.get("user_query", ""), state.get("resolved_params", {}),
+    )
+    # A contract that hands the turn back owns no route, only a receipt: the
+    # legacy path must behave exactly as it does with A2 off.
+    if bound is not None and bound.turn is None and bound.clarification is None:
+        bound = None
+    if bound is not None and bound.clarification is not None:
+        # A2 contract: unaccredited input ends here with zero source calls and
+        # never falls back to the parser that produced it.
+        return entity_profile_state(state, bound.clarification, execute_started_at=start_total)
+    profile_turn = bound.turn if bound is not None else classify_entity_profile_turn(
         state.get("user_query", ""), state.get("resolved_params", {}),
     )
     params = profile_turn.params
@@ -77,7 +93,7 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
     # Si maybe_handle_analytical_query atiende la consulta, NO se ejecuta el
     # camino tabular. La respuesta queda en analytical_response y se propaga
     # intacta por degrade_query/format_response/build_advisor_response.
-    analytics = None if is_supplier_followup(state.get("user_query", ""), params) else maybe_handle_analytical_query(
+    analytics = None if bound is not None or is_supplier_followup(state.get("user_query", ""), params) else maybe_handle_analytical_query(
         user_query=state.get("user_query", ""),
         params=params,
         dataset_id=state.get("dataset_id", ""),

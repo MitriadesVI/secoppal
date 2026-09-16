@@ -813,6 +813,9 @@ class QueryRouter:
                     "value": match.value,
                     "method": f"rewrite_{rtype}",
                     "kind": "buyer_entity",
+                    # Keep the historical global rewrite contract.  Capability-
+                    # specific admission owns any stricter fuzzy policy; the
+                    # router must not demote every fuzzy buyer in SECOPPAL.
                     "confidence": "high",
                     "like_value": None,
                     "metadata": {

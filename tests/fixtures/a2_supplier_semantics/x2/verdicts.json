@@ -1,0 +1,123 @@
+{
+ "calls": 360,
+ "hard_gates": {
+  "NEGATED_AS_POSITIVE": 0,
+  "MIXED_AS_POSITIVE": 0,
+  "UNKNOWN_AS_POSITIVE": 0,
+  "MISSING_MENTION": 0,
+  "INVENTED_MENTION": 0,
+  "INVALID_REF": 0,
+  "DUPLICATE_MENTION": 0,
+  "NON_EXACT_AS_EXACT_5": 0,
+  "UNKNOWN_AS_EXACT_5": 11,
+  "MISSING_QUANTITY_REF": 0,
+  "INVENTED_QUANTITY": 0,
+  "INVALID_QUANTITY_REF": 0,
+  "MALFORMED_OUTPUT": 0,
+  "CALL_ERROR": 0
+ },
+ "deferred_route_openings": {
+  "UNKNOWN_AS_EXACT_5__ON_DEFERRED_ROUTE": 8
+ },
+ "utility": {
+  "POLARITY_MENTIONS": 258,
+  "POLARITY_POLARITY_MATCH": 255,
+  "CARDINAL_MENTIONS": 150,
+  "CARDINAL_POLARITY_MATCH": 138,
+  "CARDINAL_SCORED": 150,
+  "CARDINAL_RELATION_MATCH": 136,
+  "CLEAR_CARDINAL": 123,
+  "POSITIVE_AS_NEGATED": 12
+ },
+ "stable_3_of_3": "117/120",
+ "failures": [
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 1,
+   "suite": "CARDINAL",
+   "id": "K38",
+   "query": "alrededor de 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=DEFERRED_TO_SIDECAR"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 1,
+   "suite": "CARDINAL",
+   "id": "K40",
+   "query": "unos 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=DEFERRED_TO_SIDECAR"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 1,
+   "suite": "CARDINAL",
+   "id": "K42",
+   "query": "distinto de 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=DEFERRED_TO_SIDECAR"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 1,
+   "suite": "CARDINAL",
+   "id": "K46",
+   "query": "no quiero 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=GRAMMAR_REFUSES"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 2,
+   "suite": "CARDINAL",
+   "id": "K38",
+   "query": "alrededor de 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=DEFERRED_TO_SIDECAR"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 2,
+   "suite": "CARDINAL",
+   "id": "K40",
+   "query": "unos 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=DEFERRED_TO_SIDECAR"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 2,
+   "suite": "CARDINAL",
+   "id": "K42",
+   "query": "distinto de 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=DEFERRED_TO_SIDECAR"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 2,
+   "suite": "CARDINAL",
+   "id": "K46",
+   "query": "no quiero 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=GRAMMAR_REFUSES"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 3,
+   "suite": "CARDINAL",
+   "id": "K37",
+   "query": "diferente de 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=DEFERRED_TO_SIDECAR"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 3,
+   "suite": "CARDINAL",
+   "id": "K40",
+   "query": "unos 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=DEFERRED_TO_SIDECAR"
+  },
+  {
+   "gate": "UNKNOWN_AS_EXACT_5",
+   "run": 3,
+   "suite": "CARDINAL",
+   "id": "K46",
+   "query": "no quiero 5 proveedores de la alcaldía de Galapa",
+   "detail": "oracle=UNKNOWN route=GRAMMAR_REFUSES"
+  }
+ ]
+}

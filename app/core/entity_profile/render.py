@@ -167,20 +167,27 @@ def _recent_lines(title: str, rows: tuple[RecentRecord, ...]) -> list[str]:
 def _focused(profile: EntityProfile) -> list[str]:
     noun = _contract_noun(profile)
     if profile.focus == "suppliers":
-        return [
+        by_count = profile.suppliers.fact("top_by_contract_count")
+        by_value = profile.suppliers.fact("top_by_contract_value")
+        lines = [
             *_supplier_lines(
                 f"Principales contratistas por número de {noun}s",
-                profile.suppliers.fact("top_by_contract_count") or (),
+                by_count or (),
                 "count",
                 accredited=section_ranking(profile.suppliers, 'count').accredited, noun=noun,
             ),
             *_supplier_lines(
                 "Principales contratistas por valor contratado",
-                profile.suppliers.fact("top_by_contract_value") or (),
+                by_value or (),
                 "value",
                 accredited=section_ranking(profile.suppliers, 'value').accredited,
             ),
         ]
+        answered = [ranking for ranking in (by_count, by_value) if ranking is not None]
+        if answered and not any(answered):
+            # A successful empty ranking is a fact; a header alone is not an answer.
+            lines.append(f"• No encontré proveedores con {noun}s que cumplan estos filtros.")
+        return lines
     if profile.focus == "modalities":
         modalities = profile.modalities.fact("top_modalities") or ()
         return [

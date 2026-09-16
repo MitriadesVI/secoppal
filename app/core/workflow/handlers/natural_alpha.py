@@ -35,11 +35,12 @@ def handle_natural_alpha(deps, ctx, provider=None):
     return observation
 
 
-def observed_deps(deps, observation):
+def observed_deps(deps, observation, capability_binding=None):
     if observation is None:
         return deps
     scoped = copy(deps)
     scoped.feedback = _AlphaFeedback(deps.feedback, observation)
+    scoped.capability_binding = capability_binding
     return scoped
 
 

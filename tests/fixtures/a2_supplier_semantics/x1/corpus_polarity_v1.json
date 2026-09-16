@@ -1,0 +1,988 @@
+{
+ "version": "polarity-sidecar-x1-v1",
+ "question": "Given a literal supplier/contractor mention, can the model determine its linguistic polarity stably enough to serve as a safety signal?",
+ "scope": "mention + polarity only. No cardinality, buyer, topic, time, filters, capability, SQL or params.",
+ "labels": [
+  "POSITIVE",
+  "NEGATED",
+  "MIXED",
+  "UNKNOWN"
+ ],
+ "oracle": "ADJUDICATED_BLIND_BY_HUMAN — absent from this file on purpose",
+ "cases": [
+  {
+   "id": "A01",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "proveedores de Barranquilla",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A02",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "quiénes son sus proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A03",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "principales contratistas de Galapa",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A04",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "cuáles son los 5 proveedores con más contratos en la Alcaldía de Barranquilla en 2025",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A05",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "muéstrame los proveedores de la Gobernación del Atlántico",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A06",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "dame los contratistas del IDU",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A07",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "top 5 proveedores de la entidad",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A08",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "proveedores con más contratos en 2025",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A09",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "necesito ver los contratistas de la ESE Hospital",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A10",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "¿qué proveedores tiene la alcaldía?",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "A11",
+   "family": "POSITIVE_PLAIN",
+   "unicode_form": "NFC",
+   "query": "busca los principales proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "B01",
+   "family": "NEGATION_SIMPLE",
+   "unicode_form": "NFC",
+   "query": "sin proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "B02",
+   "family": "NEGATION_SIMPLE",
+   "unicode_form": "NFC",
+   "query": "ningún proveedor",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedor",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "B03",
+   "family": "NEGATION_SIMPLE",
+   "unicode_form": "NFC",
+   "query": "no quiero proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "B04",
+   "family": "NEGATION_SIMPLE",
+   "unicode_form": "NFC",
+   "query": "excepto los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "B05",
+   "family": "NEGATION_SIMPLE",
+   "unicode_form": "NFC",
+   "query": "ningunos contratistas",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "B06",
+   "family": "NEGATION_SIMPLE",
+   "unicode_form": "NFC",
+   "query": "no me muestres contratistas",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "B07",
+   "family": "NEGATION_SIMPLE",
+   "unicode_form": "NFC",
+   "query": "sin contratistas",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "B08",
+   "family": "NEGATION_SIMPLE",
+   "unicode_form": "NFC",
+   "query": "excluye los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C01",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "no quiero ver a los principales proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C02",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "muéstrame contratos pero no sus proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C03",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "quiero analizar la entidad sin mostrar contratistas",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C04",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "dame el perfil completo de la alcaldía, pero sin la parte de proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C05",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "necesito los contratos de 2025 y por favor no incluyas a los contratistas",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C06",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "analiza la entidad; de los proveedores no me interesa nada",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C07",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "todo sobre la Gobernación excepto sus proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C08",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "quiero todo menos proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C09",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "muéstrame el gasto de la entidad sin entrar en los contratistas",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "C10",
+   "family": "NEGATION_LONG_SCOPE",
+   "unicode_form": "NFC",
+   "query": "el perfil de la entidad, obviando a los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D01",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "ni proveedores ni contratistas",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D02",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "proveedores sí, contratistas no",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D03",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "no proveedores sino contratistas",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D04",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "salvo proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D05",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "omitiendo los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D06",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "quitando a los contratistas",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D07",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "nada de proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D08",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "olvida los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D09",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "aparte de los proveedores, muéstrame todo",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D10",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "dejando de lado los contratistas",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D11",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "sin contar los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D12",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "proveedores y contratistas",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D13",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "contratistas no, proveedores sí",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    },
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "D14",
+   "family": "COORDINATION_ADVERSARIAL",
+   "unicode_form": "NFC",
+   "query": "ya no me interesan los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "E01",
+   "family": "NEGATION_DECOY",
+   "unicode_form": "NFC",
+   "query": "proveedores sin contratos",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "E02",
+   "family": "NEGATION_DECOY",
+   "unicode_form": "NFC",
+   "query": "sin duda, muéstrame los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "E03",
+   "family": "NEGATION_DECOY",
+   "unicode_form": "NFC",
+   "query": "proveedores sin intermediarios",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "E04",
+   "family": "NEGATION_DECOY",
+   "unicode_form": "NFC",
+   "query": "no hay duda: quiero los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "E05",
+   "family": "NEGATION_DECOY",
+   "unicode_form": "NFC",
+   "query": "contratistas que no tienen sanciones",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "E06",
+   "family": "NEGATION_DECOY",
+   "unicode_form": "NFC",
+   "query": "proveedores de entidades sin sede en Bogotá",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "E07",
+   "family": "NEGATION_DECOY",
+   "unicode_form": "NFC",
+   "query": "muéstrame los proveedores, no los contratos",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "E08",
+   "family": "NEGATION_DECOY",
+   "unicode_form": "NFC",
+   "query": "no importa el monto, dame los proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "E09",
+   "family": "NEGATION_DECOY",
+   "unicode_form": "NFC",
+   "query": "proveedores que nunca han sido sancionados",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "F01",
+   "family": "MULTIPLE_MENTIONS",
+   "unicode_form": "NFC",
+   "query": "proveedores, proveedores y contratistas",
+   "mentions_expected_count": 3,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "proveedores",
+     "occurrence": 2
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "F02",
+   "family": "MULTIPLE_MENTIONS",
+   "unicode_form": "NFC",
+   "query": "proveedores sí pero sin proveedores extranjeros",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "proveedores",
+     "occurrence": 2
+    }
+   ]
+  },
+  {
+   "id": "F03",
+   "family": "MULTIPLE_MENTIONS",
+   "unicode_form": "NFC",
+   "query": "quiero proveedores de Cali y ningún proveedor de Medellín",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "proveedor",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "F04",
+   "family": "MULTIPLE_MENTIONS",
+   "unicode_form": "NFC",
+   "query": "muéstrame los contratistas, no los contratistas de obra",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 2
+    }
+   ]
+  },
+  {
+   "id": "F05",
+   "family": "MULTIPLE_MENTIONS",
+   "unicode_form": "NFC",
+   "query": "proveedores y sin contratistas",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "F06",
+   "family": "MULTIPLE_MENTIONS",
+   "unicode_form": "NFC",
+   "query": "ni proveedores de aseo ni proveedores de papelería",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "proveedores",
+     "occurrence": 2
+    }
+   ]
+  },
+  {
+   "id": "F07",
+   "family": "MULTIPLE_MENTIONS",
+   "unicode_form": "NFC",
+   "query": "los proveedores de 2025 y los proveedores de 2024",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "proveedores",
+     "occurrence": 2
+    }
+   ]
+  },
+  {
+   "id": "F08",
+   "family": "MULTIPLE_MENTIONS",
+   "unicode_form": "NFC",
+   "query": "contratistas de obra sí, contratistas de consultoría no",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 2
+    }
+   ]
+  },
+  {
+   "id": "G01",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFC",
+   "query": "PROVEEDORES DE BARRANQUILLA",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "PROVEEDORES",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "G02",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFC",
+   "query": "ningún proveedor",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedor",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "G03",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFD",
+   "query": "ningún proveedor",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedor",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "G04",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFC",
+   "query": "¿Proveedores?",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "Proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "G05",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFC",
+   "query": "proveedores... sin contratistas",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "G06",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFC",
+   "query": "NO QUIERO PROVEEDORES",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "PROVEEDORES",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "G07",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFC",
+   "query": "Ningún Proveedor",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "Proveedor",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "G08",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFD",
+   "query": "no quiero ver a los principales proveedores",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "G09",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFC",
+   "query": "proveedores;contratistas",
+   "mentions_expected_count": 2,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    },
+    {
+     "quote": "contratistas",
+     "occurrence": 1
+    }
+   ]
+  },
+  {
+   "id": "G10",
+   "family": "FORM_VARIANT",
+   "unicode_form": "NFC",
+   "query": "  sin   proveedores  ",
+   "mentions_expected_count": 1,
+   "mention_index": [
+    {
+     "quote": "proveedores",
+     "occurrence": 1
+    }
+   ]
+  }
+ ]
+}

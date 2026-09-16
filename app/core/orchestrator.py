@@ -251,8 +251,12 @@ class SecopalWorkflow:
         # todos los handlers exponen http_metrics, no solo normal_flow. El token hace
         # segura la anidación (un run_query dentro de otro restaura el buffer externo).
         from app.core.deadline import attach_deadline_telemetry, begin_deadline, end_deadline
+        from app.core.capability_binding.dogfood_telemetry import (
+            attach_a2_telemetry, begin_turn, end_turn,
+        )
         from app.core.instrumentation import attach_telemetry, begin_collection, end_collection
         token = begin_collection()
+        a2_token = begin_turn()  # A2 dogfood receipt; inactive unless bound.
         dl_tokens = begin_deadline(ctx.run_started_at)  # H2: deadline monotónico del turno
         try:
             result = self._admit_and_dispatch(ctx, seed_resolved_params)
@@ -261,6 +265,7 @@ class SecopalWorkflow:
             # evidencia del error (un timeout es justo donde más importa). El attach no
             # aplica porque no hay result; la telemetría va al log estructurado.
             metrics = end_collection(token)
+            end_turn(a2_token)
             end_deadline(dl_tokens)
             if metrics:
                 logger.warning(
@@ -269,8 +274,10 @@ class SecopalWorkflow:
                 )
             raise
         metrics = end_collection(token)
+        a2_receipt = end_turn(a2_token)
         dl_tel = end_deadline(dl_tokens)
         attach_telemetry(result, metrics)
+        attach_a2_telemetry(result, a2_receipt)
         attach_deadline_telemetry(result, dl_tel, ctx.run_started_at)
         from app.core.buyer_groups import BuyerGroupError, group_declaration, group_for_params
         group_params = result.get("resolved_params") or {}
@@ -390,8 +397,11 @@ class SecopalWorkflow:
         observation = handle_natural_alpha(deps, ctx, self.natural_alpha_provider)
         if observation is not None and observation.terminal:
             return multi_job_result(deps, ctx, observation)
+        from app.core.capability_binding.registry import capability_for
+
+        binding = capability_for(observation, deps.settings)
         with legacy_budget(observation is not None):
-            result = handle_normal_flow(observed_deps(deps, observation), ctx)
+            result = handle_normal_flow(observed_deps(deps, observation, binding), ctx)
         params = result.get("resolved_params") or {}
         result["_continuation_owner"] = "ACTOR" if params.get("actor_scope") or params.get("actor_pending") else "TABULAR"
         return result

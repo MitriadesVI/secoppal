@@ -58,3 +58,5 @@ class WorkflowDeps:
     conv_store: ConversationStore
     narrator: NarratorHandler
     radar_store: RadarStore | None = None
+    # A2: host-owned capability id bound for THIS turn; never model params.
+    capability_binding: str | None = None

@@ -88,6 +88,21 @@ class Settings(BaseSettings):
         default=10.0, gt=0, le=45, allow_inf_nan=False,
         alias="SECOPPAL_NATURAL_ALPHA_TIMEOUT_SECONDS",
     )
+    # A2: a single Alpha-mode ANALYZE/SUPPLIERS job opens Entity Profile
+    # suppliers through its input contract. Off by default; shadow never binds.
+    secoppal_a2_suppliers_binding_enabled: bool = Field(
+        default=False, alias="SECOPPAL_A2_SUPPLIERS_BINDING_ENABLED",
+    )
+    # A2 polarity sidecar: a second, dedicated call classifies the polarity of
+    # each supplier mention the host already found. It can only withhold
+    # EXECUTE, never grant it, so with this off the contract behaves as V1.
+    secoppal_a2_supplier_polarity_sidecar_enabled: bool = Field(
+        default=False, alias="SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED",
+    )
+    secoppal_a2_supplier_polarity_timeout_seconds: float = Field(
+        default=8.0, gt=0, le=45, allow_inf_nan=False,
+        alias="SECOPPAL_A2_SUPPLIER_POLARITY_TIMEOUT_SECONDS",
+    )
 
     # ── Transporte Socrata (SODA3_TRANSPORT_V1) ──────────────────────────────
     # `soda3`   = transporte productivo default validado.
@@ -124,6 +139,18 @@ def entity_profile_frame_enabled() -> bool:
     """
     try:
         return bool(get_settings().secoppal_entity_profile_frame_enabled)
+    except Exception:  # pragma: no cover - configuración rota
+        return False
+
+
+def supplier_polarity_sidecar_enabled() -> bool:
+    """Read at the seam that wires it, not inside the pure contract.
+
+    An unreadable configuration falls to the declared default -- off -- so a
+    broken ``.env`` cannot switch on a second provider call by accident.
+    """
+    try:
+        return bool(get_settings().secoppal_a2_supplier_polarity_sidecar_enabled)
     except Exception:  # pragma: no cover - configuración rota
         return False
 

@@ -1,0 +1,87 @@
+id,query,mention,occurrence,polarity
+E08,"no importa el monto, dame los proveedores",proveedores,1,POSITIVE
+F07,los proveedores de 2025 y los proveedores de 2024,proveedores,1,POSITIVE
+C07,todo sobre la Gobernación excepto sus proveedores,proveedores,1,NEGATED
+G04,¿Proveedores?,Proveedores,1,POSITIVE
+G01,PROVEEDORES DE BARRANQUILLA,PROVEEDORES,1,POSITIVE
+D03,no proveedores sino contratistas,contratistas,1,POSITIVE
+G10,  sin   proveedores  ,proveedores,1,NEGATED
+F06,ni proveedores de aseo ni proveedores de papelería,proveedores,1,NEGATED
+D08,olvida los proveedores,proveedores,1,NEGATED
+G05,proveedores... sin contratistas,contratistas,1,NEGATED
+D01,ni proveedores ni contratistas,contratistas,1,NEGATED
+F08,"contratistas de obra sí, contratistas de consultoría no",contratistas,1,POSITIVE
+F05,proveedores y sin contratistas,contratistas,1,NEGATED
+B08,excluye los proveedores,proveedores,1,NEGATED
+D12,proveedores y contratistas,contratistas,1,POSITIVE
+F02,proveedores sí pero sin proveedores extranjeros,proveedores,2,NEGATED
+C04,"dame el perfil completo de la alcaldía, pero sin la parte de proveedores",proveedores,1,NEGATED
+B07,sin contratistas,contratistas,1,NEGATED
+A04,cuáles son los 5 proveedores con más contratos en la Alcaldía de Barranquilla en 2025,proveedores,1,POSITIVE
+F05,proveedores y sin contratistas,proveedores,1,POSITIVE
+B02,ningún proveedor,proveedor,1,NEGATED
+C10,"el perfil de la entidad, obviando a los proveedores",proveedores,1,NEGATED
+F03,quiero proveedores de Cali y ningún proveedor de Medellín,proveedores,1,POSITIVE
+E03,proveedores sin intermediarios,proveedores,1,POSITIVE
+D05,omitiendo los proveedores,proveedores,1,NEGATED
+C05,necesito los contratos de 2025 y por favor no incluyas a los contratistas,contratistas,1,NEGATED
+B01,sin proveedores,proveedores,1,NEGATED
+D03,no proveedores sino contratistas,proveedores,1,NEGATED
+F01,"proveedores, proveedores y contratistas",contratistas,1,POSITIVE
+A07,top 5 proveedores de la entidad,proveedores,1,POSITIVE
+G05,proveedores... sin contratistas,proveedores,1,POSITIVE
+D07,nada de proveedores,proveedores,1,NEGATED
+G06,NO QUIERO PROVEEDORES,PROVEEDORES,1,NEGATED
+B05,ningunos contratistas,contratistas,1,NEGATED
+A05,muéstrame los proveedores de la Gobernación del Atlántico,proveedores,1,POSITIVE
+E05,contratistas que no tienen sanciones,contratistas,1,POSITIVE
+E07,"muéstrame los proveedores, no los contratos",proveedores,1,POSITIVE
+D09,"aparte de los proveedores, muéstrame todo",proveedores,1,UNKNOWN
+D12,proveedores y contratistas,proveedores,1,POSITIVE
+E01,proveedores sin contratos,proveedores,1,POSITIVE
+C03,quiero analizar la entidad sin mostrar contratistas,contratistas,1,NEGATED
+A01,proveedores de Barranquilla,proveedores,1,POSITIVE
+F02,proveedores sí pero sin proveedores extranjeros,proveedores,1,POSITIVE
+D13,"contratistas no, proveedores sí",contratistas,1,NEGATED
+D14,ya no me interesan los proveedores,proveedores,1,NEGATED
+A10,¿qué proveedores tiene la alcaldía?,proveedores,1,POSITIVE
+D01,ni proveedores ni contratistas,proveedores,1,NEGATED
+E02,"sin duda, muéstrame los proveedores",proveedores,1,POSITIVE
+F04,"muéstrame los contratistas, no los contratistas de obra",contratistas,1,POSITIVE
+E09,proveedores que nunca han sido sancionados,proveedores,1,POSITIVE
+A09,necesito ver los contratistas de la ESE Hospital,contratistas,1,POSITIVE
+G03,ningún proveedor,proveedor,1,NEGATED
+F04,"muéstrame los contratistas, no los contratistas de obra",contratistas,2,NEGATED
+G09,proveedores;contratistas,contratistas,1,POSITIVE
+G07,Ningún Proveedor,Proveedor,1,NEGATED
+E06,proveedores de entidades sin sede en Bogotá,proveedores,1,POSITIVE
+F06,ni proveedores de aseo ni proveedores de papelería,proveedores,2,NEGATED
+C09,muéstrame el gasto de la entidad sin entrar en los contratistas,contratistas,1,NEGATED
+G02,ningún proveedor,proveedor,1,NEGATED
+D02,"proveedores sí, contratistas no",proveedores,1,POSITIVE
+A11,busca los principales proveedores,proveedores,1,POSITIVE
+D13,"contratistas no, proveedores sí",proveedores,1,POSITIVE
+D10,dejando de lado los contratistas,contratistas,1,NEGATED
+F01,"proveedores, proveedores y contratistas",proveedores,2,POSITIVE
+F03,quiero proveedores de Cali y ningún proveedor de Medellín,proveedor,1,NEGATED
+D04,salvo proveedores,proveedores,1,NEGATED
+A02,quiénes son sus proveedores,proveedores,1,POSITIVE
+D02,"proveedores sí, contratistas no",contratistas,1,NEGATED
+C06,analiza la entidad; de los proveedores no me interesa nada,proveedores,1,NEGATED
+C01,no quiero ver a los principales proveedores,proveedores,1,NEGATED
+B04,excepto los proveedores,proveedores,1,NEGATED
+A08,proveedores con más contratos en 2025,proveedores,1,POSITIVE
+A06,dame los contratistas del IDU,contratistas,1,POSITIVE
+C02,muéstrame contratos pero no sus proveedores,proveedores,1,NEGATED
+F01,"proveedores, proveedores y contratistas",proveedores,1,POSITIVE
+F07,los proveedores de 2025 y los proveedores de 2024,proveedores,2,POSITIVE
+B06,no me muestres contratistas,contratistas,1,NEGATED
+D06,quitando a los contratistas,contratistas,1,NEGATED
+E04,no hay duda: quiero los proveedores,proveedores,1,POSITIVE
+A03,principales contratistas de Galapa,contratistas,1,POSITIVE
+D11,sin contar los proveedores,proveedores,1,NEGATED
+G09,proveedores;contratistas,proveedores,1,POSITIVE
+C08,quiero todo menos proveedores,proveedores,1,NEGATED
+B03,no quiero proveedores,proveedores,1,NEGATED
+F08,"contratistas de obra sí, contratistas de consultoría no",contratistas,2,NEGATED
+G08,no quiero ver a los principales proveedores,proveedores,1,NEGATED

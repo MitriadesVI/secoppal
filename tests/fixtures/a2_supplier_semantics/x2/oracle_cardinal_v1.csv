@@ -1,0 +1,51 @@
+id,query,mention_refs,quantity_refs,polarity,expected_relation,accepted_quantity_refs
+K23,menos de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K27,no más de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K50,sus 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K22,no menos de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K48,máx. 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K49,SUS 5 PROVEEDORES de la alcaldía de Galapa,PROVEEDORES#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K32,de 5 a 10 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5) | ref2=""10""(=10)",POSITIVE,RANGE,ref1|ref2
+K39,casi 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UNKNOWN,ref1
+K01,sus 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K04,busco 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K08,5 proveedores principales de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K30,inferior a 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K46,no quiero 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UNKNOWN,ref1
+K20,por lo menos 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K10,top 5 proveedores de la entidad,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K19,5 proveedores o más de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K06,cuáles fueron los 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K02,tráeme 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K40,unos 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UNKNOWN,ref1
+K05,requiero 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K13,más de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K17,por encima de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K47,superior a. 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K28,5 proveedores o menos de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K31,entre 5 y 10 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5) | ref2=""10""(=10)",POSITIVE,RANGE,ref1|ref2
+K26,a lo sumo 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K15,superior a 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K21,5 proveedores en adelante de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K18,un mínimo de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K09,listado de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K14,al menos 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K12,me interesan 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K34,entre 3 y 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""3""(=3) | ref2=""5""(=5)",POSITIVE,RANGE,ref1|ref2
+K41,seis o cinco proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""cinco""(=5)",POSITIVE,UNKNOWN,ref1
+K35,de 10 a 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""10""(=10) | ref2=""5""(=5)",POSITIVE,RANGE,ref1|ref2
+K36,entre 5 y 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5) | ref2=""5""(=5)",POSITIVE,RANGE,ref1|ref2
+K45,sin más de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K37,diferente de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UNKNOWN,ref1
+K29,cuando mucho 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K38,alrededor de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UNKNOWN,ref1
+K16,mayor de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,LOWER_BOUND,ref1
+K33,desde 5 hasta 10 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""10""(=10)",POSITIVE,RANGE,ref1
+K24,hasta 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K07,quiero saber los 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K42,distinto de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UNKNOWN,ref1
+K11,esos 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K25,máximo 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UPPER_BOUND,ref1
+K44,5 proveedores más o menos de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UNKNOWN,ref1
+K03,encuentra 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,EXACT,ref1
+K43,un total distinto de 5 proveedores de la alcaldía de Galapa,proveedores#1,"ref1=""5""(=5)",POSITIVE,UNKNOWN,ref1

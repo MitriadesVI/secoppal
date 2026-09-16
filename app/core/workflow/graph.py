@@ -88,6 +88,7 @@ def build_application(
             build_query=build_query.bind(soql_builder=deps.soql_builder),
             execute_query=execute_query.bind(
                 secop_client=deps.secop_client, soql_builder=deps.soql_builder,
+                capability_binding=getattr(deps, "capability_binding", None),
             ),
             degrade_query=degrade_query.bind(
                 secop_client=deps.secop_client, soql_builder=deps.soql_builder,

@@ -76,6 +76,9 @@ def _warnings(
         return (f"La fuente devolvió datos contradictorios para {label}; no puedo afirmar un cero.",)
     if "INVALID_RESPONSE" in statuses:
         return (f"No pude confirmar {label}; la fuente devolvió un agregado incompleto o inválido.",)
+    if statuses and statuses <= {"BUDGET_EXHAUSTED", "BUILD_ERROR"}:
+        # Nothing was sent: blaming the source would be false (A2 X0, A06).
+        return (f"No alcancé a consultar {label} en este turno; no es una ausencia de datos.",)
     return (f"No pude calcular {label} en este momento; la fuente no respondió.",)
 
 

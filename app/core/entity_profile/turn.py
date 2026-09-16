@@ -225,8 +225,19 @@ def territory_clarification(user_query: str) -> str:
     )
 
 
-def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfileTurn:
+def classify_entity_profile_turn(
+    user_query: str, params: dict, *, bound_focus: str | None = None,
+) -> EntityProfileTurn:
+    """``bound_focus`` replaces ONLY detection (A2 capability binding).
+
+    Scope, period, sources, plan and clarifications keep their authorities; a
+    pending clarification answered with a bare «sí» is still the pending one.
+    """
     detected, focus = detect_entity_profile_turn(user_query, params)
+    if bound_focus and not (
+        detected and state_from_params(params).has_pending and is_bare_affirmative(user_query)
+    ):
+        detected, focus = True, bound_focus
     if not detected:
         clean = dict(params)
         for marker in (PROFILE_ACTIVE_PARAM, PROFILE_FOCUS_PARAM, *PROFILE_REQUEST_PARAMS):
