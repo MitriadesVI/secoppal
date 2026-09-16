@@ -49,7 +49,7 @@ def _words(text: str) -> frozenset[str]:
 
 
 def topic_groups(params: dict) -> tuple[tuple[str, ...], ...]:
-    """Each topic item with its variants; a nested list is one term's variants."""
+    """Each topic item; a nested list contains material OR alternatives."""
     groups: list[tuple[str, ...]] = []
     for key in TOPIC_KEYS:
         value = params.get(key)
@@ -97,6 +97,22 @@ def _inside(span: tuple[int, int], spans) -> bool:
     return any(a <= span[0] and span[1] <= b for a, b in spans if a is not None)
 
 
+def _unaccredited_topics(
+    groups: tuple[tuple[str, ...], ...],
+    text: str,
+    accounted_spans: list[tuple[int, int]],
+) -> list[str]:
+    unaccredited: list[str] = []
+    for group in groups:
+        for alternative in group:
+            occurrences = _literal_spans(text, alternative)
+            if not occurrences or not all(
+                _inside(occurrence, accounted_spans) for occurrence in occurrences
+            ):
+                unaccredited.append(alternative)
+    return unaccredited
+
+
 def account(
     user_query: str,
     params: dict,
@@ -122,15 +138,9 @@ def account(
     for consumed in control.consumed_spans:
         accounted_spans.extend(_literal_spans(free, consumed))
 
-    unaccredited = [
-        group[0] for group in topic_groups(profile_query_params(params))
-        if not any(
-            occurrences
-            and all(_inside(occurrence, accounted_spans) for occurrence in occurrences)
-            for variant in group
-            if (occurrences := _literal_spans(text, variant))
-        )
-    ]
+    unaccredited = _unaccredited_topics(
+        topic_groups(profile_query_params(params)), text, accounted_spans,
+    )
     protected = [
         *(span.normalized for span in supplier_evidence.cardinality.quantity_spans),
         *([temporal.span] if temporal.span else []),

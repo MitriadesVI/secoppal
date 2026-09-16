@@ -7,7 +7,10 @@ credential, or provider becomes an explicit ``UNAVAILABLE`` verdict.
 """
 from __future__ import annotations
 
-from app.config import get_settings, supplier_polarity_sidecar_enabled
+from app.config import (
+    SupplierPolaritySidecarState,
+    supplier_polarity_sidecar_config,
+)
 from app.core.capability_binding.supplier_semantics_provider import classify
 from app.core.capability_binding.supplier_semantics import (
     MentionRef,
@@ -21,17 +24,17 @@ from app.core.capability_binding.supplier_semantics import (
 
 def configured_polarity_veto() -> PolarityVeto | None:
     """The wired veto, or ``None`` only when the sidecar is explicitly off."""
-    if not supplier_polarity_sidecar_enabled():
+    configuration = supplier_polarity_sidecar_config()
+    if configuration.state is SupplierPolaritySidecarState.DISABLED:
         return None
-    try:
-        settings = get_settings()
-        api_key = settings.deepseek_api_key
-        model = settings.deepseek_model
-        timeout = settings.secoppal_a2_supplier_polarity_timeout_seconds
-    except Exception:  # pragma: no cover - configuración rota
-        return _unavailable("CONFIGURATION_UNAVAILABLE")
-    if not api_key:
-        return _unavailable("MISSING_CREDENTIAL")
+    if configuration.state is SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE:
+        return _unavailable(configuration.detail)
+
+    api_key = configuration.api_key
+    model = configuration.model
+    timeout = configuration.timeout_seconds
+    if not api_key or not model or timeout is None:  # pragma: no cover - config invariant
+        return _unavailable("CONFIGURATION_INCOMPLETE")
 
     def veto(
         user_query: str,

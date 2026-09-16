@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import os
+from dataclasses import dataclass
+from enum import Enum
 from functools import lru_cache
 from pathlib import Path
 
@@ -143,16 +146,55 @@ def entity_profile_frame_enabled() -> bool:
         return False
 
 
-def supplier_polarity_sidecar_enabled() -> bool:
-    """Read at the seam that wires it, not inside the pure contract.
+class SupplierPolaritySidecarState(str, Enum):
+    DISABLED = "DISABLED"
+    ENABLED = "ENABLED"
+    ENABLED_BUT_UNAVAILABLE = "ENABLED_BUT_UNAVAILABLE"
 
-    An unreadable configuration falls to the declared default -- off -- so a
-    broken ``.env`` cannot switch on a second provider call by accident.
-    """
+
+@dataclass(frozen=True, slots=True)
+class SupplierPolaritySidecarConfig:
+    state: SupplierPolaritySidecarState
+    api_key: str | None = None
+    model: str | None = None
+    timeout_seconds: float | None = None
+    detail: str = ""
+
+
+_TRUE_ENV_VALUES = frozenset({"1", "true", "t", "yes", "y", "on"})
+
+
+def supplier_polarity_sidecar_config() -> SupplierPolaritySidecarConfig:
+    """Load the sidecar once, preserving ON-but-unavailable as its own state."""
     try:
-        return bool(get_settings().secoppal_a2_supplier_polarity_sidecar_enabled)
+        settings = get_settings()
     except Exception:  # pragma: no cover - configuración rota
-        return False
+        raw = os.getenv("SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED", "")
+        if raw.strip().lower() in _TRUE_ENV_VALUES:
+            return SupplierPolaritySidecarConfig(
+                SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE,
+                detail="CONFIGURATION_UNAVAILABLE",
+            )
+        return SupplierPolaritySidecarConfig(SupplierPolaritySidecarState.DISABLED)
+
+    if not settings.secoppal_a2_supplier_polarity_sidecar_enabled:
+        return SupplierPolaritySidecarConfig(SupplierPolaritySidecarState.DISABLED)
+    if not settings.deepseek_api_key:
+        return SupplierPolaritySidecarConfig(
+            SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE,
+            detail="MISSING_CREDENTIAL",
+        )
+    return SupplierPolaritySidecarConfig(
+        SupplierPolaritySidecarState.ENABLED,
+        api_key=settings.deepseek_api_key,
+        model=settings.deepseek_model,
+        timeout_seconds=settings.secoppal_a2_supplier_polarity_timeout_seconds,
+    )
+
+
+def supplier_polarity_sidecar_enabled() -> bool:
+    """Compatibility boolean; wiring consumes the full tri-state snapshot."""
+    return supplier_polarity_sidecar_config().state is SupplierPolaritySidecarState.ENABLED
 
 
 def actor_profile_enabled() -> bool:

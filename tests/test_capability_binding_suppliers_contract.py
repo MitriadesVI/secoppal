@@ -78,6 +78,27 @@ def test_topic_requires_its_own_accredited_occurrence(router, text):
     assert "educacion" in decision.detail
 
 
+def test_every_or_topic_alternative_requires_causal_accreditation(router):
+    text = "proveedores de la Secretaría de Educación de Cali"
+    params = router.parse(text, today=TODAY).params
+    params["objeto"] = [["obras viales", "educacion"]]
+    decision = decide(text, params)
+    assert decision.outcome is Outcome.CLARIFY
+    assert decision.reason == "UNACCREDITED_RESIDUAL"
+    assert "obras viales" in decision.detail
+
+
+@settings(max_examples=20, deadline=None)
+@given(extra=st.text(alphabet="bcdfghjklmnpqrstvwxz", min_size=4, max_size=10))
+def test_any_unaccredited_or_alternative_blocks_the_group(router, extra):
+    text = "proveedores de la Secretaría de Educación de Cali"
+    params = router.parse(text, today=TODAY).params
+    params["objeto"] = [[extra, "educacion"]]
+    decision = decide(text, params)
+    assert decision.outcome is Outcome.CLARIFY
+    assert extra in decision.detail
+
+
 @pytest.mark.parametrize("text,reason", [
     ("dame los 10 proveedores de la alcaldía de Soledad", "UNSUPPORTED_CARDINALITY"),
     ("top 20 proveedores de la alcaldía de Galapa", "UNSUPPORTED_CARDINALITY"),

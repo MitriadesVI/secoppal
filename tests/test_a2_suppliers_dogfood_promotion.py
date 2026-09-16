@@ -21,7 +21,12 @@ from unittest.mock import Mock
 
 import pytest
 
-from app.config import Settings, get_settings
+from app.config import (
+    Settings,
+    SupplierPolaritySidecarConfig,
+    SupplierPolaritySidecarState,
+    get_settings,
+)
 from app.core.capability_binding import supplier_semantics_wiring as wiring
 from app.core.capability_binding.dogfood_telemetry import (
     TRACE_KEYS,
@@ -103,6 +108,15 @@ class CountingSidecar:
     def __call__(self, user_query, refs, quantities=()):
         self.calls += 1
         return self.verdict
+
+
+def _enabled_sidecar_config():
+    return SupplierPolaritySidecarConfig(
+        SupplierPolaritySidecarState.ENABLED,
+        api_key="k",
+        model="deepseek-chat",
+        timeout_seconds=8.0,
+    )
 
 
 @pytest.fixture(scope="module")
@@ -341,9 +355,7 @@ def test_an_invented_quantity_reference_blocks_an_otherwise_executable_turn(para
     The turn is one the grammar already accredits, so without this check the
     malformed answer would be waved through instead of blocking.
     """
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
-    monkeypatch.setattr(wiring, "get_settings", lambda: Settings(
-        _env_file=None, deepseek_api_key="k"))
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _enabled_sidecar_config)
     monkeypatch.setattr(wiring, "classify", lambda *a, **k: {
         "mentions": [{"quote": "proveedores", "occurrence": 1, "polarity": "POSITIVE"}],
         "cardinality": {"quantity_ref": 99, "relation": "EXACT"},
@@ -357,9 +369,7 @@ def test_an_invented_quantity_reference_blocks_an_otherwise_executable_turn(para
 
 def test_an_unsolicited_cardinality_claim_blocks(params, monkeypatch):
     """Nothing was asked, so an answer about a quantity is not silently dropped."""
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
-    monkeypatch.setattr(wiring, "get_settings", lambda: Settings(
-        _env_file=None, deepseek_api_key="k"))
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _enabled_sidecar_config)
     monkeypatch.setattr(wiring, "classify", lambda *a, **k: {
         "mentions": [{"quote": "proveedores", "occurrence": 1, "polarity": "POSITIVE"}],
         "cardinality": {"quantity_ref": 1, "relation": "EXACT"},
@@ -546,9 +556,7 @@ def test_the_sidecar_client_never_retries():
     TimeoutError("timed out"),
 ])
 def test_a_failed_sidecar_clarifies_instead_of_executing(params, monkeypatch, failure):
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
-    monkeypatch.setattr(wiring, "get_settings", lambda: Settings(
-        _env_file=None, deepseek_api_key="k"))
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _enabled_sidecar_config)
 
     def boom(*args, **kwargs):
         raise failure
@@ -570,9 +578,7 @@ def test_a_failed_sidecar_clarifies_instead_of_executing(params, monkeypatch, fa
     {"mentions": [{"quote": "inventado", "occurrence": 1, "polarity": "POSITIVE"}]},
 ])
 def test_a_malformed_sidecar_answer_blocks_like_a_veto(params, monkeypatch, payload):
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
-    monkeypatch.setattr(wiring, "get_settings", lambda: Settings(
-        _env_file=None, deepseek_api_key="k"))
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _enabled_sidecar_config)
     monkeypatch.setattr(wiring, "classify", lambda *a, **k: payload)
     veto = wiring.configured_polarity_veto()
     text = "proveedores de la alcaldía de Barranquilla"

@@ -176,29 +176,69 @@ def test_repeated_buyer_word_does_not_accredit_topic_occurrence(make_flow, text)
     assert flow.secop_client.calls == []
 
 
+def test_or_topic_group_requires_every_alternative_in_real_workflow(
+    make_flow, monkeypatch,
+):
+    text = "proveedores de la Secretaría de Educación de Cali"
+    flow = make_flow(text)
+    real_parse = flow.query_router.parse
+
+    def parse_with_or_group(*args, **kwargs):
+        parsed = real_parse(*args, **kwargs)
+        parsed.params["objeto"] = [["obras viales", "educacion"]]
+        return parsed
+
+    monkeypatch.setattr(flow.query_router, "parse", parse_with_or_group)
+    result = _run(flow, text)
+    assert result["route_reason"] == "a2_suppliers_unaccredited_residual"
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+
+
+def test_real_config_failure_while_sidecar_is_on_is_unavailable(
+    make_flow, monkeypatch,
+):
+    from app import config
+
+    monkeypatch.setenv("SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED", "true")
+    config.get_settings.cache_clear()
+    text = "proveedores de la alcaldía de Barranquilla"
+    flow = make_flow(text)
+
+    def broken_settings():
+        raise RuntimeError("broken configuration")
+
+    monkeypatch.setattr(config, "get_settings", broken_settings)
+    result = _run(flow, text)
+    assert result["route_reason"] == "a2_suppliers_polarity_sidecar_unavailable"
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+
+
 @pytest.mark.parametrize("failure", ["missing_credential", "config_error", "provider_unavailable"])
 def test_sidecar_on_but_unavailable_clarifies_without_source_calls(
     make_flow, monkeypatch, failure,
 ):
+    from app.config import SupplierPolaritySidecarConfig, SupplierPolaritySidecarState
     from app.core.capability_binding import supplier_semantics_wiring as wiring
 
-    class MissingCredential:
-        deepseek_api_key = None
-        deepseek_model = "deepseek-chat"
-        secoppal_a2_supplier_polarity_timeout_seconds = 8.0
-
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
-    if failure == "config_error":
-        def broken_settings():
-            raise RuntimeError("broken configuration")
-
-        monkeypatch.setattr(wiring, "get_settings", broken_settings)
+    if failure == "provider_unavailable":
+        configuration = SupplierPolaritySidecarConfig(
+            SupplierPolaritySidecarState.ENABLED,
+            api_key="test-key",
+            model="deepseek-chat",
+            timeout_seconds=8.0,
+        )
+        monkeypatch.setattr(wiring, "classify", lambda *args, **kwargs: None)
     else:
-        settings = MissingCredential()
-        if failure == "provider_unavailable":
-            settings.deepseek_api_key = "test-key"
-            monkeypatch.setattr(wiring, "classify", lambda *args, **kwargs: None)
-        monkeypatch.setattr(wiring, "get_settings", lambda: settings)
+        detail = "MISSING_CREDENTIAL" if failure == "missing_credential" else "CONFIGURATION_UNAVAILABLE"
+        configuration = SupplierPolaritySidecarConfig(
+            SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE,
+            detail=detail,
+        )
+    monkeypatch.setattr(
+        wiring, "supplier_polarity_sidecar_config", lambda: configuration,
+    )
     text = "proveedores de la alcaldía de Barranquilla"
     flow = make_flow(text)
     result = _run(flow, text)

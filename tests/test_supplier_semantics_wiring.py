@@ -12,7 +12,12 @@ from datetime import date
 
 import pytest
 
-from app.config import Settings, get_settings
+from app.config import (
+    Settings,
+    SupplierPolaritySidecarConfig,
+    SupplierPolaritySidecarState,
+    get_settings,
+)
 from app.core.capability_binding import supplier_semantics_wiring as wiring
 from app.core.capability_binding.supplier_contract import Outcome, decide
 from app.core.capability_binding.supplier_semantics import MentionRef, VetoOutcome
@@ -45,35 +50,46 @@ def test_the_flag_is_off_by_default():
 
 
 def test_off_wires_no_veto_at_all(monkeypatch):
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: False)
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _disabled)
     monkeypatch.setattr(wiring, "classify", _never_called)
     assert wiring.configured_polarity_veto() is None
 
 
+def test_explicit_off_survives_real_settings_failure(monkeypatch):
+    from app import config
+
+    monkeypatch.setenv("SECOPPAL_A2_SUPPLIER_POLARITY_SIDECAR_ENABLED", "false")
+
+    def boom():
+        raise RuntimeError("broken .env")
+
+    monkeypatch.setattr(config, "get_settings", boom)
+    assert wiring.configured_polarity_veto() is None
+
+
 def test_on_without_a_credential_wires_unavailable(monkeypatch):
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
     monkeypatch.setattr(wiring, "classify", _never_called)
-    monkeypatch.setattr(wiring, "get_settings", lambda: _settings(api_key=None))
+    monkeypatch.setattr(
+        wiring, "supplier_polarity_sidecar_config",
+        lambda: _unavailable("MISSING_CREDENTIAL"),
+    )
     veto = wiring.configured_polarity_veto()
     assert veto is not None
     assert veto(QUERY, (MentionRef("proveedores", 1),)).outcome is VetoOutcome.UNAVAILABLE
 
 
 def test_unreadable_settings_wire_unavailable(monkeypatch):
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
-
-    def boom():
-        raise RuntimeError("broken .env")
-
-    monkeypatch.setattr(wiring, "get_settings", boom)
+    monkeypatch.setattr(
+        wiring, "supplier_polarity_sidecar_config",
+        lambda: _unavailable("CONFIGURATION_UNAVAILABLE"),
+    )
     veto = wiring.configured_polarity_veto()
     assert veto is not None
     assert veto(QUERY, (MentionRef("proveedores", 1),)).outcome is VetoOutcome.UNAVAILABLE
 
 
 def test_on_with_a_credential_wires_a_veto_that_blocks_a_negative(monkeypatch, accredited):
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
-    monkeypatch.setattr(wiring, "get_settings", lambda: _settings())
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _enabled)
     monkeypatch.setattr(wiring, "classify", _answering("NEGATED"))
     veto = wiring.configured_polarity_veto()
     assert veto is not None
@@ -81,16 +97,14 @@ def test_on_with_a_credential_wires_a_veto_that_blocks_a_negative(monkeypatch, a
 
 
 def test_on_with_a_credential_lets_a_positive_through(monkeypatch, accredited):
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
-    monkeypatch.setattr(wiring, "get_settings", lambda: _settings())
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _enabled)
     monkeypatch.setattr(wiring, "classify", _answering("POSITIVE"))
     veto = wiring.configured_polarity_veto()
     assert decide(QUERY, accredited, polarity_veto=veto).outcome is Outcome.EXECUTE
 
 
 def test_a_provider_that_returns_nothing_blocks(monkeypatch, accredited):
-    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_enabled", lambda: True)
-    monkeypatch.setattr(wiring, "get_settings", lambda: _settings())
+    monkeypatch.setattr(wiring, "supplier_polarity_sidecar_config", _enabled)
     monkeypatch.setattr(wiring, "classify", lambda *a, **k: None)
     decision = decide(QUERY, accredited, polarity_veto=wiring.configured_polarity_veto())
     assert decision.outcome is Outcome.CLARIFY
@@ -121,12 +135,24 @@ def test_the_rendered_prompt_carries_the_query_and_every_ref():
     assert 'quote: "proveedores", occurrence: 2' in rendered
 
 
-def _settings(api_key: str | None = "test-key"):
-    class Stub:
-        deepseek_api_key = api_key
-        deepseek_model = "deepseek-chat"
-        secoppal_a2_supplier_polarity_timeout_seconds = 8.0
-    return Stub()
+def _disabled():
+    return SupplierPolaritySidecarConfig(SupplierPolaritySidecarState.DISABLED)
+
+
+def _unavailable(detail: str):
+    return SupplierPolaritySidecarConfig(
+        SupplierPolaritySidecarState.ENABLED_BUT_UNAVAILABLE,
+        detail=detail,
+    )
+
+
+def _enabled():
+    return SupplierPolaritySidecarConfig(
+        SupplierPolaritySidecarState.ENABLED,
+        api_key="test-key",
+        model="deepseek-chat",
+        timeout_seconds=8.0,
+    )
 
 
 def _never_called(*args, **kwargs):  # pragma: no cover - guard
