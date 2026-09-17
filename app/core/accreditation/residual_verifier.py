@@ -272,7 +272,16 @@ def verify_residual(raw: str, residual_material: tuple[str, ...], *,
     if provider is None:
         return _not_called(contract, PROVIDER_ABSENT, units)
     started = time.perf_counter()
-    response = provider.observe(call_key, provider_request(contract, raw, units))
+    try:
+        response = provider.observe(call_key, provider_request(contract, raw, units))
+    except Exception:  # noqa: BLE001 -- a provider that raises is a refusal, never an approval
+        # The runtime contract is "answer or refuse": an exception thrown by the
+        # provider must not travel into run_query. It becomes the same fail-closed
+        # receipt a provider-reported error would leave.
+        return ResidualVerification(
+            called=True, contract=contract.name, status="PROVIDER_ERROR:EXCEPTION",
+            units=units, latency_ms=round((time.perf_counter() - started) * 1000, 3),
+        )
     latency = round((time.perf_counter() - started) * 1000, 3)
     error = getattr(response, "error", "")
     if error:

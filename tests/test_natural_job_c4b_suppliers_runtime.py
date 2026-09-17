@@ -336,3 +336,31 @@ def test_the_accredited_capability_is_suppliers(frame_on, make_flow):
     assert result["credential_source"] == "NATURAL_ALPHA"
     assert result["admission_owner"] == "ENTITY_PROFILE"
     assert len(flow.feedback.get_recent()) == 1
+
+
+# ── C4B-R5: a provider that raises is contained, never propagated ────────────
+
+def test_a_provider_that_raises_ends_the_turn_in_clarify(frame_on, make_flow):
+    class Exploding:
+        def observe(self, call_key, request):
+            raise RuntimeError("boom")
+
+    flow = make_flow("alpha", ProviderResult(suppliers_payload("con quien ha contratado"),
+                                             provider_calls=1))
+    flow.settings.secoppal_a2_suppliers_binding_enabled = True
+    frame_on()
+    flow.secop_client = FrameSource()
+    flow.residual_verifier_provider = Exploding()
+    router_calls = counting_router(flow)
+    dispatch_calls = counting_dispatch(flow)
+
+    result = run(flow, GALAPA_2025, chat_id="c4b-exploding")
+
+    assert result["authority_status"] == "CLARIFY"
+    assert result["authority_reason"] == "UNACCREDITED_RESIDUAL"
+    assert result["residual_verifier_called"] is True
+    assert result["residual_verifier_status"] == "PROVIDER_ERROR:EXCEPTION"
+    assert result["weak_actor_guard_called"] is False
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+    assert router_calls == [] and dispatch_calls == []

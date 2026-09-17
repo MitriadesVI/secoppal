@@ -30,11 +30,6 @@ STOPWORDS = {
     "cuales", "cuantos", "cuantas", "cual",
     "hay", "tiene", "tienen", "esta", "estan", "este", "esten",
     "sea", "sean",
-    # Interrogativos generales y copula/auxiliar. No es vocabulario del dominio:
-    # "quien" es el mismo hueco de clase cerrada que V1 adjudico para el parser
-    # legacy (un "quien" desnudo buscaba contratos cuyo objeto lo contiene), y
-    # "es/son/ha" tampoco nombran un objeto contractual.
-    "quien", "quienes", "es", "son", "ha",
     "encuentre", "encuentren",
     "donde", "como", "cuando",
     # Greetings (including variants with extra letters)
@@ -160,10 +155,4 @@ STOPWORDS = {
     "debajo",
     # PARSER-POLARITY-MONETARY-002: post-number polarity tokens
     "adelante", "arriba", "abajo",
-    # C4A.3 — clíticos y preposiciones de clase cerrada que faltaban: el residual
-    # del carril credenciado los reportaba como material ("le", "a", "me") y no
-    # nombran objeto contractual alguno.
-    "a", "al", "ante", "cabe", "contra", "desde", "durante", "hacia", "hasta",
-    "le", "les", "lo", "me", "mediante", "mi", "mis", "nos",
-    "su", "sus", "te", "tras", "tu", "tus",
 }

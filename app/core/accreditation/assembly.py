@@ -168,12 +168,19 @@ def residual_of(raw: str, spans: tuple[AccreditedSpan, ...]) -> str:
 
 
 def material_tokens(residual: str) -> tuple[str, ...]:
-    """Tokens that still name something: the general closed class is not material."""
+    """Tokens that still name something: the functional classes are not material.
+
+    The historical closed class plus the lane's private one (``residual_language``,
+    C4B-R1). It is the exact class C4A.3 accredited for the credentialed residual,
+    kept local so no legacy consumer of ``app.data.stopwords`` is moved by it.
+    """
+    from app.core.accreditation.residual_language import residual_stopwords
     from app.data.stopwords import STOPWORDS
 
+    closed = residual_stopwords(STOPWORDS)
     return tuple(
         token for token in residual.split()
-        if normalize_text(token) not in STOPWORDS
+        if normalize_text(token) not in closed
     )
 
 

@@ -17,6 +17,7 @@ import pytest
 from app.config import Settings
 from app.core.accreditation import SUPPLIERS, capability_spec, credential_from_observation
 from app.core.accreditation.assembly import AssemblyStatus, assemble
+from app.core.accreditation.residual_language import RESIDUAL_FUNCTION_WORDS
 from app.core.accreditation.residual_verifier import (
     FROZEN_INSTRUCTION_SHA256,
     LABELS,
@@ -37,6 +38,7 @@ from app.core.accreditation.residual_verifier import (
 from app.core.entity_resolver import EntityResolver
 from app.core.natural_alpha.models import GroundedJob, Observation
 from app.core.natural_alpha.provider import ProviderResult
+from app.data.stopwords import STOPWORDS
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 EXPERIMENT = ROOT / "experiments" / "natural_job_prelegacy_v2"
@@ -290,3 +292,70 @@ def test_the_assembly_reports_the_verifier_and_the_guard_it_did_not_call(tmp_pat
 def test_units_are_numbered_by_the_host_and_never_by_the_model():
     units = units_of(("uno", "dos", "tres"))
     assert units == (ResidualUnit("R1", "uno"), ResidualUnit("R2", "dos"), ResidualUnit("R3", "tres"))
+
+
+# ── C4B-R1: the residual vocabulary is private to the lane ───────────────────
+
+LANE_WORDS = (
+    "quien", "quienes", "es", "son", "ha",
+    "a", "al", "ante", "cabe", "contra", "desde", "durante", "hacia", "hasta",
+    "le", "les", "lo", "me", "mediante", "mi", "mis", "nos",
+    "su", "sus", "te", "tras", "tu", "tus",
+)
+
+
+def test_the_lane_words_are_exactly_the_ones_c4a3_adjudicated():
+    from app.utils.money import normalize_text
+
+    assert RESIDUAL_FUNCTION_WORDS == frozenset(LANE_WORDS)
+    assert all(normalize_text(word) == word for word in RESIDUAL_FUNCTION_WORDS), (
+        "the private class is stored already normalized, like the global one")
+
+
+def test_the_global_class_is_the_base_one_and_never_sees_the_lane_words():
+    """C4B adds nothing to ``app/data/stopwords.py``: the lane's words live elsewhere."""
+    assert not (RESIDUAL_FUNCTION_WORDS & set(STOPWORDS))
+    from app.core.accreditation.residual_language import residual_stopwords
+
+    assert residual_stopwords(STOPWORDS) == frozenset(STOPWORDS) | frozenset(LANE_WORDS)
+
+
+def test_the_credentialed_residual_keeps_the_class_it_was_measured_with():
+    from app.core.accreditation.assembly import material_tokens
+
+    assert material_tokens(" ".join(LANE_WORDS)) == ()
+    assert material_tokens("a quien le su es son ha contratado") == ("contratado",)
+    # "dijo" no está en la clase funcional (ni antes ni ahora): sigue material.
+    assert material_tokens("le dijo que su contrato") == ("dijo",)
+    # No domain vocabulary was added: the verbs of the trade stay material.
+    assert material_tokens("vende compra gana adjudica trabaja") == (
+        "vende", "compra", "gana", "adjudica", "trabaja")
+
+
+def test_no_legacy_consumer_can_reach_the_private_class():
+    """Only the lane's own assembly may read it; nothing else in ``app/`` mentions it."""
+    import app
+
+    root = pathlib.Path(app.__file__).resolve().parent
+    readers = sorted(
+        path.relative_to(root).as_posix()
+        for path in root.rglob("*.py")
+        if "residual_language" in path.read_text(encoding="utf-8")
+    )
+    assert readers == ["core/accreditation/assembly.py"], readers
+
+
+# ── C4B-R5: a provider that raises is contained ──────────────────────────────
+
+def test_a_provider_that_raises_leaves_a_fail_closed_receipt():
+    class Exploding:
+        def observe(self, call_key, request):
+            raise RuntimeError("boom")
+
+    verification = verify_residual(RAW, ("contratado",), contract=SUPPLIERS_ROLE,
+                                   provider=Exploding())
+    assert verification.called is True
+    assert verification.status == "PROVIDER_ERROR:EXCEPTION"
+    assert verification.adjudicated is False
+    assert verification.units == (ResidualUnit("R1", "contratado"),)
+    assert verification.receipt_fields()["residual_units"] == [{"id": "R1", "text": "contratado"}]
