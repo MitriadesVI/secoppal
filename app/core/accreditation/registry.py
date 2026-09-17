@@ -24,6 +24,12 @@ _SPECS: tuple[CapabilitySpec, ...] = (
         universe=CONTRACTS_UNIVERSE,
         required=frozenset({Dimension.BUYER}),
         optional=frozenset({Dimension.TIME, Dimension.RANKING}),
+        guarded=frozenset({
+            Dimension.ACTOR,
+            Dimension.SOURCE,
+            Dimension.POLARITY,
+            Dimension.CARDINALITY,
+        }),
         supported_cardinality=frozenset({Cardinality.NONE, Cardinality.EXACT_5}),
         unsupported=frozenset({
             Dimension.MONEY,

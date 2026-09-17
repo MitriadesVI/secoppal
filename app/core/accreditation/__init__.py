@@ -6,7 +6,12 @@ declarative capability spec — plus the registry that matches them. Authorities
 residual accounting and admission changes live elsewhere and arrive later.
 """
 
-from .credential import NATURAL_ALPHA, CapabilityCredential, from_grounded_job
+from .credential import (
+    NATURAL_ALPHA,
+    CapabilityCredential,
+    from_grounded_job,
+    raw_fingerprint,
+)
 from .registry import (
     CONTRACTS_UNIVERSE,
     SUPPLIERS,
@@ -28,5 +33,6 @@ __all__ = [
     "capability_spec",
     "declared_capabilities",
     "from_grounded_job",
+    "raw_fingerprint",
     "spec_for_credential",
 ]

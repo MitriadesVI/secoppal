@@ -3,12 +3,24 @@
 The spec names dimensions, cardinalities and its own universe as data. It holds
 no grammar, no phrase list and no paraphrase rule: how a dimension is found is
 its authority's business, never the registry's.
+
+Every dimension belongs to exactly one category and the four categories are
+total over ``Dimension``: a dimension the spec forgot cannot slip through as
+"never mentioned".
+
+- ``required``: the capability cannot run without it.
+- ``optional``: it may apply it when the dimension's own authority accredits it.
+- ``guarded``: it never applies it alone; the dimension's own authority owns it
+  and may withhold EXECUTE (actor ownership, source universe, polarity,
+  cardinality).
+- ``unsupported``: it does not apply it and must not drop it in silence.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
+from itertools import combinations
 
 
 class Owner(str, Enum):
@@ -55,6 +67,7 @@ class CapabilitySpec:
     universe: str
     required: frozenset[Dimension]
     optional: frozenset[Dimension]
+    guarded: frozenset[Dimension]
     supported_cardinality: frozenset[Cardinality]
     unsupported: frozenset[Dimension]
 
@@ -65,16 +78,17 @@ class CapabilitySpec:
                 raise ValueError(f"INVALID_SPEC_{name.upper()}")
         if type(self.owner) is not Owner:
             raise ValueError("INVALID_SPEC_OWNER")
-        for members in (self.required, self.optional, self.unsupported):
+        categories = (self.required, self.optional, self.guarded, self.unsupported)
+        for members in categories:
             if type(members) is not frozenset or any(
                 type(member) is not Dimension for member in members
             ):
                 raise ValueError("INVALID_SPEC_DIMENSION")
         if any(type(cardinal) is not Cardinality for cardinal in self.supported_cardinality):
             raise ValueError("INVALID_SPEC_CARDINALITY")
-        if self.required & self.optional:
+        if any(first & second for first, second in combinations(categories, 2)):
             raise ValueError("SPEC_DIMENSION_OVERLAP")
-        if self.unsupported & (self.required | self.optional):
-            raise ValueError("SPEC_UNSUPPORTED_OVERLAP")
+        if frozenset().union(*categories) != frozenset(Dimension):
+            raise ValueError("SPEC_NOT_TOTAL")
         if not self.supported_cardinality:
             raise ValueError("SPEC_CARDINALITY_EMPTY")
