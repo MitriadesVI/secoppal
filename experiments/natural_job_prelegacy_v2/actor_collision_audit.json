@@ -1,0 +1,367 @@
+{
+ "checkpoint": "C4A.5 actor collision audit",
+ "index": "/Users/rodrigoortiz/Documents/secoppal/data/actor_alias_index.sqlite",
+ "guard_modified": false,
+ "trigger_total": 18,
+ "true_actor": 4,
+ "false_actor": 14,
+ "false_trigger_rate": 0.7778,
+ "triggers": [
+  {
+   "case_id": "A01",
+   "raw": "cuanto le ha vendido fundacaribe a galapa",
+   "alias": "fundacaribe",
+   "span": [
+    21,
+    32
+   ],
+   "alias_text_in_raw": "fundacaribe",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "fundacaribe"
+   ],
+   "family": "actor_subject",
+   "gold_actor_subject": true,
+   "classification": "TRUE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "A02",
+   "raw": "que le ha contratado la alcaldia de galapa a fundacaribe",
+   "alias": "fundacaribe",
+   "span": [
+    45,
+    56
+   ],
+   "alias_text_in_raw": "fundacaribe",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "alcaldia de galapa",
+    "fundacaribe"
+   ],
+   "family": "actor_subject",
+   "gold_actor_subject": true,
+   "classification": "TRUE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "D01",
+   "raw": "proveedores de galapa en obras civiles",
+   "alias": "obras",
+   "span": [
+    25,
+    30
+   ],
+   "alias_text_in_raw": "obras",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "proveedores",
+    "obras"
+   ],
+   "family": "unsupported_dimension",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H02",
+   "raw": "Necesito el listado de contratistas de la Alcaldía de Malambo de 2025, ordenado por valor contratado.",
+   "alias": "alcaldia de malambo",
+   "span": [
+    42,
+    61
+   ],
+   "alias_text_in_raw": "Alcaldía de Malambo",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "alcaldia de malambo"
+   ],
+   "family": "clear_suppliers",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H03",
+   "raw": "¿Cuáles son los 5 proveedores que más le venden al Área Metropolitana de Barranquilla?",
+   "alias": "area metropolitana de barranquilla",
+   "span": [
+    51,
+    86
+   ],
+   "alias_text_in_raw": "Área Metropolitana de Barranquilla?",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "proveedores",
+    "area metropolitana de barranquilla"
+   ],
+   "family": "clear_suppliers",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H05",
+   "raw": "¿Con qué empresas suele contratar la Alcaldía de Soledad?",
+   "alias": "contratar",
+   "span": [
+    24,
+    33
+   ],
+   "alias_text_in_raw": "contratar",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "contratar",
+    "alcaldia de soledad"
+   ],
+   "family": "paraphrase_no_noun",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H06",
+   "raw": "¿Quiénes se están ganando los contratos de la Alcaldía de Sabanalarga en lo corrido de este año?",
+   "alias": "alcaldia",
+   "span": [
+    46,
+    54
+   ],
+   "alias_text_in_raw": "Alcaldía",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "alcaldia"
+   ],
+   "family": "paraphrase_no_noun",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H07",
+   "raw": "Muéstrame el ranking de proveedores de la Alcaldía de Puerto Colombia por número de contratos en 2025.",
+   "alias": "alcaldia",
+   "span": [
+    42,
+    50
+   ],
+   "alias_text_in_raw": "Alcaldía",
+   "identity_count_or_status": "exact alias present in index; guard spans=2",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "proveedores",
+    "alcaldia",
+    "colombia"
+   ],
+   "family": "clear_suppliers",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H07",
+   "raw": "Muéstrame el ranking de proveedores de la Alcaldía de Puerto Colombia por número de contratos en 2025.",
+   "alias": "colombia",
+   "span": [
+    61,
+    69
+   ],
+   "alias_text_in_raw": "Colombia",
+   "identity_count_or_status": "exact alias present in index; guard spans=2",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "proveedores",
+    "alcaldia",
+    "colombia"
+   ],
+   "family": "clear_suppliers",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H10",
+   "raw": "¿Cuánto suman los contratos que firmó la Alcaldía de Malambo en 2025?",
+   "alias": "alcaldia de malambo",
+   "span": [
+    41,
+    60
+   ],
+   "alias_text_in_raw": "Alcaldía de Malambo",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "alcaldia de malambo"
+   ],
+   "family": "near_miss",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H13",
+   "raw": "¿Con quiénes contratan los municipios de Bolívar?",
+   "alias": "bolivar",
+   "span": [
+    41,
+    49
+   ],
+   "alias_text_in_raw": "Bolívar?",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "bolivar"
+   ],
+   "family": "near_miss",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H16",
+   "raw": "¿Quién es el representante legal de Obras y Pavimentos del Caribe S.A.S.?",
+   "alias": "obras",
+   "span": [
+    36,
+    41
+   ],
+   "alias_text_in_raw": "Obras",
+   "identity_count_or_status": "exact alias present in index; guard spans=2",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "obras",
+    "s a s"
+   ],
+   "family": "actor_subject",
+   "gold_actor_subject": true,
+   "classification": "TRUE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H16",
+   "raw": "¿Quién es el representante legal de Obras y Pavimentos del Caribe S.A.S.?",
+   "alias": "s a s",
+   "span": [
+    66,
+    73
+   ],
+   "alias_text_in_raw": "S.A.S.?",
+   "identity_count_or_status": "exact alias present in index; guard spans=2",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "obras",
+    "s a s"
+   ],
+   "family": "actor_subject",
+   "gold_actor_subject": true,
+   "classification": "TRUE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H17",
+   "raw": "¿Me muestras los proveedores de infraestructura educativa de la Alcaldía de Malambo?",
+   "alias": "infraestructura",
+   "span": [
+    32,
+    47
+   ],
+   "alias_text_in_raw": "infraestructura",
+   "identity_count_or_status": "exact alias present in index; guard spans=2",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "proveedores",
+    "infraestructura",
+    "alcaldia de malambo"
+   ],
+   "family": "topic_filter",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H17",
+   "raw": "¿Me muestras los proveedores de infraestructura educativa de la Alcaldía de Malambo?",
+   "alias": "alcaldia de malambo",
+   "span": [
+    64,
+    84
+   ],
+   "alias_text_in_raw": "Alcaldía de Malambo?",
+   "identity_count_or_status": "exact alias present in index; guard spans=2",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "proveedores",
+    "infraestructura",
+    "alcaldia de malambo"
+   ],
+   "family": "topic_filter",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "H19",
+   "raw": "Necesito saber quién le vende a la Alcaldía de Sabanalarga y también en qué modalidad contrata más.",
+   "alias": "alcaldia",
+   "span": [
+    35,
+    43
+   ],
+   "alias_text_in_raw": "Alcaldía",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "alcaldia"
+   ],
+   "family": "multi_job",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "O07",
+   "raw": "quien es el representante legal de fundacaribe",
+   "alias": "fundacaribe",
+   "span": [
+    35,
+    46
+   ],
+   "alias_text_in_raw": "fundacaribe",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "fundacaribe"
+   ],
+   "family": "not_suppliers",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  },
+  {
+   "case_id": "U08",
+   "raw": "contratos de Fundacaribe",
+   "alias": "fundacaribe",
+   "span": [
+    13,
+    24
+   ],
+   "alias_text_in_raw": "Fundacaribe",
+   "identity_count_or_status": "exact alias present in index; guard spans=1",
+   "guard_status": "CLARIFY",
+   "guard_detail": "ACTOR_MENTION_PRESENT",
+   "aliases_matched_this_turn": [
+    "fundacaribe"
+   ],
+   "family": "not_suppliers",
+   "gold_actor_subject": false,
+   "classification": "FALSE_ACTOR_TRIGGER"
+  }
+ ]
+}

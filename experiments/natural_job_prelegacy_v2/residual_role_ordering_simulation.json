@@ -1,0 +1,946 @@
+{
+ "checkpoint": "C4A.5 ordering simulation (no runtime change)",
+ "note": "Simulacion: el strong actor authority (detect_actor_name) no se mueve; solo cambia donde vive el guard exacto debil.",
+ "cases": [
+  {
+   "case_id": "A01",
+   "family": "actor_subject",
+   "outcome": "ANY_NOT_SUPPLIERS",
+   "material": [
+    "vendido"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "ACTOR_MENTION_PRESENT",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "OTHER_OWNER",
+    "reason": "actor_subject",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "A02",
+   "family": "actor_subject",
+   "outcome": "ANY_NOT_SUPPLIERS",
+   "material": [
+    "contratado"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "ACTOR_MENTION_PRESENT",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "OTHER_OWNER",
+    "reason": "actor_subject",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "C01",
+   "family": "cardinality",
+   "outcome": "HONEST_CLARIFY",
+   "material": [],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "unsupported_cardinality",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "unsupported_cardinality",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "C02",
+   "family": "cardinality",
+   "outcome": "EXECUTE",
+   "material": [],
+   "current_order": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "D01",
+   "family": "unsupported_dimension",
+   "outcome": "HONEST_CLARIFY",
+   "material": [
+    "civiles"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "ACTOR_MENTION_PRESENT",
+    "ready": false,
+    "false_actor_block": true
+   },
+   "b_says": {
+    "R1": "MATERIAL"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "D02",
+   "family": "unsupported_dimension",
+   "outcome": "HONEST_CLARIFY",
+   "material": [],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNSUPPORTED_MONEY",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "UNSUPPORTED_MONEY",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "D03",
+   "family": "unsupported_dimension",
+   "outcome": "HONEST_CLARIFY",
+   "material": [],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNSUPPORTED_MODALITY",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "UNSUPPORTED_MODALITY",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "G01",
+   "family": "no_buyer",
+   "outcome": "ANY_NOT_SUPPLIERS",
+   "material": [],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "G02",
+   "family": "no_buyer",
+   "outcome": "ANY_NOT_SUPPLIERS",
+   "material": [
+    "contratan",
+    "municipios"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "MATERIAL"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H01",
+   "family": "clear_suppliers",
+   "outcome": "EXECUTE",
+   "material": [],
+   "current_order": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H02",
+   "family": "clear_suppliers",
+   "outcome": "EXECUTE",
+   "material": [
+    "listado",
+    "contratado"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "UNKNOWN",
+    "R2": "MATERIAL"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H03",
+   "family": "clear_suppliers",
+   "outcome": "EXECUTE",
+   "material": [
+    "venden"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H04",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "venden",
+    "5",
+    "primeros"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "MATERIAL",
+    "R3": "MATERIAL"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H05",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "empresas",
+    "suele"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "ACTOR_MENTION_PRESENT",
+    "ready": false,
+    "false_actor_block": true
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "UNKNOWN"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H06",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "ganando",
+    "Sabanalarga",
+    "corrido"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "MATERIAL",
+    "R3": "UNKNOWN"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H07",
+   "family": "clear_suppliers",
+   "outcome": "EXECUTE",
+   "material": [
+    "ranking",
+    "Puerto",
+    "número"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "UNKNOWN",
+    "R2": "MATERIAL",
+    "R3": "UNKNOWN"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H08",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "empresas",
+    "adjudicatarias"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H13",
+   "family": "near_miss",
+   "outcome": "ANY_NOT_SUPPLIERS",
+   "material": [
+    "contratan",
+    "municipios"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "MATERIAL"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H15",
+   "family": "actor_subject",
+   "outcome": "ANY_NOT_SUPPLIERS",
+   "material": [
+    "vendido",
+    "Distrisuministros",
+    "Norte"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "UNKNOWN",
+    "R3": "UNKNOWN"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H17",
+   "family": "topic_filter",
+   "outcome": "HONEST_CLARIFY",
+   "material": [
+    "muestras",
+    "educativa"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "MATERIAL"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H18",
+   "family": "unsupported_cardinality",
+   "outcome": "HONEST_CLARIFY",
+   "material": [],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "unsupported_cardinality",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "unsupported_cardinality",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "H20",
+   "family": "no_buyer",
+   "outcome": "ANY_NOT_SUPPLIERS",
+   "material": [],
+   "current_order": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "N01",
+   "family": "negation",
+   "outcome": "ANY_NOT_SUPPLIERS",
+   "material": [
+    "muestres",
+    "contratado"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "negation_scope_unaccredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "UNKNOWN",
+    "R2": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "P01",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "comprado"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "P02",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "vendido"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "P03",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "empresas",
+    "trabaja"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "P04",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "empresas",
+    "adjudica",
+    "malambo"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "JOB_LANGUAGE",
+    "R3": "MATERIAL"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "P05",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "gana"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "P06",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [],
+   "current_order": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "U01",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "contratado"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "U02",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "contratado"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "U03",
+   "family": "noun_explicit",
+   "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+   "material": [
+    "principales"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "UNKNOWN"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "U04",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE",
+   "material": [
+    "vende"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "U05",
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+   "material": [
+    "compra"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "U06",
+   "family": "no_buyer",
+   "outcome": "HONEST_CLARIFY",
+   "material": [],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "U07",
+   "family": "noun_explicit",
+   "outcome": "EXECUTE",
+   "material": [],
+   "current_order": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "U13",
+   "family": "no_buyer",
+   "outcome": "ANY_NOT_SUPPLIERS",
+   "material": [],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "buyer_not_accredited",
+    "ready": false,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "X01",
+   "family": "incident_2026",
+   "outcome": "EXECUTE",
+   "material": [
+    "contratado"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "X02",
+   "family": "incident_2026",
+   "outcome": "EXECUTE",
+   "material": [],
+   "current_order": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   },
+   "b_says": null,
+   "simulated_B_before_weak_actor_guard": {
+    "status": "READY",
+    "reason": "accredited",
+    "ready": true,
+    "false_actor_block": false
+   }
+  },
+  {
+   "case_id": "X03",
+   "family": "incident_2026",
+   "outcome": "HONEST_CLARIFY",
+   "material": [
+    "educación"
+   ],
+   "current_order": {
+    "status": "CLARIFY",
+    "reason": "UNACCREDITED_RESIDUAL",
+    "ready": false,
+    "false_actor_block": false
+   },
+   "b_says": {
+    "R1": "MATERIAL"
+   },
+   "simulated_B_before_weak_actor_guard": {
+    "status": "CLARIFY",
+    "reason": "residual_material",
+    "ready": false,
+    "false_actor_block": false
+   }
+  }
+ ],
+ "CURRENT_ORDER": {
+  "supported_ready": [
+   "C02",
+   "H01",
+   "H20",
+   "P06",
+   "U07",
+   "X02"
+  ],
+  "supported_ready_count": 6,
+  "false_actor_blocks": [
+   "D01",
+   "H05"
+  ]
+ },
+ "B_BEFORE_WEAK_ACTOR_GUARD": {
+  "supported_ready": [
+   "C02",
+   "H01",
+   "H08",
+   "H20",
+   "P01",
+   "P02",
+   "P03",
+   "P05",
+   "P06",
+   "U01",
+   "U02",
+   "U04",
+   "U07",
+   "X01",
+   "X02"
+  ],
+  "supported_ready_count": 15,
+  "false_actor_blocks": []
+ }
+}

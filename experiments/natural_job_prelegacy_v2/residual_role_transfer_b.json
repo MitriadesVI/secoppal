@@ -1,0 +1,1449 @@
+{
+ "checkpoint": "C4A.5 B transfer",
+ "prompt_b_sha256_used": "756fe27464e623d6f31334e471d6b628c8aca435eb4c7e6605b813424794bec9",
+ "eligible": 27,
+ "runs": [
+  {
+   "run": 0,
+   "cases": [
+    {
+     "case_id": "A01",
+     "raw": "cuanto le ha vendido fundacaribe a galapa",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "actor_subject",
+     "units": [
+      {
+       "id": "R1",
+       "text": "vendido"
+      }
+     ],
+     "assembly_reason": "ACTOR_MENTION_PRESENT",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "A02",
+     "raw": "que le ha contratado la alcaldia de galapa a fundacaribe",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "actor_subject",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "ACTOR_MENTION_PRESENT",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "D01",
+     "raw": "proveedores de galapa en obras civiles",
+     "outcome": "HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "unsupported_dimension",
+     "units": [
+      {
+       "id": "R1",
+       "text": "civiles"
+      }
+     ],
+     "assembly_reason": "ACTOR_MENTION_PRESENT",
+     "labels": {
+      "R1": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "G02",
+     "raw": "con quien contratan los municipios del atlantico",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "no_buyer",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratan"
+      },
+      {
+       "id": "R2",
+       "text": "municipios"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "H02",
+     "raw": "Necesito el listado de contratistas de la Alcaldía de Malambo de 2025, ordenado por valor contratado.",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "clear_suppliers",
+     "units": [
+      {
+       "id": "R1",
+       "text": "listado"
+      },
+      {
+       "id": "R2",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "UNKNOWN",
+      "R2": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"UNKNOWN\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "H03",
+     "raw": "¿Cuáles son los 5 proveedores que más le venden al Área Metropolitana de Barranquilla?",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "clear_suppliers",
+     "units": [
+      {
+       "id": "R1",
+       "text": "venden"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "H04",
+     "raw": "¿Quiénes le venden más a la Alcaldía de Cartagena? Muéstrame los 5 primeros.",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "venden"
+      },
+      {
+       "id": "R2",
+       "text": "5"
+      },
+      {
+       "id": "R3",
+       "text": "primeros"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "H05",
+     "raw": "¿Con qué empresas suele contratar la Alcaldía de Soledad?",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "empresas"
+      },
+      {
+       "id": "R2",
+       "text": "suele"
+      }
+     ],
+     "assembly_reason": "ACTOR_MENTION_PRESENT",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "UNKNOWN"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"UNKNOWN\"}]}"
+    },
+    {
+     "case_id": "H06",
+     "raw": "¿Quiénes se están ganando los contratos de la Alcaldía de Sabanalarga en lo corrido de este año?",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "ganando"
+      },
+      {
+       "id": "R2",
+       "text": "Sabanalarga"
+      },
+      {
+       "id": "R3",
+       "text": "corrido"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "UNKNOWN"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"UNKNOWN\"}]}"
+    },
+    {
+     "case_id": "H07",
+     "raw": "Muéstrame el ranking de proveedores de la Alcaldía de Puerto Colombia por número de contratos en 2025.",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "clear_suppliers",
+     "units": [
+      {
+       "id": "R1",
+       "text": "ranking"
+      },
+      {
+       "id": "R2",
+       "text": "Puerto"
+      },
+      {
+       "id": "R3",
+       "text": "número"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "UNKNOWN",
+      "R2": "MATERIAL",
+      "R3": "UNKNOWN"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"UNKNOWN\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"UNKNOWN\"}]}"
+    },
+    {
+     "case_id": "H08",
+     "raw": "¿Qué empresas han sido adjudicatarias de la Alcaldía de Baranoa?",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "empresas"
+      },
+      {
+       "id": "R2",
+       "text": "adjudicatarias"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "H13",
+     "raw": "¿Con quiénes contratan los municipios de Bolívar?",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "near_miss",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratan"
+      },
+      {
+       "id": "R2",
+       "text": "municipios"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "H15",
+     "raw": "¿Cuánto le ha vendido Distrisuministros del Norte a la Alcaldía de Santo Tomás?",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "actor_subject",
+     "units": [
+      {
+       "id": "R1",
+       "text": "vendido"
+      },
+      {
+       "id": "R2",
+       "text": "Distrisuministros"
+      },
+      {
+       "id": "R3",
+       "text": "Norte"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "UNKNOWN",
+      "R3": "UNKNOWN"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"UNKNOWN\"}, {\"id\": \"R3\", \"label\": \"UNKNOWN\"}]}"
+    },
+    {
+     "case_id": "H17",
+     "raw": "¿Me muestras los proveedores de infraestructura educativa de la Alcaldía de Malambo?",
+     "outcome": "HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "topic_filter",
+     "units": [
+      {
+       "id": "R1",
+       "text": "muestras"
+      },
+      {
+       "id": "R2",
+       "text": "educativa"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "N01",
+     "raw": "no me muestres con quién ha contratado Galapa",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "negation",
+     "units": [
+      {
+       "id": "R1",
+       "text": "muestres"
+      },
+      {
+       "id": "R2",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "negation_scope_unaccredited",
+     "labels": {
+      "R1": "UNKNOWN",
+      "R2": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"UNKNOWN\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "P01",
+     "raw": "a quien le ha comprado mas el municipio de galapa",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "comprado"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "P02",
+     "raw": "quienes le han vendido a la gobernacion del atlantico",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "vendido"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "P03",
+     "raw": "con qué empresas trabaja la alcaldia de soledad",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "empresas"
+      },
+      {
+       "id": "R2",
+       "text": "trabaja"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "P04",
+     "raw": "a que empresas les adjudica contratos malambo",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "empresas"
+      },
+      {
+       "id": "R2",
+       "text": "adjudica"
+      },
+      {
+       "id": "R3",
+       "text": "malambo"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "P05",
+     "raw": "quien gana los contratos de la alcaldia de galapa",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "gana"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "U01",
+     "raw": "con quien ha contratado mas la alcaldia de cartagena en 2026",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "U02",
+     "raw": "con quien ha contratado la alcaldia de galapa",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "U03",
+     "raw": "quienes son los principales proveedores de barranquilla",
+     "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "noun_explicit",
+     "units": [
+      {
+       "id": "R1",
+       "text": "principales"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "UNKNOWN"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"UNKNOWN\"}]}"
+    },
+    {
+     "case_id": "U04",
+     "raw": "quien le vende mas a galapa",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "vende"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "U05",
+     "raw": "a quien le compra cartagena",
+     "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "compra"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "X01",
+     "raw": "con quien ha contratado la alcaldia de galapa en 2025",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "incident_2026",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "X03",
+     "raw": "proveedores de educación de Secretaría de Educación de Cali",
+     "outcome": "HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "incident_2026",
+     "units": [
+      {
+       "id": "R1",
+       "text": "educación"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"MATERIAL\"}]}"
+    }
+   ]
+  },
+  {
+   "run": 1,
+   "cases": [
+    {
+     "case_id": "A01",
+     "raw": "cuanto le ha vendido fundacaribe a galapa",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "actor_subject",
+     "units": [
+      {
+       "id": "R1",
+       "text": "vendido"
+      }
+     ],
+     "assembly_reason": "ACTOR_MENTION_PRESENT",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "A02",
+     "raw": "que le ha contratado la alcaldia de galapa a fundacaribe",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "actor_subject",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "ACTOR_MENTION_PRESENT",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "D01",
+     "raw": "proveedores de galapa en obras civiles",
+     "outcome": "HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "unsupported_dimension",
+     "units": [
+      {
+       "id": "R1",
+       "text": "civiles"
+      }
+     ],
+     "assembly_reason": "ACTOR_MENTION_PRESENT",
+     "labels": {
+      "R1": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "G02",
+     "raw": "con quien contratan los municipios del atlantico",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "no_buyer",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratan"
+      },
+      {
+       "id": "R2",
+       "text": "municipios"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "H02",
+     "raw": "Necesito el listado de contratistas de la Alcaldía de Malambo de 2025, ordenado por valor contratado.",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "clear_suppliers",
+     "units": [
+      {
+       "id": "R1",
+       "text": "listado"
+      },
+      {
+       "id": "R2",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "UNKNOWN",
+      "R2": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"UNKNOWN\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "H03",
+     "raw": "¿Cuáles son los 5 proveedores que más le venden al Área Metropolitana de Barranquilla?",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "clear_suppliers",
+     "units": [
+      {
+       "id": "R1",
+       "text": "venden"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "H04",
+     "raw": "¿Quiénes le venden más a la Alcaldía de Cartagena? Muéstrame los 5 primeros.",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "venden"
+      },
+      {
+       "id": "R2",
+       "text": "5"
+      },
+      {
+       "id": "R3",
+       "text": "primeros"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "H05",
+     "raw": "¿Con qué empresas suele contratar la Alcaldía de Soledad?",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "empresas"
+      },
+      {
+       "id": "R2",
+       "text": "suele"
+      }
+     ],
+     "assembly_reason": "ACTOR_MENTION_PRESENT",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "UNKNOWN"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"UNKNOWN\"}]}"
+    },
+    {
+     "case_id": "H06",
+     "raw": "¿Quiénes se están ganando los contratos de la Alcaldía de Sabanalarga en lo corrido de este año?",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "ganando"
+      },
+      {
+       "id": "R2",
+       "text": "Sabanalarga"
+      },
+      {
+       "id": "R3",
+       "text": "corrido"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "UNKNOWN"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"UNKNOWN\"}]}"
+    },
+    {
+     "case_id": "H07",
+     "raw": "Muéstrame el ranking de proveedores de la Alcaldía de Puerto Colombia por número de contratos en 2025.",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "clear_suppliers",
+     "units": [
+      {
+       "id": "R1",
+       "text": "ranking"
+      },
+      {
+       "id": "R2",
+       "text": "Puerto"
+      },
+      {
+       "id": "R3",
+       "text": "número"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "UNKNOWN",
+      "R2": "MATERIAL",
+      "R3": "UNKNOWN"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"UNKNOWN\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"UNKNOWN\"}]}"
+    },
+    {
+     "case_id": "H08",
+     "raw": "¿Qué empresas han sido adjudicatarias de la Alcaldía de Baranoa?",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "empresas"
+      },
+      {
+       "id": "R2",
+       "text": "adjudicatarias"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "H13",
+     "raw": "¿Con quiénes contratan los municipios de Bolívar?",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "near_miss",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratan"
+      },
+      {
+       "id": "R2",
+       "text": "municipios"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "H15",
+     "raw": "¿Cuánto le ha vendido Distrisuministros del Norte a la Alcaldía de Santo Tomás?",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "actor_subject",
+     "units": [
+      {
+       "id": "R1",
+       "text": "vendido"
+      },
+      {
+       "id": "R2",
+       "text": "Distrisuministros"
+      },
+      {
+       "id": "R3",
+       "text": "Norte"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "UNKNOWN",
+      "R3": "UNKNOWN"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"UNKNOWN\"}, {\"id\": \"R3\", \"label\": \"UNKNOWN\"}]}"
+    },
+    {
+     "case_id": "H17",
+     "raw": "¿Me muestras los proveedores de infraestructura educativa de la Alcaldía de Malambo?",
+     "outcome": "HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "topic_filter",
+     "units": [
+      {
+       "id": "R1",
+       "text": "muestras"
+      },
+      {
+       "id": "R2",
+       "text": "educativa"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "N01",
+     "raw": "no me muestres con quién ha contratado Galapa",
+     "outcome": "ANY_NOT_SUPPLIERS",
+     "owner": "NOT_SUPPLIERS",
+     "family": "negation",
+     "units": [
+      {
+       "id": "R1",
+       "text": "muestres"
+      },
+      {
+       "id": "R2",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "negation_scope_unaccredited",
+     "labels": {
+      "R1": "UNKNOWN",
+      "R2": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"UNKNOWN\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "P01",
+     "raw": "a quien le ha comprado mas el municipio de galapa",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "comprado"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "P02",
+     "raw": "quienes le han vendido a la gobernacion del atlantico",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "vendido"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "P03",
+     "raw": "con qué empresas trabaja la alcaldia de soledad",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "empresas"
+      },
+      {
+       "id": "R2",
+       "text": "trabaja"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "P04",
+     "raw": "a que empresas les adjudica contratos malambo",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "empresas"
+      },
+      {
+       "id": "R2",
+       "text": "adjudica"
+      },
+      {
+       "id": "R3",
+       "text": "malambo"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "P05",
+     "raw": "quien gana los contratos de la alcaldia de galapa",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "gana"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "U01",
+     "raw": "con quien ha contratado mas la alcaldia de cartagena en 2026",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "U02",
+     "raw": "con quien ha contratado la alcaldia de galapa",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "U03",
+     "raw": "quienes son los principales proveedores de barranquilla",
+     "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "noun_explicit",
+     "units": [
+      {
+       "id": "R1",
+       "text": "principales"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"MATERIAL\"}]}"
+    },
+    {
+     "case_id": "U04",
+     "raw": "quien le vende mas a galapa",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "vende"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "U05",
+     "raw": "a quien le compra cartagena",
+     "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "paraphrase_no_noun",
+     "units": [
+      {
+       "id": "R1",
+       "text": "compra"
+      }
+     ],
+     "assembly_reason": "buyer_not_accredited",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "X01",
+     "raw": "con quien ha contratado la alcaldia de galapa en 2025",
+     "outcome": "EXECUTE",
+     "owner": "SUPPLIERS",
+     "family": "incident_2026",
+     "units": [
+      {
+       "id": "R1",
+       "text": "contratado"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "validation": "OK",
+     "pass": true,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}"
+    },
+    {
+     "case_id": "X03",
+     "raw": "proveedores de educación de Secretaría de Educación de Cali",
+     "outcome": "HONEST_CLARIFY",
+     "owner": "SUPPLIERS",
+     "family": "incident_2026",
+     "units": [
+      {
+       "id": "R1",
+       "text": "educación"
+      }
+     ],
+     "assembly_reason": "UNACCREDITED_RESIDUAL",
+     "labels": {
+      "R1": "MATERIAL"
+     },
+     "validation": "OK",
+     "pass": false,
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"MATERIAL\"}]}"
+    }
+   ]
+  }
+ ],
+ "model": "deepseek-v4-flash",
+ "MATERIAL_FALSE_NEGATIVE": 0,
+ "material_false_negative_case_ids": [],
+ "MATERIAL_FALSE_NEGATIVE_NOMINAL": [],
+ "CLEAR_JOB_LANGUAGE_PASS": 10,
+ "CLEAR_JOB_LANGUAGE_TOTAL": 16,
+ "clear_pass_case_ids": [
+  "H03",
+  "H08",
+  "P01",
+  "P02",
+  "P03",
+  "P05",
+  "U01",
+  "U02",
+  "U04",
+  "X01"
+ ],
+ "blocked_case_ids": [
+  "D01",
+  "G02",
+  "H02",
+  "H04",
+  "H05",
+  "H06",
+  "H07",
+  "H13",
+  "H15",
+  "H17",
+  "N01",
+  "P04",
+  "U03",
+  "X03"
+ ],
+ "unstable_unit_labels": [
+  "U03"
+ ],
+ "unstable_query_pass": [],
+ "cost": {
+  "calls": 54,
+  "p50_ms": 999.2,
+  "p95_ms": 1239.8
+ },
+ "attention_cases": {
+  "X01": {
+   "labels": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "pass": true,
+   "units": [
+    {
+     "id": "R1",
+     "text": "contratado"
+    }
+   ],
+   "family": "incident_2026",
+   "outcome": "EXECUTE"
+  },
+  "P01": {
+   "labels": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "pass": true,
+   "units": [
+    {
+     "id": "R1",
+     "text": "comprado"
+    }
+   ],
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE"
+  },
+  "H05": {
+   "labels": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "UNKNOWN"
+   },
+   "pass": false,
+   "units": [
+    {
+     "id": "R1",
+     "text": "empresas"
+    },
+    {
+     "id": "R2",
+     "text": "suele"
+    }
+   ],
+   "family": "paraphrase_no_noun",
+   "outcome": "EXECUTE"
+  },
+  "X03": {
+   "labels": {
+    "R1": "MATERIAL"
+   },
+   "pass": false,
+   "units": [
+    {
+     "id": "R1",
+     "text": "educación"
+    }
+   ],
+   "family": "incident_2026",
+   "outcome": "HONEST_CLARIFY"
+  },
+  "D01": {
+   "labels": {
+    "R1": "MATERIAL"
+   },
+   "pass": false,
+   "units": [
+    {
+     "id": "R1",
+     "text": "civiles"
+    }
+   ],
+   "family": "unsupported_dimension",
+   "outcome": "HONEST_CLARIFY"
+  },
+  "A01": {
+   "labels": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "pass": true,
+   "units": [
+    {
+     "id": "R1",
+     "text": "vendido"
+    }
+   ],
+   "family": "actor_subject",
+   "outcome": "ANY_NOT_SUPPLIERS"
+  },
+  "A02": {
+   "labels": {
+    "R1": "JOB_LANGUAGE"
+   },
+   "pass": true,
+   "units": [
+    {
+     "id": "R1",
+     "text": "contratado"
+    }
+   ],
+   "family": "actor_subject",
+   "outcome": "ANY_NOT_SUPPLIERS"
+  },
+  "H15": {
+   "labels": {
+    "R1": "JOB_LANGUAGE",
+    "R2": "UNKNOWN",
+    "R3": "UNKNOWN"
+   },
+   "pass": false,
+   "units": [
+    {
+     "id": "R1",
+     "text": "vendido"
+    },
+    {
+     "id": "R2",
+     "text": "Distrisuministros"
+    },
+    {
+     "id": "R3",
+     "text": "Norte"
+    }
+   ],
+   "family": "actor_subject",
+   "outcome": "ANY_NOT_SUPPLIERS"
+  }
+ }
+}
