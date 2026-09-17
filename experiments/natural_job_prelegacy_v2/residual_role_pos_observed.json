@@ -1,0 +1,705 @@
+{
+ "AJ01": {
+  "R1": [
+   {
+    "text": "contratado",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Sing|VerbForm=Part",
+    "lemma": "contratado"
+   }
+  ]
+ },
+ "AJ02": {
+  "R1": [
+   {
+    "text": "vende",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "vender"
+   }
+  ]
+ },
+ "AJ03": {
+  "R1": [
+   {
+    "text": "compra",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "compra"
+   }
+  ]
+ },
+ "AJ04": {
+  "R1": [
+   {
+    "text": "empresas",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Plur",
+    "lemma": "empresa"
+   }
+  ],
+  "R2": [
+   {
+    "text": "suele",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "soler"
+   }
+  ]
+ },
+ "AJ05": {
+  "R1": [
+   {
+    "text": "trabajan",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "trabajar"
+   }
+  ]
+ },
+ "AJ06": {
+  "R1": [
+   {
+    "text": "contratado",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Sing|VerbForm=Part",
+    "lemma": "contratado"
+   }
+  ]
+ },
+ "AJ07": {
+  "R1": [
+   {
+    "text": "vende",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "vender"
+   }
+  ]
+ },
+ "AJ08": {
+  "R1": [
+   {
+    "text": "compra",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "compra"
+   }
+  ]
+ },
+ "AJ09": {
+  "R1": [
+   {
+    "text": "empresas",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Plur",
+    "lemma": "empresa"
+   }
+  ],
+  "R2": [
+   {
+    "text": "trabaja",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "trabajar"
+   }
+  ]
+ },
+ "AJ10": {
+  "R1": [
+   {
+    "text": "vendido",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part",
+    "lemma": "vender"
+   }
+  ]
+ },
+ "AJ11": {
+  "R1": [
+   {
+    "text": "comprado",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Sing|VerbForm=Part",
+    "lemma": "comprado"
+   }
+  ]
+ },
+ "MN01": {
+  "R1": [
+   {
+    "text": "contratado",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Sing|VerbForm=Part",
+    "lemma": "contratado"
+   }
+  ],
+  "R2": [
+   {
+    "text": "civiles",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Number=Plur",
+    "lemma": "civil"
+   }
+  ]
+ },
+ "MN02": {
+  "R1": [
+   {
+    "text": "vende",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "vender"
+   }
+  ],
+  "R2": [
+   {
+    "text": "medicamentos",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "medicamento"
+   }
+  ]
+ },
+ "MN03": {
+  "R1": [
+   {
+    "text": "compra",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "compra"
+   }
+  ],
+  "R2": [
+   {
+    "text": "alimentos",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "alimento"
+   }
+  ]
+ },
+ "MN04": {
+  "R1": [
+   {
+    "text": "empresas",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Plur",
+    "lemma": "empresa"
+   }
+  ],
+  "R2": [
+   {
+    "text": "contrata",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "contrata"
+   }
+  ],
+  "R3": [
+   {
+    "text": "mantenimiento",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Sing",
+    "lemma": "mantenimiento"
+   }
+  ],
+  "R4": [
+   {
+    "text": "vial",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Number=Sing",
+    "lemma": "vial"
+   }
+  ]
+ },
+ "MN05": {
+  "R1": [
+   {
+    "text": "trabaja",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "trabajar"
+   }
+  ],
+  "R2": [
+   {
+    "text": "servicios",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "servicio"
+   }
+  ],
+  "R3": [
+   {
+    "text": "jurídicos",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "jurídico"
+   }
+  ]
+ },
+ "MN06": {
+  "R1": [
+   {
+    "text": "vende",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "vender"
+   }
+  ],
+  "R2": [
+   {
+    "text": "dotacion",
+    "pos": "PROPN",
+    "dep": "ROOT",
+    "morph": "",
+    "lemma": "dotacion"
+   }
+  ]
+ },
+ "MN07": {
+  "R1": [
+   {
+    "text": "compra",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "compra"
+   }
+  ],
+  "R2": [
+   {
+    "text": "papeleria",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "papelerio"
+   }
+  ]
+ },
+ "MN08": {
+  "R1": [
+   {
+    "text": "empresas",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Plur",
+    "lemma": "empresa"
+   }
+  ],
+  "R2": [
+   {
+    "text": "contrata",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "contrata"
+   }
+  ],
+  "R3": [
+   {
+    "text": "aseo",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin",
+    "lemma": "aseir"
+   }
+  ]
+ },
+ "MN09": {
+  "R1": [
+   {
+    "text": "suministran",
+    "pos": "AUX",
+    "dep": "ROOT",
+    "morph": "Mood=Sub|Number=Plur|Person=3|Tense=Imp|VerbForm=Fin",
+    "lemma": "suministran"
+   }
+  ],
+  "R2": [
+   {
+    "text": "combustible",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Sing",
+    "lemma": "combustible"
+   }
+  ]
+ },
+ "MN10": {
+  "R1": [
+   {
+    "text": "vendio",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Sing",
+    "lemma": "vendio"
+   }
+  ],
+  "R2": [
+   {
+    "text": "equipos",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "equipo"
+   }
+  ],
+  "R3": [
+   {
+    "text": "computo",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Sing",
+    "lemma": "computo"
+   }
+  ]
+ },
+ "MN11": {
+  "R1": [
+   {
+    "text": "compra",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "compra"
+   }
+  ],
+  "R2": [
+   {
+    "text": "medicamentos",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "medicamento"
+   }
+  ]
+ },
+ "MV01": {
+  "R1": [
+   {
+    "text": "contrata",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "contrata"
+   }
+  ],
+  "R2": [
+   {
+    "text": "colegios",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "colegio"
+   }
+  ]
+ },
+ "MV02": {
+  "R1": [
+   {
+    "text": "empresas",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Plur",
+    "lemma": "empresa"
+   }
+  ],
+  "R2": [
+   {
+    "text": "contrata",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "contrata"
+   }
+  ],
+  "R3": [
+   {
+    "text": "transportar",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "VerbForm=Inf",
+    "lemma": "transportar"
+   }
+  ],
+  "R4": [
+   {
+    "text": "estudiantes",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Number=Plur",
+    "lemma": "estudiante"
+   }
+  ]
+ },
+ "MV03": {
+  "R1": [
+   {
+    "text": "trabaja",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "trabajar"
+   }
+  ],
+  "R2": [
+   {
+    "text": "fumigar",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "VerbForm=Inf",
+    "lemma": "fumigar"
+   }
+  ],
+  "R3": [
+   {
+    "text": "sedes",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Plur",
+    "lemma": "sed"
+   }
+  ]
+ },
+ "MV04": {
+  "R1": [
+   {
+    "text": "empresas",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Plur",
+    "lemma": "empresa"
+   }
+  ],
+  "R2": [
+   {
+    "text": "contrata",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "contrata"
+   }
+  ],
+  "R3": [
+   {
+    "text": "capacitar",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "VerbForm=Inf",
+    "lemma": "capacitar"
+   }
+  ],
+  "R4": [
+   {
+    "text": "cuidadores",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "cuidador"
+   }
+  ]
+ },
+ "MV05": {
+  "R1": [
+   {
+    "text": "contrata",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "contrata"
+   }
+  ],
+  "R2": [
+   {
+    "text": "reparar",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "VerbForm=Inf",
+    "lemma": "reparar"
+   }
+  ],
+  "R3": [
+   {
+    "text": "parques",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc",
+    "lemma": "parques"
+   }
+  ]
+ },
+ "MV06": {
+  "R1": [
+   {
+    "text": "contrata",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "contrata"
+   }
+  ],
+  "R2": [
+   {
+    "text": "colegios",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "colegio"
+   }
+  ]
+ },
+ "MV07": {
+  "R1": [
+   {
+    "text": "empresas",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Plur",
+    "lemma": "empresa"
+   }
+  ],
+  "R2": [
+   {
+    "text": "contrata",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "contrata"
+   }
+  ],
+  "R3": [
+   {
+    "text": "transportar",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "VerbForm=Inf",
+    "lemma": "transportar"
+   }
+  ],
+  "R4": [
+   {
+    "text": "estudiantes",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Number=Plur",
+    "lemma": "estudiante"
+   }
+  ]
+ },
+ "MV08": {
+  "R1": [
+   {
+    "text": "contrata",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "contrata"
+   }
+  ],
+  "R2": [
+   {
+    "text": "fumigar",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "VerbForm=Inf",
+    "lemma": "fumigar"
+   }
+  ]
+ },
+ "MV09": {
+  "R1": [
+   {
+    "text": "compra",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Sing",
+    "lemma": "compra"
+   }
+  ],
+  "R2": [
+   {
+    "text": "alimentar",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "VerbForm=Inf",
+    "lemma": "alimentar"
+   }
+  ],
+  "R3": [
+   {
+    "text": "ninos",
+    "pos": "ADJ",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "nino"
+   }
+  ]
+ },
+ "MV10": {
+  "R1": [
+   {
+    "text": "empresas",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Fem|Number=Plur",
+    "lemma": "empresa"
+   }
+  ],
+  "R2": [
+   {
+    "text": "trabaja",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+    "lemma": "trabajar"
+   }
+  ],
+  "R3": [
+   {
+    "text": "capacitar",
+    "pos": "VERB",
+    "dep": "ROOT",
+    "morph": "VerbForm=Inf",
+    "lemma": "capacitar"
+   }
+  ],
+  "R4": [
+   {
+    "text": "funcionarios",
+    "pos": "NOUN",
+    "dep": "ROOT",
+    "morph": "Gender=Masc|Number=Plur",
+    "lemma": "funcionario"
+   }
+  ]
+ }
+}

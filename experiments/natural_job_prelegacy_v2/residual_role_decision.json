@@ -1,0 +1,57 @@
+{
+ "checkpoint": "C4A.4 decision",
+ "corpus_sha256": "29425fde4f2988dc61f47bbaccbcd917431b51ed17898d1a6fd698023830fc4e",
+ "inputs_sha256": "12c3e2481b666d334199afbfebe082bbcc2b62f2df1f7b69d10f1a03e575cf36",
+ "prompt_b_sha256": "756fe27464e623d6f31334e471d6b628c8aca435eb4c7e6605b813424794bec9",
+ "frozen_before_evaluation": {
+  "MATERIAL_FN_must_be": 0,
+  "JOB_ONLY_rate_bands": {
+   "VIABLE": ">=0.80",
+   "WEAK": "0.60-0.79",
+   "REJECT": "<0.60"
+  },
+  "tie_break": "si ambos cumplen gana C_LOCAL salvo >15 pp de cobertura"
+ },
+ "verdicts": {
+  "B_LLM": {
+   "alternative": "B_LLM",
+   "MATERIAL_FALSE_NEGATIVE": 0,
+   "material_false_negative_case_ids": [],
+   "SAFETY_PASS": true,
+   "JOB_ONLY_PASS": 10,
+   "JOB_ONLY_TOTAL": 11,
+   "JOB_ONLY_RATE": 0.9091,
+   "coverage_band": "VIABLE",
+   "STATUS": "VIABLE",
+   "stability": {
+    "unstable_unit_labels": [],
+    "unstable_query_pass": []
+   },
+   "cost": {
+    "calls": 64,
+    "p50_ms": 1005.4,
+    "p95_ms": 1269.5,
+    "estimated_calls_per_turn": 1.0
+   }
+  },
+  "C_LOCAL": {
+   "alternative": "C_LOCAL",
+   "MATERIAL_FALSE_NEGATIVE": 0,
+   "material_false_negative_case_ids": [],
+   "SAFETY_PASS": true,
+   "JOB_ONLY_PASS": 0,
+   "JOB_ONLY_TOTAL": 11,
+   "JOB_ONLY_RATE": 0.0,
+   "coverage_band": "REJECT",
+   "STATUS": "COVERAGE_LOW",
+   "stability": {
+    "unstable_unit_labels": [],
+    "unstable_query_pass": [],
+    "note": "C es determinista: una corrida; se repite en --run-c para medir latencia"
+   },
+   "cost": {}
+  }
+ },
+ "winner": "B_LLM",
+ "integration": "NOT_INTEGRATED (spike only)"
+}

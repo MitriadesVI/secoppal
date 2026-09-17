@@ -1,0 +1,872 @@
+{
+ "alternative": "B_LLM",
+ "model": "deepseek-v4-flash",
+ "runs": [
+  {
+   "run": 0,
+   "cases": [
+    {
+     "case_id": "AJ01",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ02",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ03",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ04",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"UNKNOWN\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "UNKNOWN"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "AJ05",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ06",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ07",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ08",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ09",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ10",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ11",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "MN01",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN02",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN03",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN04",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN05",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN06",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN07",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN08",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN09",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN10",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN11",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV01",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV02",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV03",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV04",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV05",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV06",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV07",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV08",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV09",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV10",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    }
+   ]
+  },
+  {
+   "run": 1,
+   "cases": [
+    {
+     "case_id": "AJ01",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ02",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ03",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ04",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"UNKNOWN\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "UNKNOWN"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "AJ05",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ06",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ07",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ08",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ09",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ10",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "AJ11",
+     "group": "JOB_ONLY",
+     "gold": "JOB_ONLY",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE"
+     },
+     "pass": true,
+     "blocked_reason": null
+    },
+    {
+     "case_id": "MN01",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN02",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN03",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN04",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN05",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN06",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN07",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN08",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN09",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN10",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MN11",
+     "group": "MATERIAL_NOMINAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV01",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV02",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV03",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV04",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV05",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV06",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV07",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV08",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV09",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"MATERIAL\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "MATERIAL",
+      "R3": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    },
+    {
+     "case_id": "MV10",
+     "group": "MATERIAL_VERBAL",
+     "gold": "MATERIAL_PRESENT",
+     "raw_payload": "{\"labels\": [{\"id\": \"R1\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R2\", \"label\": \"JOB_LANGUAGE\"}, {\"id\": \"R3\", \"label\": \"MATERIAL\"}, {\"id\": \"R4\", \"label\": \"MATERIAL\"}]}",
+     "validation": "OK",
+     "labels": {
+      "R1": "JOB_LANGUAGE",
+      "R2": "JOB_LANGUAGE",
+      "R3": "MATERIAL",
+      "R4": "MATERIAL"
+     },
+     "pass": false,
+     "blocked_reason": "OK"
+    }
+   ]
+  }
+ ],
+ "stability": {
+  "unstable_unit_labels": [],
+  "unstable_query_pass": []
+ },
+ "cost": {
+  "calls": 64,
+  "p50_ms": 1005.4,
+  "p95_ms": 1269.5,
+  "estimated_calls_per_turn": 1.0
+ }
+}
