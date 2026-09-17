@@ -1,0 +1,67 @@
+{
+ "checkpoint": "C4A.4 PRE-RUN FREEZE",
+ "mission": "NATURAL_JOB_PRELEGACY_V2",
+ "base_head": "fa0dacf0f9cdd771b3107edd826d80bd4e7d6257",
+ "purpose": "Punto de pre-registro del experimento B (LLM residual verifier) vs C (local linguistic verifier). Despues de este commit cualquier cambio en estos artefactos seria visible.",
+ "files": {
+  "residual_role_holdout.json": {
+   "sha256": "29425fde4f2988dc61f47bbaccbcd917431b51ed17898d1a6fd698023830fc4e",
+   "bytes": 5384
+  },
+  "residual_role_prompt_b.txt": {
+   "sha256": "756fe27464e623d6f31334e471d6b628c8aca435eb4c7e6605b813424794bec9",
+   "bytes": 1478
+  },
+  "residual_role_inputs.json": {
+   "sha256": "12c3e2481b666d334199afbfebe082bbcc2b62f2df1f7b69d10f1a03e575cf36",
+   "bytes": 11984
+  },
+  "residual_role_spike.py": {
+   "sha256": "9ee8571bfaa39ebaab57b8836c7971626218958480de673dc4d549cfaa81919e",
+   "bytes": 16432
+  }
+ },
+ "counts": {
+  "n": 32,
+  "JOB_ONLY": 11,
+  "MATERIAL_NOMINAL": 11,
+  "MATERIAL_VERBAL": 10
+ },
+ "inputs": {
+  "cases": 32,
+  "host_failures": [],
+  "corpus_sha256": "29425fde4f2988dc61f47bbaccbcd917431b51ed17898d1a6fd698023830fc4e",
+  "prompt_b_sha256": "756fe27464e623d6f31334e471d6b628c8aca435eb4c7e6605b813424794bec9"
+ },
+ "frozen_gates": {
+  "E1": "MATERIAL_FALSE_NEGATIVE == 0 (REJECT si > 0)",
+  "E2": "JOB_ONLY stable PASS rate: >=0.80 VIABLE, 0.60-0.79 WEAK, <0.60 REJECT",
+  "E3": "B: sin majority vote; PASS solo si run1 y run2 PASS; reportar unstable_unit_labels y unstable_query_pass",
+  "E4": "costo separado por alternativa; no mezclar con SECOP ni buyer resolution",
+  "tie_break": "si ambos cumplen safety=100% y >=80%: gana C_LOCAL salvo >15pp de cobertura para B",
+  "abandon": "ninguno cumple safety=100% + >=80% -> ABANDON RESIDUAL-VERIFIER PATH"
+ },
+ "b_contract": {
+  "model": "deepseek-v4-flash",
+  "temperature": 0,
+  "reasoning": "none",
+  "runs": 2,
+  "labels": [
+   "JOB_LANGUAGE",
+   "MATERIAL",
+   "UNKNOWN"
+  ],
+  "model_may_produce_spans": false,
+  "host_validation": "ids exactos, uno por unidad, sin ids nuevos, label valido, ninguna omitida"
+ },
+ "c_policy": {
+  "engine": "spaCy es_core_news_sm",
+  "outside_repo": "/tmp/secoppal-c4a4-spacy",
+  "NOUN_PROPN_ADJ_NUM": "MATERIAL",
+  "PRON_DET_ADP_AUX_ADV_PART_SCONJ_CCONJ_PUNCT": "JOB_LANGUAGE",
+  "VERB": "UNKNOWN",
+  "other": "UNKNOWN",
+  "multi_token": "MATERIAL gana sobre UNKNOWN, UNKNOWN gana sobre JOB_LANGUAGE"
+ },
+ "no_changes_after_freeze": true
+}

@@ -1,0 +1,613 @@
+{
+ "checkpoint": "C4A.4 B/C preprocessing",
+ "corpus_sha256": "29425fde4f2988dc61f47bbaccbcd917431b51ed17898d1a6fd698023830fc4e",
+ "prompt_b_sha256": "756fe27464e623d6f31334e471d6b628c8aca435eb4c7e6605b813424794bec9",
+ "note": "Unidades = residual_material del carril credenciado (C4A.3). Ni B ni C vuelven a resolver nada.",
+ "host_failures": [],
+ "cases": [
+  {
+   "case_id": "AJ01",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "con quién ha contratado Galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "contratado"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ02",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "quién le vende a Galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "vende"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ03",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "a quiénes les compra Galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "compra"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ04",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "con qué empresas suele contratar la Alcaldía de Soledad",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "ACTOR_MENTION_PRESENT",
+   "units": [
+    {
+     "id": "R1",
+     "text": "empresas"
+    },
+    {
+     "id": "R2",
+     "text": "suele"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ05",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "quiénes trabajan con la Alcaldía de Cartagena",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "trabajan"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ06",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "con quien ha contratado galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "contratado"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ07",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "quien le vende a galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "vende"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ08",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "a quien le compra barranquilla",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "compra"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ09",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "con que empresas trabaja la alcaldia de soledad",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "empresas"
+    },
+    {
+     "id": "R2",
+     "text": "trabaja"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ10",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "quienes le han vendido a cartagena",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "vendido"
+    }
+   ]
+  },
+  {
+   "case_id": "AJ11",
+   "group": "JOB_ONLY",
+   "gold": "JOB_ONLY",
+   "raw": "a que contratistas le ha comprado galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "comprado"
+    }
+   ]
+  },
+  {
+   "case_id": "MN01",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "con quién ha contratado Galapa en obras civiles",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "ACTOR_MENTION_PRESENT",
+   "units": [
+    {
+     "id": "R1",
+     "text": "contratado"
+    },
+    {
+     "id": "R2",
+     "text": "civiles"
+    }
+   ]
+  },
+  {
+   "case_id": "MN02",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "quién le vende medicamentos a Galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "vende"
+    },
+    {
+     "id": "R2",
+     "text": "medicamentos"
+    }
+   ]
+  },
+  {
+   "case_id": "MN03",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "a quiénes les compra alimentos Galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "compra"
+    },
+    {
+     "id": "R2",
+     "text": "alimentos"
+    }
+   ]
+  },
+  {
+   "case_id": "MN04",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "con qué empresas contrata Soledad para mantenimiento vial",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "empresas"
+    },
+    {
+     "id": "R2",
+     "text": "contrata"
+    },
+    {
+     "id": "R3",
+     "text": "mantenimiento"
+    },
+    {
+     "id": "R4",
+     "text": "vial"
+    }
+   ]
+  },
+  {
+   "case_id": "MN05",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "quién trabaja con Cartagena en servicios jurídicos",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "trabaja"
+    },
+    {
+     "id": "R2",
+     "text": "servicios"
+    },
+    {
+     "id": "R3",
+     "text": "jurídicos"
+    }
+   ]
+  },
+  {
+   "case_id": "MN06",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "quien le vende dotacion a galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "vende"
+    },
+    {
+     "id": "R2",
+     "text": "dotacion"
+    }
+   ]
+  },
+  {
+   "case_id": "MN07",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "a quien le compra papeleria barranquilla",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "compra"
+    },
+    {
+     "id": "R2",
+     "text": "papeleria"
+    }
+   ]
+  },
+  {
+   "case_id": "MN08",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "con que empresas contrata soledad para aseo",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "empresas"
+    },
+    {
+     "id": "R2",
+     "text": "contrata"
+    },
+    {
+     "id": "R3",
+     "text": "aseo"
+    }
+   ]
+  },
+  {
+   "case_id": "MN09",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "quienes le suministran combustible a cartagena",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "suministran"
+    },
+    {
+     "id": "R2",
+     "text": "combustible"
+    }
+   ]
+  },
+  {
+   "case_id": "MN10",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "quien le vendio equipos de computo a galapa",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "vendio"
+    },
+    {
+     "id": "R2",
+     "text": "equipos"
+    },
+    {
+     "id": "R3",
+     "text": "computo"
+    }
+   ]
+  },
+  {
+   "case_id": "MN11",
+   "group": "MATERIAL_NOMINAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "a quien le compra medicamentos la alcaldia de soledad",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "compra"
+    },
+    {
+     "id": "R2",
+     "text": "medicamentos"
+    }
+   ]
+  },
+  {
+   "case_id": "MV01",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "con quién contrata Galapa para construir colegios",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "ACTOR_MENTION_PRESENT",
+   "units": [
+    {
+     "id": "R1",
+     "text": "contrata"
+    },
+    {
+     "id": "R2",
+     "text": "colegios"
+    }
+   ]
+  },
+  {
+   "case_id": "MV02",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "qué empresas contrata Soledad para transportar estudiantes",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "empresas"
+    },
+    {
+     "id": "R2",
+     "text": "contrata"
+    },
+    {
+     "id": "R3",
+     "text": "transportar"
+    },
+    {
+     "id": "R4",
+     "text": "estudiantes"
+    }
+   ]
+  },
+  {
+   "case_id": "MV03",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "con quién trabaja Cartagena para fumigar sedes",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "trabaja"
+    },
+    {
+     "id": "R2",
+     "text": "fumigar"
+    },
+    {
+     "id": "R3",
+     "text": "sedes"
+    }
+   ]
+  },
+  {
+   "case_id": "MV04",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "a qué empresas contrata Galapa para capacitar cuidadores",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "empresas"
+    },
+    {
+     "id": "R2",
+     "text": "contrata"
+    },
+    {
+     "id": "R3",
+     "text": "capacitar"
+    },
+    {
+     "id": "R4",
+     "text": "cuidadores"
+    }
+   ]
+  },
+  {
+   "case_id": "MV05",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "quién contrata Barranquilla para reparar parques",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "contrata"
+    },
+    {
+     "id": "R2",
+     "text": "reparar"
+    },
+    {
+     "id": "R3",
+     "text": "parques"
+    }
+   ]
+  },
+  {
+   "case_id": "MV06",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "con quien contrata galapa para construir colegios",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "ACTOR_MENTION_PRESENT",
+   "units": [
+    {
+     "id": "R1",
+     "text": "contrata"
+    },
+    {
+     "id": "R2",
+     "text": "colegios"
+    }
+   ]
+  },
+  {
+   "case_id": "MV07",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "que empresas contrata soledad para transportar estudiantes",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "empresas"
+    },
+    {
+     "id": "R2",
+     "text": "contrata"
+    },
+    {
+     "id": "R3",
+     "text": "transportar"
+    },
+    {
+     "id": "R4",
+     "text": "estudiantes"
+    }
+   ]
+  },
+  {
+   "case_id": "MV08",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "quien contrata barranquilla para fumigar",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "contrata"
+    },
+    {
+     "id": "R2",
+     "text": "fumigar"
+    }
+   ]
+  },
+  {
+   "case_id": "MV09",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "a quien le compra galapa para alimentar ninos",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "UNACCREDITED_RESIDUAL",
+   "units": [
+    {
+     "id": "R1",
+     "text": "compra"
+    },
+    {
+     "id": "R2",
+     "text": "alimentar"
+    },
+    {
+     "id": "R3",
+     "text": "ninos"
+    }
+   ]
+  },
+  {
+   "case_id": "MV10",
+   "group": "MATERIAL_VERBAL",
+   "gold": "MATERIAL_PRESENT",
+   "raw": "con que empresas trabaja cartagena para capacitar funcionarios",
+   "assembly_status": "CLARIFY",
+   "assembly_reason": "buyer_not_accredited",
+   "units": [
+    {
+     "id": "R1",
+     "text": "empresas"
+    },
+    {
+     "id": "R2",
+     "text": "trabaja"
+    },
+    {
+     "id": "R3",
+     "text": "capacitar"
+    },
+    {
+     "id": "R4",
+     "text": "funcionarios"
+    }
+   ]
+  }
+ ]
+}

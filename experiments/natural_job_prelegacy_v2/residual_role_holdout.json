@@ -1,0 +1,50 @@
+{
+  "checkpoint": "C4A.4",
+  "mission": "NATURAL_JOB_PRELEGACY_V2",
+  "purpose": "Corpus adversarial congelado ANTES de ejecutar B o C. Mide si un verificador de residual puede separar JOB_LANGUAGE de MATERIAL sin dejar pasar una sola restriccion material.",
+  "gold": {
+    "JOB_ONLY": "el residual solo aporta lenguaje relacional del trabajo: no restringe que bienes/servicios/objetos cuentan",
+    "MATERIAL_PRESENT": "el residual contiene al menos una unidad que restringe o describe materia, bien, servicio, objeto, actividad, proposito o condicion"
+  },
+  "groups": ["JOB_ONLY", "MATERIAL_NOMINAL", "MATERIAL_VERBAL"],
+  "notas": [
+    "El gold es a nivel de query, no por POS.",
+    "MATERIAL_VERBAL existe para impedir la regla falsa VERBO = JOB_LANGUAGE: 'contratar para construir colegios' restringe el objeto aunque el filtro venga en infinitivo.",
+    "Incluye lenguaje sin tildes, formas costenas y variacion singular/plural.",
+    "Congelado: no se modifica como reaccion a los resultados de B o C."
+  ],
+  "cases": [
+    {"case_id": "AJ01", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "con quién ha contratado Galapa"},
+    {"case_id": "AJ02", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "quién le vende a Galapa"},
+    {"case_id": "AJ03", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "a quiénes les compra Galapa"},
+    {"case_id": "AJ04", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "con qué empresas suele contratar la Alcaldía de Soledad"},
+    {"case_id": "AJ05", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "quiénes trabajan con la Alcaldía de Cartagena"},
+    {"case_id": "AJ06", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "con quien ha contratado galapa"},
+    {"case_id": "AJ07", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "quien le vende a galapa"},
+    {"case_id": "AJ08", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "a quien le compra barranquilla"},
+    {"case_id": "AJ09", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "con que empresas trabaja la alcaldia de soledad"},
+    {"case_id": "AJ10", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "quienes le han vendido a cartagena"},
+    {"case_id": "AJ11", "group": "JOB_ONLY", "gold": "JOB_ONLY", "raw_text": "a que contratistas le ha comprado galapa"},
+    {"case_id": "MN01", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "con quién ha contratado Galapa en obras civiles"},
+    {"case_id": "MN02", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "quién le vende medicamentos a Galapa"},
+    {"case_id": "MN03", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "a quiénes les compra alimentos Galapa"},
+    {"case_id": "MN04", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "con qué empresas contrata Soledad para mantenimiento vial"},
+    {"case_id": "MN05", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "quién trabaja con Cartagena en servicios jurídicos"},
+    {"case_id": "MN06", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "quien le vende dotacion a galapa"},
+    {"case_id": "MN07", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "a quien le compra papeleria barranquilla"},
+    {"case_id": "MN08", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "con que empresas contrata soledad para aseo"},
+    {"case_id": "MN09", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "quienes le suministran combustible a cartagena"},
+    {"case_id": "MN10", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "quien le vendio equipos de computo a galapa"},
+    {"case_id": "MN11", "group": "MATERIAL_NOMINAL", "gold": "MATERIAL_PRESENT", "raw_text": "a quien le compra medicamentos la alcaldia de soledad"},
+    {"case_id": "MV01", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "con quién contrata Galapa para construir colegios"},
+    {"case_id": "MV02", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "qué empresas contrata Soledad para transportar estudiantes"},
+    {"case_id": "MV03", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "con quién trabaja Cartagena para fumigar sedes"},
+    {"case_id": "MV04", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "a qué empresas contrata Galapa para capacitar cuidadores"},
+    {"case_id": "MV05", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "quién contrata Barranquilla para reparar parques"},
+    {"case_id": "MV06", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "con quien contrata galapa para construir colegios"},
+    {"case_id": "MV07", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "que empresas contrata soledad para transportar estudiantes"},
+    {"case_id": "MV08", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "quien contrata barranquilla para fumigar"},
+    {"case_id": "MV09", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "a quien le compra galapa para alimentar ninos"},
+    {"case_id": "MV10", "group": "MATERIAL_VERBAL", "gold": "MATERIAL_PRESENT", "raw_text": "con que empresas trabaja cartagena para capacitar funcionarios"}
+  ]
+}
