@@ -290,7 +290,8 @@ def _accredited_pending(
     if spec is None:  # The seam never builds an undeclared capability; fail closed.
         raise ValueError("CREDENTIAL_WITHOUT_DECLARED_SPEC")
     assembly = assemble(user_query, credential, spec,
-                        entity_resolver=deps.entity_resolver, today=today)
+                        entity_resolver=deps.entity_resolver, today=today,
+                        actor_resolver=deps.actor_name_resolver)
     if assembly.status is AssemblyStatus.READY:
         reason, response, params = "accredited_execution_pending", _ACCREDITED_READY, assembly.params
     elif assembly.status is AssemblyStatus.OTHER_OWNER:

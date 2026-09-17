@@ -66,7 +66,8 @@ def test_ready_transports_accredited_params_and_receipts(frame_on, make_flow):
     assert result["credential_capability"] == SUPPLIERS
     assert result["query_router_calls"] == 0 and result["legacy_bypassed"] is True
     assert [receipt["dimension"] for receipt in result["authority_receipts"]] == [
-        "BUYER", "TIME", "ACTOR", "RANKING", "CARDINALITY", "SOURCE"]
+        "BUYER", "TIME", "ACTOR", "RANKING", "CARDINALITY", "SOURCE",
+        "MODALITY", "MONEY", "GEOGRAPHY", "ACTOR"]
     # The real witnesses: no parser, no dispatcher, no source, one trace.
     assert router_calls == [] and dispatch_calls == []
     assert flow.secop_client.calls == []

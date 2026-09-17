@@ -1,21 +1,17 @@
 {
  "checkpoint": "C4A",
  "control_plane_oracle": {
-  "oracle_credential": "evidence = largest host-free portion of the turn (correct citation)",
+  "oracle_credential": "evidence = correct citation (mention, else the leftmost stretch no host authority claimed)",
   "cases": 42,
   "suppliers_execute_cases": 13,
   "gates": {
    "WRONG_BUYER": [],
-   "SILENT_FILTER_LOSS": [
-    "D03"
-   ],
-   "ACTOR_STOLEN": [
-    "A01"
-   ],
+   "SILENT_FILTER_LOSS": [],
+   "ACTOR_STOLEN": [],
    "NEGATED_JOB_EXECUTED": [],
    "UNSUPPORTED_CARDINALITY_EXECUTED": []
   },
-  "gates_pass": false,
+  "gates_pass": true,
   "clear_suppliers_ready": [
    "P01",
    "P02",
@@ -30,6 +26,11 @@
    "X02"
   ],
   "clear_suppliers_ready_rate": 0.8462,
+  "documented_coverage_gaps_p2": {
+   "C02": "ranking surface 'principales' stays material",
+   "P04": "bare municipality does not accredit as buyer"
+  },
+  "clear_suppliers_ready_rate_outside_p2": 1.0,
   "rows": [
    {
     "case_id": "U01",
@@ -60,8 +61,7 @@
     "oracle_reason": "buyer_not_accredited",
     "oracle_buyer": null,
     "oracle_residual": [
-     "principales",
-     "barranquilla"
+     "principales"
     ]
    },
    {
@@ -162,9 +162,7 @@
     "oracle_status": "CLARIFY",
     "oracle_reason": "buyer_not_accredited",
     "oracle_buyer": null,
-    "oracle_residual": [
-     "Antioquia"
-    ]
+    "oracle_residual": []
    },
    {
     "case_id": "P01",
@@ -261,10 +259,12 @@
     "owner": "NOT_SUPPLIERS",
     "outcome": "ANY_NOT_SUPPLIERS",
     "expected_buyer": null,
-    "oracle_status": "READY",
-    "oracle_reason": "accredited",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "ACTOR_MENTION_PRESENT",
     "oracle_buyer": "MUNICIPIO DE GALAPA.",
-    "oracle_residual": []
+    "oracle_residual": [
+     "a"
+    ]
    },
    {
     "case_id": "A02",
@@ -272,11 +272,10 @@
     "outcome": "ANY_NOT_SUPPLIERS",
     "expected_buyer": null,
     "oracle_status": "CLARIFY",
-    "oracle_reason": "UNACCREDITED_RESIDUAL",
+    "oracle_reason": "ACTOR_MENTION_PRESENT",
     "oracle_buyer": "MUNICIPIO DE GALAPA.",
     "oracle_residual": [
-     "a",
-     "fundacaribe"
+     "a"
     ]
    },
    {
@@ -309,10 +308,9 @@
     "outcome": "HONEST_CLARIFY",
     "expected_buyer": "galapa",
     "oracle_status": "CLARIFY",
-    "oracle_reason": "UNACCREDITED_RESIDUAL",
+    "oracle_reason": "ACTOR_MENTION_PRESENT",
     "oracle_buyer": "MUNICIPIO DE GALAPA.",
     "oracle_residual": [
-     "obras",
      "civiles"
     ]
    },
@@ -322,19 +320,17 @@
     "outcome": "HONEST_CLARIFY",
     "expected_buyer": "galapa",
     "oracle_status": "CLARIFY",
-    "oracle_reason": "UNACCREDITED_RESIDUAL",
+    "oracle_reason": "UNSUPPORTED_MONEY",
     "oracle_buyer": "MUNICIPIO DE GALAPA.",
-    "oracle_residual": [
-     "500"
-    ]
+    "oracle_residual": []
    },
    {
     "case_id": "D03",
     "owner": "SUPPLIERS",
     "outcome": "HONEST_CLARIFY",
     "expected_buyer": "galapa",
-    "oracle_status": "READY",
-    "oracle_reason": "accredited",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "UNSUPPORTED_MODALITY",
     "oracle_buyer": "MUNICIPIO DE GALAPA.",
     "oracle_residual": []
    },
@@ -346,9 +342,7 @@
     "oracle_status": "CLARIFY",
     "oracle_reason": "buyer_not_accredited",
     "oracle_buyer": null,
-    "oracle_residual": [
-     "atlantico"
-    ]
+    "oracle_residual": []
    },
    {
     "case_id": "G02",

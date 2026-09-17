@@ -48,7 +48,10 @@ def _world():
         _env_file=None, secoppal_a2_suppliers_binding_enabled=True,
         secop_feedback_path=root / "traces.jsonl", secop_feedback_db_path=root / "feedback.db",
     )
-    return settings, EntityResolver(settings.secop_alias_db_path)
+    from app.data.actor_alias_resolver import ActorNameResolver
+
+    return (settings, EntityResolver(settings.secop_alias_db_path),
+            ActorNameResolver(settings.secop_actor_alias_index_path))
 
 
 def _credential(raw, settings, interval):
@@ -78,11 +81,12 @@ def _oracle_interval(raw: str, host_spans) -> tuple[int, int]:
     return (0, len(raw))
 
 
-def _assemble(raw, settings, resolver, interval, spec):
+def _assemble(raw, settings, resolver, interval, spec, actor_resolver=None):
     credential = _credential(raw, settings, interval)
     if credential is None:
         return None
-    return assemble(raw, credential, spec, entity_resolver=resolver, today=TODAY)
+    return assemble(raw, credential, spec, entity_resolver=resolver, today=TODAY,
+                    actor_resolver=actor_resolver)
 
 
 def _mention_interval(raw: str) -> tuple[int, int] | None:
@@ -93,7 +97,7 @@ def _mention_interval(raw: str) -> tuple[int, int] | None:
     return (span[0], span[1])
 
 
-def evaluate(cases, settings, resolver) -> dict:
+def evaluate(cases, settings, resolver, actor_resolver) -> dict:
     spec = capability_spec(SUPPLIERS)
     rows, violations = [], {gate: [] for gate in GATES}
     ready_clear, realistic = [], {"mention": 0, "whole": 0, "credentialed_turns": 0}
@@ -101,10 +105,10 @@ def evaluate(cases, settings, resolver) -> dict:
         case_id, raw = case["case_id"], case["raw_text"]
         forbid = set(case.get("forbid") or ())
         # Oracle: what a correct citation would be — the host-free portion.
-        bootstrap = _assemble(raw, settings, resolver, (0, len(raw)), spec)
+        bootstrap = _assemble(raw, settings, resolver, (0, len(raw)), spec, actor_resolver)
         host_spans = bootstrap.spans if bootstrap is not None else ()
         oracle_interval = _oracle_interval(raw, host_spans)
-        assembly = _assemble(raw, settings, resolver, oracle_interval, spec)
+        assembly = _assemble(raw, settings, resolver, oracle_interval, spec, actor_resolver)
         status = assembly.status.value if assembly is not None else "NO_CREDENTIAL"
         ready = assembly is not None and assembly.status is AssemblyStatus.READY
         row = {"case_id": case_id, "owner": case["owner"], "outcome": case["outcome"],
@@ -132,19 +136,29 @@ def evaluate(cases, settings, resolver) -> dict:
                                     ("whole", (0, len(raw)))):
                 if label == "mention" and interval is None:
                     continue
-                variant = _assemble(raw, settings, resolver, interval, spec)
+                variant = _assemble(raw, settings, resolver, interval, spec, actor_resolver)
                 realistic["credentialed_turns"] += 1
                 if variant is not None and variant.status is AssemblyStatus.READY:
                     realistic[label] += 1
         rows.append(row)
     clear = [case for case in cases if case["owner"] == "SUPPLIERS" and case["outcome"] == "EXECUTE"]
+    # Coverage gaps the mission ordered documented, never repaired here (P2).
+    p2 = {"C02": "ranking surface 'principales' stays material",
+          "P04": "bare municipality does not accredit as buyer"}
+    ready = set(ready_clear)
+    beyond_p2 = [case["case_id"] for case in clear if case["case_id"] not in p2]
     return {
-        "oracle_credential": "evidence = largest host-free portion of the turn (correct citation)",
+        "oracle_credential": "evidence = correct citation (mention, else the leftmost "
+                             "stretch no host authority claimed)",
         "cases": len(cases), "suppliers_execute_cases": len(clear),
         "gates": {gate: sorted(set(ids)) for gate, ids in violations.items()},
         "gates_pass": all(not ids for ids in violations.values()),
-        "clear_suppliers_ready": sorted(ready_clear),
-        "clear_suppliers_ready_rate": round(len(ready_clear) / len(clear), 4) if clear else None,
+        "clear_suppliers_ready": sorted(ready),
+        "clear_suppliers_ready_rate": round(len(ready) / len(clear), 4) if clear else None,
+        "documented_coverage_gaps_p2": {case_id: p2[case_id] for case_id in sorted(p2)},
+        "clear_suppliers_ready_rate_outside_p2": (
+            round(len([case for case in beyond_p2 if case in ready]) / len(beyond_p2), 4)
+            if beyond_p2 else None),
         "rows": rows,
     }, realistic
 
@@ -160,8 +174,8 @@ def classifier_section() -> dict:
 
 def main() -> None:
     cases = json.loads(CORPUS.read_text(encoding="utf-8"))
-    settings, resolver = _world()
-    control, realistic = evaluate(cases, settings, resolver)
+    settings, resolver, actor_resolver = _world()
+    control, realistic = evaluate(cases, settings, resolver, actor_resolver)
     document = {
         "checkpoint": "C4A",
         "control_plane_oracle": control,

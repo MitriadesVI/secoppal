@@ -13,6 +13,7 @@ incompatibilidad del artefacto produce ``INDEX_UNAVAILABLE`` sin fallback.
 from __future__ import annotations
 
 import json
+import re
 import sqlite3
 from collections import defaultdict
 from pathlib import Path
@@ -87,6 +88,76 @@ class ActorNameResolver:
         callers remain free to keep their baseline thematic interpretation.
         """
         return self._resolve(query, allow_fuzzy=False)
+
+    def exact_aliases_in(self, text: str) -> tuple[tuple[str, int, int], ...]:
+        """Exact aliases of the index present in ``text``, with spans over it.
+
+        Reusable authority, not SUPPLIERS logic: token windows (1..max of the
+        index itself) are looked up batched against ``actor_aliases``. No fuzzy
+        retrieval, no FTS, no full-table scan of the artifact.
+
+        Answers ``()`` when the artifact is unavailable; the caller decides what
+        an unverifiable absence means. Longest non-overlapping windows win.
+        """
+        if type(text) is not str or not text.strip():
+            return ()
+        words = list(re.finditer(r"\S+", text))
+        if not words:
+            return ()
+        try:
+            maximum = self._maximum_alias_tokens()
+        except (sqlite3.Error, OSError, _IncompatibleIndexError):
+            return ()
+        windows: dict[str, list[tuple[int, int]]] = {}
+        for start in range(len(words)):
+            for width in range(1, min(maximum, len(words) - start) + 1):
+                key = normalize_actor_name(" ".join(
+                    word.group() for word in words[start:start + width]))
+                if key:
+                    windows.setdefault(key, []).append(
+                        (words[start].start(), words[start + width - 1].end()))
+        if not windows:
+            return ()
+        known = self._aliases_present(tuple(windows))
+        found: list[tuple[str, int, int]] = []
+        for key in known:
+            for start, end in windows[key]:
+                found.append((key, start, end))
+        found.sort(key=lambda entry: (entry[1], -(entry[2] - entry[1])))
+        accepted: list[tuple[str, int, int]] = []
+        for entry in found:
+            if any(entry[1] < other[2] and other[1] < entry[2] for other in accepted):
+                continue
+            accepted.append(entry)
+        return tuple(accepted)
+
+    def _maximum_alias_tokens(self) -> int:
+        connection = self._connect_readonly()
+        try:
+            row = connection.execute(
+                "SELECT MAX(LENGTH(normalized_alias) - LENGTH(REPLACE(normalized_alias, ' ', ''))"
+                " + 1) FROM actor_aliases"
+            ).fetchone()
+        finally:
+            connection.close()
+        return int(row[0]) if row and row[0] else 1
+
+    def _aliases_present(self, keys: tuple[str, ...]) -> frozenset[str]:
+        connection = self._connect_readonly()
+        present: set[str] = set()
+        try:
+            for offset in range(0, len(keys), 400):
+                chunk = keys[offset:offset + 400]
+                placeholders = ",".join("?" for _ in chunk)
+                rows = connection.execute(
+                    f"SELECT DISTINCT normalized_alias FROM actor_aliases "
+                    f"WHERE normalized_alias IN ({placeholders})",
+                    chunk,
+                ).fetchall()
+                present.update(row[0] for row in rows)
+        finally:
+            connection.close()
+        return frozenset(present)
 
     def _resolve(
         self,

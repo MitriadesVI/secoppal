@@ -28,6 +28,12 @@ from app.core.accreditation.authorities import (
     time_authority,
 )
 from app.core.accreditation.credential import CapabilityCredential
+from app.core.accreditation.guards import (
+    actor_exact_guard,
+    geography_guard,
+    modality_guard,
+    money_guard,
+)
 from app.core.accreditation.registry import CONTRACTS_UNIVERSE
 from app.core.accreditation.spec import CapabilitySpec, Dimension
 from app.core.query_text_consumption import compact_whitespace, mask_consumed_spans
@@ -147,7 +153,7 @@ def material_tokens(residual: str) -> tuple[str, ...]:
 def _params(reports: tuple[AuthorityReport, ...], spec: CapabilitySpec) -> dict:
     params: dict = {}
     for report in reports:
-        for key, value in report.params:
+        for key, value in getattr(report, "params", ()):
             params[key] = value
     dataset = _UNIVERSE_DATASET.get(spec.universe)
     if dataset is not None:
@@ -162,11 +168,20 @@ def assemble(
     *,
     entity_resolver,
     today: Date | None = None,
+    actor_resolver=None,
 ) -> AccreditationAssembly:
-    """Run every authority over the raw turn and decide its single status."""
+    """Run every authority over the raw turn and decide its single status.
+
+    Order matters (plan V2 9-17): authorities first, then the guards of the
+    dimensions the spec cannot apply, then span protection, then the evidence
+    overreach check and only then the residual. A dimension stops being visible
+    because its authority looked at the turn — never because a word happened to
+    be in the functional closed class.
+    """
     buyer = buyer_authority(raw, entity_resolver=entity_resolver)
     buyer_spans = _valid(buyer.spans, raw)
     protected = tuple((span.start, span.end) for span in buyer_spans)
+    buyer_span = protected[0] if protected else None
     time = time_authority(raw, today=today, protected_spans=protected)
     time_spans = _valid(time.spans, raw)
     actor = actor_authority(raw)
@@ -177,7 +192,18 @@ def assemble(
     buyer_surface = next(
         (span.canonical_value for span in buyer_spans if span.canonical_value), "")
     source = source_authority(raw, protected_surfaces=(buyer_surface,) if buyer_surface else ())
-    reports = (buyer, time, actor, ranking, guard, source)
+    modality = modality_guard(raw)
+    money = money_guard(raw)
+    geography = geography_guard(raw, buyer_span=buyer_span)
+    interpreted = tuple(
+        (span.start, span.end)
+        for report in (buyer, time, actor, ranking, guard, source, modality, money, geography)
+        for span in _valid(report.spans, raw)
+    )
+    actor_exact = actor_exact_guard(raw, actor_resolver=actor_resolver,
+                                    protected_spans=interpreted)
+    reports = (buyer, time, actor, ranking, guard, source,
+               modality, money, geography, actor_exact)
 
     spans = tuple(
         span for report in reports for span in _valid(report.spans, raw)
@@ -227,12 +253,18 @@ def assemble(
     )
 
 
-def _dimension_of(report: AuthorityReport) -> str:
+def _dimension_of(report) -> str:
     if report.spans:
         return report.spans[0].dimension
     for name, dimension in (
-        ("buyer", Dimension.BUYER.value), ("temporal_semantics", Dimension.TIME.value),
-        ("actor_intent", Dimension.ACTOR.value), ("control_language", Dimension.RANKING.value),
+        ("modality_resolver", Dimension.MODALITY.value),
+        ("money_polarity", Dimension.MONEY.value),
+        ("entity_resolver.TERRITORY_PHRASES", Dimension.GEOGRAPHY.value),
+        ("ActorNameResolver", Dimension.ACTOR.value),
+        ("buyer", Dimension.BUYER.value),
+        ("temporal_semantics", Dimension.TIME.value),
+        ("actor_intent", Dimension.ACTOR.value),
+        ("control_language", Dimension.RANKING.value),
         ("supplier_request_authority", Dimension.CARDINALITY.value),
         ("contract_universe_intent", Dimension.SOURCE.value),
     ):
