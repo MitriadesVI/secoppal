@@ -120,17 +120,34 @@ def main() -> None:
     instructions_sha = _sha256(instructions().encode("utf-8"))
 
     base_commit = subprocess.run(
+        ["git", "merge-base", "main", "HEAD"], cwd=ROOT, capture_output=True, check=True, text=True,
+    ).stdout.strip()
+    frozen_at_commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, check=True, text=True,
     ).stdout.strip()
     plan_path = EXPERIMENT.parents[1] / "docs" / "planes" / (
         "2026-09-16_natural_job_prelegacy_v2_implementation_plan.md")
     plan_sha = _sha256(plan_path.read_bytes())
 
+    holdout_path = EXPERIMENT / "holdout.json"
+    holdout = None
+    if holdout_path.is_file():
+        holdout_bytes = holdout_path.read_bytes()
+        holdout = {
+            "path": "experiments/natural_job_prelegacy_v2/holdout.json",
+            "sha256": _sha256(holdout_bytes),
+            "cases": len(json.loads(holdout_bytes)),
+            "provenance": "Agente en contexto fresco (plan V2 4.3): creado sin leer el prompt V3 ni "
+                          "el corpus DEV, con su propio oracle. Se incorpora sin edicion; el prompt "
+                          "no se ajusta a sus casos.",
+        }
+
     manifest = {
         "mission": "NATURAL_JOB_PRELEGACY_V2 — PRE-LEGACY CONTROL PLANE",
         "frozen_at": "2026-09-16",
         "plan": {"path": str(plan_path.relative_to(ROOT)), "sha256": plan_sha},
         "base_commit": base_commit,
+        "frozen_at_commit": frozen_at_commit,
         "evidence_branch": {
             "name": V1_REF,
             "sha": "411a03d042865f824f4d6ab206660bef949d7f47",
@@ -147,6 +164,7 @@ def main() -> None:
                           "No es holdout.",
         },
         "alpha_prompt_version": "V3",
+        "holdout": holdout,
         "alpha_prompt_file": "app/core/natural_alpha/prompt.py",
         "alpha_prompt_file_sha256": _sha256(prompt_bytes),
         "alpha_prompt_instructions_sha256": instructions_sha,
@@ -208,6 +226,7 @@ def main() -> None:
         "prompt_file_sha256": manifest["alpha_prompt_file_sha256"],
         "prompt_instructions_sha256": instructions_sha,
         "base_commit": base_commit,
+        "frozen_at_commit": frozen_at_commit,
     }, indent=1) + "\n")
 
 

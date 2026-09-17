@@ -6,6 +6,7 @@
   "sha256": "bc3380ed3fde2266e480d25312b95fc9e6885b296419c2943e610f8c46472f43"
  },
  "base_commit": "6b30737de8820a295a05549477e22dd160c6175c",
+ "frozen_at_commit": "1ad6650e5ff15c33bd5ceee4f27bf4b23bca04eb",
  "evidence_branch": {
   "name": "mo/natural-job-credential-v1",
   "sha": "411a03d042865f824f4d6ab206660bef949d7f47",
@@ -26,6 +27,12 @@
   "provenance": "38 casos NJC V1 copiados sin edición + 4 controles del plan V2 (25). No es holdout."
  },
  "alpha_prompt_version": "V3",
+ "holdout": {
+  "path": "experiments/natural_job_prelegacy_v2/holdout.json",
+  "sha256": "e27f8cfa8f2ac3195b7025ef3a764cbc8525652d282dcebfaf7d18bc38fbdadd",
+  "cases": 20,
+  "provenance": "Agente en contexto fresco (plan V2 4.3): creado sin leer el prompt V3 ni el corpus DEV, con su propio oracle. Se incorpora sin edicion; el prompt no se ajusta a sus casos."
+ },
  "alpha_prompt_file": "app/core/natural_alpha/prompt.py",
  "alpha_prompt_file_sha256": "947f74744fcf99c8e137f5f0129098363418bb1ffa159cad98dac482dc0c2f55",
  "alpha_prompt_instructions_sha256": "a77ebbd442bed837c2231e9bb9de42250a12cc3fc69fa385af31e0fc86797b87",
