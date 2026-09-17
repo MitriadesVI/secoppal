@@ -24,6 +24,12 @@ from tests.test_natural_alpha_runtime import MULTI, MULTI_RAW, RAW, make_flow, r
 PROFILE_RAW = "analiza la alcaldía de Baranoa en 2026"
 PARITY_FIELDS = ("response", "route_reason", "parsed_params", "resolved_params", "query_plan", "soql_query",
                  "dataset_id", "results", "total_count", "needs_clarification", "profile_action_phrase")
+# C2 (plan V2 8): an eligible text turn is observed once BEFORE admission, so the
+# provider is called even when the Frame lane — not the dispatcher seam — answers
+# the turn. The coverage class still reads the seam witness: PROFILE_BYPASS means
+# the seam was never reached, not that the turn was never observed. Structured
+# fast paths keep their precedence and still cost zero provider calls.
+PRE_ADMISSION_OBSERVED = frozenset({"profile_pre_seam"})
 
 
 def _steps(flow):
@@ -129,7 +135,9 @@ def test_every_eligible_turn_persists_exactly_one_hand_labelled_class(make_flow,
         assert type(turn_id) is str and turn_id not in turn_ids
         turn_ids.add(turn_id)
         assert excluded_route == (None if classification == "REACHED_ALPHA" else route)
-        assert turn["provider_calls"] == (1 if classification == "REACHED_ALPHA" else 0), turn["name"]
+        observed_before_admission = turn["name"] in PRE_ADMISSION_OBSERVED
+        assert turn["provider_calls"] == (
+            1 if classification == "REACHED_ALPHA" or observed_before_admission else 0), turn["name"]
         assert not any(key.startswith("natural_alpha_coverage") for key in turn["result"]), turn["name"]
         actual[classification] += 1
     assert sum(actual.values()) == len(alpha) == len(turn_ids)

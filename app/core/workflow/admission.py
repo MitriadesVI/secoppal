@@ -45,6 +45,7 @@ from app.core.workflow.profile_action_admission import (
 )
 
 if TYPE_CHECKING:
+    from app.core.natural_alpha.models import Observation
     from app.core.workflow.deps import WorkflowDeps
 
 
@@ -127,12 +128,18 @@ def admit(
     read: EnvelopeRead | None = None,
     actor_candidate_selection: dict | None = None,
     profile_action_selection: dict | None = None,
+    observation: "Observation | None" = None,
 ) -> AdmittedTurn:
     """Carga el contrato publicado, clasifica y devuelve UNA decisión.
 
     `read` llega ya cargado cuando el turno se reservó primero, que es el orden
     del diseño: reservar serialmente ANTES de ejecutar, y clasificar sobre la
     misma revisión que después se comprueba al publicar.
+
+    `observation` es la observación única de Natural Alpha, hecha antes de esta
+    admisión (plan V2 8). En C2 viaja como input inerte: ninguna decisión de
+    aquí la lee todavía. C3 es quien la vuelve credencial y quien puede dejar de
+    llamar al parser tabular por ella.
     """
     read = read if read is not None else _load(deps, chat_id)
     profile_state, contract, status = _restore(read)

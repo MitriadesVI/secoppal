@@ -27,7 +27,7 @@ from app.core.workflow.handlers.direct_lookup import handle_direct_lookup
 from app.core.workflow.handlers.actor_selection import handle_actor_selection
 from app.core.workflow.handlers.normal_flow import handle_normal_flow
 from app.core.workflow.handlers.natural_alpha import (
-    handle_natural_alpha, multi_job_result, observed_deps,
+    multi_job_result, note_seam, observed_deps, observe_turn,
 )
 from app.core.natural_alpha.budget import legacy_budget
 from app.core.natural_alpha.turn_receipt import abort_turn, finalize_turn, turn_scope
@@ -368,8 +368,17 @@ class SecopalWorkflow:
 
         return coordinate_turn(self, ctx, seed_resolved_params)
 
-    def _dispatch(self, ctx: HandlerContext, seed_resolved_params: dict | None) -> dict:
-        """Chain of responsibility — first non-None handler result wins."""
+    def _dispatch(self, ctx: HandlerContext, seed_resolved_params: dict | None,
+                  observation=None) -> dict:
+        """Chain of responsibility — first non-None handler result wins.
+
+        ``observation`` is the turn's Natural Alpha observation when the
+        coordinator already made it before admission (plan V2 8). It is ``None``
+        on the lanes that never reach admission, and whenever the pre-observation
+        was declined, so the seam observes here instead. The provider is called
+        at most once per turn either way, and the seam witness is noted only
+        where the seam is actually reached.
+        """
         if seed_resolved_params:
             res = handle_refinement(self.deps, ctx, seed_resolved_params)
             if res is not None:
@@ -394,9 +403,12 @@ class SecopalWorkflow:
                 return res
 
         deps = self.deps
-        observation = handle_natural_alpha(deps, ctx, self.natural_alpha_provider)
-        if observation is not None and observation.terminal:
-            return multi_job_result(deps, ctx, observation)
+        if observation is None:
+            observation = observe_turn(deps, ctx, self.natural_alpha_provider)
+        if observation is not None:
+            note_seam(deps)
+            if observation.terminal:
+                return multi_job_result(deps, ctx, observation)
         from app.core.capability_binding.registry import capability_for
 
         binding = capability_for(observation, deps.settings)

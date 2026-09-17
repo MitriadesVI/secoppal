@@ -58,6 +58,7 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
         CONTINUATION_REF_KEY,
         AdmissionRoute,
     )
+    from app.core.workflow.handlers.natural_alpha import pre_observe
     from app.core.workflow.profile_route import run_profile_route
     from app.core.workflow.results import empty_result
     from app.core.workflow.turn_publication import (
@@ -67,6 +68,11 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
     )
 
     deps = workflow.deps
+    # Plan V2 8: los controles estructurados conservan su precedencia dentro de
+    # la cadena, y Natural Alpha observa UNA sola vez, antes de que la admisión
+    # decida. En C2 la observación viaja como input inerte: nadie ejecuta por
+    # ella todavia. El dispatcher la consume y no vuelve a observar.
+    observation = pre_observe(deps, ctx, seed_resolved_params, workflow.natural_alpha_provider)
     # Paso 1 del diseño: reservar serialmente el turno ANTES de ejecutar.
     # La misma revisión que se lee aquí es la que se comprueba al publicar.
     admitted = admit(
@@ -78,6 +84,7 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
         read=reservation.previous if reservation else None,
         actor_candidate_selection=ctx.actor_candidate_selection,
         profile_action_selection=ctx.profile_action_selection,
+        observation=observation,
     )
 
     if ctx.profile_action_selection is not None:
@@ -146,11 +153,11 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
             turn_id=reservation.turn_id if reservation else "anonymous",
         )
         if routed is None:
-            result = workflow._dispatch(ctx, dispatch_seed)
+            result = workflow._dispatch(ctx, dispatch_seed, observation=observation)
         else:
             result, outcome = routed.result, routed.outcome
     else:
-        result = workflow._dispatch(ctx, dispatch_seed)
+        result = workflow._dispatch(ctx, dispatch_seed, observation=observation)
 
     from app.core.natural_alpha.terminal_publication import publish_if_terminal
 

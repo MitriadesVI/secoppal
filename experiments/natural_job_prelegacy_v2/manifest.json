@@ -6,7 +6,6 @@
   "sha256": "bc3380ed3fde2266e480d25312b95fc9e6885b296419c2943e610f8c46472f43"
  },
  "base_commit": "6b30737de8820a295a05549477e22dd160c6175c",
- "frozen_at_commit": "1ad6650e5ff15c33bd5ceee4f27bf4b23bca04eb",
  "evidence_branch": {
   "name": "mo/natural-job-credential-v1",
   "sha": "411a03d042865f824f4d6ab206660bef949d7f47",
