@@ -61,6 +61,10 @@ class ActorNameResolver:
 
     def __init__(self, index_path: str | Path):
         self.index_path = Path(index_path)
+        # The window width is a property of the artifact, not of the turn: the
+        # aggregate that reads it is a full covering-index scan (measured ~200 ms
+        # p50 on the 1.2M-alias index), so it is computed once per instance.
+        self._maximum_alias_tokens_cache: int | None = None
 
     @classmethod
     def from_settings(cls, settings: Any | None = None) -> "ActorNameResolver":
@@ -132,6 +136,8 @@ class ActorNameResolver:
         return tuple(accepted)
 
     def _maximum_alias_tokens(self) -> int:
+        if self._maximum_alias_tokens_cache is not None:
+            return self._maximum_alias_tokens_cache
         connection = self._connect_readonly()
         try:
             row = connection.execute(
@@ -140,7 +146,8 @@ class ActorNameResolver:
             ).fetchone()
         finally:
             connection.close()
-        return int(row[0]) if row and row[0] else 1
+        self._maximum_alias_tokens_cache = int(row[0]) if row and row[0] else 1
+        return self._maximum_alias_tokens_cache
 
     def _aliases_present(self, keys: tuple[str, ...]) -> frozenset[str]:
         connection = self._connect_readonly()

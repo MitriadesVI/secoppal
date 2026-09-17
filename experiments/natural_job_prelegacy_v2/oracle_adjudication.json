@@ -1,0 +1,37 @@
+{
+ "checkpoint": "C4A.2 A",
+ "mission": "NATURAL_JOB_PRELEGACY_V2",
+ "frozen_artifacts_untouched": {
+  "corpus_dev.json": true,
+  "holdout.json": true,
+  "prompt_v3.frozen.txt": true
+ },
+ "adjudications": [
+  {
+   "case_id": "P04",
+   "family": "paraphrase_no_noun",
+   "raw": "a que empresas les adjudica contratos malambo",
+   "original_oracle": "EXECUTE",
+   "adjudication": "OUT_OF_SUPPORTED_V2",
+   "reason": "El plan congelado (seccion 10, Buyer Authority) exige buyer exacto o grupo declarado: 'territorio desnudo' no acredita comprador y debe CLARIFY. 'malambo' desnudo es territorio, no entidad compradora resoluble. El comportamiento del runtime (CLARIFY / buyer_not_accredited) es el mandado por el plan, no un defecto del control plane.",
+   "runtime_behaviour": "CLARIFY / buyer_not_accredited",
+   "treated_as": "adjudicacion de alcance, nunca como runtime failure",
+   "visible_in": ["RAW"]
+  }
+ ],
+ "metrics": {
+  "definition": {
+   "RAW_CLEAR_READY": "casos SUPPLIERS/EXECUTE del corpus DEV, denominador completo (13)",
+   "SUPPORTED_V2_READY": "mismos casos menos los adjudicados OUT_OF_SUPPORTED_V2 (12)"
+  },
+  "RAW_CLEAR_READY": {"ready": 11, "total": 13, "rate": 0.8462,
+                      "misses": ["C02", "P04"]},
+  "SUPPORTED_V2_READY": {"ready": 11, "total": 12, "rate": 0.9167,
+                         "misses": ["C02"]},
+  "C02": {
+   "status": "MISS_REAL",
+   "detail": "dame los 5 principales proveedores de galapa -> CLARIFY por 'principales': el control de ranking consume el 5 y el ordering, no la superficie 'principales'.",
+   "repaired_in_this_checkpoint": false
+  }
+ }
+}
