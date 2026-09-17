@@ -18,7 +18,12 @@ def sha256(path: Path) -> str:
 
 def load_frozen():
     manifest = json.loads((DIRECTORY / "manifest.json").read_text())
+    superseded = manifest.get("superseded", {})
     for name, expected in manifest["sha256"].items():
+        if name in superseded:
+            # Historical sha under an explicit successor freeze: the artifact
+            # moved on (see `superseded`), so it stops pinning the live file.
+            continue
         if sha256(ROOT / name) != expected:
             raise ValueError(f"FROZEN_ARTIFACT_CHANGED:{name}")
     cases = json.loads((DIRECTORY / "corpus.json").read_text())

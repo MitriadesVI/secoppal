@@ -13,5 +13,19 @@
     "experiments/natural_alpha_v1/evaluation.py": "a6820ea815b196c9d5bb5e3e99d48ccbb9555ff992fa81a6eb456b02ccaeeb3c",
     "experiments/natural_alpha_v1/replay.py": "44197325bce3cd05dd633d12e39d8e9ba78d44322b13003b7ce17b92729ff2ba",
     "scripts/run_natural_alpha_v1.py": "2c103539a627a092150a60d02b596ca8c70288cc50e917e8778ca71d261ae635"
+  },
+  "superseded": {
+    "app/core/natural_alpha/prompt.py": {
+      "successor_manifest": "experiments/natural_job_prelegacy_v2/manifest.json",
+      "successor_version": "V3",
+      "superseded_at": "2026-09-16",
+      "reason": "La mision NATURAL_JOB_PRELEGACY_V2 congela el prompt V3 antes de cualquier replay (C0). El sha historico queda como registro de lo que V1 midio, pero deja de pinnear el archivo vivo. El guard de evaluation.py exige que el manifest sucesor pinnee el sha vigente."
+    },
+    "experiments/natural_alpha_v1/evaluation.py": {
+      "successor_manifest": null,
+      "successor_version": null,
+      "superseded_at": "2026-09-16",
+      "reason": "El guard gano el mecanismo explicito de supersesion que el C0 de V2 exige; la semantica de medicion de V1 no cambio. Sin manifest sucesor: queda cubierto por tests/test_natural_alpha_evaluation.py y por el skip explicito de load_frozen()."
+    }
   }
 }

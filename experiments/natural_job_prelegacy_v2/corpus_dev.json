@@ -1,0 +1,580 @@
+[
+ {
+  "case_id": "U01",
+  "family": "paraphrase_no_noun",
+  "raw_text": "con quien ha contratado mas la alcaldia de cartagena en 2026",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "cartagena",
+  "period": [
+   "2026-01-01",
+   "2026-12-31"
+  ],
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT",
+   "BUYER_MENTION_SWALLOWS_QUESTION"
+  ],
+  "source": "usuario"
+ },
+ {
+  "case_id": "U02",
+  "family": "paraphrase_no_noun",
+  "raw_text": "con quien ha contratado la alcaldia de galapa",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "galapa",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT",
+   "BUYER_MENTION_SWALLOWS_QUESTION"
+  ],
+  "source": "usuario"
+ },
+ {
+  "case_id": "U03",
+  "family": "noun_explicit",
+  "raw_text": "quienes son los principales proveedores de barranquilla",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+  "buyer": "barranquilla",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT"
+  ],
+  "source": "usuario",
+  "note": "Barranquilla como comprador o como territorio es ambiguo de verdad; aclarar es honesto, inventar un tercer comprador no."
+ },
+ {
+  "case_id": "U04",
+  "family": "paraphrase_no_noun",
+  "raw_text": "quien le vende mas a galapa",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "galapa",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT",
+   "WRONG_UNIVERSE_PROCESOS"
+  ],
+  "source": "usuario"
+ },
+ {
+  "case_id": "U05",
+  "family": "paraphrase_no_noun",
+  "raw_text": "a quien le compra cartagena",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+  "buyer": "cartagena",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT",
+   "WRONG_UNIVERSE_PROCESOS"
+  ],
+  "source": "usuario"
+ },
+ {
+  "case_id": "U06",
+  "family": "no_buyer",
+  "raw_text": "los proveedores con contratos mas grandes",
+  "owner": "SUPPLIERS",
+  "outcome": "HONEST_CLARIFY",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "EXECUTE_WITHOUT_BUYER"
+  ],
+  "source": "usuario",
+  "note": "La capability es dueña de la pregunta pero no tiene comprador: debe pedirlo, no ejecutar un ranking global."
+ },
+ {
+  "case_id": "U07",
+  "family": "noun_explicit",
+  "raw_text": "proveedores de galapa en 2025",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "galapa",
+  "period": [
+   "2025-01-01",
+   "2025-12-31"
+  ],
+  "forbid": [
+   "TOPIC_FILTER",
+   "SILENT_PERIOD_LOSS"
+  ],
+  "source": "usuario"
+ },
+ {
+  "case_id": "U08",
+  "family": "not_suppliers",
+  "raw_text": "contratos de Fundacaribe",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ],
+  "source": "usuario"
+ },
+ {
+  "case_id": "U09",
+  "family": "negation",
+  "raw_text": "no quiero proveedores",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED",
+   "NEGATED_JOB_EXECUTED"
+  ],
+  "source": "usuario"
+ },
+ {
+  "case_id": "U10",
+  "family": "not_suppliers",
+  "raw_text": "como contrata Barranquilla",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ],
+  "source": "usuario",
+  "note": "Pregunta de modo/modalidad, no de con quien."
+ },
+ {
+  "case_id": "U11",
+  "family": "not_suppliers",
+  "raw_text": "modalidades de Galapa",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ],
+  "source": "usuario"
+ },
+ {
+  "case_id": "U12",
+  "family": "not_suppliers",
+  "raw_text": "contratos de educación",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ],
+  "source": "usuario"
+ },
+ {
+  "case_id": "U13",
+  "family": "no_buyer",
+  "raw_text": "proveedores en Antioquia",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED",
+   "EXECUTE_WITHOUT_BUYER"
+  ],
+  "source": "usuario",
+  "note": "Universo geografico sin comprador: la capability de hoy no lo sirve; devolver el turno o aclarar, nunca inventar una entidad."
+ },
+ {
+  "case_id": "P01",
+  "family": "paraphrase_no_noun",
+  "raw_text": "a quien le ha comprado mas el municipio de galapa",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "galapa",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT"
+  ]
+ },
+ {
+  "case_id": "P02",
+  "family": "paraphrase_no_noun",
+  "raw_text": "quienes le han vendido a la gobernacion del atlantico",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "gobernacion del atlantico",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT"
+  ]
+ },
+ {
+  "case_id": "P03",
+  "family": "paraphrase_no_noun",
+  "raw_text": "con qué empresas trabaja la alcaldia de soledad",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "soledad",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT",
+   "BUYER_MENTION_SWALLOWS_QUESTION"
+  ]
+ },
+ {
+  "case_id": "P04",
+  "family": "paraphrase_no_noun",
+  "raw_text": "a que empresas les adjudica contratos malambo",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "malambo",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT"
+  ]
+ },
+ {
+  "case_id": "P05",
+  "family": "paraphrase_no_noun",
+  "raw_text": "quien gana los contratos de la alcaldia de galapa",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "galapa",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT"
+  ]
+ },
+ {
+  "case_id": "P06",
+  "family": "paraphrase_no_noun",
+  "raw_text": "a quienes les ha adjudicado la alcaldia de cartagena este año",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "cartagena",
+  "period": "RELATIVE_CURRENT_YEAR",
+  "forbid": [
+   "TOPIC_FILTER",
+   "SILENT_PERIOD_LOSS"
+  ]
+ },
+ {
+  "case_id": "N01",
+  "family": "negation",
+  "raw_text": "no me muestres con quién ha contratado Galapa",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED",
+   "NEGATED_JOB_EXECUTED"
+  ],
+  "note": "Semanticamente SUPPLIERS y negativa, sin sustantivo literal. Es el caso que la autoridad determinista de polaridad no puede ver."
+ },
+ {
+  "case_id": "N02",
+  "family": "negation",
+  "raw_text": "quiero ver los contratos de galapa pero no los proveedores",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED",
+   "NEGATED_JOB_EXECUTED"
+  ]
+ },
+ {
+  "case_id": "N03",
+  "family": "negation",
+  "raw_text": "sin contratistas, solo dame los contratos de galapa",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED",
+   "NEGATED_JOB_EXECUTED"
+  ]
+ },
+ {
+  "case_id": "A01",
+  "family": "actor_subject",
+  "raw_text": "cuanto le ha vendido fundacaribe a galapa",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED",
+   "ACTOR_STOLEN"
+  ],
+  "note": "El sujeto es el proveedor identificado: pertenece a Actor Profile."
+ },
+ {
+  "case_id": "A02",
+  "family": "actor_subject",
+  "raw_text": "que le ha contratado la alcaldia de galapa a fundacaribe",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED",
+   "ACTOR_STOLEN"
+  ],
+  "note": "Hay comprador y proveedor nombrado: no es la lista de proveedores."
+ },
+ {
+  "case_id": "C01",
+  "family": "cardinality",
+  "raw_text": "dame los 3 principales proveedores de galapa",
+  "owner": "SUPPLIERS",
+  "outcome": "HONEST_CLARIFY",
+  "buyer": "galapa",
+  "period": null,
+  "forbid": [
+   "SILENT_CARDINALITY_SWAP"
+  ],
+  "note": "La vista sirve 5; responder 5 llamandolos 3 es la mentira que el contrato existe para evitar."
+ },
+ {
+  "case_id": "C02",
+  "family": "cardinality",
+  "raw_text": "dame los 5 principales proveedores de galapa",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "galapa",
+  "period": null,
+  "forbid": [
+   "TOPIC_FILTER"
+  ]
+ },
+ {
+  "case_id": "D01",
+  "family": "unsupported_dimension",
+  "raw_text": "proveedores de galapa en obras civiles",
+  "owner": "SUPPLIERS",
+  "outcome": "HONEST_CLARIFY",
+  "buyer": "galapa",
+  "period": null,
+  "forbid": [
+   "SILENT_FILTER_LOSS"
+  ],
+  "note": "La vista no filtra por tema: quitarlo en silencio es perdida silenciosa."
+ },
+ {
+  "case_id": "D02",
+  "family": "unsupported_dimension",
+  "raw_text": "proveedores de galapa con contratos de mas de 500 millones",
+  "owner": "SUPPLIERS",
+  "outcome": "HONEST_CLARIFY",
+  "buyer": "galapa",
+  "period": null,
+  "forbid": [
+   "SILENT_FILTER_LOSS"
+  ]
+ },
+ {
+  "case_id": "D03",
+  "family": "unsupported_dimension",
+  "raw_text": "proveedores de licitacion publica de galapa",
+  "owner": "SUPPLIERS",
+  "outcome": "HONEST_CLARIFY",
+  "buyer": "galapa",
+  "period": null,
+  "forbid": [
+   "SILENT_FILTER_LOSS"
+  ]
+ },
+ {
+  "case_id": "G01",
+  "family": "no_buyer",
+  "raw_text": "quienes son los proveedores del atlantico",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "EXECUTE_WITHOUT_BUYER",
+   "SUPPLIERS_EXECUTED"
+  ]
+ },
+ {
+  "case_id": "G02",
+  "family": "no_buyer",
+  "raw_text": "con quien contratan los municipios del atlantico",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "EXECUTE_WITHOUT_BUYER",
+   "SUPPLIERS_EXECUTED"
+  ],
+  "note": "Paráfrasis SUPPLIERS con universo multi-comprador: la capability sirve una entidad, no un departamento."
+ },
+ {
+  "case_id": "O01",
+  "family": "not_suppliers",
+  "raw_text": "cuanto ha contratado la alcaldia de galapa en 2025",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ]
+ },
+ {
+  "case_id": "O02",
+  "family": "not_suppliers",
+  "raw_text": "que ha contratado galapa este año",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ],
+  "note": "Near-miss deliberado: «que» contrata es objeto, «con quien» es proveedor."
+ },
+ {
+  "case_id": "O03",
+  "family": "not_suppliers",
+  "raw_text": "cuales son las entidades que mas contratan en el atlantico",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ],
+  "note": "TOP_ENTITIES: compara compradores, no lista proveedores."
+ },
+ {
+  "case_id": "O04",
+  "family": "not_suppliers",
+  "raw_text": "muestrame los contratos de galapa",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ]
+ },
+ {
+  "case_id": "O05",
+  "family": "not_suppliers",
+  "raw_text": "que modalidades usa la alcaldia de cartagena",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ]
+ },
+ {
+  "case_id": "O06",
+  "family": "not_suppliers",
+  "raw_text": "busca oportunidades abiertas de aseo en galapa",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED"
+  ]
+ },
+ {
+  "case_id": "O07",
+  "family": "not_suppliers",
+  "raw_text": "quien es el representante legal de fundacaribe",
+  "owner": "NOT_SUPPLIERS",
+  "outcome": "ANY_NOT_SUPPLIERS",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "SUPPLIERS_EXECUTED",
+   "ACTOR_STOLEN"
+  ]
+ },
+ {
+  "case_id": "X01",
+  "family": "incident_2026",
+  "raw_text": "con quien ha contratado la alcaldia de galapa en 2025",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "galapa",
+  "period": [
+   "2025-01-01",
+   "2025-12-31"
+  ],
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT",
+   "BUYER_MENTION_SWALLOWS_QUESTION",
+   "SILENT_PERIOD_LOSS"
+  ],
+  "source": "incident_2026",
+  "note": "Incidente real (plan V2 4.1/25): parafrasis SUPPLIERS con comprador y periodo. El incidente de Cartagena 2026 ya vive en el corpus DEV como U01."
+ },
+ {
+  "case_id": "X02",
+  "family": "incident_2026",
+  "raw_text": "cuales son los proveedores con contratos mas grandes de alcaldia de barranquilla",
+  "owner": "SUPPLIERS",
+  "outcome": "EXECUTE",
+  "buyer": "barranquilla",
+  "period": null,
+  "ranking": "value",
+  "forbid": [
+   "TOPIC_FILTER",
+   "ACTOR_SUBJECT"
+  ],
+  "source": "incident_2026",
+  "note": "Incidente real (plan V2 25): proveedores de Barranquilla con ranking por valor. El ranking se mide como dato informativo del harness, no como gate duro."
+ },
+ {
+  "case_id": "X03",
+  "family": "incident_2026",
+  "raw_text": "proveedores de educación de Secretaría de Educación de Cali",
+  "owner": "SUPPLIERS",
+  "outcome": "HONEST_CLARIFY",
+  "buyer": "secretaría de educación de cali",
+  "period": null,
+  "forbid": [
+   "SILENT_FILTER_LOSS"
+  ],
+  "source": "incident_2026",
+  "note": "Control del plan V2 25: filtro material (educación) que la vista de proveedores no soporta; el comprador sí es resoluble, así que aclarar, nunca ejecutar sin el filtro."
+ },
+ {
+  "case_id": "X04",
+  "family": "multi_job",
+  "raw_text": "dame los proveedores de galapa y las modalidades de contratación que usa",
+  "owner": "MULTI_JOB",
+  "outcome": "SAFE_NON_EXECUTION",
+  "buyer": null,
+  "period": null,
+  "forbid": [
+   "WRONG_CAPABILITY_EXECUTED"
+  ],
+  "source": "incident_2026",
+  "note": "Control del plan V2 25: multi-job debe resolverse en forma segura (bloqueo honesto o aclaración). Ejecutar cualquiera de los dos trabajos como si fuera el pedido completo es exactamente WRONG_CAPABILITY_EXECUTED."
+ }
+]

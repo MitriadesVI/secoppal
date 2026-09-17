@@ -8,7 +8,9 @@ import pytest
 from app.core.natural_alpha.catalog import ACTION_ASPECTS
 from app.core.natural_alpha.prompt import provider_request
 from app.core.natural_alpha.provider import ProviderResult
-from experiments.natural_alpha_v1.evaluation import DIRECTORY, evaluate, load_frozen, metrics
+from experiments.natural_alpha_v1.evaluation import (
+    DIRECTORY, ROOT, evaluate, load_frozen, metrics, sha256,
+)
 from experiments.natural_alpha_v1.replay import RecordedProvider, ReplayError
 
 
@@ -36,6 +38,21 @@ def test_corpus_catalog_and_frozen_artifacts():
         assert all(aspect in ACTION_ASPECTS[action] for action, aspect in pairs)
     assert manifest["timeout_seconds"] == 10
     assert gold["oracle_status"] == "PROVISIONAL_ORACLE"
+
+
+def test_superseded_artifact_names_a_live_successor_that_pins_it():
+    manifest = json.loads((DIRECTORY / "manifest.json").read_text())
+    for name, note in manifest.get("superseded", {}).items():
+        assert name in manifest["sha256"]
+        assert note["reason"], f"MISSING_REASON:{name}"
+        if not note.get("successor_manifest"):
+            continue
+        successor = ROOT / note["successor_manifest"]
+        assert successor.is_file(), f"MISSING_SUCCESSOR:{note['successor_manifest']}"
+        successor_manifest = json.loads(successor.read_text())
+        assert successor_manifest["alpha_prompt_file"] == name
+        assert successor_manifest["alpha_prompt_file_sha256"] == sha256(ROOT / name), (
+            f"SUCCESSOR_SHA_STALE:{name}")
 
 
 def test_fabricated_perfect_replay_zero_calls_and_all_records_consumed():

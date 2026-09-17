@@ -1,0 +1,76 @@
+{
+ "mission": "NATURAL_JOB_PRELEGACY_V2 — PRE-LEGACY CONTROL PLANE",
+ "frozen_at": "2026-09-16",
+ "plan": {
+  "path": "docs/planes/2026-09-16_natural_job_prelegacy_v2_implementation_plan.md",
+  "sha256": "bc3380ed3fde2266e480d25312b95fc9e6885b296419c2943e610f8c46472f43"
+ },
+ "base_commit": "6b30737de8820a295a05549477e22dd160c6175c",
+ "evidence_branch": {
+  "name": "mo/natural-job-credential-v1",
+  "sha": "411a03d042865f824f4d6ab206660bef949d7f47",
+  "role": "evidencia a preservar; no se mergea"
+ },
+ "corpus_dev": {
+  "path": "experiments/natural_job_prelegacy_v2/corpus_dev.json",
+  "sha256": "00fbb74107ee354eb163469958e19a7a585722cdea8ff904b91aeec1b9d3d29e",
+  "cases": 42,
+  "njc_v1_cases": 38,
+  "njc_v1_corpus_sha256": "ac75246b8e10b37b434c0be22aca2b251f370fe7a19c26c533e185397e39597e",
+  "v2_cases": [
+   "X01",
+   "X02",
+   "X03",
+   "X04"
+  ],
+  "provenance": "38 casos NJC V1 copiados sin edición + 4 controles del plan V2 (25). No es holdout."
+ },
+ "alpha_prompt_version": "V3",
+ "alpha_prompt_file": "app/core/natural_alpha/prompt.py",
+ "alpha_prompt_file_sha256": "947f74744fcf99c8e137f5f0129098363418bb1ffa159cad98dac482dc0c2f55",
+ "alpha_prompt_instructions_sha256": "a77ebbd442bed837c2231e9bb9de42250a12cc3fc69fa385af31e0fc86797b87",
+ "alpha_prompt_frozen_copy": "experiments/natural_job_prelegacy_v2/prompt_v3.frozen.txt",
+ "alpha_prompt_delta": "V3 = V2 (definiciones conceptuales SUPPLIERS/TOP_ENTITIES) + (a) el fragmento de evidencia mínimo que demuestra el trabajo y no absorbe comprador/fecha/monto/territorio/tema, (b) 'el qué contrató una entidad es SEARCH, nunca SUPPLIERS'. Definiciones tomadas del plan V2 4.2; congeladas antes de cualquier replay V3 y no se reajustan mirando resultados.",
+ "alpha_provider_frozen": {
+  "model": "deepseek-v4-flash",
+  "temperature": 0,
+  "reasoning_effort": "none",
+  "tools": [],
+  "max_output_tokens": 1024,
+  "response_format": {
+   "type": "json_object"
+  },
+  "schema": "jobs[{action, aspect, evidence_quote, occurrence}] (estricto, sin claves extra)"
+ },
+ "hard_gates": {
+  "WRONG_CAPABILITY_EXECUTED": 0,
+  "WRONG_BUYER": 0,
+  "SILENT_FILTER_LOSS": 0,
+  "ACTOR_STOLEN": 0,
+  "NEGATED_JOB_EXECUTED": 0,
+  "UNSUPPORTED_CARDINALITY_EXECUTED": 0,
+  "LEGACY_FALLBACK_AFTER_VALID_CREDENTIAL": 0,
+  "QUERY_ROUTER_CALLS_ON_CREDENTIALED_TURNS": 0,
+  "LEGACY_GRAPH_ENTERED_WITH_VALID_CREDENTIAL": 0
+ },
+ "product_metrics": {
+  "CLEAR_SUPPLIERS_EXECUTION_RATE": ">= 0.90 sobre los casos SUPPLIERS claros y soportados",
+  "secondary": [
+   "HONEST_CLARIFY_RATE",
+   "WRONG_EXECUTION_RATE"
+  ],
+  "note": "EXECUTE + CLARIFY no es titular; reportar n exacto (plan V2 23)."
+ },
+ "stop_conditions": [
+  "copiar o reimplementar gran parte de QueryRouter",
+  "whitelist de verbos SUPPLIERS",
+  "tercer runtime de perfil",
+  "el LLM emite parámetros ejecutables",
+  "Topic Evidence general nuevo",
+  "otro sidecar para el happy path",
+  "reglas por paráfrasis en vez de authorities genéricas",
+  "duplicar Frame V1.2 en vez de adaptarlo"
+ ],
+ "abandonment_rule": "Última prueba seria del enfoque. Con credentials correctas, CONTROL_PLANE hard gates != 0 o CLEAR_SUPPLIERS_EXECUTION_RATE < 90% por defectos del control plane/residual/authorities produce NO_GO_ARCHITECTURE y se abandona esta vía.",
+ "prohibited_remedy": "Prohibido arreglar una paráfrasis añadiendo vocabulario al host; prohibido enumerar vende/compra/adjudica/trabaja/gana en una whitelist. Si aparecen, STOP."
+}
