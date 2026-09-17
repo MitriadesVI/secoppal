@@ -45,8 +45,16 @@ from app.core.workflow.profile_action_admission import (
 )
 
 if TYPE_CHECKING:
+    from app.core.accreditation.credential import CapabilityCredential
+    from app.core.accreditation.spec import CapabilitySpec
     from app.core.natural_alpha.models import Observation
     from app.core.workflow.deps import WorkflowDeps
+
+
+_ACCREDITED_PENDING = (
+    "Entendí el trabajo solicitado, pero esta ruta todavía no ha acreditado sus "
+    "parámetros de ejecución."
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -61,6 +69,14 @@ class AdmittedTurn:
     params: dict
     effective_user_query: str
     trusted_profile_action: TrustedProfileAction | None = None
+    # Plan V2 9 (C3): la autoridad credenciada que este turno reclamó. Viajan
+    # juntas o ambas son None — nunca una credencial sin la spec que la declaró.
+    credential: "CapabilityCredential | None" = None
+    capability_spec: "CapabilitySpec | None" = None
+
+    def __post_init__(self) -> None:
+        if (self.credential is None) != (self.capability_spec is None):
+            raise ValueError("CREDENTIAL_SPEC_MISMATCH")
 
     @property
     def route(self) -> AdmissionRoute:
@@ -183,6 +199,13 @@ def admit(
         )
     if read.usable and read.envelope.chat_id != chat_id:
         profile_state, contract, status = ProfileConversationState(), None, EnvelopeStatus.CORRUPT
+    accredited = _accredited_pending(
+        deps, observation=observation, user_query=user_query,
+        seed_resolved_params=seed_resolved_params, profile_state=profile_state,
+        contract=contract, status=status, revision=read.revision,
+    )
+    if accredited is not None:
+        return accredited
     params = deps.query_router.parse(user_query, today=today).params
     from app.core.workflow.external_admission import external_owner
     external = external_owner(user_query, params, actor_candidate_selection)
@@ -233,9 +256,43 @@ def admit(
     )
 
 
+def _accredited_pending(
+    deps: "WorkflowDeps", *, observation, user_query, seed_resolved_params,
+    profile_state, contract, status, revision,
+) -> AdmittedTurn | None:
+    """C3 scaffolding: claim a credentialed turn and stop honestly, before any parse.
+
+    Plan V2 9: with a valid credential there is no ``query_router.parse``, no
+    external owner over legacy params, no legacy migration and no fallback to the
+    dispatcher — this is the only lane that ends the turn. C4 replaces the
+    clarification with the accredited authorities; until then the turn carries
+    ``params = {}`` and zero source calls.
+    """
+    from app.core.accreditation.registry import spec_for_credential
+    from app.core.accreditation.seam import credential_from_observation
+    from app.core.workflow.admission_rules import input_shape
+
+    credential = credential_from_observation(observation, user_query, settings=deps.settings)
+    if credential is None:
+        return None
+    spec = spec_for_credential(credential)
+    if spec is None:  # The seam never builds an undeclared capability; fail closed.
+        raise ValueError("CREDENTIAL_WITHOUT_DECLARED_SPEC")
+    return _finish_admission(
+        decision=AdmissionDecision(
+            AdmissionRoute.CLARIFY, "accredited_authorities_pending",
+            input_shape(user_query, seed_resolved_params=seed_resolved_params),
+            ContinuationOwner.ENTITY_PROFILE, _ACCREDITED_PENDING,
+        ),
+        profile_state=profile_state, contract=contract, status=status,
+        revision=revision, params={}, effective_user_query=user_query,
+        credential=credential, capability_spec=spec,
+    )
+
+
 def _finish_admission(
     *, decision, profile_state, contract, status, revision, params,
-    effective_user_query, trusted=None,
+    effective_user_query, trusted=None, credential=None, capability_spec=None,
 ) -> AdmittedTurn:
     application = build_admission(decision)
     *_, final = application.run(halt_after=list(_TERMINALS))
@@ -246,6 +303,7 @@ def _finish_admission(
         envelope_status=status, conversation_revision=revision, params=params,
         effective_user_query=effective_user_query,
         trusted_profile_action=trusted,
+        credential=credential, capability_spec=capability_spec,
     )
 
 

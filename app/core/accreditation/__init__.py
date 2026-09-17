@@ -17,8 +17,10 @@ from .registry import (
     SUPPLIERS,
     capability_spec,
     declared_capabilities,
+    spec_for_action_aspect,
     spec_for_credential,
 )
+from .seam import credential_from_observation, rollout_enabled
 from .spec import CapabilitySpec, Cardinality, Dimension, Owner
 
 __all__ = [
@@ -31,8 +33,11 @@ __all__ = [
     "Dimension",
     "Owner",
     "capability_spec",
+    "credential_from_observation",
     "declared_capabilities",
     "from_grounded_job",
     "raw_fingerprint",
+    "rollout_enabled",
+    "spec_for_action_aspect",
     "spec_for_credential",
 ]

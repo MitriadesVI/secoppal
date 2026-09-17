@@ -41,11 +41,23 @@ _SPECS: tuple[CapabilitySpec, ...] = (
 )
 
 _BY_CAPABILITY = {spec.capability: spec for spec in _SPECS}
+_BY_PAIR = {(spec.action, spec.aspect): spec for spec in _SPECS}
 
 
 def capability_spec(capability: object) -> CapabilitySpec | None:
     """The declared spec, or ``None`` when this build cannot serve the capability."""
     return _BY_CAPABILITY.get(capability) if type(capability) is str else None
+
+
+def spec_for_action_aspect(action: object, aspect: object) -> CapabilitySpec | None:
+    """The spec that declares this (action, aspect) pair, or ``None``.
+
+    The pair is the model's whole contribution; which capability it opens is
+    declared here and nowhere else.
+    """
+    if type(action) is not str or type(aspect) is not str:
+        return None
+    return _BY_PAIR.get((action, aspect))
 
 
 def spec_for_credential(credential: CapabilityCredential | None) -> CapabilitySpec | None:

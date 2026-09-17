@@ -159,6 +159,15 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
     else:
         result = workflow._dispatch(ctx, dispatch_seed, observation=observation)
 
+    if admitted.credential is not None:
+        # Plan V2 9 (C3): el turno credenciado no llega al dispatcher, así que la
+        # procedencia que antes adjuntaba el seam se adjunta aquí — una sola vez,
+        # antes de publicar y de trazar. El testigo del seam también se anota
+        # aquí: la cobertura ve un turno que sí alcanzó a Natural Alpha.
+        from app.core.workflow.handlers.natural_alpha import note_seam
+        note_seam(deps)
+        _attach_credentialed(result, observation, admitted)
+
     from app.core.natural_alpha.terminal_publication import publish_if_terminal
 
     if publish_if_terminal(deps, ctx, reservation, result):
@@ -278,6 +287,23 @@ def _execute_profile_action(workflow, ctx, admitted, reservation):
     )
     _attach_published_actions(result, outcome, published.published)
     return result
+
+
+def _attach_credentialed(result, observation, admitted) -> None:
+    """Provenance for a turn admission claimed before the seam (plan V2 9, C3).
+
+    The dispatcher never ran, so nothing else would attach the observation. One
+    result, one trace: these fields ride the very trace this turn already writes.
+    """
+    from app.core.workflow.handlers.natural_alpha import attach_observation
+
+    if observation is not None:
+        attach_observation(result, observation)
+    result["credential_capability"] = admitted.credential.capability
+    result["credential_source"] = admitted.credential.source
+    result["admission_owner"] = admitted.decision.owner.value
+    result["admission_reason"] = admitted.decision.reason
+    result["legacy_bypassed"] = True
 
 
 def _attach_published_actions(result, outcome, published):
