@@ -1,0 +1,493 @@
+{
+ "checkpoint": "C4A",
+ "control_plane_oracle": {
+  "oracle_credential": "evidence = largest host-free portion of the turn (correct citation)",
+  "cases": 42,
+  "suppliers_execute_cases": 13,
+  "gates": {
+   "WRONG_BUYER": [],
+   "SILENT_FILTER_LOSS": [
+    "D03"
+   ],
+   "ACTOR_STOLEN": [
+    "A01"
+   ],
+   "NEGATED_JOB_EXECUTED": [],
+   "UNSUPPORTED_CARDINALITY_EXECUTED": []
+  },
+  "gates_pass": false,
+  "clear_suppliers_ready": [
+   "P01",
+   "P02",
+   "P03",
+   "P05",
+   "P06",
+   "U01",
+   "U02",
+   "U04",
+   "U07",
+   "X01",
+   "X02"
+  ],
+  "clear_suppliers_ready_rate": 0.8462,
+  "rows": [
+   {
+    "case_id": "U01",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "cartagena",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U02",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "galapa",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U03",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+    "expected_buyer": "barranquilla",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": [
+     "principales",
+     "barranquilla"
+    ]
+   },
+   {
+    "case_id": "U04",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "galapa",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U05",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE_OR_HONEST_CLARIFY",
+    "expected_buyer": "cartagena",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U06",
+    "owner": "SUPPLIERS",
+    "outcome": "HONEST_CLARIFY",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U07",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "galapa",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U08",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U09",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U10",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U11",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U12",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MINISTERIO DE EDUCACION NACIONAL (MEN)",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "U13",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": [
+     "Antioquia"
+    ]
+   },
+   {
+    "case_id": "P01",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "galapa",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "P02",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "gobernacion del atlantico",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "DEPARTAMENTO DEL ATLANTICO**",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "P03",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "soledad",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE SOLEDAD",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "P04",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "malambo",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": []
+   },
+   {
+    "case_id": "P05",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "galapa",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "P06",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "cartagena",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "N01",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "negation_scope_unaccredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "N02",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "intent_witness_not_positive",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "N03",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "intent_witness_not_positive",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "A01",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "A02",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "UNACCREDITED_RESIDUAL",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": [
+     "a",
+     "fundacaribe"
+    ]
+   },
+   {
+    "case_id": "C01",
+    "owner": "SUPPLIERS",
+    "outcome": "HONEST_CLARIFY",
+    "expected_buyer": "galapa",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "unsupported_cardinality",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": [
+     "principales"
+    ]
+   },
+   {
+    "case_id": "C02",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "galapa",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "UNACCREDITED_RESIDUAL",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": [
+     "principales"
+    ]
+   },
+   {
+    "case_id": "D01",
+    "owner": "SUPPLIERS",
+    "outcome": "HONEST_CLARIFY",
+    "expected_buyer": "galapa",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "UNACCREDITED_RESIDUAL",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": [
+     "obras",
+     "civiles"
+    ]
+   },
+   {
+    "case_id": "D02",
+    "owner": "SUPPLIERS",
+    "outcome": "HONEST_CLARIFY",
+    "expected_buyer": "galapa",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "UNACCREDITED_RESIDUAL",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": [
+     "500"
+    ]
+   },
+   {
+    "case_id": "D03",
+    "owner": "SUPPLIERS",
+    "outcome": "HONEST_CLARIFY",
+    "expected_buyer": "galapa",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "G01",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": [
+     "atlantico"
+    ]
+   },
+   {
+    "case_id": "G02",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": []
+   },
+   {
+    "case_id": "O01",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "O02",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "ACTOR_BUYER_SPAN_CONFLICT",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "O03",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": []
+   },
+   {
+    "case_id": "O04",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "O05",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "O06",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "O07",
+    "owner": "NOT_SUPPLIERS",
+    "outcome": "ANY_NOT_SUPPLIERS",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "buyer_not_accredited",
+    "oracle_buyer": null,
+    "oracle_residual": []
+   },
+   {
+    "case_id": "X01",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "galapa",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "X02",
+    "owner": "SUPPLIERS",
+    "outcome": "EXECUTE",
+    "expected_buyer": "barranquilla",
+    "oracle_status": "READY",
+    "oracle_reason": "accredited",
+    "oracle_buyer": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+    "oracle_residual": []
+   },
+   {
+    "case_id": "X03",
+    "owner": "SUPPLIERS",
+    "outcome": "HONEST_CLARIFY",
+    "expected_buyer": "secretaría de educación de cali",
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "UNACCREDITED_RESIDUAL",
+    "oracle_buyer": "SECRETARIA DE EDUCACION DE CALI",
+    "oracle_residual": [
+     "educación"
+    ]
+   },
+   {
+    "case_id": "X04",
+    "owner": "MULTI_JOB",
+    "outcome": "SAFE_NON_EXECUTION",
+    "expected_buyer": null,
+    "oracle_status": "CLARIFY",
+    "oracle_reason": "UNACCREDITED_RESIDUAL",
+    "oracle_buyer": "MUNICIPIO DE GALAPA.",
+    "oracle_residual": [
+     "y",
+     "modalidades",
+     "contratación",
+     "usa"
+    ]
+   }
+  ]
+ },
+ "evidence_quality_model": {
+  "definition": "how many SUPPLIERS/EXECUTE turns reach READY under each citation style",
+  "mention_citations_ready": 2,
+  "whole_turn_citations_ready": 2,
+  "credentialed_variants": 16,
+  "note": "an overreaching citation clarifying is the designed behavior (plan V2 6), not a control-plane defect"
+ },
+ "end_to_end_alpha": {
+  "status": "NOT_RUN",
+  "reason": "no recorded V3 payloads in this checkpoint; classifier mistakes are reported here only and never folded into the control-plane gates"
+ }
+}

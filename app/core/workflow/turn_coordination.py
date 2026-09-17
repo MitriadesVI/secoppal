@@ -290,7 +290,7 @@ def _execute_profile_action(workflow, ctx, admitted, reservation):
 
 
 def _attach_credentialed(result, observation, admitted) -> None:
-    """Provenance for a turn admission claimed before the seam (plan V2 9, C3).
+    """Provenance for a turn admission claimed before the seam (plan V2 9, C3/C4A).
 
     The dispatcher never ran, so nothing else would attach the observation. One
     result, one trace: these fields ride the very trace this turn already writes.
@@ -304,6 +304,12 @@ def _attach_credentialed(result, observation, admitted) -> None:
     result["admission_owner"] = admitted.decision.owner.value
     result["admission_reason"] = admitted.decision.reason
     result["legacy_bypassed"] = True
+    # This lane cannot reach the router by construction; the numeric witness that
+    # falsifies it is the real spy over QueryRouter.parse in the C4A tests.
+    result["query_router_calls"] = 0
+    if admitted.assembly is not None:
+        result["accredited_params"] = dict(admitted.params)
+        result.update(admitted.assembly.receipt_fields())
 
 
 def _attach_published_actions(result, outcome, published):

@@ -30,6 +30,11 @@ STOPWORDS = {
     "cuales", "cuantos", "cuantas", "cual",
     "hay", "tiene", "tienen", "esta", "estan", "este", "esten",
     "sea", "sean",
+    # Interrogativos generales y copula/auxiliar. No es vocabulario del dominio:
+    # "quien" es el mismo hueco de clase cerrada que V1 adjudico para el parser
+    # legacy (un "quien" desnudo buscaba contratos cuyo objeto lo contiene), y
+    # "es/son/ha" tampoco nombran un objeto contractual.
+    "quien", "quienes", "es", "son", "ha",
     "encuentre", "encuentren",
     "donde", "como", "cuando",
     # Greetings (including variants with extra letters)

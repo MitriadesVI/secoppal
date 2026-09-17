@@ -45,15 +45,20 @@ from app.core.workflow.profile_action_admission import (
 )
 
 if TYPE_CHECKING:
+    from app.core.accreditation.assembly import AccreditationAssembly
     from app.core.accreditation.credential import CapabilityCredential
     from app.core.accreditation.spec import CapabilitySpec
     from app.core.natural_alpha.models import Observation
     from app.core.workflow.deps import WorkflowDeps
 
 
-_ACCREDITED_PENDING = (
-    "Entendí el trabajo solicitado, pero esta ruta todavía no ha acreditado sus "
-    "parámetros de ejecución."
+_ACCREDITED_READY = (
+    "Entendí el trabajo solicitado y acredité sus parámetros de ejecución, pero esta "
+    "ruta todavía no ejecuta la consulta."
+)
+_ACCREDITED_OTHER_OWNER = (
+    "Entendí que esta pregunta es sobre un actor concreto; esa ruta todavía no está "
+    "conectada en este carril."
 )
 
 
@@ -69,14 +74,19 @@ class AdmittedTurn:
     params: dict
     effective_user_query: str
     trusted_profile_action: TrustedProfileAction | None = None
-    # Plan V2 9 (C3): la autoridad credenciada que este turno reclamó. Viajan
-    # juntas o ambas son None — nunca una credencial sin la spec que la declaró.
+    # Plan V2 9 (C3/C4A): la autoridad credenciada que este turno reclamó y el
+    # ensamblaje que sus autoridades produjeron. Viajan juntas o ambas son None —
+    # nunca una credencial sin la spec que la declaró, ni un ensamblaje sin
+    # credencial que lo justifique.
     credential: "CapabilityCredential | None" = None
     capability_spec: "CapabilitySpec | None" = None
+    assembly: "AccreditationAssembly | None" = None
 
     def __post_init__(self) -> None:
         if (self.credential is None) != (self.capability_spec is None):
             raise ValueError("CREDENTIAL_SPEC_MISMATCH")
+        if self.assembly is not None and self.credential is None:
+            raise ValueError("ASSEMBLY_WITHOUT_CREDENTIAL")
 
     @property
     def route(self) -> AdmissionRoute:
@@ -202,7 +212,7 @@ def admit(
     accredited = _accredited_pending(
         deps, observation=observation, user_query=user_query,
         seed_resolved_params=seed_resolved_params, profile_state=profile_state,
-        contract=contract, status=status, revision=read.revision,
+        contract=contract, status=status, revision=read.revision, today=today,
     )
     if accredited is not None:
         return accredited
@@ -258,16 +268,17 @@ def admit(
 
 def _accredited_pending(
     deps: "WorkflowDeps", *, observation, user_query, seed_resolved_params,
-    profile_state, contract, status, revision,
+    profile_state, contract, status, revision, today=None,
 ) -> AdmittedTurn | None:
-    """C3 scaffolding: claim a credentialed turn and stop honestly, before any parse.
+    """C4A: ensamblar las autoridades sobre el raw y terminar el turno con honestidad.
 
-    Plan V2 9: with a valid credential there is no ``query_router.parse``, no
-    external owner over legacy params, no legacy migration and no fallback to the
-    dispatcher — this is the only lane that ends the turn. C4 replaces the
-    clarification with the accredited authorities; until then the turn carries
-    ``params = {}`` and zero source calls.
+    Plan V2 9-17: con credencial válida no hay ``query_router.parse``, ni
+    external owner sobre params legacy, ni migración, ni caída al dispatcher. Las
+    autoridades independientes leen el raw y producen ``accredited_params``; C4A
+    todavía no ejecuta el runtime de perfil, así que READY termina en un CLARIFY
+    que transporta los parámetros acreditados y sus receipts.
     """
+    from app.core.accreditation.assembly import AssemblyStatus, assemble
     from app.core.accreditation.registry import spec_for_credential
     from app.core.accreditation.seam import credential_from_observation
     from app.core.workflow.admission_rules import input_shape
@@ -278,21 +289,30 @@ def _accredited_pending(
     spec = spec_for_credential(credential)
     if spec is None:  # The seam never builds an undeclared capability; fail closed.
         raise ValueError("CREDENTIAL_WITHOUT_DECLARED_SPEC")
+    assembly = assemble(user_query, credential, spec,
+                        entity_resolver=deps.entity_resolver, today=today)
+    if assembly.status is AssemblyStatus.READY:
+        reason, response, params = "accredited_execution_pending", _ACCREDITED_READY, assembly.params
+    elif assembly.status is AssemblyStatus.OTHER_OWNER:
+        reason, response, params = "other_owner_pending", _ACCREDITED_OTHER_OWNER, {}
+    else:
+        reason, params = assembly.reason, {}
+        response = next((issue.detail for issue in assembly.issues if issue.detail), "")
     return _finish_admission(
         decision=AdmissionDecision(
-            AdmissionRoute.CLARIFY, "accredited_authorities_pending",
+            AdmissionRoute.CLARIFY, reason,
             input_shape(user_query, seed_resolved_params=seed_resolved_params),
-            ContinuationOwner.ENTITY_PROFILE, _ACCREDITED_PENDING,
+            ContinuationOwner.ENTITY_PROFILE, response,
         ),
         profile_state=profile_state, contract=contract, status=status,
-        revision=revision, params={}, effective_user_query=user_query,
-        credential=credential, capability_spec=spec,
+        revision=revision, params=params, effective_user_query=user_query,
+        credential=credential, capability_spec=spec, assembly=assembly,
     )
 
 
 def _finish_admission(
     *, decision, profile_state, contract, status, revision, params,
-    effective_user_query, trusted=None, credential=None, capability_spec=None,
+    effective_user_query, trusted=None, credential=None, capability_spec=None, assembly=None,
 ) -> AdmittedTurn:
     application = build_admission(decision)
     *_, final = application.run(halt_after=list(_TERMINALS))
@@ -303,7 +323,7 @@ def _finish_admission(
         envelope_status=status, conversation_revision=revision, params=params,
         effective_user_query=effective_user_query,
         trusted_profile_action=trusted,
-        credential=credential, capability_spec=capability_spec,
+        credential=credential, capability_spec=capability_spec, assembly=assembly,
     )
 
 

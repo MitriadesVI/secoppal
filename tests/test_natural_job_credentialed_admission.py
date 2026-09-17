@@ -151,24 +151,32 @@ def test_admitted_turn_carries_credential_and_spec_together():
 
 # ── C3.4 / C3.5 / C3.6 / C3.7: the credentialed lane ──────────────────────────
 
-@pytest.mark.parametrize("raw", [GALAPA, CARTAGENA])
-def test_credentialed_turn_claims_admission_without_any_legacy_call(frame_on, make_flow, raw):
+@pytest.mark.parametrize("raw,expected_residual", [
+    (GALAPA, ""),
+    (CARTAGENA, "mas"),  # "mas" is functional: it stays in the text, not in the material
+])
+def test_credentialed_turn_claims_admission_without_any_legacy_call(
+        frame_on, make_flow, raw, expected_residual):
     flow = credentialed_flow(make_flow, frame_on=frame_on)
     router_calls = counting_router(flow)
     dispatch_calls = counting_dispatch(flow)
 
     result = run(flow, raw, chat_id="c3")
 
-    # C3.4 — the claim, with the scaffolding clarification and nothing else.
-    assert result["route_reason"] == "admission_accredited_authorities_pending"
+    # C3.4 + C4A.11 — the claim, with the accredited assembly and nothing else.
+    assert result["route_reason"] == "admission_accredited_execution_pending"
     assert result["needs_clarification"] is True
-    assert "todavía no ha acreditado" in result["response"]
+    assert "acredité sus parámetros" in result["response"]
     assert result["parsed_params"] == {} and result["resolved_params"] == {}
+    assert result["authority_status"] == "READY"
+    assert result["temporal_authority"]
+    assert result["residual_material"] == []
+    assert result["residual_text"] == expected_residual
     # C3.6 — provenance rides the one trace this turn writes.
     assert result["credential_capability"] == SUPPLIERS
     assert result["credential_source"] == "NATURAL_ALPHA"
     assert result["admission_owner"] == "ENTITY_PROFILE"
-    assert result["admission_reason"] == "accredited_authorities_pending"
+    assert result["admission_reason"] == "accredited_execution_pending"
     assert result["legacy_bypassed"] is True
     assert result["natural_alpha_status"] == "MATCHED"
     assert result["natural_alpha_jobs"] == [
@@ -200,10 +208,12 @@ def test_admit_itself_never_parses_a_credentialed_turn(frame_on, make_flow):
         observation=observation(grounded()),
     )
     assert turned.route is AdmissionRoute.CLARIFY
-    assert turned.decision.reason == "accredited_authorities_pending"
+    assert turned.decision.reason == "accredited_execution_pending"
     assert turned.decision.owner is ContinuationOwner.ENTITY_PROFILE
-    assert turned.params == {}
+    assert turned.params["entidad_resolved"].startswith("MUNICIPIO DE GALAPA")
+    assert turned.params["fecha_desde"] == "2025-01-01"
     assert turned.credential is not None and turned.capability_spec is not None
+    assert turned.assembly is not None and turned.assembly.receipt_fields()["authority_status"] == "READY"
     assert router_calls == []
 
 
