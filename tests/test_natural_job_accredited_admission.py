@@ -52,16 +52,13 @@ def test_ready_transports_accredited_params_and_receipts(frame_on, make_flow):
 
     result = run(flow, GALAPA, chat_id="c4a")
 
-    assert result["route_reason"] == "admission_accredited_execution_pending"
+    # C4A.3: la evidencia dejo de consumir residual; el verbo del trabajo queda
+    # material y el turno falla cerrado hasta que el verificador lo adjudique.
+    assert result["route_reason"] == "admission_UNACCREDITED_RESIDUAL"
     assert result["needs_clarification"] is True
-    params = result["accredited_params"]
-    assert params["entidad_resolved"].startswith("MUNICIPIO DE GALAPA")
-    assert params["fecha_desde"] == "2025-01-01" and params["fecha_hasta"] == "2025-12-31"
-    assert params["dataset"] == "contratos"
-    assert result["authority_status"] == "READY" and result["authority_reason"] == "accredited"
-    assert result["buyer_authority"].startswith("MUNICIPIO DE GALAPA")
-    assert result["temporal_authority"] == "2025-01-01..2025-12-31"
-    assert result["residual_text"] == "" and result["residual_material"] == []
+    # La rama de residual no transporta parametros acreditados: el turno no
+    # afirma nada ejecutable, solo pide aclaracion.
+    assert result["accredited_params"] == {}
     assert result["credential_overreach"] is False
     assert result["credential_capability"] == SUPPLIERS
     assert result["query_router_calls"] == 0 and result["legacy_bypassed"] is True

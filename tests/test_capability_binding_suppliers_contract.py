@@ -105,7 +105,7 @@ def test_any_unaccredited_or_alternative_blocks_the_group(router, extra):
     ("proveedores de la alcaldía de Galapa en contratación directa", "UNSUPPORTED_DIMENSION"),
     ("proveedores de la alcaldía de Soledad con contratos de más de 500 millones", "UNSUPPORTED_DIMENSION"),
     ("proveedores activos de la alcaldía de Soledad", "UNSUPPORTED_DIMENSION"),
-    ("quiénes son sus proveedores?", "UNACCREDITED_RESIDUAL"),
+    ("quiénes son sus proveedores?", "BUYER_REQUIRED"),  # C4A.3: "sus"/"son" ya no son material
     ("los proveedores con mas contratos?", "BUYER_REQUIRED"),
     ("proveedores de la alcaldía de San Juan", "BUYER_NOT_ACCREDITED"),
 ])

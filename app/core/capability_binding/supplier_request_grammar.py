@@ -175,11 +175,19 @@ def _base_claim(tokens: tuple[Token, ...], mention: int) -> CardinalityClaim:
     exact_operator = _match_left(tokens, quantity_index - 1, _EXACT_OP)
     start = exact_operator[0] if exact_operator else quantity_index
     start = _determiner_start(tokens, start)
+    # A rank modifier sits between the quantity and the noun and is part of the
+    # same cardinal claim ("5 principales proveedores"), so the claim owns it:
+    # the grammar already knows these tokens -- _nominal_start walks them -- and
+    # leaving them outside the claim made the host read them as material.
+    modifiers = tuple(
+        token for token in tokens[quantity_index + 1:mention]
+        if token.text in _RANK_MODIFIERS
+    )
     claim = CardinalityClaim(
         CardinalityRelation.EXACT,
         (quantity_value,),
         exact_operator[1] if exact_operator else (),
-        (quantity,),
+        (quantity, *modifiers),
         start=start,
         end=mention + 1,
     )

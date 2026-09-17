@@ -160,4 +160,10 @@ STOPWORDS = {
     "debajo",
     # PARSER-POLARITY-MONETARY-002: post-number polarity tokens
     "adelante", "arriba", "abajo",
+    # C4A.3 — clíticos y preposiciones de clase cerrada que faltaban: el residual
+    # del carril credenciado los reportaba como material ("le", "a", "me") y no
+    # nombran objeto contractual alguno.
+    "a", "al", "ante", "cabe", "contra", "desde", "durante", "hacia", "hasta",
+    "le", "les", "lo", "me", "mediante", "mi", "mis", "nos",
+    "su", "sus", "te", "tras", "tu", "tus",
 }

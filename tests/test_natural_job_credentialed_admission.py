@@ -152,8 +152,8 @@ def test_admitted_turn_carries_credential_and_spec_together():
 # ── C3.4 / C3.5 / C3.6 / C3.7: the credentialed lane ──────────────────────────
 
 @pytest.mark.parametrize("raw,expected_residual", [
-    (GALAPA, ""),
-    (CARTAGENA, "mas"),  # "mas" is functional: it stays in the text, not in the material
+    (GALAPA, "con quien ha contratado"),   # C4A.3: la evidencia no consume residual
+    (CARTAGENA, "con quien ha contratado mas"),  # "mas" is functional: stays in the text, not material
 ])
 def test_credentialed_turn_claims_admission_without_any_legacy_call(
         frame_on, make_flow, raw, expected_residual):
@@ -164,19 +164,18 @@ def test_credentialed_turn_claims_admission_without_any_legacy_call(
     result = run(flow, raw, chat_id="c3")
 
     # C3.4 + C4A.11 — the claim, with the accredited assembly and nothing else.
-    assert result["route_reason"] == "admission_accredited_execution_pending"
+    # C4A.3: el verbo del trabajo queda material, asi que el turno falla cerrado.
+    assert result["route_reason"] == "admission_UNACCREDITED_RESIDUAL"
     assert result["needs_clarification"] is True
-    assert "acredité sus parámetros" in result["response"]
+    assert result["response"]
     assert result["parsed_params"] == {} and result["resolved_params"] == {}
-    assert result["authority_status"] == "READY"
-    assert result["temporal_authority"]
-    assert result["residual_material"] == []
+    assert result["residual_material"] == ["contratado"]
     assert result["residual_text"] == expected_residual
     # C3.6 — provenance rides the one trace this turn writes.
     assert result["credential_capability"] == SUPPLIERS
     assert result["credential_source"] == "NATURAL_ALPHA"
     assert result["admission_owner"] == "ENTITY_PROFILE"
-    assert result["admission_reason"] == "accredited_execution_pending"
+    assert result["admission_reason"] == "UNACCREDITED_RESIDUAL"
     assert result["legacy_bypassed"] is True
     assert result["natural_alpha_status"] == "MATCHED"
     assert result["natural_alpha_jobs"] == [
@@ -208,12 +207,12 @@ def test_admit_itself_never_parses_a_credentialed_turn(frame_on, make_flow):
         observation=observation(grounded()),
     )
     assert turned.route is AdmissionRoute.CLARIFY
-    assert turned.decision.reason == "accredited_execution_pending"
+    # C4A.3: el verbo del trabajo sigue material; la ruta credenciada ya no lo tapa.
+    assert turned.decision.reason == "UNACCREDITED_RESIDUAL"
     assert turned.decision.owner is ContinuationOwner.ENTITY_PROFILE
-    assert turned.params["entidad_resolved"].startswith("MUNICIPIO DE GALAPA")
-    assert turned.params["fecha_desde"] == "2025-01-01"
+    assert turned.params == {}
     assert turned.credential is not None and turned.capability_spec is not None
-    assert turned.assembly is not None and turned.assembly.receipt_fields()["authority_status"] == "READY"
+    assert turned.assembly is not None and turned.assembly.receipt_fields()["authority_status"] == "CLARIFY"
     assert router_calls == []
 
 

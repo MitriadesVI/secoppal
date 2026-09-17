@@ -16,7 +16,6 @@ from datetime import date as Date
 from enum import Enum
 
 from app.core.accreditation.authorities import (
-    JOB_EVIDENCE,
     SUPPLIER_MENTION,
     AccreditedSpan,
     AuthorityReport,
@@ -225,12 +224,11 @@ def assemble(
             issues.append(AssemblyIssue(report.detail or "authority_clarify",
                                         _dimension_of(report), report.clarification))
 
-    evidence_consumes = not overreach
-    consumed = spans + (
-        (AccreditedSpan(JOB_EVIDENCE, credential.evidence_interval[0],
-                        credential.evidence_interval[1], "natural_alpha.job"),)
-        if evidence_consumes else ()
-    )
+    # The credential's own evidence never consumes residual: the model's quote is
+    # not an authority over the raw turn, so masking it could hide material the
+    # host never accredited (C4A.3).
+    evidence_consumes = False
+    consumed = spans
     residual = residual_of(raw, tuple(consumed))
     material = material_tokens(residual)
     if material:

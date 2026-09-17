@@ -85,14 +85,20 @@ def accredited(raw, world, *, evidence):
 
 def test_galapa_2025_assembles_buyer_and_time(world):
     assembly = accredited(GALAPA, world, evidence="con quien ha contratado")
-    assert assembly.status is AssemblyStatus.READY, (assembly.issues, assembly.residual_material)
+    # C4A.3: la evidencia del credential ya no consume residual, asi que el verbo
+    # del trabajo ("contratado") sigue material y el turno falla cerrado hasta que
+    # el verificador de residual lo adjudique. Comprador y periodo si quedan
+    # acreditados: eso es lo que prueban estas lineas.
+    assert assembly.status is AssemblyStatus.CLARIFY, (assembly.issues, assembly.residual_material)
+    assert assembly.reason == "UNACCREDITED_RESIDUAL"
+    assert "contratado" in assembly.residual_material
     # The gazetteer's own string is carried verbatim: "MUNICIPIO DE GALAPA." (the
     # trailing period is the alias DB's, not this lane's to repair).
     assert assembly.params["entidad_resolved"].startswith("MUNICIPIO DE GALAPA")
     assert assembly.params["fecha_desde"] == "2025-01-01"
     assert assembly.params["fecha_hasta"] == "2025-12-31"
     assert assembly.params["dataset"] == "contratos"
-    assert assembly.residual == "" and assembly.residual_material == ()
+    assert assembly.residual == "con quien ha contratado" and assembly.residual_material == ("contratado",)
     assert assembly.credential_overreach is False
     receipts = {receipt.dimension: receipt for receipt in assembly.authority_receipts}
     assert receipts["BUYER"].status == "OK" and receipts["BUYER"].detail == "buyer_exact"
@@ -101,11 +107,11 @@ def test_galapa_2025_assembles_buyer_and_time(world):
 
 def test_cartagena_2026_assembles(world):
     assembly = accredited(CARTAGENA, world, evidence="con quien ha contratado")
-    assert assembly.status is AssemblyStatus.READY, (assembly.issues, assembly.residual_material)
+    assert assembly.status is AssemblyStatus.CLARIFY, (assembly.issues, assembly.residual_material)
+    assert assembly.residual_material == ("contratado",)  # C4A.3: evidencia retirada
     assert "CARTAGENA" in assembly.params["entidad_resolved"]
     assert assembly.params["fecha_desde"] == "2026-01-01"
     assert assembly.params["fecha_hasta"] == "2026-12-31"
-    assert assembly.residual_material == ()
     assert "ordering_signal" not in assembly.params  # bare "mas" is not an ordering
 
 
@@ -126,7 +132,7 @@ def test_material_residual_is_never_erased(world, evidence):
     assert assembly.status is AssemblyStatus.CLARIFY
     assert assembly.reason == "UNACCREDITED_RESIDUAL"
     assert "obras" in assembly.residual_material and "civiles" in assembly.residual_material
-    assert assembly.evidence_consumes_residual is (evidence != OBRAS)
+    assert assembly.evidence_consumes_residual is False  # C4A.3: nunca consume
     assert assembly.credential_overreach is (evidence == OBRAS)
 
 
@@ -236,7 +242,7 @@ def test_geography_guard_ignores_the_buyers_own_name(world):
     assert independent.status is AssemblyStatus.CLARIFY
     assert independent.reason == "UNSUPPORTED_GEOGRAPHY"
     contained = accredited(GALAPA, world, evidence="con quien ha contratado")
-    assert contained.status is AssemblyStatus.READY
+    assert contained.status is AssemblyStatus.CLARIFY  # C4A.3: "contratado" material
 
 
 def test_actor_exact_guard_contains_a_named_actor(world):
