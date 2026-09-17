@@ -85,6 +85,7 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
         actor_candidate_selection=ctx.actor_candidate_selection,
         profile_action_selection=ctx.profile_action_selection,
         observation=observation,
+        residual_provider=workflow.residual_verifier_provider,
     )
 
     if ctx.profile_action_selection is not None:
@@ -146,13 +147,31 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
             needs_clarification=True,
         )
     elif admitted.route is AdmissionRoute.PROFILE:
+        # C4B: un turno credenciado ya adjudicó el trabajo, así que el foco de la
+        # capability reemplaza SÓLO la detección del perfil; compilar, ejecutar y
+        # presentar siguen siendo del Frame que ya existe.
+        bound_focus = (admitted.capability_spec.focus
+                       if admitted.credential is not None and admitted.capability_spec is not None
+                       else None)
         routed = run_profile_route(
             deps, ctx,
             params=admitted.params,
             state=admitted.profile_state,
             turn_id=reservation.turn_id if reservation else "anonymous",
+            bound_focus=bound_focus,
         )
-        if routed is None:
+        if routed is None and admitted.credential is not None:
+            # Sin ruta de perfil NO se cae al grafo legacy: un turno credenciado
+            # termina en CLARIFY, que es terminal, igual que sus demás vetos.
+            result = empty_result(
+                response=(
+                    "Acredité el trabajo y sus parámetros, pero este análisis no pudo "
+                    "compilar la consulta. Reformúlala indicando la entidad y el periodo."
+                ),
+                route_reason="admission_accredited_profile_route_unavailable",
+                needs_clarification=True,
+            )
+        elif routed is None:
             result = workflow._dispatch(ctx, dispatch_seed, observation=observation)
         else:
             result, outcome = routed.result, routed.outcome

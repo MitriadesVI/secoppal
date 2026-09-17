@@ -52,10 +52,6 @@ if TYPE_CHECKING:
     from app.core.workflow.deps import WorkflowDeps
 
 
-_ACCREDITED_READY = (
-    "Entendí el trabajo solicitado y acredité sus parámetros de ejecución, pero esta "
-    "ruta todavía no ejecuta la consulta."
-)
 _ACCREDITED_OTHER_OWNER = (
     "Entendí que esta pregunta es sobre un actor concreto; esa ruta todavía no está "
     "conectada en este carril."
@@ -155,6 +151,7 @@ def admit(
     actor_candidate_selection: dict | None = None,
     profile_action_selection: dict | None = None,
     observation: "Observation | None" = None,
+    residual_provider=None,
 ) -> AdmittedTurn:
     """Carga el contrato publicado, clasifica y devuelve UNA decisión.
 
@@ -213,6 +210,7 @@ def admit(
         deps, observation=observation, user_query=user_query,
         seed_resolved_params=seed_resolved_params, profile_state=profile_state,
         contract=contract, status=status, revision=read.revision, today=today,
+        residual_provider=residual_provider,
     )
     if accredited is not None:
         return accredited
@@ -268,18 +266,23 @@ def admit(
 
 def _accredited_pending(
     deps: "WorkflowDeps", *, observation, user_query, seed_resolved_params,
-    profile_state, contract, status, revision, today=None,
+    profile_state, contract, status, revision, today=None, residual_provider=None,
 ) -> AdmittedTurn | None:
-    """C4A: ensamblar las autoridades sobre el raw y terminar el turno con honestidad.
+    """C4A/C4B: ensamblar las autoridades sobre el raw y terminar el turno con honestidad.
 
     Plan V2 9-17: con credencial válida no hay ``query_router.parse``, ni
     external owner sobre params legacy, ni migración, ni caída al dispatcher. Las
-    autoridades independientes leen el raw y producen ``accredited_params``; C4A
-    todavía no ejecuta el runtime de perfil, así que READY termina en un CLARIFY
-    que transporta los parámetros acreditados y sus receipts.
+    autoridades independientes leen el raw y producen ``accredited_params``.
+
+    READY (C4B) ya no es un CLARIFY: los parámetros acreditados toman la ruta
+    PROFILE que existe para cualquier turno de perfil, con la credencial y la spec
+    viajando juntas. El verificador de residual corre dentro del ensamblaje — sólo
+    con residual material — y un veto suyo, un error o cualquier guard siguen
+    terminando el turno en CLARIFY, que es terminal.
     """
     from app.core.accreditation.assembly import AssemblyStatus, assemble
     from app.core.accreditation.registry import spec_for_credential
+    from app.core.accreditation.residual_verifier import settings_residual_provider
     from app.core.accreditation.seam import credential_from_observation
     from app.core.workflow.admission_rules import input_shape
 
@@ -291,17 +294,20 @@ def _accredited_pending(
         raise ValueError("CREDENTIAL_WITHOUT_DECLARED_SPEC")
     assembly = assemble(user_query, credential, spec,
                         entity_resolver=deps.entity_resolver, today=today,
-                        actor_resolver=deps.actor_name_resolver)
+                        actor_resolver=deps.actor_name_resolver,
+                        residual_verifier=residual_provider
+                        or settings_residual_provider(deps.settings))
+    route, reason, response, params = AdmissionRoute.CLARIFY, "", "", {}
     if assembly.status is AssemblyStatus.READY:
-        reason, response, params = "accredited_execution_pending", _ACCREDITED_READY, assembly.params
+        route, reason, params = AdmissionRoute.PROFILE, "accredited", assembly.params
     elif assembly.status is AssemblyStatus.OTHER_OWNER:
-        reason, response, params = "other_owner_pending", _ACCREDITED_OTHER_OWNER, {}
+        reason, response = "other_owner_pending", _ACCREDITED_OTHER_OWNER
     else:
-        reason, params = assembly.reason, {}
+        reason = assembly.reason
         response = next((issue.detail for issue in assembly.issues if issue.detail), "")
     return _finish_admission(
         decision=AdmissionDecision(
-            AdmissionRoute.CLARIFY, reason,
+            route, reason,
             input_shape(user_query, seed_resolved_params=seed_resolved_params),
             ContinuationOwner.ENTITY_PROFILE, response,
         ),

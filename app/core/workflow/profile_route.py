@@ -42,6 +42,7 @@ def run_profile_route(
     params: dict,
     state: ProfileConversationState,
     turn_id: str,
+    bound_focus: str | None = None,
 ) -> ProfileRouteResult | None:
     outcome = run_profile_turn(
         user_query=ctx.user_query,
@@ -51,6 +52,7 @@ def run_profile_route(
         soql_builder=deps.soql_builder,
         secop_client=deps.secop_client,
         today=ctx.today,
+        bound_focus=bound_focus,
     )
     if outcome is None:
         return None

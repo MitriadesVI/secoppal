@@ -90,6 +90,9 @@ class SecopalWorkflow:
     def __init__(self, settings: Settings):
         self.settings = settings
         self.natural_alpha_provider = None  # lazy in eligible turns; injectable in tests
+        # C4B: el verificador de residual (B) usa el mismo contrato bounded que
+        # Natural Alpha y se construye perezosamente; inyectable en tests.
+        self.residual_verifier_provider = None
         self.entity_resolver = EntityResolver(settings.secop_alias_db_path)
         self.query_router = QueryRouter(entity_resolver=self.entity_resolver)
         self.actor_name_resolver = ActorNameResolver(settings.secop_actor_alias_index_path)

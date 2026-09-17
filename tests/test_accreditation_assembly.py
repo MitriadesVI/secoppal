@@ -1,10 +1,16 @@
-"""C4A: authorities over the raw turn, accredited params, residual and overreach.
+"""C4A/C4B: authorities over the raw turn, accredited params, residual and overreach.
 
 Only the control plane is measured here: credentials are injected (oracle) and
 the classifier is not run. The assembler never touches QueryRouter, the legacy
 graph or a source — that is asserted in the credentialed-admission tests, where
 the real counters live.
+
+C4B moved the weak exact actor guard after the residual verifier, so a case whose
+only veto is that guard now needs a verifier that approves: with no verifier the
+turn still clarifies, but for the residual (the verifier is the gate that runs
+first), not for the actor.
 """
+import json
 from datetime import date
 
 import pytest
@@ -73,11 +79,27 @@ def credential_for(raw, settings, *, evidence):
     return rebuilt
 
 
-def accredited(raw, world, *, evidence):
+class ApprovingVerifier:
+    """B's frozen contract, approving: every unit it is handed is job language."""
+
+    def __init__(self):
+        self.calls = []
+
+    def observe(self, call_key, request):
+        from app.core.natural_alpha.provider import ProviderResult
+
+        body = json.loads(json.loads(request["input"])["text"].split("\n\nENTRADA\n", 1)[1])
+        self.calls.append(body["residual_units"])
+        return ProviderResult(json.dumps({"labels": [
+            {"id": line.split(":", 1)[0], "label": "JOB_LANGUAGE"}
+            for line in body["residual_units"]]}), provider_calls=1)
+
+
+def accredited(raw, world, *, evidence, verifier=None):
     settings, resolver, actor_resolver = world
     return assemble(raw, credential_for(raw, settings, evidence=evidence),
                     capability_spec(SUPPLIERS), entity_resolver=resolver, today=TODAY,
-                    actor_resolver=actor_resolver)
+                    actor_resolver=actor_resolver, residual_verifier=verifier)
 
 
 # ── C4A.13: mandatory incidents (oracle: the credential witnesses the job phrase,
@@ -253,10 +275,15 @@ def test_actor_exact_guard_contains_a_named_actor(world):
     assert any("fundacaribe" in alias for alias, _, _ in found), (
         "the actor index did not recognise the exact alias; an unavailable index must "
         "not be mistaken for containment")
+    # C4B: el guard débil corre DESPUÉS del verificador de residual, así que el
+    # caso necesita un verificador que apruebe para llegar a él.
+    verifier = ApprovingVerifier()
     assembly = accredited("cuanto le ha vendido fundacaribe a galapa", world,
-                          evidence="le ha vendido")
+                          evidence="le ha vendido", verifier=verifier)
     assert assembly.status is AssemblyStatus.CLARIFY
-    assert assembly.reason in ("ACTOR_MENTION_PRESENT", "actor_subject")
+    assert assembly.reason == "ACTOR_MENTION_PRESENT"
+    assert assembly.weak_actor_guard_called is True
+    assert verifier.calls, "the weak actor guard runs only after the verifier answered"
     guard = actor_exact_guard("cuanto le ha vendido fundacaribe a galapa",
                               actor_resolver=actor_resolver, protected_spans=())
     assert guard.status == "CLARIFY"
@@ -286,10 +313,14 @@ def test_guard_mutation_lets_its_case_through(world, monkeypatch, guard_name, ra
     from app.core.accreditation import assembly as assembly_module
     from app.core.accreditation.guards import GuardReport
 
-    blocked = accredited(raw, world, evidence=evidence)
+    # C4B: este caso es el veto del guard débil, que sólo corre si el verificador
+    # de residual aprobó — sin verificador el turno se detiene antes, por residual.
+    blocked = accredited(raw, world, evidence=evidence,
+                         verifier=ApprovingVerifier() if guard_name == "actor_exact_guard" else None)
     assert blocked.reason == expected_reason, blocked.reason
 
     monkeypatch.setattr(assembly_module, guard_name,
                         lambda *args, **kwargs: GuardReport("disabled", "ABSENT"))
-    mutated = accredited(raw, world, evidence=evidence)
+    mutated = accredited(raw, world, evidence=evidence,
+                         verifier=ApprovingVerifier() if guard_name == "actor_exact_guard" else None)
     assert mutated.reason != expected_reason

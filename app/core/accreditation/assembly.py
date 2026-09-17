@@ -4,8 +4,14 @@ The assembly never executes: it decides READY / CLARIFY / OTHER_OWNER for a turn
 a credential already claimed, and it never consults the legacy parser, the
 QueryRouter or a source. Parameters are only what an authority accredited, and
 the residual is computed over the raw turn from the accredited spans — the
-credential's own evidence only consumes residual when it does not overreach into
-a host-owned span.
+credential's own evidence never consumes residual.
+
+C4B order: the strong actor authority (``detect_actor_name``) keeps its place at
+the head of the chain, then the deterministic authorities, then the residual —
+the only point where nothing else can decide —, then the residual-role verifier
+(B) and only then the weak exact actor guard. The verifier can only veto: MATERIAL,
+UNKNOWN and every error stop the turn before the weak guard is even called, and
+only all-``JOB_LANGUAGE`` lets the guard be asked.
 """
 
 from __future__ import annotations
@@ -28,12 +34,19 @@ from app.core.accreditation.authorities import (
 )
 from app.core.accreditation.credential import CapabilityCredential
 from app.core.accreditation.guards import (
+    GuardReport,
     actor_exact_guard,
     geography_guard,
     modality_guard,
     money_guard,
 )
 from app.core.accreditation.registry import CONTRACTS_UNIVERSE
+from app.core.accreditation.residual_verifier import (
+    ResidualVerification,
+    not_reached,
+    residual_role_contract,
+    verify_residual,
+)
 from app.core.accreditation.spec import CapabilitySpec, Dimension
 from app.core.query_text_consumption import compact_whitespace, mask_consumed_spans
 from app.utils.money import normalize_text
@@ -50,6 +63,11 @@ _HOST_OWNED = frozenset({
     Dimension.SOURCE.value, Dimension.RANKING.value, Dimension.MONEY.value,
     Dimension.MODALITY.value, Dimension.GEOGRAPHY.value, Dimension.TOPIC.value,
 })
+# The receipt the weak guard leaves when the residual verifier stopped the turn:
+# the guard has no opinion because it was never asked, and saying so is the point.
+_GUARD_NOT_RUN = "NOT_RUN"
+_GUARD_NOT_RUN_DETAIL = "not_run_residual_material"
+_WEAK_GUARD_AUTHORITY = "ActorNameResolver.exact_aliases_in"
 
 
 class AssemblyStatus(str, Enum):
@@ -87,6 +105,9 @@ class AccreditationAssembly:
     credential_overreach: bool
     evidence_consumes_residual: bool
     owner: str = ""
+    # C4B: the verifier's receipt and whether the weak actor guard was asked.
+    residual_verification: ResidualVerification | None = None
+    weak_actor_guard_called: bool = False
 
     def receipt_fields(self) -> dict:
         """Flat provenance for the turn result (plan V2 21 counters on top)."""
@@ -95,7 +116,7 @@ class AccreditationAssembly:
         temporal = ""
         if self.params.get("fecha_desde") or self.params.get("fecha_hasta"):
             temporal = f"{self.params.get('fecha_desde') or '..'}..{self.params.get('fecha_hasta') or '..'}"
-        return {
+        fields = {
             "authority_status": self.status.value,
             "authority_reason": self.reason,
             "authority_owner": self.owner,
@@ -107,6 +128,7 @@ class AccreditationAssembly:
             "evidence_consumes_residual": self.evidence_consumes_residual,
             "residual_text": self.residual,
             "residual_material": list(self.residual_material),
+            "weak_actor_guard_called": self.weak_actor_guard_called,
             "accredited_spans": [
                 {"dimension": span.dimension, "start": span.start, "end": span.end,
                  "authority": span.authority, "canonical_value": span.canonical_value}
@@ -118,6 +140,12 @@ class AccreditationAssembly:
                 for receipt in self.authority_receipts
             ],
         }
+        # The verifier's own receipt travels flat: called/not-reached/not-called,
+        # the contract, the units it saw, its labels and its latency. No key, no
+        # secret, ever.
+        if self.residual_verification is not None:
+            fields.update(self.residual_verification.receipt_fields())
+        return fields
 
 
 def _valid(spans: tuple[AccreditedSpan, ...], raw: str) -> tuple[AccreditedSpan, ...]:
@@ -149,7 +177,7 @@ def material_tokens(residual: str) -> tuple[str, ...]:
     )
 
 
-def _params(reports: tuple[AuthorityReport, ...], spec: CapabilitySpec) -> dict:
+def _params(reports: tuple[AuthorityReport | GuardReport, ...], spec: CapabilitySpec) -> dict:
     params: dict = {}
     for report in reports:
         for key, value in getattr(report, "params", ()):
@@ -168,14 +196,15 @@ def assemble(
     entity_resolver,
     today: Date | None = None,
     actor_resolver=None,
+    residual_verifier=None,
 ) -> AccreditationAssembly:
     """Run every authority over the raw turn and decide its single status.
 
-    Order matters (plan V2 9-17): authorities first, then the guards of the
-    dimensions the spec cannot apply, then span protection, then the evidence
-    overreach check and only then the residual. A dimension stops being visible
-    because its authority looked at the turn — never because a word happened to
-    be in the functional closed class.
+    Order matters (plan V2 9-17, C4B): authorities first, then the guards of the
+    dimensions the spec cannot apply, then span protection, then the residual —
+    and there the verifier answers before the weak exact actor guard is asked. A
+    dimension stops being visible because its authority looked at the turn —
+    never because a word happened to be in the functional closed class.
     """
     buyer = buyer_authority(raw, entity_resolver=entity_resolver)
     buyer_spans = _valid(buyer.spans, raw)
@@ -194,23 +223,18 @@ def assemble(
     modality = modality_guard(raw)
     money = money_guard(raw)
     geography = geography_guard(raw, buyer_span=buyer_span)
+    reports = (buyer, time, actor, ranking, guard, source, modality, money, geography)
+    # What the weak guard must never re-read as an actor: every span the host has
+    # already interpreted (same call site the C4A.5 audit measured).
     interpreted = tuple(
         (span.start, span.end)
-        for report in (buyer, time, actor, ranking, guard, source, modality, money, geography)
+        for report in reports
         for span in _valid(report.spans, raw)
     )
-    actor_exact = actor_exact_guard(raw, actor_resolver=actor_resolver,
-                                    protected_spans=interpreted)
-    reports = (buyer, time, actor, ranking, guard, source,
-               modality, money, geography, actor_exact)
-
-    spans = tuple(
-        span for report in reports for span in _valid(report.spans, raw)
-    )
-    occupied = tuple(
-        (span.start, span.end) for span in spans if span.dimension in _HOST_OWNED
-    )
-    overreach = any(_overlaps(credential.evidence_interval, interval) for interval in occupied)
+    # The residual is what THESE authorities did not accredit. The weak guard is
+    # deliberately absent here: its alias would otherwise hide text from the
+    # verifier before the verifier was asked (that is what D01/H05 measured).
+    spans = tuple(span for report in reports for span in _valid(report.spans, raw))
 
     conflicts = [
         AssemblyIssue("ACTOR_BUYER_SPAN_CONFLICT", Dimension.ACTOR.value,
@@ -228,26 +252,57 @@ def assemble(
     # not an authority over the raw turn, so masking it could hide material the
     # host never accredited (C4A.3).
     evidence_consumes = False
-    consumed = spans
-    residual = residual_of(raw, tuple(consumed))
+    residual = residual_of(raw, spans)
     material = material_tokens(residual)
-    if material:
-        issues.append(AssemblyIssue("UNACCREDITED_RESIDUAL", Dimension.TOPIC.value,
-                                    " ".join(material)))
+    params = _params(reports, spec)
+    status, reason, owner = _decide(conflicts, actor, issues, params)
+
+    verification: ResidualVerification = not_reached(spec.capability)
+    weak_actor_guard_called = False
+    guard_receipt = AuthorityReceipt(Dimension.ACTOR.value, _WEAK_GUARD_AUTHORITY,
+                                     _GUARD_NOT_RUN, _GUARD_NOT_RUN_DETAIL)
+    if status is AssemblyStatus.READY:
+        # C4B: the residual is the last dimension without an owner. With nothing
+        # to adjudicate there is no call at all; with units, the verifier decides
+        # first and the weak actor guard is asked only if it did not veto.
+        verification = verify_residual(
+            raw, material, contract=residual_role_contract(spec.capability),
+            provider=residual_verifier,
+        )
+        if material and not verification.adjudicated:
+            status, reason = AssemblyStatus.CLARIFY, "UNACCREDITED_RESIDUAL"
+            issues.append(AssemblyIssue("UNACCREDITED_RESIDUAL", Dimension.TOPIC.value,
+                                        " ".join(material)))
+        else:
+            actor_exact = actor_exact_guard(raw, actor_resolver=actor_resolver,
+                                            protected_spans=interpreted)
+            weak_actor_guard_called = True
+            spans = spans + _valid(actor_exact.spans, raw)
+            guard_receipt = AuthorityReceipt(
+                Dimension.ACTOR.value, actor_exact.authority, actor_exact.status,
+                actor_exact.detail, len(actor_exact.spans))
+            if actor_exact.status == "CLARIFY":
+                status, reason = AssemblyStatus.CLARIFY, actor_exact.detail
+                issues.append(AssemblyIssue(actor_exact.detail, Dimension.ACTOR.value,
+                                            actor_exact.clarification))
+
+    occupied = tuple(
+        (span.start, span.end) for span in spans if span.dimension in _HOST_OWNED
+    )
+    overreach = any(_overlaps(credential.evidence_interval, interval) for interval in occupied)
 
     receipts = tuple(
         AuthorityReceipt(_dimension_of(report), report.authority, report.status,
                          report.detail, len(report.spans))
         for report in reports
-    )
-    params = _params(reports, spec)
-    status, reason, owner = _decide(conflicts, actor, issues, params)
+    ) + (guard_receipt,)
     return AccreditationAssembly(
         status=status, reason=reason, params=params, spans=spans,
         issues=tuple(issues), authority_receipts=receipts,
         residual=residual, residual_material=material,
         credential_overreach=overreach, evidence_consumes_residual=evidence_consumes,
-        owner=owner,
+        owner=owner, residual_verification=verification,
+        weak_actor_guard_called=weak_actor_guard_called,
     )
 
 
@@ -282,6 +337,11 @@ def _decide(
     conflicts: list[AssemblyIssue], actor: AuthorityReport,
     issues: list[AssemblyIssue], params: dict,
 ) -> tuple[AssemblyStatus, str, str]:
+    """Everything that decides before the residual: conflicts, actor, guards, scope.
+
+    READY here means "the turn reached the residual point", not "the turn may
+    execute": the residual verifier and the weak actor guard still have to answer.
+    """
     if conflicts:
         return AssemblyStatus.CLARIFY, conflicts[0].code, ""
     if actor.status == "OTHER_OWNER":
@@ -291,7 +351,4 @@ def _decide(
         return AssemblyStatus.CLARIFY, blocking[0].code, ""
     if not _scope_accepted(params):
         return AssemblyStatus.CLARIFY, "scope_not_accredited", ""
-    residual_issue = next((i for i in issues if i.code == "UNACCREDITED_RESIDUAL"), None)
-    if residual_issue is not None:
-        return AssemblyStatus.CLARIFY, "UNACCREDITED_RESIDUAL", ""
     return AssemblyStatus.READY, "accredited", ""

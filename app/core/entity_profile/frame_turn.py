@@ -16,7 +16,7 @@ confirmado.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date as Date
 from enum import Enum
 import re
@@ -27,7 +27,11 @@ from app.core.entity_profile.claim_adapters import (
     collect_claims,
     consume_clear_period_terms,
 )
-from app.core.entity_profile.claim_composition import buyer_scope_from, compose_patch
+from app.core.entity_profile.claim_composition import (
+    PatchProposal,
+    buyer_scope_from,
+    compose_patch,
+)
 from app.core.entity_profile.execution_record import (
     ExecutionRecord,
     build_execution_record,
@@ -39,7 +43,14 @@ from app.core.entity_profile.frame_response import render_frame_profile
 from app.core.entity_profile.frame_response import build_profile_sections
 from app.core.entity_profile.frame_runner import ProfileEvidence, execute_plan
 from app.core.entity_profile.presentation import project_entity_profile
-from app.core.entity_profile.patch import EntityProfilePatch, apply_patch
+from app.core.entity_profile.patch import (
+    EntityProfilePatch,
+    PatchOp,
+    PatchOperation,
+    PatchTarget,
+    TargetKind,
+    apply_patch,
+)
 from app.core.entity_profile.pending_resolution import PendingOutcome, resolve_pending
 from app.core.entity_profile.profile_state import (
     PendingIssue,
@@ -108,10 +119,20 @@ class ProfileTurnOutcome:
 
 def is_profile_turn(
     user_query: str, params: dict, state: ProfileConversationState,
+    *, bound_focus: str | None = None,
 ) -> tuple[bool, str | None]:
-    """¿Este turno lo posee el perfil? El universo activo sale del ESTADO."""
+    """¿Este turno lo posee el perfil? El universo activo sale del ESTADO.
+
+    ``bound_focus`` reemplaza SÓLO la detección — el mismo contrato que
+    ``classify_entity_profile_turn(bound_focus=...)`` usa en el carril A2: una
+    autoridad ya adjudicó el trabajo (SUPPLIERS) y el Frame sigue siendo quien
+    compila, ejecuta y presenta. Una pendiente abierta sigue ganando: contestarla
+    es lo que el turno significa.
+    """
     if state.has_pending:
         return True, _pending_focus(state)
+    if bound_focus:
+        return True, bound_focus
     if state.confirmed_frame is None:
         return detect_entity_profile_turn(user_query, params)
     from app.core.contract_universe_intent import request
@@ -143,9 +164,10 @@ def run_profile_turn(
     soql_builder: Any,
     secop_client: Any,
     today: Date | None = None,
+    bound_focus: str | None = None,
 ) -> ProfileTurnOutcome | None:
     """El turno completo, o `None` si el perfil no es su dueño."""
-    detected, focus = is_profile_turn(user_query, params, state)
+    detected, focus = is_profile_turn(user_query, params, state, bound_focus=bound_focus)
     if not detected:
         return None
 
@@ -180,7 +202,7 @@ def run_profile_turn(
         user_query=user_query, clean=clean, base=base, buyer=buyer,
         turn_id=turn_id, state=state, soql_builder=soql_builder,
         secop_client=secop_client, resolution=resolution, focus=focus,
-        today=today,
+        today=today, bound_focus=bound_focus,
     )
 
 
@@ -188,13 +210,15 @@ def run_profile_turn(
 
 def _compose_and_run(
     *, user_query, clean, base, buyer, turn_id, state, soql_builder,
-    secop_client, resolution, focus, today,
+    secop_client, resolution, focus, today, bound_focus=None,
 ) -> ProfileTurnOutcome:
     claims = collect_claims(
         user_query, clean, turn_id=turn_id, buyer_resolution=resolution,
         today=today,
     )
-    proposal = compose_patch(claims, base_frame=base, buyer_scope=buyer)
+    proposal = _bind_focus(
+        compose_patch(claims, base_frame=base, buyer_scope=buyer), bound_focus,
+    )
     if proposal.patch is None:
         if proposal.issues:
             return _clarify(
@@ -343,6 +367,30 @@ def _empty_patch(turn_id, base, buyer) -> EntityProfilePatch:
         base_frame_ref=(base.frame_id, base.revision) if base else None,
         new_buyer_scope=buyer if base is None else None,
     )
+
+
+def _bind_focus(proposal: PatchProposal, bound_focus: str | None) -> PatchProposal:
+    """C4B: el trabajo ACREDITADO fija el foco del Frame con una operación tipada.
+
+    Una credencial ``entity_profile.suppliers`` ya adjudicó qué trabajo es este
+    turno, así que el foco de la capability se declara con la MISMA operación que
+    usa el texto —``SET`` sobre ``TargetKind.FOCUS``— y reemplaza la que las
+    claims hayan producido: dos ``SET`` sobre el mismo target con valores
+    distintos invalidarían el parche (``CONFLICTING_OPERATIONS``), y el foco
+    acreditado no puede depender de si la paráfrasis nombró el sustantivo.
+    Nada más del parche cambia; compilar, ejecutar y presentar siguen siendo del
+    Frame.
+    """
+    if bound_focus is None or proposal.patch is None:
+        return proposal
+    operations = tuple(
+        op for op in proposal.patch.operations
+        if op.target.kind is not TargetKind.FOCUS
+    ) + (
+        PatchOp(target=PatchTarget(TargetKind.FOCUS), operation=PatchOperation.SET,
+                value=bound_focus),
+    )
+    return replace(proposal, patch=replace(proposal.patch, operations=operations))
 
 
 def _base_frame(
