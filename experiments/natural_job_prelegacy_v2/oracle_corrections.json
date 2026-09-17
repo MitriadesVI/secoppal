@@ -1,0 +1,28 @@
+{
+  "checkpoint": "C4A.3",
+  "mission": "NATURAL_JOB_PRELEGACY_V2",
+  "frozen_artifacts_untouched": {
+    "corpus_dev.json": true,
+    "holdout.json": true,
+    "prompt_v3.frozen.txt": true,
+    "oracle_adjudication.json": true
+  },
+  "nota": "Correcciones del oraculo de EJECUCION congelado. No se edita el holdout: se registra aparte que la expectativa era erronea y por que, para que el harness no cuente el caso como violacion de un hard gate.",
+  "corrections": [
+    {
+      "case_id": "H20",
+      "dataset": "holdout",
+      "raw": "¿Quiénes son los proveedores del departamento de Antioquia?",
+      "original_expectation": {
+        "owner": "NOT_SUPPLIERS",
+        "outcome": "ANY_NOT_SUPPLIERS",
+        "forbid": ["SUPPLIERS_EXECUTED", "EXECUTE_WITHOUT_BUYER"]
+      },
+      "correction": "ORACLE_ERROR",
+      "observed_runtime": "READY/accredited con buyer DEPARTAMENTO DE ANTIOQUIA//",
+      "reason": "El texto nombra una entidad compradora explicita ('departamento de Antioquia'), no un territorio desnudo: el resolver la acredita como comprador y EXECUTE_WITHOUT_BUYER no aplica. La expectativa del holdout se escribio desde la familia no_buyer y quedo equivocada; el comportamiento del host es el correcto.",
+      "consequence": "El caso queda EXCLUIDO de la contabilidad de hard gates, nunca silenciado: se reporta aparte como oracle_error_excluded.",
+      "contrast": "U13 ('proveedores en Antioquia') y H13 ('municipios de Bolívar') si son territorios/universos sin comprador unico y su CLARIFY se mantiene."
+    }
+  ]
+}

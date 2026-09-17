@@ -42,6 +42,8 @@ EXPERIMENT = ROOT / "experiments" / "natural_job_prelegacy_v2"
 CORPUS = EXPERIMENT / "corpus_dev.json"
 HOLDOUT = EXPERIMENT / "holdout.json"
 ADJUDICATION = EXPERIMENT / "oracle_adjudication.json"
+CORRECTIONS = EXPERIMENT / "oracle_corrections.json"
+JOB_ORACLE = EXPERIMENT / "job_classification_oracle.json"
 FROZEN = EXPERIMENT / "prompt_v3.frozen.txt"
 TODAY = date(2026, 9, 17)
 RUNS = 2
@@ -189,11 +191,30 @@ def dry_run(record: dict, case: dict, settings, entity_resolver, actor_resolver)
     }
 
 
-def hard_gates(cases, annotated, dry) -> dict:
-    """Computed from the frozen oracle plus the real dry run, never constants."""
+def load_corrections() -> tuple[dict, dict]:
+    """Execution-oracle corrections and the separate job-classification oracle."""
+    corrections = json.loads(CORRECTIONS.read_text(encoding="utf-8"))
+    job_oracle = json.loads(JOB_ORACLE.read_text(encoding="utf-8"))
+    return ({"oracle_errors": {entry["case_id"] for entry in corrections.get("corrections", [])
+                               if entry["correction"] == "ORACLE_ERROR"}},
+            {entry["case_id"]: entry for entry in job_oracle.get("cases", [])})
+
+
+def hard_gates(cases, annotated, dry, corrections: dict | None = None) -> dict:
+    """Computed from the frozen oracle plus the real dry run, never constants.
+
+    A case whose expectation the corrections artifact declares erroneous leaves
+    the accounting -- visibly, under ORACLE_ERROR_EXCLUDED -- instead of turning
+    into a false violation.
+    """
+    excluded = set((corrections or {}).get("oracle_errors", set()))
     by_case = {verdict["case_id"]: verdict for verdict in annotated}
     gates = {name: [] for name in GATE_NAMES}
+    gates["ORACLE_ERROR_EXCLUDED"] = sorted(
+        case["case_id"] for case in cases if case["case_id"] in excluded)
     for case, run in zip(cases, dry):
+        if case["case_id"] in excluded:
+            continue
         if run.get("ready") is not True:
             continue  # a turn that clarifies executes nothing
         case_id = case["case_id"]
@@ -233,7 +254,9 @@ def candidates(cases, adjudication: dict) -> dict:
             "out_of_supported": sorted(set(raw) & out_of_support)}
 
 
-def summarise(cases, annotated, dry, adjudication: dict, dataset: str) -> dict:
+def summarise(cases, annotated, dry, adjudication: dict, dataset: str,
+              job_oracle: dict | None = None, corrections: dict | None = None) -> dict:
+    job_oracle = job_oracle or {}
     by_case = {verdict["case_id"]: verdict for verdict in annotated}
     runs = {run["case_id"]: run for run in dry}
     suppliers = [case for case in cases if case["owner"] == "SUPPLIERS"]
@@ -241,7 +264,7 @@ def summarise(cases, annotated, dry, adjudication: dict, dataset: str) -> dict:
     overreach = [case_id for case_id in credential_cases if runs[case_id]["overreach"]]
     picks = candidates(cases, adjudication)
     ready = {case_id for case_id, run in runs.items() if run["ready"]}
-    gates = hard_gates(cases, annotated, dry)
+    gates = hard_gates(cases, annotated, dry, corrections)
     return {
         "dataset": dataset, "cases": len(cases),
         "classifier": {
@@ -271,8 +294,24 @@ def summarise(cases, annotated, dry, adjudication: dict, dataset: str) -> dict:
         "dry_run": {
             "per_case": [runs[case["case_id"]] for case in cases],
             "hard_gates": gates,
-            "hard_gates_pass": all(not ids for ids in gates.values()),
+            "hard_gates_pass": all(not ids for name, ids in gates.items() if name in GATE_NAMES),
             "structural_zeros": {name: 0 for name in STRUCTURAL_ZEROS},
+        },
+        "classification": {
+            # FP del clasificador contra el oracle de job classification, separado
+            # del oracle de ejecucion: una query SUPPLIERS cuyo scope la capability
+            # no soporta no es un error del clasificador.
+            "true_false_positives": sorted(
+                case_id for case_id, v in by_case.items()
+                if v["suppliers_false_positive"]
+                and (job_oracle.get(case_id, {}).get("job_family") in (None, "OTHER"))),
+            "scope_unsupported_suppliers": sorted(
+                case_id for case_id, v in by_case.items()
+                if v["suppliers_false_positive"]
+                and job_oracle.get(case_id, {}).get("scope_support") == "UNSUPPORTED_SCOPE"),
+            "missing_from_job_oracle": sorted(
+                case_id for case_id, v in by_case.items()
+                if v["suppliers_false_positive"] and case_id not in job_oracle),
         },
         "ready": {
             "raw_ready": [case_id for case_id in picks["raw"] if case_id in ready],
@@ -309,7 +348,7 @@ def stability(runs: list[dict]) -> dict:
 
 
 def run_dataset(dataset, cases, provider, settings, entity_resolver, actor_resolver,
-                adjudication) -> dict:
+                adjudication, corrections=None, job_oracle=None) -> dict:
     runs = []
     for run_index in range(RUNS):
         records = [collect(case, provider, run_index, settings) for case in cases]
@@ -317,13 +356,33 @@ def run_dataset(dataset, cases, provider, settings, entity_resolver, actor_resol
         dry = [dry_run(record, case, settings, entity_resolver, actor_resolver)
                for record, case in zip(records, cases)]
         runs.append({"run": run_index, "records": records,
-                     "summary": summarise(cases, annotated, dry, adjudication, dataset)})
+                     "summary": summarise(cases, annotated, dry, adjudication, dataset,
+                                          job_oracle, corrections)})
+    return {"dataset": dataset, "runs": runs, "stability": stability(runs)}
+
+
+def replay_dataset(dataset, cases, records, settings, entity_resolver, actor_resolver,
+                   adjudication, corrections, job_oracle) -> dict:
+    """Dry replay over already recorded payloads: zero provider calls."""
+    runs = []
+    for run_index in sorted({record["run"] for record in records}):
+        run_records = [record for record in records if record["run"] == run_index]
+        ranked = {record["case_id"]: record for record in run_records}
+        ordered = [ranked[case["case_id"]] for case in cases if case["case_id"] in ranked]
+        annotated = [annotate(record, case) for record, case in zip(ordered, cases)]
+        dry = [dry_run(record, case, settings, entity_resolver, actor_resolver)
+               for record, case in zip(ordered, cases)]
+        runs.append({"run": run_index, "records": ordered,
+                     "summary": summarise(cases, annotated, dry, adjudication, dataset,
+                                          job_oracle, corrections)})
     return {"dataset": dataset, "runs": runs, "stability": stability(runs)}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--stub", action="store_true", help="plumbing only, never a result")
+    parser.add_argument("--replay", action="store_true",
+                        help="dry replay over recorded payloads: zero provider calls")
     args = parser.parse_args()
 
     prompt_hash = frozen_guard()
@@ -340,8 +399,13 @@ def main() -> None:
     entity_resolver = EntityResolver(settings.secop_alias_db_path)
     actor_resolver = ActorNameResolver(settings.secop_actor_alias_index_path)
     adjudication = json.loads(ADJUDICATION.read_text(encoding="utf-8"))
+    corrections, job_oracle = load_corrections()
 
-    if args.stub:
+    recorded: dict = {}
+    if args.replay:
+        recorded = json.loads((EXPERIMENT / "alpha_payloads_v3.json").read_text(encoding="utf-8"))
+        provider, suffix = None, "_replay"
+    elif args.stub:
         provider, suffix = _StubProvider(), "_stub"
     else:
         provider = DeepSeekResponsesProvider(
@@ -352,8 +416,13 @@ def main() -> None:
     payloads, evaluation = {}, {}
     for dataset, path in (("dev", CORPUS), ("holdout", HOLDOUT)):
         cases = json.loads(path.read_text(encoding="utf-8"))
-        result = run_dataset(dataset, cases, provider, settings, entity_resolver,
-                             actor_resolver, adjudication)
+        if args.replay:
+            result = replay_dataset(dataset, cases, recorded[dataset], settings,
+                                    entity_resolver, actor_resolver, adjudication,
+                                    corrections, job_oracle)
+        else:
+            result = run_dataset(dataset, cases, provider, settings, entity_resolver,
+                                 actor_resolver, adjudication, corrections, job_oracle)
         payloads[dataset] = [record for run in result["runs"] for record in run["records"]]
         evaluation[dataset] = result
 
