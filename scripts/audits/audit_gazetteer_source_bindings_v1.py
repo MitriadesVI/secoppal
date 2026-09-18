@@ -36,18 +36,20 @@ Los predicados no se reconstruyen a mano: el universo LIKE actual sale de
 emiten producción. Reimplementarlas mediría una consulta que el producto nunca
 manda.
 
-Lectura de los datos: por defecto `classic` (el endpoint de recurso), con
-`--transport soda3` disponible. Las sondas de latencia fueron CONTRADICTORIAS
-entre sí (el mismo `GROUP BY` con `unaccent(UPPER()) LIKE` medido entre 4,4 y
-126 segundos según el momento, en ambos transportes): Socrata no permite
-adjudicar un ganador de velocidad con una muestra así. Lo que sí quedó probado,
-y es lo que importa aquí, es que **ambos transportes devuelven el MISMO
-universo** para estos predicados — fingerprints idénticos en 4/4 casos,
-`artifacts/audits/smoke_adr073_v1/transport_parity.json`. Como la elección no
-cambia lo medido, se conserva `classic` (media peor pero sin los casos extremos
-de SODA3 en la muestra disponible). Presupuesto 60s por llamada, 1 reintento,
-workers=2; un timeout se clasifica `INCONCLUSIVE` y se reprocesa con
-`--recheck-existing`, opcionalmente con `--transport soda3`.
+Lectura de los datos: por defecto `soda3` (`/api/v3/views/{dataset}/query.json`),
+que es además el transporte del runtime (ADR-070), con `--transport classic`
+disponible. La latencia de Socrata resultó MUY variable y las sondas se
+contradicen entre ventanas —el mismo `GROUP BY` con `unaccent(UPPER()) LIKE`
+medido entre 4 y 126 segundos—, pero la medición que decide es la consulta que
+este auditor más emite, la igualdad exacta sobre `jbjy-vk9h`: 63,9 s en classic
+contra 2,6 s en soda3, y un LIKE que expiraba a 120 s en classic contra 50,7 s
+en soda3. Lo que sí está probado, y es lo que importa para la validez del
+resultado, es que **ambos transportes devuelven el MISMO universo** para estos
+predicados: fingerprints idénticos en 4/4 casos
+(`artifacts/audits/smoke_adr073_v1/transport_parity.json`). Presupuesto 60 s por
+llamada, hasta 2 reintentos, workers=2; lo que no responda se clasifica
+`INCONCLUSIVE` y se reprocesa con `--recheck-existing`, que es la única salida
+honesta para un timeout.
 
 Uso:
 
@@ -214,9 +216,9 @@ class Source:
         self,
         settings: Settings,
         *,
-        transport: str = "classic",
+        transport: str = "soda3",
         timeout_seconds: float = 60.0,
-        retries: int = 1,
+        retries: int = 2,
         sleep: Callable[[float], None] = time.sleep,
     ) -> None:
         self.transport_name = transport
@@ -1100,6 +1102,11 @@ class Auditor:
             "binding_status": binding_verdict["status"],
             "declared_groups": list(canonical.declared_groups),
             "ecosystem": canonical.ecosystem,
+            # Procedencia del transporte EN EL REGISTRO: un lote puede
+            # reanudarse con otro transporte (así se resolvió el primer intento),
+            # y que dos registros del mismo progress.jsonl se midieran distinto
+            # no puede quedar invisible en el manifiesto.
+            "transport": self.source.transport_name,
             "evidence_flags": evidence_flags(canonical, measurement),
             "datasets": {dataset: dataset_summary(entry) for dataset, entry in measurement["datasets"].items()},
             "proposed_binding": candidate["sources"] if candidate else None,
@@ -1267,11 +1274,16 @@ def build_summary(records: list[dict], authorities: Authorities) -> dict:
 
     def rows_of(record: dict) -> int:
         """Filas observadas por identidad. En un binding vigente el universo LIKE
-        no se mide (producción no pasa por ahí): manda el universo de su binding."""
+        no se mide (producción no pasa por ahí): manda el universo de su binding.
+
+        Las claves son las del registro de `progress.jsonl` (`like_rows`,
+        `bound_rows`), no las del measurement interno: leer la clave equivocada
+        dejaba todos los top-lists en cero sin que nada fallara.
+        """
         total = 0
         for dataset, _ in DATASETS:
             entry = record["datasets"].get(dataset) or {}
-            value = entry.get("like_rows_grouped")
+            value = entry.get("like_rows")
             if value is None:
                 value = entry.get("bound_rows")
             if value is None:
@@ -1284,9 +1296,18 @@ def build_summary(records: list[dict], authorities: Authorities) -> dict:
     unbound.sort(key=rows_of, reverse=True)
     no_identity = [record for record in records if record["status"] == "NO_STABLE_IDENTITY"]
     no_identity.sort(key=rows_of, reverse=True)
-    single_nit = [record for record in no_identity
-                  if sum(len((record["datasets"].get(dataset) or {}).get("nits_reached") or [])
-                         for dataset, _ in DATASETS) == 1]
+
+    def distinct_nits(record: dict) -> set[str]:
+        """NITs acreditados por la evidencia, UNIDOS entre datasets.
+
+        Sumar por dataset duplicaba el mismo NIT observado en procesos y en
+        contratos y dejaba el worklist de acreditación en una fracción de su
+        tamaño real: el NIT es uno, no uno por dataset.
+        """
+        return {nit for dataset, _ in DATASETS
+                for nit in ((record["datasets"].get(dataset) or {}).get("nits_reached") or [])}
+
+    single_nit = [record for record in no_identity if len(distinct_nits(record)) == 1]
     splits = [record for record in records if record["status"] == "SOURCE_NAME_SPLIT"]
     splits.sort(key=rows_of, reverse=True)
     inconclusive = [record for record in records if record["status"] == "INCONCLUSIVE"]
@@ -1581,9 +1602,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--recheck-existing", action="store_true",
                         help="reprocesar identidades ya cerradas")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    parser.add_argument("--transport", choices=("classic", "soda3"), default="classic")
+    parser.add_argument("--transport", choices=("soda3", "classic"), default="soda3")
     parser.add_argument("--timeout", type=float, default=60.0)
-    parser.add_argument("--retries", type=int, default=1)
+    parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--summary-only", action="store_true",
                         help="reconstruir reportes desde progress.jsonl sin tocar la red")
     parser.add_argument("--env-file", default=None,

@@ -37,6 +37,8 @@ class FakeSource:
     el auditor sigue emitiendo SoQL real y aquí sólo se decide qué devolver.
     """
 
+    transport_name = "fake"
+
     def __init__(self, *, like=None, forms=None, bound=None, counts=None, failures=None):
         self.like = like or {}
         self.forms = forms or {}
