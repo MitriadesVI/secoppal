@@ -1,0 +1,189 @@
+{
+  "record": {
+    "canonical_name": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+    "canonical_hash": "d98065ee31e387ec",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 4,
+    "started_at": "2026-09-18T06:24:43.563145+00:00",
+    "finished_at": "2026-09-18T06:24:43.991502+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "BUYER_UNIT",
+      "value": "municipal_m0:05086",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": false
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "BUYER_UNIT:municipal_m0:05086",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA"
+        ]
+      },
+      "observed_at": "2026-09-03",
+      "observed_rows": {
+        "p6dx-8zbt": 251,
+        "jbjy-vk9h": 202
+      },
+      "evidence": "artifacts/audits/municipal_m1a/promotion_manifest.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+            "nit": "890981880",
+            "rows": 469
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 469,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+            "nit": "890981880",
+            "rows": 431
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 431,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 428.1
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+            "nit": "890981880",
+            "rows": 469
+          }
+        ],
+        "bound_rows": 469
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+            "nit": "890981880",
+            "rows": 431
+          }
+        ],
+        "bound_rows": 431
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "890981880"
+      ],
+      "jbjy-vk9h": [
+        "890981880"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA"
+        ],
+        "present": [
+          "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA"
+        ],
+        "rows": 469
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA"
+        ],
+        "present": [
+          "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA"
+        ],
+        "rows": 431
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

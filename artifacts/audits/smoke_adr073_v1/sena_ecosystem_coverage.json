@@ -1,0 +1,206 @@
+{
+  "family": "SENA",
+  "authority": "app/data/sena_units.json",
+  "note": "SENA no es un mapa 1:1: el padre y los ecosistemas regionales son COMPOSICIONES declaradas (contains_all / official_names), no BuyerUnits. Este reporte no propone bindings ni crea Buyer Groups.",
+  "ecosystems_total": 1,
+  "ecosystems": [
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Antioquia",
+      "role": "regional_ecosystem",
+      "label": "SENA Antioquia",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')))",
+          "forms_reached": [
+            "SENA REGIONAL ANTIOQUIA CENTRO DE LOS RECURSOS NATURALES RENOVABLES LA SALADA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CFMA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTAPT",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTMAE",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTPGA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTTAOA?",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+            "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 10,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 33243,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')))",
+          "forms_reached": [
+            "SENA REGIONAL ANTIOQUIA CENTRO DE LOS RECURSOS NATURALES RENOVABLES LA SALADA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CFMA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTAPT",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTMAE",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTPGA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTTAOA?",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+            "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 10,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 36306,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    }
+  ],
+  "units_total": 0,
+  "units_with_stable_identity": 0,
+  "units_already_bound": 0,
+  "units_candidate_ready": 0,
+  "units_review": 0,
+  "units_inconclusive": 0,
+  "regional_coverage": [
+    {
+      "department": "Magdalena",
+      "label": "SENA Magdalena",
+      "contains_all": [
+        "SENA",
+        "MAGDALENA"
+      ]
+    },
+    {
+      "department": "Santander",
+      "label": "SENA Santander",
+      "contains_all": [
+        "SENA",
+        "SANTANDER"
+      ]
+    },
+    {
+      "department": "Bolívar",
+      "label": "SENA Bolívar",
+      "contains_all": [
+        "SENA",
+        "BOLIVAR"
+      ]
+    },
+    {
+      "department": "Atlántico",
+      "label": "SENA Atlántico",
+      "contains_all": [
+        "SENA",
+        "ATLANTICO"
+      ]
+    },
+    {
+      "department": "Antioquia",
+      "label": "SENA Antioquia",
+      "contains_all": [
+        "SENA",
+        "ANTIOQUIA"
+      ]
+    },
+    {
+      "department": "Valle del Cauca",
+      "label": "SENA Valle del Cauca",
+      "contains_all": [
+        "SENA",
+        "VALLE"
+      ]
+    },
+    {
+      "department": "Cauca",
+      "label": "SENA Cauca",
+      "contains_all": [
+        "SENA",
+        "CAUCA"
+      ]
+    },
+    {
+      "department": "Nariño",
+      "label": "SENA Nariño",
+      "contains_all": [
+        "SENA",
+        "NARINO"
+      ]
+    },
+    {
+      "department": "Cundinamarca",
+      "label": "SENA Cundinamarca",
+      "contains_all": [
+        "SENA",
+        "CUNDINAMARCA"
+      ]
+    },
+    {
+      "department": "Distrito Capital de Bogotá",
+      "label": "SENA Distrito Capital",
+      "contains_all": [
+        "SENA",
+        "DISTRITO CAPITAL"
+      ]
+    },
+    {
+      "department": "Córdoba",
+      "label": "SENA Córdoba",
+      "contains_all": [
+        "SENA",
+        "CORDOBA"
+      ]
+    },
+    {
+      "department": "La Guajira",
+      "label": "SENA La Guajira",
+      "contains_all": [
+        "SENA",
+        "GUAJIRA"
+      ]
+    },
+    {
+      "department": "Sucre",
+      "label": "SENA Sucre",
+      "contains_all": [
+        "SENA",
+        "SUCRE"
+      ]
+    },
+    {
+      "department": "Cesar",
+      "label": "SENA Cesar",
+      "contains_all": [
+        "SENA",
+        "CESAR"
+      ]
+    },
+    {
+      "department": "Norte de Santander",
+      "label": "SENA Norte de Santander",
+      "contains_all": [
+        "SENA",
+        "NORTE DE SANTANDER"
+      ]
+    }
+  ],
+  "dataset_coverage": {
+    "p6dx-8zbt": 0,
+    "jbjy-vk9h": 0
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "audit": "ADR073_GAZETTEER_WIDE_SOURCE_BINDING_AUDIT_V1",
+  "head": "0ca6469c93b2d3123f7f11e9afc2e953378b43fd",
+  "branch": "audit/adr073-gazetteer-wide-v1",
+  "git_status_short": "?? artifacts/audits/smoke_adr073_v1/\n?? scripts/audits/audit_gazetteer_source_bindings_v1.py\n?? tests/test_gazetteer_source_binding_audit.py",
+  "script": "scripts/audits/audit_gazetteer_source_bindings_v1.py",
+  "script_sha256": "6de78e7bf7049fe579731bbec6a35009848e6017109bfaf2cdbb0f1ab8c50370",
+  "authority_sha256": {
+    "aliases_db": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
+    "buyer_source_names": "9f45bd7978743a9c0c4ca2e739b83ca2ef21270e25e71b22e1d1d049440efcb5",
+    "buyer_groups": "627ad644e96e1967261bae926c4f6180af39c5ca0ebcc2e8114167be8cedeade",
+    "icbf_regionals": "ec755371aae17d1cfafcfa1f08b9b991d66da99f4cf054ed28b3ae89e7c3c78f",
+    "sena_units": "7a3f874c7a35ba22a5ea67f48b1da6fa7323679712bfad80cf66a48f3e41d003"
+  },
+  "runtime_files_sha256": {
+    "app/core/soql_builder.py": "e7672dda139464c071b64336d5dc315fe7ac8eed093b20cc5b539962ad293754",
+    "app/core/buyer_source_names.py": "cbe9f08d0b7ecce15c0ee840d2180374294619f65c08a7a4a716e26d72d7662b",
+    "app/core/buyer_groups.py": "a8076676f039a1890d1bfc2ed163f7a32e9ca35cd7fa4c110a2a5bfa24d8e6ef",
+    "app/core/entity_resolver.py": "622c25bf1663850753bdffd9f7728467cbe60cd654b950ca4a2ab7165d5f51b9"
+  },
+  "datasets": {
+    "p6dx-8zbt": "entidad",
+    "jbjy-vk9h": "nombre_entidad"
+  },
+  "nit_column": "nit_entidad",
+  "domain": "www.datos.gov.co",
+  "transport": "classic",
+  "workers": 2,
+  "timeout_seconds": 60.0,
+  "retries": 1,
+  "group_limit": 200,
+  "started_at": "2026-09-18T05:57:41.447155+00:00",
+  "total_canonical_identities": 1134,
+  "identities_with_accredited_key": 596,
+  "ecosystem_entries": 23,
+  "already_bound": 593,
+  "options": {
+    "limit": 0,
+    "only": [
+      "UNIVERSIDAD NACIONAL DE COLOMBIA",
+      "INVIAS",
+      "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "SUBRED INTEGRADA DE SERVICIOS DE SALUD NORTE E.S.E. (OFICIAL)",
+      "ESE HOSPITAL LOCAL DE MALAMBO SANTA MARÍA MAGDALENA",
+      "MUNICIPIO DE PEREIRA- OFICIAL",
+      "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "ECOSYSTEM:SENA:regional:Antioquia"
+    ],
+    "start_after": null,
+    "resume": true,
+    "recheck_existing": false
+  },
+  "source_telemetry": {
+    "calls": 16,
+    "ok": 16,
+    "timeouts": 0,
+    "errors": 0,
+    "retries": 0
+  },
+  "finished_at": "2026-09-18T06:00:58.411706+00:00",
+  "processed_in_this_run": 8,
+  "skipped_resume": 0,
+  "elapsed_seconds": 197.0
+}

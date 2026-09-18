@@ -1,0 +1,189 @@
+{
+  "record": {
+    "canonical_name": "ALCALDÍA MUNICIPAL DE SOPO",
+    "canonical_hash": "5a668275c198ecec",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 4,
+    "started_at": "2026-09-18T06:29:42.313278+00:00",
+    "finished_at": "2026-09-18T06:29:42.647020+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "BUYER_UNIT",
+      "value": "municipal_m0:25758",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": false
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "BUYER_UNIT:municipal_m0:25758",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDÍA MUNICIPAL DE SOPO"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA MUNICIPAL DE SOPO"
+        ]
+      },
+      "observed_at": "2026-09-03",
+      "observed_rows": {
+        "p6dx-8zbt": 796,
+        "jbjy-vk9h": 520
+      },
+      "evidence": "artifacts/audits/municipal_m1a/promotion_manifest.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA MUNICIPAL DE SOPO",
+            "nit": "899999468",
+            "rows": 4902
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 4902,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA MUNICIPAL DE SOPO",
+            "nit": "899999468",
+            "rows": 3438
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 3438,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 333.5
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA MUNICIPAL DE SOPO",
+            "nit": "899999468",
+            "rows": 4902
+          }
+        ],
+        "bound_rows": 4902
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA MUNICIPAL DE SOPO",
+            "nit": "899999468",
+            "rows": 3438
+          }
+        ],
+        "bound_rows": 3438
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "899999468"
+      ],
+      "jbjy-vk9h": [
+        "899999468"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "ALCALDÍA MUNICIPAL DE SOPO"
+        ],
+        "present": [
+          "ALCALDÍA MUNICIPAL DE SOPO"
+        ],
+        "rows": 4902
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "ALCALDÍA MUNICIPAL DE SOPO"
+        ],
+        "present": [
+          "ALCALDÍA MUNICIPAL DE SOPO"
+        ],
+        "rows": 3438
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

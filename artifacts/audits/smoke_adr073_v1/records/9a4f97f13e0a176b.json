@@ -1,0 +1,207 @@
+{
+  "record": {
+    "canonical_name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+    "canonical_hash": "9a4f97f13e0a176b",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 4,
+    "started_at": "2026-09-18T05:56:09.230766+00:00",
+    "finished_at": "2026-09-18T05:56:11.957357+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "NIT",
+      "value": "8001631300",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": true
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "NIT:8001631300",
+      "sources": {
+        "p6dx-8zbt": [
+          "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+        ],
+        "jbjy-vk9h": [
+          "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+        ]
+      },
+      "observed_at": "2026-09-02",
+      "observed_rows": {
+        "p6dx-8zbt": 1509,
+        "jbjy-vk9h": 1
+      },
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)",
+            "rows": 1529
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)",
+            "nit": "8001631300",
+            "rows": 1529
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 1529,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)",
+            "rows": 1
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)",
+            "nit": "8001631300",
+            "rows": 1
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 1,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 4,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 2726.2
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)",
+            "rows": 1529
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)",
+            "nit": "8001631300",
+            "rows": 1529
+          }
+        ],
+        "bound_rows": 1529
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)",
+            "rows": 1
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)",
+            "nit": "8001631300",
+            "rows": 1
+          }
+        ],
+        "bound_rows": 1
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "8001631300"
+      ],
+      "jbjy-vk9h": [
+        "8001631300"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+        ],
+        "present": [
+          "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+        ],
+        "rows": 1529
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+        ],
+        "present": [
+          "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+        ],
+        "rows": 1
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

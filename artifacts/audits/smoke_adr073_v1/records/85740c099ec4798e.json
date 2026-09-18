@@ -1,0 +1,255 @@
+{
+  "record": {
+    "canonical_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+    "canonical_hash": "85740c099ec4798e",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 28,
+    "started_at": "2026-09-18T05:54:55.519390+00:00",
+    "finished_at": "2026-09-18T05:55:21.768693+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "NIT",
+      "value": "890480184",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": true
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "NIT:890480184",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ]
+      },
+      "observed_at": "2026-09-17",
+      "observed_rows": {
+        "p6dx-8zbt": 49678,
+        "jbjy-vk9h": 48301
+      },
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+            "rows": 49719
+          },
+          {
+            "name": "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT",
+            "rows": 37
+          },
+          {
+            "name": "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+            "rows": 29
+          },
+          {
+            "name": "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+            "rows": 8
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+            "nit": "890480184",
+            "rows": 49719
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 49719,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+            "rows": 48301
+          },
+          {
+            "name": "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+            "rows": 24
+          },
+          {
+            "name": "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT",
+            "rows": 10
+          },
+          {
+            "name": "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+            "rows": 2
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+            "nit": "890480184",
+            "rows": 48301
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 48301,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 4,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 26247.9
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+            "rows": 49719
+          },
+          {
+            "name": "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT",
+            "rows": 37
+          },
+          {
+            "name": "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+            "rows": 29
+          },
+          {
+            "name": "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+            "rows": 8
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+            "nit": "890480184",
+            "rows": 49719
+          }
+        ],
+        "bound_rows": 49719
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+            "rows": 48301
+          },
+          {
+            "name": "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+            "rows": 24
+          },
+          {
+            "name": "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT",
+            "rows": 10
+          },
+          {
+            "name": "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+            "rows": 2
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+            "nit": "890480184",
+            "rows": 48301
+          }
+        ],
+        "bound_rows": 48301
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "890480184"
+      ],
+      "jbjy-vk9h": [
+        "890480184"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ],
+        "present": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ],
+        "rows": 49719
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ],
+        "present": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ],
+        "rows": 48301
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

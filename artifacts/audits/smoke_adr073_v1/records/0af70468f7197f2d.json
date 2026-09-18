@@ -1,0 +1,125 @@
+{
+  "record": {
+    "canonical_name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+    "canonical_hash": "0af70468f7197f2d",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 19,
+    "started_at": "2026-09-18T05:57:41.450162+00:00",
+    "finished_at": "2026-09-18T05:58:43.203939+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 890201900"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ALCALDIA DISTRITAL BARRANCABERMEJA%'))",
+        "forms_reached": [
+          "ALCALDIA DISTRITAL BARRANCABERMEJA"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "890201900"
+        ],
+        "like_rows": 29531,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDIA DISTRITAL BARRANCABERMEJA%'))",
+        "forms_reached": [
+          "ALCALDIA DISTRITAL BARRANCABERMEJA"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "890201900"
+        ],
+        "like_rows": 30077,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 61752.3
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ALCALDIA DISTRITAL BARRANCABERMEJA%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+            "nit": "890201900",
+            "rows": 29531
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 29531
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDIA DISTRITAL BARRANCABERMEJA%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+            "nit": "890201900",
+            "rows": 30077
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 30077
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "record": {
+    "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+    "canonical_hash": "22dcc25e9e311e3d",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 16,
+    "started_at": "2026-09-18T06:51:35.901183+00:00",
+    "finished_at": "2026-09-18T06:51:36.971908+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "NIT",
+      "value": "899999083",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": true
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "NIT:899999083",
+      "sources": {
+        "p6dx-8zbt": [
+          "DAPRE"
+        ],
+        "jbjy-vk9h": [
+          "DAPRE"
+        ]
+      },
+      "observed_at": "2026-09-02",
+      "observed_rows": {
+        "p6dx-8zbt": 17128,
+        "jbjy-vk9h": 4351
+      },
+      "evidence": "artifacts/audits/source_name_projection_v1.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": true,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "DAPRE",
+            "rows": 17150
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "DAPRE",
+            "nit": "899999083",
+            "rows": 17150
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 17150,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "DAPRE",
+            "rows": 4366
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "DAPRE",
+            "nit": "899999083",
+            "rows": 4366
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 4366,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 4,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 1070.3
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "DAPRE",
+            "rows": 17150
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "DAPRE",
+            "nit": "899999083",
+            "rows": 17150
+          }
+        ],
+        "bound_rows": 17150
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "DAPRE",
+            "rows": 4366
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "DAPRE",
+            "nit": "899999083",
+            "rows": 4366
+          }
+        ],
+        "bound_rows": 4366
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "899999083"
+      ],
+      "jbjy-vk9h": [
+        "899999083"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "DAPRE"
+        ],
+        "present": [
+          "DAPRE"
+        ],
+        "rows": 17150
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "DAPRE"
+        ],
+        "present": [
+          "DAPRE"
+        ],
+        "rows": 4366
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

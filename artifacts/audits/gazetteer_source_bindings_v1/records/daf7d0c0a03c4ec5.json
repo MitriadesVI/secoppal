@@ -1,0 +1,161 @@
+{
+  "record": {
+    "canonical_name": "ADRES",
+    "canonical_hash": "daf7d0c0a03c4ec5",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 18,
+    "started_at": "2026-09-18T06:20:29.634363+00:00",
+    "finished_at": "2026-09-18T06:20:29.984311+00:00",
+    "status": "AMBIGUOUS_IDENTITY",
+    "status_reasons": [
+      "evidencia física apunta a 4 identidades: 802004421, 809006078, 901037916, 901405850"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ADRES%'))",
+        "forms_reached": [
+          "ADRES",
+          "CENTRO EDUCATIVO RURAL MADRESECA",
+          "I.E.T LA VEGA DE LOS PADRES",
+          "INSTITUCION EDUCATIVA DISTRITAL MADRES CATOLICAS"
+        ],
+        "forms_reached_count": 4,
+        "nits_reached": [
+          "802004421",
+          "809006078",
+          "901037916",
+          "901405850"
+        ],
+        "like_rows": 4196,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ADRES%'))",
+        "forms_reached": [
+          "ADRES",
+          "CENTRO EDUCATIVO RURAL MADRESECA",
+          "I.E.T LA VEGA DE LOS PADRES"
+        ],
+        "forms_reached_count": 3,
+        "nits_reached": [
+          "809006078",
+          "901037916",
+          "901405850"
+        ],
+        "like_rows": 5459,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 349.5
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ADRES%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ADRES",
+            "nit": "901037916",
+            "rows": 4111
+          },
+          {
+            "name": "CENTRO EDUCATIVO RURAL MADRESECA",
+            "nit": "901405850",
+            "rows": 31
+          },
+          {
+            "name": "I.E.T LA VEGA DE LOS PADRES",
+            "nit": "809006078",
+            "rows": 34
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DISTRITAL MADRES CATOLICAS",
+            "nit": "802004421",
+            "rows": 20
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 4196
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ADRES%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ADRES",
+            "nit": "901037916",
+            "rows": 5434
+          },
+          {
+            "name": "CENTRO EDUCATIVO RURAL MADRESECA",
+            "nit": "901405850",
+            "rows": 7
+          },
+          {
+            "name": "I.E.T LA VEGA DE LOS PADRES",
+            "nit": "809006078",
+            "rows": 18
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 5459
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

@@ -1,0 +1,2440 @@
+{
+  "record": {
+    "canonical_name": "ANI",
+    "canonical_hash": "3f79ccd1432f8960",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 17,
+    "started_at": "2026-09-18T06:34:39.804591+00:00",
+    "finished_at": "2026-09-18T06:35:18.724502+00:00",
+    "status": "AMBIGUOUS_IDENTITY",
+    "status_reasons": [
+      "evidencia física apunta a 197 identidades: 800002916, 800008456, 8000084563, 800008556, 800016942, 800027784, 8000506037, 800068760, 800077545, 800095770, 800099136, 800099237, 800099455, 800101441, 800115569, 800121084, 800123131, 800130812, 800140132, 800140623, 800141053, 800153304, 8001538810, 800165850, 800166129, 800175668, 800177754, 800182104, 800188225, 800196299, 8001997082, 8002241983, 800226175, 800239720, 800243941, 800250029, 8002527222, 804016186, 806007801, 806008245, 807006015, 807006421, 810000598, 810000880, 810000966, 810001096, 810001114, 810001393, 810005578, 810005966, 811019071, 811019614, 8110278510, 8110390753, 811040224, 812003657, 812007611, 812007891, 812008107, 813001950, 813002490, 813008271, 817000949, 8190072070, 821000765, 821001328, 822007312, 823001507, 823002185, 823003229, 823003969, 824001728, 8240027660, 825002525, 827000288, 828000353, 829003472, 830034182, 830037517, 830039670, 8300396705, 830041314, 830063598, 830070022, 8301259969, 832002183, 834001593, 837000033, 8390003600, 842000015, 844000635, 846003582, 846004027, 860002400, 860007887, 860011153, 860030197, 860532389, 890481310, 890501438, 890680437, 890801007, 890801053, 890801059, 890801137, 8908013929, 890802548, 890803239, 8908032858, 8908060017, 890807930, 890980802, 8909808023, 890984986, 8909849868, 891190431, 8912006381, 891200686, 891702186, 8918000314, 891855492, 891900289, 891900343, 891902811, 892099242, 892099285, 899999048, 899999050, 8999990672, 899999114, 899999343, 8999994002, 899999709, 9000017229, 900004592, 900012537, 900012755, 900014413, 9000161304, 900017839, 9000283248, 900073043, 900076342, 900081460, 900094475, 900098017, 900110509, 900119824, 9001229106, 900149064, 900150224, 900156335, 900159118, 900217714, 900253145, 900253878, 900260907, 900284830, 9002930760, 900304063, 900314002, 900315506, 900342704, 900392869, 9005841451, 9006809090, 900805219, 900907644, 900929063, 900932971, 900933332, 9010798724, 901097324, 901127870, 901190414, 901212832, 901226580, 9012516946, 901419843, 9014332637, 901440188, 901465799, 901498485, 901540902, 901540945, 901540992, 9015412568, 901554663, 9015819502, 901624414, 901665080, 901767734, 901833147, 9019022274, 901911478, 901978862, 902002313"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": true
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ANI%'))",
+        "forms_reached": [
+          "AFROLLANITO",
+          "AGUAS DE MANIZALES",
+          "ALCALDIA MUNICIPAL DE ALBANIA",
+          "ALCALDIA MUNICIPAL DE CHAGUANI",
+          "ALCALDIA MUNICIPAL DE SAMANIEGO",
+          "ALCALDIA MUNICIPAL DE SAN ESTANISLAO DE KOSTKA",
+          "ALCALDIA MUNICIPAL DE VIANI",
+          "ALCALDIA MUNICIPIO DE BETANIA",
+          "ALCALDIA MUNICIPIO DE MANI 1",
+          "ALCALDÍA MUNICIPAL DE AQUITANIA",
+          "ALCALDÍA MUNICIPAL DE ROLDANILLO",
+          "ANI",
+          "ARTESANIAS DE COLOMBIA S.A",
+          "ASOCIACION CABLE AEREO MANIZALES",
+          "BIORGANICOS DEL SUR DEL HUILA SA ESP",
+          "CE JORDANIA APIA",
+          "CEHANI E.S.E",
+          "CENTRAL ADMINISTRATIVA Y CONTABLE PASTO SANIDAD",
+          "CENTRAL ADMINISTRATIVA Y CONTABLE REGIONAL ARMENIA-SANIDAD",
+          "CENTRAL ADMINISTRATIVA Y CONTABLE-POP-SANIDAD/",
+          "CENTRO EDUCATIVO DE EL CAÑITO",
+          "CENTRO EDUCATIVO EL MANZANILLO",
+          "CENTRO EDUCATIVO INDIGENA SIKUANI PLAYEROS",
+          "CENTRO EDUCATIVO PANTANITO",
+          "CENTRO EDUCATIVO RURAL BERTRANIA1",
+          "CENTRO EDUCATIVO RURAL LUCITANIA",
+          "CENTRO EDUCATIVO SERRANIA DEL MELUA",
+          "CENTRO EDUCATIVO VENTANILLA ARRIBA",
+          "COLEGIO ESTANISLAO ZULETA  IED",
+          "COLEGIO JAIRO ANIBAL NIÑO C.E.D",
+          "COLEGIO LA LLANITA",
+          "COLEGIO PRADO VERANIEGO IED",
+          "COLEGIO REPUBLICA FEDERAL DE ALEMANIA IED",
+          "COMPAÑIA DE SEGUROS DE VIDA COLMENA*",
+          "COMPAÑIA ENERGETICA DEL CARIBE S.A.S. ESP",
+          "COMPAÑÍA COLOMBIANA DE SERVICIOS DE VALOR AGREGADO Y TELEMÁTICOS COLVATEL S.A. ESP",
+          "CONCEJO DE DURANIA NORTE DE SANTANDER",
+          "CONCEJO DE MANIZALES",
+          "CONCEJO DEL MUNICIPIO DE ALBANIA CAQUETA",
+          "CONCEJO MUNICIPAL DE AQUITANIA",
+          "CONCEJO MUNICIPAL DE BETANIA",
+          "CONCEJO MUNICIPAL DE MANI",
+          "CONCEJO MUNICIPAL DE SILVANIA",
+          "CONCEJO ROLDANILLO",
+          "CONTRALORIA GENERAL DE LA REPÚBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+          "CONTRALORIA GENERAL DEL MUNICIPIO DE MANIZALES",
+          "CORPORACION FRESNENSE DE OBRAS SANITARIAS**",
+          "Compañia de Servicios Publicos de Sogamoso",
+          "Concejo Municipal de Pensilvania",
+          "CÁRCEL Y PENITENCIARIA DE MEDIA SEGURIDAD DE MANIZALES",
+          "DEPARTAMENTO DE POLICIA CESAR - AREA DE SANIDAD",
+          "DEPARTAMENTO DE POLICIA VICHADA - AREA SANIDAD*",
+          "DIRECCION DE SANIDAD DE EJERCITO-DISPENSARIO MEDICO FLORENCIA",
+          "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+          "DIRECCION DE SANIDAD EJERCITO DISPENSARIO MEDICO YOPAL",
+          "DIRECCION DE SANIDAD EJERCITO DISPENSARIO MÉDICO SUROCCIDENTE",
+          "DIRECCION GENERAL SANIDAD BAS02 1015 BARRANQUILLA",
+          "DIRECCIÓN DE SANIDAD ARMADA NACIONAL",
+          "DIRECCIÓN DE SANIDAD EJÉRCITO1",
+          "DIRECCIÓN GENERAL DE SANIDAD MILITAR+",
+          "DISAN AREA DE SANIDAD SAN ANDRES",
+          "DISPENSARIO MEDICO NEIVA - DIRECCIÓN DE SANIDAD EJERCITO",
+          "EMPRESA DE OBRAS SANITARIAS DE CALDAS S.A E.S.P.",
+          "EMPRESA DE OBRAS SANITARIAS DE LA PROVINCIA DE OBANDO EMPOOBANDO E.S.P.",
+          "EMPRESA DE OBRAS SANITARIAS DE PASTO EMPOPASTO S.A. E.S.P.",
+          "EMPRESA DE OBRAS SANITARIAS DE SANTA ROSA DE CABAL EMPOCABAL E.S.P - E.I.C.E",
+          "EMPRESA DE SERVICIOS PUBLICOS DE ACUEDUCTO ALCANTARILLADO Y ASEO DEL MUNICIPIO DE CURUMANI ACUACUR E.S.P",
+          "EMPRESA DE SERVICIOS PUBLICOS DE LEJANIAS META - ESPL",
+          "EMPRESA DE SERVICIOS PUBLICOS DOMICILIARIOS DE ALBANIA S.A E.S.P.",
+          "EMPRESA DE SERVICIOS PUBLICOS DOMICILIARIOS DE LA MONTAÑITA S.A. E.S.P",
+          "EMPRESA DE SERVICIOS PÚBLICOS DOMICILIARIOS DE VIANÍ",
+          "EMPRESA MUNICIPAL PARA LA SALUD (EMSA - LOTERIA DE MANIZALES)",
+          "EMPRESA SOCIAL DEL ESTADO  MERCEDES TELLEZ DE PRADILLA E.S.E - HOSPITAL DE VIANI",
+          "EMPRESA SOCIAL DEL ESTADO CENTRO DE SALUD GIOVANI CRISTINI",
+          "EMPRESA SOCIAL DEL ESTADO HOSPITAL EMIRO QUINTERO CAÑIZARES 12",
+          "EMPRESAS PUBLICAS DE HISPANIA S.A. E.S.P.",
+          "EMPRESAS PUBLICAS DE PENSILVANIA E.S.P",
+          "EMPRESAS PUBLICAS MUNICIPALES DE BETANIA S.A. E.S.P1",
+          "EMPUSILVANIA SA ESP",
+          "EPMSC PENSILVANIA",
+          "ESCUELA NORMAL SUPERIOR DE MANIZALES",
+          "ESE HOSPITAL SAN RAFAEL DE ALBANIA",
+          "ESE SALUD AQUITANIA",
+          "ESTABLECIMIENTO PENITENCIARIO DE MEDIANA SEGURIDAD Y CARCELARIO DE ROLDANILLO VALLE",
+          "FUNDACION BOTANICA Y ZOOLOGICA DE BARRANQUILLA",
+          "GRUPO DE CABALLERIA MECANIZADO No 18",
+          "GUAVIARE SANIDAD",
+          "HOSPITAL DEPARTAMENTAL SAN ANTONIO DE ROLDANILLO",
+          "IE COLEGIO PRESBITERO DANIEL JORDAN",
+          "IED ALEMANIA UNIFICADA",
+          "IED OLGA EMILIANI",
+          "INGENIERÍA DESARROLLO Y ADMINISTRACIÓN DE MANIZALES S.A. ESP (Comprador)",
+          "INSTITUCION EDUCATIVA  RURAL EL CANIME",
+          "INSTITUCION EDUCATIVA 27 DE OCTUBRE DE ANIMAS ALTAS",
+          "INSTITUCION EDUCATIVA ALBANIA",
+          "INSTITUCION EDUCATIVA ANIBAL MARTINEZ ZULETA - TAMALAMEQUE",
+          "INSTITUCION EDUCATIVA ANIBAL OJEDA",
+          "INSTITUCION EDUCATIVA BALDOMERO SANIN CANO",
+          "INSTITUCION EDUCATIVA BETANIA",
+          "INSTITUCION EDUCATIVA CAÑITO DE LOS SÁBALOS",
+          "INSTITUCION EDUCATIVA CRISTOBAL COLON CAMPANITO",
+          "INSTITUCION EDUCATIVA DANIEL ALFONSO PAZ ALVAREZ",
+          "INSTITUCION EDUCATIVA DE LEJANIAS",
+          "INSTITUCION EDUCATIVA DEPARTAMENTAL BALDOMERO SANIN CANO",
+          "INSTITUCION EDUCATIVA DEPARTAMENTAL CAPELLANIA",
+          "INSTITUCION EDUCATIVA DEPARTAMENTAL GERMANIA",
+          "INSTITUCION EDUCATIVA DEPARTAMENTAL LICEO ARIGUANI",
+          "INSTITUCION EDUCATIVA DEPARTAMENTAL NATANIA",
+          "INSTITUCION EDUCATIVA DEPARTAMENTAL SANTA GEMMA DE GALGANI",
+          "INSTITUCION EDUCATIVA DEPARTAMENTAL TECNICA AGROPECARIA CARMEN DE ARIGUANI",
+          "INSTITUCION EDUCATIVA DISTRITAL ANIBAL FERNANDEZ DE SOTO",
+          "INSTITUCION EDUCATIVA DISTRITAL BETANIA NORTE",
+          "INSTITUCION EDUCATIVA ESTEFANIA MARIMON ISAZA",
+          "INSTITUCION EDUCATIVA FE Y ALEGRIA GRANIZAL",
+          "INSTITUCION EDUCATIVA HENRY DANIELS",
+          "INSTITUCION EDUCATIVA INSTITUTO MANIZALES",
+          "INSTITUCION EDUCATIVA JUAN BAUTISTA MIGANI",
+          "INSTITUCION EDUCATIVA JUANITA GARCIA MANJARREZ",
+          "INSTITUCION EDUCATIVA LIMBANIA VELASCO",
+          "INSTITUCION EDUCATIVA LUSITANIA PAZ DE COLOMBIA",
+          "INSTITUCION EDUCATIVA MANZANILLO DEL MAR",
+          "INSTITUCION EDUCATIVA REGION SUR DE AQUITANIA",
+          "INSTITUCION EDUCATIVA RODANIA",
+          "INSTITUCION EDUCATIVA RURAL  LA CABAÑITA",
+          "INSTITUCION EDUCATIVA RURAL ALBANIA",
+          "INSTITUCION EDUCATIVA RURAL BETANIA",
+          "INSTITUCION EDUCATIVA RURAL GRANIZADA",
+          "INSTITUCION EDUCATIVA RURAL HERMANO DANIEL",
+          "INSTITUCION EDUCATIVA RURAL PANTANILLO",
+          "INSTITUCION EDUCATIVA RURAL PLATANILLO",
+          "INSTITUCION EDUCATIVA RURAL SAN JOSE DE CAQUETANIA",
+          "INSTITUCION EDUCATIVA RURAL SANPEREGRINO MANIZALES",
+          "INSTITUCION EDUCATIVA SAN JOSE DE CURUMANI",
+          "INSTITUCION EDUCATIVA SIETE DE AGOSTO MANIZALES",
+          "INSTITUCION EDUCATIVA SILVANIA",
+          "INSTITUCION EDUCATIVA TECNICA AGROPECUARIA DE ALBANIA",
+          "INSTITUCION EDUCATIVA TECNICA EN INFORMATICA ANIBAL NOGUERA MENDOZA",
+          "INSTITUCION SAN RAFAEL DE ALBANIA",
+          "INSTITUCIÓN EDUCATIVA  DANIEL MARÍA LÓPEZ RODRÍGUEZ",
+          "INSTITUCIÓN EDUCATIVA BETANIA",
+          "INSTITUCIÓN EDUCATIVA CARDENAL ANÍBAL MUÑOZ DUQUE",
+          "INSTITUCIÓN EDUCATIVA PENSILVANIA",
+          "INSTITUCIÓN EDUCATIVA RURAL INDÍGENA COEMANI FORTUNATO REALLY",
+          "INSTITUCIÓN EDUCATIVA SAN JOSE DE LLANITOS  DE ACEVEDO HUILA",
+          "INSTITUCIÓN EDUCATIVA TÉCNICA AGROPECUARIA ANÍBAL GANDARA CAMPO",
+          "INSTITUTO DE CULTURA Y TURISMO DE MANIZALES",
+          "INSTITUTO DE FINANCIAMIENTO PROMOCIÓN Y DESARROLLO DE MANIZALES - INFI-MANIZALES",
+          "INSTITUTO DE PLANIFICACIÓN Y PROMOCIÓN DE SOLUCIONES ENERGÉTICAS PARA LAS ZONAS NO INTERCONECTADAS IPSE",
+          "INSTITUTO DE VALORIZACION DE MANIZALES",
+          "INSTITUTO DISTRITAL DE PROTECCION Y BIENESTAR ANIMAL",
+          "INSTITUTO INEM BALDOMERO SANIN CANO",
+          "INSTITUTO MUNICIPAL DE CULTURA Y CIUDADANIA DE APARTADO",
+          "INSTITUTO TECNICO COMERCIAL DE CAPELLANIA",
+          "Institución Universitaria de Roldanillo",
+          "Jardín Botánico José Celestino Mutis",
+          "KUMPANIA DE SAMPUES SAS",
+          "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+          "LA PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION - PAP - DE SAN JUAN EN EL DEPARTAMENTO DE ANTIOQUIA",
+          "LA PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION DEL AGUA BOSQUES Y EL TURISMO",
+          "MUNICIPIO DE ALBANIA",
+          "MUNICIPIO DE ALBANIA LA GUAJIRA",
+          "MUNICIPIO DE ARIGUANI",
+          "MUNICIPIO DE DURANIA - NORTE DE SANTANDER",
+          "MUNICIPIO DE HISPANIA",
+          "MUNICIPIO DE LA MONTAÑITA CAQUETA",
+          "MUNICIPIO DE LEJANIAS",
+          "MUNICIPIO DE MANIZALES",
+          "MUNICIPIO DE PENSILVANIA",
+          "MUNICIPIO DE SILVANIA",
+          "ORGANIZACION PARA LA RECREACION Y EL DEPORTE DE IPIALES - ORDEPI",
+          "ORGANIZACION REGIONAL INDIGENA DE CASANARE ORIC DEL MUNICIPIO DE YOPAL",
+          "ORGANIZACION WIWA YUGUMAIUN BUNKUANARRUA TAYRONA",
+          "ORGANIZACIÓN DE AFRODESCENDIENTES O COMUNIDADES NEGRAS DESPLAZADOS Y VICTIMAS DE LA VIOLENCIA DEL MUNICIPIO DE PLANETA RICA  CORDOBA ODEPRIVICOR",
+          "PERSONERIA MUNICIPAL BETANIA",
+          "PERSONERIA MUNICIPAL DE AQUITANIA",
+          "PERSONERIA MUNICIPAL DE DURANIA**",
+          "PERSONERIA MUNICIPAL DE HISPANIA",
+          "PERSONERIA MUNICIPAL DE MANI",
+          "PERSONERIA MUNICIPAL DE MANIZALES",
+          "POLICIA METROPOLITA DE CARTAGENA DE INDIAS -AREA DE SANIDAD BOLIVAR",
+          "POLICIA METROPOLITANA DE MANIZALES-UPRES CALDAS",
+          "POLICÍA METROPOLITANA DE MANIZALES",
+          "POSITIVA COMPAÑIA DE SEGUROS S.A",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION TURÍSTICA Y AGROECOLOGICA DEL OCCIDENTE ANTIOQUEÑO",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION- PAP-",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN -PAP- AGROINDUSTRIAL DEL OCCIDENTE ANTIOQUEÑO",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN -PAP- MINERO AGROECOLÓGICA",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN CARTAMA",
+          "PROVINCIA DMINISTRATIVA Y DE PLANIFICACION - PAP DEL SUMAPAZ",
+          "RECLUSION MUJERES MANIZALES",
+          "REGION ADMINISTRATIVA DE PLANIFICACION RAP PACIFICO",
+          "REGION ADMINISTRATIVA Y DE PLANIFICACION RAP DEL AGUA Y LA MONTAÑA",
+          "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP - CARIBE",
+          "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP - EJE CAFETERO",
+          "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP-LLANOS",
+          "RESGUARDO INDIGENA CRISTIANIA",
+          "Rama Judicial  Dirección Seccional de Administración Judicial de Manizales"
+        ],
+        "forms_reached_count": 197,
+        "nits_reached": [
+          "800002916",
+          "800008456",
+          "8000084563",
+          "800008556",
+          "800016942",
+          "800027784",
+          "8000506037",
+          "800068760",
+          "800077545",
+          "800095770",
+          "800099136",
+          "800099237",
+          "800099455",
+          "800101441",
+          "800115569",
+          "800121084",
+          "800123131",
+          "800130812",
+          "800140132",
+          "800140623",
+          "800141053",
+          "800153304",
+          "8001538810",
+          "800165850",
+          "800166129",
+          "800175668",
+          "800177754",
+          "800182104",
+          "800188225",
+          "800196299",
+          "8001997082",
+          "8002241983",
+          "800226175",
+          "800239720",
+          "800243941",
+          "800250029",
+          "8002527222",
+          "804016186",
+          "806007801",
+          "806008245",
+          "807006015",
+          "807006421",
+          "810000598",
+          "810000880",
+          "810000966",
+          "810001096",
+          "810001114",
+          "810001393",
+          "810005578",
+          "810005966",
+          "811019071",
+          "811019614",
+          "8110278510",
+          "8110390753",
+          "811040224",
+          "812003657",
+          "812007611",
+          "812007891",
+          "812008107",
+          "813001950",
+          "813002490",
+          "813008271",
+          "817000949",
+          "8190072070",
+          "821000765",
+          "821001328",
+          "822007312",
+          "823001507",
+          "823002185",
+          "823003229",
+          "823003969",
+          "824001728",
+          "8240027660",
+          "825002525",
+          "827000288",
+          "828000353",
+          "829003472",
+          "830034182",
+          "830037517",
+          "830039670",
+          "8300396705",
+          "830041314",
+          "830063598",
+          "830070022",
+          "8301259969",
+          "832002183",
+          "834001593",
+          "837000033",
+          "8390003600",
+          "842000015",
+          "844000635",
+          "846003582",
+          "846004027",
+          "860002400",
+          "860007887",
+          "860011153",
+          "860030197",
+          "860532389",
+          "890481310",
+          "890501438",
+          "890680437",
+          "890801007",
+          "890801053",
+          "890801059",
+          "890801137",
+          "8908013929",
+          "890802548",
+          "890803239",
+          "890807930",
+          "890980802",
+          "8909808023",
+          "890984986",
+          "8909849868",
+          "891190431",
+          "8912006381",
+          "891200686",
+          "891702186",
+          "8918000314",
+          "891855492",
+          "891900289",
+          "891900343",
+          "891902811",
+          "892099242",
+          "892099285",
+          "899999048",
+          "8999990672",
+          "899999343",
+          "8999994002",
+          "899999709",
+          "9000017229",
+          "900004592",
+          "900012537",
+          "900012755",
+          "900014413",
+          "9000161304",
+          "900017839",
+          "9000283248",
+          "900073043",
+          "900076342",
+          "900081460",
+          "900094475",
+          "900098017",
+          "900110509",
+          "900119824",
+          "9001229106",
+          "900149064",
+          "900150224",
+          "900156335",
+          "900159118",
+          "900217714",
+          "900253145",
+          "900253878",
+          "900260907",
+          "900284830",
+          "9002930760",
+          "900304063",
+          "900314002",
+          "900315506",
+          "900342704",
+          "900392869",
+          "9005841451",
+          "9006809090",
+          "900805219",
+          "900907644",
+          "900929063",
+          "900932971",
+          "900933332",
+          "9010798724",
+          "901097324",
+          "901127870",
+          "901190414",
+          "901212832",
+          "901226580",
+          "9012516946",
+          "901419843",
+          "9014332637",
+          "901440188",
+          "901465799",
+          "901498485",
+          "901540902",
+          "901540945",
+          "901540992",
+          "9015412568",
+          "901554663",
+          "9015819502",
+          "901624414",
+          "901665080",
+          "901767734",
+          "901833147",
+          "9019022274",
+          "901911478",
+          "901978862",
+          "902002313"
+        ],
+        "like_rows": 125140,
+        "like_universe_complete": false,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANI%'))",
+        "forms_reached": [
+          "AFROLLANITO",
+          "AGUAS DE MANIZALES",
+          "ALCALDIA MUNICIPAL DE ALBANIA",
+          "ALCALDIA MUNICIPAL DE CHAGUANI",
+          "ALCALDIA MUNICIPAL DE SAMANIEGO",
+          "ALCALDIA MUNICIPAL DE SAN ESTANISLAO DE KOSTKA",
+          "ALCALDIA MUNICIPAL DE VIANI",
+          "ALCALDIA MUNICIPIO DE BETANIA",
+          "ALCALDIA MUNICIPIO DE MANI 1",
+          "ALCALDÍA MUNICIPAL DE AQUITANIA",
+          "ALCALDÍA MUNICIPAL DE ROLDANILLO",
+          "ANI",
+          "ARTESANIAS DE COLOMBIA S.A",
+          "ASOCIACION CABLE AEREO MANIZALES",
+          "BIORGANICOS DEL SUR DEL HUILA SA ESP",
+          "CEHANI E.S.E",
+          "CENTRAL ADMINISTRATIVA Y CONTABLE PASTO SANIDAD",
+          "CENTRAL ADMINISTRATIVA Y CONTABLE REGIONAL ARMENIA-SANIDAD",
+          "CENTRAL ADMINISTRATIVA Y CONTABLE-POP-SANIDAD/",
+          "CENTRO EDUCATIVO EL MANZANILLO",
+          "CENTRO EDUCATIVO INDIGENA SIKUANI PLAYEROS",
+          "COLEGIO PRADO VERANIEGO IED",
+          "COLEGIO REPUBLICA FEDERAL DE ALEMANIA IED",
+          "COMPAÑIA DE SEGUROS DE VIDA COLMENA*",
+          "COMPAÑIA ENERGETICA DEL CARIBE S.A.S. ESP",
+          "CONCEJO DE DURANIA NORTE DE SANTANDER",
+          "CONCEJO DE MANIZALES",
+          "CONCEJO DEL MUNICIPIO DE ALBANIA CAQUETA",
+          "CONCEJO MUNICIPAL DE AQUITANIA",
+          "CONCEJO MUNICIPAL DE BETANIA",
+          "CONCEJO MUNICIPAL DE MANI",
+          "CONCEJO MUNICIPAL DE SILVANIA",
+          "CONCEJO ROLDANILLO",
+          "CONTRALORIA GENERAL DE LA REPÚBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+          "CONTRALORIA GENERAL DEL MUNICIPIO DE MANIZALES",
+          "CORPORACION FRESNENSE DE OBRAS SANITARIAS**",
+          "Compañia de Servicios Publicos de Sogamoso",
+          "Concejo Municipal de Pensilvania",
+          "CÁRCEL Y PENITENCIARIA DE MEDIA SEGURIDAD DE MANIZALES",
+          "DEPARTAMENTO DE POLICIA CESAR - AREA DE SANIDAD",
+          "DEPARTAMENTO DE POLICIA VICHADA - AREA SANIDAD*",
+          "DIRECCION DE SANIDAD DE EJERCITO-DISPENSARIO MEDICO FLORENCIA",
+          "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+          "DIRECCION DE SANIDAD EJERCITO DISPENSARIO MEDICO YOPAL",
+          "DIRECCION DE SANIDAD EJERCITO DISPENSARIO MÉDICO SUROCCIDENTE",
+          "DIRECCION GENERAL SANIDAD BAS02 1015 BARRANQUILLA",
+          "DIRECCIÓN DE SANIDAD ARMADA NACIONAL",
+          "DIRECCIÓN DE SANIDAD EJÉRCITO1",
+          "DIRECCIÓN GENERAL DE SANIDAD MILITAR+",
+          "DISAN AREA DE SANIDAD SAN ANDRES",
+          "DISPENSARIO MEDICO NEIVA - DIRECCIÓN DE SANIDAD EJERCITO",
+          "EMPRESA DE OBRAS SANITARIAS DE LA PROVINCIA DE OBANDO EMPOOBANDO E.S.P.",
+          "EMPRESA DE OBRAS SANITARIAS DE PASTO EMPOPASTO S.A. E.S.P.",
+          "EMPRESA DE SERVICIOS PUBLICOS DE ACUEDUCTO ALCANTARILLADO Y ASEO DEL MUNICIPIO DE CURUMANI ACUACUR E.S.P",
+          "EMPRESA DE SERVICIOS PUBLICOS DE LEJANIAS META - ESPL",
+          "EMPRESA MUNICIPAL PARA LA SALUD (EMSA - LOTERIA DE MANIZALES)",
+          "EMPRESA SOCIAL DEL ESTADO  MERCEDES TELLEZ DE PRADILLA E.S.E - HOSPITAL DE VIANI",
+          "EMPRESA SOCIAL DEL ESTADO CENTRO DE SALUD GIOVANI CRISTINI",
+          "EMPRESA SOCIAL DEL ESTADO HOSPITAL EMIRO QUINTERO CAÑIZARES 12",
+          "EMPRESAS PUBLICAS DE HISPANIA S.A. E.S.P.",
+          "EMPRESAS PUBLICAS MUNICIPALES DE BETANIA S.A. E.S.P1",
+          "EMPUSILVANIA SA ESP",
+          "EPMSC PENSILVANIA",
+          "ESCUELA NORMAL SUPERIOR DE MANIZALES",
+          "ESE HOSPITAL SAN RAFAEL DE ALBANIA",
+          "ESE SALUD AQUITANIA",
+          "ESTABLECIMIENTO PENITENCIARIO DE MEDIANA SEGURIDAD Y CARCELARIO DE ROLDANILLO VALLE",
+          "FUNDACION BOTANICA Y ZOOLOGICA DE BARRANQUILLA",
+          "GRUPO DE CABALLERIA MECANIZADO No 18",
+          "GUAVIARE SANIDAD",
+          "HOSPITAL DEPARTAMENTAL SAN ANTONIO DE ROLDANILLO",
+          "INGENIERÍA DESARROLLO Y ADMINISTRACIÓN DE MANIZALES S.A. ESP (Comprador)",
+          "INSTITUCION EDUCATIVA 27 DE OCTUBRE DE ANIMAS ALTAS",
+          "INSTITUCION EDUCATIVA ALBANIA",
+          "INSTITUCION EDUCATIVA JUAN BAUTISTA MIGANI",
+          "INSTITUCION EDUCATIVA LUSITANIA PAZ DE COLOMBIA",
+          "INSTITUCION EDUCATIVA RURAL GRANIZADA",
+          "INSTITUCION EDUCATIVA RURAL PANTANILLO",
+          "INSTITUCION EDUCATIVA RURAL SANPEREGRINO MANIZALES",
+          "INSTITUCION EDUCATIVA SIETE DE AGOSTO MANIZALES",
+          "INSTITUCION EDUCATIVA TECNICA AGROPECUARIA DE ALBANIA",
+          "INSTITUCION SAN RAFAEL DE ALBANIA",
+          "INSTITUTO DE CULTURA Y TURISMO DE MANIZALES",
+          "INSTITUTO DE FINANCIAMIENTO PROMOCIÓN Y DESARROLLO DE MANIZALES - INFI-MANIZALES",
+          "INSTITUTO DE PLANIFICACIÓN Y PROMOCIÓN DE SOLUCIONES ENERGÉTICAS PARA LAS ZONAS NO INTERCONECTADAS IPSE",
+          "INSTITUTO DE VALORIZACION DE MANIZALES",
+          "INSTITUTO DISTRITAL DE PROTECCION Y BIENESTAR ANIMAL",
+          "INSTITUTO MUNICIPAL DE CULTURA Y CIUDADANIA DE APARTADO",
+          "Institución Universitaria de Roldanillo",
+          "Jardín Botánico José Celestino Mutis",
+          "KUMPANIA DE SAMPUES SAS",
+          "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+          "LA PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION - PAP - DE SAN JUAN EN EL DEPARTAMENTO DE ANTIOQUIA",
+          "LA PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION DEL AGUA BOSQUES Y EL TURISMO",
+          "MUNICIPIO DE ALBANIA",
+          "MUNICIPIO DE ALBANIA LA GUAJIRA",
+          "MUNICIPIO DE ARIGUANI",
+          "MUNICIPIO DE DURANIA - NORTE DE SANTANDER",
+          "MUNICIPIO DE HISPANIA",
+          "MUNICIPIO DE LA MONTAÑITA CAQUETA",
+          "MUNICIPIO DE LEJANIAS",
+          "MUNICIPIO DE MANIZALES",
+          "MUNICIPIO DE PENSILVANIA",
+          "MUNICIPIO DE SILVANIA",
+          "ORGANIZACION PARA LA RECREACION Y EL DEPORTE DE IPIALES - ORDEPI",
+          "ORGANIZACION REGIONAL INDIGENA DE CASANARE ORIC DEL MUNICIPIO DE YOPAL",
+          "ORGANIZACION WIWA YUGUMAIUN BUNKUANARRUA TAYRONA",
+          "PERSONERIA MUNICIPAL BETANIA",
+          "PERSONERIA MUNICIPAL DE AQUITANIA",
+          "PERSONERIA MUNICIPAL DE DURANIA**",
+          "PERSONERIA MUNICIPAL DE HISPANIA",
+          "PERSONERIA MUNICIPAL DE MANI",
+          "PERSONERIA MUNICIPAL DE MANIZALES",
+          "POLICIA METROPOLITA DE CARTAGENA DE INDIAS -AREA DE SANIDAD BOLIVAR",
+          "POLICIA METROPOLITANA DE MANIZALES-UPRES CALDAS",
+          "POLICÍA METROPOLITANA DE MANIZALES",
+          "POSITIVA COMPAÑIA DE SEGUROS S.A",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION TURÍSTICA Y AGROECOLOGICA DEL OCCIDENTE ANTIOQUEÑO",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION- PAP-",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN -PAP- AGROINDUSTRIAL DEL OCCIDENTE ANTIOQUEÑO",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN -PAP- MINERO AGROECOLÓGICA",
+          "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN CARTAMA",
+          "PROVINCIA DMINISTRATIVA Y DE PLANIFICACION - PAP DEL SUMAPAZ",
+          "RECLUSION MUJERES MANIZALES",
+          "REGION ADMINISTRATIVA DE PLANIFICACION RAP PACIFICO",
+          "REGION ADMINISTRATIVA Y DE PLANIFICACION RAP DEL AGUA Y LA MONTAÑA",
+          "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP - CARIBE",
+          "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP - EJE CAFETERO",
+          "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP-LLANOS",
+          "RESGUARDO INDIGENA CRISTIANIA",
+          "Rama Judicial  Dirección Seccional de Administración Judicial de Manizales",
+          "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+          "TERMINAL DE TRANSPORTES DE MANIZALES S.A",
+          "UNIDAD ADMINISTRATIVA ESPECIAL DE ORGANIZACIONES SOLIDARIAS",
+          "UNIVERSIDAD DE MANIZALES"
+        ],
+        "forms_reached_count": 135,
+        "nits_reached": [
+          "800002916",
+          "800008456",
+          "8000084563",
+          "800008556",
+          "800027784",
+          "800077545",
+          "800095770",
+          "800099136",
+          "800099237",
+          "800099455",
+          "800101441",
+          "800121084",
+          "800123131",
+          "800130812",
+          "800140132",
+          "800140623",
+          "800141053",
+          "800165850",
+          "800182104",
+          "8001997082",
+          "8002241983",
+          "800226175",
+          "800239720",
+          "800243941",
+          "800250029",
+          "8002527222",
+          "806007801",
+          "807006015",
+          "807006421",
+          "810000598",
+          "810001096",
+          "810001114",
+          "810001393",
+          "810005578",
+          "810005966",
+          "8110390753",
+          "811040224",
+          "813001950",
+          "821000765",
+          "821001328",
+          "8240027660",
+          "825002525",
+          "829003472",
+          "830034182",
+          "830037517",
+          "830039670",
+          "8300396705",
+          "830041314",
+          "8301259969",
+          "834001593",
+          "837000033",
+          "8390003600",
+          "842000015",
+          "844000635",
+          "860002400",
+          "860007887",
+          "860011153",
+          "860030197",
+          "890481310",
+          "890501438",
+          "890680437",
+          "890801007",
+          "890801053",
+          "890801059",
+          "890801137",
+          "8908032858",
+          "8908060017",
+          "890807930",
+          "890980802",
+          "8909808023",
+          "890984986",
+          "8909849868",
+          "891190431",
+          "8912006381",
+          "891200686",
+          "891702186",
+          "8918000314",
+          "891855492",
+          "891900289",
+          "891900343",
+          "891902811",
+          "892099242",
+          "899999048",
+          "899999050",
+          "8999990672",
+          "899999114",
+          "8999994002",
+          "899999709",
+          "900004592",
+          "900094475",
+          "900110509",
+          "900149064",
+          "900150224",
+          "900156335",
+          "900217714",
+          "900284830",
+          "900315506",
+          "900342704",
+          "9005841451",
+          "900805219",
+          "900907644",
+          "900929063",
+          "900932971",
+          "900933332",
+          "9010798724",
+          "901097324",
+          "901127870",
+          "901190414",
+          "901212832",
+          "901226580",
+          "9012516946",
+          "901419843",
+          "9014332637",
+          "901440188",
+          "901465799",
+          "901498485",
+          "901540902",
+          "901540945",
+          "901540992",
+          "9015412568",
+          "901554663",
+          "9015819502",
+          "901624414",
+          "901665080",
+          "901767734",
+          "901833147",
+          "901978862",
+          "902002313"
+        ],
+        "like_rows": 89167,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 38914.0
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ANI%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "AFROLLANITO",
+            "nit": "9010798724",
+            "rows": 2
+          },
+          {
+            "name": "AGUAS DE MANIZALES",
+            "nit": "810000598",
+            "rows": 3288
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE ALBANIA",
+            "nit": "800099455",
+            "rows": 24
+          },
+          {
+            "name": "ALCALDÍA MUNICIPAL DE AQUITANIA",
+            "nit": "800077545",
+            "rows": 941
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE CHAGUANI",
+            "nit": "8999994002",
+            "rows": 8
+          },
+          {
+            "name": "ALCALDÍA MUNICIPAL DE ROLDANILLO",
+            "nit": "891900289",
+            "rows": 1885
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE SAMANIEGO",
+            "nit": "800099136",
+            "rows": 6
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE SAN ESTANISLAO DE KOSTKA",
+            "nit": "890481310",
+            "rows": 44
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE VIANI",
+            "nit": "899999709",
+            "rows": 16
+          },
+          {
+            "name": "ALCALDIA MUNICIPIO DE BETANIA",
+            "nit": "890980802",
+            "rows": 447
+          },
+          {
+            "name": "ALCALDIA MUNICIPIO DE MANI 1",
+            "nit": "800008456",
+            "rows": 886
+          },
+          {
+            "name": "ANI",
+            "nit": "8301259969",
+            "rows": 7551
+          },
+          {
+            "name": "ARTESANIAS DE COLOMBIA S.A",
+            "nit": "860007887",
+            "rows": 4730
+          },
+          {
+            "name": "ASOCIACION CABLE AEREO MANIZALES",
+            "nit": "900315506",
+            "rows": 827
+          },
+          {
+            "name": "BIORGANICOS DEL SUR DEL HUILA SA ESP",
+            "nit": "813001950",
+            "rows": 236
+          },
+          {
+            "name": "CÁRCEL Y PENITENCIARIA DE MEDIA SEGURIDAD DE MANIZALES",
+            "nit": "810001096",
+            "rows": 371
+          },
+          {
+            "name": "CEHANI E.S.E",
+            "nit": "8912006381",
+            "rows": 2179
+          },
+          {
+            "name": "CE JORDANIA APIA",
+            "nit": "9000017229",
+            "rows": 26
+          },
+          {
+            "name": "CENTRAL ADMINISTRATIVA Y CONTABLE PASTO SANIDAD",
+            "nit": "830039670",
+            "rows": 2
+          },
+          {
+            "name": "CENTRAL ADMINISTRATIVA Y CONTABLE-POP-SANIDAD/",
+            "nit": "900156335",
+            "rows": 14
+          },
+          {
+            "name": "CENTRAL ADMINISTRATIVA Y CONTABLE REGIONAL ARMENIA-SANIDAD",
+            "nit": "830039670",
+            "rows": 1451
+          },
+          {
+            "name": "CENTRO EDUCATIVO DE EL CAÑITO",
+            "nit": "823003229",
+            "rows": 19
+          },
+          {
+            "name": "CENTRO EDUCATIVO EL MANZANILLO",
+            "nit": "811040224",
+            "rows": 38
+          },
+          {
+            "name": "CENTRO EDUCATIVO INDIGENA SIKUANI PLAYEROS",
+            "nit": "834001593",
+            "rows": 16
+          },
+          {
+            "name": "CENTRO EDUCATIVO PANTANITO",
+            "nit": "9000283248",
+            "rows": 16
+          },
+          {
+            "name": "CENTRO EDUCATIVO RURAL BERTRANIA1",
+            "nit": "9001229106",
+            "rows": 39
+          },
+          {
+            "name": "CENTRO EDUCATIVO RURAL LUCITANIA",
+            "nit": "846003582",
+            "rows": 1
+          },
+          {
+            "name": "CENTRO EDUCATIVO SERRANIA DEL MELUA",
+            "nit": "822007312",
+            "rows": 17
+          },
+          {
+            "name": "CENTRO EDUCATIVO VENTANILLA ARRIBA",
+            "nit": "9002930760",
+            "rows": 9
+          },
+          {
+            "name": "COLEGIO ESTANISLAO ZULETA  IED",
+            "nit": "832002183",
+            "rows": 141
+          },
+          {
+            "name": "COLEGIO JAIRO ANIBAL NIÑO C.E.D",
+            "nit": "830063598",
+            "rows": 55
+          },
+          {
+            "name": "COLEGIO LA LLANITA",
+            "nit": "804016186",
+            "rows": 48
+          },
+          {
+            "name": "COLEGIO PRADO VERANIEGO IED",
+            "nit": "830037517",
+            "rows": 75
+          },
+          {
+            "name": "COLEGIO REPUBLICA FEDERAL DE ALEMANIA IED",
+            "nit": "830034182",
+            "rows": 112
+          },
+          {
+            "name": "COMPAÑÍA COLOMBIANA DE SERVICIOS DE VALOR AGREGADO Y TELEMÁTICOS COLVATEL S.A. ESP",
+            "nit": "800196299",
+            "rows": 760
+          },
+          {
+            "name": "COMPAÑIA DE SEGUROS DE VIDA COLMENA*",
+            "nit": "800226175",
+            "rows": 4
+          },
+          {
+            "name": "Compañia de Servicios Publicos de Sogamoso",
+            "nit": "8918000314",
+            "rows": 2
+          },
+          {
+            "name": "COMPAÑIA ENERGETICA DEL CARIBE S.A.S. ESP",
+            "nit": "900907644",
+            "rows": 22
+          },
+          {
+            "name": "CONCEJO DE DURANIA NORTE DE SANTANDER",
+            "nit": "807006015",
+            "rows": 7
+          },
+          {
+            "name": "CONCEJO DEL MUNICIPIO DE ALBANIA CAQUETA",
+            "nit": "891190431",
+            "rows": 3
+          },
+          {
+            "name": "CONCEJO DE MANIZALES",
+            "nit": "810005966",
+            "rows": 378
+          },
+          {
+            "name": "CONCEJO MUNICIPAL DE AQUITANIA",
+            "nit": "900929063",
+            "rows": 13
+          },
+          {
+            "name": "CONCEJO MUNICIPAL DE BETANIA",
+            "nit": "890980802",
+            "rows": 4
+          },
+          {
+            "name": "CONCEJO MUNICIPAL DE MANI",
+            "nit": "8000084563",
+            "rows": 3
+          },
+          {
+            "name": "Concejo Municipal de Pensilvania",
+            "nit": "890801137",
+            "rows": 11
+          },
+          {
+            "name": "CONCEJO MUNICIPAL DE SILVANIA",
+            "nit": "890680437",
+            "rows": 11
+          },
+          {
+            "name": "CONCEJO ROLDANILLO",
+            "nit": "821001328",
+            "rows": 18
+          },
+          {
+            "name": "CONTRALORIA GENERAL DE LA REPÚBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+            "nit": "8999990672",
+            "rows": 59
+          },
+          {
+            "name": "CONTRALORIA GENERAL DEL MUNICIPIO DE MANIZALES",
+            "nit": "800101441",
+            "rows": 200
+          },
+          {
+            "name": "CORPORACION FRESNENSE DE OBRAS SANITARIAS**",
+            "nit": "800123131",
+            "rows": 461
+          },
+          {
+            "name": "DEPARTAMENTO DE POLICIA CESAR - AREA DE SANIDAD",
+            "nit": "800140623",
+            "rows": 829
+          },
+          {
+            "name": "DEPARTAMENTO DE POLICIA VICHADA - AREA SANIDAD*",
+            "nit": "842000015",
+            "rows": 185
+          },
+          {
+            "name": "DIRECCIÓN DE SANIDAD ARMADA NACIONAL",
+            "nit": "9014332637",
+            "rows": 1505
+          },
+          {
+            "name": "DIRECCION DE SANIDAD DE EJERCITO-DISPENSARIO MEDICO FLORENCIA",
+            "nit": "901540902",
+            "rows": 2329
+          },
+          {
+            "name": "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+            "nit": "830041314",
+            "rows": 7938
+          },
+          {
+            "name": "DIRECCIÓN DE SANIDAD EJÉRCITO1",
+            "nit": "901440188",
+            "rows": 3618
+          },
+          {
+            "name": "DIRECCION DE SANIDAD EJERCITO DISPENSARIO MÉDICO SUROCCIDENTE",
+            "nit": "901540992",
+            "rows": 6770
+          },
+          {
+            "name": "DIRECCION DE SANIDAD EJERCITO DISPENSARIO MEDICO YOPAL",
+            "nit": "901540945",
+            "rows": 2546
+          },
+          {
+            "name": "DIRECCIÓN GENERAL DE SANIDAD MILITAR+",
+            "nit": "8300396705",
+            "rows": 2043
+          },
+          {
+            "name": "DIRECCION GENERAL SANIDAD BAS02 1015 BARRANQUILLA",
+            "nit": "830039670",
+            "rows": 1161
+          },
+          {
+            "name": "DISAN AREA DE SANIDAD SAN ANDRES",
+            "nit": "800141053",
+            "rows": 184
+          },
+          {
+            "name": "DISPENSARIO MEDICO NEIVA - DIRECCIÓN DE SANIDAD EJERCITO",
+            "nit": "9015412568",
+            "rows": 2550
+          },
+          {
+            "name": "EMPRESA DE OBRAS SANITARIAS DE CALDAS S.A E.S.P.",
+            "nit": "890803239",
+            "rows": 1968
+          },
+          {
+            "name": "EMPRESA DE OBRAS SANITARIAS DE LA PROVINCIA DE OBANDO EMPOOBANDO E.S.P.",
+            "nit": "800140132",
+            "rows": 407
+          },
+          {
+            "name": "EMPRESA DE OBRAS SANITARIAS DE PASTO EMPOPASTO S.A. E.S.P.",
+            "nit": "891200686",
+            "rows": 6
+          },
+          {
+            "name": "EMPRESA DE OBRAS SANITARIAS DE SANTA ROSA DE CABAL EMPOCABAL E.S.P - E.I.C.E",
+            "nit": "8000506037",
+            "rows": 509
+          },
+          {
+            "name": "EMPRESA DE SERVICIOS PUBLICOS DE ACUEDUCTO ALCANTARILLADO Y ASEO DEL MUNICIPIO DE CURUMANI ACUACUR E.S.P",
+            "nit": "800239720",
+            "rows": 12
+          },
+          {
+            "name": "EMPRESA DE SERVICIOS PUBLICOS DE LEJANIAS META - ESPL",
+            "nit": "900284830",
+            "rows": 124
+          },
+          {
+            "name": "EMPRESA DE SERVICIOS PUBLICOS DOMICILIARIOS DE ALBANIA S.A E.S.P.",
+            "nit": "900098017",
+            "rows": 44
+          },
+          {
+            "name": "EMPRESA DE SERVICIOS PUBLICOS DOMICILIARIOS DE LA MONTAÑITA S.A. E.S.P",
+            "nit": "900073043",
+            "rows": 66
+          },
+          {
+            "name": "EMPRESA DE SERVICIOS PÚBLICOS DOMICILIARIOS DE VIANÍ",
+            "nit": "900392869",
+            "rows": 39
+          },
+          {
+            "name": "EMPRESA MUNICIPAL PARA LA SALUD (EMSA - LOTERIA DE MANIZALES)",
+            "nit": "890801007",
+            "rows": 182
+          },
+          {
+            "name": "EMPRESA SOCIAL DEL ESTADO CENTRO DE SALUD GIOVANI CRISTINI",
+            "nit": "806007801",
+            "rows": 673
+          },
+          {
+            "name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL EMIRO QUINTERO CAÑIZARES 12",
+            "nit": "890501438",
+            "rows": 2865
+          },
+          {
+            "name": "EMPRESA SOCIAL DEL ESTADO  MERCEDES TELLEZ DE PRADILLA E.S.E - HOSPITAL DE VIANI",
+            "nit": "900094475",
+            "rows": 746
+          },
+          {
+            "name": "EMPRESAS PUBLICAS DE HISPANIA S.A. E.S.P.",
+            "nit": "900150224",
+            "rows": 174
+          },
+          {
+            "name": "EMPRESAS PUBLICAS DE PENSILVANIA E.S.P",
+            "nit": "800153304",
+            "rows": 539
+          },
+          {
+            "name": "EMPRESAS PUBLICAS MUNICIPALES DE BETANIA S.A. E.S.P1",
+            "nit": "900217714",
+            "rows": 88
+          },
+          {
+            "name": "EMPUSILVANIA SA ESP",
+            "nit": "900342704",
+            "rows": 265
+          },
+          {
+            "name": "EPMSC PENSILVANIA",
+            "nit": "810001393",
+            "rows": 207
+          },
+          {
+            "name": "ESCUELA NORMAL SUPERIOR DE MANIZALES",
+            "nit": "800027784",
+            "rows": 98
+          },
+          {
+            "name": "ESE HOSPITAL SAN RAFAEL DE ALBANIA",
+            "nit": "825002525",
+            "rows": 1130
+          },
+          {
+            "name": "ESE SALUD AQUITANIA",
+            "nit": "891855492",
+            "rows": 594
+          },
+          {
+            "name": "ESTABLECIMIENTO PENITENCIARIO DE MEDIANA SEGURIDAD Y CARCELARIO DE ROLDANILLO VALLE",
+            "nit": "821000765",
+            "rows": 39
+          },
+          {
+            "name": "FUNDACION BOTANICA Y ZOOLOGICA DE BARRANQUILLA",
+            "nit": "8001997082",
+            "rows": 18
+          },
+          {
+            "name": "GRUPO DE CABALLERIA MECANIZADO No 18",
+            "nit": "800130812",
+            "rows": 484
+          },
+          {
+            "name": "GUAVIARE SANIDAD",
+            "nit": "8002527222",
+            "rows": 192
+          },
+          {
+            "name": "HOSPITAL DEPARTAMENTAL SAN ANTONIO DE ROLDANILLO",
+            "nit": "891900343",
+            "rows": 1284
+          },
+          {
+            "name": "IE COLEGIO PRESBITERO DANIEL JORDAN",
+            "nit": "800115569",
+            "rows": 89
+          },
+          {
+            "name": "IED ALEMANIA UNIFICADA",
+            "nit": "830070022",
+            "rows": 104
+          },
+          {
+            "name": "IED OLGA EMILIANI",
+            "nit": "901911478",
+            "rows": 6
+          },
+          {
+            "name": "INGENIERÍA DESARROLLO Y ADMINISTRACIÓN DE MANIZALES S.A. ESP (Comprador)",
+            "nit": "901498485",
+            "rows": 79
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA 27 DE OCTUBRE DE ANIMAS ALTAS",
+            "nit": "829003472",
+            "rows": 39
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA ALBANIA",
+            "nit": "800121084",
+            "rows": 6
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA ANIBAL MARTINEZ ZULETA - TAMALAMEQUE",
+            "nit": "800175668",
+            "rows": 85
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA ANIBAL OJEDA",
+            "nit": "823001507",
+            "rows": 15
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA BALDOMERO SANIN CANO",
+            "nit": "9019022274",
+            "rows": 21
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA BETANIA",
+            "nit": "812007891",
+            "rows": 65
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA BETANIA",
+            "nit": "900119824",
+            "rows": 17
+          },
+          {
+            "name": "INSTITUCIÓN EDUCATIVA BETANIA",
+            "nit": "813008271",
+            "rows": 45
+          },
+          {
+            "name": "INSTITUCIÓN EDUCATIVA BETANIA",
+            "nit": "900017839",
+            "rows": 30
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA CAÑITO DE LOS SÁBALOS",
+            "nit": "900076342",
+            "rows": 11
+          },
+          {
+            "name": "INSTITUCIÓN EDUCATIVA CARDENAL ANÍBAL MUÑOZ DUQUE",
+            "nit": "811019614",
+            "rows": 1
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA CRISTOBAL COLON CAMPANITO",
+            "nit": "812007611",
+            "rows": 50
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DANIEL ALFONSO PAZ ALVAREZ",
+            "nit": "800188225",
+            "rows": 56
+          },
+          {
+            "name": "INSTITUCIÓN EDUCATIVA  DANIEL MARÍA LÓPEZ RODRÍGUEZ",
+            "nit": "810000880",
+            "rows": 20
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DE LEJANIAS",
+            "nit": "800166129",
+            "rows": 82
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DEPARTAMENTAL BALDOMERO SANIN CANO",
+            "nit": "899999343",
+            "rows": 36
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DEPARTAMENTAL BALDOMERO SANIN CANO",
+            "nit": "9006809090",
+            "rows": 2
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DEPARTAMENTAL CAPELLANIA",
+            "nit": "900012755",
+            "rows": 112
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DEPARTAMENTAL GERMANIA",
+            "nit": "8190072070",
+            "rows": 61
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DEPARTAMENTAL LICEO ARIGUANI",
+            "nit": "800068760",
+            "rows": 82
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DEPARTAMENTAL NATANIA",
+            "nit": "827000288",
+            "rows": 78
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DEPARTAMENTAL SANTA GEMMA DE GALGANI",
+            "nit": "800177754",
+            "rows": 37
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DEPARTAMENTAL TECNICA AGROPECARIA CARMEN DE ARIGUANI",
+            "nit": "900012537",
+            "rows": 3
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DISTRITAL ANIBAL FERNANDEZ DE SOTO",
+            "nit": "860532389",
+            "rows": 50
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA DISTRITAL BETANIA NORTE",
+            "nit": "8001538810",
+            "rows": 40
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA ESTEFANIA MARIMON ISAZA",
+            "nit": "812008107",
+            "rows": 39
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA FE Y ALEGRIA GRANIZAL",
+            "nit": "811019071",
+            "rows": 70
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA HENRY DANIELS",
+            "nit": "892099285",
+            "rows": 75
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA INSTITUTO MANIZALES",
+            "nit": "8908013929",
+            "rows": 79
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA JUAN BAUTISTA MIGANI",
+            "nit": "800008556",
+            "rows": 138
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA JUANITA GARCIA MANJARREZ",
+            "nit": "823003969",
+            "rows": 75
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA LIMBANIA VELASCO",
+            "nit": "817000949",
+            "rows": 48
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA LUSITANIA PAZ DE COLOMBIA",
+            "nit": "900932971",
+            "rows": 86
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA MANZANILLO DEL MAR",
+            "nit": "806008245",
+            "rows": 42
+          },
+          {
+            "name": "INSTITUCIÓN EDUCATIVA PENSILVANIA",
+            "nit": "810000966",
+            "rows": 65
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA REGION SUR DE AQUITANIA",
+            "nit": "900314002",
+            "rows": 18
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RODANIA",
+            "nit": "812003657",
+            "rows": 15
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL ALBANIA",
+            "nit": "846004027",
+            "rows": 44
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL BETANIA",
+            "nit": "900253878",
+            "rows": 2
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA  RURAL EL CANIME",
+            "nit": "900253145",
+            "rows": 2
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL GRANIZADA",
+            "nit": "900110509",
+            "rows": 39
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL HERMANO DANIEL",
+            "nit": "8110278510",
+            "rows": 19
+          },
+          {
+            "name": "INSTITUCIÓN EDUCATIVA RURAL INDÍGENA COEMANI FORTUNATO REALLY",
+            "nit": "828000353",
+            "rows": 27
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL  LA CABAÑITA",
+            "nit": "900159118",
+            "rows": 27
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL PANTANILLO",
+            "nit": "8110390753",
+            "rows": 43
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL PLATANILLO",
+            "nit": "900014413",
+            "rows": 31
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL SAN JOSE DE CAQUETANIA",
+            "nit": "900304063",
+            "rows": 6
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL SANPEREGRINO MANIZALES",
+            "nit": "890807930",
+            "rows": 188
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA SAN JOSE DE CURUMANI",
+            "nit": "824001728",
+            "rows": 88
+          },
+          {
+            "name": "INSTITUCIÓN EDUCATIVA SAN JOSE DE LLANITOS  DE ACEVEDO HUILA",
+            "nit": "9000161304",
+            "rows": 37
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA SIETE DE AGOSTO MANIZALES",
+            "nit": "810005578",
+            "rows": 51
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA SILVANIA",
+            "nit": "813002490",
+            "rows": 62
+          },
+          {
+            "name": "INSTITUCIÓN EDUCATIVA TÉCNICA AGROPECUARIA ANÍBAL GANDARA CAMPO",
+            "nit": "823002185",
+            "rows": 36
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA TECNICA AGROPECUARIA DE ALBANIA",
+            "nit": "800182104",
+            "rows": 49
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA TECNICA EN INFORMATICA ANIBAL NOGUERA MENDOZA",
+            "nit": "900081460",
+            "rows": 48
+          },
+          {
+            "name": "INSTITUCION SAN RAFAEL DE ALBANIA",
+            "nit": "800243941",
+            "rows": 48
+          },
+          {
+            "name": "Institución Universitaria de Roldanillo",
+            "nit": "891902811",
+            "rows": 671
+          },
+          {
+            "name": "INSTITUTO DE CULTURA Y TURISMO DE MANIZALES",
+            "nit": "800250029",
+            "rows": 2560
+          },
+          {
+            "name": "INSTITUTO DE FINANCIAMIENTO PROMOCIÓN Y DESARROLLO DE MANIZALES - INFI-MANIZALES",
+            "nit": "890801059",
+            "rows": 906
+          },
+          {
+            "name": "INSTITUTO DE PLANIFICACIÓN Y PROMOCIÓN DE SOLUCIONES ENERGÉTICAS PARA LAS ZONAS NO INTERCONECTADAS IPSE",
+            "nit": "899999048",
+            "rows": 2189
+          },
+          {
+            "name": "INSTITUTO DE VALORIZACION DE MANIZALES",
+            "nit": "800002916",
+            "rows": 939
+          },
+          {
+            "name": "INSTITUTO DISTRITAL DE PROTECCION Y BIENESTAR ANIMAL",
+            "nit": "901097324",
+            "rows": 4689
+          },
+          {
+            "name": "INSTITUTO INEM BALDOMERO SANIN CANO",
+            "nit": "890802548",
+            "rows": 71
+          },
+          {
+            "name": "INSTITUTO MUNICIPAL DE CULTURA Y CIUDADANIA DE APARTADO",
+            "nit": "901465799",
+            "rows": 522
+          },
+          {
+            "name": "INSTITUTO TECNICO COMERCIAL DE CAPELLANIA",
+            "nit": "800016942",
+            "rows": 59
+          },
+          {
+            "name": "Jardín Botánico José Celestino Mutis",
+            "nit": "860030197",
+            "rows": 10644
+          },
+          {
+            "name": "KUMPANIA DE SAMPUES SAS",
+            "nit": "9005841451",
+            "rows": 7
+          },
+          {
+            "name": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+            "nit": "860002400",
+            "rows": 2143
+          },
+          {
+            "name": "LA PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION DEL AGUA BOSQUES Y EL TURISMO",
+            "nit": "901226580",
+            "rows": 448
+          },
+          {
+            "name": "LA PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION - PAP - DE SAN JUAN EN EL DEPARTAMENTO DE ANTIOQUIA",
+            "nit": "901624414",
+            "rows": 83
+          },
+          {
+            "name": "MUNICIPIO DE ALBANIA",
+            "nit": "891190431",
+            "rows": 598
+          },
+          {
+            "name": "MUNICIPIO DE ALBANIA LA GUAJIRA",
+            "nit": "8390003600",
+            "rows": 39
+          },
+          {
+            "name": "MUNICIPIO DE ARIGUANI",
+            "nit": "891702186",
+            "rows": 28
+          },
+          {
+            "name": "MUNICIPIO DE DURANIA - NORTE DE SANTANDER",
+            "nit": "800099237",
+            "rows": 482
+          },
+          {
+            "name": "MUNICIPIO DE HISPANIA",
+            "nit": "890984986",
+            "rows": 1034
+          },
+          {
+            "name": "MUNICIPIO DE LA MONTAÑITA CAQUETA",
+            "nit": "800095770",
+            "rows": 912
+          },
+          {
+            "name": "MUNICIPIO DE LEJANIAS",
+            "nit": "892099242",
+            "rows": 2
+          },
+          {
+            "name": "MUNICIPIO DE MANIZALES",
+            "nit": "890801053",
+            "rows": 10441
+          },
+          {
+            "name": "MUNICIPIO DE PENSILVANIA",
+            "nit": "890801137",
+            "rows": 1190
+          },
+          {
+            "name": "MUNICIPIO DE SILVANIA",
+            "nit": "890680437",
+            "rows": 401
+          },
+          {
+            "name": "ORGANIZACIÓN DE AFRODESCENDIENTES O COMUNIDADES NEGRAS DESPLAZADOS Y VICTIMAS DE LA VIOLENCIA DEL MUNICIPIO DE PLANETA RICA  CORDOBA ODEPRIVICOR",
+            "nit": "900260907",
+            "rows": 2
+          },
+          {
+            "name": "ORGANIZACION PARA LA RECREACION Y EL DEPORTE DE IPIALES - ORDEPI",
+            "nit": "837000033",
+            "rows": 218
+          },
+          {
+            "name": "ORGANIZACION REGIONAL INDIGENA DE CASANARE ORIC DEL MUNICIPIO DE YOPAL",
+            "nit": "844000635",
+            "rows": 9
+          },
+          {
+            "name": "ORGANIZACION WIWA YUGUMAIUN BUNKUANARRUA TAYRONA",
+            "nit": "8240027660",
+            "rows": 2
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL BETANIA",
+            "nit": "8909808023",
+            "rows": 1
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE AQUITANIA",
+            "nit": "900933332",
+            "rows": 22
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE DURANIA**",
+            "nit": "807006421",
+            "rows": 2
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE HISPANIA",
+            "nit": "8909849868",
+            "rows": 8
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE MANI",
+            "nit": "901833147",
+            "rows": 2
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE MANIZALES",
+            "nit": "900004592",
+            "rows": 274
+          },
+          {
+            "name": "POLICIA METROPOLITA DE CARTAGENA DE INDIAS -AREA DE SANIDAD BOLIVAR",
+            "nit": "900149064",
+            "rows": 1206
+          },
+          {
+            "name": "POLICÍA METROPOLITANA DE MANIZALES",
+            "nit": "900805219",
+            "rows": 1011
+          },
+          {
+            "name": "POLICIA METROPOLITANA DE MANIZALES-UPRES CALDAS",
+            "nit": "900805219",
+            "rows": 2133
+          },
+          {
+            "name": "POSITIVA COMPAÑIA DE SEGUROS S.A",
+            "nit": "860011153",
+            "rows": 1771
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN CARTAMA",
+            "nit": "901212832",
+            "rows": 156
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION- PAP-",
+            "nit": "901554663",
+            "rows": 6
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN -PAP- AGROINDUSTRIAL DEL OCCIDENTE ANTIOQUEÑO",
+            "nit": "902002313",
+            "rows": 4
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN -PAP- MINERO AGROECOLÓGICA",
+            "nit": "901419843",
+            "rows": 1
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION TURÍSTICA Y AGROECOLOGICA DEL OCCIDENTE ANTIOQUEÑO",
+            "nit": "901978862",
+            "rows": 20
+          },
+          {
+            "name": "PROVINCIA DMINISTRATIVA Y DE PLANIFICACION - PAP DEL SUMAPAZ",
+            "nit": "901767734",
+            "rows": 17
+          },
+          {
+            "name": "Rama Judicial  Dirección Seccional de Administración Judicial de Manizales",
+            "nit": "800165850",
+            "rows": 602
+          },
+          {
+            "name": "RECLUSION MUJERES MANIZALES",
+            "nit": "810001114",
+            "rows": 133
+          },
+          {
+            "name": "REGION ADMINISTRATIVA DE PLANIFICACION RAP PACIFICO",
+            "nit": "901127870",
+            "rows": 748
+          },
+          {
+            "name": "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP - CARIBE",
+            "nit": "901190414",
+            "rows": 18
+          },
+          {
+            "name": "REGION ADMINISTRATIVA Y DE PLANIFICACION RAP DEL AGUA Y LA MONTAÑA",
+            "nit": "901665080",
+            "rows": 40
+          },
+          {
+            "name": "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP - EJE CAFETERO",
+            "nit": "9012516946",
+            "rows": 653
+          },
+          {
+            "name": "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP-LLANOS",
+            "nit": "9015819502",
+            "rows": 120
+          },
+          {
+            "name": "RESGUARDO INDIGENA CRISTIANIA",
+            "nit": "8002241983",
+            "rows": 97
+          }
+        ],
+        "like_universe_complete": false,
+        "like_rows_grouped": 125140
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANI%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "AFROLLANITO",
+            "nit": "9010798724",
+            "rows": 1
+          },
+          {
+            "name": "AGUAS DE MANIZALES",
+            "nit": "810000598",
+            "rows": 49
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE ALBANIA",
+            "nit": "800099455",
+            "rows": 19
+          },
+          {
+            "name": "ALCALDÍA MUNICIPAL DE AQUITANIA",
+            "nit": "800077545",
+            "rows": 794
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE CHAGUANI",
+            "nit": "8999994002",
+            "rows": 5
+          },
+          {
+            "name": "ALCALDÍA MUNICIPAL DE ROLDANILLO",
+            "nit": "891900289",
+            "rows": 1624
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE SAMANIEGO",
+            "nit": "800099136",
+            "rows": 2
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE SAN ESTANISLAO DE KOSTKA",
+            "nit": "890481310",
+            "rows": 25
+          },
+          {
+            "name": "ALCALDIA MUNICIPAL DE VIANI",
+            "nit": "899999709",
+            "rows": 5
+          },
+          {
+            "name": "ALCALDIA MUNICIPIO DE BETANIA",
+            "nit": "890980802",
+            "rows": 355
+          },
+          {
+            "name": "ALCALDIA MUNICIPIO DE MANI 1",
+            "nit": "800008456",
+            "rows": 748
+          },
+          {
+            "name": "ANI",
+            "nit": "8301259969",
+            "rows": 6026
+          },
+          {
+            "name": "ARTESANIAS DE COLOMBIA S.A",
+            "nit": "860007887",
+            "rows": 110
+          },
+          {
+            "name": "ASOCIACION CABLE AEREO MANIZALES",
+            "nit": "900315506",
+            "rows": 554
+          },
+          {
+            "name": "BIORGANICOS DEL SUR DEL HUILA SA ESP",
+            "nit": "813001950",
+            "rows": 236
+          },
+          {
+            "name": "CÁRCEL Y PENITENCIARIA DE MEDIA SEGURIDAD DE MANIZALES",
+            "nit": "810001096",
+            "rows": 280
+          },
+          {
+            "name": "CEHANI E.S.E",
+            "nit": "8912006381",
+            "rows": 8
+          },
+          {
+            "name": "CENTRAL ADMINISTRATIVA Y CONTABLE PASTO SANIDAD",
+            "nit": "830039670",
+            "rows": 1
+          },
+          {
+            "name": "CENTRAL ADMINISTRATIVA Y CONTABLE-POP-SANIDAD/",
+            "nit": "900156335",
+            "rows": 6
+          },
+          {
+            "name": "CENTRAL ADMINISTRATIVA Y CONTABLE REGIONAL ARMENIA-SANIDAD",
+            "nit": "830039670",
+            "rows": 907
+          },
+          {
+            "name": "CENTRO EDUCATIVO EL MANZANILLO",
+            "nit": "811040224",
+            "rows": 1
+          },
+          {
+            "name": "CENTRO EDUCATIVO INDIGENA SIKUANI PLAYEROS",
+            "nit": "834001593",
+            "rows": 1
+          },
+          {
+            "name": "COLEGIO PRADO VERANIEGO IED",
+            "nit": "830037517",
+            "rows": 11
+          },
+          {
+            "name": "COLEGIO REPUBLICA FEDERAL DE ALEMANIA IED",
+            "nit": "830034182",
+            "rows": 42
+          },
+          {
+            "name": "COMPAÑIA DE SEGUROS DE VIDA COLMENA*",
+            "nit": "800226175",
+            "rows": 2
+          },
+          {
+            "name": "Compañia de Servicios Publicos de Sogamoso",
+            "nit": "8918000314",
+            "rows": 2
+          },
+          {
+            "name": "COMPAÑIA ENERGETICA DEL CARIBE S.A.S. ESP",
+            "nit": "900907644",
+            "rows": 5
+          },
+          {
+            "name": "CONCEJO DE DURANIA NORTE DE SANTANDER",
+            "nit": "807006015",
+            "rows": 7
+          },
+          {
+            "name": "CONCEJO DEL MUNICIPIO DE ALBANIA CAQUETA",
+            "nit": "891190431",
+            "rows": 4
+          },
+          {
+            "name": "CONCEJO DE MANIZALES",
+            "nit": "810005966",
+            "rows": 323
+          },
+          {
+            "name": "CONCEJO MUNICIPAL DE AQUITANIA",
+            "nit": "900929063",
+            "rows": 12
+          },
+          {
+            "name": "CONCEJO MUNICIPAL DE BETANIA",
+            "nit": "890980802",
+            "rows": 4
+          },
+          {
+            "name": "CONCEJO MUNICIPAL DE MANI",
+            "nit": "8000084563",
+            "rows": 3
+          },
+          {
+            "name": "Concejo Municipal de Pensilvania",
+            "nit": "890801137",
+            "rows": 10
+          },
+          {
+            "name": "CONCEJO MUNICIPAL DE SILVANIA",
+            "nit": "890680437",
+            "rows": 11
+          },
+          {
+            "name": "CONCEJO ROLDANILLO",
+            "nit": "821001328",
+            "rows": 16
+          },
+          {
+            "name": "CONTRALORIA GENERAL DE LA REPÚBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+            "nit": "8999990672",
+            "rows": 44
+          },
+          {
+            "name": "CONTRALORIA GENERAL DEL MUNICIPIO DE MANIZALES",
+            "nit": "800101441",
+            "rows": 215
+          },
+          {
+            "name": "CORPORACION FRESNENSE DE OBRAS SANITARIAS**",
+            "nit": "800123131",
+            "rows": 454
+          },
+          {
+            "name": "DEPARTAMENTO DE POLICIA CESAR - AREA DE SANIDAD",
+            "nit": "800140623",
+            "rows": 786
+          },
+          {
+            "name": "DEPARTAMENTO DE POLICIA VICHADA - AREA SANIDAD*",
+            "nit": "842000015",
+            "rows": 159
+          },
+          {
+            "name": "DIRECCIÓN DE SANIDAD ARMADA NACIONAL",
+            "nit": "9014332637",
+            "rows": 769
+          },
+          {
+            "name": "DIRECCION DE SANIDAD DE EJERCITO-DISPENSARIO MEDICO FLORENCIA",
+            "nit": "901540902",
+            "rows": 1618
+          },
+          {
+            "name": "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+            "nit": "830041314",
+            "rows": 2135
+          },
+          {
+            "name": "DIRECCIÓN DE SANIDAD EJÉRCITO1",
+            "nit": "901440188",
+            "rows": 2280
+          },
+          {
+            "name": "DIRECCION DE SANIDAD EJERCITO DISPENSARIO MÉDICO SUROCCIDENTE",
+            "nit": "901540992",
+            "rows": 5791
+          },
+          {
+            "name": "DIRECCION DE SANIDAD EJERCITO DISPENSARIO MEDICO YOPAL",
+            "nit": "901540945",
+            "rows": 1627
+          },
+          {
+            "name": "DIRECCIÓN GENERAL DE SANIDAD MILITAR+",
+            "nit": "8300396705",
+            "rows": 1656
+          },
+          {
+            "name": "DIRECCION GENERAL SANIDAD BAS02 1015 BARRANQUILLA",
+            "nit": "830039670",
+            "rows": 1080
+          },
+          {
+            "name": "DISAN AREA DE SANIDAD SAN ANDRES",
+            "nit": "800141053",
+            "rows": 148
+          },
+          {
+            "name": "DISPENSARIO MEDICO NEIVA - DIRECCIÓN DE SANIDAD EJERCITO",
+            "nit": "9015412568",
+            "rows": 1630
+          },
+          {
+            "name": "EMPRESA DE OBRAS SANITARIAS DE LA PROVINCIA DE OBANDO EMPOOBANDO E.S.P.",
+            "nit": "800140132",
+            "rows": 204
+          },
+          {
+            "name": "EMPRESA DE OBRAS SANITARIAS DE PASTO EMPOPASTO S.A. E.S.P.",
+            "nit": "891200686",
+            "rows": 1
+          },
+          {
+            "name": "EMPRESA DE SERVICIOS PUBLICOS DE ACUEDUCTO ALCANTARILLADO Y ASEO DEL MUNICIPIO DE CURUMANI ACUACUR E.S.P",
+            "nit": "800239720",
+            "rows": 1
+          },
+          {
+            "name": "EMPRESA DE SERVICIOS PUBLICOS DE LEJANIAS META - ESPL",
+            "nit": "900284830",
+            "rows": 8
+          },
+          {
+            "name": "EMPRESA MUNICIPAL PARA LA SALUD (EMSA - LOTERIA DE MANIZALES)",
+            "nit": "890801007",
+            "rows": 2
+          },
+          {
+            "name": "EMPRESA SOCIAL DEL ESTADO CENTRO DE SALUD GIOVANI CRISTINI",
+            "nit": "806007801",
+            "rows": 6
+          },
+          {
+            "name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL EMIRO QUINTERO CAÑIZARES 12",
+            "nit": "890501438",
+            "rows": 4006
+          },
+          {
+            "name": "EMPRESA SOCIAL DEL ESTADO  MERCEDES TELLEZ DE PRADILLA E.S.E - HOSPITAL DE VIANI",
+            "nit": "900094475",
+            "rows": 2
+          },
+          {
+            "name": "EMPRESAS PUBLICAS DE HISPANIA S.A. E.S.P.",
+            "nit": "900150224",
+            "rows": 8
+          },
+          {
+            "name": "EMPRESAS PUBLICAS MUNICIPALES DE BETANIA S.A. E.S.P1",
+            "nit": "900217714",
+            "rows": 90
+          },
+          {
+            "name": "EMPUSILVANIA SA ESP",
+            "nit": "900342704",
+            "rows": 12
+          },
+          {
+            "name": "EPMSC PENSILVANIA",
+            "nit": "810001393",
+            "rows": 200
+          },
+          {
+            "name": "ESCUELA NORMAL SUPERIOR DE MANIZALES",
+            "nit": "800027784",
+            "rows": 14
+          },
+          {
+            "name": "ESE HOSPITAL SAN RAFAEL DE ALBANIA",
+            "nit": "825002525",
+            "rows": 5
+          },
+          {
+            "name": "ESE SALUD AQUITANIA",
+            "nit": "891855492",
+            "rows": 10
+          },
+          {
+            "name": "ESTABLECIMIENTO PENITENCIARIO DE MEDIANA SEGURIDAD Y CARCELARIO DE ROLDANILLO VALLE",
+            "nit": "821000765",
+            "rows": 32
+          },
+          {
+            "name": "FUNDACION BOTANICA Y ZOOLOGICA DE BARRANQUILLA",
+            "nit": "8001997082",
+            "rows": 1
+          },
+          {
+            "name": "GRUPO DE CABALLERIA MECANIZADO No 18",
+            "nit": "800130812",
+            "rows": 244
+          },
+          {
+            "name": "GUAVIARE SANIDAD",
+            "nit": "8002527222",
+            "rows": 166
+          },
+          {
+            "name": "HOSPITAL DEPARTAMENTAL SAN ANTONIO DE ROLDANILLO",
+            "nit": "891900343",
+            "rows": 3
+          },
+          {
+            "name": "INGENIERÍA DESARROLLO Y ADMINISTRACIÓN DE MANIZALES S.A. ESP (Comprador)",
+            "nit": "901498485",
+            "rows": 1
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA 27 DE OCTUBRE DE ANIMAS ALTAS",
+            "nit": "829003472",
+            "rows": 22
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA ALBANIA",
+            "nit": "800121084",
+            "rows": 2
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA JUAN BAUTISTA MIGANI",
+            "nit": "800008556",
+            "rows": 19
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA LUSITANIA PAZ DE COLOMBIA",
+            "nit": "900932971",
+            "rows": 1
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL GRANIZADA",
+            "nit": "900110509",
+            "rows": 1
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL PANTANILLO",
+            "nit": "8110390753",
+            "rows": 5
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA RURAL SANPEREGRINO MANIZALES",
+            "nit": "890807930",
+            "rows": 19
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA SIETE DE AGOSTO MANIZALES",
+            "nit": "810005578",
+            "rows": 1
+          },
+          {
+            "name": "INSTITUCION EDUCATIVA TECNICA AGROPECUARIA DE ALBANIA",
+            "nit": "800182104",
+            "rows": 1
+          },
+          {
+            "name": "INSTITUCION SAN RAFAEL DE ALBANIA",
+            "nit": "800243941",
+            "rows": 4
+          },
+          {
+            "name": "Institución Universitaria de Roldanillo",
+            "nit": "891902811",
+            "rows": 479
+          },
+          {
+            "name": "INSTITUTO DE CULTURA Y TURISMO DE MANIZALES",
+            "nit": "800250029",
+            "rows": 2424
+          },
+          {
+            "name": "INSTITUTO DE FINANCIAMIENTO PROMOCIÓN Y DESARROLLO DE MANIZALES - INFI-MANIZALES",
+            "nit": "890801059",
+            "rows": 800
+          },
+          {
+            "name": "INSTITUTO DE PLANIFICACIÓN Y PROMOCIÓN DE SOLUCIONES ENERGÉTICAS PARA LAS ZONAS NO INTERCONECTADAS IPSE",
+            "nit": "899999048",
+            "rows": 1892
+          },
+          {
+            "name": "INSTITUTO DE VALORIZACION DE MANIZALES",
+            "nit": "800002916",
+            "rows": 675
+          },
+          {
+            "name": "INSTITUTO DISTRITAL DE PROTECCION Y BIENESTAR ANIMAL",
+            "nit": "901097324",
+            "rows": 4540
+          },
+          {
+            "name": "INSTITUTO MUNICIPAL DE CULTURA Y CIUDADANIA DE APARTADO",
+            "nit": "901465799",
+            "rows": 529
+          },
+          {
+            "name": "Jardín Botánico José Celestino Mutis",
+            "nit": "860030197",
+            "rows": 10533
+          },
+          {
+            "name": "KUMPANIA DE SAMPUES SAS",
+            "nit": "9005841451",
+            "rows": 3
+          },
+          {
+            "name": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+            "nit": "860002400",
+            "rows": 12
+          },
+          {
+            "name": "LA PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION DEL AGUA BOSQUES Y EL TURISMO",
+            "nit": "901226580",
+            "rows": 476
+          },
+          {
+            "name": "LA PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION - PAP - DE SAN JUAN EN EL DEPARTAMENTO DE ANTIOQUIA",
+            "nit": "901624414",
+            "rows": 83
+          },
+          {
+            "name": "MUNICIPIO DE ALBANIA",
+            "nit": "891190431",
+            "rows": 534
+          },
+          {
+            "name": "MUNICIPIO DE ALBANIA LA GUAJIRA",
+            "nit": "8390003600",
+            "rows": 34
+          },
+          {
+            "name": "MUNICIPIO DE ARIGUANI",
+            "nit": "891702186",
+            "rows": 27
+          },
+          {
+            "name": "MUNICIPIO DE DURANIA - NORTE DE SANTANDER",
+            "nit": "800099237",
+            "rows": 450
+          },
+          {
+            "name": "MUNICIPIO DE HISPANIA",
+            "nit": "890984986",
+            "rows": 916
+          },
+          {
+            "name": "MUNICIPIO DE LA MONTAÑITA CAQUETA",
+            "nit": "800095770",
+            "rows": 752
+          },
+          {
+            "name": "MUNICIPIO DE LEJANIAS",
+            "nit": "892099242",
+            "rows": 1
+          },
+          {
+            "name": "MUNICIPIO DE MANIZALES",
+            "nit": "890801053",
+            "rows": 8742
+          },
+          {
+            "name": "MUNICIPIO DE PENSILVANIA",
+            "nit": "890801137",
+            "rows": 1089
+          },
+          {
+            "name": "MUNICIPIO DE SILVANIA",
+            "nit": "890680437",
+            "rows": 345
+          },
+          {
+            "name": "ORGANIZACION PARA LA RECREACION Y EL DEPORTE DE IPIALES - ORDEPI",
+            "nit": "837000033",
+            "rows": 257
+          },
+          {
+            "name": "ORGANIZACION REGIONAL INDIGENA DE CASANARE ORIC DEL MUNICIPIO DE YOPAL",
+            "nit": "844000635",
+            "rows": 10
+          },
+          {
+            "name": "ORGANIZACION WIWA YUGUMAIUN BUNKUANARRUA TAYRONA",
+            "nit": "8240027660",
+            "rows": 2
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL BETANIA",
+            "nit": "8909808023",
+            "rows": 3
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE AQUITANIA",
+            "nit": "900933332",
+            "rows": 25
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE DURANIA**",
+            "nit": "807006421",
+            "rows": 3
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE HISPANIA",
+            "nit": "8909849868",
+            "rows": 8
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE MANI",
+            "nit": "901833147",
+            "rows": 3
+          },
+          {
+            "name": "PERSONERIA MUNICIPAL DE MANIZALES",
+            "nit": "900004592",
+            "rows": 250
+          },
+          {
+            "name": "POLICIA METROPOLITA DE CARTAGENA DE INDIAS -AREA DE SANIDAD BOLIVAR",
+            "nit": "900149064",
+            "rows": 1148
+          },
+          {
+            "name": "POLICÍA METROPOLITANA DE MANIZALES",
+            "nit": "900805219",
+            "rows": 599
+          },
+          {
+            "name": "POLICIA METROPOLITANA DE MANIZALES-UPRES CALDAS",
+            "nit": "900805219",
+            "rows": 1575
+          },
+          {
+            "name": "POSITIVA COMPAÑIA DE SEGUROS S.A",
+            "nit": "860011153",
+            "rows": 1
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN CARTAMA",
+            "nit": "901212832",
+            "rows": 337
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION- PAP-",
+            "nit": "901554663",
+            "rows": 6
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN -PAP- AGROINDUSTRIAL DEL OCCIDENTE ANTIOQUEÑO",
+            "nit": "902002313",
+            "rows": 4
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN -PAP- MINERO AGROECOLÓGICA",
+            "nit": "901419843",
+            "rows": 1
+          },
+          {
+            "name": "PROVINCIA ADMINISTRATIVA Y DE PLANIFICACION TURÍSTICA Y AGROECOLOGICA DEL OCCIDENTE ANTIOQUEÑO",
+            "nit": "901978862",
+            "rows": 19
+          },
+          {
+            "name": "PROVINCIA DMINISTRATIVA Y DE PLANIFICACION - PAP DEL SUMAPAZ",
+            "nit": "901767734",
+            "rows": 22
+          },
+          {
+            "name": "Rama Judicial  Dirección Seccional de Administración Judicial de Manizales",
+            "nit": "800165850",
+            "rows": 447
+          },
+          {
+            "name": "RECLUSION MUJERES MANIZALES",
+            "nit": "810001114",
+            "rows": 123
+          },
+          {
+            "name": "REGION ADMINISTRATIVA DE PLANIFICACION RAP PACIFICO",
+            "nit": "901127870",
+            "rows": 732
+          },
+          {
+            "name": "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP - CARIBE",
+            "nit": "901190414",
+            "rows": 73
+          },
+          {
+            "name": "REGION ADMINISTRATIVA Y DE PLANIFICACION RAP DEL AGUA Y LA MONTAÑA",
+            "nit": "901665080",
+            "rows": 41
+          },
+          {
+            "name": "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP - EJE CAFETERO",
+            "nit": "9012516946",
+            "rows": 694
+          },
+          {
+            "name": "REGIÓN ADMINISTRATIVA Y DE PLANIFICACIÓN RAP-LLANOS",
+            "nit": "9015819502",
+            "rows": 124
+          },
+          {
+            "name": "RESGUARDO INDIGENA CRISTIANIA",
+            "nit": "8002241983",
+            "rows": 103
+          },
+          {
+            "name": "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+            "nit": "899999114",
+            "rows": 7591
+          },
+          {
+            "name": "TERMINAL DE TRANSPORTES DE MANIZALES S.A",
+            "nit": "8908032858",
+            "rows": 382
+          },
+          {
+            "name": "UNIDAD ADMINISTRATIVA ESPECIAL DE ORGANIZACIONES SOLIDARIAS",
+            "nit": "899999050",
+            "rows": 1555
+          },
+          {
+            "name": "UNIVERSIDAD DE MANIZALES",
+            "nit": "8908060017",
+            "rows": 1
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 89167
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

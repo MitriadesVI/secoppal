@@ -1,0 +1,207 @@
+{
+  "record": {
+    "canonical_name": "MUNICIPIO DE SOACHA",
+    "canonical_hash": "9b98cca602d923bf",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 21,
+    "started_at": "2026-09-18T05:56:02.235459+00:00",
+    "finished_at": "2026-09-18T05:56:05.460275+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "NIT",
+      "value": "800094755",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": true
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "NIT:800094755",
+      "sources": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE SOACHA.."
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE SOACHA."
+        ]
+      },
+      "observed_at": "2026-09-03",
+      "observed_rows": {
+        "p6dx-8zbt": 22115,
+        "jbjy-vk9h": 21868
+      },
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "MUNICIPIO DE SOACHA..",
+            "rows": 22302
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE SOACHA..",
+            "nit": "800094755",
+            "rows": 22302
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 22302,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "MUNICIPIO DE SOACHA.",
+            "rows": 22029
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE SOACHA.",
+            "nit": "800094755",
+            "rows": 22029
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 22029,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 4,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 3224.3
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "MUNICIPIO DE SOACHA..",
+            "rows": 22302
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE SOACHA..",
+            "nit": "800094755",
+            "rows": 22302
+          }
+        ],
+        "bound_rows": 22302
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "MUNICIPIO DE SOACHA.",
+            "rows": 22029
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE SOACHA.",
+            "nit": "800094755",
+            "rows": 22029
+          }
+        ],
+        "bound_rows": 22029
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "800094755"
+      ],
+      "jbjy-vk9h": [
+        "800094755"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "MUNICIPIO DE SOACHA.."
+        ],
+        "present": [
+          "MUNICIPIO DE SOACHA.."
+        ],
+        "rows": 22302
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "MUNICIPIO DE SOACHA."
+        ],
+        "present": [
+          "MUNICIPIO DE SOACHA."
+        ],
+        "rows": 22029
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

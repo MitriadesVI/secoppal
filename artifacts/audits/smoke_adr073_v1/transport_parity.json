@@ -1,0 +1,79 @@
+{
+  "evidence": "TRANSPORT_PARITY_CLASSIC_VS_SODA3",
+  "note": "El auditor mide el PREDICADO del producto. Ambos transportes aceptan el mismo SoQL; si devolvieran universos distintos, la elección de transporte cambiaría lo medido.",
+  "same_universe_all": true,
+  "cases": [
+    {
+      "canonical": "MUNICIPIO DE GALAPA.",
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT entidad, nit_entidad, count(*) AS cnt WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) GROUP BY entidad, nit_entidad LIMIT 200",
+      "classic": {
+        "status": "OK",
+        "rows": 1,
+        "fingerprint": "fcf1491e09113afe",
+        "latency_s": 27.5
+      },
+      "soda3": {
+        "status": "OK",
+        "rows": 1,
+        "fingerprint": "fcf1491e09113afe",
+        "latency_s": 7.5
+      },
+      "same_universe": true
+    },
+    {
+      "canonical": "MUNICIPIO DE GALAPA.",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT nombre_entidad, nit_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) GROUP BY nombre_entidad, nit_entidad LIMIT 200",
+      "classic": {
+        "status": "OK",
+        "rows": 1,
+        "fingerprint": "3bb5ad083edc89b2",
+        "latency_s": 96.5
+      },
+      "soda3": {
+        "status": "OK",
+        "rows": 1,
+        "fingerprint": "3bb5ad083edc89b2",
+        "latency_s": 4.4
+      },
+      "same_universe": true
+    },
+    {
+      "canonical": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT entidad, nit_entidad, count(*) AS cnt WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ALCALDIA DISTRITAL BARRANCABERMEJA%')) GROUP BY entidad, nit_entidad LIMIT 200",
+      "classic": {
+        "status": "OK",
+        "rows": 1,
+        "fingerprint": "387c462fdea4d557",
+        "latency_s": 19.8
+      },
+      "soda3": {
+        "status": "OK",
+        "rows": 1,
+        "fingerprint": "387c462fdea4d557",
+        "latency_s": 26.4
+      },
+      "same_universe": true
+    },
+    {
+      "canonical": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT nombre_entidad, nit_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDIA DISTRITAL BARRANCABERMEJA%')) GROUP BY nombre_entidad, nit_entidad LIMIT 200",
+      "classic": {
+        "status": "OK",
+        "rows": 1,
+        "fingerprint": "b8456749daf6024a",
+        "latency_s": 18.4
+      },
+      "soda3": {
+        "status": "OK",
+        "rows": 1,
+        "fingerprint": "b8456749daf6024a",
+        "latency_s": 17.6
+      },
+      "same_universe": true
+    }
+  ]
+}

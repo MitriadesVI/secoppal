@@ -1,0 +1,189 @@
+{
+  "record": {
+    "canonical_name": "ALCALDIA DE PALESTINA",
+    "canonical_hash": "1d797e6d5c5edc49",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 2,
+    "started_at": "2026-09-18T06:20:38.665040+00:00",
+    "finished_at": "2026-09-18T06:20:38.969630+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "BUYER_UNIT",
+      "value": "municipal_m0:41530",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": false
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "BUYER_UNIT:municipal_m0:41530",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA DE PALESTINA"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA DE PALESTINA"
+        ]
+      },
+      "observed_at": "2026-09-03",
+      "observed_rows": {
+        "p6dx-8zbt": 430,
+        "jbjy-vk9h": 441
+      },
+      "evidence": "artifacts/audits/municipal_m1a/promotion_manifest.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDIA DE PALESTINA",
+            "nit": "891102764",
+            "rows": 841
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 841,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDIA DE PALESTINA",
+            "nit": "891102764",
+            "rows": 791
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 791,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 304.3
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDIA DE PALESTINA",
+            "nit": "891102764",
+            "rows": 841
+          }
+        ],
+        "bound_rows": 841
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDIA DE PALESTINA",
+            "nit": "891102764",
+            "rows": 791
+          }
+        ],
+        "bound_rows": 791
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "891102764"
+      ],
+      "jbjy-vk9h": [
+        "891102764"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "ALCALDIA DE PALESTINA"
+        ],
+        "present": [
+          "ALCALDIA DE PALESTINA"
+        ],
+        "rows": 841
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "ALCALDIA DE PALESTINA"
+        ],
+        "present": [
+          "ALCALDIA DE PALESTINA"
+        ],
+        "rows": 791
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

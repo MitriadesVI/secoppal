@@ -1,0 +1,802 @@
+{
+  "total": 381,
+  "classes": {
+    "ALREADY_BOUND_VERIFIED": 243,
+    "BINDING_DRIFT_REVIEW": 0,
+    "EXACT_BINDABLE": 0,
+    "SOURCE_NAME_SPLIT": 0,
+    "MULTI_NAME_REVIEW": 0,
+    "BUYER_GROUP_MEMBER": 0,
+    "BUYER_GROUP_CANDIDATE": 0,
+    "INSTITUTIONAL_ECOSYSTEM": 0,
+    "NO_STABLE_IDENTITY": 134,
+    "AMBIGUOUS_IDENTITY": 4,
+    "FOREIGN_IDENTITY_COLLISION": 0,
+    "NOT_EQUIVALENT": 0,
+    "INCONCLUSIVE": 0,
+    "ERROR": 0
+  },
+  "bindings": {
+    "existing_total": 243,
+    "existing_verified": 243,
+    "existing_drift": 0,
+    "candidate_ready": 0,
+    "candidate_requires_review": 0
+  },
+  "groups": {
+    "total": 4,
+    "ready_today": 0,
+    "ready_after_review": 0,
+    "partial": 3,
+    "blocked": 1
+  },
+  "ecosystems": {
+    "institutional": 0,
+    "icbf_units": 0,
+    "sena_units": 0
+  },
+  "top_lists": {
+    "largest_unbound_buyers_by_rows": [
+      {
+        "canonical_name": "ANI",
+        "status": "AMBIGUOUS_IDENTITY",
+        "identity": null,
+        "rows": 214307,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "AGENCIA NACIONAL DE TIERRAS - ANT",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 102154,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 59608,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ALCALDIA  MUNICIPIO DE IBAGUE*",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 56651,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "DANE - DIRECCION TERRITORIAL CENTRO",
+        "status": "AMBIGUOUS_IDENTITY",
+        "identity": null,
+        "rows": 54089,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ALCALDIA DE PASTO",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 49802,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "DEFENSORÍA DEL PUEBLO",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 49235,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 46123,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ALCALDÍA DE POPAYÁN",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 46042,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ALCALDIA MUNICIPIO DE VILLAVICENCIO",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 44441,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "CAMARA DE REPRESENTANTES",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 41232,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "AEROCIVIL",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 33760,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ALCALDIA DE FLORIDABLANCA",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 31534,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "BANCO DE LA REPUBLICA",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 30951,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ALCALDÍA MUNICIPIO DE PALMIRA",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 30548,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ALCALDÍA DISTRITAL DE SANTA MARTA",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 30542,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ALCALDIA MUNICIPAL DE VALLEDUPAR",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 29609,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "AGENCIA DE DESARROLLO RURAL",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 27805,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "DANE - DIRECCION TERRITORIAL NORTE",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 27763,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "AGENCIA LOGISTICA DE LAS FUERZAS MILITARES",
+        "status": "NO_STABLE_IDENTITY",
+        "identity": null,
+        "rows": 27054,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      }
+    ],
+    "largest_source_name_splits_by_rows": [],
+    "largest_inconclusive_by_rows": [],
+    "foreign_collision_cases": [
+      {
+        "canonical_name": "ADRES",
+        "status": "AMBIGUOUS_IDENTITY",
+        "identity": null,
+        "rows": 9655,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ANI",
+        "status": "AMBIGUOUS_IDENTITY",
+        "identity": null,
+        "rows": 214307,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "ANM",
+        "status": "AMBIGUOUS_IDENTITY",
+        "identity": null,
+        "rows": 21826,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      },
+      {
+        "canonical_name": "DANE - DIRECCION TERRITORIAL CENTRO",
+        "status": "AMBIGUOUS_IDENTITY",
+        "identity": null,
+        "rows": 54089,
+        "already_bound": false,
+        "source_name_split_observed": false,
+        "composition_signal": false
+      }
+    ],
+    "groups_with_most_missing_bindings": [
+      {
+        "group_id": "icbf_national",
+        "status": "BLOCKED",
+        "members_blocked": 33,
+        "missing_bindings": [
+          "ICBF SEDE NACIONAL",
+          "ICBF REGIONAL AMAZONAS",
+          "ICBF REGIONAL ANTIOQUIA",
+          "ICBF REGIONAL ARAUCA *",
+          "ICBF REGIONAL ATLANTICO",
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+          "ICBF REGIONAL CALDAS",
+          "ICBF REGIONAL CAQUETA",
+          "ICBF REGIONAL CASANARE",
+          "ICBF REGIONAL CAUCA",
+          "ICBF REGIONAL CESAR",
+          "ICBF REGIONAL CHOCO",
+          "ICBF REGIONAL CORDOBA",
+          "ICBF REGIONAL CUNDINAMARCA",
+          "ICBF REGIONAL GUAINIA",
+          "ICBF REGIONAL GUAVIARE",
+          "ICBF REGIONAL HUILA",
+          "ICBF REGIONAL GUAJIRA",
+          "ICBF REGIONAL MAGDALENA"
+        ]
+      },
+      {
+        "group_id": "bogota_executive",
+        "status": "PARTIAL",
+        "members_blocked": 17,
+        "missing_bindings": [
+          "SECRETARIA DE EDUCACION DEL DISTRITO",
+          "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "SECRETARIA DISTRITAL DE AMBIENTE",
+          "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+          "SECRETARIA DISTRITAL DE GOBIERNO 1",
+          "SECRETARIA DISTRITAL DEL HABITAT-",
+          "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "SECRETARIA DISTRITAL DE LA MUJER",
+          "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+          "SECRETARIA DISTRITAL DE PLANEACION",
+          "SECRETARIA DISTRITAL DE HACIENDA",
+          "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+          "SECRETARIA JURIDICA DISTRITAL.",
+          "FONDO DE DESARROLLO LOCAL DE BOSA",
+          "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA"
+        ]
+      },
+      {
+        "group_id": "bogota_central",
+        "status": "PARTIAL",
+        "members_blocked": 14,
+        "missing_bindings": [
+          "SECRETARIA DE EDUCACION DEL DISTRITO",
+          "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "SECRETARIA DISTRITAL DE AMBIENTE",
+          "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+          "SECRETARIA DISTRITAL DE GOBIERNO 1",
+          "SECRETARIA DISTRITAL DEL HABITAT-",
+          "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "SECRETARIA DISTRITAL DE LA MUJER",
+          "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+          "SECRETARIA DISTRITAL DE PLANEACION",
+          "SECRETARIA DISTRITAL DE HACIENDA",
+          "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+          "SECRETARIA JURIDICA DISTRITAL."
+        ]
+      },
+      {
+        "group_id": "bogota_local_mayoralties",
+        "status": "PARTIAL",
+        "members_blocked": 3,
+        "missing_bindings": [
+          "FONDO DE DESARROLLO LOCAL DE BOSA",
+          "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA"
+        ]
+      }
+    ],
+    "no_stable_identity_with_single_observed_nit": {
+      "count": 134,
+      "top": [
+        {
+          "canonical_name": "AGENCIA NACIONAL DE TIERRAS - ANT",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 102154,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 59608,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "ALCALDIA  MUNICIPIO DE IBAGUE*",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 56651,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "ALCALDIA DE PASTO",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 49802,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "DEFENSORÍA DEL PUEBLO",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 49235,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 46123,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "ALCALDÍA DE POPAYÁN",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 46042,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "ALCALDIA MUNICIPIO DE VILLAVICENCIO",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 44441,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "CAMARA DE REPRESENTANTES",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 41232,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "AEROCIVIL",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 33760,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "ALCALDIA DE FLORIDABLANCA",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 31534,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "BANCO DE LA REPUBLICA",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 30951,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "ALCALDÍA MUNICIPIO DE PALMIRA",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 30548,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "ALCALDÍA DISTRITAL DE SANTA MARTA",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 30542,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "ALCALDIA MUNICIPAL DE VALLEDUPAR",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 29609,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "AGENCIA DE DESARROLLO RURAL",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 27805,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "DANE - DIRECCION TERRITORIAL NORTE",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 27763,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "AGENCIA LOGISTICA DE LAS FUERZAS MILITARES",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 27054,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE GESTION DEL MEDIO AMBIENTE DAGMA",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 26501,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 25470,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false
+        }
+      ]
+    },
+    "identities_with_unreached_source_forms": {
+      "count": 0,
+      "top": []
+    },
+    "source_name_split_evidenced": {
+      "count": 2,
+      "top": [
+        {
+          "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+          "status": "ALREADY_BOUND_VERIFIED",
+          "identity": {
+            "type": "NIT",
+            "value": "899999083",
+            "provenance": "app/data/buyer_source_names.json",
+            "accredited": true,
+            "discovery_capable": true
+          },
+          "rows": 21516,
+          "already_bound": true,
+          "source_name_split_observed": true,
+          "composition_signal": false
+        },
+        {
+          "canonical_name": ".SECRETARÍA DISTRITAL DE SALUD.",
+          "status": "ALREADY_BOUND_VERIFIED",
+          "identity": {
+            "type": "BUYER_UNIT",
+            "value": ".SECRETARÍA DISTRITAL DE SALUD.",
+            "provenance": "app/data/buyer_source_names.json",
+            "accredited": true,
+            "discovery_capable": false
+          },
+          "rows": 1134,
+          "already_bound": true,
+          "source_name_split_observed": true,
+          "composition_signal": false
+        }
+      ]
+    },
+    "identities_with_composition_signal": {
+      "count": 1,
+      "top": [
+        {
+          "canonical_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+          "status": "ALREADY_BOUND_VERIFIED",
+          "identity": {
+            "type": "NIT",
+            "value": "890480184",
+            "provenance": "app/data/buyer_source_names.json",
+            "accredited": true,
+            "discovery_capable": true
+          },
+          "rows": 98020,
+          "already_bound": true,
+          "source_name_split_observed": false,
+          "composition_signal": true
+        }
+      ]
+    },
+    "unbalanced_dataset_coverage": {
+      "count": 4,
+      "top": [
+        {
+          "canonical_name": "BANCO DE LA REPUBLICA",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 30951,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false,
+          "rows_by_dataset": {
+            "p6dx-8zbt": 30880,
+            "jbjy-vk9h": 71
+          }
+        },
+        {
+          "canonical_name": "ATENCION SEGURIDAD SOCIAL BIENESTAR SALUD EMPRESA DEL ESTADO",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 7190,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false,
+          "rows_by_dataset": {
+            "p6dx-8zbt": 7181,
+            "jbjy-vk9h": 9
+          }
+        },
+        {
+          "canonical_name": "BANCO AGRARIO DE COLOMBIA S.A.",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 5217,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false,
+          "rows_by_dataset": {
+            "p6dx-8zbt": 5206,
+            "jbjy-vk9h": 11
+          }
+        },
+        {
+          "canonical_name": "Central Hidoreléctrica de Caldas S.A E.S.P BIC",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 4946,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false,
+          "rows_by_dataset": {
+            "p6dx-8zbt": 4945,
+            "jbjy-vk9h": 1
+          }
+        }
+      ]
+    }
+  },
+  "group_readiness": {
+    "bogota_central": {
+      "group_id": "bogota_central",
+      "version": "2026-09-03.v1",
+      "label": "Administración central de Bogotá",
+      "members_total": 18,
+      "members_already_bound": 4,
+      "members_candidate_ready": 0,
+      "members_blocked": 14,
+      "members_inconclusive": 0,
+      "missing_bindings": [
+        "SECRETARIA DE EDUCACION DEL DISTRITO",
+        "SECRETARÍA DISTRITAL DE MOVILIDAD",
+        "SECRETARIA DISTRITAL DE AMBIENTE",
+        "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+        "SECRETARIA DISTRITAL DE GOBIERNO 1",
+        "SECRETARIA DISTRITAL DEL HABITAT-",
+        "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+        "SECRETARIA DISTRITAL DE LA MUJER",
+        "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+        "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+        "SECRETARIA DISTRITAL DE PLANEACION",
+        "SECRETARIA DISTRITAL DE HACIENDA",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+        "SECRETARIA JURIDICA DISTRITAL."
+      ],
+      "inconclusive_members": [],
+      "projected_names_processes": 4,
+      "projected_names_contracts": 4,
+      "projected_names_after_review_processes": 4,
+      "projected_names_after_review_contracts": 4,
+      "would_exceed_max_group_names": false,
+      "would_exceed_after_review": false,
+      "status": "PARTIAL",
+      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+    },
+    "bogota_local_mayoralties": {
+      "group_id": "bogota_local_mayoralties",
+      "version": "2026-09-03.v1",
+      "label": "20 alcaldías locales y fondos de desarrollo local de Bogotá",
+      "members_total": 20,
+      "members_already_bound": 17,
+      "members_candidate_ready": 0,
+      "members_blocked": 3,
+      "members_inconclusive": 0,
+      "missing_bindings": [
+        "FONDO DE DESARROLLO LOCAL DE BOSA",
+        "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+        "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA"
+      ],
+      "inconclusive_members": [],
+      "projected_names_processes": 17,
+      "projected_names_contracts": 17,
+      "projected_names_after_review_processes": 17,
+      "projected_names_after_review_contracts": 17,
+      "would_exceed_max_group_names": false,
+      "would_exceed_after_review": false,
+      "status": "PARTIAL",
+      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+    },
+    "icbf_national": {
+      "group_id": "icbf_national",
+      "version": "2026-09-03.v1",
+      "label": "ICBF: sede nacional y 32 regionales",
+      "members_total": 33,
+      "members_already_bound": 0,
+      "members_candidate_ready": 0,
+      "members_blocked": 33,
+      "members_inconclusive": 0,
+      "missing_bindings": [
+        "ICBF SEDE NACIONAL",
+        "ICBF REGIONAL AMAZONAS",
+        "ICBF REGIONAL ANTIOQUIA",
+        "ICBF REGIONAL ARAUCA *",
+        "ICBF REGIONAL ATLANTICO",
+        "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+        "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+        "ICBF REGIONAL CALDAS",
+        "ICBF REGIONAL CAQUETA",
+        "ICBF REGIONAL CASANARE",
+        "ICBF REGIONAL CAUCA",
+        "ICBF REGIONAL CESAR",
+        "ICBF REGIONAL CHOCO",
+        "ICBF REGIONAL CORDOBA",
+        "ICBF REGIONAL CUNDINAMARCA",
+        "ICBF REGIONAL GUAINIA",
+        "ICBF REGIONAL GUAVIARE",
+        "ICBF REGIONAL HUILA",
+        "ICBF REGIONAL GUAJIRA",
+        "ICBF REGIONAL MAGDALENA",
+        "ICBF REGIONAL META",
+        "ICBF REGIONAL NARIÑO",
+        "ICBF REGIONAL NORTE DE SANTANDER",
+        "ICBF REGIONAL PUTUMAYO",
+        "ICBF REGIONAL QUINDIO",
+        "ICBF RISARALDA//",
+        "ICBF REGIONAL SAN ANDRES",
+        "ICBF REGIONAL SANTANDER",
+        "ICBF REGIONAL SUCRE",
+        "ICBF REGIONAL TOLIMA",
+        "ICBF REGIONAL VAUPES",
+        "ICBF REGIONAL VALLE DEL CAUCA",
+        "ICBF REGIONAL VICHADA"
+      ],
+      "inconclusive_members": [],
+      "projected_names_processes": 0,
+      "projected_names_contracts": 0,
+      "projected_names_after_review_processes": 0,
+      "projected_names_after_review_contracts": 0,
+      "would_exceed_max_group_names": false,
+      "would_exceed_after_review": false,
+      "status": "BLOCKED",
+      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+    },
+    "bogota_executive": {
+      "group_id": "bogota_executive",
+      "version": "2026-09-03.v1",
+      "label": "Ejecutivo de Bogotá: 18 entidades centrales y 20 alcaldías locales",
+      "members_total": 38,
+      "members_already_bound": 21,
+      "members_candidate_ready": 0,
+      "members_blocked": 17,
+      "members_inconclusive": 0,
+      "missing_bindings": [
+        "SECRETARIA DE EDUCACION DEL DISTRITO",
+        "SECRETARÍA DISTRITAL DE MOVILIDAD",
+        "SECRETARIA DISTRITAL DE AMBIENTE",
+        "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+        "SECRETARIA DISTRITAL DE GOBIERNO 1",
+        "SECRETARIA DISTRITAL DEL HABITAT-",
+        "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+        "SECRETARIA DISTRITAL DE LA MUJER",
+        "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+        "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+        "SECRETARIA DISTRITAL DE PLANEACION",
+        "SECRETARIA DISTRITAL DE HACIENDA",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+        "SECRETARIA JURIDICA DISTRITAL.",
+        "FONDO DE DESARROLLO LOCAL DE BOSA",
+        "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+        "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA"
+      ],
+      "inconclusive_members": [],
+      "projected_names_processes": 21,
+      "projected_names_contracts": 21,
+      "projected_names_after_review_processes": 21,
+      "projected_names_after_review_contracts": 21,
+      "would_exceed_max_group_names": false,
+      "would_exceed_after_review": false,
+      "status": "PARTIAL",
+      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+    }
+  },
+  "transport": "soda3",
+  "generated_at": "2026-09-18T06:53:11.584837+00:00"
+}

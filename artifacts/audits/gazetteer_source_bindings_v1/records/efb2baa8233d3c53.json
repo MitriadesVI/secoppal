@@ -1,0 +1,152 @@
+{
+  "record": {
+    "canonical_name": "DANE - DIRECCION TERRITORIAL CENTRO",
+    "canonical_hash": "efb2baa8233d3c53",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 38,
+    "started_at": "2026-09-18T06:49:36.124920+00:00",
+    "finished_at": "2026-09-18T06:50:13.590028+00:00",
+    "status": "AMBIGUOUS_IDENTITY",
+    "status_reasons": [
+      "evidencia física apunta a 2 identidades: 800072977, 899999027"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DANE - DIRECCION TERRITORIAL CENTRO%'))",
+        "forms_reached": [
+          "DANE - DIRECCION TERRITORIAL CENTRO",
+          "FONDANE - DIRECCION TERRITORIAL CENTRO",
+          "FONDO ROTATORIO DEL DANE - FONDANE - DIRECCIÓN TERRITORIAL CENTRO OCCIDENTE"
+        ],
+        "forms_reached_count": 3,
+        "nits_reached": [
+          "800072977",
+          "899999027"
+        ],
+        "like_rows": 26474,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DANE - DIRECCION TERRITORIAL CENTRO%'))",
+        "forms_reached": [
+          "DANE - DIRECCION TERRITORIAL CENTRO",
+          "FONDANE - DIRECCION TERRITORIAL CENTRO",
+          "FONDO ROTATORIO DEL DANE - FONDANE - DIRECCIÓN TERRITORIAL CENTRO OCCIDENTE"
+        ],
+        "forms_reached_count": 3,
+        "nits_reached": [
+          "800072977",
+          "899999027"
+        ],
+        "like_rows": 27615,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 37464.7
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DANE - DIRECCION TERRITORIAL CENTRO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "DANE - DIRECCION TERRITORIAL CENTRO",
+            "nit": "899999027",
+            "rows": 19236
+          },
+          {
+            "name": "FONDANE - DIRECCION TERRITORIAL CENTRO",
+            "nit": "800072977",
+            "rows": 6486
+          },
+          {
+            "name": "FONDO ROTATORIO DEL DANE - FONDANE - DIRECCIÓN TERRITORIAL CENTRO OCCIDENTE",
+            "nit": "800072977",
+            "rows": 752
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 26474
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DANE - DIRECCION TERRITORIAL CENTRO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "DANE - DIRECCION TERRITORIAL CENTRO",
+            "nit": "899999027",
+            "rows": 20332
+          },
+          {
+            "name": "FONDANE - DIRECCION TERRITORIAL CENTRO",
+            "nit": "800072977",
+            "rows": 6497
+          },
+          {
+            "name": "FONDO ROTATORIO DEL DANE - FONDANE - DIRECCIÓN TERRITORIAL CENTRO OCCIDENTE",
+            "nit": "800072977",
+            "rows": 786
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 27615
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

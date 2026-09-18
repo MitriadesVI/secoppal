@@ -1,0 +1,126 @@
+{
+  "record": {
+    "canonical_name": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE",
+    "canonical_hash": "5631b2a4235a2413",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 2,
+    "started_at": "2026-09-18T06:45:36.766354+00:00",
+    "finished_at": "2026-09-18T06:45:48.682081+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 800254453"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE%'))",
+        "forms_reached": [
+          "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "800254453"
+        ],
+        "like_rows": 1598,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE%'))",
+        "forms_reached": [
+          "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "800254453"
+        ],
+        "like_rows": 1093,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 11915.4
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE",
+            "nit": "800254453",
+            "rows": 1598
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 1598
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE",
+            "nit": "800254453",
+            "rows": 1093
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 1093
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

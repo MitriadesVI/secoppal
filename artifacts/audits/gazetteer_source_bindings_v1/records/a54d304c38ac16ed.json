@@ -1,0 +1,192 @@
+{
+  "record": {
+    "canonical_name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+    "canonical_hash": "a54d304c38ac16ed",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 7,
+    "started_at": "2026-09-18T06:24:15.463851+00:00",
+    "finished_at": "2026-09-18T06:24:15.799907+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "BUYER_UNIT",
+      "value": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": false
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "BUYER_UNIT:ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL"
+        ]
+      },
+      "observed_at": "2026-09-03",
+      "observed_rows": {
+        "p6dx-8zbt": 2967,
+        "jbjy-vk9h": 3685
+      },
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [
+      "bogota_executive",
+      "bogota_local_mayoralties"
+    ],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+            "nit": "899999061",
+            "rows": 2974
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 2974,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+            "nit": "899999061",
+            "rows": 3691
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 3691,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 335.7
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+            "nit": "899999061",
+            "rows": 2974
+          }
+        ],
+        "bound_rows": 2974
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+            "nit": "899999061",
+            "rows": 3691
+          }
+        ],
+        "bound_rows": 3691
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "899999061"
+      ],
+      "jbjy-vk9h": [
+        "899999061"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL"
+        ],
+        "present": [
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL"
+        ],
+        "rows": 2974
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL"
+        ],
+        "present": [
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL"
+        ],
+        "rows": 3691
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

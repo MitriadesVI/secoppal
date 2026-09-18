@@ -1,0 +1,189 @@
+{
+  "record": {
+    "canonical_name": "ALCALDIA DE MANAURE BALCON DEL CESAR",
+    "canonical_hash": "c99c31c7e2605cd6",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 4,
+    "started_at": "2026-09-18T06:20:37.976555+00:00",
+    "finished_at": "2026-09-18T06:20:38.350890+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "BUYER_UNIT",
+      "value": "municipal_m0:20443",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": false
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "BUYER_UNIT:municipal_m0:20443",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA DE MANAURE BALCON DEL CESAR"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA DE MANAURE BALCON DEL CESAR"
+        ]
+      },
+      "observed_at": "2026-09-03",
+      "observed_rows": {
+        "p6dx-8zbt": 9,
+        "jbjy-vk9h": 9
+      },
+      "evidence": "artifacts/audits/municipal_m1a/promotion_manifest.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDIA DE MANAURE BALCON DEL CESAR",
+            "nit": "892301761",
+            "rows": 22
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 22,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ALCALDIA DE MANAURE BALCON DEL CESAR",
+            "nit": "892301761",
+            "rows": 24
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 24,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 374.1
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDIA DE MANAURE BALCON DEL CESAR",
+            "nit": "892301761",
+            "rows": 22
+          }
+        ],
+        "bound_rows": 22
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ALCALDIA DE MANAURE BALCON DEL CESAR",
+            "nit": "892301761",
+            "rows": 24
+          }
+        ],
+        "bound_rows": 24
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "892301761"
+      ],
+      "jbjy-vk9h": [
+        "892301761"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "ALCALDIA DE MANAURE BALCON DEL CESAR"
+        ],
+        "present": [
+          "ALCALDIA DE MANAURE BALCON DEL CESAR"
+        ],
+        "rows": 22
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "ALCALDIA DE MANAURE BALCON DEL CESAR"
+        ],
+        "present": [
+          "ALCALDIA DE MANAURE BALCON DEL CESAR"
+        ],
+        "rows": 24
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

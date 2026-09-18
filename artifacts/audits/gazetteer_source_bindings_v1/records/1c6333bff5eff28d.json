@@ -1,0 +1,126 @@
+{
+  "record": {
+    "canonical_name": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA",
+    "canonical_hash": "1c6333bff5eff28d",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 3,
+    "started_at": "2026-09-18T06:48:10.030037+00:00",
+    "finished_at": "2026-09-18T06:48:20.113760+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 823000077"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA%'))",
+        "forms_reached": [
+          "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "823000077"
+        ],
+        "like_rows": 1,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA%'))",
+        "forms_reached": [
+          "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "823000077"
+        ],
+        "like_rows": 1,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 10083.4
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA",
+            "nit": "823000077",
+            "rows": 1
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 1
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA",
+            "nit": "823000077",
+            "rows": 1
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 1
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

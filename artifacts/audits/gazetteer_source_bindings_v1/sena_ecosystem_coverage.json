@@ -1,0 +1,139 @@
+{
+  "family": "SENA",
+  "authority": "app/data/sena_units.json",
+  "note": "SENA no es un mapa 1:1: el padre y los ecosistemas regionales son COMPOSICIONES declaradas (contains_all / official_names), no BuyerUnits. Este reporte no propone bindings ni crea Buyer Groups.",
+  "ecosystems_total": 0,
+  "ecosystems": [],
+  "units_total": 0,
+  "units_with_stable_identity": 0,
+  "units_already_bound": 0,
+  "units_candidate_ready": 0,
+  "units_review": 0,
+  "units_inconclusive": 0,
+  "regional_coverage": [
+    {
+      "department": "Magdalena",
+      "label": "SENA Magdalena",
+      "contains_all": [
+        "SENA",
+        "MAGDALENA"
+      ]
+    },
+    {
+      "department": "Santander",
+      "label": "SENA Santander",
+      "contains_all": [
+        "SENA",
+        "SANTANDER"
+      ]
+    },
+    {
+      "department": "Bolívar",
+      "label": "SENA Bolívar",
+      "contains_all": [
+        "SENA",
+        "BOLIVAR"
+      ]
+    },
+    {
+      "department": "Atlántico",
+      "label": "SENA Atlántico",
+      "contains_all": [
+        "SENA",
+        "ATLANTICO"
+      ]
+    },
+    {
+      "department": "Antioquia",
+      "label": "SENA Antioquia",
+      "contains_all": [
+        "SENA",
+        "ANTIOQUIA"
+      ]
+    },
+    {
+      "department": "Valle del Cauca",
+      "label": "SENA Valle del Cauca",
+      "contains_all": [
+        "SENA",
+        "VALLE"
+      ]
+    },
+    {
+      "department": "Cauca",
+      "label": "SENA Cauca",
+      "contains_all": [
+        "SENA",
+        "CAUCA"
+      ]
+    },
+    {
+      "department": "Nariño",
+      "label": "SENA Nariño",
+      "contains_all": [
+        "SENA",
+        "NARINO"
+      ]
+    },
+    {
+      "department": "Cundinamarca",
+      "label": "SENA Cundinamarca",
+      "contains_all": [
+        "SENA",
+        "CUNDINAMARCA"
+      ]
+    },
+    {
+      "department": "Distrito Capital de Bogotá",
+      "label": "SENA Distrito Capital",
+      "contains_all": [
+        "SENA",
+        "DISTRITO CAPITAL"
+      ]
+    },
+    {
+      "department": "Córdoba",
+      "label": "SENA Córdoba",
+      "contains_all": [
+        "SENA",
+        "CORDOBA"
+      ]
+    },
+    {
+      "department": "La Guajira",
+      "label": "SENA La Guajira",
+      "contains_all": [
+        "SENA",
+        "GUAJIRA"
+      ]
+    },
+    {
+      "department": "Sucre",
+      "label": "SENA Sucre",
+      "contains_all": [
+        "SENA",
+        "SUCRE"
+      ]
+    },
+    {
+      "department": "Cesar",
+      "label": "SENA Cesar",
+      "contains_all": [
+        "SENA",
+        "CESAR"
+      ]
+    },
+    {
+      "department": "Norte de Santander",
+      "label": "SENA Norte de Santander",
+      "contains_all": [
+        "SENA",
+        "NORTE DE SANTANDER"
+      ]
+    }
+  ],
+  "dataset_coverage": {
+    "p6dx-8zbt": 0,
+    "jbjy-vk9h": 0
+  }
+}

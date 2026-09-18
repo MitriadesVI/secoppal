@@ -1,0 +1,207 @@
+{
+  "record": {
+    "canonical_name": "UNIVERSIDAD DE LA AMAZONIA",
+    "canonical_hash": "57075ba50fe19543",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 1,
+    "started_at": "2026-09-18T05:56:07.849996+00:00",
+    "finished_at": "2026-09-18T05:56:09.937342+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "NIT",
+      "value": "891190346",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": true
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "NIT:891190346",
+      "sources": {
+        "p6dx-8zbt": [
+          "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+        ],
+        "jbjy-vk9h": [
+          "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+        ]
+      },
+      "observed_at": "2026-09-02",
+      "observed_rows": {
+        "p6dx-8zbt": 2549,
+        "jbjy-vk9h": 2
+      },
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD DE LA AMAZONIA (Entidad)",
+            "rows": 2558
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD DE LA AMAZONIA (Entidad)",
+            "nit": "891190346",
+            "rows": 2558
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 2558,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD DE LA AMAZONIA (Entidad)",
+            "rows": 2
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD DE LA AMAZONIA (Entidad)",
+            "nit": "891190346",
+            "rows": 2
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 2,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 4,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 2086.8
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD DE LA AMAZONIA (Entidad)",
+            "rows": 2558
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD DE LA AMAZONIA (Entidad)",
+            "nit": "891190346",
+            "rows": 2558
+          }
+        ],
+        "bound_rows": 2558
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD DE LA AMAZONIA (Entidad)",
+            "rows": 2
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD DE LA AMAZONIA (Entidad)",
+            "nit": "891190346",
+            "rows": 2
+          }
+        ],
+        "bound_rows": 2
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "891190346"
+      ],
+      "jbjy-vk9h": [
+        "891190346"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+        ],
+        "present": [
+          "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+        ],
+        "rows": 2558
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+        ],
+        "present": [
+          "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+        ],
+        "rows": 2
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

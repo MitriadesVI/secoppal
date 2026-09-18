@@ -1,0 +1,126 @@
+{
+  "record": {
+    "canonical_name": "ALCALDÍA DE POPAYÁN",
+    "canonical_hash": "dfa53e05fa83b0a1",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 19,
+    "started_at": "2026-09-18T06:20:38.972367+00:00",
+    "finished_at": "2026-09-18T06:21:31.668894+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 891580006"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE POPAYÁN%'))",
+        "forms_reached": [
+          "ALCALDÍA DE POPAYÁN"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "891580006"
+        ],
+        "like_rows": 23429,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE POPAYÁN%'))",
+        "forms_reached": [
+          "ALCALDÍA DE POPAYÁN"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "891580006"
+        ],
+        "like_rows": 22613,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 52698.3
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE POPAYÁN%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ALCALDÍA DE POPAYÁN",
+            "nit": "891580006",
+            "rows": 23429
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 23429
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE POPAYÁN%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ALCALDÍA DE POPAYÁN",
+            "nit": "891580006",
+            "rows": 22613
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 22613
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}
