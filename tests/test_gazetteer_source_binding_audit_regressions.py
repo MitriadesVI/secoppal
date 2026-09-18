@@ -407,6 +407,82 @@ def test_missing_raw_record_is_declared(tmp_path, monkeypatch):
     assert summary["evidence_integrity"]["missing"] == [f"{audit.RECORDS_SUBDIR}/{record_file.name}"]
 
 
+def test_deleting_the_hash_index_is_a_problem_even_with_clean_evidence(tmp_path, monkeypatch):
+    """La ausencia del índice es un problema POR SÍ MISMA, no sólo con evidencia alterada.
+
+    Con el índice presente, la línea base es la que certifica. Sin él no hay nada
+    contra qué verificar: regenerarlo desde el disco convertiría cualquier
+    alteración previa en `ok`.
+    """
+    monkeypatch.setattr(audit, "build_inventory", lambda authorities: [canonical("A")])
+    source = FakeSource(like={})
+    audit.run(_args(tmp_path), source_factory=lambda settings, args: source)
+    (tmp_path / audit.RECORDS_HASH_FILE).unlink()
+
+    assert audit.run(_args(tmp_path, summary_only=True),
+                     source_factory=lambda settings, args: source) == 2
+    summary = json.loads((tmp_path / "summary.json").read_text(encoding="utf-8"))
+    assert summary["evidence_integrity"]["ok"] is False
+    assert summary["evidence_integrity"]["hash_file_created_by_this_run"] is False
+    assert not (tmp_path / audit.RECORDS_HASH_FILE).exists(), "el rebuild regeneró el índice"
+    assert any("no existe" in problem for problem in summary["report_status"]["problems"])
+    # Una causa raíz, un problema: sin índice no hay «entradas faltantes» que
+    # enumerar (serían 1134 líneas repitiendo lo mismo).
+    assert summary["evidence_integrity"]["undeclared"] == []
+    assert len(summary["report_status"]["problems"]) <= 3
+
+
+def test_explicit_adoption_fixes_the_baseline_of_a_legacy_directory(tmp_path, monkeypatch):
+    """La capacidad de adoptar un directorio heredado no desaparece: requiere intención."""
+    monkeypatch.setattr(audit, "build_inventory", lambda authorities: [canonical("A")])
+    source = FakeSource(like={})
+    audit.run(_args(tmp_path), source_factory=lambda settings, args: source)
+    (tmp_path / audit.RECORDS_HASH_FILE).unlink()
+
+    assert audit.run(_args(tmp_path, summary_only=True, adopt_evidence_index=True),
+                     source_factory=lambda settings, args: source) == 0
+    manifest = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["last_invocation"]["evidence_index_adopted"] is True
+    assert manifest["report_status"]["ok"] is True
+    # Y a partir de ahí el directorio vuelve a ser verificable sin el flag.
+    assert audit.run(_args(tmp_path, summary_only=True),
+                     source_factory=lambda settings, args: source) == 0
+
+
+def test_index_without_entry_for_an_active_record_is_undeclared(tmp_path, monkeypatch):
+    """Un registro activo sin entrada en el índice no es invisible."""
+    monkeypatch.setattr(audit, "build_inventory",
+                        lambda authorities: [canonical("A"), canonical("B")])
+    source = FakeSource(like={})
+    audit.run(_args(tmp_path), source_factory=lambda settings, args: source)
+    hash_file = tmp_path / audit.RECORDS_HASH_FILE
+    lines = [line for line in hash_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+    assert len(lines) == 2
+    dropped = lines.pop()
+    hash_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    assert audit.run(_args(tmp_path, summary_only=True),
+                     source_factory=lambda settings, args: source) == 2
+    summary = json.loads((tmp_path / "summary.json").read_text(encoding="utf-8"))
+    assert summary["evidence_integrity"]["undeclared"] == [dropped.split("  ", 1)[1]]
+    assert any("sin entrada en" in problem for problem in summary["report_status"]["problems"])
+
+
+def test_new_records_from_a_recheck_are_added_to_the_index(tmp_path, monkeypatch):
+    """Un reproceso escribe evidencia nueva y el índice tiene que cubrirla."""
+    monkeypatch.setattr(audit, "build_inventory",
+                        lambda authorities: [canonical("A"), canonical("B")])
+    source = FakeSource(like={})
+    audit.run(_args(tmp_path), source_factory=lambda settings, args: source)
+    assert (tmp_path / audit.RECORDS_HASH_FILE).read_text().count("\n") == 2
+
+    assert audit.run(_args(tmp_path, only=["B"], recheck_existing=True),
+                     source_factory=lambda settings, args: source) == 0
+    summary = json.loads((tmp_path / "summary.json").read_text(encoding="utf-8"))
+    assert summary["evidence_integrity"]["checked"] == 2
+    assert (tmp_path / audit.RECORDS_HASH_FILE).read_text().count("\n") == 2
+
+
 # ── P1-1 / P2-3 sobre el artefacto que se entrega ───────────────────────────
 
 pytestmark_artifact = pytest.mark.skipif(not ARTIFACT.exists(), reason="artefacto no disponible")

@@ -7,6 +7,7 @@
 **Reproductor:** [`scripts/audits/audit_gazetteer_source_bindings_v1.py`](../../scripts/audits/audit_gazetteer_source_bindings_v1.py)
 **Tests:** [`tests/test_gazetteer_source_binding_audit.py`](../../tests/test_gazetteer_source_binding_audit.py) ·
 [`tests/test_zeus_adr073_adversarial.py`](../../tests/test_zeus_adr073_adversarial.py) ·
+[`tests/test_zeus_adr073_recheck.py`](../../tests/test_zeus_adr073_recheck.py) ·
 [`tests/test_gazetteer_source_binding_audit_regressions.py`](../../tests/test_gazetteer_source_binding_audit_regressions.py)
 
 ## 1. Veredicto
@@ -387,7 +388,19 @@ por su proyección declarada, sin aplanarse:
 # una identidad concreta, en un directorio aparte
 .venv/bin/python scripts/audits/audit_gazetteer_source_bindings_v1.py \
     --only "MUNICIPIO DE SOACHA" --output artifacts/audits/mi_prueba
+
+# adoptar la evidencia de un directorio heredado que no tiene índice (ver §11)
+.venv/bin/python scripts/audits/audit_gazetteer_source_bindings_v1.py \
+    --summary-only --adopt-evidence-index --output <directorio_heredado>
 ```
+
+El índice de evidencia (`records.sha256`) no se crea nunca por su cuenta. Si falta
+y hay evidencia esperada, el reporte lo declara como problema y termina con código
+≠ 0: sin línea base no hay nada contra qué verificar, y regenerarlo desde el disco
+certificaría a ciegas cualquier alteración previa. `--adopt-evidence-index` es la
+única forma de fijar esa línea base sobre evidencia que no se pudo verificar, deja
+`last_invocation.evidence_index_adopted = true` en el manifiesto y es una decisión
+deliberada, no un efecto colateral.
 
 `manifest.json` describe el lote y la invocación en bloques que no se pisan:
 
@@ -451,6 +464,15 @@ cerrado; con evidencia alterada o una repetición sin declarar sale ≠ 0.
 - **`smoke_adr073_v1/summary.json` es un corte parcial de 8 de sus 22
   identidades** (§5). Ese directorio quedó fuera del alcance de esta misión y no
   se reescribió; los gates se leen de su `progress.jsonl`.
+- **Reconstruir un directorio con evidencia y SIN índice ahora falla.** Antes el
+  índice se regeneraba desde el disco y el reporte salía `ok`; eso convertía un
+  `rm records.sha256` en una forma de certificar evidencia alterada. El
+  comportamiento nuevo es el correcto —y el único seguro—, pero es un cambio
+  hacia afuera: un directorio heredado sin índice (por ejemplo
+  `smoke_adr073_v1/`, o los `..._attempt*` de las primeras corridas) necesita
+  `--adopt-evidence-index` para volver a ser verificable, y esa adopción queda
+  marcada en el manifiesto. El artefacto de este lote **no** está en ese caso:
+  su índice está en el commit y se verifican 1134/1134 con el rebuild.
 - Un timeout se registra como `INCONCLUSIVE` y nunca se resuelve por
   conveniencia. En este lote no hubo ninguno: por eso la comparación de universos
   está completa en todas las identidades medibles. La telemetría y la ventana del
@@ -463,7 +485,10 @@ La revisión independiente (`audit/adr073-gazetteer-wide-v1-independent`,
 `fabda711`) devolvió `REMEDIATION_REQUIRED` con 3 P1, 6 P2 y 2 P3, y cinco tests
 adversariales rojos (`z08`, `z09b`, `z11`, `z12`, `z13`). Esos cinco casos se
 portaron **verbatim** a `tests/test_zeus_adr073_adversarial.py` y hoy pasan; las
-expectativas no se rebajaron. Las regresiones propias quedaron en
+expectativas no se rebajaron. La re-revisión (`2e2c9a9`) agregó `z16` —el
+fail-open del índice de hashes—, portado igual de verbatim a
+`tests/test_zeus_adr073_recheck.py`, más los findings P1-4 y P3-3 de la tabla.
+Las regresiones propias quedaron en
 `tests/test_gazetteer_source_binding_audit_regressions.py`.
 
 | Finding | Qué era | Qué quedó |
@@ -479,6 +504,8 @@ expectativas no se rebajaron. Las regresiones propias quedaron en
 | P2-6 | `if value` hacía invisible un dataset en 0 | `value is not None`: 62 → 81 casos; no cambia clase ni elegibilidad |
 | P3-1 | el documento usaba alias humanos como nombres canónicos (`ECOPETROL`, `CORPOICA`, `UAESP`, `UFPS`) | nombres canónicos del artefacto (`EMPRESA COLOMBIANA DE PETROLEOS`, `… - AGROSAVIA`, `UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS`, `UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA`) |
 | P3-2 | `smoke_gates.json` citado e inexistente; HEAD del manifiesto sin contexto; `icbf_units` 34 con 33 unidades | gates reanclados a la evidencia cruda; `batch.head` vs HEAD de la invocación; `icbf_units` cuenta unidades declaradas (33) |
+| P1-4 (re-revisión) | borrar `records.sha256` antes de un rebuild hacía que el pipeline lo regenerara desde el disco y certificara `ok: true` con un registro alterado (reproducido: exit 0 contra exit 2 con el índice presente) | el índice no se crea solo: su ausencia con evidencia esperada es un problema y la corrida sale ≠ 0; fijar una línea base sobre un directorio heredado exige `--adopt-evidence-index` y queda marcado en el manifiesto. Test: `test_z16_deleting_the_hash_index_must_not_launder_altered_evidence` (portado verbatim de `2e2c9a9`) |
+| P3-3 (re-revisión) | la rama «evidencia sin entrada en el índice» no tenía regresión propia | test directo (`test_index_without_entry_for_an_active_record_is_undeclared`): índice presente y **sin** la línea de un registro activo → `undeclared` + exit ≠ 0. Y sin índice no se enumera esa rama: una causa raíz, un problema, no 1134 líneas repitiendo lo mismo |
 
 Lo que esta remediación **no** hizo, por estar fuera de su alcance: no volvió a
 ejecutar el lote (2312 llamadas) —todo el trabajo es offline sobre la evidencia

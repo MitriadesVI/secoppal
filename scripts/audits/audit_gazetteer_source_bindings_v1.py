@@ -58,7 +58,13 @@ Uso:
 
 Opciones: --resume, --workers, --limit, --start-after, --only,
 --recheck-existing, --output, --transport, --timeout, --retries, --summary-only,
---env-file.
+--adopt-evidence-index, --env-file.
+
+Índice de evidencia: `records.sha256` lo genera este pipeline (una entrada por
+registro activo) y se verifica ANTES de construir el resumen. No se crea solo: si
+falta y hay evidencia esperada, es un problema y la corrida sale ≠ 0, porque
+regenerarlo desde el disco certificaría a ciegas cualquier alteración previa.
+`--adopt-evidence-index` es la adopción deliberada de un directorio heredado.
 """
 
 from __future__ import annotations
@@ -555,13 +561,19 @@ def write_records_hash_file(out: Path, relative_paths: Sequence[str]) -> int:
     return len(lines)
 
 
-def verify_evidence(out: Path, expected: Sequence[str]) -> dict:
+def verify_evidence(out: Path, expected: Sequence[str], *, create_missing: bool = False) -> dict:
     """Integridad por registro, ANTES de construir el resumen.
 
     Un raw record alterado, ilegible o sin entrada en `records.sha256` no pasa en
-    silencio: el resumen lo publica y la corrida termina con código ≠ 0. Si el
-    archivo de hashes no existe todavía se crea (primer contacto), pero si existe
-    NO se reescribe: regenerarlo sobre evidencia alterada lavaría la alteración.
+    silencio: el resumen lo publica y la corrida termina con código ≠ 0.
+
+    El índice NUNCA se crea solo. Regenerarlo sobre evidencia alterada lavaría la
+    alteración, y eso vale igual cuando el archivo está AUSENTE —que es un `rm` de
+    distancia— que cuando está presente: sin línea base no hay nada contra qué
+    verificar, así que su ausencia con evidencia esperada es un PROBLEMA, no una
+    licencia. `create_missing=True` lo usa sólo quien está autorizado a fijar la
+    línea base sobre evidencia preexistente: la adopción explícita
+    (`--adopt-evidence-index`) de un directorio heredado.
     """
     hash_path = out / RECORDS_HASH_FILE
     declared: dict[str, str] = {}
@@ -570,9 +582,20 @@ def verify_evidence(out: Path, expected: Sequence[str]) -> dict:
     if hash_path.exists():
         declared, problems = parse_records_hash_file(hash_path)
     elif expected:
-        write_records_hash_file(out, expected)
-        declared, problems = parse_records_hash_file(hash_path)
-        created = True
+        if create_missing:
+            write_records_hash_file(out, expected)
+            declared, problems = parse_records_hash_file(hash_path)
+            created = True
+        else:
+            problems.append(
+                f"{RECORDS_HASH_FILE} no existe: sin índice no hay línea base contra la cual "
+                f"verificar {len(expected)} registros de evidencia, y regenerarlo los "
+                f"certificaría a ciegas")
+    # Sin índice no se puede afirmar por registro que le «falte la entrada»: lo que
+    # falta es el índice, y eso ya está declarado arriba. Enumerar 1134 veces la
+    # misma causa raíz taparía el motivo real. `undeclared` sólo habla cuando hay
+    # un índice contra el cual estar incompleto.
+    index_present = hash_path.exists()
     report = {
         "hash_file": RECORDS_HASH_FILE,
         "hash_file_created_by_this_run": created,
@@ -594,6 +617,11 @@ def verify_evidence(out: Path, expected: Sequence[str]) -> dict:
             json.loads(path.read_text(encoding="utf-8"))
         except ValueError as exc:
             report["unparsable"].append({"path": relative, "error": f"{type(exc).__name__}: {exc}"})
+            continue
+        if not index_present:
+            # No hay índice: no hay nada contra qué comparar y hashear 1134 blobs
+            # para luego tirar el resultado no aporta. El problema raíz ya está
+            # declarado, y la validez de cada JSON ya se comprobó arriba.
             continue
         digest = sha256_file(path)
         if relative not in declared:
@@ -2157,7 +2185,8 @@ def build_manifest(args: argparse.Namespace, inventory: list[Canonical], setting
             "retries": args.retries,
             "options": {"limit": args.limit, "only": args.only, "start_after": args.start_after,
                         "resume": args.resume, "recheck_existing": args.recheck_existing,
-                        "summary_only": args.summary_only},
+                        "summary_only": args.summary_only,
+                        "adopt_evidence_index": bool(getattr(args, "adopt_evidence_index", False))},
         },
         "progress": reconciliation.brief(),
         "report_rebuilt_at": now_iso(),
@@ -2253,9 +2282,17 @@ def run(args: argparse.Namespace, source_factory: Callable[[Settings, argparse.N
 
     # La evidencia se verifica ANTES de construir el resumen: si un raw record no
     # cuadra con `records.sha256`, el resumen no puede nacer diciendo que todo está
-    # bien. Y `records.sha256` no se regenera sobre evidencia alterada.
+    # bien. Y el índice no se reescribe sobre evidencia alterada —ni se crea solo
+    # cuando falta—: su ausencia con evidencia esperada es un problema, salvo
+    # adopción explícita de un directorio heredado.
+    # `--adopt-evidence-index` se lee con `getattr`: los arneses de test construyen
+    # su Namespace a mano y la suite adversarial de ZEUS se porta verbatim, sin
+    # tocarla; el CLI real siempre trae el atributo.
+    adopt_index = bool(getattr(args, "adopt_evidence_index", False))
     integrity = verify_evidence(
-        out, [records_relative_path(canonical) for canonical in sorted(reconciliation.active)])
+        out, [records_relative_path(canonical) for canonical in sorted(reconciliation.active)],
+        create_missing=adopt_index)
+    adopted_index = bool(integrity.get("hash_file_created_by_this_run"))
 
     invocation_telemetry = None
     if will_measure:
@@ -2301,6 +2338,10 @@ def run(args: argparse.Namespace, source_factory: Callable[[Settings, argparse.N
     })
     if invocation_telemetry is not None:
         manifest["last_invocation"]["source_telemetry"] = invocation_telemetry
+    if adopted_index:
+        # Marca de intención: el índice se fijó para evidencia PREEXISTENTE que no
+        # se pudo verificar contra una línea base. No es un efecto colateral.
+        manifest["last_invocation"]["evidence_index_adopted"] = True
     manifest["progress"] = reconciliation.brief()
     manifest["report_status"] = {
         "ok": reconciliation.ok and integrity["ok"],
@@ -2349,6 +2390,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--summary-only", action="store_true",
                         help="reconstruir reportes desde progress.jsonl sin tocar la red")
+    parser.add_argument("--adopt-evidence-index", dest="adopt_evidence_index", action="store_true",
+                        help="fijar `records.sha256` para evidencia PREEXISTENTE sin índice "
+                             "(adopción explícita de un directorio heredado). Sin este flag, que "
+                             "el índice falte es un ERROR del reporte, no una regeneración")
     parser.add_argument("--env-file", default=None,
                         help=".env a cargar (por defecto el del checkout principal)")
     return parser.parse_args(argv)
