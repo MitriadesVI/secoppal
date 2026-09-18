@@ -1,0 +1,126 @@
+{
+  "record": {
+    "canonical_name": "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA",
+    "canonical_hash": "c52c34d44c937a1f",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 30,
+    "started_at": "2026-09-18T07:00:48.149748+00:00",
+    "finished_at": "2026-09-18T07:01:06.102510+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 800084206"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA%'))",
+        "forms_reached": [
+          "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "800084206"
+        ],
+        "like_rows": 6050,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA%'))",
+        "forms_reached": [
+          "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "800084206"
+        ],
+        "like_rows": 5923,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 17952.5
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA",
+            "nit": "800084206",
+            "rows": 6050
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 6050
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA",
+            "nit": "800084206",
+            "rows": 5923
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 5923
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

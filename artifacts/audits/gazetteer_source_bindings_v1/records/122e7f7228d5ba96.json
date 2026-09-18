@@ -1,0 +1,126 @@
+{
+  "record": {
+    "canonical_name": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.",
+    "canonical_hash": "122e7f7228d5ba96",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 31,
+    "started_at": "2026-09-18T07:01:06.105637+00:00",
+    "finished_at": "2026-09-18T07:01:39.244323+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 899999094"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.%'))",
+        "forms_reached": [
+          "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P."
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "899999094"
+        ],
+        "like_rows": 11589,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.%'))",
+        "forms_reached": [
+          "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P."
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "899999094"
+        ],
+        "like_rows": 4535,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 33138.5
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.",
+            "nit": "899999094",
+            "rows": 11589
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 11589
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.",
+            "nit": "899999094",
+            "rows": 4535
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 4535
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

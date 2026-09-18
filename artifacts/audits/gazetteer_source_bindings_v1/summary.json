@@ -17,9 +17,15 @@
     "ERROR": 0
   },
   "bindings": {
-    "existing_total": 593,
-    "existing_verified": 593,
+    "existing_bindings_total": 593,
+    "existing_bindings_verified": 593,
     "existing_drift": 0,
+    "source_name_liveness_verified": 593,
+    "foreign_identity_check": {
+      "NIT_authoritative_checked": 18,
+      "BUYER_UNIT_structural_only": 575,
+      "note": "`NIT_authoritative_checked` re-observó identidad fiscal ajena contra un NIT acreditado. `BUYER_UNIT_structural_only` verificó presencia y filas de las formas declaradas, pero su identidad es BUYER_UNIT (no tiene NIT propio) así que no acredita nada sobre identidad fiscal ajena."
+    },
     "candidate_ready": 2,
     "candidate_requires_review": 4
   },
@@ -32,7 +38,7 @@
   },
   "ecosystems": {
     "institutional": 23,
-    "icbf_units": 34,
+    "icbf_units": 33,
     "sena_units": 3
   },
   "top_lists": {
@@ -770,7 +776,7 @@
       ]
     },
     "unbalanced_dataset_coverage": {
-      "count": 62,
+      "count": 81,
       "top": [
         {
           "canonical_name": "UNIVERSIDAD NACIONAL DE COLOMBIA",
@@ -864,6 +870,19 @@
           }
         },
         {
+          "canonical_name": "EMPRESAS PUBLICAS DE MEDELLIN E.S.P.",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 26067,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false,
+          "rows_by_dataset": {
+            "p6dx-8zbt": 26067,
+            "jbjy-vk9h": 0
+          }
+        },
+        {
           "canonical_name": "HOSPITAL GENERAL DE MEDELLIN LUZ CASTRO DE GUTIERREZ ESE",
           "status": "NO_STABLE_IDENTITY",
           "identity": null,
@@ -887,6 +906,19 @@
           "rows_by_dataset": {
             "p6dx-8zbt": 22605,
             "jbjy-vk9h": 45
+          }
+        },
+        {
+          "canonical_name": "UNIVERSIDAD TECNOLÓGICA DE PEREIRA",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 22528,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false,
+          "rows_by_dataset": {
+            "p6dx-8zbt": 22528,
+            "jbjy-vk9h": 0
           }
         },
         {
@@ -968,6 +1000,19 @@
           }
         },
         {
+          "canonical_name": "SOCIEDAD TELEVISION DE ANTIOQUIA LTDA",
+          "status": "NO_STABLE_IDENTITY",
+          "identity": null,
+          "rows": 14026,
+          "already_bound": false,
+          "source_name_split_observed": false,
+          "composition_signal": false,
+          "rows_by_dataset": {
+            "p6dx-8zbt": 14026,
+            "jbjy-vk9h": 0
+          }
+        },
+        {
           "canonical_name": "Universidad Surcolombiana",
           "status": "NO_STABLE_IDENTITY",
           "identity": null,
@@ -992,45 +1037,6 @@
             "p6dx-8zbt": 12586,
             "jbjy-vk9h": 12
           }
-        },
-        {
-          "canonical_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
-          "status": "NO_STABLE_IDENTITY",
-          "identity": null,
-          "rows": 12514,
-          "already_bound": false,
-          "source_name_split_observed": false,
-          "composition_signal": false,
-          "rows_by_dataset": {
-            "p6dx-8zbt": 12417,
-            "jbjy-vk9h": 97
-          }
-        },
-        {
-          "canonical_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL MARCO FIDEL SUAREZ",
-          "status": "NO_STABLE_IDENTITY",
-          "identity": null,
-          "rows": 12428,
-          "already_bound": false,
-          "source_name_split_observed": false,
-          "composition_signal": false,
-          "rows_by_dataset": {
-            "p6dx-8zbt": 12427,
-            "jbjy-vk9h": 1
-          }
-        },
-        {
-          "canonical_name": "EMPRESAS MUNICIPALES DE CALI",
-          "status": "NO_STABLE_IDENTITY",
-          "identity": null,
-          "rows": 11862,
-          "already_bound": false,
-          "source_name_split_observed": false,
-          "composition_signal": false,
-          "rows_by_dataset": {
-            "p6dx-8zbt": 11850,
-            "jbjy-vk9h": 12
-          }
         }
       ]
     }
@@ -1053,8 +1059,19 @@
       "projected_names_after_review_contracts": 18,
       "would_exceed_max_group_names": false,
       "would_exceed_after_review": false,
+      "duplicated_source_names": {
+        "today": {
+          "p6dx-8zbt": [],
+          "jbjy-vk9h": []
+        },
+        "after_review": {
+          "p6dx-8zbt": [],
+          "jbjy-vk9h": []
+        }
+      },
+      "max_group_source_names": 40,
       "status": "READY_TODAY",
-      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente. BLOCKED cubre también «no cabe» o «dos miembros reclaman el mismo nombre físico», que son condiciones de la autoridad de Buyer Groups."
     },
     "bogota_local_mayoralties": {
       "group_id": "bogota_local_mayoralties",
@@ -1073,8 +1090,19 @@
       "projected_names_after_review_contracts": 20,
       "would_exceed_max_group_names": false,
       "would_exceed_after_review": false,
+      "duplicated_source_names": {
+        "today": {
+          "p6dx-8zbt": [],
+          "jbjy-vk9h": []
+        },
+        "after_review": {
+          "p6dx-8zbt": [],
+          "jbjy-vk9h": []
+        }
+      },
+      "max_group_source_names": 40,
       "status": "READY_TODAY",
-      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente. BLOCKED cubre también «no cabe» o «dos miembros reclaman el mismo nombre físico», que son condiciones de la autoridad de Buyer Groups."
     },
     "icbf_national": {
       "group_id": "icbf_national",
@@ -1093,8 +1121,19 @@
       "projected_names_after_review_contracts": 33,
       "would_exceed_max_group_names": false,
       "would_exceed_after_review": false,
+      "duplicated_source_names": {
+        "today": {
+          "p6dx-8zbt": [],
+          "jbjy-vk9h": []
+        },
+        "after_review": {
+          "p6dx-8zbt": [],
+          "jbjy-vk9h": []
+        }
+      },
+      "max_group_source_names": 40,
       "status": "READY_TODAY",
-      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente. BLOCKED cubre también «no cabe» o «dos miembros reclaman el mismo nombre físico», que son condiciones de la autoridad de Buyer Groups."
     },
     "bogota_executive": {
       "group_id": "bogota_executive",
@@ -1113,10 +1152,157 @@
       "projected_names_after_review_contracts": 38,
       "would_exceed_max_group_names": false,
       "would_exceed_after_review": false,
+      "duplicated_source_names": {
+        "today": {
+          "p6dx-8zbt": [],
+          "jbjy-vk9h": []
+        },
+        "after_review": {
+          "p6dx-8zbt": [],
+          "jbjy-vk9h": []
+        }
+      },
+      "max_group_source_names": 40,
       "status": "READY_TODAY",
-      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+      "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente. BLOCKED cubre también «no cabe» o «dos miembros reclaman el mismo nombre físico», que son condiciones de la autoridad de Buyer Groups."
     }
   },
+  "progress": {
+    "progress_lines": 1137,
+    "canonical_unique": 1134,
+    "superseded_records": 3,
+    "active_records": 1134,
+    "undeclared_duplicates": 0,
+    "contradictory_records": 0,
+    "problems": [],
+    "supersessions": [
+      {
+        "canonical_hash": "bc17c9dac30e3e52",
+        "canonical_name": "SENA DIRECCIÓN GENERAL Dirección Jurídica",
+        "superseded": {
+          "record_id": "bc17c9dac30e3e52:1",
+          "line": 1006,
+          "attempt": 1,
+          "record_sha256": "7ab7775e1987667cb221fc25b0a53edae30447307b78e0a8b82e5ca75c00d987",
+          "status": "INCONCLUSIVE",
+          "started_at": "2026-09-18T07:48:30.872049+00:00"
+        },
+        "successor": {
+          "record_id": "bc17c9dac30e3e52:2",
+          "line": 1135,
+          "attempt": 2,
+          "record_sha256": "29d28c4a8d5d5a0b718161251bf0f53eb0bc88b8b08f2ed0c7bcd86b0f62671c",
+          "status": "INCONCLUSIVE",
+          "started_at": "2026-09-18T08:05:52.239408+00:00"
+        },
+        "declared_by": "ledger",
+        "reason": "recheck_existing",
+        "changed_fields": []
+      },
+      {
+        "canonical_hash": "ce230b16c71c8ffb",
+        "canonical_name": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+        "superseded": {
+          "record_id": "ce230b16c71c8ffb:1",
+          "line": 1008,
+          "attempt": 1,
+          "record_sha256": "af149e8b07f0baf724553ae820625e02b50591865942cb18b49a2115bcb90939",
+          "status": "EXACT_BINDABLE",
+          "started_at": "2026-09-18T07:48:30.635963+00:00"
+        },
+        "successor": {
+          "record_id": "ce230b16c71c8ffb:2",
+          "line": 1136,
+          "attempt": 2,
+          "record_sha256": "e173a76491614ae263bd95f6bbd61dd80925f831edafa276e3b5d44e6b67c0c4",
+          "status": "EXACT_BINDABLE",
+          "started_at": "2026-09-18T08:05:52.239230+00:00"
+        },
+        "declared_by": "ledger",
+        "reason": "recheck_existing",
+        "changed_fields": [
+          "candidate"
+        ]
+      },
+      {
+        "canonical_hash": "c16129a97681d1e0",
+        "canonical_name": "SENA SECRETARIA GENERAL",
+        "superseded": {
+          "record_id": "c16129a97681d1e0:1",
+          "line": 1044,
+          "attempt": 1,
+          "record_sha256": "feae43d3b14fe77e1f5cd2812b30da429a6abd9a39cb973eb9f642a2ea641130",
+          "status": "EXACT_BINDABLE",
+          "started_at": "2026-09-18T07:52:11.347733+00:00"
+        },
+        "successor": {
+          "record_id": "c16129a97681d1e0:2",
+          "line": 1137,
+          "attempt": 2,
+          "record_sha256": "8377d8010fd4f6d945ce66b563908bdc96399d7127b7f72d332ee34271047d59",
+          "status": "EXACT_BINDABLE",
+          "started_at": "2026-09-18T08:05:52.960600+00:00"
+        },
+        "declared_by": "ledger",
+        "reason": "recheck_existing",
+        "changed_fields": [
+          "candidate"
+        ]
+      }
+    ],
+    "ledger": "progress_supersessions.jsonl"
+  },
+  "undeclared_duplicates": [],
+  "contradictory_records": [],
+  "telemetry": {
+    "all_attempts": {
+      "records": 1137,
+      "source_calls": 2312,
+      "timeouts": 0,
+      "retries": 4,
+      "latency_ms_total": 12415885.7
+    },
+    "active_records": {
+      "records": 1134,
+      "source_calls": 2298,
+      "timeouts": 0,
+      "retries": 4,
+      "latency_ms_total": 12355977.3
+    },
+    "superseded_attempts": {
+      "records": 3,
+      "source_calls": 14,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms_total": 59908.4
+    },
+    "measurement_window": {
+      "started_at": "2026-09-18T06:20:28.791278+00:00",
+      "finished_at": "2026-09-18T08:05:54.061933+00:00",
+      "elapsed_seconds": 6325.3
+    },
+    "derived_from": "progress.jsonl",
+    "note": "Suma del bloque `network` de cada asiento de progress.jsonl. `all_attempts` incluye los intentos reemplazados; `active_records` sólo los vigentes. La diferencia son las llamadas de los reprocesos."
+  },
+  "evidence_integrity": {
+    "hash_file": "records.sha256",
+    "hash_file_created_by_this_run": false,
+    "declared_entries": 1134,
+    "expected": 1134,
+    "checked": 1134,
+    "missing": [],
+    "unparsable": [],
+    "mismatched": [],
+    "undeclared": [],
+    "problems": [],
+    "ok": true
+  },
+  "report_status": {
+    "ok": true,
+    "progress_ok": true,
+    "evidence_integrity_ok": true,
+    "problems": []
+  },
   "transport": "soda3",
-  "generated_at": "2026-09-18T08:07:59.661188+00:00"
+  "generated_at": "2026-09-18T14:15:10.034378+00:00"
 }

@@ -1,0 +1,189 @@
+{
+  "record": {
+    "canonical_name": "MUNICIPIO DE ANZA",
+    "canonical_hash": "13dd83de455df6ef",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 4,
+    "started_at": "2026-09-18T07:40:23.849010+00:00",
+    "finished_at": "2026-09-18T07:40:24.128215+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "BUYER_UNIT",
+      "value": "municipal_m0:05044",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": false
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "BUYER_UNIT:municipal_m0:05044",
+      "sources": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE ANZA"
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE ANZA"
+        ]
+      },
+      "observed_at": "2026-09-03",
+      "observed_rows": {
+        "p6dx-8zbt": 234,
+        "jbjy-vk9h": 214
+      },
+      "evidence": "artifacts/audits/municipal_m1a/promotion_manifest.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE ANZA",
+            "nit": "890983824",
+            "rows": 437
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 437,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE ANZA",
+            "nit": "890983824",
+            "rows": 412
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 412,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 278.9
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE ANZA",
+            "nit": "890983824",
+            "rows": 437
+          }
+        ],
+        "bound_rows": 437
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE ANZA",
+            "nit": "890983824",
+            "rows": 412
+          }
+        ],
+        "bound_rows": 412
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "890983824"
+      ],
+      "jbjy-vk9h": [
+        "890983824"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "MUNICIPIO DE ANZA"
+        ],
+        "present": [
+          "MUNICIPIO DE ANZA"
+        ],
+        "rows": 437
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "MUNICIPIO DE ANZA"
+        ],
+        "present": [
+          "MUNICIPIO DE ANZA"
+        ],
+        "rows": 412
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

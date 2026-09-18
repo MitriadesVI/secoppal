@@ -1,0 +1,74 @@
+{
+  "record": {
+    "canonical_name": "ECOSYSTEM:SENA:macro:caribe",
+    "canonical_hash": "456349bac897b294",
+    "kind": "ecosystem",
+    "labels": [
+      "caribe"
+    ],
+    "origin": [
+      "sena_units"
+    ],
+    "aliases_count": 0,
+    "started_at": "2026-09-18T08:03:49.424076+00:00",
+    "finished_at": "2026-09-18T08:03:49.424135+00:00",
+    "status": "INSTITUTIONAL_ECOSYSTEM",
+    "status_reasons": [
+      "composición institucional declarada"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": {
+      "family": "SENA",
+      "role": "macro_region",
+      "region": "caribe",
+      "departments": [
+        "Atlántico",
+        "Bolívar",
+        "Cesar",
+        "Córdoba",
+        "La Guajira",
+        "Magdalena",
+        "Sucre",
+        "San Andrés, Providencia y Santa Catalina"
+      ]
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {},
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 0,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 0.0
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {},
+    "errors": [],
+    "phase_b": false,
+    "projection_mode": "derived",
+    "projection_terms": [
+      "SENA"
+    ]
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

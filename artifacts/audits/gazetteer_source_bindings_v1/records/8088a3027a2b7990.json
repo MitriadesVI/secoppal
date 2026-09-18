@@ -1,0 +1,126 @@
+{
+  "record": {
+    "canonical_name": "FINANCIERA DE DESARROLLO TERRITORIAL S.A.",
+    "canonical_hash": "8088a3027a2b7990",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 23,
+    "started_at": "2026-09-18T07:15:12.727710+00:00",
+    "finished_at": "2026-09-18T07:16:00.498761+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 800096329"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%FINANCIERA DE DESARROLLO TERRITORIAL S.A.%'))",
+        "forms_reached": [
+          "FINANCIERA DE DESARROLLO TERRITORIAL S.A."
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "800096329"
+        ],
+        "like_rows": 5109,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%FINANCIERA DE DESARROLLO TERRITORIAL S.A.%'))",
+        "forms_reached": [
+          "FINANCIERA DE DESARROLLO TERRITORIAL S.A."
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "800096329"
+        ],
+        "like_rows": 13,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 47770.7
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%FINANCIERA DE DESARROLLO TERRITORIAL S.A.%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "FINANCIERA DE DESARROLLO TERRITORIAL S.A.",
+            "nit": "800096329",
+            "rows": 5109
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 5109
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%FINANCIERA DE DESARROLLO TERRITORIAL S.A.%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "FINANCIERA DE DESARROLLO TERRITORIAL S.A.",
+            "nit": "800096329",
+            "rows": 13
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 13
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "record": {
+    "canonical_name": "ECOSYSTEM:SENA:national",
+    "canonical_hash": "44dc69fe26d494d3",
+    "kind": "ecosystem",
+    "labels": [
+      "SENA Nacional"
+    ],
+    "origin": [
+      "sena_units"
+    ],
+    "aliases_count": 0,
+    "started_at": "2026-09-18T07:59:36.238350+00:00",
+    "finished_at": "2026-09-18T07:59:36.797564+00:00",
+    "status": "INSTITUTIONAL_ECOSYSTEM",
+    "status_reasons": [
+      "composición institucional declarada"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": {
+      "family": "SENA",
+      "role": "national_parent",
+      "declared_official_names": [
+        "SENA SECRETARIA GENERAL",
+        "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+        "SENA DIRECCIÓN GENERAL Dirección Jurídica"
+      ]
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "(entidad = 'SENA SECRETARIA GENERAL' OR entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas' OR entidad = 'SENA DIRECCIÓN GENERAL Dirección Jurídica')",
+        "forms_reached": [
+          "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+          "SENA SECRETARIA GENERAL"
+        ],
+        "forms_reached_count": 2,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 16581,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "(nombre_entidad = 'SENA SECRETARIA GENERAL' OR nombre_entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas' OR nombre_entidad = 'SENA DIRECCIÓN GENERAL Dirección Jurídica')",
+        "forms_reached": [
+          "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+          "SENA SECRETARIA GENERAL"
+        ],
+        "forms_reached_count": 2,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 11011,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 558.8
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "projection_mode": "official_names",
+        "like_where": "(entidad = 'SENA SECRETARIA GENERAL' OR entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas' OR entidad = 'SENA DIRECCIÓN GENERAL Dirección Jurídica')",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+            "nit": "899999034",
+            "rows": 5559
+          },
+          {
+            "name": "SENA SECRETARIA GENERAL",
+            "nit": "899999034",
+            "rows": 11022
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 16581
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "projection_mode": "official_names",
+        "like_where": "(nombre_entidad = 'SENA SECRETARIA GENERAL' OR nombre_entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas' OR nombre_entidad = 'SENA DIRECCIÓN GENERAL Dirección Jurídica')",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+            "nit": "899999034",
+            "rows": 249
+          },
+          {
+            "name": "SENA SECRETARIA GENERAL",
+            "nit": "899999034",
+            "rows": 10762
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 11011
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

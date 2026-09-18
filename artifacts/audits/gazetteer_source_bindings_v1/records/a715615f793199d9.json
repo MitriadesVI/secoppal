@@ -1,0 +1,182 @@
+{
+  "record": {
+    "canonical_name": "E.S.E. HOSPITAL SAN ANTONIO",
+    "canonical_hash": "a715615f793199d9",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 17,
+    "started_at": "2026-09-18T06:59:51.252923+00:00",
+    "finished_at": "2026-09-18T07:00:06.111093+00:00",
+    "status": "AMBIGUOUS_IDENTITY",
+    "status_reasons": [
+      "evidencia física apunta a 5 identidades: 800182136, 845000038, 8909846967, 891180065, 900036553"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%E.S.E. HOSPITAL SAN ANTONIO%'))",
+        "forms_reached": [
+          "E.S.E. HOSPITAL SAN ANTONIO",
+          "E.S.E. HOSPITAL SAN ANTONIO DE GIGANTE",
+          "E.S.E. HOSPITAL SAN ANTONIO DE NATAGAIMA",
+          "E.S.E. HOSPITAL SAN ANTONIO DEL TEQUENDAMA",
+          "E.S.E. HOSPITAL SAN ANTONIO TARAZÁ"
+        ],
+        "forms_reached_count": 5,
+        "nits_reached": [
+          "800182136",
+          "845000038",
+          "8909846967",
+          "891180065",
+          "900036553"
+        ],
+        "like_rows": 11019,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%E.S.E. HOSPITAL SAN ANTONIO%'))",
+        "forms_reached": [
+          "E.S.E. HOSPITAL SAN ANTONIO",
+          "E.S.E. HOSPITAL SAN ANTONIO DE GIGANTE",
+          "E.S.E. HOSPITAL SAN ANTONIO DE NATAGAIMA",
+          "E.S.E. HOSPITAL SAN ANTONIO DEL TEQUENDAMA",
+          "E.S.E. HOSPITAL SAN ANTONIO TARAZÁ"
+        ],
+        "forms_reached_count": 5,
+        "nits_reached": [
+          "800182136",
+          "845000038",
+          "8909846967",
+          "891180065",
+          "900036553"
+        ],
+        "like_rows": 692,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 14857.8
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%E.S.E. HOSPITAL SAN ANTONIO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO",
+            "nit": "845000038",
+            "rows": 6328
+          },
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO DE GIGANTE",
+            "nit": "891180065",
+            "rows": 1007
+          },
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO DEL TEQUENDAMA",
+            "nit": "900036553",
+            "rows": 1444
+          },
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO DE NATAGAIMA",
+            "nit": "800182136",
+            "rows": 1048
+          },
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO TARAZÁ",
+            "nit": "8909846967",
+            "rows": 1192
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 11019
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%E.S.E. HOSPITAL SAN ANTONIO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO",
+            "nit": "845000038",
+            "rows": 1
+          },
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO DE GIGANTE",
+            "nit": "891180065",
+            "rows": 16
+          },
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO DEL TEQUENDAMA",
+            "nit": "900036553",
+            "rows": 636
+          },
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO DE NATAGAIMA",
+            "nit": "800182136",
+            "rows": 35
+          },
+          {
+            "name": "E.S.E. HOSPITAL SAN ANTONIO TARAZÁ",
+            "nit": "8909846967",
+            "rows": 4
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 692
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

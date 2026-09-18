@@ -1,0 +1,221 @@
+{
+  "record": {
+    "canonical_name": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+    "canonical_hash": "ce230b16c71c8ffb",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "sena_units"
+    ],
+    "aliases_count": 24,
+    "started_at": "2026-09-18T08:05:52.239230+00:00",
+    "finished_at": "2026-09-18T08:05:54.002790+00:00",
+    "status": "EXACT_BINDABLE",
+    "status_reasons": [
+      "proyección exacta con el mismo universo"
+    ],
+    "identity": {
+      "type": "BUYER_UNIT",
+      "value": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+      "provenance": "app/data/sena_units.json",
+      "accredited": true,
+      "discovery_capable": false
+    },
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": {
+      "family": "SENA",
+      "role": "declared_unit",
+      "catalog": "app/data/sena_units.json"
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas%'))",
+        "forms_reached": [
+          "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 5559,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": {
+          "exact_where": "entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas'",
+          "candidate_names": [
+            "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+          ],
+          "like_count": 5559,
+          "exact_count": 5559,
+          "same_universe": true,
+          "like_status": "OK",
+          "exact_status": "OK"
+        }
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas%'))",
+        "forms_reached": [
+          "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 249,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": {
+          "exact_where": "nombre_entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas'",
+          "candidate_names": [
+            "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+          ],
+          "like_count": 249,
+          "exact_count": 249,
+          "same_universe": true,
+          "like_status": "OK",
+          "exact_status": "OK"
+        }
+      }
+    },
+    "proposed_binding": {
+      "p6dx-8zbt": [
+        "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+      ],
+      "jbjy-vk9h": [
+        "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+      ]
+    },
+    "semantics_preserved": true,
+    "candidate": {
+      "canonical_name": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+      },
+      "identity_provenance": "app/data/sena_units.json",
+      "observed_at": "2026-09-18",
+      "sources": {
+        "p6dx-8zbt": [
+          "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+        ],
+        "jbjy-vk9h": [
+          "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 5559,
+        "jbjy-vk9h": 249
+      },
+      "classification": "EXACT_BINDABLE",
+      "semantics_preserved": true,
+      "foreign_identities_reached": [],
+      "declared_groups": [],
+      "evidence_record": "records/ce230b16c71c8ffb.json",
+      "promotion_status": "CANDIDATE_NOT_PROMOTED",
+      "note": "Candidato producido por auditoría read-only. NO es un binding productivo: no se ha escrito en app/data/buyer_source_names.json y requiere revisión humana independiente antes de cualquier promoción."
+    },
+    "network": {
+      "calls": 6,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 1762.5
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+            "nit": "899999034",
+            "rows": 5559
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 5559,
+        "equivalence": {
+          "exact_where": "entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas'",
+          "candidate_names": [
+            "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+          ],
+          "like_count": 5559,
+          "exact_count": 5559,
+          "same_universe": true,
+          "like_status": "OK",
+          "exact_status": "OK"
+        }
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+            "nit": "899999034",
+            "rows": 249
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 249,
+        "equivalence": {
+          "exact_where": "nombre_entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas'",
+          "candidate_names": [
+            "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+          ],
+          "like_count": 249,
+          "exact_count": 249,
+          "same_universe": true,
+          "like_status": "OK",
+          "exact_status": "OK"
+        }
+      }
+    },
+    "errors": [],
+    "phase_b": true,
+    "candidate_names": {
+      "p6dx-8zbt": [
+        "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+      ],
+      "jbjy-vk9h": [
+        "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas"
+      ]
+    }
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

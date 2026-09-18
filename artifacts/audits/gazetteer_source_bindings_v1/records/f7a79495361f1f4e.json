@@ -1,0 +1,215 @@
+{
+  "record": {
+    "canonical_name": "MUNICIPIO DE SOLEDAD",
+    "canonical_hash": "f7a79495361f1f4e",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 23,
+    "started_at": "2026-09-18T07:43:07.541746+00:00",
+    "finished_at": "2026-09-18T07:43:08.260312+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "NIT",
+      "value": "890106291",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": true
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "NIT:890106291",
+      "sources": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE SOLEDAD"
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE SOLEDAD"
+        ]
+      },
+      "observed_at": "2026-09-17",
+      "observed_rows": {
+        "p6dx-8zbt": 10302,
+        "jbjy-vk9h": 12087
+      },
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "MUNICIPIO DE SOLEDAD",
+            "rows": 10315
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE SOLEDAD",
+            "nit": "890106291",
+            "rows": 10315
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 10315,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "MUNICIPIO DE SOLEDAD",
+            "rows": 12087
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE SOLEDAD",
+            "nit": "890106291",
+            "rows": 12087
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 12087,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 4,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 718.2
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "MUNICIPIO DE SOLEDAD",
+            "rows": 10315
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE SOLEDAD",
+            "nit": "890106291",
+            "rows": 10315
+          }
+        ],
+        "bound_rows": 10315
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "MUNICIPIO DE SOLEDAD",
+            "rows": 12087
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "MUNICIPIO DE SOLEDAD",
+            "nit": "890106291",
+            "rows": 12087
+          }
+        ],
+        "bound_rows": 12087
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "890106291"
+      ],
+      "jbjy-vk9h": [
+        "890106291"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "MUNICIPIO DE SOLEDAD"
+        ],
+        "present": [
+          "MUNICIPIO DE SOLEDAD"
+        ],
+        "rows": 10315
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "MUNICIPIO DE SOLEDAD"
+        ],
+        "present": [
+          "MUNICIPIO DE SOLEDAD"
+        ],
+        "rows": 12087
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

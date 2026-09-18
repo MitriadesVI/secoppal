@@ -1,17 +1,24 @@
 # GAZETTEER-WIDE SOURCE BINDING AUDIT V1 — cobertura ADR-073 sobre todo el gazetteer
 
 **Tipo:** auditoría read-only + artefacto reproducible
-**Fecha:** 2026-09-18 · **Rama:** `audit/adr073-gazetteer-wide-v1` · **HEAD antes/después:** `0ca6469`
+**Fecha:** 2026-09-18 · **Rama:** `audit/adr073-gazetteer-wide-v1` (`c7beacd`) + remediación en `fix/adr073-gazetteer-wide-v1-remediation`
+**Lote:** medido sobre `06bd882` · **Cierre del lote:** `0ca6469` → `c7beacd` · **Revisión independiente:** `fabda711` (§12)
 **Artefacto:** [`artifacts/audits/gazetteer_source_bindings_v1/`](../../artifacts/audits/gazetteer_source_bindings_v1/)
 **Reproductor:** [`scripts/audits/audit_gazetteer_source_bindings_v1.py`](../../scripts/audits/audit_gazetteer_source_bindings_v1.py)
-**Tests:** [`tests/test_gazetteer_source_binding_audit.py`](../../tests/test_gazetteer_source_binding_audit.py)
+**Tests:** [`tests/test_gazetteer_source_binding_audit.py`](../../tests/test_gazetteer_source_binding_audit.py) ·
+[`tests/test_zeus_adr073_adversarial.py`](../../tests/test_zeus_adr073_adversarial.py) ·
+[`tests/test_gazetteer_source_binding_audit_regressions.py`](../../tests/test_gazetteer_source_binding_audit_regressions.py)
 
 ## 1. Veredicto
 
 ```text
-ADR073_GAZETTEER_WIDE_V1: COMPLETE
-  1134 / 1134 identidades cerradas · 2312 llamadas · 0 timeouts · 0 ERROR · 0 drift
-  593 bindings vigentes re-observados (593 verificados) · 2 candidatos · 4 grupos READY_TODAY
+ADR073_GAZETTEER_WIDE_V1: COMPLETE (con remediación de la revisión independiente, §12)
+  1134 / 1134 identidades cerradas · 2312 llamadas en 1137 intentos
+  (2298 en los 1134 registros vigentes + 14 en los 3 reprocesos declarados)
+  0 timeouts · 0 ERROR · 0 drift
+  593 bindings vigentes re-observados: 593 con liveness de nombre verificada,
+  y el chequeo de identidad fiscal ajena —que exige NIT acreditado— aplicó a 18
+  2 candidatos · 4 grupos READY_TODAY
 RUNTIME MODIFICADO: NO · DATOS DE PRODUCTO MODIFICADOS: NO · PROMOCIÓN: NO
 ```
 
@@ -19,11 +26,13 @@ RUNTIME MODIFICADO: NO · DATOS DE PRODUCTO MODIFICADOS: NO · PROMOCIÓN: NO
 `--summary-only` sin volver a tocar la red. Este documento congela el cierre del
 lote; si el gazetteer cambia, el lote se repite y el documento se re-sincroniza.
 
-Nota de procedencia: `started_at`/`finished_at` del manifiesto son de una
-reconstrucción de reportes posterior, no de la ventana de medición —la corrida
-duró 6.213,5 s según su propio log, y el manifiesto lo declara así en
-`batch_totals.timing_note`. La telemetría del lote está recompuesta desde
-`progress.jsonl` y marcada como recompuesta: no se disfraza de original.
+Procedencia, sin ambigüedad: el manifiesto separa la historia del LOTE
+(`batch`, inmutable) de la última invocación (`last_invocation`) y del rebuild
+(`report_rebuilt_at`). `batch.head` es el HEAD sobre el que se MIDIÓ
+(`06bd882`); `head` en el nivel raíz es el HEAD de la última invocación. La
+ventana de medición y los conteos de `batch` se **derivan** de
+`progress.jsonl` (`06:20:28 → 08:05:54 UTC`, 6325,3 s); ninguna cifra del
+manifiesto se recompone a mano ni se copia de un log externo.
 
 ## 2. Qué se midió y qué no
 
@@ -110,19 +119,28 @@ con otro transporte no quede invisible.
 
 ## 5. Validación antes del lote completo
 
-El smoke exigido por el encargo (§26) corrió contra la fuente viva, en
-`artifacts/audits/smoke_adr073_v1/` (22 identidades, no versionado como
-artefacto del lote), con sus gates en `smoke_gates.json`:
+El smoke exigido por el encargo (§26) corrió contra la fuente viva y quedó en
+`artifacts/audits/smoke_adr073_v1/` (22 identidades), con su paridad de
+transportes en `transport_parity.json`. Los gates se leen de
+`smoke_adr073_v1/progress.jsonl` —que es la evidencia cruda de esa corrida— y de
+`transport_parity.json`; no existe ningún `smoke_gates.json`:
 
-| Gate | Resultado |
-|---|---|
-| Los 4 bindings del dogfood se reproducen (Soledad, Galapa, Barranquilla, Cartagena) | PASS — nombres y clasificación `ALREADY_BOUND_VERIFIED`, conteos vivos coherentes con el sidecar |
-| DAPRE reproduce el source-name split | PASS — el canónico largo no es el nombre físico (`DAPRE`), declarado en `evidence_flags` |
-| Yopal reproduce el split ENTRE datasets | PASS — `MUNICIPIO DE YOPAL...` / `MUNICIPIO DE YOPAL..` |
-| SENA no se aplana | PASS — padre y ecosistema regional `INSTITUTIONAL_ECOSYSTEM`, sin binding, decenas de unidades físicas bajo un solo NIT |
-| ICBF se mide como composición, no como unidad | PASS — 33 nombres oficiales, 3 formas de NIT |
-| Buyer Groups no se mezclan con bindings | PASS — ningún grupo es identidad; los miembros se auditan individualmente |
-| Cero ERROR / cero INCONCLUSIVE en el smoke | PASS |
+| Gate | Resultado | Dónde se ve |
+|---|---|---|
+| Los 4 bindings del dogfood se reproducen (Soledad, Galapa, Barranquilla, Cartagena) | PASS — los cuatro cierran `ALREADY_BOUND_VERIFIED` | `smoke_adr073_v1/progress.jsonl` (12 `ALREADY_BOUND_VERIFIED`) |
+| SENA no se aplana | PASS — padre y regional `INSTITUTIONAL_ECOSYSTEM`, sin binding | `progress.jsonl` (3 ecosistemas: SENA nacional, SENA Antioquia, ICBF nacional) |
+| ICBF se mide como composición, no como unidad | PASS — 33 formas físicas, 121.936 / 120.869 filas | `progress.jsonl` (`ECOSYSTEM:ICBF:national`) |
+| Buyer Groups no se mezclan con bindings | PASS — ningún grupo es identidad; los miembros se auditan individualmente | `summary.json` / `buyer_group_readiness.json` |
+| Cero ERROR / cero INCONCLUSIVE en el smoke | PASS — 12 + 3 + 7, sin `ERROR` ni `INCONCLUSIVE` | `progress.jsonl` |
+| Ambos transportes devuelven el mismo universo | PASS — `same_universe_all: true`, fingerprints idénticos en 4/4 casos | `transport_parity.json` |
+
+Dos salvedades de esa carpeta, declaradas en vez de tapadas: su `summary.json`
+es un corte **parcial** de 8 identidades de una ventana anterior (su
+`progress.jsonl` tiene 22), y ese directorio está fuera del alcance de esta
+misión, así que no se reescribió. Los gates de arriba se tomaron de la evidencia
+cruda, no del resumen parcial. El split de DAPRE y el split entre datasets de
+Yopal se verifican en el lote completo (`evidence_flags.source_name_split_observed`,
+§7), que es donde esos dos bindings quedaron medidos.
 
 ## 6. Resultados del lote completo (1134 / 1134)
 
@@ -139,10 +157,13 @@ artefacto del lote), con sus gates en `smoke_gates.json`:
 | `BINDING_DRIFT_REVIEW` · `FOREIGN_IDENTITY_COLLISION` · `NOT_EQUIVALENT` · `SOURCE_NAME_SPLIT` · `BUYER_GROUP_MEMBER` · `ERROR` | 0 | nada que reportar |
 
 ```text
-bindings vigentes re-observados: 593 / 593 verificados, 0 con drift, 0 modificados
+bindings vigentes re-observados: 593 / 593 con liveness de nombre verificada, 0 con drift,
+                                 0 modificados · identidad fiscal ajena chequeada en 18 (NIT
+                                 acreditado) · 575 verificados sólo estructuralmente (§8)
 candidatos producidos:            2   (ver §8)
-llamadas a la fuente:             2312 · timeouts 0 · reintentos 4 · ~5,4 s por llamada
-duración del lote:                6213,5 s (~1h 44m) con workers=2 sobre SODA3
+llamadas a la fuente:             2312 en 1137 intentos (2298 en los 1134 vigentes + 14
+                                  en los 3 reprocesos declarados) · timeouts 0 · reintentos 4
+ventana de medición del lote:     6325,3 s (06:20:28 → 08:05:54 UTC) con workers=2 sobre SODA3
 ```
 
 Los 593 bindings del sidecar se re-observaron contra la fuente (formas declaradas
@@ -170,13 +191,15 @@ Ninguna se resolvió: se declaran. Son el argumento más fuerte del lote para no
 promover bindings por parecido de nombre, y también son defectos que el producto
 ya está ejecutando hoy.
 
-**Splits observados en bindings VIGENTES** (`evidence_flags.source_name_split_observed`, 11):
-`FONDO FINANCIERO DISTRITAL DE SALUD` (45.137) · `MUNICIPIO DE SOACHA` (44.331) ·
+**Splits observados en bindings VIGENTES** (`evidence_flags.source_name_split_observed`, 11).
+Los nombres son los canónicos del artefacto, no los alias con que se los conoce en
+el habla: `FONDO FINANCIERO DISTRITAL DE SALUD` (45.137) · `MUNICIPIO DE SOACHA` (44.331) ·
 `MUNICIPIO DE YOPAL` (37.137) · `DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA
 REPÚBLICA` (21.516, el nombre físico es `DAPRE`) · `MINISTERIO DE JUSTICIA Y DEL
-DERECHO` (14.522) · `UAESP` (12.129) · `UNIATLANTICO` (9.227) · `UNIVERSIDAD DE LA
-AMAZONIA` (2.560) · `UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ` (2.258) · `UFPS SECCIONAL
-OCAÑA` (1.530) · `.SECRETARÍA DISTRITAL DE SALUD.` (1.134). Es el fenómeno que
+DERECHO` (14.522) · `UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS` (12.129,
+el nombre físico es `UAESP`) · `UNIATLANTICO` (9.227) · `UNIVERSIDAD DE LA
+AMAZONIA` (2.560) · `UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA` (2.258) · `UNIVERSIDAD FRANCISCO DE PAULA
+SANTANDER SECCIONAL OCAÑA` (1.530) · `.SECRETARÍA DISTRITAL DE SALUD.` (1.134). Es el fenómeno que
 ADR-073 vino a resolver, medido sobre los bindings que ya lo resuelven.
 
 **Composición y multi-nombre (4):** `SENA REGIONAL ATLANTICO` (27.436,
@@ -187,12 +210,16 @@ CALDAS` (24.737) y `SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA`
 token-distinta bajo un mismo NIT observado, sin autoridad declarada que diga que
 son la misma unidad — o que son varias.
 
-**Cobertura desbalanceada (62):** un dataset alcanza <1% del otro, lo que
-significa que el nombre canónico no viaja igual entre procesos y contratos.
-Mayores: `UNIVERSIDAD NACIONAL DE COLOMBIA` (112.154 / **14**) · `LA CORPORACION
-COLOMBIANA DE INVESTIGACION AGROPECUARIA` (52.822 / 1) · `UNIVERSIDAD DE
-ANTIOQUIA` (44.658 / 34) · `ECOPETROL` (38.093 / 74) · `ESE HOSPITAL MANUEL
-URIBE ANGEL` (35.384 / 5). Es un umbral de reporte, no una clasificación.
+**Cobertura desbalanceada (81):** un dataset alcanza <1% del otro, lo que
+significa que el nombre canónico no viaja igual entre procesos y contratos. Son
+81 y no 62 porque un dataset en CERO cuenta como desbalance, no como dato
+ausente: con `if value` el cero desaparecía del vector y 19 casos con 0 filas en
+contratos quedaban invisibles (`EMPRESAS PUBLICAS DE MEDELLIN E.S.P.`:
+26.067 / **0**; `UNIVERSIDAD DEL TOLIMA`: 4.130 / **0**). Mayores: `UNIVERSIDAD NACIONAL DE COLOMBIA` (112.154 / **14**) · `LA CORPORACION
+COLOMBIANA DE INVESTIGACION AGROPECUARIA - AGROSAVIA` (52.822 / 1) · `UNIVERSIDAD DE
+ANTIOQUIA` (44.658 / 34) · `EMPRESA COLOMBIANA DE PETROLEOS` (38.093 / 74) · `ESE HOSPITAL MANUEL
+URIBE ANGEL` (35.384 / 5). Es un umbral de reporte, no una clasificación: no cambia
+la clase de ninguna identidad ni habilita candidatos.
 
 ## 8. Candidatos (`bindings_ready.jsonl`)
 
@@ -212,6 +239,63 @@ inventario tienen un NIT acreditado por una autoridad declarada, y las 18 ya
 tienen binding. Sin llave acreditada no hay `identity_key`, y sin `identity_key`
 no hay candidato que pueda escribirse sin inventar la identidad — que es
 exactamente lo que el encargo prohíbe.
+
+### 8.1 Qué se comprobó en cada binding vigente (sin inflarlo)
+
+`593 / 593 verificados` aplanaba dos comprobaciones distintas en una cifra. El
+resumen las separa:
+
+```text
+existing_bindings_total:            593
+source_name_liveness_verified:      593     (formas declaradas presentes y con filas
+                                             hoy, en los dos datasets)
+foreign_identity_check:
+  NIT_authoritative_checked:         18     (identidad NIT acreditada: se comprobó que
+                                             el universo declarado no alcanza un NIT ajeno)
+  BUYER_UNIT_structural_only:       575     (identidad BUYER_UNIT: no tiene NIT propio,
+                                             así que NO acredita nada sobre identidad ajena)
+```
+
+Los 575 no están menos verificados: están verificados **estructuralmente**, que es
+todo lo que su identidad declarada permite afirmar. Llamarlos «identity-safe
+verified» sería afirmar algo que la evidencia no sostiene.
+
+### 8.2 Intentos y supersession (1137 asientos, 1134 identidades)
+
+`progress.jsonl` es append-only y el lote tiene 1137 asientos para 1134
+identidades: tres unidades SENA se reprocesaron. Cada asiento se identifica
+(`record_id` = `<canonical_hash>:<attempt>`) y un reproceso declara a cuál
+reemplaza; los tres históricos lo declaran en `progress_supersessions.jsonl`,
+porque el auditor de la época no escribía esos campos. El reporte **exige** esa
+declaración y valida que el sucesor sea posterior y corresponda al intento
+anterior:
+
+```text
+progress_lines:        1137
+canonical_unique:      1134
+superseded_records:       3
+active_records:        1134
+undeclared_duplicates:    0
+```
+
+Los dos reemplazos que importan cambiaron el RESULTADO: `SENA SECRETARIA GENERAL`
+y `SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas`
+quedaron con `candidate = null` en el primer intento y produjeron su candidato en
+el reproceso. Antes, `done[canonical_hash] = record` dejaba ganar al último sin
+dejar rastro; ahora el reemplazo es explícito, con el `sha256` de los dos asientos.
+Un duplicado sin declarar **falla** el reporte y el canónico queda sin resultado
+final: el auditor no elige por orden de línea.
+
+### 8.3 Integridad de la evidencia raw
+
+`records.sha256` se genera con el pipeline (una entrada por registro activo,
+`path` + `sha256`) y se **verifica antes** de construir el resumen: un
+`records/<hash>.json` alterado, ilegible o ausente deja el reporte en
+`evidence_integrity.ok = false`, con el detalle, y la corrida termina con código
+de salida ≠ 0. El archivo de hashes **no** se regenera sobre evidencia alterada:
+regenerarlo lavaría la alteración. La evidencia que sostiene los dos candidatos
+existe y está verificada en el commit (`records/ce230b16c71c8ffb.json`,
+`records/c16129a97681d1e0.json`), junto con los 1134 registros.
 
 **Worklist de acreditación: 490 identidades** de las 497 que quedaron sin llave.
 Son casos cuyo universo LIKE alcanza **una sola forma física y un solo NIT** en
@@ -258,6 +342,16 @@ Promover un candidato es otro lote, con revisión humana independiente.
 **Los cuatro grupos declarados quedan `READY_TODAY`**: todos sus miembros tienen
 binding verificado y la proyección cabe en el tope de 40 nombres.
 
+El estado de un grupo no depende sólo de que sus miembros estén bindeados. Es
+`BLOCKED` —aunque todos sus miembros estén listos— si la proyección **no cabe**
+(`> 40` nombres, tras adjudicar candidatos incluidos) o si **dos miembros
+distintos reclaman el mismo nombre físico**, que es la condición que
+`buyer_groups.BuyerGroup.names_for` rechaza en producción. El reporte publica
+`duplicated_source_names` por dataset para que eso se vea en vez de esconderse
+detrás del conteo: sumar con `extend()` deja los dos nombres en la lista y el
+total sube como si todo estuviera bien. En este lote no hay colisión ninguna
+(0 en los cuatro grupos) y por eso los cuatro son `READY_TODAY`.
+
 | Grupo | Miembros | Bindeados | Nombres proyectados (proc./contr.) | Estado |
 |---|---:|---:|---:|---|
 | `bogota_central` | 18 | 18 | 18 / 18 | `READY_TODAY` |
@@ -295,10 +389,34 @@ por su proyección declarada, sin aplanarse:
     --only "MUNICIPIO DE SOACHA" --output artifacts/audits/mi_prueba
 ```
 
-`manifest.json` congela HEAD, rama, sha256 del script, sha256 de las cinco
-autoridades, sha256 de los módulos de runtime leídos, datasets, transporte,
-workers, presupuesto, política de reintentos y total de identidades. Sin esos
-hashes una corrida no es reproducible, sólo recordada.
+`manifest.json` describe el lote y la invocación en bloques que no se pisan:
+
+```text
+head / branch          HEAD de ESTA invocación (aquí, la rama de remediación)
+batch                  procedencia del LOTE original, inmutable:
+                       head 06bd882 (el HEAD sobre el que se MIDIÓ), rama, sha256 del
+                       script y de las cinco autoridades y de los módulos de runtime
+                       leídos, transport, workers, timeout, retry_budget, y —derivados
+                       de progress.jsonl— source_calls 2312, retries 4, records 1137 y
+                       la ventana de medición 06:20:28 → 08:05:54 UTC (6325,3 s)
+last_invocation        qué hizo esta corrida: mode (measure | recheck | rebuild),
+                       started_at, finished_at, elapsed_seconds, selected, pending,
+                       processed, batch_records, options, sha256 del script y de los
+                       runtime files LEÍDOS AHORA, y su propia source_telemetry
+report_rebuilt_at      cuándo se reconstruyeron los reportes
+progress               progress_lines / canonical_unique / superseded_records /
+                       active_records / undeclared_duplicates
+report_status          ok + problemas concretos (integridad y supersession)
+```
+
+Sin esos hashes una corrida no es reproducible, sólo recordada. Y con un solo
+bloque no había forma de distinguir «el lote midió en `06bd882`» de «esta
+reconstrucción corrió en otro HEAD»: por eso el HEAD del lote y el HEAD de la
+invocación son campos distintos, y `batch` no lo reescribe ni `--summary-only` ni
+`--only` ni un rebuild.
+
+La corrida sale con código 0 sólo si el reporte se puede leer como resultado
+cerrado; con evidencia alterada o una repetición sin declarar sale ≠ 0.
 
 ## 11. Límites y deuda abierta
 
@@ -310,19 +428,63 @@ hashes una corrida no es reproducible, sólo recordada.
 - **Las 14 colisiones son defecto del fallback, no del binding.** `ANI` (197 NIT)
   o `ESE CENTRO` (56) alcanzan identidades distintas HOY, en producción. Ningún
   binding ADR-073 las arregla: eso es admisión/routing, otra decisión y otro lote.
-- **62 identidades con cobertura desbalanceada** entre procesos y contratos
-  (UNAL: 112.154 / 14): el nombre canónico no viaja igual en los dos datasets.
-  Cada una puede necesitar su propio binding por dataset, y eso no se resuelve
-  por parecido.
+- **81 identidades con cobertura desbalanceada** entre procesos y contratos
+  (UNAL: 112.154 / 14), 19 de ellas con 0 filas en contratos: el nombre canónico
+  no viaja igual en los dos datasets. Cada una puede necesitar su propio binding
+  por dataset, y eso no se resuelve por parecido.
 - **1 sin evidencia física:** `SENA DIRECCIÓN GENERAL Dirección Jurídica` está
   declarada en el catálogo y no se publica con ese nombre (0 filas en ambos
   datasets). El catálogo y la fuente discrepan; el auditor lo declara.
 - **1 universo truncado** (`ANI`: el `GROUP BY` llegó al tope de 200 grupos), así
   que su cuenta de 197 identidades es un piso.
+- **Los 575 bindings de identidad `BUYER_UNIT` no acreditan identidad fiscal.**
+  Su verificación es de presencia y filas de las formas declaradas. Afirmar
+  «identity-safe» sobre ellos exigiría una identidad fiscal acreditada que no
+  existe (§8.1).
+- **La evidencia de un intento reemplazado vive sólo en `progress.jsonl`.**
+  `records/<hash>.json` guarda el intento VIGENTE —es lo que
+  `bindings_ready.jsonl` referencia—, así que el reemplazo es auditable por su
+  asiento y su `sha256` (declarados en `progress_supersessions.jsonl`) pero la
+  medición completa del intento anterior no se conserva en `records/`. Cambiar el
+  esquema de nombres tocaría las rutas que los candidatos ya declaran: es un paso
+  de otro lote.
+- **`smoke_adr073_v1/summary.json` es un corte parcial de 8 de sus 22
+  identidades** (§5). Ese directorio quedó fuera del alcance de esta misión y no
+  se reescribió; los gates se leen de su `progress.jsonl`.
 - Un timeout se registra como `INCONCLUSIVE` y nunca se resuelve por
   conveniencia. En este lote no hubo ninguno: por eso la comparación de universos
-  está completa en todas las identidades medibles.
-- Nota de procedencia del artefacto: la telemetría está recompuesta desde
-  `progress.jsonl` y la ventana temporal del manifiesto es la de una
-  reconstrucción de reportes posterior (§1). El defecto quedó corregido en el
-  script: una reconstrucción ya no pisa la procedencia del lote.
+  está completa en todas las identidades medibles. La telemetría y la ventana del
+  lote se derivan de `progress.jsonl`; no hay ninguna cifra recompuesta a mano
+  ni copiada de un log externo.
+
+## 12. Remediación de la revisión independiente (ZEUS)
+
+La revisión independiente (`audit/adr073-gazetteer-wide-v1-independent`,
+`fabda711`) devolvió `REMEDIATION_REQUIRED` con 3 P1, 6 P2 y 2 P3, y cinco tests
+adversariales rojos (`z08`, `z09b`, `z11`, `z12`, `z13`). Esos cinco casos se
+portaron **verbatim** a `tests/test_zeus_adr073_adversarial.py` y hoy pasan; las
+expectativas no se rebajaron. Las regresiones propias quedaron en
+`tests/test_gazetteer_source_binding_audit_regressions.py`.
+
+| Finding | Qué era | Qué quedó |
+|---|---|---|
+| P1-1 | 1134 raw records en disco, 384 trackeados; la evidencia de los 2 candidatos SENA no estaba en el commit | 1134/1134 trackeados, con test que lo mide (`git ls-files`) |
+| P1-2 | `done[canonical_hash] = record`: el último intento ganaba en silencio | supersession explícita (auto o por ledger validado); duplicado sin declarar → reporte falla y el canónico queda sin resultado |
+| P1-3 | `--summary-only`/`--only` reescribían `started_at`/`finished_at` del lote | `batch` separado e inmutable; `last_invocation` propio; `report_rebuilt_at` |
+| P2-1 | «593 verificados» aplanaba liveness con chequeo de identidad fiscal | `source_name_liveness_verified` + `foreign_identity_check` (18 NIT / 575 estructural) |
+| P2-2 | telemetría recompuesta a mano y `batch_totals` alimentado desde un log en `/tmp` | telemetría derivada de `progress.jsonl`, separando todos los intentos (2312) de los vigentes (2298); claves viejas absorbidas y declaradas |
+| P2-3 | `records.sha256` existía pero nadie lo generaba ni lo validaba | lo genera el pipeline y se verifica **antes** del resumen; no se regenera sobre evidencia alterada; exit ≠ 0 |
+| P2-4 | `READY_AFTER_REVIEW` le ganaba a `would_exceed_after_review` | `over_after` → `BLOCKED` (tope `> 40`, como producción) |
+| P2-5 | dos miembros con el mismo nombre físico no se detectaban | `duplicated_source_names` por dataset y `BLOCKED`, hoy y tras revisión |
+| P2-6 | `if value` hacía invisible un dataset en 0 | `value is not None`: 62 → 81 casos; no cambia clase ni elegibilidad |
+| P3-1 | el documento usaba alias humanos como nombres canónicos (`ECOPETROL`, `CORPOICA`, `UAESP`, `UFPS`) | nombres canónicos del artefacto (`EMPRESA COLOMBIANA DE PETROLEOS`, `… - AGROSAVIA`, `UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS`, `UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA`) |
+| P3-2 | `smoke_gates.json` citado e inexistente; HEAD del manifiesto sin contexto; `icbf_units` 34 con 33 unidades | gates reanclados a la evidencia cruda; `batch.head` vs HEAD de la invocación; `icbf_units` cuenta unidades declaradas (33) |
+
+Lo que esta remediación **no** hizo, por estar fuera de su alcance: no volvió a
+ejecutar el lote (2312 llamadas) —todo el trabajo es offline sobre la evidencia
+existente—, no promovió ningún candidato, no tocó `app/**` ni los datos de
+producto, no modificó los 1137 asientos de `progress.jsonl` y no cambió ningún
+resultado observado para hacer pasar un test. La deuda de producto que la
+revisión dejó explícitamente aparte (ownership de alias ANI/INVÍAS, las 14
+`AMBIGUOUS_IDENTITY`, el worklist de acreditación, `SENA REGIONAL ATLANTICO` y
+los bindings de entidades nuevas) sigue abierta y sigue siendo otra misión.

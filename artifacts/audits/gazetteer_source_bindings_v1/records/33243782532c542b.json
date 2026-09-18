@@ -1,0 +1,126 @@
+{
+  "record": {
+    "canonical_name": "GOBERNACION DEL HUILA*",
+    "canonical_hash": "33243782532c542b",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 19,
+    "started_at": "2026-09-18T07:23:00.955857+00:00",
+    "finished_at": "2026-09-18T07:23:28.518915+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 800103913"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%GOBERNACION DEL HUILA*%'))",
+        "forms_reached": [
+          "GOBERNACION DEL HUILA*"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "800103913"
+        ],
+        "like_rows": 12250,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GOBERNACION DEL HUILA*%'))",
+        "forms_reached": [
+          "GOBERNACION DEL HUILA*"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "800103913"
+        ],
+        "like_rows": 11993,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 27562.7
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%GOBERNACION DEL HUILA*%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "GOBERNACION DEL HUILA*",
+            "nit": "800103913",
+            "rows": 12250
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 12250
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GOBERNACION DEL HUILA*%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "GOBERNACION DEL HUILA*",
+            "nit": "800103913",
+            "rows": 11993
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 11993
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

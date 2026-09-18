@@ -1,0 +1,242 @@
+{
+  "record": {
+    "canonical_name": "ECOSYSTEM:SENA:regional:Antioquia",
+    "canonical_hash": "00469b1705852cd0",
+    "kind": "ecosystem",
+    "labels": [
+      "SENA Antioquia"
+    ],
+    "origin": [
+      "sena_units"
+    ],
+    "aliases_count": 0,
+    "started_at": "2026-09-18T08:02:13.370417+00:00",
+    "finished_at": "2026-09-18T08:02:31.182395+00:00",
+    "status": "INSTITUTIONAL_ECOSYSTEM",
+    "status_reasons": [
+      "composición institucional declarada"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": {
+      "family": "SENA",
+      "role": "regional_ecosystem",
+      "department": "Antioquia"
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')))",
+        "forms_reached": [
+          "SENA REGIONAL ANTIOQUIA CENTRO DE LOS RECURSOS NATURALES RENOVABLES LA SALADA",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CFMA",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTAPT",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTMAE",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTPGA",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTTAOA?",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+          "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+        ],
+        "forms_reached_count": 10,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 33243,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')))",
+        "forms_reached": [
+          "SENA REGIONAL ANTIOQUIA CENTRO DE LOS RECURSOS NATURALES RENOVABLES LA SALADA",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CFMA",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTAPT",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTMAE",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTPGA",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTTAOA?",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+          "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+          "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+        ],
+        "forms_reached_count": 10,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 36306,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 17810.9
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "projection_mode": "contains_all",
+        "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL ANTIOQUIA CENTRO DE LOS RECURSOS NATURALES RENOVABLES LA SALADA",
+            "nit": "899999034",
+            "rows": 2280
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CFMA",
+            "nit": "899999034",
+            "rows": 1271
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+            "nit": "899999034",
+            "rows": 3660
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+            "nit": "899999034",
+            "rows": 4648
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTAPT",
+            "nit": "899999034",
+            "rows": 2220
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTMAE",
+            "nit": "899999034",
+            "rows": 1528
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTPGA",
+            "nit": "899999034",
+            "rows": 1784
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTTAOA?",
+            "nit": "899999034",
+            "rows": 1962
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+            "nit": "899999034",
+            "rows": 4761
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto",
+            "nit": "899999034",
+            "rows": 9129
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 33243
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "projection_mode": "contains_all",
+        "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL ANTIOQUIA CENTRO DE LOS RECURSOS NATURALES RENOVABLES LA SALADA",
+            "nit": "899999034",
+            "rows": 1891
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CFMA",
+            "nit": "899999034",
+            "rows": 999
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+            "nit": "899999034",
+            "rows": 3276
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+            "nit": "899999034",
+            "rows": 4072
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTAPT",
+            "nit": "899999034",
+            "rows": 3056
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTMAE",
+            "nit": "899999034",
+            "rows": 1856
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTPGA",
+            "nit": "899999034",
+            "rows": 1493
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTTAOA?",
+            "nit": "899999034",
+            "rows": 1564
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+            "nit": "899999034",
+            "rows": 6984
+          },
+          {
+            "name": "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto",
+            "nit": "899999034",
+            "rows": 11115
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 36306
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

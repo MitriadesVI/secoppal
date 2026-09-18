@@ -1,0 +1,215 @@
+{
+  "record": {
+    "canonical_name": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+    "canonical_hash": "698715a99adf0292",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 2,
+    "started_at": "2026-09-18T07:58:36.171670+00:00",
+    "finished_at": "2026-09-18T07:58:36.881891+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "NIT",
+      "value": "891680089",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": true
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "NIT:891680089",
+      "sources": {
+        "p6dx-8zbt": [
+          "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+        ],
+        "jbjy-vk9h": [
+          "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+        ]
+      },
+      "observed_at": "2026-09-02",
+      "observed_rows": {
+        "p6dx-8zbt": 2257,
+        "jbjy-vk9h": 1
+      },
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": true,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+            "rows": 2257
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+            "nit": "891680089",
+            "rows": 2257
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 2257,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+            "rows": 1
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+            "nit": "891680089",
+            "rows": 1
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 1,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 4,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 709.8
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+            "rows": 2257
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+            "nit": "891680089",
+            "rows": 2257
+          }
+        ],
+        "bound_rows": 2257
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+            "rows": 1
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+            "nit": "891680089",
+            "rows": 1
+          }
+        ],
+        "bound_rows": 1
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "891680089"
+      ],
+      "jbjy-vk9h": [
+        "891680089"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+        ],
+        "present": [
+          "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+        ],
+        "rows": 2257
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+        ],
+        "present": [
+          "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+        ],
+        "rows": 1
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

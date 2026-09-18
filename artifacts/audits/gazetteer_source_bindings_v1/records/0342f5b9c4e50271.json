@@ -1,0 +1,192 @@
+{
+  "record": {
+    "canonical_name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+    "canonical_hash": "0342f5b9c4e50271",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 32,
+    "started_at": "2026-09-18T07:16:25.578493+00:00",
+    "finished_at": "2026-09-18T07:16:26.046819+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "BUYER_UNIT",
+      "value": "FONDO DE DESARROLLO LOCAL DE BOSA",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": false
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "BUYER_UNIT:FONDO DE DESARROLLO LOCAL DE BOSA",
+      "sources": {
+        "p6dx-8zbt": [
+          "FONDO DE DESARROLLO LOCAL DE BOSA"
+        ],
+        "jbjy-vk9h": [
+          "FONDO DE DESARROLLO LOCAL DE BOSA"
+        ]
+      },
+      "observed_at": "2026-09-03",
+      "observed_rows": {
+        "p6dx-8zbt": 6017,
+        "jbjy-vk9h": 5513
+      },
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [
+      "bogota_executive",
+      "bogota_local_mayoralties"
+    ],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+            "nit": "8999990615",
+            "rows": 6050
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 6050,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+            "nit": "8999990615",
+            "rows": 5524
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 5524,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 468.0
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+            "nit": "8999990615",
+            "rows": 6050
+          }
+        ],
+        "bound_rows": 6050
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+            "nit": "8999990615",
+            "rows": 5524
+          }
+        ],
+        "bound_rows": 5524
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "8999990615"
+      ],
+      "jbjy-vk9h": [
+        "8999990615"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "FONDO DE DESARROLLO LOCAL DE BOSA"
+        ],
+        "present": [
+          "FONDO DE DESARROLLO LOCAL DE BOSA"
+        ],
+        "rows": 6050
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "FONDO DE DESARROLLO LOCAL DE BOSA"
+        ],
+        "present": [
+          "FONDO DE DESARROLLO LOCAL DE BOSA"
+        ],
+        "rows": 5524
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

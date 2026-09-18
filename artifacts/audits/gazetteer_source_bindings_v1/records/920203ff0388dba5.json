@@ -1,0 +1,174 @@
+{
+  "record": {
+    "canonical_name": "UNIVERSIDAD POPULAR DEL CESAR",
+    "canonical_hash": "920203ff0388dba5",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 2,
+    "started_at": "2026-09-18T07:58:26.814585+00:00",
+    "finished_at": "2026-09-18T07:58:27.302101+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "NIT",
+      "value": "8923002856",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": true
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "NIT:8923002856",
+      "sources": {
+        "p6dx-8zbt": [
+          "UNIVERSIDAD POPULAR DEL CESAR."
+        ]
+      },
+      "observed_at": "2026-09-02",
+      "observed_rows": {
+        "p6dx-8zbt": 57
+      },
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD POPULAR DEL CESAR.",
+            "rows": 57
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD POPULAR DEL CESAR.",
+            "nit": "8923002856",
+            "rows": 57
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 57,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 3,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 487.2
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD POPULAR DEL CESAR.",
+            "rows": 57
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD POPULAR DEL CESAR.",
+            "nit": "8923002856",
+            "rows": 57
+          }
+        ],
+        "bound_rows": 57
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [],
+        "identity_forms_complete": true
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "8923002856"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "UNIVERSIDAD POPULAR DEL CESAR."
+        ],
+        "present": [
+          "UNIVERSIDAD POPULAR DEL CESAR."
+        ],
+        "rows": 57
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "record": {
+    "canonical_name": "SENA REGIONAL ATLANTICO",
+    "canonical_hash": "aa481d630bb12a3d",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 29,
+    "started_at": "2026-09-18T07:49:16.771932+00:00",
+    "finished_at": "2026-09-18T07:49:29.297624+00:00",
+    "status": "BUYER_GROUP_CANDIDATE",
+    "status_reasons": [
+      "identidad fiscal sin acreditar; el universo alcanza 2 formas token-distintas con forma de raíz + unidades hija"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA REGIONAL ATLANTICO%'))",
+        "forms_reached": [
+          "SENA REGIONAL ATLANTICO",
+          "SENA REGIONAL ATLANTICO Intercentros"
+        ],
+        "forms_reached_count": 2,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 10250,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA REGIONAL ATLANTICO%'))",
+        "forms_reached": [
+          "SENA REGIONAL ATLANTICO",
+          "SENA REGIONAL ATLANTICO Intercentros"
+        ],
+        "forms_reached_count": 2,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 17186,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 12525.2
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA REGIONAL ATLANTICO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL ATLANTICO",
+            "nit": "899999034",
+            "rows": 4226
+          },
+          {
+            "name": "SENA REGIONAL ATLANTICO Intercentros",
+            "nit": "899999034",
+            "rows": 6024
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 10250
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA REGIONAL ATLANTICO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL ATLANTICO",
+            "nit": "899999034",
+            "rows": 7955
+          },
+          {
+            "name": "SENA REGIONAL ATLANTICO Intercentros",
+            "nit": "899999034",
+            "rows": 9231
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 17186
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

@@ -1,0 +1,557 @@
+{
+  "record": {
+    "canonical_name": "ECOSYSTEM:ICBF:national",
+    "canonical_hash": "be2ffe73e783a258",
+    "kind": "ecosystem",
+    "labels": [
+      "I.C.B.F. Nacional (sede + 32 regionales)"
+    ],
+    "origin": [
+      "icbf_regionals"
+    ],
+    "aliases_count": 0,
+    "started_at": "2026-09-18T08:03:49.428855+00:00",
+    "finished_at": "2026-09-18T08:03:50.979692+00:00",
+    "status": "INSTITUTIONAL_ECOSYSTEM",
+    "status_reasons": [
+      "composición institucional declarada"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": {
+      "family": "ICBF",
+      "role": "national_parent",
+      "declared_group": "icbf_national",
+      "declared_official_names": [
+        "ICBF SEDE NACIONAL",
+        "ICBF REGIONAL AMAZONAS",
+        "ICBF REGIONAL ANTIOQUIA",
+        "ICBF REGIONAL ARAUCA *",
+        "ICBF REGIONAL ATLANTICO",
+        "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+        "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+        "ICBF REGIONAL CALDAS",
+        "ICBF REGIONAL CAQUETA",
+        "ICBF REGIONAL CASANARE",
+        "ICBF REGIONAL CAUCA",
+        "ICBF REGIONAL CESAR",
+        "ICBF REGIONAL CHOCO",
+        "ICBF REGIONAL CORDOBA",
+        "ICBF REGIONAL CUNDINAMARCA",
+        "ICBF REGIONAL GUAINIA",
+        "ICBF REGIONAL GUAVIARE",
+        "ICBF REGIONAL HUILA",
+        "ICBF REGIONAL GUAJIRA",
+        "ICBF REGIONAL MAGDALENA",
+        "ICBF REGIONAL META",
+        "ICBF REGIONAL NARIÑO",
+        "ICBF REGIONAL NORTE DE SANTANDER",
+        "ICBF REGIONAL PUTUMAYO",
+        "ICBF REGIONAL QUINDIO",
+        "ICBF RISARALDA//",
+        "ICBF REGIONAL SAN ANDRES",
+        "ICBF REGIONAL SANTANDER",
+        "ICBF REGIONAL SUCRE",
+        "ICBF REGIONAL TOLIMA",
+        "ICBF REGIONAL VAUPES",
+        "ICBF REGIONAL VALLE DEL CAUCA",
+        "ICBF REGIONAL VICHADA"
+      ]
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "(entidad = 'ICBF SEDE NACIONAL' OR entidad = 'ICBF REGIONAL AMAZONAS' OR entidad = 'ICBF REGIONAL ANTIOQUIA' OR entidad = 'ICBF REGIONAL ARAUCA *' OR entidad = 'ICBF REGIONAL ATLANTICO' OR entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR entidad = 'ICBF REGIONAL CALDAS' OR entidad = 'ICBF REGIONAL CAQUETA' OR entidad = 'ICBF REGIONAL CASANARE' OR entidad = 'ICBF REGIONAL CAUCA' OR entidad = 'ICBF REGIONAL CESAR' OR entidad = 'ICBF REGIONAL CHOCO' OR entidad = 'ICBF REGIONAL CORDOBA' OR entidad = 'ICBF REGIONAL CUNDINAMARCA' OR entidad = 'ICBF REGIONAL GUAINIA' OR entidad = 'ICBF REGIONAL GUAVIARE' OR entidad = 'ICBF REGIONAL HUILA' OR entidad = 'ICBF REGIONAL GUAJIRA' OR entidad = 'ICBF REGIONAL MAGDALENA' OR entidad = 'ICBF REGIONAL META' OR entidad = 'ICBF REGIONAL NARIÑO' OR entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR entidad = 'ICBF REGIONAL PUTUMAYO' OR entidad = 'ICBF REGIONAL QUINDIO' OR entidad = 'ICBF RISARALDA//' OR entidad = 'ICBF REGIONAL SAN ANDRES' OR entidad = 'ICBF REGIONAL SANTANDER' OR entidad = 'ICBF REGIONAL SUCRE' OR entidad = 'ICBF REGIONAL TOLIMA' OR entidad = 'ICBF REGIONAL VAUPES' OR entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR entidad = 'ICBF REGIONAL VICHADA')",
+        "forms_reached": [
+          "ICBF REGIONAL AMAZONAS",
+          "ICBF REGIONAL ANTIOQUIA",
+          "ICBF REGIONAL ARAUCA *",
+          "ICBF REGIONAL ATLANTICO",
+          "ICBF REGIONAL CALDAS",
+          "ICBF REGIONAL CAQUETA",
+          "ICBF REGIONAL CASANARE",
+          "ICBF REGIONAL CAUCA",
+          "ICBF REGIONAL CESAR",
+          "ICBF REGIONAL CHOCO",
+          "ICBF REGIONAL CORDOBA",
+          "ICBF REGIONAL CUNDINAMARCA",
+          "ICBF REGIONAL GUAINIA",
+          "ICBF REGIONAL GUAJIRA",
+          "ICBF REGIONAL GUAVIARE",
+          "ICBF REGIONAL HUILA",
+          "ICBF REGIONAL MAGDALENA",
+          "ICBF REGIONAL META",
+          "ICBF REGIONAL NARIÑO",
+          "ICBF REGIONAL NORTE DE SANTANDER",
+          "ICBF REGIONAL PUTUMAYO",
+          "ICBF REGIONAL QUINDIO",
+          "ICBF REGIONAL SAN ANDRES",
+          "ICBF REGIONAL SANTANDER",
+          "ICBF REGIONAL SUCRE",
+          "ICBF REGIONAL TOLIMA",
+          "ICBF REGIONAL VALLE DEL CAUCA",
+          "ICBF REGIONAL VAUPES",
+          "ICBF REGIONAL VICHADA",
+          "ICBF RISARALDA//",
+          "ICBF SEDE NACIONAL",
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA"
+        ],
+        "forms_reached_count": 33,
+        "nits_reached": [
+          "899999239",
+          "8999992391",
+          "8999992392"
+        ],
+        "like_rows": 121936,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "(nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA')",
+        "forms_reached": [
+          "ICBF REGIONAL AMAZONAS",
+          "ICBF REGIONAL ANTIOQUIA",
+          "ICBF REGIONAL ARAUCA *",
+          "ICBF REGIONAL ATLANTICO",
+          "ICBF REGIONAL CALDAS",
+          "ICBF REGIONAL CAQUETA",
+          "ICBF REGIONAL CASANARE",
+          "ICBF REGIONAL CAUCA",
+          "ICBF REGIONAL CESAR",
+          "ICBF REGIONAL CHOCO",
+          "ICBF REGIONAL CORDOBA",
+          "ICBF REGIONAL CUNDINAMARCA",
+          "ICBF REGIONAL GUAINIA",
+          "ICBF REGIONAL GUAJIRA",
+          "ICBF REGIONAL GUAVIARE",
+          "ICBF REGIONAL HUILA",
+          "ICBF REGIONAL MAGDALENA",
+          "ICBF REGIONAL META",
+          "ICBF REGIONAL NARIÑO",
+          "ICBF REGIONAL NORTE DE SANTANDER",
+          "ICBF REGIONAL PUTUMAYO",
+          "ICBF REGIONAL QUINDIO",
+          "ICBF REGIONAL SAN ANDRES",
+          "ICBF REGIONAL SANTANDER",
+          "ICBF REGIONAL SUCRE",
+          "ICBF REGIONAL TOLIMA",
+          "ICBF REGIONAL VALLE DEL CAUCA",
+          "ICBF REGIONAL VAUPES",
+          "ICBF REGIONAL VICHADA",
+          "ICBF RISARALDA//",
+          "ICBF SEDE NACIONAL",
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA"
+        ],
+        "forms_reached_count": 33,
+        "nits_reached": [
+          "899999239",
+          "8999992391",
+          "8999992392"
+        ],
+        "like_rows": 120869,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 1549.3
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "projection_mode": "official_names",
+        "like_where": "(entidad = 'ICBF SEDE NACIONAL' OR entidad = 'ICBF REGIONAL AMAZONAS' OR entidad = 'ICBF REGIONAL ANTIOQUIA' OR entidad = 'ICBF REGIONAL ARAUCA *' OR entidad = 'ICBF REGIONAL ATLANTICO' OR entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR entidad = 'ICBF REGIONAL CALDAS' OR entidad = 'ICBF REGIONAL CAQUETA' OR entidad = 'ICBF REGIONAL CASANARE' OR entidad = 'ICBF REGIONAL CAUCA' OR entidad = 'ICBF REGIONAL CESAR' OR entidad = 'ICBF REGIONAL CHOCO' OR entidad = 'ICBF REGIONAL CORDOBA' OR entidad = 'ICBF REGIONAL CUNDINAMARCA' OR entidad = 'ICBF REGIONAL GUAINIA' OR entidad = 'ICBF REGIONAL GUAVIARE' OR entidad = 'ICBF REGIONAL HUILA' OR entidad = 'ICBF REGIONAL GUAJIRA' OR entidad = 'ICBF REGIONAL MAGDALENA' OR entidad = 'ICBF REGIONAL META' OR entidad = 'ICBF REGIONAL NARIÑO' OR entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR entidad = 'ICBF REGIONAL PUTUMAYO' OR entidad = 'ICBF REGIONAL QUINDIO' OR entidad = 'ICBF RISARALDA//' OR entidad = 'ICBF REGIONAL SAN ANDRES' OR entidad = 'ICBF REGIONAL SANTANDER' OR entidad = 'ICBF REGIONAL SUCRE' OR entidad = 'ICBF REGIONAL TOLIMA' OR entidad = 'ICBF REGIONAL VAUPES' OR entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR entidad = 'ICBF REGIONAL VICHADA')",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ICBF REGIONAL AMAZONAS",
+            "nit": "899999239",
+            "rows": 1269
+          },
+          {
+            "name": "ICBF REGIONAL ANTIOQUIA",
+            "nit": "899999239",
+            "rows": 9211
+          },
+          {
+            "name": "ICBF REGIONAL ARAUCA *",
+            "nit": "899999239",
+            "rows": 1653
+          },
+          {
+            "name": "ICBF REGIONAL ATLANTICO",
+            "nit": "8999992392",
+            "rows": 4396
+          },
+          {
+            "name": "ICBF REGIONAL CALDAS",
+            "nit": "899999239",
+            "rows": 2969
+          },
+          {
+            "name": "ICBF REGIONAL CAQUETA",
+            "nit": "899999239",
+            "rows": 2304
+          },
+          {
+            "name": "ICBF REGIONAL CASANARE",
+            "nit": "899999239",
+            "rows": 1718
+          },
+          {
+            "name": "ICBF REGIONAL CAUCA",
+            "nit": "899999239",
+            "rows": 4417
+          },
+          {
+            "name": "ICBF REGIONAL CESAR",
+            "nit": "899999239",
+            "rows": 2594
+          },
+          {
+            "name": "ICBF REGIONAL CHOCO",
+            "nit": "899999239",
+            "rows": 3328
+          },
+          {
+            "name": "ICBF REGIONAL CORDOBA",
+            "nit": "899999239",
+            "rows": 3820
+          },
+          {
+            "name": "ICBF REGIONAL CUNDINAMARCA",
+            "nit": "899999239",
+            "rows": 4915
+          },
+          {
+            "name": "ICBF REGIONAL GUAINIA",
+            "nit": "899999239",
+            "rows": 841
+          },
+          {
+            "name": "ICBF REGIONAL GUAJIRA",
+            "nit": "899999239",
+            "rows": 4978
+          },
+          {
+            "name": "ICBF REGIONAL GUAVIARE",
+            "nit": "899999239",
+            "rows": 1053
+          },
+          {
+            "name": "ICBF REGIONAL HUILA",
+            "nit": "899999239",
+            "rows": 3203
+          },
+          {
+            "name": "ICBF REGIONAL MAGDALENA",
+            "nit": "899999239",
+            "rows": 3535
+          },
+          {
+            "name": "ICBF REGIONAL META",
+            "nit": "899999239",
+            "rows": 2454
+          },
+          {
+            "name": "ICBF REGIONAL NARIÑO",
+            "nit": "899999239",
+            "rows": 4917
+          },
+          {
+            "name": "ICBF REGIONAL NORTE DE SANTANDER",
+            "nit": "899999239",
+            "rows": 3517
+          },
+          {
+            "name": "ICBF REGIONAL PUTUMAYO",
+            "nit": "899999239",
+            "rows": 1887
+          },
+          {
+            "name": "ICBF REGIONAL QUINDIO",
+            "nit": "899999239",
+            "rows": 2084
+          },
+          {
+            "name": "ICBF REGIONAL SAN ANDRES",
+            "nit": "899999239",
+            "rows": 877
+          },
+          {
+            "name": "ICBF REGIONAL SANTANDER",
+            "nit": "8999992391",
+            "rows": 4789
+          },
+          {
+            "name": "ICBF REGIONAL SUCRE",
+            "nit": "899999239",
+            "rows": 2593
+          },
+          {
+            "name": "ICBF REGIONAL TOLIMA",
+            "nit": "899999239",
+            "rows": 4043
+          },
+          {
+            "name": "ICBF REGIONAL VALLE DEL CAUCA",
+            "nit": "899999239",
+            "rows": 7738
+          },
+          {
+            "name": "ICBF REGIONAL VAUPES",
+            "nit": "899999239",
+            "rows": 923
+          },
+          {
+            "name": "ICBF REGIONAL VICHADA",
+            "nit": "899999239",
+            "rows": 1044
+          },
+          {
+            "name": "ICBF RISARALDA//",
+            "nit": "899999239",
+            "rows": 2230
+          },
+          {
+            "name": "ICBF SEDE NACIONAL",
+            "nit": "899999239",
+            "rows": 17568
+          },
+          {
+            "name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+            "nit": "899999239",
+            "rows": 5399
+          },
+          {
+            "name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+            "nit": "899999239",
+            "rows": 3669
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 121936
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "projection_mode": "official_names",
+        "like_where": "(nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA')",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ICBF REGIONAL AMAZONAS",
+            "nit": "899999239",
+            "rows": 1160
+          },
+          {
+            "name": "ICBF REGIONAL ANTIOQUIA",
+            "nit": "899999239",
+            "rows": 9223
+          },
+          {
+            "name": "ICBF REGIONAL ARAUCA *",
+            "nit": "899999239",
+            "rows": 1558
+          },
+          {
+            "name": "ICBF REGIONAL ATLANTICO",
+            "nit": "8999992392",
+            "rows": 4272
+          },
+          {
+            "name": "ICBF REGIONAL CALDAS",
+            "nit": "899999239",
+            "rows": 2843
+          },
+          {
+            "name": "ICBF REGIONAL CAQUETA",
+            "nit": "899999239",
+            "rows": 2140
+          },
+          {
+            "name": "ICBF REGIONAL CASANARE",
+            "nit": "899999239",
+            "rows": 1689
+          },
+          {
+            "name": "ICBF REGIONAL CAUCA",
+            "nit": "899999239",
+            "rows": 4665
+          },
+          {
+            "name": "ICBF REGIONAL CESAR",
+            "nit": "899999239",
+            "rows": 3381
+          },
+          {
+            "name": "ICBF REGIONAL CHOCO",
+            "nit": "899999239",
+            "rows": 3512
+          },
+          {
+            "name": "ICBF REGIONAL CORDOBA",
+            "nit": "899999239",
+            "rows": 3713
+          },
+          {
+            "name": "ICBF REGIONAL CUNDINAMARCA",
+            "nit": "899999239",
+            "rows": 4965
+          },
+          {
+            "name": "ICBF REGIONAL GUAINIA",
+            "nit": "899999239",
+            "rows": 743
+          },
+          {
+            "name": "ICBF REGIONAL GUAJIRA",
+            "nit": "899999239",
+            "rows": 4728
+          },
+          {
+            "name": "ICBF REGIONAL GUAVIARE",
+            "nit": "899999239",
+            "rows": 965
+          },
+          {
+            "name": "ICBF REGIONAL HUILA",
+            "nit": "899999239",
+            "rows": 3148
+          },
+          {
+            "name": "ICBF REGIONAL MAGDALENA",
+            "nit": "899999239",
+            "rows": 3487
+          },
+          {
+            "name": "ICBF REGIONAL META",
+            "nit": "899999239",
+            "rows": 2926
+          },
+          {
+            "name": "ICBF REGIONAL NARIÑO",
+            "nit": "899999239",
+            "rows": 4961
+          },
+          {
+            "name": "ICBF REGIONAL NORTE DE SANTANDER",
+            "nit": "899999239",
+            "rows": 3923
+          },
+          {
+            "name": "ICBF REGIONAL PUTUMAYO",
+            "nit": "899999239",
+            "rows": 1774
+          },
+          {
+            "name": "ICBF REGIONAL QUINDIO",
+            "nit": "899999239",
+            "rows": 1985
+          },
+          {
+            "name": "ICBF REGIONAL SAN ANDRES",
+            "nit": "899999239",
+            "rows": 791
+          },
+          {
+            "name": "ICBF REGIONAL SANTANDER",
+            "nit": "8999992391",
+            "rows": 4788
+          },
+          {
+            "name": "ICBF REGIONAL SUCRE",
+            "nit": "899999239",
+            "rows": 2830
+          },
+          {
+            "name": "ICBF REGIONAL TOLIMA",
+            "nit": "899999239",
+            "rows": 4176
+          },
+          {
+            "name": "ICBF REGIONAL VALLE DEL CAUCA",
+            "nit": "899999239",
+            "rows": 7633
+          },
+          {
+            "name": "ICBF REGIONAL VAUPES",
+            "nit": "899999239",
+            "rows": 812
+          },
+          {
+            "name": "ICBF REGIONAL VICHADA",
+            "nit": "899999239",
+            "rows": 954
+          },
+          {
+            "name": "ICBF RISARALDA//",
+            "nit": "899999239",
+            "rows": 2404
+          },
+          {
+            "name": "ICBF SEDE NACIONAL",
+            "nit": "899999239",
+            "rows": 15736
+          },
+          {
+            "name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+            "nit": "899999239",
+            "rows": 5335
+          },
+          {
+            "name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+            "nit": "899999239",
+            "rows": 3649
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 120869
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

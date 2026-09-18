@@ -1,0 +1,840 @@
+{
+  "record": {
+    "canonical_name": "ESE CENTRO",
+    "canonical_hash": "af4390ae39eaeca9",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 11,
+    "started_at": "2026-09-18T07:08:00.158877+00:00",
+    "finished_at": "2026-09-18T07:08:13.697758+00:00",
+    "status": "AMBIGUOUS_IDENTITY",
+    "status_reasons": [
+      "evidencia física apunta a 56 identidades: 800247350, 802006991, 802009463, 804005182, 804007078, 804007611, 804008273, 804010718, 804014637, 804014810, 804014835, 804015164, 805027261, 8060110871, 806012905, 806014499, 807002015, 813006877, 819004503, 820000857, 820002248, 820002715, 8200029165, 8200032915, 820003328, 820003404, 820003444, 8200035167, 8200035246, 820003550, 820003571, 820003580, 820003619, 820003632, 820003839, 820003876, 820003915, 823001035, 823001901, 8230020449, 826002625, 826002660, 8260026764, 826002687, 829003945, 832009187, 832010240, 900127853, 900134497, 900134576, 900135676, 900142446, 900160887, 900206237, 900208755, 900283194"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ESE CENTRO%'))",
+        "forms_reached": [
+          "ESE CENTRO",
+          "ESE CENTRO DE REHABILITACION CARDIONEUROMUSCULAR DE NORTE DE SANTANDER",
+          "ESE CENTRO DE SALUD BUENAVISTA",
+          "ESE CENTRO DE SALUD CAMILO HURTADO CIFUENTES",
+          "ESE CENTRO DE SALUD CAMILO RUEDA DE VILLANUEVA",
+          "ESE CENTRO DE SALUD CON CAMA**",
+          "ESE CENTRO DE SALUD CON CAMAS DE CORDOBA BOLIVAR",
+          "ESE CENTRO DE SALUD CON CAMAS DE LA CABECERA MUNICIPAL EL PEÑON BOL",
+          "ESE CENTRO DE SALUD DE CHITARAQUE",
+          "ESE CENTRO DE SALUD DE COLOSO",
+          "ESE CENTRO DE SALUD DE CUCUNUBA",
+          "ESE CENTRO DE SALUD DE MACANAL",
+          "ESE CENTRO DE SALUD DE MOTAVITA",
+          "ESE CENTRO DE SALUD DE TOCA",
+          "ESE CENTRO DE SALUD DE TUBARA",
+          "ESE CENTRO DE SALUD DE ZAPAYAN",
+          "ESE CENTRO DE SALUD DE ZETAQUIRA",
+          "ESE CENTRO DE SALUD DEL MUNICIPIO DE FIRAVITOBA",
+          "ESE CENTRO DE SALUD EDGAR ALONSO PULIDO SOLANO",
+          "ESE CENTRO DE SALUD HECTOR PINEDA GALLO SUSACON BOYACA//",
+          "ESE CENTRO DE SALUD INMACULADA CONCEPCIÓN DE GALERAS",
+          "ESE CENTRO DE SALUD JAIME MICHEL",
+          "ESE CENTRO DE SALUD JORGE GONZALEZ OLMOS",
+          "ESE CENTRO DE SALUD JUAN SOLERI (Entidad)",
+          "ESE CENTRO DE SALUD LOS ANDES",
+          "ESE CENTRO DE SALUD LUIS LANCHEROS",
+          "ESE CENTRO DE SALUD MAJAGUAL",
+          "ESE CENTRO DE SALUD MUNICIPIO DE LABRANZAGRANDE",
+          "ESE CENTRO DE SALUD MUNICIPIO DEL PARAMO",
+          "ESE CENTRO DE SALUD NUESTRA SEÑORA DE BELEN",
+          "ESE CENTRO DE SALUD NUESTRA SEÑORA DE FÁTIMA",
+          "ESE CENTRO DE SALUD NUESTRA SEÑORA DE GUADALUPE",
+          "ESE CENTRO DE SALUD NUESTRA SEÑORA DE LA ESPERANZA - MOLOGAVITA",
+          "ESE CENTRO DE SALUD NUESTRA SEÑORA DEL CARMEN DE VETAS",
+          "ESE CENTRO DE SALUD NUEVO COLON",
+          "ESE CENTRO DE SALUD PUERTO PARRA",
+          "ESE CENTRO DE SALUD RAFAEL SALGADO DE MARIPI .",
+          "ESE CENTRO DE SALUD SAN ANTONIO DE PALMITO",
+          "ESE CENTRO DE SALUD SAN BERNARDO",
+          "ESE CENTRO DE SALUD SAN BLAS DE TINJACA",
+          "ESE CENTRO DE SALUD SAN FRANCISCO DE SALES",
+          "ESE CENTRO DE SALUD SAN JOSE DE NIMAIMA",
+          "ESE CENTRO DE SALUD SAN JOSE DE SAN MARCOS SUCRE",
+          "ESE CENTRO DE SALUD SAN JUAN DE DIOS DEL PITAL HUILA",
+          "ESE CENTRO DE SALUD SAN PEDRO DE CABRERA",
+          "ESE CENTRO DE SALUD SAN RAFAEL - RONDON",
+          "ESE CENTRO DE SALUD SAN ROQUE DE GUEPSA SANTANDER",
+          "ESE CENTRO DE SALUD SANTA BARBARA",
+          "ESE CENTRO DE SALUD SANTA BARBARA TUNUNGUA",
+          "ESE CENTRO DE SALUD SANTA LUCIA ATLÁNTICO",
+          "ESE CENTRO DE SALUD SANTANA",
+          "ESE CENTRO DE SALUD SANTO ECCEHOMO",
+          "ESE CENTRO DERMATOLOGICO FEDERICO LLERAS ACOSTA",
+          "ESE CENTRO HOSPITAL LAS MERCEDES",
+          "ESE CENTRO SALUD DE VENTAQUEMADA",
+          "Ese Centro de Salud San Miguel"
+        ],
+        "forms_reached_count": 56,
+        "nits_reached": [
+          "800247350",
+          "802006991",
+          "802009463",
+          "804005182",
+          "804007078",
+          "804007611",
+          "804008273",
+          "804010718",
+          "804014637",
+          "804014810",
+          "804014835",
+          "804015164",
+          "805027261",
+          "8060110871",
+          "806012905",
+          "806014499",
+          "807002015",
+          "813006877",
+          "819004503",
+          "820000857",
+          "820002248",
+          "820002715",
+          "8200029165",
+          "8200032915",
+          "820003328",
+          "820003404",
+          "820003444",
+          "8200035167",
+          "8200035246",
+          "820003550",
+          "820003571",
+          "820003580",
+          "820003619",
+          "820003632",
+          "820003839",
+          "820003876",
+          "820003915",
+          "823001035",
+          "823001901",
+          "8230020449",
+          "826002625",
+          "826002660",
+          "8260026764",
+          "826002687",
+          "829003945",
+          "832009187",
+          "832010240",
+          "900127853",
+          "900134497",
+          "900134576",
+          "900135676",
+          "900142446",
+          "900160887",
+          "900206237",
+          "900208755",
+          "900283194"
+        ],
+        "like_rows": 51195,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ESE CENTRO%'))",
+        "forms_reached": [
+          "ESE CENTRO",
+          "ESE CENTRO DE REHABILITACION CARDIONEUROMUSCULAR DE NORTE DE SANTANDER",
+          "ESE CENTRO DE SALUD BUENAVISTA",
+          "ESE CENTRO DE SALUD CAMILO HURTADO CIFUENTES",
+          "ESE CENTRO DE SALUD CAMILO RUEDA DE VILLANUEVA",
+          "ESE CENTRO DE SALUD CON CAMAS DE CORDOBA BOLIVAR",
+          "ESE CENTRO DE SALUD DE CHITARAQUE",
+          "ESE CENTRO DE SALUD DE COLOSO",
+          "ESE CENTRO DE SALUD DE CUCUNUBA",
+          "ESE CENTRO DE SALUD DE MACANAL",
+          "ESE CENTRO DE SALUD DE MOTAVITA",
+          "ESE CENTRO DE SALUD DE TOCA",
+          "ESE CENTRO DE SALUD DE TUBARA",
+          "ESE CENTRO DE SALUD DE ZAPAYAN",
+          "ESE CENTRO DE SALUD DE ZETAQUIRA",
+          "ESE CENTRO DE SALUD DEL MUNICIPIO DE FIRAVITOBA",
+          "ESE CENTRO DE SALUD EDGAR ALONSO PULIDO SOLANO",
+          "ESE CENTRO DE SALUD HECTOR PINEDA GALLO SUSACON BOYACA//",
+          "ESE CENTRO DE SALUD JAIME MICHEL",
+          "ESE CENTRO DE SALUD JORGE GONZALEZ OLMOS",
+          "ESE CENTRO DE SALUD JUAN SOLERI (Entidad)",
+          "ESE CENTRO DE SALUD LUIS LANCHEROS",
+          "ESE CENTRO DE SALUD MAJAGUAL",
+          "ESE CENTRO DE SALUD MUNICIPIO DE LABRANZAGRANDE",
+          "ESE CENTRO DE SALUD MUNICIPIO DEL PARAMO",
+          "ESE CENTRO DE SALUD NUESTRA SEÑORA DE BELEN",
+          "ESE CENTRO DE SALUD NUESTRA SEÑORA DE GUADALUPE",
+          "ESE CENTRO DE SALUD NUESTRA SEÑORA DE LA ESPERANZA - MOLOGAVITA",
+          "ESE CENTRO DE SALUD NUESTRA SEÑORA DEL CARMEN DE VETAS",
+          "ESE CENTRO DE SALUD NUEVO COLON",
+          "ESE CENTRO DE SALUD PUERTO PARRA",
+          "ESE CENTRO DE SALUD RAFAEL SALGADO DE MARIPI .",
+          "ESE CENTRO DE SALUD SAN BLAS DE TINJACA",
+          "ESE CENTRO DE SALUD SAN FRANCISCO DE SALES",
+          "ESE CENTRO DE SALUD SAN JOSE DE NIMAIMA",
+          "ESE CENTRO DE SALUD SAN JOSE DE SAN MARCOS SUCRE",
+          "ESE CENTRO DE SALUD SAN JUAN DE DIOS DEL PITAL HUILA",
+          "ESE CENTRO DE SALUD SAN PEDRO DE CABRERA",
+          "ESE CENTRO DE SALUD SAN RAFAEL - RONDON",
+          "ESE CENTRO DE SALUD SAN ROQUE DE GUEPSA SANTANDER",
+          "ESE CENTRO DE SALUD SANTA BARBARA",
+          "ESE CENTRO DE SALUD SANTA LUCIA ATLÁNTICO",
+          "ESE CENTRO DE SALUD SANTANA",
+          "ESE CENTRO DE SALUD SANTO ECCEHOMO",
+          "ESE CENTRO DERMATOLOGICO FEDERICO LLERAS ACOSTA",
+          "ESE CENTRO HOSPITAL LAS MERCEDES",
+          "ESE CENTRO SALUD DE VENTAQUEMADA",
+          "Ese Centro de Salud San Miguel"
+        ],
+        "forms_reached_count": 48,
+        "nits_reached": [
+          "800247350",
+          "802006991",
+          "802009463",
+          "804005182",
+          "804007078",
+          "804007611",
+          "804008273",
+          "804010718",
+          "804014637",
+          "804014810",
+          "804014835",
+          "804015164",
+          "805027261",
+          "806012905",
+          "807002015",
+          "813006877",
+          "819004503",
+          "820000857",
+          "820002248",
+          "820002715",
+          "8200029165",
+          "8200032915",
+          "820003328",
+          "820003404",
+          "820003444",
+          "8200035167",
+          "8200035246",
+          "820003550",
+          "820003571",
+          "820003580",
+          "820003619",
+          "820003632",
+          "820003876",
+          "820003915",
+          "823001035",
+          "8230020449",
+          "826002625",
+          "826002660",
+          "8260026764",
+          "826002687",
+          "829003945",
+          "832009187",
+          "832010240",
+          "900127853",
+          "900135676",
+          "900160887",
+          "900206237",
+          "900283194"
+        ],
+        "like_rows": 3128,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 13524.6
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ESE CENTRO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ESE CENTRO",
+            "nit": "805027261",
+            "rows": 6638
+          },
+          {
+            "name": "ESE CENTRO DE REHABILITACION CARDIONEUROMUSCULAR DE NORTE DE SANTANDER",
+            "nit": "807002015",
+            "rows": 511
+          },
+          {
+            "name": "ESE CENTRO DERMATOLOGICO FEDERICO LLERAS ACOSTA",
+            "nit": "800247350",
+            "rows": 702
+          },
+          {
+            "name": "ESE CENTRO DE SALUD BUENAVISTA",
+            "nit": "820003550",
+            "rows": 415
+          },
+          {
+            "name": "ESE CENTRO DE SALUD CAMILO HURTADO CIFUENTES",
+            "nit": "900127853",
+            "rows": 3154
+          },
+          {
+            "name": "ESE CENTRO DE SALUD CAMILO RUEDA DE VILLANUEVA",
+            "nit": "804005182",
+            "rows": 883
+          },
+          {
+            "name": "ESE CENTRO DE SALUD CON CAMA**",
+            "nit": "806014499",
+            "rows": 329
+          },
+          {
+            "name": "ESE CENTRO DE SALUD CON CAMAS DE CORDOBA BOLIVAR",
+            "nit": "806012905",
+            "rows": 1409
+          },
+          {
+            "name": "ESE CENTRO DE SALUD CON CAMAS DE LA CABECERA MUNICIPAL EL PEÑON BOL",
+            "nit": "8060110871",
+            "rows": 732
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE CHITARAQUE",
+            "nit": "820003580",
+            "rows": 79
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE COLOSO",
+            "nit": "900206237",
+            "rows": 693
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE CUCUNUBA",
+            "nit": "832010240",
+            "rows": 606
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DEL MUNICIPIO DE FIRAVITOBA",
+            "nit": "8260026764",
+            "rows": 237
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE MACANAL",
+            "nit": "820000857",
+            "rows": 364
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE MOTAVITA",
+            "nit": "820003404",
+            "rows": 410
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE TOCA",
+            "nit": "8200035246",
+            "rows": 557
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE TUBARA",
+            "nit": "802009463",
+            "rows": 1677
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE ZAPAYAN",
+            "nit": "819004503",
+            "rows": 1286
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE ZETAQUIRA",
+            "nit": "820002715",
+            "rows": 483
+          },
+          {
+            "name": "ESE CENTRO DE SALUD EDGAR ALONSO PULIDO SOLANO",
+            "nit": "8200029165",
+            "rows": 468
+          },
+          {
+            "name": "ESE CENTRO DE SALUD HECTOR PINEDA GALLO SUSACON BOYACA//",
+            "nit": "826002625",
+            "rows": 398
+          },
+          {
+            "name": "ESE CENTRO DE SALUD INMACULADA CONCEPCIÓN DE GALERAS",
+            "nit": "823001901",
+            "rows": 232
+          },
+          {
+            "name": "ESE CENTRO DE SALUD JAIME MICHEL",
+            "nit": "804010718",
+            "rows": 321
+          },
+          {
+            "name": "ESE CENTRO DE SALUD JORGE GONZALEZ OLMOS",
+            "nit": "820003915",
+            "rows": 303
+          },
+          {
+            "name": "ESE CENTRO DE SALUD JUAN SOLERI (Entidad)",
+            "nit": "804007611",
+            "rows": 356
+          },
+          {
+            "name": "ESE CENTRO DE SALUD LOS ANDES",
+            "nit": "900142446",
+            "rows": 2199
+          },
+          {
+            "name": "ESE CENTRO DE SALUD LUIS LANCHEROS",
+            "nit": "820003571",
+            "rows": 374
+          },
+          {
+            "name": "ESE CENTRO DE SALUD MAJAGUAL",
+            "nit": "8230020449",
+            "rows": 1922
+          },
+          {
+            "name": "ESE CENTRO DE SALUD MUNICIPIO DE LABRANZAGRANDE",
+            "nit": "826002687",
+            "rows": 581
+          },
+          {
+            "name": "ESE CENTRO DE SALUD MUNICIPIO DEL PARAMO",
+            "nit": "804014835",
+            "rows": 316
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUESTRA SEÑORA DE BELEN",
+            "nit": "826002660",
+            "rows": 349
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUESTRA SEÑORA DE FÁTIMA",
+            "nit": "900134497",
+            "rows": 2128
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUESTRA SEÑORA DE GUADALUPE",
+            "nit": "8200035167",
+            "rows": 432
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUESTRA SEÑORA DE LA ESPERANZA - MOLOGAVITA",
+            "nit": "804014810",
+            "rows": 409
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUESTRA SEÑORA DEL CARMEN DE VETAS",
+            "nit": "804007078",
+            "rows": 318
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUEVO COLON",
+            "nit": "820003328",
+            "rows": 357
+          },
+          {
+            "name": "ESE CENTRO DE SALUD PUERTO PARRA",
+            "nit": "829003945",
+            "rows": 636
+          },
+          {
+            "name": "ESE CENTRO DE SALUD RAFAEL SALGADO DE MARIPI .",
+            "nit": "8200032915",
+            "rows": 431
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN ANTONIO DE PALMITO",
+            "nit": "900208755",
+            "rows": 844
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN BERNARDO",
+            "nit": "900134576",
+            "rows": 1099
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN BLAS DE TINJACA",
+            "nit": "820003619",
+            "rows": 406
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN FRANCISCO DE SALES",
+            "nit": "900283194",
+            "rows": 1602
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN JOSE DE NIMAIMA",
+            "nit": "832009187",
+            "rows": 735
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN JOSE DE SAN MARCOS SUCRE",
+            "nit": "823001035",
+            "rows": 3750
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN JUAN DE DIOS DEL PITAL HUILA",
+            "nit": "813006877",
+            "rows": 1373
+          },
+          {
+            "name": "Ese Centro de Salud San Miguel",
+            "nit": "900135676",
+            "rows": 1602
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN PEDRO DE CABRERA",
+            "nit": "804014637",
+            "rows": 289
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN RAFAEL - RONDON",
+            "nit": "820003444",
+            "rows": 260
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN ROQUE DE GUEPSA SANTANDER",
+            "nit": "804015164",
+            "rows": 409
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SANTA BARBARA",
+            "nit": "804008273",
+            "rows": 356
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SANTA BARBARA TUNUNGUA",
+            "nit": "820003839",
+            "rows": 308
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SANTA LUCIA ATLÁNTICO",
+            "nit": "802006991",
+            "rows": 1170
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SANTANA",
+            "nit": "820003632",
+            "rows": 679
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SANTO ECCEHOMO",
+            "nit": "820003876",
+            "rows": 395
+          },
+          {
+            "name": "ESE CENTRO HOSPITAL LAS MERCEDES",
+            "nit": "900160887",
+            "rows": 1745
+          },
+          {
+            "name": "ESE CENTRO SALUD DE VENTAQUEMADA",
+            "nit": "820002248",
+            "rows": 478
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 51195
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ESE CENTRO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ESE CENTRO",
+            "nit": "805027261",
+            "rows": 5
+          },
+          {
+            "name": "ESE CENTRO DE REHABILITACION CARDIONEUROMUSCULAR DE NORTE DE SANTANDER",
+            "nit": "807002015",
+            "rows": 3
+          },
+          {
+            "name": "ESE CENTRO DERMATOLOGICO FEDERICO LLERAS ACOSTA",
+            "nit": "800247350",
+            "rows": 1
+          },
+          {
+            "name": "ESE CENTRO DE SALUD BUENAVISTA",
+            "nit": "820003550",
+            "rows": 7
+          },
+          {
+            "name": "ESE CENTRO DE SALUD CAMILO HURTADO CIFUENTES",
+            "nit": "900127853",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD CAMILO RUEDA DE VILLANUEVA",
+            "nit": "804005182",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD CON CAMAS DE CORDOBA BOLIVAR",
+            "nit": "806012905",
+            "rows": 1
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE CHITARAQUE",
+            "nit": "820003580",
+            "rows": 3
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE COLOSO",
+            "nit": "900206237",
+            "rows": 651
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE CUCUNUBA",
+            "nit": "832010240",
+            "rows": 85
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DEL MUNICIPIO DE FIRAVITOBA",
+            "nit": "8260026764",
+            "rows": 4
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE MACANAL",
+            "nit": "820000857",
+            "rows": 1
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE MOTAVITA",
+            "nit": "820003404",
+            "rows": 3
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE TOCA",
+            "nit": "8200035246",
+            "rows": 79
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE TUBARA",
+            "nit": "802009463",
+            "rows": 6
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE ZAPAYAN",
+            "nit": "819004503",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD DE ZETAQUIRA",
+            "nit": "820002715",
+            "rows": 505
+          },
+          {
+            "name": "ESE CENTRO DE SALUD EDGAR ALONSO PULIDO SOLANO",
+            "nit": "8200029165",
+            "rows": 10
+          },
+          {
+            "name": "ESE CENTRO DE SALUD HECTOR PINEDA GALLO SUSACON BOYACA//",
+            "nit": "826002625",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD JAIME MICHEL",
+            "nit": "804010718",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD JORGE GONZALEZ OLMOS",
+            "nit": "820003915",
+            "rows": 63
+          },
+          {
+            "name": "ESE CENTRO DE SALUD JUAN SOLERI (Entidad)",
+            "nit": "804007611",
+            "rows": 372
+          },
+          {
+            "name": "ESE CENTRO DE SALUD LUIS LANCHEROS",
+            "nit": "820003571",
+            "rows": 4
+          },
+          {
+            "name": "ESE CENTRO DE SALUD MAJAGUAL",
+            "nit": "8230020449",
+            "rows": 1
+          },
+          {
+            "name": "ESE CENTRO DE SALUD MUNICIPIO DE LABRANZAGRANDE",
+            "nit": "826002687",
+            "rows": 3
+          },
+          {
+            "name": "ESE CENTRO DE SALUD MUNICIPIO DEL PARAMO",
+            "nit": "804014835",
+            "rows": 3
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUESTRA SEÑORA DE BELEN",
+            "nit": "826002660",
+            "rows": 11
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUESTRA SEÑORA DE GUADALUPE",
+            "nit": "8200035167",
+            "rows": 3
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUESTRA SEÑORA DE LA ESPERANZA - MOLOGAVITA",
+            "nit": "804014810",
+            "rows": 10
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUESTRA SEÑORA DEL CARMEN DE VETAS",
+            "nit": "804007078",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD NUEVO COLON",
+            "nit": "820003328",
+            "rows": 180
+          },
+          {
+            "name": "ESE CENTRO DE SALUD PUERTO PARRA",
+            "nit": "829003945",
+            "rows": 19
+          },
+          {
+            "name": "ESE CENTRO DE SALUD RAFAEL SALGADO DE MARIPI .",
+            "nit": "8200032915",
+            "rows": 7
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN BLAS DE TINJACA",
+            "nit": "820003619",
+            "rows": 63
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN FRANCISCO DE SALES",
+            "nit": "900283194",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN JOSE DE NIMAIMA",
+            "nit": "832009187",
+            "rows": 198
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN JOSE DE SAN MARCOS SUCRE",
+            "nit": "823001035",
+            "rows": 5
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN JUAN DE DIOS DEL PITAL HUILA",
+            "nit": "813006877",
+            "rows": 6
+          },
+          {
+            "name": "Ese Centro de Salud San Miguel",
+            "nit": "900135676",
+            "rows": 264
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN PEDRO DE CABRERA",
+            "nit": "804014637",
+            "rows": 12
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN RAFAEL - RONDON",
+            "nit": "820003444",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SAN ROQUE DE GUEPSA SANTANDER",
+            "nit": "804015164",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SANTA BARBARA",
+            "nit": "804008273",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SANTA LUCIA ATLÁNTICO",
+            "nit": "802006991",
+            "rows": 485
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SANTANA",
+            "nit": "820003632",
+            "rows": 24
+          },
+          {
+            "name": "ESE CENTRO DE SALUD SANTO ECCEHOMO",
+            "nit": "820003876",
+            "rows": 4
+          },
+          {
+            "name": "ESE CENTRO HOSPITAL LAS MERCEDES",
+            "nit": "900160887",
+            "rows": 2
+          },
+          {
+            "name": "ESE CENTRO SALUD DE VENTAQUEMADA",
+            "nit": "820002248",
+            "rows": 5
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 3128
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "record": {
+    "canonical_name": "INSTITUTO DE DESARROLLO URBANO",
+    "canonical_hash": "4a19ef76317c9ef2",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 20,
+    "started_at": "2026-09-18T07:33:32.507629+00:00",
+    "finished_at": "2026-09-18T07:33:54.923789+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 899999081"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%INSTITUTO DE DESARROLLO URBANO%'))",
+        "forms_reached": [
+          "INSTITUTO DE DESARROLLO URBANO"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "899999081"
+        ],
+        "like_rows": 16374,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%INSTITUTO DE DESARROLLO URBANO%'))",
+        "forms_reached": [
+          "INSTITUTO DE DESARROLLO URBANO"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "899999081"
+        ],
+        "like_rows": 14709,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 22415.7
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%INSTITUTO DE DESARROLLO URBANO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "INSTITUTO DE DESARROLLO URBANO",
+            "nit": "899999081",
+            "rows": 16374
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 16374
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%INSTITUTO DE DESARROLLO URBANO%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "INSTITUTO DE DESARROLLO URBANO",
+            "nit": "899999081",
+            "rows": 14709
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 14709
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

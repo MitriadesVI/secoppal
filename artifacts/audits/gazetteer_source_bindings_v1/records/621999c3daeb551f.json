@@ -1,0 +1,198 @@
+{
+  "record": {
+    "canonical_name": "ICBF REGIONAL VICHADA",
+    "canonical_hash": "621999c3daeb551f",
+    "kind": "buyer_unit",
+    "labels": [
+      "Vichada"
+    ],
+    "origin": [
+      "buyer_source_names",
+      "sidecar_identity",
+      "icbf_regionals"
+    ],
+    "aliases_count": 0,
+    "started_at": "2026-09-18T07:29:41.091071+00:00",
+    "finished_at": "2026-09-18T07:29:41.378459+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "BUYER_UNIT",
+      "value": "ICBF REGIONAL VICHADA",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": false
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "BUYER_UNIT:ICBF REGIONAL VICHADA",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL VICHADA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL VICHADA"
+        ]
+      },
+      "observed_at": "2026-09-03",
+      "observed_rows": {
+        "p6dx-8zbt": 1040,
+        "jbjy-vk9h": 950
+      },
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [
+      "icbf_national"
+    ],
+    "ecosystem": {
+      "family": "ICBF",
+      "role": "declared_unit",
+      "catalog": "app/data/icbf_regionals.json",
+      "department": "Vichada"
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ICBF REGIONAL VICHADA",
+            "nit": "899999239",
+            "rows": 1044
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 1044,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "ICBF REGIONAL VICHADA",
+            "nit": "899999239",
+            "rows": 954
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 954,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 287.1
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ICBF REGIONAL VICHADA",
+            "nit": "899999239",
+            "rows": 1044
+          }
+        ],
+        "bound_rows": 1044
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "ICBF REGIONAL VICHADA",
+            "nit": "899999239",
+            "rows": 954
+          }
+        ],
+        "bound_rows": 954
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "899999239"
+      ],
+      "jbjy-vk9h": [
+        "899999239"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "ICBF REGIONAL VICHADA"
+        ],
+        "present": [
+          "ICBF REGIONAL VICHADA"
+        ],
+        "rows": 1044
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "ICBF REGIONAL VICHADA"
+        ],
+        "present": [
+          "ICBF REGIONAL VICHADA"
+        ],
+        "rows": 954
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

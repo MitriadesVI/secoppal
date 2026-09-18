@@ -1,0 +1,215 @@
+{
+  "record": {
+    "canonical_name": "UNIVERSIDAD DE CÓRDOBA",
+    "canonical_hash": "6a733e80e63f9d0f",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db",
+      "buyer_source_names",
+      "sidecar_identity"
+    ],
+    "aliases_count": 1,
+    "started_at": "2026-09-18T07:56:19.939538+00:00",
+    "finished_at": "2026-09-18T07:56:20.590094+00:00",
+    "status": "ALREADY_BOUND_VERIFIED",
+    "status_reasons": [
+      "binding re-observado sin drift"
+    ],
+    "identity": {
+      "type": "NIT",
+      "value": "891080031",
+      "provenance": "app/data/buyer_source_names.json",
+      "accredited": true,
+      "discovery_capable": true
+    },
+    "already_bound": true,
+    "binding": {
+      "identity_key": "NIT:891080031",
+      "sources": {
+        "p6dx-8zbt": [
+          "UNIVERSIDAD DE CORDOBA"
+        ],
+        "jbjy-vk9h": [
+          "UNIVERSIDAD DE CORDOBA"
+        ]
+      },
+      "observed_at": "2026-09-02",
+      "observed_rows": {
+        "p6dx-8zbt": 3708,
+        "jbjy-vk9h": 2
+      },
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json"
+    },
+    "binding_status": "VERIFIED",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": true,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD DE CORDOBA",
+            "rows": 3753
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD DE CORDOBA",
+            "nit": "891080031",
+            "rows": 3753
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 3753,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_where": null,
+        "forms_reached": [],
+        "forms_reached_count": 0,
+        "nits_reached": [],
+        "like_rows": null,
+        "like_universe_complete": null,
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD DE CORDOBA",
+            "rows": 2
+          }
+        ],
+        "identity_forms_status": "OK",
+        "forms_not_reached_by_like": null,
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD DE CORDOBA",
+            "nit": "891080031",
+            "rows": 2
+          }
+        ],
+        "bound_status": "OK",
+        "bound_rows": 2,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 4,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 649.9
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD DE CORDOBA",
+            "rows": 3753
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD DE CORDOBA",
+            "nit": "891080031",
+            "rows": 3753
+          }
+        ],
+        "bound_rows": 3753
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_status": "SKIPPED_ALREADY_BOUND",
+        "like_universe": [],
+        "like_universe_complete": null,
+        "like_rows_grouped": null,
+        "like_where": null,
+        "identity_forms_status": "OK",
+        "identity_forms": [
+          {
+            "name": "UNIVERSIDAD DE CORDOBA",
+            "rows": 2
+          }
+        ],
+        "identity_forms_complete": true,
+        "bound_status": "OK",
+        "bound_universe": [
+          {
+            "name": "UNIVERSIDAD DE CORDOBA",
+            "nit": "891080031",
+            "rows": 2
+          }
+        ],
+        "bound_rows": 2
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "VERIFIED",
+    "missing_names": {},
+    "foreign_nits": {},
+    "observed_nits": {
+      "p6dx-8zbt": [
+        "891080031"
+      ],
+      "jbjy-vk9h": [
+        "891080031"
+      ]
+    },
+    "names_now": {
+      "p6dx-8zbt": {
+        "declared": [
+          "UNIVERSIDAD DE CORDOBA"
+        ],
+        "present": [
+          "UNIVERSIDAD DE CORDOBA"
+        ],
+        "rows": 3753
+      },
+      "jbjy-vk9h": {
+        "declared": [
+          "UNIVERSIDAD DE CORDOBA"
+        ],
+        "present": [
+          "UNIVERSIDAD DE CORDOBA"
+        ],
+        "rows": 2
+      }
+    },
+    "inconclusive_datasets": []
+  }
+}

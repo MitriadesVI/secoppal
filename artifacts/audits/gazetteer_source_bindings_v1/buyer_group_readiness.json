@@ -16,8 +16,19 @@
     "projected_names_after_review_contracts": 18,
     "would_exceed_max_group_names": false,
     "would_exceed_after_review": false,
+    "duplicated_source_names": {
+      "today": {
+        "p6dx-8zbt": [],
+        "jbjy-vk9h": []
+      },
+      "after_review": {
+        "p6dx-8zbt": [],
+        "jbjy-vk9h": []
+      }
+    },
+    "max_group_source_names": 40,
     "status": "READY_TODAY",
-    "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+    "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente. BLOCKED cubre también «no cabe» o «dos miembros reclaman el mismo nombre físico», que son condiciones de la autoridad de Buyer Groups."
   },
   "bogota_local_mayoralties": {
     "group_id": "bogota_local_mayoralties",
@@ -36,8 +47,19 @@
     "projected_names_after_review_contracts": 20,
     "would_exceed_max_group_names": false,
     "would_exceed_after_review": false,
+    "duplicated_source_names": {
+      "today": {
+        "p6dx-8zbt": [],
+        "jbjy-vk9h": []
+      },
+      "after_review": {
+        "p6dx-8zbt": [],
+        "jbjy-vk9h": []
+      }
+    },
+    "max_group_source_names": 40,
     "status": "READY_TODAY",
-    "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+    "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente. BLOCKED cubre también «no cabe» o «dos miembros reclaman el mismo nombre físico», que son condiciones de la autoridad de Buyer Groups."
   },
   "icbf_national": {
     "group_id": "icbf_national",
@@ -56,8 +78,19 @@
     "projected_names_after_review_contracts": 33,
     "would_exceed_max_group_names": false,
     "would_exceed_after_review": false,
+    "duplicated_source_names": {
+      "today": {
+        "p6dx-8zbt": [],
+        "jbjy-vk9h": []
+      },
+      "after_review": {
+        "p6dx-8zbt": [],
+        "jbjy-vk9h": []
+      }
+    },
+    "max_group_source_names": 40,
     "status": "READY_TODAY",
-    "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+    "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente. BLOCKED cubre también «no cabe» o «dos miembros reclaman el mismo nombre físico», que son condiciones de la autoridad de Buyer Groups."
   },
   "bogota_executive": {
     "group_id": "bogota_executive",
@@ -76,7 +109,18 @@
     "projected_names_after_review_contracts": 38,
     "would_exceed_max_group_names": false,
     "would_exceed_after_review": false,
+    "duplicated_source_names": {
+      "today": {
+        "p6dx-8zbt": [],
+        "jbjy-vk9h": []
+      },
+      "after_review": {
+        "p6dx-8zbt": [],
+        "jbjy-vk9h": []
+      }
+    },
+    "max_group_source_names": 40,
     "status": "READY_TODAY",
-    "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente."
+    "note": "Los candidatos NO son bindings productivos: READY_AFTER_REVIEW significa que el grupo quedaría completo si se adjudican y promueven individualmente. BLOCKED cubre también «no cabe» o «dos miembros reclaman el mismo nombre físico», que son condiciones de la autoridad de Buyer Groups."
   }
 }

@@ -1,0 +1,134 @@
+{
+  "record": {
+    "canonical_name": "ECOSYSTEM:SENA:regional:La Guajira",
+    "canonical_hash": "f4a14c0221c5b106",
+    "kind": "ecosystem",
+    "labels": [
+      "SENA La Guajira"
+    ],
+    "origin": [
+      "sena_units"
+    ],
+    "aliases_count": 0,
+    "started_at": "2026-09-18T08:03:04.403148+00:00",
+    "finished_at": "2026-09-18T08:03:19.541706+00:00",
+    "status": "INSTITUTIONAL_ECOSYSTEM",
+    "status_reasons": [
+      "composición institucional declarada"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": {
+      "family": "SENA",
+      "role": "regional_ecosystem",
+      "department": "La Guajira"
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%GUAJIRA%')))",
+        "forms_reached": [
+          "SENA REGIONAL GUAJIRA Grupo Mixto de Apoyo Administrativo"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 4069,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GUAJIRA%')))",
+        "forms_reached": [
+          "SENA REGIONAL GUAJIRA Grupo Mixto de Apoyo Administrativo"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 5680,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 15138.0
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "projection_mode": "contains_all",
+        "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%GUAJIRA%')))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL GUAJIRA Grupo Mixto de Apoyo Administrativo",
+            "nit": "899999034",
+            "rows": 4069
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 4069
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "projection_mode": "contains_all",
+        "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GUAJIRA%')))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL GUAJIRA Grupo Mixto de Apoyo Administrativo",
+            "nit": "899999034",
+            "rows": 5680
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 5680
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "record": {
+    "canonical_name": "ECOSYSTEM:SENA:macro:eje_cafetero",
+    "canonical_hash": "cc6905a517e61bbf",
+    "kind": "ecosystem",
+    "labels": [
+      "eje_cafetero"
+    ],
+    "origin": [
+      "sena_units"
+    ],
+    "aliases_count": 0,
+    "started_at": "2026-09-18T08:03:49.425653+00:00",
+    "finished_at": "2026-09-18T08:03:49.425691+00:00",
+    "status": "INSTITUTIONAL_ECOSYSTEM",
+    "status_reasons": [
+      "composición institucional declarada"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": {
+      "family": "SENA",
+      "role": "macro_region",
+      "region": "eje_cafetero",
+      "departments": [
+        "Caldas",
+        "Quindío",
+        "Risaralda"
+      ]
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {},
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 0,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 0.0
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {},
+    "errors": [],
+    "phase_b": false,
+    "projection_mode": "derived",
+    "projection_terms": [
+      "SENA"
+    ]
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

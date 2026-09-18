@@ -1,0 +1,158 @@
+{
+  "record": {
+    "canonical_name": "ECOSYSTEM:SENA:regional:Nariño",
+    "canonical_hash": "6994512b154b4ae9",
+    "kind": "ecosystem",
+    "labels": [
+      "SENA Nariño"
+    ],
+    "origin": [
+      "sena_units"
+    ],
+    "aliases_count": 0,
+    "started_at": "2026-09-18T08:02:31.362537+00:00",
+    "finished_at": "2026-09-18T08:02:48.164399+00:00",
+    "status": "INSTITUTIONAL_ECOSYSTEM",
+    "status_reasons": [
+      "composición institucional declarada"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": {
+      "family": "SENA",
+      "role": "regional_ecosystem",
+      "department": "Nariño"
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%NARINO%')))",
+        "forms_reached": [
+          "SENA REGIONAL NARIÑO CENTRO SUR COLOMBIANO DE LOGISTICA INTERNACIONAL",
+          "SENA REGIONAL NARIÑO Grupo Administrativo CAPCP",
+          "SENA REGIONAL NARIÑO Grupo de Apoyo Administrativo Mixto"
+        ],
+        "forms_reached_count": 3,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 8842,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NARINO%')))",
+        "forms_reached": [
+          "SENA REGIONAL NARIÑO CENTRO SUR COLOMBIANO DE LOGISTICA INTERNACIONAL",
+          "SENA REGIONAL NARIÑO Grupo Administrativo CAPCP",
+          "SENA REGIONAL NARIÑO Grupo de Apoyo Administrativo Mixto"
+        ],
+        "forms_reached_count": 3,
+        "nits_reached": [
+          "899999034"
+        ],
+        "like_rows": 7754,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 16801.2
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "projection_mode": "contains_all",
+        "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%NARINO%')))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL NARIÑO CENTRO SUR COLOMBIANO DE LOGISTICA INTERNACIONAL",
+            "nit": "899999034",
+            "rows": 2114
+          },
+          {
+            "name": "SENA REGIONAL NARIÑO Grupo Administrativo CAPCP",
+            "nit": "899999034",
+            "rows": 1877
+          },
+          {
+            "name": "SENA REGIONAL NARIÑO Grupo de Apoyo Administrativo Mixto",
+            "nit": "899999034",
+            "rows": 4851
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 8842
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "projection_mode": "contains_all",
+        "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NARINO%')))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL NARIÑO CENTRO SUR COLOMBIANO DE LOGISTICA INTERNACIONAL",
+            "nit": "899999034",
+            "rows": 1820
+          },
+          {
+            "name": "SENA REGIONAL NARIÑO Grupo Administrativo CAPCP",
+            "nit": "899999034",
+            "rows": 1896
+          },
+          {
+            "name": "SENA REGIONAL NARIÑO Grupo de Apoyo Administrativo Mixto",
+            "nit": "899999034",
+            "rows": 4038
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 7754
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

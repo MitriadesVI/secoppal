@@ -1,0 +1,126 @@
+{
+  "record": {
+    "canonical_name": "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+    "canonical_hash": "3c87087f064d406d",
+    "kind": "buyer_unit",
+    "labels": [],
+    "origin": [
+      "aliases_db"
+    ],
+    "aliases_count": 21,
+    "started_at": "2026-09-18T07:08:36.938507+00:00",
+    "finished_at": "2026-09-18T07:09:12.899776+00:00",
+    "status": "NO_STABLE_IDENTITY",
+    "status_reasons": [
+      "NIT observado no acreditado: 891780008"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": null,
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL%'))",
+        "forms_reached": [
+          "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "891780008"
+        ],
+        "like_rows": 13230,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL%'))",
+        "forms_reached": [
+          "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL"
+        ],
+        "forms_reached_count": 1,
+        "nits_reached": [
+          "891780008"
+        ],
+        "like_rows": 10118,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 35959.4
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+            "nit": "891780008",
+            "rows": 13230
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 13230
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL%'))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+            "nit": "891780008",
+            "rows": 10118
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 10118
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}

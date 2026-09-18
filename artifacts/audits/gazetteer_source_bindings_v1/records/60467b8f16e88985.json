@@ -1,0 +1,196 @@
+{
+  "record": {
+    "canonical_name": "ECOSYSTEM:SENA:regional:Cundinamarca",
+    "canonical_hash": "60467b8f16e88985",
+    "kind": "ecosystem",
+    "labels": [
+      "SENA Cundinamarca"
+    ],
+    "origin": [
+      "sena_units"
+    ],
+    "aliases_count": 0,
+    "started_at": "2026-09-18T08:02:45.681214+00:00",
+    "finished_at": "2026-09-18T08:03:01.207750+00:00",
+    "status": "INSTITUTIONAL_ECOSYSTEM",
+    "status_reasons": [
+      "composición institucional declarada"
+    ],
+    "identity": null,
+    "already_bound": false,
+    "binding": null,
+    "binding_status": "NOT_BOUND",
+    "declared_groups": [],
+    "ecosystem": {
+      "family": "SENA",
+      "role": "regional_ecosystem",
+      "department": "Cundinamarca"
+    },
+    "transport": "soda3",
+    "evidence_flags": {
+      "like_universe_skipped": false,
+      "source_name_split_observed": false,
+      "identity_publishes_unreached_forms": false,
+      "composition_signal": false,
+      "like_universe_truncated": false
+    },
+    "datasets": {
+      "p6dx-8zbt": {
+        "like_status": "OK",
+        "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CUNDINAMARCA%')))",
+        "forms_reached": [
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CAE",
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDAE",
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CTDPE",
+          "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+        ],
+        "forms_reached_count": 6,
+        "nits_reached": [
+          "899999034",
+          "8999990341"
+        ],
+        "like_rows": 18881,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      },
+      "jbjy-vk9h": {
+        "like_status": "OK",
+        "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CUNDINAMARCA%')))",
+        "forms_reached": [
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CAE",
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDAE",
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CTDPE",
+          "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+        ],
+        "forms_reached_count": 6,
+        "nits_reached": [
+          "899999034",
+          "8999990341"
+        ],
+        "like_rows": 19583,
+        "like_universe_complete": true,
+        "identity_forms": [],
+        "identity_forms_status": null,
+        "forms_not_reached_by_like": [],
+        "bound_universe": [],
+        "bound_status": null,
+        "bound_rows": null,
+        "equivalence": null
+      }
+    },
+    "proposed_binding": null,
+    "semantics_preserved": null,
+    "candidate": null,
+    "network": {
+      "calls": 2,
+      "timeouts": 0,
+      "retries": 0,
+      "latency_ms": 15525.7
+    },
+    "errors": [],
+    "error": null
+  },
+  "measurement": {
+    "datasets": {
+      "p6dx-8zbt": {
+        "dataset": "p6dx-8zbt",
+        "entity_field": "entidad",
+        "projection_mode": "contains_all",
+        "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CUNDINAMARCA%')))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CAE",
+            "nit": "8999990341",
+            "rows": 2314
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+            "nit": "8999990341",
+            "rows": 3894
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+            "nit": "899999034",
+            "rows": 2967
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDAE",
+            "nit": "899999034",
+            "rows": 2279
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CTDPE",
+            "nit": "899999034",
+            "rows": 3159
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+            "nit": "899999034",
+            "rows": 4268
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 18881
+      },
+      "jbjy-vk9h": {
+        "dataset": "jbjy-vk9h",
+        "entity_field": "nombre_entidad",
+        "projection_mode": "contains_all",
+        "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CUNDINAMARCA%')))",
+        "like_status": "OK",
+        "like_universe": [
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CAE",
+            "nit": "8999990341",
+            "rows": 2115
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+            "nit": "8999990341",
+            "rows": 3448
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+            "nit": "899999034",
+            "rows": 3492
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDAE",
+            "nit": "899999034",
+            "rows": 2715
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CTDPE",
+            "nit": "899999034",
+            "rows": 2611
+          },
+          {
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+            "nit": "899999034",
+            "rows": 5202
+          }
+        ],
+        "like_universe_complete": true,
+        "like_rows_grouped": 19583
+      }
+    },
+    "errors": [],
+    "phase_b": false
+  },
+  "binding_verdict": {
+    "status": "NOT_BOUND",
+    "missing_names": {},
+    "foreign_nits": {}
+  }
+}
