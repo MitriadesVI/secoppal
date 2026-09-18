@@ -907,6 +907,15 @@ def classify(canonical: Canonical, measurement: dict, binding_verdict: dict) -> 
     if incomplete_like:
         return {"status": "INCONCLUSIVE", "reasons": ["universo LIKE no medido: " + ", ".join(incomplete_like)]}
 
+    # 8b — Identidad acreditada que la fuente no publica en NINGÚN dataset.
+    # No es un timeout ni un fallo: es un hecho medido (0 filas), y sin universo
+    # no hay nada que proyectar. Se dice con esas palabras en vez de dejarlo
+    # como «comparación no terminada», que sugeriría una duda que no existe.
+    if not all_forms and not any(entry.get("identity_forms") for entry in datasets.values()):
+        return {"status": "INCONCLUSIVE",
+                "reasons": ["el nombre declarado no se publica en la fuente (0 filas en ambos "
+                            "datasets): no hay universo que proyectar"]}
+
     # 9 — El LIKE es ciego a las formas reales de la identidad acreditada.
     if expected_nit is not None:
         for dataset, entry in datasets.items():
@@ -952,10 +961,19 @@ def build_candidate(canonical: Canonical, measurement: dict, status: str) -> dic
 
     Nunca contiene una forma que el LIKE no alcance (ampliaría el universo) ni
     una forma con filas bajo una identidad ajena.
+
+    Una unidad individual declarada por un catálogo institucional (`role ==
+    "declared_unit"`: las unidades nacionales del SENA, las regionales del ICBF)
+    SÍ puede llevar binding: es una BuyerUnit concreta, no la composición. Lo que
+    no puede llevar binding es el PADRE ni un ecosistema regional, porque su
+    semántica es «varias unidades», y para eso está el Buyer Group.
     """
     if status not in ("EXACT_BINDABLE", "SOURCE_NAME_SPLIT"):
         return None
-    if canonical.identity is None or canonical.ecosystem or canonical.kind == "ecosystem":
+    if canonical.identity is None or canonical.kind == "ecosystem":
+        return None
+    role = (canonical.ecosystem or {}).get("role")
+    if role not in (None, "declared_unit"):
         return None
     expected_nit = digits_of(canonical.identity.value) if canonical.identity.type == "NIT" else None
     sources: dict[str, list[str]] = {}
@@ -1539,6 +1557,13 @@ def run(args: argparse.Namespace, source_factory: Callable[[Settings, argparse.N
     inventory = build_inventory(authorities)
     out = Path(args.output)
     out.mkdir(parents=True, exist_ok=True)
+    manifest_path = out / "manifest.json"
+    previous_manifest: dict = {}
+    if manifest_path.exists():
+        try:
+            previous_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except ValueError:
+            previous_manifest = {}
     progress_path = out / "progress.jsonl"
 
     done: dict[str, dict] = {}
@@ -1547,16 +1572,30 @@ def run(args: argparse.Namespace, source_factory: Callable[[Settings, argparse.N
     if args.recheck_existing:
         done = {}
 
-    manifest = build_manifest(args, inventory, read_only_settings())
-    write_json(out / "manifest.json", manifest)
-
     selected = select_inventory(inventory, args)
     pending = [item for item in selected if args.recheck_existing or item.hash not in done]
     skipped = len(selected) - len(pending)
+    will_measure = bool(pending) and not args.summary_only
+
+    manifest = build_manifest(args, inventory, read_only_settings())
+    # Una reconstrucción de reportes (`--summary-only`) no vuelve a medir nada:
+    # si pisara el manifiesto, borraría la telemetría y el tiempo de la corrida
+    # que SÍ tocó la red. El manifiesto describe el lote, no la última
+    # invocación que lo leyó.
+    if not will_measure:
+        for key in ("source_telemetry", "source_telemetry_reconstructed", "source_telemetry_note",
+                    "batch_totals", "started_at", "finished_at", "elapsed_seconds",
+                    "processed_in_this_run"):
+            if key in previous_manifest:
+                manifest[key] = previous_manifest[key]
+                manifest.setdefault("provenance_preserved_from_previous_manifest", []).append(key)
+    manifest["report_rebuilt_at"] = now_iso()
+    write_json(manifest_path, manifest)
+
     print(f"inventario: {len(inventory)} · seleccionados: {len(selected)} · "
           f"pendientes: {len(pending)} · saltados por --resume: {skipped}", flush=True)
 
-    if not args.summary_only and pending:
+    if will_measure:
         settings = read_only_settings()
         source = (source_factory or source_from_settings)(settings, args)
         auditor = Auditor(args, settings, source=source)
@@ -1567,23 +1606,27 @@ def run(args: argparse.Namespace, source_factory: Callable[[Settings, argparse.N
                 future.result()
         manifest["source_telemetry"] = source.telemetry
 
-    records = [done.get(item.hash, {}) for item in selected]
-    records = [record for record in records if record]
-    fresh = {record["canonical_hash"]: record for record in read_jsonl(progress_path)}
-    records = [fresh[item.hash] for item in selected if item.hash in fresh]
+    # El resumen describe el LOTE, no la selección de esta invocación: un
+    # `--only` de reproceso sobre el directorio canónico reconstruía el summary
+    # con dos o tres registros y pisaba el del lote completo. Los registros que
+    # se reportan son todos los presentes en progress.jsonl, y `uncovered` es lo
+    # que falta del INVENTARIO, no de lo seleccionado.
+    fresh_all = {record["canonical_hash"]: record for record in read_jsonl(progress_path)}
+    records = [fresh_all[item.hash] for item in inventory if item.hash in fresh_all]
     manifest["finished_at"] = now_iso()
     manifest["processed_in_this_run"] = len(pending)
+    manifest["processed_total_in_batch"] = len(records)
     manifest["skipped_resume"] = skipped
     manifest["elapsed_seconds"] = round(time.time() - started, 1)
     write_json(out / "manifest.json", manifest)
     summary = write_outputs(out, records, authorities, manifest)
-    uncovered = [item.canonical_name for item in selected if item.hash not in fresh]
+    uncovered = [item.canonical_name for item in inventory if item.hash not in fresh_all]
     print(json.dumps({
         "total": summary["total"],
         "classes": summary["classes"],
         "groups": summary["groups"],
         "bindings": summary["bindings"],
-        "uncovered_selected": len(uncovered),
+        "uncovered_from_inventory": len(uncovered),
         "elapsed_seconds": manifest["elapsed_seconds"],
     }, ensure_ascii=False, indent=2), flush=True)
     print(f"escrito {out}", flush=True)

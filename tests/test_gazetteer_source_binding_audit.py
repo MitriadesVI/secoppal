@@ -611,6 +611,74 @@ def test_candidate_never_contains_foreign_identity():
     assert candidate is None
 
 
+# ── Ecosistemas: la unidad individual sí, la composición no ─────────────────
+
+
+def test_declared_catalog_unit_can_produce_a_candidate():
+    """Una unidad individual declarada por un catálogo institucional es una
+    BuyerUnit: su binding es una proyección 1:1 normal."""
+    record = canonical("SENA SECRETARIA GENERAL", bound=None)
+    record.identity = audit.Identity("BUYER_UNIT", "SENA SECRETARIA GENERAL", "sena_units.json")
+    record.ecosystem = {"family": "SENA", "role": "declared_unit"}
+    source = FakeSource(
+        like={P6DX: [("SENA SECRETARIA GENERAL", "899999034", 11)],
+              JBBY: [("SENA SECRETARIA GENERAL", "899999034", 10)]},
+        counts={P6DX: (11, 11), JBBY: (10, 10)},
+    )
+    _, _, outcome, candidate = observe(source, record)
+    assert outcome["status"] == "EXACT_BINDABLE"
+    assert candidate is not None
+    assert candidate["sources"][P6DX] == ["SENA SECRETARIA GENERAL"]
+
+
+def test_ecosystem_parent_never_produces_a_candidate():
+    """El padre SENA representa «muchas unidades»: su lugar es el Buyer Group."""
+    record = canonical("ECOSYSTEM:SENA:national", kind="ecosystem")
+    record.ecosystem = {"family": "SENA", "role": "national_parent"}
+    record.ecosystem_projection = {"mode": "official_names", "official_names": ["SENA SECRETARIA GENERAL"]}
+    measurement = {"datasets": {}, "errors": []}
+    assert audit.build_candidate(record, measurement, "EXACT_BINDABLE") is None
+    regional = canonical("ECOSYSTEM:SENA:regional:Antioquia", kind="ecosystem")
+    regional.ecosystem = {"family": "SENA", "role": "regional_ecosystem"}
+    assert audit.build_candidate(regional, measurement, "EXACT_BINDABLE") is None
+
+
+def test_bindable_classification_always_carries_a_candidate():
+    """Invariante de coherencia: si la clase afirma que la proyección exacta
+    preserva la semántica, el candidato tiene que existir. Un `EXACT_BINDABLE`
+    sin candidato deja al revisor con una afirmación que no puede ejecutar."""
+    cases = {
+        "EXACT_BINDABLE": (
+            {P6DX: [("MUNICIPIO COHERENTE", "123", 5)], JBBY: [("MUNICIPIO COHERENTE", "123", 5)]},
+            {P6DX: [("MUNICIPIO COHERENTE", 5)], JBBY: [("MUNICIPIO COHERENTE", 5)]},
+        ),
+        "SOURCE_NAME_SPLIT": (
+            {P6DX: [("MUNICIPIO COHERENTE..", "123", 5)],
+             JBBY: [("MUNICIPIO COHERENTE.", "123", 5)]},
+            {P6DX: [("MUNICIPIO COHERENTE..", 5)], JBBY: [("MUNICIPIO COHERENTE.", 5)]},
+        ),
+    }
+    for status, (like, forms) in cases.items():
+        record = canonical("MUNICIPIO COHERENTE", nit="123")
+        source = FakeSource(like=like, forms=forms, counts={P6DX: (5, 5), JBBY: (5, 5)})
+        _, _, outcome, candidate = observe(source, record)
+        assert outcome["status"] == status, status
+        assert candidate is not None, f"{status} sin candidato"
+        assert candidate["classification"] == status
+        assert candidate["semantics_preserved"] is True
+
+
+def test_declared_name_absent_from_source_says_so():
+    record = canonical("UNIDAD QUE NADIE PUBLICA")
+    record.identity = audit.Identity("BUYER_UNIT", "UNIDAD QUE NADIE PUBLICA", "sena_units.json")
+    record.ecosystem = {"family": "SENA", "role": "declared_unit"}
+    source = FakeSource(like={P6DX: [], JBBY: []})
+    _, _, outcome, candidate = observe(source, record)
+    assert outcome["status"] == "INCONCLUSIVE"
+    assert "no se publica en la fuente" in outcome["reasons"][0]
+    assert candidate is None
+
+
 def test_sidecar_is_never_written_by_the_audit(tmp_path, monkeypatch):
     before = SIDECAR.read_bytes()
     monkeypatch.setattr(audit, "build_inventory",
