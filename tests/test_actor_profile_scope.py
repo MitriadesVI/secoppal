@@ -1,4 +1,18 @@
-"""Applied scope is presentation only; SQL oracle frozen at f6fa849."""
+"""Applied scope is presentation only; SQL oracle frozen at f6fa849.
+
+DOGFOOD_BUYER_COVERAGE_ADR073 repinea el predicado de entidad de los tres casos
+de Barranquilla, y SÓLO ese predicado: el comprador gana un binding ADR-073, así
+que el builder emite `nombre_entidad = '...'` donde antes emitía
+`unaccent(UPPER(...)) LIKE '%...%'`. No es una relajación del oráculo — es la
+razón de ser de la capa, y el universo se midió idéntico en vivo
+(`artifacts/audits/dogfood_buyer_coverage_adr073.json`: mismas filas en las ocho
+celdas, ningún NIT ajeno alcanzado por el fallback).
+
+`approximate_buyer` NO se repinea: lleva `entidad_like`, la ruta de fallback
+explícito donde la proyección no interviene, y su LIKE sigue byte-idéntico. Esa
+asimetría es la prueba de que el cambio está acotado al binding y no al builder.
+Identidad, tema, fechas y transporte quedan byte a byte como estaban.
+"""
 from __future__ import annotations
 
 from copy import deepcopy

@@ -75,42 +75,42 @@
         "core": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
         },
         "date_range": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
         },
         "buyers": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
         },
         "years": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
         },
         "modalities": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
         },
         "territories": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+          "soql": "SELECT departamento, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
         },
         "observed_names": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
         },
         "recent_contracts": {
           "transport": "query",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
         }
       }
     },
@@ -192,42 +192,42 @@
         "core": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
         },
         "date_range": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
         },
         "buyers": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
         },
         "years": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
         },
         "modalities": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
         },
         "territories": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+          "soql": "SELECT departamento, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
         },
         "observed_names": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
         },
         "recent_contracts": {
           "transport": "query",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
         }
       }
     },
@@ -494,42 +494,42 @@
         "core": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
+          "soql": "SELECT SUM(valor_del_contrato) as total_value, COUNT(*) as total_count WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT'))"
         },
         "date_range": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
+          "soql": "SELECT min(fecha_de_firma) AS date_min, max(fecha_de_firma) AS date_max WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL"
         },
         "buyers": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
+          "soql": "SELECT nombre_entidad, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5"
         },
         "years": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
+          "soql": "SELECT date_trunc_y(fecha_de_firma) AS yr, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) AND fecha_de_firma IS NOT NULL GROUP BY yr ORDER BY yr DESC"
         },
         "modalities": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
+          "soql": "SELECT modalidad_de_contratacion, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY modalidad_de_contratacion ORDER BY cnt DESC LIMIT 5"
         },
         "territories": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT departamento, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
+          "soql": "SELECT departamento, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY departamento ORDER BY cnt DESC LIMIT 5"
         },
         "observed_names": {
           "transport": "aggregate",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
+          "soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10"
         },
         "recent_contracts": {
           "transport": "query",
           "dataset": "jbjy-vk9h",
-          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 1000000 AND documento_proveedor = '10000001' AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('NIT')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
         }
       }
     },

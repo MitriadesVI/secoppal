@@ -1,0 +1,628 @@
+{
+  "audit": "DOGFOOD_BUYER_COVERAGE_ADR073",
+  "observed_at": "2026-09-17",
+  "generated_at": "2026-09-18T01:22:08.024171+00:00",
+  "domain": "www.datos.gov.co",
+  "reps": 3,
+  "script": "scripts/audits/audit_dogfood_buyer_coverage_adr073.py",
+  "observations": [
+    {
+      "phrase": "alcaldia de soledad",
+      "resolution": {
+        "value": "MUNICIPIO DE SOLEDAD",
+        "method": "exact",
+        "confidence": "high"
+      },
+      "canonical_name": "MUNICIPIO DE SOLEDAD",
+      "datasets": {
+        "p6dx-8zbt": {
+          "entity_field": "entidad",
+          "nit_rows": 10302,
+          "physical_forms": [
+            {
+              "name": "MUNICIPIO DE SOLEDAD",
+              "rows": 10302
+            }
+          ],
+          "like_universe": [
+            {
+              "nit": "890106291",
+              "name": "MUNICIPIO DE SOLEDAD",
+              "rows": 10302
+            }
+          ],
+          "forms_reached_by_like": [
+            "MUNICIPIO DE SOLEDAD"
+          ],
+          "forms_not_reached_by_like": [],
+          "foreign_nits_reached_by_like": [],
+          "benchmark": {
+            "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE SOLEDAD%'))",
+            "exact_where": "entidad = 'MUNICIPIO DE SOLEDAD'",
+            "like_rows": 10302,
+            "exact_rows": 10302,
+            "same_universe": true,
+            "like_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "exact_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "like_timeouts": 0,
+            "exact_timeouts": 0,
+            "like_ms_median": 4343.9,
+            "exact_ms_median": 1013.0,
+            "like_ms": [
+              19929.0,
+              3848.9,
+              4343.9
+            ],
+            "exact_ms": [
+              1013.0,
+              1351.7,
+              737.1
+            ],
+            "speedup": 4.3
+          }
+        },
+        "jbjy-vk9h": {
+          "entity_field": "nombre_entidad",
+          "nit_rows": 12087,
+          "physical_forms": [
+            {
+              "name": "MUNICIPIO DE SOLEDAD",
+              "rows": 12087
+            }
+          ],
+          "like_universe": [
+            {
+              "nit": "890106291",
+              "name": "MUNICIPIO DE SOLEDAD",
+              "rows": 12087
+            }
+          ],
+          "forms_reached_by_like": [
+            "MUNICIPIO DE SOLEDAD"
+          ],
+          "forms_not_reached_by_like": [],
+          "foreign_nits_reached_by_like": [],
+          "benchmark": {
+            "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE SOLEDAD%'))",
+            "exact_where": "nombre_entidad = 'MUNICIPIO DE SOLEDAD'",
+            "like_rows": 12087,
+            "exact_rows": 12087,
+            "same_universe": true,
+            "like_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "exact_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "like_timeouts": 0,
+            "exact_timeouts": 0,
+            "like_ms_median": 6614.2,
+            "exact_ms_median": 979.7,
+            "like_ms": [
+              19599.8,
+              6614.2,
+              4700.9
+            ],
+            "exact_ms": [
+              1757.3,
+              767.3,
+              979.7
+            ],
+            "speedup": 6.8
+          }
+        }
+      },
+      "identity_key_candidates": [
+        "890106291"
+      ],
+      "identity_key": {
+        "type": "NIT",
+        "value": "890106291"
+      },
+      "proposed_binding": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE SOLEDAD"
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE SOLEDAD"
+        ]
+      },
+      "declared_not_bound": {},
+      "observed_rows": {
+        "p6dx-8zbt": 10302,
+        "jbjy-vk9h": 12087
+      },
+      "semantics_preserved": true,
+      "status": "READY"
+    },
+    {
+      "phrase": "alcaldia de galapa",
+      "resolution": {
+        "value": "MUNICIPIO DE GALAPA.",
+        "method": "exact",
+        "confidence": "high"
+      },
+      "canonical_name": "MUNICIPIO DE GALAPA.",
+      "datasets": {
+        "p6dx-8zbt": {
+          "entity_field": "entidad",
+          "nit_rows": 4460,
+          "physical_forms": [
+            {
+              "name": "MUNICIPIO DE GALAPA.",
+              "rows": 4460
+            }
+          ],
+          "like_universe": [
+            {
+              "nit": "890102472",
+              "name": "MUNICIPIO DE GALAPA.",
+              "rows": 4460
+            }
+          ],
+          "forms_reached_by_like": [
+            "MUNICIPIO DE GALAPA."
+          ],
+          "forms_not_reached_by_like": [],
+          "foreign_nits_reached_by_like": [],
+          "benchmark": {
+            "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%'))",
+            "exact_where": "entidad = 'MUNICIPIO DE GALAPA.'",
+            "like_rows": 4460,
+            "exact_rows": 4460,
+            "same_universe": true,
+            "like_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "exact_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "like_timeouts": 0,
+            "exact_timeouts": 0,
+            "like_ms_median": 3804.4,
+            "exact_ms_median": 737.9,
+            "like_ms": [
+              3804.4,
+              3218.3,
+              3828.3
+            ],
+            "exact_ms": [
+              737.9,
+              1760.5,
+              628.2
+            ],
+            "speedup": 5.2
+          }
+        },
+        "jbjy-vk9h": {
+          "entity_field": "nombre_entidad",
+          "nit_rows": 4314,
+          "physical_forms": [
+            {
+              "name": "MUNICIPIO DE GALAPA.",
+              "rows": 4314
+            }
+          ],
+          "like_universe": [
+            {
+              "nit": "890102472",
+              "name": "MUNICIPIO DE GALAPA.",
+              "rows": 4314
+            }
+          ],
+          "forms_reached_by_like": [
+            "MUNICIPIO DE GALAPA."
+          ],
+          "forms_not_reached_by_like": [],
+          "foreign_nits_reached_by_like": [],
+          "benchmark": {
+            "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%'))",
+            "exact_where": "nombre_entidad = 'MUNICIPIO DE GALAPA.'",
+            "like_rows": 4314,
+            "exact_rows": 4314,
+            "same_universe": true,
+            "like_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "exact_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "like_timeouts": 0,
+            "exact_timeouts": 0,
+            "like_ms_median": 3290.7,
+            "exact_ms_median": 673.8,
+            "like_ms": [
+              3301.7,
+              3290.7,
+              3173.0
+            ],
+            "exact_ms": [
+              646.6,
+              845.4,
+              673.8
+            ],
+            "speedup": 4.9
+          }
+        }
+      },
+      "identity_key_candidates": [
+        "890102472"
+      ],
+      "identity_key": {
+        "type": "NIT",
+        "value": "890102472"
+      },
+      "proposed_binding": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE GALAPA."
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE GALAPA."
+        ]
+      },
+      "declared_not_bound": {},
+      "observed_rows": {
+        "p6dx-8zbt": 4460,
+        "jbjy-vk9h": 4314
+      },
+      "semantics_preserved": true,
+      "status": "READY"
+    },
+    {
+      "phrase": "alcaldia de barranquilla",
+      "resolution": {
+        "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "method": "exact",
+        "confidence": "high"
+      },
+      "canonical_name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "datasets": {
+        "p6dx-8zbt": {
+          "entity_field": "entidad",
+          "nit_rows": 17166,
+          "physical_forms": [
+            {
+              "name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "rows": 17166
+            }
+          ],
+          "like_universe": [
+            {
+              "nit": "890102018",
+              "name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "rows": 17166
+            }
+          ],
+          "forms_reached_by_like": [
+            "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+          ],
+          "forms_not_reached_by_like": [],
+          "foreign_nits_reached_by_like": [],
+          "benchmark": {
+            "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%'))",
+            "exact_where": "entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA'",
+            "like_rows": 17166,
+            "exact_rows": 17166,
+            "same_universe": true,
+            "like_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "exact_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "like_timeouts": 0,
+            "exact_timeouts": 0,
+            "like_ms_median": 3733.8,
+            "exact_ms_median": 772.7,
+            "like_ms": [
+              3733.8,
+              3610.1,
+              3792.1
+            ],
+            "exact_ms": [
+              772.7,
+              666.1,
+              903.4
+            ],
+            "speedup": 4.8
+          }
+        },
+        "jbjy-vk9h": {
+          "entity_field": "nombre_entidad",
+          "nit_rows": 49061,
+          "physical_forms": [
+            {
+              "name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "rows": 49061
+            }
+          ],
+          "like_universe": [
+            {
+              "nit": "890102018",
+              "name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+              "rows": 49061
+            }
+          ],
+          "forms_reached_by_like": [
+            "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+          ],
+          "forms_not_reached_by_like": [],
+          "foreign_nits_reached_by_like": [],
+          "benchmark": {
+            "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%'))",
+            "exact_where": "nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA'",
+            "like_rows": 49061,
+            "exact_rows": 49061,
+            "same_universe": true,
+            "like_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "exact_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "like_timeouts": 0,
+            "exact_timeouts": 0,
+            "like_ms_median": 3933.2,
+            "exact_ms_median": 870.0,
+            "like_ms": [
+              3933.2,
+              7161.5,
+              3736.1
+            ],
+            "exact_ms": [
+              870.0,
+              665.1,
+              1207.9
+            ],
+            "speedup": 4.5
+          }
+        }
+      },
+      "identity_key_candidates": [
+        "890102018"
+      ],
+      "identity_key": {
+        "type": "NIT",
+        "value": "890102018"
+      },
+      "proposed_binding": {
+        "p6dx-8zbt": [
+          "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+        ],
+        "jbjy-vk9h": [
+          "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+        ]
+      },
+      "declared_not_bound": {},
+      "observed_rows": {
+        "p6dx-8zbt": 17166,
+        "jbjy-vk9h": 49061
+      },
+      "semantics_preserved": true,
+      "status": "READY"
+    },
+    {
+      "phrase": "alcaldia de cartagena",
+      "resolution": {
+        "value": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "method": "exact",
+        "confidence": "high"
+      },
+      "canonical_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "datasets": {
+        "p6dx-8zbt": {
+          "entity_field": "entidad",
+          "nit_rows": 49752,
+          "physical_forms": [
+            {
+              "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+              "rows": 49678
+            },
+            {
+              "name": "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT",
+              "rows": 37
+            },
+            {
+              "name": "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+              "rows": 29
+            },
+            {
+              "name": "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+              "rows": 8
+            }
+          ],
+          "like_universe": [
+            {
+              "nit": "890480184",
+              "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+              "rows": 49678
+            }
+          ],
+          "forms_reached_by_like": [
+            "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+          ],
+          "forms_not_reached_by_like": [
+            "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+            "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+            "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT"
+          ],
+          "foreign_nits_reached_by_like": [],
+          "benchmark": {
+            "like_where": "unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%'))",
+            "exact_where": "entidad = 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS'",
+            "like_rows": 49678,
+            "exact_rows": 49678,
+            "same_universe": true,
+            "like_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "exact_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "like_timeouts": 0,
+            "exact_timeouts": 0,
+            "like_ms_median": 5188.1,
+            "exact_ms_median": 776.4,
+            "like_ms": [
+              4938.9,
+              5845.0,
+              5188.1
+            ],
+            "exact_ms": [
+              1146.9,
+              776.4,
+              672.8
+            ],
+            "speedup": 6.7
+          }
+        },
+        "jbjy-vk9h": {
+          "entity_field": "nombre_entidad",
+          "nit_rows": 48337,
+          "physical_forms": [
+            {
+              "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+              "rows": 48301
+            },
+            {
+              "name": "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+              "rows": 24
+            },
+            {
+              "name": "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT",
+              "rows": 10
+            },
+            {
+              "name": "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+              "rows": 2
+            }
+          ],
+          "like_universe": [
+            {
+              "nit": "890480184",
+              "name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+              "rows": 48301
+            }
+          ],
+          "forms_reached_by_like": [
+            "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+          ],
+          "forms_not_reached_by_like": [
+            "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+            "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+            "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT"
+          ],
+          "foreign_nits_reached_by_like": [],
+          "benchmark": {
+            "like_where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS%'))",
+            "exact_where": "nombre_entidad = 'ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS'",
+            "like_rows": 48301,
+            "exact_rows": 48301,
+            "same_universe": true,
+            "like_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "exact_status": [
+              "OK",
+              "OK",
+              "OK"
+            ],
+            "like_timeouts": 0,
+            "exact_timeouts": 0,
+            "like_ms_median": 17429.0,
+            "exact_ms_median": 1132.0,
+            "like_ms": [
+              104182.1,
+              16207.3,
+              17429.0
+            ],
+            "exact_ms": [
+              2114.2,
+              870.5,
+              1132.0
+            ],
+            "speedup": 15.4
+          }
+        }
+      },
+      "identity_key_candidates": [
+        "890480184"
+      ],
+      "identity_key": {
+        "type": "NIT",
+        "value": "890480184"
+      },
+      "proposed_binding": {
+        "p6dx-8zbt": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ]
+      },
+      "declared_not_bound": {
+        "p6dx-8zbt": [
+          "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+          "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+          "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA DE LA LOCALIDAD INDUSTRIAL Y DE LA BAHIA",
+          "ALCALDÍA DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS - FONDO ESPECIAL DE BOMBEROS",
+          "DEPARTAMENTO ADMINISTRATIVO DE TRÁNSITO Y TRANSPORTE DATT"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 49678,
+        "jbjy-vk9h": 48301
+      },
+      "semantics_preserved": true,
+      "status": "READY"
+    }
+  ],
+  "excluded": [
+    {
+      "phrase": "alcaldia de malambo",
+      "reason": "NO_CANONICAL_IDENTITY",
+      "resolution": {
+        "value": null,
+        "method": "rewrite_unresolved",
+        "confidence": "low"
+      }
+    }
+  ]
+}

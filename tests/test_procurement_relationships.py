@@ -1,4 +1,17 @@
-"""Offline authority, ambiguity, isolation and byte-replay invariants."""
+"""Offline authority, ambiguity, isolation and byte-replay invariants.
+
+DOGFOOD_BUYER_COVERAGE_ADR073 repinea `edge_evidence.json` y
+`process_contract_join.json` por UNA línea cada uno: `buyer_authorities` de
+Barranquilla deja de ser `app/data/aliases_db.json:exact_dataset_canonical` y
+pasa a ser `app/data/buyer_source_names.json`. El canario no se equivocaba —
+registró fielmente que la autoridad cambió, que es exactamente lo que ADR-073
+declara al hacer de la proyección de nombres una autoridad independiente.
+
+Nada más se movió: ni una fila, ni un join, ni un conteo; `gates.json` sigue en
+`pass` con `identity_and_product` vacío y los 38 canarios de buyer_group
+intactos. El re-pineo se hizo comprobando que el diff era EXACTAMENTE esa
+etiqueta, no regenerando los artefactos a ciegas.
+"""
 from copy import deepcopy
 from decimal import Decimal
 import json

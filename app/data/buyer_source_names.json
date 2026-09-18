@@ -12363,6 +12363,90 @@
         "p6dx-8zbt": 1,
         "jbjy-vk9h": 1
       }
+    },
+    {
+      "canonical_name": "MUNICIPIO DE SOLEDAD",
+      "identity_key": {
+        "type": "NIT",
+        "value": "890106291"
+      },
+      "observed_at": "2026-09-17",
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE SOLEDAD"
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE SOLEDAD"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 10302,
+        "jbjy-vk9h": 12087
+      }
+    },
+    {
+      "canonical_name": "MUNICIPIO DE GALAPA.",
+      "identity_key": {
+        "type": "NIT",
+        "value": "890102472"
+      },
+      "observed_at": "2026-09-17",
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE GALAPA."
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE GALAPA."
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4460,
+        "jbjy-vk9h": 4314
+      }
+    },
+    {
+      "canonical_name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "identity_key": {
+        "type": "NIT",
+        "value": "890102018"
+      },
+      "observed_at": "2026-09-17",
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+        ],
+        "jbjy-vk9h": [
+          "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 17166,
+        "jbjy-vk9h": 49061
+      }
+    },
+    {
+      "canonical_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "identity_key": {
+        "type": "NIT",
+        "value": "890480184"
+      },
+      "observed_at": "2026-09-17",
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 49678,
+        "jbjy-vk9h": 48301
+      }
     }
   ]
 }

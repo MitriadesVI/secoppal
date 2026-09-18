@@ -4793,8 +4793,8 @@
       "barranquilla": {
         "ambiguous_rows": [],
         "buyer_authorities": [
-          "app/data/aliases_db.json:exact_dataset_canonical",
-          "app/data/aliases_db.json:exact_dataset_canonical"
+          "app/data/buyer_source_names.json",
+          "app/data/buyer_source_names.json"
         ],
         "buyer_mismatch_rows": [],
         "buyer_unit": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
