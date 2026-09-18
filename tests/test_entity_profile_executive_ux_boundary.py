@@ -19,6 +19,22 @@ def _pre_alpha_streamlit(text: str) -> str:
         "        return issue_streamlit_identity(\n"
         "            identity, account, auth_enabled=get_settings().secoppal_auth_enabled,\n"
         "        )\n",
+        # DOGFOOD-001 C: the trace header said "LLM: No" on a turn Natural Alpha
+        # decided, and said nothing about which profile job had which status.
+        # Both additions are read-only projections of fields the result already
+        # carries; test_dogfood_001_execution_budget covers what they display.
+        '        "natural_alpha_status": result.get("natural_alpha_status", ""),\n'
+        '        "profile_job_receipts": result.get("profile_job_receipts", []),\n',
+        '        alpha_status = debug.get("natural_alpha_status", "")\n'
+        "        st.markdown(\n"
+        "            f\"**Natural Alpha:** {'Si' if alpha_status else 'No'}\"\n"
+        '            + (f" (`{alpha_status}`)" if alpha_status else "")\n'
+        '            + " — el indicador **LLM** de arriba es el fallback legacy de parseo."\n'
+        "        )\n"
+        '        job_receipts = debug.get("profile_job_receipts") or []\n'
+        "        if job_receipts:\n"
+        '            st.markdown("**Jobs del perfil (intentado / estado / filas / ms):**")\n'
+        "            st.dataframe(job_receipts, use_container_width=True)\n\n",
     )
     for addition in additions:
         assert text.count(addition) == 1

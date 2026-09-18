@@ -29,6 +29,7 @@ from app.core.entity_profile.aspects import (
 from app.core.entity_profile.aspects.activity import MODALITY_CARDINALITY_LIMIT
 from app.core.entity_profile.aspects.temporal import YEAR_LIMIT
 from app.core.entity_profile.evidence import section_evidence_calls
+from app.core.entity_profile.failure_language import failure_clause
 from app.core.entity_profile.frame_compiler import ProfilePlan
 from app.core.entity_profile.frame_render import humanize_period
 from app.core.entity_profile.frame_runner import ProfileEvidence
@@ -162,8 +163,11 @@ def _warnings(
             f"No pude confirmar {label}; la fuente devolvió un agregado "
             "incompleto o inválido.",
         )
+    # DOGFOOD-001 C: la causa, no una sola frase para todas. «La fuente no
+    # respondió» es falso cuando la consulta nunca llegó a emitirse.
+    clause = failure_clause(tuple(statuses)) or "la fuente no respondió"
     return (
-        f"No pude calcular {label} en este momento; la fuente no respondió.",
+        f"No pude calcular {label} en este momento; {clause}.",
     )
 
 

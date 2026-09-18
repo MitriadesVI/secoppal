@@ -15,6 +15,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
+from app.core.entity_profile.execution_trace import job_receipts
 from app.core.entity_profile.frame_turn import (
     ProfileTurnOutcome,
     TurnKind,
@@ -82,6 +83,10 @@ def _result(outcome: ProfileTurnOutcome) -> dict:
         ),
         "profile_planned_jobs": outcome.planned_jobs,
         "profile_attempted_calls": outcome.attempted_calls,
+        # DOGFOOD-001 B: un recibo por job —intentado, estado, filas, latencia—
+        # antes de que `log_trace` corra. Sin esto, «expiró» y «no hay nada»
+        # dejan la misma huella.
+        "profile_job_receipts": [dict(job) for job in job_receipts(outcome.evidence)],
         "profile_issues": list(outcome.issues),
         "entity_profile_view": outcome.profile_view,
     })

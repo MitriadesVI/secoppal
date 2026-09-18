@@ -4,6 +4,7 @@ from dataclasses import replace
 
 from app.config import entity_profile_frame_enabled
 from app.core.conversation_store import is_reset_command
+from app.core.natural_alpha.budget import profile_budget
 from app.core.store_lock import conversation_lock
 from app.core.workflow.continuity_staging import stage_continuity
 
@@ -153,13 +154,18 @@ def _execute(workflow, ctx, seed_resolved_params, reservation):
         bound_focus = (admitted.capability_spec.focus
                        if admitted.credential is not None and admitted.capability_spec is not None
                        else None)
-        routed = run_profile_route(
-            deps, ctx,
-            params=admitted.params,
-            state=admitted.profile_state,
-            turn_id=reservation.turn_id if reservation else "anonymous",
-            bound_focus=bound_focus,
-        )
+        # DOGFOOD-001 A: la fase lingüística (Alpha + verificador de residual)
+        # ya corrió y su latencia no puede seguir descontándose del socket de
+        # SECOP. Es la MISMA política que legacy aplica antes de su ejecución,
+        # bajo la misma condición, y no mueve el deadline de 15 s del turno.
+        with profile_budget(observation is not None):
+            routed = run_profile_route(
+                deps, ctx,
+                params=admitted.params,
+                state=admitted.profile_state,
+                turn_id=reservation.turn_id if reservation else "anonymous",
+                bound_focus=bound_focus,
+            )
         if routed is None and admitted.credential is not None:
             # Sin ruta de perfil NO se cae al grafo legacy: un turno credenciado
             # termina en CLARIFY, que es terminal, igual que sus demás vetos.
@@ -277,6 +283,10 @@ def _execute_profile_action(workflow, ctx, admitted, reservation):
             )
         return result
 
+    # Sin `profile_budget`: `observes_turn` declina toda selección de acción, así
+    # que este carril no gasta fase lingüística y no hay presupuesto que devolver
+    # (misma condición que legacy). Si algún día llegara a observarse, la política
+    # de DOGFOOD-001 A tendría que envolver también esta llamada.
     routed = run_profile_route(
         deps, ctx,
         params=admitted.params,

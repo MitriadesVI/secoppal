@@ -206,7 +206,19 @@ M2_1_MODIFIED_FILE_SHA256 = {
     # Alpha R3 seals only the current authenticated account identity. The same
     # inverse-byte guard removes the exact issuer seam and restores 84ce0fbc;
     # test_natural_alpha_identity proves /chat spoofing and stale accounts fail.
-    "streamlit_app.py": "26f19892520370a14e49182309631b6168540af1c13f5d7ab9c1d4aa1fedd162",
+    # DOGFOOD-001 C lo repinea por HONESTIDAD DE LA TRAZA, no por función: el
+    # encabezado decía "LLM: No" en un turno que Natural Alpha decidió, y no
+    # decía en qué estado terminó cada job del perfil, de modo que un 2/2
+    # timeout y un universo vacío dejaban la misma huella en pantalla. El diff
+    # son dos proyecciones de solo lectura sobre campos que el result YA lleva
+    # (`natural_alpha_status`, `profile_job_receipts`) y su render dentro del
+    # expander de trace: no toca Search, ranking, cursor de paginación ni sus
+    # fingerprints —los oráculos de Search de este archivo siguen
+    # byte-idénticos—. Lo acota el guard inverso de
+    # tests/test_entity_profile_executive_ux_boundary.py, que retira esas
+    # adiciones exactas y restaura 84ce0fbc, y
+    # tests/test_dogfood_001_execution_budget.py.
+    "streamlit_app.py": "4948b388885a0fafd22daefdbce10718f3a8d38676fddbe5d8068365bbccc47f",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

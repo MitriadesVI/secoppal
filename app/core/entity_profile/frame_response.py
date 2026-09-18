@@ -13,6 +13,7 @@ activa una degradación tabular como rescate.
 """
 from __future__ import annotations
 
+from app.core.entity_profile.failure_language import total_failure_text
 from app.core.entity_profile.frame import EntityProfileFrame
 from app.core.entity_profile.frame_compiler import ProfilePlan
 from app.core.entity_profile.frame_render import (
@@ -46,12 +47,6 @@ _NEXT_STEPS = {
 }
 _NEXT_STEPS_BOTH = (
     "Puedes pedirme sus proveedores, modalidades, evolución o contratos recientes."
-)
-
-_TOTAL_FAILURE = (
-    "Ninguna de las fuentes respondió a este análisis. No interpreto ese "
-    "silencio como ausencia de actividad: el alcance de arriba es lo que se "
-    "intentó consultar."
 )
 
 
@@ -120,7 +115,10 @@ def render_frame_profile(
     if facts:
         blocks.append("\n".join(facts))
     if evidence.total_failure:
-        blocks.append(_TOTAL_FAILURE)
+        # DOGFOOD-001 C: la causa se nombra —expiró, falló o no se emitió— en vez
+        # de una sola frase para las tres. La cláusula que impide leerlo como un
+        # cero viaja dentro del mismo texto.
+        blocks.append(total_failure_text(plan, evidence))
     else:
         blocks.extend(profile.warnings)
     if plan.focus == "overview":

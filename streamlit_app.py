@@ -361,6 +361,17 @@ def _render_trace(debug: dict) -> None:
         c3.markdown(f"**Dataset:** `{debug.get('dataset_id', '')}`")
         c4.markdown(f"**Resultados:** {debug.get('results_count', '?')}")
 
+        alpha_status = debug.get("natural_alpha_status", "")
+        st.markdown(
+            f"**Natural Alpha:** {'Si' if alpha_status else 'No'}"
+            + (f" (`{alpha_status}`)" if alpha_status else "")
+            + " — el indicador **LLM** de arriba es el fallback legacy de parseo."
+        )
+        job_receipts = debug.get("profile_job_receipts") or []
+        if job_receipts:
+            st.markdown("**Jobs del perfil (intentado / estado / filas / ms):**")
+            st.dataframe(job_receipts, use_container_width=True)
+
         st.markdown("**Parametros extraidos:**")
         st.json(debug.get("parsed_params", {}))
 
@@ -478,6 +489,8 @@ def _assistant_history_item(result: dict, *, query: str = "") -> dict:
         "resolved_params": _clean_resolved(resolved_params),
         "soql_query": result.get("soql_query", ""),
         "results_count": len(result.get("results", [])),
+        "natural_alpha_status": result.get("natural_alpha_status", ""),
+        "profile_job_receipts": result.get("profile_job_receipts", []),
     }
     return {
         **({"natural_alpha": alpha_view} if alpha_view else {}),
