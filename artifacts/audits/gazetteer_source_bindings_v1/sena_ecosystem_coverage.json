@@ -2,14 +2,901 @@
   "family": "SENA",
   "authority": "app/data/sena_units.json",
   "note": "SENA no es un mapa 1:1: el padre y los ecosistemas regionales son COMPOSICIONES declaradas (contains_all / official_names), no BuyerUnits. Este reporte no propone bindings ni crea Buyer Groups.",
-  "ecosystems_total": 0,
-  "ecosystems": [],
-  "units_total": 0,
-  "units_with_stable_identity": 0,
+  "ecosystems_total": 22,
+  "ecosystems": [
+    {
+      "canonical_name": "ECOSYSTEM:SENA:national",
+      "role": "national_parent",
+      "label": "SENA Nacional",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(entidad = 'SENA SECRETARIA GENERAL' OR entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas' OR entidad = 'SENA DIRECCIÓN GENERAL Dirección Jurídica')",
+          "forms_reached": [
+            "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+            "SENA SECRETARIA GENERAL"
+          ],
+          "forms_reached_count": 2,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 16581,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(nombre_entidad = 'SENA SECRETARIA GENERAL' OR nombre_entidad = 'SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas' OR nombre_entidad = 'SENA DIRECCIÓN GENERAL Dirección Jurídica')",
+          "forms_reached": [
+            "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+            "SENA SECRETARIA GENERAL"
+          ],
+          "forms_reached_count": 2,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 11011,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Magdalena",
+      "role": "regional_ecosystem",
+      "label": "SENA Magdalena",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MAGDALENA%')))",
+          "forms_reached": [
+            "SERVICIO NACIONAL DE APRENDIZAJE - SENA MAGDALENA"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "8999990341"
+          ],
+          "like_rows": 5028,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MAGDALENA%')))",
+          "forms_reached": [
+            "SERVICIO NACIONAL DE APRENDIZAJE - SENA MAGDALENA"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "8999990341"
+          ],
+          "like_rows": 6584,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Santander",
+      "role": "regional_ecosystem",
+      "label": "SENA Santander",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SANTANDER%')))",
+          "forms_reached": [
+            "SENA - REGIONAL SANTANDER",
+            "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto",
+            "SENA REGIONAL SANTANDER Grupo Administrativo CA",
+            "SENA REGIONAL SANTANDER Grupo Administrativo CATA",
+            "SENA REGIONAL SANTANDER Grupo Administrativo CGAO",
+            "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+            "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 7,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 24470,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SANTANDER%')))",
+          "forms_reached": [
+            "SENA - REGIONAL SANTANDER",
+            "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto",
+            "SENA REGIONAL SANTANDER Grupo Administrativo CA",
+            "SENA REGIONAL SANTANDER Grupo Administrativo CATA",
+            "SENA REGIONAL SANTANDER Grupo Administrativo CGAO",
+            "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+            "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 7,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 28716,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Bolívar",
+      "role": "regional_ecosystem",
+      "label": "SENA Bolívar",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%BOLIVAR%')))",
+          "forms_reached": [
+            "SENA REGIONAL BOLIVAR Centro para la Industria Petroquímica",
+            "SENA REGIONAL BOLIVAR Grupo Administrativo CINFP",
+            "SENA REGIONAL BOLIVAR Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 3,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 10998,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%BOLIVAR%')))",
+          "forms_reached": [
+            "SENA REGIONAL BOLIVAR Centro para la Industria Petroquímica",
+            "SENA REGIONAL BOLIVAR Grupo Administrativo CINFP",
+            "SENA REGIONAL BOLIVAR Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 3,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 12793,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Atlántico",
+      "role": "regional_ecosystem",
+      "label": "SENA Atlántico",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ATLANTICO%')))",
+          "forms_reached": [
+            "SENA REGIONAL ATLANTICO",
+            "SENA REGIONAL ATLANTICO Intercentros",
+            "SENA-REGIONAL ATLANTICO -CENTRO PARA EL DESARROLLO AGROECOLOGICO Y AGROINDUSTRIAL"
+          ],
+          "forms_reached_count": 3,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 11469,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ATLANTICO%')))",
+          "forms_reached": [
+            "SENA REGIONAL ATLANTICO",
+            "SENA REGIONAL ATLANTICO Intercentros",
+            "SENA-REGIONAL ATLANTICO -CENTRO PARA EL DESARROLLO AGROECOLOGICO Y AGROINDUSTRIAL"
+          ],
+          "forms_reached_count": 3,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 19790,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Antioquia",
+      "role": "regional_ecosystem",
+      "label": "SENA Antioquia",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')))",
+          "forms_reached": [
+            "SENA REGIONAL ANTIOQUIA CENTRO DE LOS RECURSOS NATURALES RENOVABLES LA SALADA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CFMA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTAPT",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTMAE",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTPGA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTTAOA?",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+            "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 10,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 33243,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')))",
+          "forms_reached": [
+            "SENA REGIONAL ANTIOQUIA CENTRO DE LOS RECURSOS NATURALES RENOVABLES LA SALADA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CFMA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTAPT",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTMAE",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTPGA",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTTAOA?",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+            "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+            "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 10,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 36306,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Valle del Cauca",
+      "role": "regional_ecosystem",
+      "label": "SENA Valle del Cauca",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%VALLE%')))",
+          "forms_reached": [
+            "SENA REGIONAL VALLE Grupo Administrativo CBI",
+            "SENA REGIONAL VALLE Grupo Administrativo CNPB",
+            "SENA REGIONAL VALLE Grupo Administrativo CTA",
+            "SENA REGIONAL VALLE Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 4,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 15914,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%VALLE%')))",
+          "forms_reached": [
+            "SENA REGIONAL VALLE Grupo Administrativo CBI",
+            "SENA REGIONAL VALLE Grupo Administrativo CNPB",
+            "SENA REGIONAL VALLE Grupo Administrativo CTA",
+            "SENA REGIONAL VALLE Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 4,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 18331,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Cauca",
+      "role": "regional_ecosystem",
+      "label": "SENA Cauca",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CAUCA%')))",
+          "forms_reached": [
+            "CENTRO DE COMERCIO Y SERVICIOS - SENA REGIONAL CAUCA",
+            "SENA REGIONAL CAUCA",
+            "SENA REGIONAL CAUCA Centro agropecuario",
+            "SENA REGIONAL CAUCA Grupo Administrativo Intercentros CTPI"
+          ],
+          "forms_reached_count": 4,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 8951,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CAUCA%')))",
+          "forms_reached": [
+            "CENTRO DE COMERCIO Y SERVICIOS - SENA REGIONAL CAUCA",
+            "SENA REGIONAL CAUCA",
+            "SENA REGIONAL CAUCA Centro agropecuario",
+            "SENA REGIONAL CAUCA Grupo Administrativo Intercentros CTPI"
+          ],
+          "forms_reached_count": 4,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 10649,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Nariño",
+      "role": "regional_ecosystem",
+      "label": "SENA Nariño",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%NARINO%')))",
+          "forms_reached": [
+            "SENA REGIONAL NARIÑO CENTRO SUR COLOMBIANO DE LOGISTICA INTERNACIONAL",
+            "SENA REGIONAL NARIÑO Grupo Administrativo CAPCP",
+            "SENA REGIONAL NARIÑO Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 3,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 8842,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NARINO%')))",
+          "forms_reached": [
+            "SENA REGIONAL NARIÑO CENTRO SUR COLOMBIANO DE LOGISTICA INTERNACIONAL",
+            "SENA REGIONAL NARIÑO Grupo Administrativo CAPCP",
+            "SENA REGIONAL NARIÑO Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 3,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 7754,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Cundinamarca",
+      "role": "regional_ecosystem",
+      "label": "SENA Cundinamarca",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CUNDINAMARCA%')))",
+          "forms_reached": [
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CAE",
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDAE",
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CTDPE",
+            "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+          ],
+          "forms_reached_count": 6,
+          "nits_reached": [
+            "899999034",
+            "8999990341"
+          ],
+          "like_rows": 18881,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CUNDINAMARCA%')))",
+          "forms_reached": [
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CAE",
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDAE",
+            "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CTDPE",
+            "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+          ],
+          "forms_reached_count": 6,
+          "nits_reached": [
+            "899999034",
+            "8999990341"
+          ],
+          "like_rows": 19583,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Distrito Capital de Bogotá",
+      "role": "regional_ecosystem",
+      "label": "SENA Distrito Capital",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DISTRITO CAPITAL%')))",
+          "forms_reached": [
+            "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+            "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+            "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+            "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CTCM",
+            "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+          ],
+          "forms_reached_count": 5,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 19664,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO CAPITAL%')))",
+          "forms_reached": [
+            "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+            "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+            "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+            "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CTCM",
+            "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+          ],
+          "forms_reached_count": 5,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 32576,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Córdoba",
+      "role": "regional_ecosystem",
+      "label": "SENA Córdoba",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CORDOBA%')))",
+          "forms_reached": [
+            "SERVICIO NACIONAL DE APRENDIZAJE SENA REGIONAL CORDOBA"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 2963,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CORDOBA%')))",
+          "forms_reached": [
+            "SERVICIO NACIONAL DE APRENDIZAJE SENA REGIONAL CORDOBA"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 8131,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:La Guajira",
+      "role": "regional_ecosystem",
+      "label": "SENA La Guajira",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%GUAJIRA%')))",
+          "forms_reached": [
+            "SENA REGIONAL GUAJIRA Grupo Mixto de Apoyo Administrativo"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 4069,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GUAJIRA%')))",
+          "forms_reached": [
+            "SENA REGIONAL GUAJIRA Grupo Mixto de Apoyo Administrativo"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 5680,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Sucre",
+      "role": "regional_ecosystem",
+      "label": "SENA Sucre",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SUCRE%')))",
+          "forms_reached": [
+            "SENA REGIONAL SUCRE"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 5688,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SUCRE%')))",
+          "forms_reached": [
+            "SENA REGIONAL SUCRE"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 4968,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Cesar",
+      "role": "regional_ecosystem",
+      "label": "SENA Cesar",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%CESAR%')))",
+          "forms_reached": [
+            "SENA REGIONAL CESAR Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 7390,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%CESAR%')))",
+          "forms_reached": [
+            "SENA REGIONAL CESAR Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 8686,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:regional:Norte de Santander",
+      "role": "regional_ecosystem",
+      "label": "SENA Norte de Santander",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {
+        "p6dx-8zbt": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%NORTE DE SANTANDER%')))",
+          "forms_reached": [
+            "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 6144,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        },
+        "jbjy-vk9h": {
+          "like_status": "OK",
+          "like_where": "(unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%NORTE DE SANTANDER%')))",
+          "forms_reached": [
+            "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto"
+          ],
+          "forms_reached_count": 1,
+          "nits_reached": [
+            "899999034"
+          ],
+          "like_rows": 9436,
+          "like_universe_complete": true,
+          "identity_forms": [],
+          "identity_forms_status": null,
+          "forms_not_reached_by_like": [],
+          "bound_universe": [],
+          "bound_status": null,
+          "bound_rows": null,
+          "equivalence": null
+        }
+      }
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:macro:caribe",
+      "role": "macro_region",
+      "label": "caribe",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {}
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:macro:costa_atlantica",
+      "role": "macro_region",
+      "label": "costa_atlantica",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {}
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:macro:eje_cafetero",
+      "role": "macro_region",
+      "label": "eje_cafetero",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {}
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:macro:pacifico",
+      "role": "macro_region",
+      "label": "pacifico",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {}
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:macro:amazonia",
+      "role": "macro_region",
+      "label": "amazonia",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {}
+    },
+    {
+      "canonical_name": "ECOSYSTEM:SENA:macro:orinoquia",
+      "role": "macro_region",
+      "label": "orinoquia",
+      "status": "INSTITUTIONAL_ECOSYSTEM",
+      "datasets": {}
+    }
+  ],
+  "units_total": 3,
+  "units_with_stable_identity": 3,
   "units_already_bound": 0,
-  "units_candidate_ready": 0,
+  "units_candidate_ready": 2,
   "units_review": 0,
-  "units_inconclusive": 0,
+  "units_inconclusive": 1,
   "regional_coverage": [
     {
       "department": "Magdalena",
@@ -133,7 +1020,7 @@
     }
   ],
   "dataset_coverage": {
-    "p6dx-8zbt": 0,
-    "jbjy-vk9h": 0
+    "p6dx-8zbt": 3,
+    "jbjy-vk9h": 3
   }
 }

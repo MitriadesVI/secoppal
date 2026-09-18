@@ -1,10 +1,10 @@
 {
   "audit": "ADR073_GAZETTEER_WIDE_SOURCE_BINDING_AUDIT_V1",
-  "head": "f3fc16bd6832cd0a7ac102b0c3f2addf3d5831cf",
+  "head": "06bd882bc238e2f80767b52eb552b17fb6a21543",
   "branch": "audit/adr073-gazetteer-wide-v1",
-  "git_status_short": "M scripts/audits/audit_gazetteer_source_bindings_v1.py\n M tests/test_gazetteer_source_binding_audit.py\n?? artifacts/audits/gazetteer_source_bindings_v1/\n?? artifacts/audits/gazetteer_source_bindings_v1_attempt1_classic/\n?? artifacts/audits/gazetteer_source_bindings_v1_attempt2_partial_mixed/\n?? artifacts/audits/smoke_adr073_v1/\n?? docs/gazetteer/GAZETTEER_WIDE_SOURCE_BINDINGS_V1.md",
+  "git_status_short": "M artifacts/audits/gazetteer_source_bindings_v1/already_bound_verified.jsonl\n M artifacts/audits/gazetteer_source_bindings_v1/ambiguous_identity.jsonl\n M artifacts/audits/gazetteer_source_bindings_v1/bindings_ready.jsonl\n M artifacts/audits/gazetteer_source_bindings_v1/buyer_group_candidates.jsonl\n M artifacts/audits/gazetteer_source_bindings_v1/buyer_group_readiness.json\n M artifacts/audits/gazetteer_source_bindings_v1/inconclusive.jsonl\n M artifacts/audits/gazetteer_source_bindings_v1/institutional_ecosystems.jsonl\n M artifacts/audits/gazetteer_source_bindings_v1/manifest.json\n M artifacts/audits/gazetteer_source_bindings_v1/multi_name_review.jsonl\n M artifacts/audits/gazetteer_source_bindings_v1/no_stable_identity.jsonl\n M artifacts/audits/gazetteer_source_bindings_v1/progress.jsonl\n M artifacts/audits/gazetteer_source_bindings_v1/sena_ecosystem_coverage.json\n M artifacts/audits/gazetteer_source_bindings_v1/summary.json\n M scripts/audits/audit_gazetteer_source_bindings_v1.py\n M tests/test_gazetteer_source_binding_audit.py\n?? artifacts/audits/gazetteer_source_bindings_v1/records/002247c81641f906.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/00469b1705852cd0.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/00a9983969aa4861.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/00d0366fb6269f9e.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/014729ec8235291f.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/01625b766d6204d3.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/01a13b704dd8514e.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/01a25d41ec090cd6.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/01adc4ec82dfb45c.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/01b0bd69dac93f00.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/01cae1e51b62bf3e.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/01f23d9b167f8ec2.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/022856d6fc682bd9.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0277949924aff917.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/03331e9d3e4fcab9.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0342f5b9c4e50271.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/047de9eff2921e68.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/05eac56576221321.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/065db303454af25e.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/06643388e5d96fab.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/06e8dbf8859e0b66.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/077c2f6b08f665a4.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/07e49ae312574fe3.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/080c8b069b5371b2.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/08f1a48f7e4ef005.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/092a24e883391aa0.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/09838c012b1869b2.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/09a1b8bd4c6cbc41.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/09def41acec185bb.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0a3848b4129207f9.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0a840505ee74f6cc.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0ac4b07e67b69283.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0acadfa370e72053.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0b0484cf40d5931c.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0b0950a14c087c9c.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0b0ad44bbb007a82.json\n?? artifacts/audits/gazetteer_source_bindings_v1/records/0c3ac1795b5a883a.json\n?? artifacts/audits/gazetteer_source",
   "script": "scripts/audits/audit_gazetteer_source_bindings_v1.py",
-  "script_sha256": "51b7b99a7bd1b09d41bfceb0c6ae091219c134006ac0ecdec086ad096962bfd9",
+  "script_sha256": "512322c409e1ebac032264138bd2f41f4083b96dd0807d424de9d67a032de3e3",
   "authority_sha256": {
     "aliases_db": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
     "buyer_source_names": "9f45bd7978743a9c0c4ca2e739b83ca2ef21270e25e71b22e1d1d049440efcb5",
@@ -29,7 +29,7 @@
   "timeout_seconds": 60.0,
   "retries": 2,
   "group_limit": 200,
-  "started_at": "2026-09-18T06:53:11.572387+00:00",
+  "started_at": "2026-09-18T08:06:24.853666+00:00",
   "total_canonical_identities": 1134,
   "identities_with_accredited_key": 596,
   "ecosystem_entries": 23,
@@ -41,8 +41,41 @@
     "resume": false,
     "recheck_existing": false
   },
-  "finished_at": "2026-09-18T06:53:11.583333+00:00",
-  "processed_in_this_run": 753,
-  "skipped_resume": 381,
-  "elapsed_seconds": 0.1
+  "source_telemetry_reconstructed": {
+    "calls": 2312,
+    "timeouts": 0,
+    "retries": 4,
+    "ok": 2312,
+    "errors": 0,
+    "latency_ms_total": 12415885.7,
+    "latency_ms_mean_per_call": 5370.2
+  },
+  "provenance_preserved_from_previous_manifest": [
+    "source_telemetry_reconstructed",
+    "source_telemetry_note",
+    "batch_totals",
+    "started_at",
+    "finished_at",
+    "elapsed_seconds",
+    "processed_in_this_run"
+  ],
+  "source_telemetry_note": "Recompuesta sumando el bloque `network` de los 1134 registros de progress.jsonl. La telemetría original de la corrida se perdió cuando una reconstrucción de reportes reescribió manifest.json (--summary-only); el defecto quedó corregido en el script y una reconstrucción ya no pisa la procedencia del lote.",
+  "batch_totals": {
+    "records": 1137,
+    "transports": [
+      "soda3"
+    ],
+    "timeouts": 0,
+    "retries": 4,
+    "errors": 0,
+    "batch_elapsed_seconds_from_run_log": 6213.5,
+    "run_log": "/tmp/adr073_full_run3.log",
+    "timing_note": "started_at/finished_at del manifiesto NO son la ventana de medición: corresponden a la reconstrucción de reportes que reescribió este archivo. La duración real del lote (6213.5 s) está en el log de la corrida."
+  },
+  "finished_at": "2026-09-18T08:07:59.657407+00:00",
+  "elapsed_seconds": 0.1,
+  "processed_in_this_run": 0,
+  "report_rebuilt_at": "2026-09-18T08:07:59.642506+00:00",
+  "processed_total_in_batch": 1134,
+  "skipped_resume": 1134
 }
