@@ -1,0 +1,23 @@
+{
+  "name": "SUPPLIERS 1.1 — sondeo temprano de la ruta Frame",
+  "note": "Corpus de trabajo del frente: será el germen del corpus V1.1 (seccion 15). Los rows sinteticos tienen un empate deliberado en el 2do puesto (12,10,10,8,6,4,2).",
+  "cases": [
+    {"id": "v01", "query": "proveedores de la alcaldía de Galapa", "quote": "proveedores"},
+    {"id": "v02", "query": "los 3 proveedores con más contratos de la alcaldía de Galapa", "quote": "proveedores"},
+    {"id": "v03", "query": "proveedores con más contratos de la alcaldía de Barranquilla", "quote": "proveedores"},
+    {"id": "v04", "query": "proveedores con contratos de mayor valor de la alcaldía de Barranquilla", "quote": "proveedores"},
+    {"id": "v05", "query": "el proveedor con más contratos de la alcaldía de Galapa", "quote": "proveedor"},
+    {"id": "v06", "query": "quién ha contratado por mayor valor con la Alcaldía de Barranquilla", "quote": "ha contratado"},
+    {"id": "v07", "query": "top 10 proveedores de la alcaldía de Barranquilla", "quote": "proveedores"},
+    {"id": "v08", "query": "100 proveedores de la alcaldía de Barranquilla", "quote": "proveedores"},
+    {"id": "v09", "query": "varios proveedores de la alcaldía de Barranquilla", "quote": "proveedores"},
+    {"id": "v10", "query": "proveedores de Galapa por más de 500 millones", "quote": "proveedores"},
+    {"id": "v11", "query": "el proveedor con más contratos de la alcaldía de Barranquilla", "quote": "proveedor",
+     "rows": [
+       {"documento_proveedor": "900200001", "tipodocproveedor": "NIT", "supplier_name": "EMPATE A", "contract_count": 12, "total_contract_value": 12000000.0},
+       {"documento_proveedor": "900200002", "tipodocproveedor": "NIT", "supplier_name": "EMPATE B", "contract_count": 12, "total_contract_value": 11000000.0},
+       {"documento_proveedor": "900200003", "tipodocproveedor": "NIT", "supplier_name": "TERCERO", "contract_count": 8, "total_contract_value": 8000000.0}
+     ]},
+    {"id": "v12", "query": "los 2 proveedores con más contratos de la alcaldía de Barranquilla", "quote": "proveedores"}
+  ]
+}

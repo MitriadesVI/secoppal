@@ -1,0 +1,16 @@
+{
+  "name": "SUPPLIERS 1.1 — baseline V1 (freeze before the change)",
+  "note": "Casos minimos de la seccion 3 del contrato. Quotes literales del raw para el proveedor de Natural Alpha scripted; labels del verificador de residual donde el C4A.5 adjudico MATERIAL.",
+  "cases": [
+    {"id": "b01", "bucket": "default", "query": "proveedores de la alcaldía de Galapa", "quote": "proveedores"},
+    {"id": "b02", "bucket": "default", "query": "proveedores de la alcaldía de Galapa en 2025", "quote": "proveedores"},
+    {"id": "b03", "bucket": "default", "query": "con quién ha contratado la alcaldía de Galapa", "quote": "ha contratado"},
+    {"id": "b04", "bucket": "count", "query": "proveedores con más contratos de la alcaldía de Barranquilla", "quote": "proveedores"},
+    {"id": "b05", "bucket": "value", "query": "proveedores con contratos de mayor valor de la alcaldía de Barranquilla", "quote": "proveedores"},
+    {"id": "b06", "bucket": "unsupported", "query": "proveedores de licitación pública de Galapa", "quote": "proveedores"},
+    {"id": "b07", "bucket": "money", "query": "proveedores de Galapa por más de 500 millones", "quote": "proveedores"},
+    {"id": "b08", "bucket": "topic", "query": "proveedores de educación de la Secretaría de Educación de Cali", "quote": "proveedores", "labels": {"educación": "MATERIAL"}},
+    {"id": "b09", "bucket": "actor", "query": "5 proveedores en adelante del proveedor NIT 900711074", "quote": "proveedores"},
+    {"id": "b10", "bucket": "negation", "query": "sin proveedores de la alcaldía de Galapa", "quote": "proveedores"}
+  ]
+}
