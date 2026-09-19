@@ -4663,3 +4663,14 @@ los artefactos congelados.
 
 Documentar no activa. Rollback: `SECOPPAL_NATURAL_ALPHA_MODE=off`.
 [Decisión completa](decisions/2026-09-13_ADR-096_natural-alpha-scoped-dogfood.md).
+
+---
+
+## ADR-097: SUPPLIERS V1 → V1.1 — petición explícita de ranking
+
+**Fecha:** 2026-09-18
+**Contexto:** SUPPLIERS servía una única vista fija —5 principales por número de contratos y por valor— con el corte como constante del SQL, y ejecutaba siempre ambos rankings. La cardinalidad ejecutable era un solo número exacto. Una pregunta completa no podía expresar ni la métrica ni la cantidad.
+**Decisión:** la capability gana `SupplierRankingRequest` (frozen): `metric` (COUNT | VALUE | BOTH) y `limit` exacto 1..25, con default BOTH/5. Un ranking = un job de fuente (COUNT→count, VALUE→value, BOTH→ambos); el SQL pide `limit+1` filas y la extra es un testigo de empate que nunca se publica. Un empate en el primer lugar no se presenta como líder único, y el empate del corte se declara. Cardinalidad no exacta, fuera de rango o ambigua queda fail-closed (aclaración, cero llamadas, sin truncar); el transporte entre carriles viaja validado y un transporte malformado no cae al default. Presentación adaptativa: escalar para top-1, lista con el N ejecutado para métrica única, la vista dual V1 para BOTH, con la operación ejecutada en la vista JSON. V1 ⊂ V1.1: la consulta genérica conserva BOTH/5, sus dos llamadas y sus vetos de dinero, modalidad, tema, geografía y actor.
+**Evidencia:** paridad BASE↔AFTER sin regresiones (30 pares; deltas esperados: métrica explícita = un solo job, fetch interno = corte+1); dogfood de 68 consultas standalone con los siete ceros duros en cero; corpus + propiedades + integración por `SecopalWorkflow.run_query`; Ruff limpio; Semgrep sin findings nuevos. La limitación `ACTOR_BUYER_SPAN_CONFLICT` («quién ha contratado por mayor valor con la Alcaldía de X») quedó adjudicada como preexistente: idéntica en BASE y candidato, con las autoridades de actor y comprador intactas.
+**Fuera de alcance:** follow-ups y continuidad, filtros nuevos (dinero/modalidad/tema), composición con otras capabilities, nuevos LLM o prompts, gazetteer, ADR-073 y Actor Profile. Documentar no activa: la activación productiva es una decisión posterior y de otro gate.
+[Decisión completa](decisions/2026-09-18_ADR-097_suppliers-request-flex-v1.md).
