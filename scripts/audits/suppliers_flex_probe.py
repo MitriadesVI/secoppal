@@ -175,11 +175,9 @@ def run_case(case: dict, mode: str, root: Path) -> dict:
     )
     os.environ["SECOPPAL_A2_SUPPLIERS_BINDING_ENABLED"] = "true"
     get_settings.cache_clear()
-    try:
-        import burr.telemetry
-        burr.telemetry.g_telemetry_enabled = False
-    except Exception:  # pragma: no cover - telemetry is best-effort
-        pass
+    import burr.telemetry
+
+    burr.telemetry.g_telemetry_enabled = False
 
     root.mkdir(parents=True, exist_ok=True)
     flow = SecopalWorkflow(_settings(root))
