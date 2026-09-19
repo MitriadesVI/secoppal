@@ -23,6 +23,11 @@ from app.core.entity_profile.models import (
     SourceCall,
     unavailable_section,
 )
+from app.core.entity_profile.supplier_ranking_request import (
+    DEFAULT_SUPPLIER_REQUEST,
+    SupplierRankingRequest,
+)
+from app.core.entity_profile.supplier_rankings import window_ranking
 
 
 _DATASET_BY_CALL = {
@@ -174,24 +179,32 @@ def _modalities(
 
 
 def _suppliers(
-    rows: dict[str, list[dict]], calls: dict[str, SourceCall], executed: frozenset[str],
+    rows: dict[str, list[dict]], calls: dict[str, SourceCall],
+    executed: frozenset[str], limit: int, metric: str = "both",
 ) -> EntityProfileSection:
+    """La vista de proveedores del plan: el corte que su petición autorizó.
+
+    El corte llega del plan (default V1 cuando no hay request), y se aplica
+    igual que en Frame: la fila extra que pide el SQL —el testigo de empate—
+    nunca es un resultado. Un ranking que la métrica no ejecuta no deja fact:
+    no se pidió, no falló.
+    """
     ids = _executed(("supplier_count", "supplier_value"), executed)
     if not ids:
         return unavailable_section()
     facts: list[EntityProfileFact] = []
-    if calls.get("supplier_count") and calls["supplier_count"].status == "SUCCESS":
-        facts.append(_fact(
-            "top_by_contract_count",
-            parse_suppliers(rows.get("supplier_count", [])),
-            CONTRACT_DATASET,
-        ))
-    if calls.get("supplier_value") and calls["supplier_value"].status == "SUCCESS":
-        facts.append(_fact(
-            "top_by_contract_value",
-            parse_suppliers(rows.get("supplier_value", [])),
-            CONTRACT_DATASET,
-        ))
+    for call_id, key, ranking in (
+        ("supplier_count", "top_by_contract_count", "count"),
+        ("supplier_value", "top_by_contract_value", "value"),
+    ):
+        if metric not in ("both", ranking):
+            continue
+        if calls.get(call_id) and calls[call_id].status == "SUCCESS":
+            window = window_ranking(
+                parse_suppliers(rows.get(call_id, [])), limit, ranking=ranking,
+            )
+            facts.append(_fact(key, window.visible, CONTRACT_DATASET))
+            facts.append(_fact(f"{ranking}_window", window, CONTRACT_DATASET))
     return EntityProfileSection(
         _status(ids, calls),
         (CONTRACT_DATASET,),
@@ -257,6 +270,17 @@ def _temporal(
     )
 
 
+def _supplier_request(plan: Any) -> SupplierRankingRequest:
+    """El request del plan; un plan duck-typed sin él es la vista V1 por defecto.
+
+    Los planes reales siempre lo declaran (build_execution_plan); las
+    estructuras de prueba que sólo describen foco y llamadas ejecutadas siguen
+    midiéndose contra la vista por defecto en vez de fallar.
+    """
+    request = getattr(plan, "supplier_ranking", None)
+    return request if isinstance(request, SupplierRankingRequest) else DEFAULT_SUPPLIER_REQUEST
+
+
 def build_sections(
     plan: Any,
     scope: EntityProfileScope,
@@ -268,6 +292,7 @@ def build_sections(
     calls = section_evidence_calls(rows, calls)
     executed = plan.executed_call_ids
     focus = plan.focus
+    request = _supplier_request(plan)
     activity = values = modalities = suppliers = temporal = recent = unavailable_section()
     if focus == "overview":
         process = parse_process_activity(rows.get("process_activity", []))
@@ -300,7 +325,9 @@ def build_sections(
         ) if ids else unavailable_section()
         values = _values(rows, calls, executed)
         modalities = _modalities(rows, calls, executed)
-        suppliers = _suppliers(rows, calls, executed)
+        suppliers = _suppliers(
+            rows, calls, executed, request.limit, request.metric.value,
+        )
         temporal = EntityProfileSection(
             activity.status,
             activity.source,
@@ -319,7 +346,9 @@ def build_sections(
         ) if ids else unavailable_section()
         recent = _recent(rows, calls, soql_builder, executed)
     elif focus == "suppliers":
-        suppliers = _suppliers(rows, calls, executed)
+        suppliers = _suppliers(
+            rows, calls, executed, request.limit, request.metric.value,
+        )
     elif focus == "modalities":
         modalities = _modalities(rows, calls, executed)
     elif focus == "values":

@@ -11,9 +11,9 @@ from app.core.entity_profile.models import (
     PROCESS_DATASET,
     EntityProfile,
     RecentRecord,
-    SupplierMetric,
 )
 from app.core.entity_profile.source_request import RequestedSources
+from app.core.entity_profile.supplier_presentation import supplier_lines
 from app.core.entity_profile.supplier_rankings import section_ranking
 
 
@@ -135,25 +135,6 @@ def _overview(profile: EntityProfile) -> list[str]:
     return lines[:8]
 
 
-def _supplier_lines(
-    title: str, suppliers: tuple[SupplierMetric, ...], metric: str, *, accredited: bool, noun: str = "contrato",
-) -> list[str]:
-    if not suppliers:
-        return []
-    if not accredited:
-        label = 'valor' if metric == 'value' else f'número de {noun}s'
-        title = f"Proveedores observados; ranking por {label} no acreditado"
-    lines = [title]
-    for supplier in suppliers:
-        value = (
-            _count(supplier.contract_count, noun + "s")
-            if metric == "count"
-            else _money(supplier.total_contract_value)
-        )
-        lines.append(f"• {supplier.observed_name}: {value}")
-    return lines
-
-
 def _recent_lines(title: str, rows: tuple[RecentRecord, ...]) -> list[str]:
     if not rows:
         return []
@@ -167,27 +148,9 @@ def _recent_lines(title: str, rows: tuple[RecentRecord, ...]) -> list[str]:
 def _focused(profile: EntityProfile) -> list[str]:
     noun = _contract_noun(profile)
     if profile.focus == "suppliers":
-        by_count = profile.suppliers.fact("top_by_contract_count")
-        by_value = profile.suppliers.fact("top_by_contract_value")
-        lines = [
-            *_supplier_lines(
-                f"Principales contratistas por número de {noun}s",
-                by_count or (),
-                "count",
-                accredited=section_ranking(profile.suppliers, 'count').accredited, noun=noun,
-            ),
-            *_supplier_lines(
-                "Principales contratistas por valor contratado",
-                by_value or (),
-                "value",
-                accredited=section_ranking(profile.suppliers, 'value').accredited,
-            ),
-        ]
-        answered = [ranking for ranking in (by_count, by_value) if ranking is not None]
-        if answered and not any(answered):
-            # A successful empty ranking is a fact; a header alone is not an answer.
-            lines.append(f"• No encontré proveedores con {noun}s que cumplan estos filtros.")
-        return lines
+        # La presentación adaptativa vive en su propio módulo: responde la
+        # métrica y el corte EJECUTADOS, con el empate del borde declarado.
+        return supplier_lines(profile, noun, money=_money, count=_count)
     if profile.focus == "modalities":
         modalities = profile.modalities.fact("top_modalities") or ()
         return [

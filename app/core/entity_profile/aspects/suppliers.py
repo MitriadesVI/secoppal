@@ -12,13 +12,33 @@ from app.core.entity_profile.aspects.common import (
 )
 from app.core.entity_profile.models import CONTRACT_DATASET, SupplierMetric
 from app.core.entity_profile.supplier_numbers import supplier_amount
+from app.core.entity_profile.supplier_ranking_request import (
+    DEFAULT_SUPPLIER_LIMIT,
+    MAX_SUPPLIER_LIMIT,
+)
 
 
-SUPPLIER_LIMIT = 5
+# Alias retro-compatible: el default de la vista es el mismo número que V1
+# declaraba como única constante. La autoridad de cardinalidad ya no depende de
+# este módulo; el alias sobrevive para los imports existentes.
+SUPPLIER_LIMIT = DEFAULT_SUPPLIER_LIMIT
 SupplierRanking = Literal["count", "value"]
 
 
-def build_supplier_query(builder: Any, params: dict, ranking: SupplierRanking) -> str:
+def build_supplier_query(
+    builder: Any, params: dict, ranking: SupplierRanking,
+    limit: int = DEFAULT_SUPPLIER_LIMIT,
+) -> str:
+    """El SELECT del ranking, con la cantidad EXACTA que el plan autorizó.
+
+    ``limit`` es el corte pedido. El SQL pide una fila más: ese testigo de
+    empate (§12) nunca es un resultado — los consumidores truncan a ``limit`` y
+    la fila extra sólo decide si el corte cae dentro de un empate. El entero se
+    valida aquí además de en el request: nunca se interpola un número no
+    acreditado.
+    """
+    if isinstance(limit, bool) or type(limit) is not int or not 1 <= limit <= MAX_SUPPLIER_LIMIT:
+        raise ValueError("SUPPLIER_LIMIT_OUT_OF_RANGE")
     spec, where = build_where(builder, CONTRACT_DATASET, params)
     document = spec.contractor_document
     document_type = spec.contractor_document_type
@@ -33,7 +53,7 @@ def build_supplier_query(builder: Any, params: dict, ranking: SupplierRanking) -
         f"AND {exclude_actor_document_sentinels(document)} "
         f"GROUP BY {document}, {document_type} "
         f"ORDER BY {metric} DESC, {document_type} ASC, {document} ASC "
-        f"LIMIT {SUPPLIER_LIMIT}"
+        f"LIMIT {limit + 1}"
     )
 
 

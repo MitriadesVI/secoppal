@@ -43,6 +43,10 @@ from app.core.entity_profile.frame_values import (
     SourceOrigin,
 )
 from app.core.entity_profile.immutability import deep_freeze
+from app.core.entity_profile.supplier_ranking_request import (
+    DEFAULT_SUPPLIER_REQUEST,
+    SupplierRankingRequest,
+)
 
 CATALOG_VERSION = "entity-profile-frame-2-contract-universe-1.1"
 
@@ -95,7 +99,15 @@ class JobSpec:
     build: Callable[[Any, dict], str]
 
 
-def _job_catalog() -> Mapping[str, tuple[JobSpec, ...]]:
+def _job_catalog(
+    supplier_request: SupplierRankingRequest = DEFAULT_SUPPLIER_REQUEST,
+) -> Mapping[str, tuple[JobSpec, ...]]:
+    """Los jobs por foco. El corte de proveedores es el de la petición, ya validado.
+
+    El entero entra por el cierre del lambda —como en V1 el 5 era una constante—
+    pero proviene de un request inmutable que la autoridad de cardinalidad
+    acreditó, no de una superficie que un emisor pueda reinterpretar.
+    """
     process_activity = JobSpec(
         "process_activity", "activity_modalities", SourceKind.PROCESSES,
         "aggregate", build_process_activity_query,
@@ -106,11 +118,15 @@ def _job_catalog() -> Mapping[str, tuple[JobSpec, ...]]:
     )
     supplier_count = JobSpec(
         "supplier_count", "suppliers", SourceKind.CONTRACTS, "aggregate",
-        lambda builder, params: build_supplier_query(builder, params, "count"),
+        lambda builder, params: build_supplier_query(
+            builder, params, "count", supplier_request.limit,
+        ),
     )
     supplier_value = JobSpec(
         "supplier_value", "suppliers", SourceKind.CONTRACTS, "aggregate",
-        lambda builder, params: build_supplier_query(builder, params, "value"),
+        lambda builder, params: build_supplier_query(
+            builder, params, "value", supplier_request.limit,
+        ),
     )
     recent_processes = JobSpec(
         "recent_processes", "recent", SourceKind.PROCESSES, "query",
@@ -207,11 +223,17 @@ class ProfilePlan:
     jobs: tuple[CompiledJob, ...]
     limitations: tuple[str, ...] = ()
     buyer_scope: BuyerScope | None = None
+    # La petición de proveedores que autorizó los jobs de suppliers: métrica y
+    # corte exacto. Viaja con el plan para que ejecución y presentación hablen
+    # de lo EJECUTADO y no de lo que el foco sugiere.
+    supplier_ranking: SupplierRankingRequest = DEFAULT_SUPPLIER_REQUEST
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "frame_ref", tuple(self.frame_ref))
         object.__setattr__(self, "jobs", tuple(self.jobs))
         object.__setattr__(self, "limitations", tuple(self.limitations))
+        if type(self.supplier_ranking) is not SupplierRankingRequest:
+            raise ValueError("INVALID_SUPPLIER_RANKING_REQUEST")
         source_plans = deep_freeze(self.source_plans)
         for source, source_plan in source_plans.items():
             if source_plan.source is not source:
@@ -281,8 +303,17 @@ def compile_profile(
     *,
     soql_builder,
     capability_catalog: Mapping[str, frozenset[SourceKind]] = FOCUS_CAPABILITY,
+    supplier_ranking: SupplierRankingRequest | None = None,
 ) -> PlanDecision:
-    """Frame -> plan autorizado, o la pregunta que impide autorizar uno."""
+    """Frame -> plan autorizado, o la pregunta que impide autorizar uno.
+
+    ``supplier_ranking`` es un valor ya acreditado (como el catálogo): el texto
+    no entra aquí. Sin petición, la vista V1 responde — BOTH con el corte por
+    defecto —, que es la paridad exacta que las consultas genéricas conservan.
+    """
+    ranking = supplier_ranking if supplier_ranking is not None else DEFAULT_SUPPLIER_REQUEST
+    if type(ranking) is not SupplierRankingRequest:
+        raise ValueError("INVALID_SUPPLIER_RANKING_REQUEST")
     issues = _validate_predicates(frame)
     if issues:
         return clarification(issues)
@@ -332,7 +363,7 @@ def compile_profile(
         return clarification((PlanIssue("UNSUPPORTED_PREDICATE", str(exc)),))
 
     try:
-        jobs = _build_jobs(soql_builder, frame.focus, source_plans)
+        jobs = _build_jobs(soql_builder, frame.focus, source_plans, ranking)
     except (UnsupportedPredicateError, ValueError, RuntimeError) as exc:
         # `UnsafeGlobalQueryError` y `BuyerCandidateSetExceedsSafeLimitError`
         # son RuntimeError. Un SQL que no se puede construir bloquea el plan
@@ -355,6 +386,7 @@ def compile_profile(
             source_plans=source_plans,
             jobs=jobs,
             limitations=limitations,
+            supplier_ranking=ranking,
         ),
         limitations=limitations,
     )
@@ -412,19 +444,26 @@ def _compile_source(builder, frame: EntityProfileFrame, source: SourceKind):
     )
 
 
-def _build_jobs(builder, focus: str, source_plans) -> tuple[CompiledJob, ...]:
+def _build_jobs(
+    builder, focus: str, source_plans,
+    supplier_ranking: SupplierRankingRequest,
+) -> tuple[CompiledJob, ...]:
     """El SQL de cada job, con el WHERE ya congelado por el compilador.
 
     Los constructores de aspecto siguen siendo los acreditados: aportan la
     forma del SELECT, el GROUP BY y el orden. Lo único que se les sustituye es
     la decisión de WHERE, que aquí ya está tomada. `params` llega vacío a
     propósito: no queda nada que un emisor pueda reinterpretar.
+
+    Un job de suppliers que la petición no ejecuta NO se planifica: COUNT no
+    pide el ranking por valor ni VALUE el de conteo (§10). No hay una segunda
+    llamada que después se oculte.
     """
-    specs = _job_catalog()[focus]
+    specs = _job_catalog(supplier_ranking)[focus]
     if len(specs) > PROFILE_QUERY_BUDGET:
         raise ValueError("Entity Profile query budget exceeded before execution")
     jobs: list[CompiledJob] = []
-    for spec in specs:
+    for spec in _ranked_specs(specs, supplier_ranking):
         plan = source_plans.get(spec.source)
         if plan is None:
             continue
@@ -436,6 +475,18 @@ def _build_jobs(builder, focus: str, source_plans) -> tuple[CompiledJob, ...]:
             sql=spec.build(frozen, {}),
         ))
     return tuple(jobs)
+
+
+def _ranked_specs(
+    specs: tuple[JobSpec, ...], request: SupplierRankingRequest,
+) -> tuple[JobSpec, ...]:
+    """Sólo el ranking que la petición ejecuta; los jobs ajenos no se tocan."""
+    def asked(spec: JobSpec) -> bool:
+        if not spec.call_id.startswith("supplier_"):
+            return True
+        return request.metric.asks(spec.call_id[len("supplier_"):])
+
+    return tuple(spec for spec in specs if asked(spec))
 
 
 class _FrozenWhereBuilder:

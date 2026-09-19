@@ -23,6 +23,12 @@ from app.core.entity_profile.query_runner import QueryJob, jobs_for_focus
 from app.core.entity_profile.semantic_request import EntityProfileSemanticRequest
 from app.core.entity_profile.source_plan import SourcePlan, project_sources
 from app.core.entity_profile.source_request import RequestedSources, SourceProvenance
+from app.core.entity_profile.supplier_ranking_request import (
+    DEFAULT_SUPPLIER_REQUEST,
+    SupplierRankingRequest,
+    UNSUPPORTED_CARDINALITY_TEXT,
+    request_from_params,
+)
 from app.core.entity_profile.temporal_event import TemporalEvent
 
 
@@ -102,6 +108,14 @@ class EntityProfileExecutionPlan:
     contract_plan: SourcePlan
     jobs: tuple[QueryJob, ...] = ()
     clarification: str | None = None
+    # La petición de proveedores de este plan: métrica y corte exacto. Llega
+    # transportada por params (primitivas) y reconstruida validada; sin ella, la
+    # vista V1 por defecto.
+    supplier_ranking: SupplierRankingRequest = DEFAULT_SUPPLIER_REQUEST
+
+    def __post_init__(self) -> None:
+        if type(self.supplier_ranking) is not SupplierRankingRequest:
+            raise ValueError("INVALID_SUPPLIER_RANKING_REQUEST")
 
     @property
     def focus(self) -> str:
@@ -218,6 +232,14 @@ def build_execution_plan(
         PROCESS_DATASET: process_plan,
         CONTRACT_DATASET: contract_plan,
     }
+    # La petición de proveedores viaja por params ya resuelta (carril A2). Un
+    # transporte malformado no cae al default: se aclara con cero jobs.
+    supplier_ranking = request_from_params(params)
+    if supplier_ranking is None:
+        return EntityProfileExecutionPlan(
+            request, process_plan, contract_plan,
+            clarification=UNSUPPORTED_CARDINALITY_TEXT,
+        )
 
     if request.unsupported_event is not None:
         return EntityProfileExecutionPlan(
@@ -282,7 +304,10 @@ def build_execution_plan(
 
     jobs = tuple(
         replace(job, params=plans[_JOB_DATASET_BY_ID[job.call_id]].params)
-        for job in jobs_for_focus(request.focus)
+        for job in jobs_for_focus(request.focus, supplier_ranking)
         if _JOB_DATASET_BY_ID[job.call_id] in executable
     )
-    return EntityProfileExecutionPlan(request, process_plan, contract_plan, jobs)
+    return EntityProfileExecutionPlan(
+        request, process_plan, contract_plan, jobs,
+        supplier_ranking=supplier_ranking,
+    )

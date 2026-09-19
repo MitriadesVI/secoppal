@@ -63,7 +63,9 @@ def test_placeholder_group_cannot_consume_top_five(case, ranking):
     artificial = next(row for row in old if row['documento_proveedor'] == 'No Definido')
     assert artificial['contract_count'] == 11
     assert artificial['supplier_name'] == max(row[2] for row in placeholders)
-    assert len(parse_suppliers(old)) == 4
+    # El artificial encabeza el fetch (6 = corte + testigo de empate) y jamás
+    # parsea; los 5 válidos quedan visibles.
+    assert len(parse_suppliers(old)) == 5
     actual = parse_suppliers(aggregate(valid + placeholders, ranking))
     expected = parse_suppliers(aggregate(valid, ranking))
     assert len(actual) == 5
@@ -77,7 +79,9 @@ def test_predicate_precedes_grouping_and_keeps_typed_key_and_limit(ranking):
     assert 'NOT IN' in where
     assert "'NO DEFINIDO'" in where
     assert 'GROUP BY documento_proveedor, tipodocproveedor' in sql
-    assert sql.endswith('LIMIT 5')
+    # El corte por defecto es 5; el SQL pide una fila más —el testigo de
+    # empate (§12)— que los consumidores separan y nunca publican.
+    assert sql.endswith('LIMIT 6')
 
 
 @pytest.mark.parametrize('value', [None, '', 'unknown', '12', *SENTINELS])

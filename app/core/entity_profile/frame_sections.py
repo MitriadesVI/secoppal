@@ -43,7 +43,12 @@ from app.core.entity_profile.models import (
     SourceCall,
     unavailable_section,
 )
-from app.core.entity_profile.supplier_rankings import accredit_ranking, ranking_warnings
+from app.core.entity_profile.supplier_rankings import (
+    accredit_ranking,
+    ranking_warnings,
+    window_ranking,
+)
+from app.core.entity_profile.supplier_ranking_request import SupplierRankingRequest
 
 
 SECTION_ORDER = (
@@ -78,7 +83,7 @@ def build_frame_sections(
         "activity": lambda: _activity(rows, calls, coverage),
         "values": lambda: _values(rows, calls),
         "modalities": lambda: _modalities(rows, calls),
-        "suppliers": lambda: _suppliers(rows, calls),
+        "suppliers": lambda: _suppliers(rows, calls, plan.supplier_ranking),
         "temporal": lambda: _temporal(plan, rows, calls, coverage),
         "recent": lambda: _recent(rows, calls, soql_builder),
     }
@@ -274,27 +279,36 @@ def _modalities(rows, calls) -> EntityProfileSection:
     )
 
 
-def _suppliers(rows, calls) -> EntityProfileSection:
+def _suppliers(
+    rows, calls, request: SupplierRankingRequest,
+) -> EntityProfileSection:
     ids = _ids(("supplier_count", "supplier_value"), calls)
     if not ids:
         return unavailable_section(attempted=True)
     facts: list[EntityProfileFact] = []
     warnings = list(_warnings("los proveedores", ids, calls))
     status = _status(ids, calls)
-    for call_id, key in (
-        ("supplier_count", "top_by_contract_count"),
-        ("supplier_value", "top_by_contract_value"),
+    for call_id, key, ranking in (
+        ("supplier_count", "top_by_contract_count", "count"),
+        ("supplier_value", "top_by_contract_value", "value"),
     ):
+        if not request.metric.asks(ranking):
+            # El ranking no se planificó: ni se pidió ni falló. Un fact suyo, o
+            # su advertencia, convertiría «no lo pediste» en «no lo obtuve».
+            continue
         available = call_id in ids and calls[call_id].status == "SUCCESS"
         suppliers = parse_suppliers(rows.get(call_id, [])) if available else ()
-        ranking = 'count' if call_id == 'supplier_count' else 'value'
-        decision = accredit_ranking(ranking, suppliers, available=available)
+        # El corte visible y su testigo de empate (§12): la fila extra que pide
+        # el SQL se separa aquí y nunca se publica como resultado.
+        window = window_ranking(suppliers, request.limit, ranking=ranking)
+        decision = accredit_ranking(ranking, window.visible, available=available)
         facts.append(_fact(f'{ranking}_ranking_accreditation', decision, CONTRACT_DATASET))
+        facts.append(_fact(f'{ranking}_window', window, CONTRACT_DATASET))
         warnings.extend(ranking_warnings(ranking, decision))
         if available:
             if not decision.amounts_valid or not decision.counts_valid:
                 status = SectionStatus.PARTIAL
-            facts.append(_fact(key, suppliers, CONTRACT_DATASET))
+            facts.append(_fact(key, window.visible, CONTRACT_DATASET))
     return EntityProfileSection(
         status, (CONTRACT_DATASET,),
         (("identity", "typed_supplier_document"),), tuple(facts),

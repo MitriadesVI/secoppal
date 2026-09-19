@@ -20,7 +20,8 @@ from app.core.entity_profile.models import (
     RecentRecord,
     SupplierMetric,
 )
-from app.core.entity_profile.render import _contract_noun, _money, profile_next_steps
+from app.core.entity_profile.render import _contract_noun, _count, _money, profile_next_steps
+from app.core.entity_profile.supplier_presentation import supplier_view
 from app.core.entity_profile.supplier_rankings import section_ranking
 
 
@@ -76,6 +77,9 @@ def project_entity_profile(profile: EntityProfile) -> dict:
         "suppliers": {
             "by_value": _supplier(profile, "value", noun),
             "by_count": _supplier(profile, "count", noun),
+            # La operación EJECUTADA: la métrica, el corte y el empate del borde.
+            # by_value/by_count se conservan para los consumidores V1.
+            "ranking": supplier_view(profile, noun, money=_money, count=_count),
         },
         "recent": {
             "process": _recent(profile.recent.fact("processes")),

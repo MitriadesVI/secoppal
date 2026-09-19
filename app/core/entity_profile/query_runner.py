@@ -16,6 +16,10 @@ from app.core.entity_profile.aspects import (
 )
 from app.core.entity_profile.models import CONTRACT_DATASET, PROCESS_DATASET, SourceCall
 from app.core.entity_profile.immutability import mutable_copy
+from app.core.entity_profile.supplier_ranking_request import (
+    DEFAULT_SUPPLIER_REQUEST,
+    SupplierRankingRequest,
+)
 
 
 ENTITY_PROFILE_QUERY_BUDGET = 6
@@ -46,7 +50,15 @@ class JobResult:
     call: SourceCall
 
 
-def jobs_for_focus(focus: str) -> tuple[QueryJob, ...]:
+def jobs_for_focus(
+    focus: str,
+    supplier_request: SupplierRankingRequest = DEFAULT_SUPPLIER_REQUEST,
+) -> tuple[QueryJob, ...]:
+    """Los jobs del foco. El ranking de proveedores es el de la petición.
+
+    Sólo se planifica el ranking que la petición ejecuta: COUNT no envía la
+    consulta por valor ni VALUE la de conteo.
+    """
     process_activity = QueryJob(
         "process_activity", "activity_modalities", PROCESS_DATASET, "aggregate",
         build_process_activity_query,
@@ -57,11 +69,15 @@ def jobs_for_focus(focus: str) -> tuple[QueryJob, ...]:
     )
     supplier_count = QueryJob(
         "supplier_count", "suppliers", CONTRACT_DATASET, "aggregate",
-        lambda builder, params: build_supplier_query(builder, params, "count"),
+        lambda builder, params: build_supplier_query(
+            builder, params, "count", supplier_request.limit,
+        ),
     )
     supplier_value = QueryJob(
         "supplier_value", "suppliers", CONTRACT_DATASET, "aggregate",
-        lambda builder, params: build_supplier_query(builder, params, "value"),
+        lambda builder, params: build_supplier_query(
+            builder, params, "value", supplier_request.limit,
+        ),
     )
     recent_processes = QueryJob(
         "recent_processes", "recent", PROCESS_DATASET, "query",
@@ -99,9 +115,19 @@ def jobs_for_focus(focus: str) -> tuple[QueryJob, ...]:
         jobs = plans[focus]
     except KeyError as exc:
         raise ValueError(f"unknown Entity Profile focus: {focus}") from exc
+    jobs = tuple(job for job in jobs if _supplier_ranking_asked(job, supplier_request))
     if len(jobs) > ENTITY_PROFILE_QUERY_BUDGET:
         raise ValueError("Entity Profile query budget exceeded before execution")
     return jobs
+
+
+def _supplier_ranking_asked(
+    job: QueryJob, request: SupplierRankingRequest,
+) -> bool:
+    """Sólo el ranking que la petición ejecuta; ningún otro job se filtra."""
+    if not job.call_id.startswith("supplier_"):
+        return True
+    return request.metric.asks(job.call_id[len("supplier_"):])
 
 
 def _is_timeout(exc: Exception) -> bool:

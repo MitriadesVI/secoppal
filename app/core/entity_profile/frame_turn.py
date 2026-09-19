@@ -59,6 +59,11 @@ from app.core.entity_profile.profile_state import (
     new_pending_id,
 )
 from app.core.entity_profile.scope import resolve_profile_scope
+from app.core.entity_profile.supplier_ranking_request import (
+    DEFAULT_SUPPLIER_REQUEST,
+    SupplierRankingRequest,
+    resolve_supplier_ranking_request,
+)
 from app.core.entity_profile.turn import (
     GEOGRAPHY_PARAM_KEYS,
     PROFILE_ACTIVE_PARAM,
@@ -198,11 +203,27 @@ def run_profile_turn(
         # Sin comprador propio y sin Frame confirmado no hay universo posible.
         return _territory_block(user_query, params, resolution)
 
+    # La petición de proveedores se resuelve UNA vez aquí, del texto del turno,
+    # y viaja ya inmutable a la compilación. Un None significa que la
+    # cardinalidad pedida no es servible: se aclara, nunca se ejecuta el default
+    # por ella.
+    ranking = DEFAULT_SUPPLIER_REQUEST
+    if focus == "suppliers":
+        resolved = _ranking_request(user_query)
+        if resolved is None:
+            return ProfileTurnOutcome(
+                TurnKind.CLARIFICATION,
+                _unsupported_cardinality_text(),
+                state, "entity_profile_suppliers_unsupported_cardinality",
+                issues=("UNSUPPORTED_CARDINALITY",),
+            )
+        ranking = resolved
+
     return _compose_and_run(
         user_query=user_query, clean=clean, base=base, buyer=buyer,
         turn_id=turn_id, state=state, soql_builder=soql_builder,
         secop_client=secop_client, resolution=resolution, focus=focus,
-        today=today, bound_focus=bound_focus,
+        today=today, bound_focus=bound_focus, supplier_ranking=ranking,
     )
 
 
@@ -211,6 +232,7 @@ def run_profile_turn(
 def _compose_and_run(
     *, user_query, clean, base, buyer, turn_id, state, soql_builder,
     secop_client, resolution, focus, today, bound_focus=None,
+    supplier_ranking=DEFAULT_SUPPLIER_REQUEST,
 ) -> ProfileTurnOutcome:
     claims = collect_claims(
         user_query, clean, turn_id=turn_id, buyer_resolution=resolution,
@@ -241,14 +263,17 @@ def _compose_and_run(
         )
     return _compile_and_execute(
         outcome.frame, proposal.patch, state, base, soql_builder, secop_client,
-        focus,
+        focus, supplier_ranking,
     )
 
 
 def _compile_and_execute(
     candidate, patch, state, base, soql_builder, secop_client, focus,
+    supplier_ranking=DEFAULT_SUPPLIER_REQUEST,
 ) -> ProfileTurnOutcome:
-    decision = compile_profile(candidate, soql_builder=soql_builder)
+    decision = compile_profile(
+        candidate, soql_builder=soql_builder, supplier_ranking=supplier_ranking,
+    )
     if decision.status is PlanStatus.NEEDS_CLARIFICATION:
         return _clarify(
             state, base,
@@ -449,6 +474,30 @@ def _invalid_text(reason: str | None) -> str:
         + (f" ({reason})." if reason else ".")
         + " Vuelve a decirme qué entidad quieres analizar."
     )
+
+
+def _ranking_request(user_query: str) -> SupplierRankingRequest | None:
+    """La petición de proveedores del turno, o ``None`` cuando no es servible.
+
+    Una sola autoridad la resuelve —la de cardinalidad del binding de
+    SUPPLIERS—, sobre el texto del turno. Compilar y ejecutar reciben el valor
+    ya resuelto; nadie aguas abajo vuelve a leer el español.
+    """
+    from app.core.capability_binding.supplier_request_authority import (
+        assess_supplier_request,
+    )
+
+    return resolve_supplier_ranking_request(
+        user_query, assess_supplier_request(user_query),
+    )
+
+
+def _unsupported_cardinality_text() -> str:
+    from app.core.entity_profile.supplier_ranking_request import (
+        UNSUPPORTED_CARDINALITY_TEXT,
+    )
+
+    return UNSUPPORTED_CARDINALITY_TEXT
 
 
 def _fold(text: str) -> str:
