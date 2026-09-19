@@ -133,6 +133,38 @@ def _settings(root: Path):
     )
 
 
+def _actor_resolver(scratch: Path):
+    """El índice de actores del fixture C4B: la frontera real de producción.
+
+    Sin él, un nombre de proveedor no reconocible ("fundacaribe") no puede ser
+    reclamado por Actor Profile y el turno se sirve como vista de proveedores —
+    el MISMO comportamiento en BASE y en el candidato, medido antes de
+    adjudicarlo. Con él, el guard exacto hace su trabajo.
+    """
+    from app.data.actor_alias_index import build_actor_alias_index
+    from app.data.actor_alias_resolver import ActorNameResolver
+
+    path = scratch / "actors.sqlite"
+    if not path.exists():
+        scratch.mkdir(parents=True, exist_ok=True)
+        build_actor_alias_index(
+            [
+                {"tipodocproveedor": "NIT", "documento_proveedor": "900123456",
+                 "proveedor_adjudicado": "FUNDACARIBE", "occurrences": 12,
+                 "first_seen": "2023-01-01", "last_seen": "2026-01-01"},
+                {"tipodocproveedor": "NIT", "documento_proveedor": "900777111",
+                 "proveedor_adjudicado": "OBRAS", "occurrences": 4,
+                 "first_seen": "2023-01-01", "last_seen": "2026-01-01"},
+                {"tipodocproveedor": "NIT", "documento_proveedor": "900777222",
+                 "proveedor_adjudicado": "CONTRATAR", "occurrences": 3,
+                 "first_seen": "2023-01-01", "last_seen": "2026-01-01"},
+            ],
+            path, source_dataset="flex-probe-fixture",
+            built_at="2026-09-18T12:00:00+00:00",
+        )
+    return ActorNameResolver(path)
+
+
 def run_case(case: dict, mode: str, root: Path) -> dict:
     from app.config import get_settings
     from app.core.conversation_store import ConversationStore
@@ -161,6 +193,7 @@ def run_case(case: dict, mode: str, root: Path) -> dict:
     )
     flow.natural_alpha_provider = Mock(observe=Mock(return_value=observation))
     flow.residual_verifier_provider = ApprovingVerifier(case.get("labels"))
+    flow.actor_name_resolver = _actor_resolver(root.parent)
 
     chat_id = f"probe-{case['id']}-{mode}"
     try:
@@ -184,6 +217,7 @@ def run_case(case: dict, mode: str, root: Path) -> dict:
         "needs_clarification": bool(result.get("needs_clarification")),
         "response": result.get("response", ""),
         "view_focus": view.get("focus") if isinstance(view, dict) else None,
+        "view_header": view.get("header") if isinstance(view, dict) else None,
         "view_suppliers": suppliers_view,
         "accredited_params": {
             key: value for key, value in (result.get("accredited_params") or {}).items()
