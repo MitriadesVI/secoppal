@@ -37,7 +37,9 @@ def main() -> int:
     for key, before in sorted(base.items()):
         current = after.get(key)
         if current is None:
-            deltas.append((*key, "MISSING_AFTER", "", ""))
+            # Un par de BASE sin contraparte en AFTER es una regresión, no una
+            # nota: la paridad se mide entre pares (ZEUS-2 lo señaló).
+            deltas.append((*key, "REGRESSION", "par presente", "sin contraparte"))
             continue
         if current["outcome"] != before["outcome"]:
             deltas.append((*key, "REGRESSION", before["outcome"], current["outcome"]))
