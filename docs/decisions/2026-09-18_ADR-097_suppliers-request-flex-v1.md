@@ -83,6 +83,34 @@ llamadas. La paridad BASE↔AFTER sobre los diez casos §3 no tiene regresiones;
 los deltas son EXPECTED: una métrica explícita deja de consultar el ranking que
 no pidió, y el fetch interno pasa a `corte+1`.
 
+## Remediaciones de la revisión independiente
+
+ZEUS (tres revisores en contexto limpio) encontró tres defectos reales del
+candidato y varios observations; los defectos se remediaron con contraejemplo y
+test, y las fronteras quedaron fijadas en el corpus:
+
+- **D1 · cantidad colgante.** «el top 30 de los proveedores de X» — el enlace y
+  el determinante separaban la cantidad del grupo nominal y el turno se servía
+  con la vista por defecto. La gramática ahora marca esa cantidad como residuo
+  ambiguo (fail-closed), con ventana corta: un año u otra cantidad lejana no
+  califican (el decoy `en 2025 quiero ver proveedores` sigue resolviendo).
+- **D2 · familia numérica en palabras.** «veintiséis/doscientos proveedores»
+  caían a WORD y el número desaparecía sin residuo. El lexer marca veinti- y
+  las centenas como no resueltas → UNKNOWN_QUANTITY (fail-closed).
+- **D3 · proporción en palabras.** «el 10 por ciento» ejecutaba mientras
+  «el 10%» aclaraba. El detector de proporción cubre el símbolo y las palabras;
+  «la mitad/un tercio/la mayoría» se suman a los cuantificadores indefinidos.
+- Además: el transporte presente-con-None ya no cae al default; con un solo
+  cupo el escalar cubre también BOTH (un empate no nombra líder); sin cifra
+  acreditable el título escalar no afirma un primer puesto; y el verificador de
+  paridad dejó de ser ciego (dos bugs propios: desempaque de los call
+  records y `limits(after)` en vez de `limits(current)`).
+
+Evidencia final: dogfood de 73 casos con los siete ceros duros en cero;
+paridad fresca con el mismo harness a ambos lados (30 pares, 13 deltas, todos
+EXPECTED_V1_1_DELTA: corte+1 y métrica explícita, 0 regresiones); Ruff limpio;
+Semgrep 25→24 con 0 findings nuevos.
+
 ## Consecuencias
 
 - Todo el camino de proveedores (Frame y legacy) comparte un único resolver; el

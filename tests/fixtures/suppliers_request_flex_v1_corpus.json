@@ -384,6 +384,36 @@
       }
     },
     {
+      "id": "o05",
+      "bucket": "over_max",
+      "query": "el top 30 de los proveedores de la alcaldía de Barranquilla",
+      "quote": "proveedores",
+      "expect": {
+        "metric": null,
+        "limit": null
+      }
+    },
+    {
+      "id": "o06",
+      "bucket": "over_max",
+      "query": "veintiséis proveedores de la alcaldía de Barranquilla",
+      "quote": "proveedores",
+      "expect": {
+        "metric": null,
+        "limit": null
+      }
+    },
+    {
+      "id": "o07",
+      "bucket": "over_max",
+      "query": "doscientos proveedores de la alcaldía de Barranquilla",
+      "quote": "proveedores",
+      "expect": {
+        "metric": null,
+        "limit": null
+      }
+    },
+    {
       "id": "a01",
       "bucket": "ambiguous",
       "query": "varios proveedores de la alcaldía de Barranquilla",
@@ -457,6 +487,26 @@
       "id": "a08",
       "bucket": "ambiguous",
       "query": "algunos proveedores de la alcaldía de Barranquilla",
+      "quote": "proveedores",
+      "expect": {
+        "metric": null,
+        "limit": null
+      }
+    },
+    {
+      "id": "a09",
+      "bucket": "ambiguous",
+      "query": "el 10 por ciento de los proveedores de la alcaldía de Barranquilla",
+      "quote": "proveedores",
+      "expect": {
+        "metric": null,
+        "limit": null
+      }
+    },
+    {
+      "id": "a10",
+      "bucket": "ambiguous",
+      "query": "la mitad de los proveedores de la alcaldía de Barranquilla",
       "quote": "proveedores",
       "expect": {
         "metric": null,

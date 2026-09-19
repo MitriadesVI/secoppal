@@ -55,6 +55,17 @@ class RowsSource:
         self.calls.append((dataset, soql))
         return 0
 
+
+# Empate deliberado en el primer lugar (12 y 12 contratos).
+TIE_ROWS = [
+    {"documento_proveedor": "900200001", "tipodocproveedor": "NIT",
+     "supplier_name": "EMPATE A", "contract_count": 12, "total_contract_value": 12000000.0},
+    {"documento_proveedor": "900200002", "tipodocproveedor": "NIT",
+     "supplier_name": "EMPATE B", "contract_count": 12, "total_contract_value": 11000000.0},
+    {"documento_proveedor": "900200003", "tipodocproveedor": "NIT",
+     "supplier_name": "TERCERO", "contract_count": 8, "total_contract_value": 8000000.0},
+]
+
 # Un caso representativo por bucket servible; el corpus completo se verifica en
 # el módulo determinista (mismo fixture, cero coste).
 SERVED = ("d01", "d02", "c01", "c02", "c03", "v03", "s01", "s02", "e04", "e07", "e06", "y01", "p02")
@@ -147,14 +158,7 @@ def test_a_first_place_tie_is_never_presented_as_a_unique_leader(frame_on, make_
     """§12: empate en el primer lugar — se nombra el valor y el empate, no un líder."""
     case = BY_ID["s02"]
     flow, _verifier = accredited_flow(make_flow, frame_on, case["quote"])
-    flow.secop_client = RowsSource([
-        {"documento_proveedor": "900200001", "tipodocproveedor": "NIT",
-         "supplier_name": "EMPATE A", "contract_count": 12, "total_contract_value": 12000000.0},
-        {"documento_proveedor": "900200002", "tipodocproveedor": "NIT",
-         "supplier_name": "EMPATE B", "contract_count": 12, "total_contract_value": 11000000.0},
-        {"documento_proveedor": "900200003", "tipodocproveedor": "NIT",
-         "supplier_name": "TERCERO", "contract_count": 8, "total_contract_value": 8000000.0},
-    ])
+    flow.secop_client = RowsSource(TIE_ROWS)
 
     result = run(flow, case["query"], chat_id="flex-tie")
 
@@ -165,6 +169,45 @@ def test_a_first_place_tie_is_never_presented_as_a_unique_leader(frame_on, make_
     assert ranking["ties"] == [
         {"ranking": "count", "position": 1, "boundary": "12 contratos"},
     ]
+
+
+def test_a_both_with_a_single_cup_and_a_tie_never_names_a_leader(frame_on, make_flow):
+    """ZEUS §11: «1 proveedor …» es BOTH/1 — el escalar cubre ambas métricas.
+
+    Con estas filas sólo empata el ranking por conteo (12,12); por valor hay
+    líder único (12M contra 11M) y nombrarlo es correcto. Lo que no puede pasar
+    es que el ranking EMPATADO nombre a alguien.
+    """
+    flow, _verifier = accredited_flow(make_flow, frame_on, "proveedor")
+    flow.secop_client = RowsSource(TIE_ROWS)
+
+    result = run(flow, "1 proveedor de la alcaldía de Barranquilla", chat_id="flex-both1-tie")
+
+    response = result["response"]
+    assert "existe empate en el primer lugar" in response
+    assert "EMPATE A: 12 contratos" not in response, "el ranking empatado no nombra"
+    assert "EMPATE B: 12 contratos" not in response
+    ranking = result["entity_profile_view"]["suppliers"]["ranking"]
+    assert (ranking["metric"], ranking["limit"]) == ("both", 1)
+    assert [tie["ranking"] for tie in ranking["ties"]] == ["count"]
+
+
+def test_a_failed_single_ranking_never_keeps_an_affirming_title(frame_on, make_flow):
+    """ZEUS §11: sin cifra acreditable el título escalar no afirma un primer puesto."""
+    class FailingSource(RowsSource):
+        def aggregate(self, dataset, soql, **kwargs):
+            self.calls.append((dataset, soql))
+            raise TimeoutError("SECOP no respondió")
+
+    case = BY_ID["s05"]
+    flow, _verifier = accredited_flow(make_flow, frame_on, case["quote"])
+    flow.secop_client = FailingSource([])
+
+    result = run(flow, case["query"], chat_id="flex-scalar-fail")
+
+    response = result["response"]
+    assert "Proveedor con mayor valor contratado" not in response
+    assert "no acreditado" in response
 
 
 def test_a_boundary_tie_in_a_top_n_is_declared_without_deciding_the_order(frame_on, make_flow):

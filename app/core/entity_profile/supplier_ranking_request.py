@@ -90,11 +90,12 @@ UNSUPPORTED_CARDINALITY_TEXT = (
 # las refuta como residuo; aquí se cierran las que no llevan número.
 _UNBOUNDED_QUANTIFIERS = re.compile(
     r"\b(?:varios|varias|algunos|algunas|unos|unas|todos|todas|ambos|ambas|"
-    r"aproximadamente|cerca\s+de|alrededor\s+de|mas\s+o\s+menos)\b"
+    r"aproximadamente|cerca\s+de|alrededor\s+de|mas\s+o\s+menos|"
+    r"mitad|tercio|mayoria)\b"
 )
-# «el 10% de proveedores»: el símbolo corta el segmento y ninguna gramática lo
-# lee como cantidad; sigue siendo una proporción que la vista no puede servir.
-_PERCENT = re.compile(r"\d\s*%")
+# «el 10% de proveedores» y su forma en palabras («el 10 por ciento»): ninguna
+# gramática lee una proporción como cantidad, y la vista no puede servirla.
+_PERCENT = re.compile(r"\d\s*%|\bpor\s+ciento\b|\bporciento\b")
 
 
 def resolve_supplier_ranking_request(
@@ -162,13 +163,16 @@ def transport_params(request: SupplierRankingRequest) -> dict:
 def request_from_params(params: dict) -> SupplierRankingRequest | None:
     """El request transportado, reconstruido y validado; ``None`` si no cuadra.
 
-    Ausente significa «la vista V1 por defecto». Presente y malformado es una
-    petición que no se ejecuta: fail-closed, jamás un default silencioso.
+    Ausente significa «la vista V1 por defecto». Presente —aunque sea con
+    ``None``— es una petición que no se ejecuta: fail-closed, jamás un default
+    silencioso.
     """
+    if METRIC_PARAM not in params and LIMIT_PARAM not in params:
+        return DEFAULT_SUPPLIER_REQUEST
     metric = params.get(METRIC_PARAM)
     limit = params.get(LIMIT_PARAM)
-    if metric is None and limit is None:
-        return DEFAULT_SUPPLIER_REQUEST
+    if metric is None or limit is None:
+        return None
     try:
         return SupplierRankingRequest(SupplierRankingMetric(metric), limit)
     except (TypeError, ValueError):

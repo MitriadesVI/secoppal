@@ -107,9 +107,42 @@ def test_transport_roundtrip_is_json_safe_and_validated():
     {LIMIT_PARAM: 3, METRIC_PARAM: "otro"},
     {LIMIT_PARAM: 3, METRIC_PARAM: None},
     {LIMIT_PARAM: None, METRIC_PARAM: "count"},
+    # Presente con None también es fail-closed: sólo AUSENTE es el default.
+    {LIMIT_PARAM: None, METRIC_PARAM: None},
 ])
 def test_malformed_transport_fails_closed(malformed):
     assert request_from_params(malformed) is None
+
+
+# ── fronteras cerradas por la revisión independiente (§11) ───────────────────
+
+@pytest.mark.parametrize("surface", [
+    "el top 30 de los proveedores de la alcaldía de Barranquilla",
+    "top 30 de proveedores de la alcaldía de Barranquilla",
+    "dame los 30 de los proveedores de la alcaldía de Barranquilla",
+    "veintiséis proveedores de la alcaldía de Barranquilla",
+    "veintinueve proveedores de la alcaldía de Barranquilla",
+    "doscientos proveedores de la alcaldía de Barranquilla",
+])
+def test_a_dangling_or_spelled_number_out_of_range_never_falls_to_the_default(surface):
+    """D1/D2: el número no adherido («de los») o en palabras se cierra, no se sirve."""
+    assert resolved(surface) is None
+
+
+@pytest.mark.parametrize("surface", [
+    "el 10 por ciento de los proveedores de la alcaldía de Barranquilla",
+    "diez por ciento de los proveedores de la alcaldía de Barranquilla",
+    "la mitad de los proveedores de la alcaldía de Barranquilla",
+])
+def test_a_proportion_never_falls_to_the_default(surface):
+    """D3: la proporción (símbolo o palabras) no se reinterpreta como corte."""
+    assert resolved(surface) is None
+
+
+def test_the_year_decoy_is_not_a_dangling_quantity():
+    # La regresión que la ventana corta evita: un año lejano no es una cantidad
+    # colgante y el decoy sigue resolviendo la vista por defecto.
+    assert resolved("en 2025 quiero ver proveedores") == DEFAULT_SUPPLIER_REQUEST
 
 
 # ── propiedades (§16) ────────────────────────────────────────────────────────
@@ -132,13 +165,18 @@ def test_zero_and_negative_never_become_a_limit(value):
 
 
 @given(amount=st.integers(min_value=1, max_value=10**7))
-def test_a_monetary_amount_never_becomes_the_cut(amount):
+def test_a_monetary_amount_never_changes_the_requested_view(amount):
+    """El monto no participa: con y sin él, la resolución es exactamente la misma.
+
+    (La versión anterior comparaba `limit != amount`, que con amount=5 coincide
+    con el default y no probaba nada: ZEUS lo encontró.)
+    """
+    base = resolved("proveedores de la alcaldía de Barranquilla")
     for surface in (
         f"proveedores de la alcaldía de Barranquilla por más de {amount} millones",
         f"proveedores de la alcaldía de Barranquilla con contratos por {amount} millones",
     ):
-        request = resolved(surface)
-        assert request is None or request.limit != amount
+        assert resolved(surface) == base
 
 
 @given(year=st.integers(min_value=1990, max_value=2100))

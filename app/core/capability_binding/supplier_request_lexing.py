@@ -58,6 +58,16 @@ _UNRESOLVED_NUMBER_WORDS = frozenset({
     "diecisiete", "dieciocho", "diecinueve", "cuarenta", "sesenta",
     "setenta", "ochenta", "noventa", "ciento", "mil", "millon",
     "millones",
+    # La familia veinti- y las centenas no tienen producción: sin esta marca
+    # caían a WORD y el número desaparecía sin residuo — un pedido fuera de
+    # rango servido con el default en silencio.
+    "veintiun", "veintiuna", "veintiuno", "veintidos", "veintitres",
+    "veinticuatro", "veinticinco", "veintiseis", "veintisiete",
+    "veintiocho", "veintinueve",
+    "doscientos", "doscientas", "trescientos", "trescientas",
+    "cuatrocientos", "cuatrocientas", "quinientos", "quinientas",
+    "seiscientos", "seiscientas", "setecientos", "setecientas",
+    "ochocientos", "ochocientas", "novecientos", "novecientas",
 })
 _COMPARATORS = frozenset({
     ">=", "<=", "!=", "==", ">", "<", "=", "+", "-", "≥", "≤",

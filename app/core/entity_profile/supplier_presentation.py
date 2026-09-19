@@ -69,7 +69,10 @@ def supplier_lines(
         decision = section_ranking(profile.suppliers, ranking)
         window = section_window(profile.suppliers, ranking)
         visible = window.visible if window is not None else _fact_rows(profile, ranking)
-        if request.limit == 1 and request.metric is not SupplierRankingMetric.BOTH:
+        if request.limit == 1:
+            # El escalar cubre también BOTH: con un solo cupo, un empate de
+            # primer lugar se declara igual en las dos métricas, sin nombrar a
+            # nadie como líder único.
             lines.extend(
                 _single_lines(ranking, visible, window, decision, noun, money=money, count=count)
             )
@@ -149,17 +152,23 @@ def _single_lines(
         else "Proveedor con mayor valor contratado"
     )
     if not visible:
+        if not decision.accredited:
+            # Sin cifra acreditable el título no puede afirmar un primer puesto.
+            label = "valor" if ranking == "value" else f"número de {noun}s"
+            return [f"Proveedores observados; ranking por {label} no acreditado"]
         return [title]
     if window is not None and window.tied:
         # §12: el mayor valor observado y el empate, sin nombrar un líder único.
         return [title, f"• {_tie_first_sentence(ranking, window, noun, money=money, count=count)}"]
     if not decision.accredited or (window is not None and window.uncertain):
-        # Sin cifra acreditable en el borde no se afirma un primer puesto; la
+        # Sin cifra acreditable en el borde no se afirma un primer puesto ni se
+        # numera el puesto: el escalar degrada a una lista sin posición, y la
         # advertencia de la sección ya dice por qué.
         return [
             *_listed_lines(
                 ranking, visible, decision,
                 _single_request(ranking), noun, money=money, count=count,
+                numbered=False,
             ),
         ]
     supplier = visible[0]
@@ -176,7 +185,7 @@ def _single_request(ranking: str) -> SupplierRankingRequest:
 
 def _listed_lines(
     ranking, visible, decision: RankingAccreditation, request, noun, *,
-    money, count,
+    money, count, numbered: bool = True,
 ) -> list[str]:
     if request.metric is SupplierRankingMetric.BOTH:
         title = (
@@ -197,7 +206,7 @@ def _listed_lines(
             count(supplier.contract_count, f"{noun}s") if ranking == "count"
             else money(supplier.total_contract_value)
         )
-        if request.metric is SupplierRankingMetric.BOTH:
+        if request.metric is SupplierRankingMetric.BOTH or not numbered:
             lines.append(f"• {supplier.observed_name}: {primary}")
         else:
             lines.append(f"{index}. {supplier.observed_name}: {primary}")
@@ -220,7 +229,8 @@ def _tie_lines(profile, request, noun, *, money, count) -> list[str]:
     """El empate en el corte, declarado sin decidir un orden que la fuente no dio."""
     lines: list[str] = []
     for ranking in requested_rankings(request):
-        if request.limit == 1 and request.metric is not SupplierRankingMetric.BOTH:
+        if request.limit == 1:
+            # Con un solo cupo el empate lo narra el escalar de cada ranking.
             continue
         window = section_window(profile.suppliers, ranking)
         if window is None or not window.tied:

@@ -20,9 +20,9 @@ def load(path: str) -> dict[tuple[str, str], dict]:
 
 def limits(row: dict) -> list[str]:
     return [
-        soql.split("LIMIT ")[-1].split()[0]
-        for _, soql in row.get("calls", [])
-        if "LIMIT" in soql
+        call["soql"].split("LIMIT ")[-1].split()[0]
+        for call in row.get("calls", [])
+        if "LIMIT" in call.get("soql", "")
     ]
 
 
@@ -52,13 +52,14 @@ def main() -> int:
             else:
                 deltas.append((*key, "REGRESSION", before_calls, after_calls))
         if before.get("view_header") is None:
-            # El baseline se grabó antes de que el probe registrara el header:
-            # no comparable, no una regresión.
-            deltas.append((*key, "HARNESS_DIFFERENCE", "sin header", buyer(current)))
+            # El baseline viejo se grabó antes de que el probe registrara el
+            # header; solo es una diferencia si el otro lado sí tiene algo.
+            if buyer(current) is not None:
+                deltas.append((*key, "HARNESS_DIFFERENCE", "sin header en base", buyer(current)))
         elif buyer(current) != buyer(before):
             deltas.append((*key, "REGRESSION", buyer(before), buyer(current)))
-        before_limits, after_limits = sorted(limits(before)), sorted(limits(after))
-        if before_limits != after_limits and before.get("view_header") is not None:
+        before_limits, after_limits = sorted(limits(before)), sorted(limits(current))
+        if before_limits != after_limits:
             if before_limits and after_limits and all(
                 int(current_limit) == int(before_limit) + 1
                 for before_limit, current_limit in zip(before_limits, after_limits)

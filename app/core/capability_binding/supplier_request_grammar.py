@@ -49,6 +49,7 @@ _DANGLING_PREFIX = frozenset({
     "mas", "menos", "minimo", "maximo", "hasta", "entre", "sumo",
     "exactamente", "justo", "precisamente",
 })
+_DANGLING_LINKS = frozenset({"de", "del"})
 _DANGLING_POST = (("por", "lo"), ("a", "lo"), ("o",))
 _QUANTITY_KINDS = frozenset({TokenKind.BOUNDED_INTEGER, TokenKind.NUMBER_WORD})
 _INVALID_QUANTITY_KINDS = frozenset({
@@ -231,6 +232,33 @@ def _unknown(
     )
 
 
+def _dangling_quantity(
+    tokens: tuple[Token, ...], nominal: int, claim: CardinalityClaim,
+) -> Token | None:
+    """Una cantidad que el grupo nominal dejó colgando, o ``None``.
+
+    «el top 30 de los proveedores»: el enlace y el determinante separan la
+    cantidad del nominal, así que no se adhiere —pero tampoco es invisible. Es
+    una cardinalidad que no se pudo leer, y el default no puede servirla en
+    silencio (contrato §6: >MAX aclara, jamás trunca). La ventana es corta y el
+    patrón exige enlace + determinantes: un año u otra cantidad lejana no
+    califican.
+    """
+    for index in range(max(0, nominal - 4), nominal):
+        token = tokens[index]
+        if token in claim.quantities or token.kind not in _QUANTITY_KINDS:
+            continue
+        if index + 1 >= nominal or tokens[index + 1].text not in _DANGLING_LINKS:
+            continue
+        middle = tokens[index + 2:nominal]
+        if all(
+            item.text in _DETERMINERS or item.text in _RANK_MODIFIERS
+            for item in middle
+        ):
+            return token
+    return None
+
+
 def _residue(
     tokens: tuple[Token, ...],
     mention: int,
@@ -243,6 +271,9 @@ def _residue(
         return comparators, CardinalityResidueReason.UNKNOWN_OPERATOR
 
     nominal = _nominal_start(tokens, mention)
+    dangling = _dangling_quantity(tokens, nominal, claim)
+    if dangling is not None:
+        return (dangling,), CardinalityResidueReason.AMBIGUOUS_ATTACHMENT
     pre_slot = nominal - 1
     post_slot = mention + 1
     for index in (pre_slot, post_slot):
