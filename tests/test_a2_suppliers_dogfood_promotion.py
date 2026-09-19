@@ -49,6 +49,7 @@ from app.core.capability_binding.supplier_request_types import (
 )
 from app.core.capability_binding.supplier_semantics import VetoOutcome, VetoVerdict
 from app.core.conversation_store import ConversationStore
+from app.core.entity_profile.supplier_ranking_request import MAX_SUPPLIER_LIMIT
 from app.core.entity_resolver import EntityResolver
 from app.core.natural_alpha.models import GroundedJob, Observation
 from app.core.natural_alpha.provider import ProviderResult
@@ -609,10 +610,10 @@ def test_a_non_positive_turn_never_executes(params, turn_polarity):
 
 @pytest.mark.parametrize("relation,value", [
     ("LOWER_BOUND", 5), ("UPPER_BOUND", 5), ("RANGE", 5),
-    ("UNKNOWN", 5), ("EXACT", 7), ("NONE", None),
+    ("UNKNOWN", 5), ("EXACT", MAX_SUPPLIER_LIMIT + 5), ("NONE", None),
 ])
-def test_a_rescue_only_survives_an_exact_five(params, relation, value):
-    """The deferred route may be revived by nothing but an exact five."""
+def test_a_rescue_only_survives_an_exact_servable_cardinality(params, relation, value):
+    """The deferred route may be revived by nothing but an exact served amount."""
     text = "sus 5 proveedores de la alcaldía de Barranquilla"
     assert assess_supplier_request(text).authorization is Authorization.NOT_ACCREDITED
     sidecar = CountingSidecar(
@@ -621,6 +622,17 @@ def test_a_rescue_only_survives_an_exact_five(params, relation, value):
     decision = decide(text, params(text), polarity_veto=sidecar)
     assert decision.outcome is Outcome.CLARIFY
     assert sidecar.calls == 1
+
+
+def test_a_rescue_of_a_served_exact_executes_with_its_cut(params):
+    # V1.1: el sidecar arbitra el número que el host no leyó y el corte viaja.
+    text = "sus 5 proveedores de la alcaldía de Barranquilla"
+    sidecar = CountingSidecar(
+        VetoVerdict(VetoOutcome.CONFIRMED, "POSITIVE", relation="EXACT", relation_value=7),
+    )
+    decision = decide(text, params(text), polarity_veto=sidecar)
+    assert decision.outcome is Outcome.EXECUTE
+    assert decision.admitted_params["_supplier_ranking_limit"] == 7
 
 
 def test_a_rescue_of_exactly_five_executes(params):
@@ -632,6 +644,7 @@ def test_a_rescue_of_exactly_five_executes(params):
     decision = decide(text, params(text), polarity_veto=sidecar, record=record)
     assert decision.outcome is Outcome.EXECUTE
     assert record["a2_rescued_by_sidecar"] is True
+    assert decision.admitted_params["_supplier_ranking_limit"] == 5
 
 
 # ── preconditions that contained the bad bindings ────────────────────────────

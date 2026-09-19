@@ -30,7 +30,7 @@ _SPECS: tuple[CapabilitySpec, ...] = (
             Dimension.POLARITY,
             Dimension.CARDINALITY,
         }),
-        supported_cardinality=frozenset({Cardinality.NONE, Cardinality.EXACT_5}),
+        supported_cardinality=frozenset(Cardinality),
         unsupported=frozenset({
             Dimension.MONEY,
             Dimension.MODALITY,

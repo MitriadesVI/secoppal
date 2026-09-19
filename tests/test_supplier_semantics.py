@@ -135,7 +135,20 @@ def test_a_rescued_cardinal_only_survives_as_the_one_supported_exact(relation, a
     assert decision.reason == "UNSUPPORTED_CARDINALITY"
 
 
-def test_a_rescued_cardinal_on_another_number_does_not_execute(accredited):
+def test_a_rescued_cardinal_beyond_the_served_range_does_not_execute(accredited):
+    """V1.1: el rescate revive un exacto SERVIDO; fuera del rango se aclara."""
+    def veto(query, refs, quantities=()):
+        payload = {"mentions": [{"quote": r.quote, "occurrence": r.occurrence,
+                                 "polarity": "POSITIVE"} for r in refs],
+                   "cardinality": {"quantity_ref": 1, "relation": "EXACT"}}
+        return adjudicate(refs, payload, quantities)
+
+    decision = decide("sus 40 proveedores de la alcaldía de Galapa",
+                      dict(accredited), polarity_veto=veto)
+    assert decision.outcome is Outcome.CLARIFY
+
+
+def test_a_rescued_cardinal_within_the_served_range_executes(accredited):
     def veto(query, refs, quantities=()):
         payload = {"mentions": [{"quote": r.quote, "occurrence": r.occurrence,
                                  "polarity": "POSITIVE"} for r in refs],
@@ -144,7 +157,8 @@ def test_a_rescued_cardinal_on_another_number_does_not_execute(accredited):
 
     decision = decide("sus 20 proveedores de la alcaldía de Galapa",
                       dict(accredited), polarity_veto=veto)
-    assert decision.outcome is Outcome.CLARIFY
+    assert decision.outcome is Outcome.EXECUTE
+    assert decision.admitted_params["_supplier_ranking_limit"] == 20
 
 
 def test_confirmed_executes(accredited):

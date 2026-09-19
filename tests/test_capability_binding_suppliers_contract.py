@@ -15,6 +15,7 @@ from app.core.capability_binding.registry import SUPPLIERS, capability_for
 from app.core.capability_binding.supplier_contract import Outcome, decide
 from app.core.capability_binding.supplier_request_authority import assess_supplier_request
 from app.core.capability_binding.supplier_request_types import Authorization, Polarity
+from app.core.entity_profile.supplier_ranking_request import MAX_SUPPLIER_LIMIT
 from app.core.entity_resolver import EntityResolver
 from app.core.natural_alpha.models import GroundedJob, Observation
 from app.core.query_router import QueryRouter
@@ -100,8 +101,8 @@ def test_any_unaccredited_or_alternative_blocks_the_group(router, extra):
 
 
 @pytest.mark.parametrize("text,reason", [
-    ("dame los 10 proveedores de la alcaldía de Soledad", "UNSUPPORTED_CARDINALITY"),
-    ("top 20 proveedores de la alcaldía de Galapa", "UNSUPPORTED_CARDINALITY"),
+    ("dame los 30 proveedores de la alcaldía de Soledad", "UNSUPPORTED_CARDINALITY"),
+    ("top 40 proveedores de la alcaldía de Galapa", "UNSUPPORTED_CARDINALITY"),
     ("proveedores de la alcaldía de Galapa en contratación directa", "UNSUPPORTED_DIMENSION"),
     ("proveedores de la alcaldía de Soledad con contratos de más de 500 millones", "UNSUPPORTED_DIMENSION"),
     ("proveedores activos de la alcaldía de Soledad", "UNSUPPORTED_DIMENSION"),
@@ -206,8 +207,19 @@ def test_non_exact_cardinality_never_executes(router, text):
 
 
 @settings(max_examples=20, deadline=None)
-@given(requested=st.integers(min_value=1, max_value=20).filter(lambda value: value != 5))
-def test_any_exact_supplier_limit_other_than_five_is_unsupported(router, requested):
+@given(requested=st.integers(min_value=1, max_value=MAX_SUPPLIER_LIMIT))
+def test_every_exact_supplier_limit_within_the_range_executes(router, requested):
+    # V1.1: el rango exacto 1..MAX es ejecutable y el corte viaja en el request.
+    text = f"{requested} proveedores de la alcaldía de Barranquilla"
+    assert assess_supplier_request(text).authorization is Authorization.EXECUTABLE
+    decision = _decide(router, text)
+    assert decision.outcome is Outcome.EXECUTE
+    assert decision.admitted_params["_supplier_ranking_limit"] == requested
+
+
+@settings(max_examples=20, deadline=None)
+@given(requested=st.integers(min_value=MAX_SUPPLIER_LIMIT + 1, max_value=MAX_SUPPLIER_LIMIT + 40))
+def test_any_exact_supplier_limit_beyond_the_range_is_unsupported(router, requested):
     text = f"{requested} proveedores de la alcaldía de Barranquilla"
     assert assess_supplier_request(text).authorization is Authorization.NOT_ACCREDITED
     assert _decide(router, text).outcome is Outcome.CLARIFY

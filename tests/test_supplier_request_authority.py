@@ -8,6 +8,7 @@ import pytest
 from hypothesis import given, settings, strategies as st
 
 from app.core.entity_profile.aspects.suppliers import SUPPLIER_LIMIT
+from app.core.entity_profile.supplier_ranking_request import MAX_SUPPLIER_LIMIT
 from app.core.capability_binding.supplier_request_authority import assess_supplier_request
 from app.core.capability_binding.supplier_request_lexing import TokenKind, tokenize
 from app.core.capability_binding.supplier_request_types import (
@@ -68,18 +69,24 @@ def test_closed_cardinality_relations_preserve_operator(text, relation, values):
 
 
 @pytest.mark.parametrize("text", [
-    "4 proveedores", "6 proveedores", "10 proveedores", "top 20 proveedores",
+    "26 proveedores", "30 proveedores", "100 proveedores", "top 100 proveedores",
 ])
-def test_exact_other_than_configured_limit_never_authorizes(text):
+def test_exact_beyond_the_served_range_never_authorizes(text):
     evidence = _evidence(text)
     assert evidence.cardinality.relation is CardinalityRelation.EXACT
     assert evidence.cardinality.values != (SUPPLIER_LIMIT,)
     assert evidence.authorization is Authorization.NOT_ACCREDITED
 
 
-def test_supplier_limit_parity_is_the_only_executable_exact_cardinality():
+def test_the_served_exact_range_is_executable_and_bounded():
+    # V1.1 sirve un exacto dentro de 1..MAX; el default V1 sigue siendo 5, y el
+    # borde de arriba no se trunca: fuera del rango se aclara.
     assert SUPPLIER_LIMIT == 5
-    assert _evidence(f"{SUPPLIER_LIMIT} proveedores").authorization is Authorization.EXECUTABLE
+    assert MAX_SUPPLIER_LIMIT == 25
+    for servable in (1, SUPPLIER_LIMIT, MAX_SUPPLIER_LIMIT):
+        assert _evidence(f"{servable} proveedores").authorization is Authorization.EXECUTABLE
+    for outside in (0, MAX_SUPPLIER_LIMIT + 1, 100):
+        assert _evidence(f"{outside} proveedores").authorization is Authorization.NOT_ACCREDITED
 
 
 @pytest.mark.parametrize("text,polarity", [
@@ -209,7 +216,7 @@ def test_authority_is_deterministic_and_reentrant():
     value=st.integers(min_value=1, max_value=30),
     noun=st.sampled_from(["proveedor", "proveedores", "contratista", "contratistas"]),
 )
-def test_non_none_or_exact_five_structure_never_authorizes(relation, value, noun):
+def test_non_none_or_served_exact_structure_never_authorizes(relation, value, noun):
     surfaces = {
         "lower": f"más de {value} {noun}",
         "upper": f"hasta {value} {noun}",
@@ -217,7 +224,9 @@ def test_non_none_or_exact_five_structure_never_authorizes(relation, value, noun
         "other": f"{value} {noun}",
     }
     evidence = _evidence(surfaces[relation])
-    if relation != "other" or value != SUPPLIER_LIMIT:
+    if relation == "other" and 1 <= value <= MAX_SUPPLIER_LIMIT:
+        assert evidence.authorization is Authorization.EXECUTABLE
+    else:
         assert evidence.authorization is Authorization.NOT_ACCREDITED
 
 

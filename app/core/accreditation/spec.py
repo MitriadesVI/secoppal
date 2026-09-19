@@ -22,6 +22,8 @@ from dataclasses import dataclass
 from enum import Enum
 from itertools import combinations
 
+from app.core.entity_profile.supplier_ranking_request import MAX_SUPPLIER_LIMIT
+
 
 class Owner(str, Enum):
     ENTITY_PROFILE = "ENTITY_PROFILE"
@@ -46,15 +48,22 @@ class Dimension(str, Enum):
     TOPIC = "TOPIC"
 
 
-class Cardinality(Enum):
-    """Cardinality claims the capability can serve.
-
-    ``EXACT_5`` carries the view's own number as its value, so a change in the
-    view is a change the drift test can see.
-    """
-
-    NONE = None
-    EXACT_5 = 5
+# Cardinalidad declarada por la spec: NONE (sin número) o un exacto dentro de
+# 1..MAX. Los miembros se generan del máximo que declara el request para que la
+# spec no pueda divergir de la vista en silencio; el drift test compara los dos
+# conjuntos.
+Cardinality = Enum(
+    "Cardinality",
+    {"NONE": None, **{
+        f"EXACT_{number}": number
+        for number in range(1, MAX_SUPPLIER_LIMIT + 1)
+    }},
+    module=__name__,
+    qualname="Cardinality",
+)
+Cardinality.__doc__ = (
+    "Cardinality claims the capability can serve: NONE or an exact 1..MAX."
+)
 
 
 @dataclass(frozen=True, slots=True)

@@ -26,7 +26,7 @@ from app.core.accreditation import (
     spec_for_credential,
 )
 from app.core.capability_binding.registry import SUPPLIERS as A2_SUPPLIERS
-from app.core.entity_profile.aspects.suppliers import SUPPLIER_LIMIT
+from app.core.entity_profile.supplier_ranking_request import MAX_SUPPLIER_LIMIT
 from app.core.natural_alpha.models import GroundedJob
 
 RAW = "con quien ha contratado la alcaldia de galapa en 2025"
@@ -51,7 +51,7 @@ def test_suppliers_spec_is_the_declared_contract():
     assert spec.guarded == frozenset({
         Dimension.ACTOR, Dimension.SOURCE, Dimension.POLARITY, Dimension.CARDINALITY,
     })
-    assert spec.supported_cardinality == frozenset({Cardinality.NONE, Cardinality.EXACT_5})
+    assert spec.supported_cardinality == frozenset(Cardinality)
     assert spec.unsupported == frozenset({
         Dimension.MONEY, Dimension.MODALITY, Dimension.TOPIC, Dimension.GEOGRAPHY,
     })
@@ -69,12 +69,15 @@ def test_every_dimension_belongs_to_exactly_one_category():
     assert sum(len(category) for category in categories) == len(Dimension)
 
 
-def test_declared_cardinality_matches_the_view_limit():
+def test_declared_cardinality_matches_the_view_range():
+    # V1.1 declara TODO el rango exacto que la vista sirve: los miembros se
+    # generan del máximo del request, así que spec y ejecución no pueden
+    # divergir en silencio.
     spec = capability_spec(SUPPLIERS)
     assert spec is not None
     exact = {cardinal.value for cardinal in spec.supported_cardinality
              if cardinal is not Cardinality.NONE}
-    assert exact == {SUPPLIER_LIMIT}
+    assert exact == set(range(1, MAX_SUPPLIER_LIMIT + 1))
     assert Cardinality.NONE.value is None
 
 

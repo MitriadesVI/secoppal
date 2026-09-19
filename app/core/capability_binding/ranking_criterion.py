@@ -25,3 +25,18 @@ def ranking_criterion_spans(normalized: str) -> tuple[tuple[int, int], ...]:
     """Spans naming a count or value supplier ranking, in folded lower-case text."""
     spans = [match.span() for pattern in (_COUNT, _VALUE) for match in pattern.finditer(normalized)]
     return tuple(sorted(set(spans)))
+
+
+def ranking_metric_kind(normalized: str) -> str | None:
+    """Which ranking criterion the turn names: ``"count"``, ``"value"`` or ``None``.
+
+    ``None`` means "no single criterion": either the turn names none — the
+    plain "proveedores de X" — or it names both. Both readings are the same
+    request: rank by both metrics. The distinction is deliberately not carried,
+    because no consumer of this authority can act differently on it.
+    """
+    has_count = _COUNT.search(normalized) is not None
+    has_value = _VALUE.search(normalized) is not None
+    if has_count == has_value:
+        return None
+    return "count" if has_count else "value"

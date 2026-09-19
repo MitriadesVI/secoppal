@@ -25,7 +25,10 @@ from app.core.capability_binding.supplier_request_types import (
     SupplierRequestEvidence,
     ordered_span_set,
 )
-from app.core.entity_profile.aspects.suppliers import SUPPLIER_LIMIT
+from app.core.entity_profile.supplier_ranking_request import (
+    DEFAULT_SUPPLIER_LIMIT,
+    MAX_SUPPLIER_LIMIT,
+)
 from app.core.entity_profile.text_offsets import NormalizedText, normalize_with_offsets
 
 
@@ -222,7 +225,11 @@ def assess_supplier_request(user_query: str) -> SupplierRequestEvidence:
         and complete
         and (
             relation is CardinalityRelation.NONE
-            or (relation is CardinalityRelation.EXACT and values == (SUPPLIER_LIMIT,))
+            or (
+                relation is CardinalityRelation.EXACT
+                and len(values) == 1
+                and 1 <= values[0] <= MAX_SUPPLIER_LIMIT
+            )
         )
     )
     return SupplierRequestEvidence(

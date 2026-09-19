@@ -34,7 +34,16 @@ from app.core.capability_binding.supplier_request_types import (
     CardinalityResidueReason,
     Polarity,
 )
-from app.core.entity_profile.aspects.suppliers import SUPPLIER_LIMIT
+from app.core.entity_profile.supplier_ranking_request import (
+    DEFAULT_SUPPLIER_LIMIT,
+    DEFAULT_SUPPLIER_REQUEST,
+    MAX_SUPPLIER_LIMIT,
+    UNSUPPORTED_CARDINALITY_TEXT,
+    SupplierRankingRequest,
+    ranking_metric,
+    resolve_supplier_ranking_request,
+    transport_params,
+)
 from app.core.entity_profile.scope import resolve_profile_scope
 from app.core.entity_profile.turn import (
     GEOGRAPHY_PARAM_KEYS,
@@ -201,9 +210,9 @@ def decide(
         note(record, a2_ambiguity_class=ambiguity)
         return _clarify("DOGFOOD_CARDINAL_AMBIGUITY", (
             f"Entendí una cantidad aproximada o indirecta de proveedores, y no voy a "
-            f"resolverla adivinando. La vista de proveedores muestra los {SUPPLIER_LIMIT} "
+            f"resolverla adivinando. La vista de proveedores muestra los {DEFAULT_SUPPLIER_LIMIT} "
             f"principales por número de contratos y por valor. ¿Te sirven los "
-            f"{SUPPLIER_LIMIT} principales?"
+            f"{DEFAULT_SUPPLIER_LIMIT} principales?"
         ), (ambiguity,), record)
 
     # A cardinal the local grammar could not read is deferred, not refused:
@@ -228,9 +237,9 @@ def decide(
             else " y ".join(str(value) for value in evidence.cardinality.values)
         ) or "una cantidad no acreditada"
         return _clarify("UNSUPPORTED_CARDINALITY", (
-            f"La vista de proveedores muestra los {SUPPLIER_LIMIT} principales por número de "
+            f"La vista de proveedores muestra los {DEFAULT_SUPPLIER_LIMIT} principales por número de "
             f"contratos y por valor. Pediste {requested}; no voy a responder otra cantidad "
-            f"en silencio. ¿Te sirven los {SUPPLIER_LIMIT} principales?"
+            f"en silencio. ¿Te sirven los {DEFAULT_SUPPLIER_LIMIT} principales?"
         ), (requested,), record)
 
     accounting = account(user_query, params, supplier_evidence=evidence)
@@ -285,6 +294,19 @@ def decide(
     note(record, a2_buyer_accredited=True,
          a2_period_accredited=any(params.get(key) for key in _TIME))
     admitted = {key: value for key, value in params.items() if key not in TOPIC_KEYS}
+    ranking = resolve_supplier_ranking_request(user_query, evidence)
+    if ranking is not None:
+        note(record, a2_ranking_metric=ranking.metric.value, a2_ranking_limit=ranking.limit)
+        # El request viaja ya resuelto (dos primitivas) para que el plan lo
+        # reconstruya validado: nadie aguas abajo vuelve a leer el español.
+        admitted.update(transport_params(ranking))
+    elif not deferred_cardinal:
+        # La construcción o la cantidad no se pueden servir: se aclara en vez de
+        # ejecutar otra vista en silencio. Un turno DIFERIDO no se cierra aquí:
+        # su cantidad la arbitra el sidecar, y el request se construye con su
+        # veredicto (unas líneas más abajo) o el turno aclara.
+        return _clarify("UNSUPPORTED_CARDINALITY", UNSUPPORTED_CARDINALITY_TEXT,
+                        (evidence.cardinality.relation.value,), record)
     if polarity_veto is None:
         return _execute(admitted, record)
 
@@ -302,16 +324,23 @@ def decide(
         a2_veto_reason=verdict.detail,
     )
     if verdict.outcome is VetoOutcome.CONFIRMED and deferred_cardinal:
-        # The rescue is narrow on purpose: the capability serves one cardinality,
-        # so only an exact claim on that number can revive the turn. Every other
-        # relation the sentence might express ends in a clarification.
-        if verdict.relation != "EXACT" or verdict.relation_value != SUPPLIER_LIMIT:
+        # The rescue is narrow on purpose: only an exact claim on a cardinality
+        # the view can serve revives the turn. Every other relation the sentence
+        # might express ends in a clarification. The request is built from the
+        # verdict — the only place the host did not read the number itself.
+        rescued = verdict.relation_value
+        if (verdict.relation != "EXACT" or isinstance(rescued, bool)
+                or not isinstance(rescued, int)
+                or not 1 <= rescued <= MAX_SUPPLIER_LIMIT):
             return _clarify("UNSUPPORTED_CARDINALITY", (
-                f"La vista de proveedores muestra los {SUPPLIER_LIMIT} principales por número "
+                f"La vista de proveedores muestra los {DEFAULT_SUPPLIER_LIMIT} principales por número "
                 f"de contratos y por valor, y entendí que pedías otra cantidad. "
-                f"¿Te sirven los {SUPPLIER_LIMIT} principales?"
+                f"¿Te sirven los {DEFAULT_SUPPLIER_LIMIT} principales?"
             ), (verdict.relation,), record)
-        note(record, a2_rescued_by_sidecar=True, a2_cardinal_relation="EXACT")
+        request = SupplierRankingRequest(ranking_metric(user_query), rescued)
+        admitted.update(transport_params(request))
+        note(record, a2_rescued_by_sidecar=True, a2_cardinal_relation="EXACT",
+             a2_ranking_metric=request.metric.value, a2_ranking_limit=request.limit)
         return _execute(admitted, record)
     if verdict.outcome is VetoOutcome.CONFIRMED:
         return _execute(admitted, record)
