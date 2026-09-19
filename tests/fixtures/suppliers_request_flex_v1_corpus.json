@@ -1,0 +1,86 @@
+{
+  "name": "SUPPLIERS 1.1 — corpus de resolución (contrato §15)",
+  "note": "expect = {metric, limit} que el resolver DEBE producir; null/null = ninguna petición (fail-closed). veto = la dimensión que otra autoridad detiene antes de ejecutar (se comprueba E2E con cero llamadas). quote = fragmento literal del raw para el proveedor Natural Alpha scripted.",
+  "cases": [
+    {"id": "d01", "bucket": "default", "query": "proveedores de la alcaldía de Galapa", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+    {"id": "d02", "bucket": "default", "query": "con quién ha contratado la alcaldía de Galapa", "quote": "ha contratado", "expect": {"metric": "both", "limit": 5}},
+    {"id": "d03", "bucket": "default", "query": "proveedores de la alcaldía de Galapa en 2025", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+    {"id": "d04", "bucket": "default", "query": "los proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+    {"id": "d05", "bucket": "default", "query": "dame los contratistas de la alcaldía de Barranquilla", "quote": "contratistas", "expect": {"metric": "both", "limit": 5}},
+    {"id": "d06", "bucket": "default", "query": "muéstrame los proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+
+    {"id": "c01", "bucket": "count", "query": "proveedores con más contratos de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "count", "limit": 5}},
+    {"id": "c02", "bucket": "count", "query": "los 3 proveedores con más contratos de la alcaldía de Galapa", "quote": "proveedores", "expect": {"metric": "count", "limit": 3}},
+    {"id": "c03", "bucket": "count", "query": "cuáles son los proveedores con mayor número de contratos de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "count", "limit": 5}},
+    {"id": "c04", "bucket": "count", "query": "proveedores con mayor cantidad de contratos de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "count", "limit": 5}},
+    {"id": "c05", "bucket": "count", "query": "quiénes tienen más contratos con la alcaldía de Barranquilla", "quote": "contratos", "expect": {"metric": "count", "limit": 5}},
+    {"id": "c06", "bucket": "count", "query": "los 10 proveedores con más contratos de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "count", "limit": 10}},
+    {"id": "c07", "bucket": "count", "query": "top 5 proveedores con más contratos de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "count", "limit": 5}},
+    {"id": "c08", "bucket": "count", "query": "los proveedores con más contratos de la alcaldía de Barranquilla en 2026", "quote": "proveedores", "expect": {"metric": "count", "limit": 5}},
+
+    {"id": "v01", "bucket": "value", "query": "proveedores con mayor valor contratado de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "value", "limit": 5}},
+    {"id": "v02", "bucket": "value", "query": "proveedores con contratos de mayor valor de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "value", "limit": 5}},
+    {"id": "v03", "bucket": "value", "query": "los 4 proveedores con más valor contratado de la alcaldía de Galapa", "quote": "proveedores", "expect": {"metric": "value", "limit": 4}},
+    {"id": "v04", "bucket": "value", "query": "proveedores por mayor valor de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "value", "limit": 5}},
+
+    {"id": "s01", "bucket": "singular", "query": "el proveedor con más contratos de la alcaldía de Galapa", "quote": "proveedor", "expect": {"metric": "count", "limit": 1}},
+    {"id": "s02", "bucket": "singular", "query": "cuál es el proveedor con más contratos de la alcaldía de Barranquilla", "quote": "proveedor", "expect": {"metric": "count", "limit": 1}},
+    {"id": "s03", "bucket": "singular", "query": "quién tiene más contratos con la alcaldía de Soledad", "quote": "contratos", "expect": {"metric": "count", "limit": 1}},
+    {"id": "s04", "bucket": "singular", "query": "quién ha contratado por mayor valor con la alcaldía de Barranquilla", "quote": "ha contratado", "expect": {"metric": "value", "limit": 1}},
+    {"id": "s05", "bucket": "singular", "query": "el proveedor de mayor valor contratado de la alcaldía de Barranquilla", "quote": "proveedor", "expect": {"metric": "value", "limit": 1}},
+    {"id": "s06", "bucket": "singular", "query": "el contratista con más contratos de la alcaldía de Galapa", "quote": "contratista", "expect": {"metric": "count", "limit": 1}},
+    {"id": "s07", "bucket": "singular", "query": "un proveedor con más contratos de la alcaldía de Galapa", "quote": "proveedor", "expect": {"metric": "count", "limit": 1}},
+    {"id": "s08", "bucket": "singular", "query": "quién ha contratado más valor con la alcaldía de Barranquilla", "quote": "ha contratado", "expect": {"metric": "value", "limit": 1}},
+
+    {"id": "e01", "bucket": "exact", "query": "2 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 2}},
+    {"id": "e02", "bucket": "exact", "query": "los 3 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 3}},
+    {"id": "e03", "bucket": "exact", "query": "cinco proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+    {"id": "e04", "bucket": "exact", "query": "10 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 10}},
+    {"id": "e05", "bucket": "exact", "query": "top 10 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 10}},
+    {"id": "e06", "bucket": "exact", "query": "los diez principales proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 10}},
+    {"id": "e07", "bucket": "exact", "query": "25 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 25}},
+    {"id": "e08", "bucket": "exact", "query": "exactamente 7 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 7}},
+
+    {"id": "o01", "bucket": "over_max", "query": "26 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "o02", "bucket": "over_max", "query": "30 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "o03", "bucket": "over_max", "query": "100 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "o04", "bucket": "over_max", "query": "1000 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+
+    {"id": "a01", "bucket": "ambiguous", "query": "varios proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "a02", "bucket": "ambiguous", "query": "unos proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "a03", "bucket": "ambiguous", "query": "todos los proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "a04", "bucket": "ambiguous", "query": "aproximadamente 5 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "a05", "bucket": "ambiguous", "query": "más de 5 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "a06", "bucket": "ambiguous", "query": "entre 3 y 5 proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "a07", "bucket": "ambiguous", "query": "el 10% de proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "a08", "bucket": "ambiguous", "query": "algunos proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+
+    {"id": "m01", "bucket": "money", "query": "proveedores de Galapa por más de 500 millones", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}, "veto": "MONEY"},
+    {"id": "m02", "bucket": "money", "query": "proveedores de la alcaldía de Barranquilla con contratos por valor superior a 200 millones", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}, "veto": "MONEY"},
+
+    {"id": "y01", "bucket": "year", "query": "proveedores de la alcaldía de Galapa en 2025", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+    {"id": "y02", "bucket": "year", "query": "los 5 proveedores de la alcaldía de Barranquilla en 2026", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+    {"id": "y03", "bucket": "year", "query": "proveedores de la alcaldía de Barranquilla en 2020", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+    {"id": "n01", "bucket": "document", "query": "dame 5 proveedores de la alcaldía de Barranquilla con documento 900711074", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+
+    {"id": "ac01", "bucket": "actor", "query": "5 proveedores en adelante del proveedor NIT 900711074", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}, "veto": "ACTOR"},
+    {"id": "ac02", "bucket": "actor", "query": "cuánto le ha vendido fundacaribe a la alcaldía de Galapa", "quote": "ha vendido", "expect": {"metric": "both", "limit": 5}, "veto": "ACTOR"},
+
+    {"id": "g01", "bucket": "negation", "query": "sin proveedores de la alcaldía de Galapa", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "g02", "bucket": "negation", "query": "no quiero ver a los proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "g03", "bucket": "negation", "query": "proveedores y sin contratistas de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+    {"id": "g04", "bucket": "negation", "query": "excepto los proveedores de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": null, "limit": null}},
+
+    {"id": "u01", "bucket": "unsupported", "query": "proveedores de licitación pública de Galapa", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}, "veto": "MODALITY"},
+    {"id": "u02", "bucket": "unsupported", "query": "proveedores de educación de la Secretaría de Educación de Cali", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}, "veto": "TOPIC"},
+    {"id": "u03", "bucket": "unsupported", "query": "proveedores activos de la alcaldía de Barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}, "veto": "DIMENSION"},
+    {"id": "u04", "bucket": "unsupported", "query": "proveedores de la alcaldía de Galapa en contratación directa", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}, "veto": "MODALITY"},
+
+    {"id": "p01", "bucket": "parity", "query": "proveedores de la alcaldía de Baranoa", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}},
+    {"id": "p02", "bucket": "parity", "query": "cuales son los 5 proveedores con mas contratos en la alcaldia de barranquilla en 2025?", "quote": "proveedores", "expect": {"metric": "count", "limit": 5}},
+    {"id": "p03", "bucket": "parity", "query": "con quien ha contratado la alcaldia de galapa", "quote": "ha contratado", "expect": {"metric": "both", "limit": 5}},
+    {"id": "p04", "bucket": "parity", "query": "quien le vende mas a galapa", "quote": "vende", "expect": {"metric": "both", "limit": 5}},
+    {"id": "p05", "bucket": "parity", "query": "a quien le ha comprado mas el municipio de galapa", "quote": "ha comprado", "expect": {"metric": "both", "limit": 5}},
+    {"id": "p06", "bucket": "parity", "query": "muestrame los proveedores de la alcaldia de barranquilla", "quote": "proveedores", "expect": {"metric": "both", "limit": 5}}
+  ]
+}
