@@ -1,9 +1,23 @@
 from __future__ import annotations
 
+from datetime import date
+from pathlib import Path
+
+from burr.core import State
+
 from app.core.analytics.contract_activity import as_analytics_payload, handle_contract_activity
 from app.core.analytics.contract_activity.models import DecisionKind
 from app.core.analytics.contract_activity.presentation import render_result
 from app.core.analytics.contract_activity.runtime import BLANK_GROUP, NULL_GROUP
+from app.core.entity_resolver import EntityResolver
+from app.core.query_router import QueryRouter
+from app.core.soql_builder import SoQLBuilder
+from app.core.workflow.actions.execution import execute_query
+from app.core.workflow.result_ownership import (
+    ResultOwner,
+    owns_execution_and_presentation,
+    result_owner,
+)
 from tests.test_contract_activity_narrow_corpus import BUYER_PARAMS, CorpusClient
 
 
@@ -83,3 +97,45 @@ def test_legitimate_zero_requires_both_successful_calls() -> None:
     assert decision.kind is DecisionKind.ANSWER
     assert decision.result is not None and decision.result.total == 0
     assert len(client.calls) == 2
+
+
+def test_product_router_timeout_is_terminal_and_preserves_unknown_total() -> None:
+    raw = "¿Cuántos contratos tiene el Municipio de Galapa?"
+    params = QueryRouter(
+        EntityResolver(Path("app/data/aliases_db.json"))
+    ).parse(raw, today=date(2026, 9, 20)).params
+
+    class TimeoutClient:
+        def __init__(self) -> None:
+            self.aggregate_calls: list[tuple[str, str]] = []
+
+        def with_timeout(self, _seconds: int):
+            return self
+
+        def aggregate(self, dataset: str, sql: str):
+            self.aggregate_calls.append((dataset, sql))
+            raise TimeoutError("source timeout")
+
+        def query(self, _dataset: str, _sql: str):
+            raise AssertionError("tabular query expansion is forbidden")
+
+        def count(self, _dataset: str, _sql: str):
+            raise AssertionError("tabular count expansion is forbidden")
+
+    client = TimeoutClient()
+    state = State({
+        "resolved_params": params,
+        "dataset_id": "jbjy-vk9h",
+        "soql_query": "UNEXECUTED TABULAR QUERY",
+        "user_query": raw,
+        "timings_ms": {},
+    })
+    result = execute_query(state, client, SoQLBuilder())
+
+    assert result["needs_clarification"] is True
+    assert result["analytical_intent"] == "contract_activity"
+    assert result["route_reason"] == "analytics_contract_activity_clarify"
+    assert result["total_count"] is None
+    assert len(client.aggregate_calls) == 1
+    assert result_owner(result) is ResultOwner.CONTRACT_ACTIVITY
+    assert owns_execution_and_presentation(result, {}) is True

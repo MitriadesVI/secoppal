@@ -101,13 +101,16 @@ def execute_query(
         soql_builder=soql_builder,
     )
     if analytics:
+        analytical_total = analytics.get("total_count")
         return _with_timing(
             state,
             "execute_total_ms",
             start_total,
             results=[],
             query_error="",
-            total_count=int(analytics.get("total_count", 0) or 0),
+            total_count=(
+                None if analytical_total is None else int(analytical_total or 0)
+            ),
             timeout_suggestions=[],
             risk_flag_timeout=False,
             needs_clarification=bool(analytics.get("needs_clarification", False)),

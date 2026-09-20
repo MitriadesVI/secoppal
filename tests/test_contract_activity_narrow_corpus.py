@@ -2,20 +2,24 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import date
+from pathlib import Path
 
 from app.core.analytics.contract_activity import handle_contract_activity
 from app.core.analytics.contract_activity.models import DecisionKind
+from app.core.entity_resolver import EntityResolver
+from app.core.query_router import QueryRouter
 
 
-_FROZEN_SHA256 = "a09ad535f762eea12c7110a3dd6381268f9a293568f07228edabe1ce27df5439"
-_FROZEN_ACCEPTANCE = '''{"record_type":"meta","contract":"CONTRACT_ACTIVITY_V1_NARROW","version":1,"case_count":30,"frozen_before_writer":true}
+_FROZEN_SHA256 = "b872a0ef206dfafd41d575f5a6a456032c494308867e57818ea0b046002fdc13"
+_FROZEN_ACCEPTANCE = '''{"record_type":"meta","contract":"CONTRACT_ACTIVITY_V1_NARROW","version":2,"supersedes_sha256":"a09ad535f762eea12c7110a3dd6381268f9a293568f07228edabe1ce27df5439","corrections":{"NAR-003":"explicit BuyerUnit; bare Galapa was an invalid READY oracle","NAR-007":"explicit BuyerUnit; corpus may not inject absent buyer authority"},"case_count":30,"frozen_before_repair_writer":true}
 {"id":"NAR-001","family":"TOTAL_TIME","raw":"¿Cuántos contratos firmó Galapa en agosto de 2026?","expected":"READY","operation":"TOTAL","calls":2}
 {"id":"NAR-002","family":"TOTAL_TIME","raw":"Dime el total de contratos de Galapa durante 2025.","expected":"READY","operation":"TOTAL","calls":2}
-{"id":"NAR-003","family":"TOTAL_NO_TIME","raw":"¿Cuántos contratos tiene Galapa?","expected":"READY","operation":"TOTAL","calls":2}
+{"id":"NAR-003","family":"TOTAL_NO_TIME","raw":"¿Cuántos contratos tiene el Municipio de Galapa?","expected":"READY","operation":"TOTAL","calls":2}
 {"id":"NAR-004","family":"MODALITY_FILTER","raw":"¿Cuántos contratos por contratación directa firmó Galapa en 2026?","expected":"READY","operation":"TOTAL","calls":2}
 {"id":"NAR-005","family":"GROUP_MODALITY","raw":"Desglosa los contratos de Galapa por modalidad.","expected":"READY","operation":"BY_MODALITY","calls":3}
 {"id":"NAR-006","family":"GROUP_MODALITY","raw":"Distribuye por modalidad los contratos firmados por Galapa en 2025.","expected":"READY","operation":"BY_MODALITY","calls":3}
-{"id":"NAR-007","family":"GROUP_STATE","raw":"Desglosa por estado reportado los contratos de Galapa.","expected":"READY","operation":"BY_REPORTED_STATE","calls":3}
+{"id":"NAR-007","family":"GROUP_STATE","raw":"Desglosa por estado reportado los contratos del Municipio de Galapa.","expected":"READY","operation":"BY_REPORTED_STATE","calls":3}
 {"id":"NAR-008","family":"GROUP_STATE","raw":"Distribuye los contratos firmados por Galapa en 2025 según su estado actual.","expected":"READY","operation":"BY_REPORTED_STATE","calls":3}
 {"id":"NAR-009","family":"MONEY_STRICT","raw":"¿Cuántos contratos superiores a 200 millones firmó Galapa en 2026?","expected":"READY","operation":"TOTAL","calls":2,"where_contains":"valor_del_contrato > 200000000"}
 {"id":"NAR-010","family":"MONEY_INCLUSIVE","raw":"¿Cuántos contratos de al menos 200 millones firmó Galapa en 2026?","expected":"READY","operation":"TOTAL","calls":2,"where_contains":"valor_del_contrato >= 200000000"}
@@ -90,9 +94,14 @@ def _cases() -> list[dict]:
     assert meta == {
         "record_type": "meta",
         "contract": "CONTRACT_ACTIVITY_V1_NARROW",
-        "version": 1,
+        "version": 2,
+        "supersedes_sha256": "a09ad535f762eea12c7110a3dd6381268f9a293568f07228edabe1ce27df5439",
+        "corrections": {
+            "NAR-003": "explicit BuyerUnit; bare Galapa was an invalid READY oracle",
+            "NAR-007": "explicit BuyerUnit; corpus may not inject absent buyer authority",
+        },
         "case_count": 30,
-        "frozen_before_writer": True,
+        "frozen_before_repair_writer": True,
     }
     assert len(cases) == meta["case_count"]
     return cases
@@ -107,6 +116,31 @@ def test_frozen_acceptance_corpus() -> None:
     for case in _cases():
         client = CorpusClient()
         decision = handle_contract_activity(case["raw"], _adapt_params(case), client)
+        actual = "READY" if decision.kind is DecisionKind.ANSWER else decision.kind.value
+        observations = {
+            "expected": actual,
+            "calls": len(client.calls),
+            "operation": decision.request.operation.value if decision.request else None,
+        }
+        for field in ("expected", "calls", "operation"):
+            if field in case and observations[field] != case[field]:
+                failures.append(
+                    f"{case['id']} {field}: {observations[field]!r} != {case[field]!r}"
+                )
+        if case.get("where_contains") and (
+            decision.plan is None or case["where_contains"] not in decision.plan.where
+        ):
+            failures.append(f"{case['id']} missing WHERE fragment")
+    assert failures == []
+
+
+def test_full_v2_corpus_through_product_query_router() -> None:
+    router = QueryRouter(EntityResolver(Path("app/data/aliases_db.json")))
+    failures: list[str] = []
+    for case in _cases():
+        params = router.parse(case["raw"], today=date(2026, 9, 20)).params
+        client = CorpusClient()
+        decision = handle_contract_activity(case["raw"], params, client)
         actual = "READY" if decision.kind is DecisionKind.ANSWER else decision.kind.value
         observations = {
             "expected": actual,
