@@ -37,11 +37,15 @@ class ResultOwner(str, Enum):
 
     TABULAR = "TABULAR"
     ENTITY_PROFILE = "ENTITY_PROFILE"
+    CONTRACT_ACTIVITY = "CONTRACT_ACTIVITY"
 
 
 # Intents cuya ejecución y presentación son TERMINALES: ningún postprocesador
 # puede consultar la fuente ni reemplazar su respuesta después de ellos.
-_TERMINAL_INTENTS = {ENTITY_PROFILE_INTENT: ResultOwner.ENTITY_PROFILE}
+_TERMINAL_INTENTS = {
+    ENTITY_PROFILE_INTENT: ResultOwner.ENTITY_PROFILE,
+    "contract_activity": ResultOwner.CONTRACT_ACTIVITY,
+}
 
 
 def _intent(source: Any) -> str:

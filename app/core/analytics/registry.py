@@ -14,6 +14,10 @@ from typing import Any
 
 from app.core.analytics.aggregate_sum import AggregateSumAnalyzer
 from app.core.analytics.base import BaseAnalyzer, has_analytics_scope
+from app.core.analytics.contract_activity import (
+    as_analytics_payload,
+    handle_contract_activity,
+)
 from app.core.analytics.execution import ExecutionAnalyzer
 from app.core.analytics.ranking import RankingAnalyzer
 from app.core.analytics.temporal import TemporalAnalyzer
@@ -96,6 +100,10 @@ def maybe_handle_analytical_query(
 
     No infla run_query. Retorna None si ningún analyzer reconoce la query.
     """
+    contract_activity = handle_contract_activity(user_query, params, secop_client)
+    contract_activity_payload = as_analytics_payload(contract_activity)
+    if contract_activity_payload is not None:
+        return contract_activity_payload
     for analyzer in REGISTRY:
         if analyzer.detect(user_query, params):
             return _run(analyzer, params, dataset_id, secop_client, soql_builder)
