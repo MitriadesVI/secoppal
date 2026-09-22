@@ -111,7 +111,7 @@ _EMPTY_VALUES = (None, "", [], {}, (), False)
         "parsed_params", "needs_llm", "route_reason",
         "modality_interpretation", "modality_followup_instruction", "timings_ms",
         "negation_requests", "positive_query",
-        "analytic_controls", "material_residual",
+        "analytic_controls", "material_residual", "material_evidence",
     ],
 )
 def parse_query(state: State, query_router: QueryRouter) -> State:
@@ -143,6 +143,9 @@ def parse_query(state: State, query_router: QueryRouter) -> State:
         # it travels beside ``parsed_params``, not inside it.
         analytic_controls=[control.to_state() for control in result.analytic_controls],
         material_residual=list(result.material_residual),
+        material_evidence=(
+            result.material_evidence.to_state() if result.material_evidence else None
+        ),
     )
 
 

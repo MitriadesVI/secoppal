@@ -166,6 +166,12 @@ _NEGATED_GROUP = {
     )
     for dim, rx in _DIMENSIONS.items()
 }
+# A coordinator has negative force only when it continues a compatible
+# negative criterion.  It owns its own occurrence, including the connective.
+_NEGATIVE_CONTINUATION = {
+    dim: re.compile(rf"\b(?:tampoco|ni(?:\s+tampoco)?)\s+(?:por|segun)\s+{rx}\b", _F)
+    for dim, rx in _DIMENSIONS.items()
+}
 _NEGATED_LIST = re.compile(
     rf"""\b(?:sin|no)\s+(?:(?:me|nos)\s+)?
         (?:listar|enumerar|mostrar|listes|enumeres|muestres)\s+
@@ -269,6 +275,34 @@ def locate_analytic_controls(
         claim(match, AnalyticControlKind.LIST, None, negative)
     for match in _NEGATED_TOTAL_ONLY.finditer(text):
         claim(match, AnalyticControlKind.TOTAL_ONLY, None, negative)
+
+    continuations = sorted(
+        ((match, dimension) for dimension, pattern in _NEGATIVE_CONTINUATION.items()
+         for match in pattern.finditer(text)),
+        key=lambda pair: pair[0].start(),
+    )
+    for index, (match, dimension) in enumerate(continuations):
+        preceding = next(
+            (control for control in reversed(found)
+             if control.kind is group and control.polarity is negative
+             and control.end <= match.start()
+             and re.fullmatch(r"[\s,;:]*", text[control.end:match.start()])),
+            None,
+        )
+        paired_ni = (
+            match.group().startswith("ni ")
+            and index + 1 < len(continuations)
+            and continuations[index + 1][0].group().startswith("ni ")
+            and re.fullmatch(
+                r"[\s,;:]*",
+                text[match.end():continuations[index + 1][0].start()],
+            ) is not None
+        )
+        if preceding is not None or paired_ni:
+            claim(match, group, dimension, negative)
+        else:
+            # An ungrounded "tampoco" cannot donate a positive criterion.
+            taken.append(match.span())
 
     counted = False
     for pattern in _COUNT_CUES:

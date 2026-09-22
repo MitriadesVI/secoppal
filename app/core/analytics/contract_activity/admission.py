@@ -18,7 +18,6 @@ from app.core.analytic_control import (
     AnalyticControlSpan,
     AnalyticDimension,
     controls_from_state,
-    locate_analytic_controls,
 )
 from app.core.analytic_operation import (
     AnalyticOperation,
@@ -29,7 +28,8 @@ from app.core.buyer_source_names import project_buyer_names
 from app.core.contract_universe import CELEBRATED_STATES, fold_state
 from app.core.entity_profile.scope import resolve_profile_scope
 from app.core.estado_families import detect_estado_family
-from app.core.material_residual import material_residual as structural_split
+from app.core.material_residual import MaterialEvidence
+from app.core.query_text_consumption import mask_consumed_spans
 from app.core.modality_dataset_projection import project_modality_filter
 from app.core.modality_filter import ModalityFilter
 from app.core.modality_resolution_models import ResolutionStatus
@@ -114,22 +114,31 @@ def admit_contract_activity(
     today: Date | None = None,
     analytic_controls: tuple | None = None,
     material_residual: tuple[str, ...] | None = None,
+    material_evidence: object = None,
 ) -> Admission:
     """Claim only the narrow envelope; a claimed invalid request is terminal.
 
-    ``analytic_controls`` / ``material_residual`` are the parser's evidence for
-    this turn; the workflow always passes them.  A direct caller that has no
-    parse gets the controls from the same upstream authority (without the
-    parser's protected spans) and no material evidence beyond ``params``.
+    Direct callers use QueryRouter's same upstream evidence producer when they
+    do not supply a parsed turn.  They cannot use a weaker local grammar.
     """
     text = normalize_text(raw)
-    controls = (
-        locate_analytic_controls(text)
-        if analytic_controls is None
-        else controls_from_state(analytic_controls)
-    )
+    if analytic_controls is None or material_residual is None:
+        from app.core.query_router import QueryRouter
+
+        parsed = QueryRouter().parse(raw, today=today)
+        if analytic_controls is None:
+            analytic_controls = parsed.analytic_controls
+        if material_residual is None:
+            material_residual = parsed.material_residual
+        if material_evidence is None:
+            material_evidence = parsed.material_evidence
+    controls = controls_from_state(analytic_controls)
+    if material_evidence is not None and MaterialEvidence.from_state(material_evidence) is None:
+        return _clarify("INVALID_MATERIAL_EVIDENCE")
     analytic = derive_operation(controls)
     content = _without_controls(text, controls)
+    if content is None:
+        return _clarify("ANALYTIC_EVIDENCE_COORDINATES_INVALID")
     if binding is None:
         operation, disposition = _operation(content, analytic)
         if disposition is not None:
@@ -166,6 +175,9 @@ def admit_contract_activity(
     if not source_names:
         return _clarify("BUYER_SOURCE_PROJECTION_REQUIRED")
 
+    if _has_unowned_topic(params, material_residual, material_evidence):
+        return _clarify("UNSUPPORTED_MATERIAL_FILTER")
+
     if binding is None:
         period, period_error = _period(text)
         if period_error:
@@ -179,21 +191,7 @@ def admit_contract_activity(
         states, state_error = _states(content, operation)
         if state_error:
             return _clarify(state_error)
-        if _has_unowned_topic(
-            params,
-            material_residual,
-            resolution.identity.display_name,
-            resolution.scope.buyer_units,
-        ):
-            return _clarify("UNSUPPORTED_MATERIAL_FILTER")
     else:
-        if _has_unowned_topic(
-            params,
-            material_residual,
-            resolution.identity.display_name,
-            resolution.scope.buyer_units,
-        ):
-            return _clarify("UNSUPPORTED_MATERIAL_FILTER")
         filters = accredit_filters(raw, params, operation, today=today)
         if not filters.ok:
             return _clarify(filters.reason)
@@ -261,17 +259,16 @@ def _operation(
     return operation, None
 
 
-def _without_controls(text: str, controls: tuple[AnalyticControlSpan, ...]) -> str:
+def _without_controls(text: str, controls: tuple[AnalyticControlSpan, ...]) -> str | None:
     """``text`` with each accredited analytic span blanked out.
 
-    Offsets were taken over the parser's corrected text, which may differ from
-    ``normalize_text(raw)``; the evidence surface is therefore located again
-    rather than trusted by position.
+    A corrected or otherwise changed coordinate space must fail closed rather
+    than mask the first equal lexical surface in another occurrence.
     """
-    content = text
     for control in controls:
-        content = content.replace(control.evidence_text, " " * len(control.evidence_text), 1)
-    return content
+        if control.start < 0 or control.end > len(text) or text[control.start:control.end] != control.evidence_text:
+            return None
+    return mask_consumed_spans(text, ((control.start, control.end) for control in controls))
 
 
 def _period(text: str) -> tuple[tuple[str, str] | None, str | None]:
@@ -385,28 +382,20 @@ def _buyer_is_present(text: str, display: str, buyer_units: tuple[str, ...]) -> 
 def _has_unowned_topic(
     params: dict,
     material_residual: tuple[str, ...] | None,
-    display: str,
-    buyer_units: tuple[str, ...],
+    material_evidence: object,
 ) -> bool:
     """Any subject matter this capability cannot filter on.
 
-    Two sources, both upstream: the lossless material residual of the turn
-    ("gas", "TIC" never reach ``objeto``), and every executable topic filter in
-    ``params`` (follow-up or LLM-proposed topics included).  Only the resolved
-    buyer's own name may appear there; there is no list of functional words.
+    The parser has already consumed the exact buyer occurrence before it
+    computes the residual.  A second equal surface remains CONTENT.  Topic
+    params from other paths are also unsupported regardless of vocabulary.
     """
-    authority = normalize_text(" ".join((display, *buyer_units)))
-    buyer_tokens = set(re.findall(r"\b\w+\b", authority)) | set(_GENERIC_BUYER_WORDS)
-    values: list[str] = list(material_residual or ())
-    for key in _TOPIC_KEYS:
-        value = params.get(key) or ()
-        if isinstance(value, str):
-            values.append(value)
-        else:
-            for item in value:
-                values.extend(item if isinstance(item, list) else (item,))
-    text = " ".join(normalize_text(str(value)) for value in values)
-    return any(token not in buyer_tokens for token in structural_split(text))
+    evidence = MaterialEvidence.from_state(material_evidence)
+    return bool(
+        (evidence is not None and evidence.occurrences)
+        or material_residual
+        or any(params.get(key) for key in _TOPIC_KEYS)
+    )
 
 
 def _clarify(reason: str) -> Admission:

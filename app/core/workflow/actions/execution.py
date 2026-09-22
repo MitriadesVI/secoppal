@@ -62,7 +62,7 @@ from app.core.workflow.actions.entity_profile import (
 ACTOR_PROFILE_INTENT = "actor_profile"
 
 
-@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "today", "analytic_controls", "material_residual", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "entity_profile_view", "route_reason", "resolved_params", "analytic_limitation", "timings_ms"])
+@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "today", "analytic_controls", "material_residual", "material_evidence", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "entity_profile_view", "route_reason", "resolved_params", "analytic_limitation", "timings_ms"])
 def execute_query(
     state: State, secop_client: SecopClient, soql_builder: SoQLBuilder,
     capability_binding: object = LEGACY_CONTRACT_ACTIVITY_DIRECT,
@@ -119,6 +119,7 @@ def execute_query(
             tuple(state.get("material_residual") or ())
             if "material_residual" in state else None
         ),
+        material_evidence=state.get("material_evidence"),
     )
     if analytics:
         analytical_total = analytics.get("total_count")

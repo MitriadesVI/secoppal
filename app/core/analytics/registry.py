@@ -103,6 +103,7 @@ def maybe_handle_analytical_query(
     today: Date | None = None,
     analytic_controls: tuple | None = None,
     material_residual: tuple[str, ...] | None = None,
+    material_evidence: object = None,
 ) -> dict | None:
     """Punto de entrada controlado para queries analíticas.
 
@@ -127,6 +128,7 @@ def maybe_handle_analytical_query(
             today=today,
             analytic_controls=analytic_controls,
             material_residual=material_residual,
+            material_evidence=material_evidence,
         )
         contract_activity_payload = as_analytics_payload(contract_activity)
         if contract_activity_payload is not None:

@@ -70,6 +70,7 @@ class EntityCandidate(NamedTuple):
     # esta restricción, al capturar el nombre completo el fuzzy sin puerta de
     # estas familias contesta una pregunta por un hospital con el departamento.
     rejects_territorial_root: bool = False
+    occurrence_span: tuple[int, int] | None = None
 
 
 # Each entry: (compiled_regex, replacer_fn)
@@ -325,6 +326,9 @@ def rewrite_entity(query: str) -> list[EntityCandidate]:
                         rewrite_type=rewrite_type,
                         requires_deterministic=truncates_compound,
                         rejects_territorial_root=is_sectoral_name(candidate),
+                        occurrence_span=(
+                            match.start(0), match.start(0) + len(consumed_span)
+                        ),
                     )
                 )
 

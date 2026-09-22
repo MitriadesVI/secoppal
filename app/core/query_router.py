@@ -43,7 +43,13 @@ from app.core.analytic_control import (
 )
 from app.core.capability_binding.ranking_criterion import ranking_criterion_spans
 from app.core.control_language import interpret_control_language
-from app.core.material_residual import material_residual
+from app.core.material_residual import (
+    MaterialEvidence,
+    OccurrenceOwnership,
+    material_evidence,
+    material_residual,
+)
+from app.core.explicit_content import explicit_content_occurrences
 from app.core.state_predication import state_predicate
 from app.core.money_polarity import (
     MoneyRelation,
@@ -266,6 +272,7 @@ class ParsedQuery:
     # ANALYTIC_CONTROL_UPSTREAM_V1 — evidence, not filters: never in ``params``.
     analytic_controls: tuple[AnalyticControlSpan, ...] = ()
     material_residual: tuple[str, ...] = ()
+    material_evidence: MaterialEvidence | None = None
 
 
 class QueryRouter:
@@ -480,6 +487,7 @@ class QueryRouter:
             normalized,
             protected_spans=(
                 *ranking_criterion_spans(normalized),
+                *(occurrence.span for occurrence in explicit_content_occurrences(normalized)),
                 *(
                     self.entity_resolver.proper_names.spans_in(normalized)
                     if self.entity_resolver else ()
@@ -772,6 +780,7 @@ class QueryRouter:
         )
         rewritten_entity = None
         unresolved_rewrite = None
+        buyer_ownership: OccurrenceOwnership | None = None
         if entity_candidates and self.entity_resolver and not params.get("entidad_resolved"):
             # Los candidatos llegan agrupados por span, del más largo al más
             # corto. Dentro de UN span compiten formas canónicas rivales
@@ -789,7 +798,10 @@ class QueryRouter:
                 # A trailing-token fallback cannot split an accredited name
                 # starting here. Otherwise a newly added shorter buyer steals
                 # a longer existing institution before its own rewrite runs.
-                start = scrubbed.find(consumed)
+                span = candidate.occurrence_span
+                if span is None or scrubbed[slice(*span)] != consumed:
+                    continue
+                start = span[0]
                 if any(a == start and b > start + len(consumed) for a, b in accredited_name_spans):
                     continue
                 identity = municipal_guards.get(rtype)
@@ -797,7 +809,7 @@ class QueryRouter:
                     # Consume the entire protected identity if no full exact
                     # buyer wins; neither shrink nor later scan may reopen it.
                     unresolved_rewrite = (identity.protected_span, identity.protected_span,
-                                          rtype, identity.unresolved())
+                                          rtype, identity.unresolved(), span)
                     if consumed != identity.protected_span:
                         continue
                 if pending_fuzzy and pending_fuzzy[1] != consumed:
@@ -826,12 +838,12 @@ class QueryRouter:
                         if candidate.requires_deterministic:
                             continue
                         if pending_fuzzy is None:
-                            pending_fuzzy = (canonical, consumed, rtype, match)
+                            pending_fuzzy = (canonical, consumed, rtype, match, span)
                         continue
-                    rewritten_entity = (canonical, consumed, rtype, match)
+                    rewritten_entity = (canonical, consumed, rtype, match, span)
                     break
                 if match and match.clarification_needed and unresolved_rewrite is None:
-                    unresolved_rewrite = (canonical, consumed, rtype, match)
+                    unresolved_rewrite = (canonical, consumed, rtype, match, span)
                 # A complete, valid department name with no unique root owner
                 # is a terminal fail-closed result.  Trying shorter rewrite
                 # candidates would turn "San Andrés" into "San" and reopen
@@ -842,14 +854,24 @@ class QueryRouter:
             if not rewritten_entity and pending_fuzzy and not terminal:
                 rewritten_entity = pending_fuzzy
             if not rewritten_entity and unresolved_rewrite:
-                _, consumed, rtype, _ = unresolved_rewrite
+                _, consumed, rtype, _, span = unresolved_rewrite
                 identity = municipal_guards.get(rtype)
                 if identity and consumed == identity.protected_span:
                     district = identity.district_alias(self.entity_resolver, municipal_geography)
                     if district:
-                        rewritten_entity = (district[0], consumed, rtype, district[1])
+                        rewritten_entity = (district[0], consumed, rtype, district[1], span)
             if rewritten_entity:
-                canonical, consumed, rtype, match = rewritten_entity
+                canonical, consumed, rtype, match, span = rewritten_entity
+                buyer_ownership = OccurrenceOwnership(
+                    snapshot=scrubbed,
+                    buyer_span=span,
+                    content_spans=tuple(
+                        occurrence.span
+                        for occurrence in explicit_content_occurrences(scrubbed)
+                    ),
+                )
+                if not buyer_ownership.valid():
+                    raise RuntimeError("buyer/content occurrence ownership overlaps")
                 params["entidad"] = canonical
                 params["entidad_resolved"] = match.value
                 params["entidad_resolution"] = {
@@ -873,10 +895,10 @@ class QueryRouter:
                     },
                 }
                 consumed_spans.append(consumed)
-                scrubbed = scrubbed.replace(consumed, " ", 1)
+                scrubbed = mask_consumed_spans(scrubbed, (span,))
                 scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
             elif unresolved_rewrite:
-                canonical, consumed, rtype, match = unresolved_rewrite
+                canonical, consumed, rtype, match, span = unresolved_rewrite
                 params["entidad"] = canonical
                 params["entidad_resolution"] = {
                     **match.to_dict(),
@@ -888,7 +910,7 @@ class QueryRouter:
                     },
                 }
                 consumed_spans.append(consumed)
-                scrubbed = scrubbed.replace(consumed, " ", 1)
+                scrubbed = mask_consumed_spans(scrubbed, (span,))
                 scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
         # ── 5. GAZETTEER SCAN: Entity (longest alias match) ─────────────
@@ -898,6 +920,21 @@ class QueryRouter:
         if self.entity_resolver and "entidad_resolved" not in params:
             entity_scan = self.entity_resolver.scan_entity(scrubbed)
             if entity_scan:
+                if (
+                    entity_scan.occurrence_span is None
+                    or scrubbed[slice(*entity_scan.occurrence_span)] != entity_scan.matched_alias
+                ):
+                    raise RuntimeError("entity scan occurrence does not match its source")
+                buyer_ownership = OccurrenceOwnership(
+                    snapshot=scrubbed,
+                    buyer_span=entity_scan.occurrence_span,
+                    content_spans=tuple(
+                        occurrence.span
+                        for occurrence in explicit_content_occurrences(scrubbed)
+                    ),
+                )
+                if not buyer_ownership.valid():
+                    raise RuntimeError("buyer/content occurrence ownership overlaps")
                 params["entidad"] = entity_scan.matched_alias
                 params["entidad_resolved"] = entity_scan.official_name
                 params["entidad_resolution"] = {
@@ -1259,6 +1296,15 @@ class QueryRouter:
         # for "contratos de gas" (short token) and must not be read as "no
         # subject" by any consumer.
         residual_material = material_residual(objeto_text, objeto_phrases)
+        occurrence_material = material_evidence(objeto_text)
+        if buyer_ownership is not None:
+            occurrence_material = replace(occurrence_material, ownership=buyer_ownership)
+        # A governed literal remains evidence even if the legacy object
+        # extractor projects only some of its words.
+        residual_material = tuple(dict.fromkeys((
+            *residual_material,
+            *(occurrence.surface for occurrence in explicit_content_occurrences(normalized)),
+        )))
 
         # ── 12. Object terms (whatever remains after all extractions) ───
         object_terms = self._extract_object_terms(objeto_text)
@@ -1307,6 +1353,7 @@ class QueryRouter:
             text_lineage=text_lineage,
             analytic_controls=analytic_controls,
             material_residual=residual_material,
+            material_evidence=occurrence_material,
         )
 
     # ─── Helper methods (only for non-entity extractions) ───────────────

@@ -163,6 +163,7 @@ def build_application(
             analytical_intent="",
             analytic_controls=[],
             material_residual=[],
+            material_evidence=None,
             analytic_limitation="",
             entity_profile_view=None,
             timings_ms={},

@@ -26,6 +26,7 @@ from app.core.geography_alias import is_geography_alias
 from app.core.scan_alias_policy import is_scan_eligible_alias, record_alias_policy
 from app.core.territory_phrase_index import TerritoryPhraseIndex
 from app.core.proper_name_spans import ExactNameIndex
+from app.core.query_text_consumption import mask_consumed_spans
 from app.data.colombia_geography import REGION_ALIASES
 from app.data.departamentos import DEPARTAMENTOS, DEPARTAMENTOS_OFICIALES
 from app.utils.money import normalize_text
@@ -169,6 +170,7 @@ class ScanResult:
     matched_alias: str  # the alias that was found in text
     remaining_text: str  # text with the matched alias removed
     method: str  # "scan_exact"
+    occurrence_span: tuple[int, int] | None = None
 
 
 def is_department_root_name(official: str) -> bool:
@@ -436,7 +438,10 @@ class EntityResolver:
             if reject_fn and reject_fn(alias, text, official):
                 continue
 
-            remaining = re.sub(rf'\b{re.escape(alias)}\b', ' ', text, count=1)
+            occurrence = re.search(rf'\b{re.escape(alias)}\b', text)
+            if occurrence is None:
+                continue
+            remaining = mask_consumed_spans(text, (occurrence.span(),))
             remaining = re.sub(r'\s+', ' ', remaining).strip()
 
             return ScanResult(
@@ -444,6 +449,7 @@ class EntityResolver:
                 matched_alias=alias,
                 remaining_text=remaining,
                 method="scan_exact",
+                occurrence_span=occurrence.span(),
             )
 
         return None
