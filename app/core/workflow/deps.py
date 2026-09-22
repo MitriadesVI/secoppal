@@ -59,4 +59,4 @@ class WorkflowDeps:
     narrator: NarratorHandler
     radar_store: RadarStore | None = None
     # A2: host-owned capability id bound for THIS turn; never model params.
-    capability_binding: str | None = None
+    capability_binding: object | None = None

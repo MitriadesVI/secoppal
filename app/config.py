@@ -96,6 +96,11 @@ class Settings(BaseSettings):
     secoppal_a2_suppliers_binding_enabled: bool = Field(
         default=False, alias="SECOPPAL_A2_SUPPLIERS_BINDING_ENABLED",
     )
+    # Contract Activity is a separate Alpha binding.  The supplier pilot must
+    # never make this route reachable as a side effect.
+    secoppal_contract_activity_binding_enabled: bool = Field(
+        default=False, alias="SECOPPAL_CONTRACT_ACTIVITY_BINDING_ENABLED",
+    )
     # ── Transporte Socrata (SODA3_TRANSPORT_V1) ──────────────────────────────
     # `soda3`   = transporte productivo default validado.
     # `classic` = rollback explicito sobre sodapy y GET /resource/.

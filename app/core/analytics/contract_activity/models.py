@@ -106,3 +106,4 @@ class ContractActivityDecision:
     request: ContractActivityRequest | None = None
     plan: ContractActivityPlan | None = None
     result: ContractActivityResult | None = None
+    binding_receipt: dict | None = None

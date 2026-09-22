@@ -35,7 +35,7 @@ def build_plan(request: ContractActivityRequest) -> ContractActivityPlan:
             f"valor_del_contrato {request.money.operator} {request.money.amount_cop}"
         )
     where = " AND ".join(clause for clause in clauses if clause)
-    fingerprint = _fingerprint(where)
+    fingerprint = _fingerprint(f"{request.operation.value}\0{where}")
     identity_fingerprint = _fingerprint(identity_where)
     group_field = _GROUP_FIELD.get(request.operation)
     return ContractActivityPlan(

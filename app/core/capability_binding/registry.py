@@ -17,22 +17,31 @@ from __future__ import annotations
 
 from types import MappingProxyType
 
+from app.core.capability_binding.contract_activity_binding import (
+    ContractActivityBinding,
+)
+
 SUPPLIERS = "entity_profile.suppliers"
 
 _BINDINGS = MappingProxyType({("ANALYZE", "SUPPLIERS"): SUPPLIERS})
 
 
-def capability_for(observation, settings) -> str | None:
+def capability_for(observation, settings) -> object | None:
     """The capability a single Alpha-mode job opens, or ``None``.
 
     Shadow mode never governs a route, and a multi-job or ungrounded proposal
     binds nothing.
     """
-    if getattr(settings, "secoppal_a2_suppliers_binding_enabled", False) is not True:
-        return None
     if observation is None or observation.mode != "alpha" or observation.status != "MATCHED":
         return None
     if len(observation.jobs) != 1:
         return None
     job = observation.jobs[0]
+    contract_activity = ContractActivityBinding.from_job(job)
+    if contract_activity is not None:
+        if getattr(settings, "secoppal_contract_activity_binding_enabled", False) is True:
+            return contract_activity
+        return None
+    if getattr(settings, "secoppal_a2_suppliers_binding_enabled", False) is not True:
+        return None
     return _BINDINGS.get((job.action, job.aspect))

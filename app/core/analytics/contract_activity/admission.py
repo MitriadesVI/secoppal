@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import calendar
 import re
+from datetime import date as Date
+from typing import TYPE_CHECKING
 
 from app.core.buyer_source_names import project_buyer_names
 from app.core.contract_universe import CELEBRATED_STATES, fold_state
@@ -21,6 +23,12 @@ from .models import (
     MoneyConstraint,
     Operation,
 )
+from .filters import accredit_filters
+
+if TYPE_CHECKING:
+    from app.core.capability_binding.contract_activity_binding import (
+        ContractActivityBinding,
+    )
 
 
 _COUNT = re.compile(r"\b(?:cuantos|cuantas|cuente|cuenta|total\s+de)\b")
@@ -85,13 +93,29 @@ _ACTOR_KEYS = (
 )
 
 
-def admit_contract_activity(raw: str, params: dict) -> Admission:
+def admit_contract_activity(
+    raw: str,
+    params: dict,
+    *,
+    binding: ContractActivityBinding | None = None,
+    today: Date | None = None,
+) -> Admission:
     """Claim only the narrow envelope; a claimed invalid request is terminal."""
     text = normalize_text(raw)
-    operation, disposition = _operation(text)
-    if disposition is not None:
-        return disposition
-    assert operation is not None
+    if binding is None:
+        operation, disposition = _operation(text)
+        if disposition is not None:
+            return disposition
+        assert operation is not None
+    else:
+        from app.core.capability_binding.contract_activity_binding import (
+            accredit_contract_unit,
+        )
+
+        unit = accredit_contract_unit(raw, binding)
+        if not unit.accredited:
+            return _clarify(unit.reason)
+        operation = binding.operation
 
     if any(params.get(key) for key in _ACTOR_KEYS):
         return _clarify("BUYER_ONLY_SCOPE")
@@ -105,20 +129,35 @@ def admit_contract_activity(raw: str, params: dict) -> Admission:
     if not source_names:
         return _clarify("BUYER_SOURCE_PROJECTION_REQUIRED")
 
-    period, period_error = _period(text)
-    if period_error:
-        return _clarify(period_error)
-    money, money_error = _money(text)
-    if money_error:
-        return _clarify(money_error)
-    modalities, modality_error = _modalities(raw, text, operation)
-    if modality_error:
-        return _clarify(modality_error)
-    states, state_error = _states(text, operation)
-    if state_error:
-        return _clarify(state_error)
-    if _has_unowned_topic(params, resolution.identity.display_name, resolution.scope.buyer_units):
-        return _clarify("UNSUPPORTED_MATERIAL_FILTER")
+    if binding is None:
+        period, period_error = _period(text)
+        if period_error:
+            return _clarify(period_error)
+        money, money_error = _money(text)
+        if money_error:
+            return _clarify(money_error)
+        modalities, modality_error = _modalities(raw, text, operation)
+        if modality_error:
+            return _clarify(modality_error)
+        states, state_error = _states(text, operation)
+        if state_error:
+            return _clarify(state_error)
+        if _has_unowned_topic(
+            params, resolution.identity.display_name, resolution.scope.buyer_units
+        ):
+            return _clarify("UNSUPPORTED_MATERIAL_FILTER")
+    else:
+        filters = accredit_filters(raw, params, operation, today=today)
+        if not filters.ok:
+            return _clarify(filters.reason)
+        period = (
+            (filters.date_from, filters.date_to)
+            if filters.date_from is not None and filters.date_to is not None
+            else None
+        )
+        money = filters.money
+        modalities = filters.modality_values
+        states = filters.reported_states
 
     request = ContractActivityRequest(
         raw=raw,

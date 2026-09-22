@@ -10,6 +10,7 @@ Añadir un análisis nuevo = importar su Analyzer y añadirlo a REGISTRY. Nada m
 
 from __future__ import annotations
 
+from datetime import date as Date
 from typing import Any
 
 from app.core.analytics.aggregate_sum import AggregateSumAnalyzer
@@ -33,6 +34,8 @@ REGISTRY: list[BaseAnalyzer] = [
     TemporalAnalyzer(),
     AggregateSumAnalyzer(),
 ]
+
+LEGACY_CONTRACT_ACTIVITY_DIRECT = object()
 
 
 def detect_analytical_intent(query: str, params: dict | None = None) -> str | None:
@@ -95,15 +98,35 @@ def maybe_handle_analytical_query(
     secop_client: Any,
     soql_builder: Any,
     channel: str = "whatsapp",
+    *,
+    capability_binding: object = LEGACY_CONTRACT_ACTIVITY_DIRECT,
+    today: Date | None = None,
 ) -> dict | None:
     """Punto de entrada controlado para queries analíticas.
 
     No infla run_query. Retorna None si ningún analyzer reconoce la query.
     """
-    contract_activity = handle_contract_activity(user_query, params, secop_client)
-    contract_activity_payload = as_analytics_payload(contract_activity)
-    if contract_activity_payload is not None:
-        return contract_activity_payload
+    from app.core.capability_binding.contract_activity_binding import (
+        ContractActivityBinding,
+    )
+
+    if capability_binding is LEGACY_CONTRACT_ACTIVITY_DIRECT or isinstance(
+        capability_binding, ContractActivityBinding
+    ):
+        contract_activity = handle_contract_activity(
+            user_query,
+            params,
+            secop_client,
+            binding=(
+                capability_binding
+                if isinstance(capability_binding, ContractActivityBinding)
+                else None
+            ),
+            today=today,
+        )
+        contract_activity_payload = as_analytics_payload(contract_activity)
+        if contract_activity_payload is not None:
+            return contract_activity_payload
     for analyzer in REGISTRY:
         if analyzer.detect(user_query, params):
             return _run(analyzer, params, dataset_id, secop_client, soql_builder)

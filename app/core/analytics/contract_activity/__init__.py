@@ -1,6 +1,8 @@
 """Narrow one-turn Contract Activity handler."""
 from __future__ import annotations
 
+from datetime import date as Date
+from typing import TYPE_CHECKING
 from typing import Any
 
 from .admission import admit_contract_activity
@@ -15,17 +17,38 @@ from .planning import build_plan
 from .presentation import clarification, render_result
 from .runtime import ContractActivityUnavailable, execute_plan
 
+if TYPE_CHECKING:
+    from app.core.capability_binding.contract_activity_binding import (
+        ContractActivityBinding,
+    )
+
 
 def handle_contract_activity(
     user_query: str,
     params: dict,
     secop_client: Any,
+    *,
+    binding: ContractActivityBinding | None = None,
+    today: Date | None = None,
 ) -> ContractActivityDecision:
-    admission = admit_contract_activity(user_query, params)
+    receipt = binding.receipt(user_query) if binding is not None else None
+    admission = admit_contract_activity(
+        user_query, params, binding=binding, today=today,
+    )
     if admission.status is AdmissionStatus.HANDOFF:
+        if binding is not None:
+            return ContractActivityDecision(
+                DecisionKind.CLARIFY,
+                reason="BOUND_CONTRACT_ACTIVITY_NOT_TERMINAL",
+                binding_receipt=receipt,
+            )
         return ContractActivityDecision(DecisionKind.HANDOFF, reason=admission.reason)
     if admission.status is AdmissionStatus.CLARIFY:
-        return ContractActivityDecision(DecisionKind.CLARIFY, reason=admission.reason)
+        return ContractActivityDecision(
+            DecisionKind.CLARIFY,
+            reason=admission.reason,
+            binding_receipt=receipt,
+        )
     assert admission.request is not None
     plan = build_plan(admission.request)
     try:
@@ -36,12 +59,14 @@ def handle_contract_activity(
             reason=str(exc),
             request=admission.request,
             plan=plan,
+            binding_receipt=receipt,
         )
     return ContractActivityDecision(
         DecisionKind.ANSWER,
         request=admission.request,
         plan=plan,
         result=result,
+        binding_receipt=receipt,
     )
 
 
@@ -49,7 +74,7 @@ def as_analytics_payload(decision: ContractActivityDecision) -> dict | None:
     if decision.kind is DecisionKind.HANDOFF:
         return None
     if decision.kind is DecisionKind.CLARIFY:
-        return {
+        payload = {
             "response": clarification(decision.reason),
             "needs_clarification": True,
             "clarification_reason": clarification(decision.reason),
@@ -60,9 +85,12 @@ def as_analytics_payload(decision: ContractActivityDecision) -> dict | None:
             "results": [],
             "total_count": None,
         }
+        if decision.binding_receipt is not None:
+            payload["contract_activity_binding_receipt"] = decision.binding_receipt
+        return payload
     assert decision.request is not None and decision.plan is not None
     assert decision.result is not None
-    return {
+    payload = {
         "response": render_result(decision.request, decision.result),
         "needs_clarification": False,
         "clarification_reason": "",
@@ -73,6 +101,9 @@ def as_analytics_payload(decision: ContractActivityDecision) -> dict | None:
         "results": [],
         "total_count": decision.result.total,
     }
+    if decision.binding_receipt is not None:
+        payload["contract_activity_binding_receipt"] = decision.binding_receipt
+    return payload
 
 
 __all__ = [

@@ -25,6 +25,7 @@ from burr.core import State, action
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.actor_profile.turn import maybe_handle_actor_profile
 from app.core.analytics import maybe_handle_analytical_query
+from app.core.analytics.registry import LEGACY_CONTRACT_ACTIVITY_DIRECT
 from app.core.entity_profile.turn import classify_entity_profile_turn
 from app.core.entity_profile.followup import is_supplier_followup
 from app.core.observer import observe as observe_universe_fn
@@ -58,10 +59,10 @@ from app.core.workflow.actions.entity_profile import (
 ACTOR_PROFILE_INTENT = "actor_profile"
 
 
-@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "entity_profile_view", "route_reason", "resolved_params", "timings_ms"])
+@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "today", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "entity_profile_view", "route_reason", "resolved_params", "timings_ms"])
 def execute_query(
     state: State, secop_client: SecopClient, soql_builder: SoQLBuilder,
-    capability_binding: str | None = None,
+    capability_binding: object = LEGACY_CONTRACT_ACTIVITY_DIRECT,
 ) -> State:
     """Execute SECOP count + query with graceful error handling.
     On timeout for heavy ordering queries, retry without ordering_signal.
@@ -99,6 +100,8 @@ def execute_query(
         dataset_id=state.get("dataset_id", ""),
         secop_client=secop_client,
         soql_builder=soql_builder,
+        capability_binding=capability_binding,
+        today=state.get("today"),
     )
     if analytics:
         analytical_total = analytics.get("total_count")

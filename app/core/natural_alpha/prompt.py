@@ -24,6 +24,11 @@ SEARCH/PROCESSES o SEARCH/CONTRACTS, nunca ANALYZE/SUPPLIERS.
 OVERVIEW es una visión general; VALUES trata de valores; VALUE_STATS son estadísticas;
 TOTAL_VALUE solicita una suma; MODALITIES de modalidades; RECENT de actividad reciente;
 TEMPORAL de evolución; EXECUTION de ejecución contractual.
+CONTRACT_COUNT pide cuántos contratos hay; CONTRACTS_BY_MODALITY pide un conteo o
+distribución de contratos agrupado por modalidad; CONTRACTS_BY_STATE pide un conteo o
+distribución por el estado actualmente reportado. No uses estas tres categorías para
+listar contratos, sumar valores, estudiar estados históricos ni nombrar una modalidad
+sin pedir el conteo o distribución contractual.
 SUPPLIERS es la pregunta por las personas o empresas a las que una entidad compradora
 le compra, contrata o adjudica, con las palabras que sea que el usuario use.
 TOP_ENTITIES compara o clasifica entre sí a varias entidades compradoras.
