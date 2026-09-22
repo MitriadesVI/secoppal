@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "base_sha": "a83cc4f806bb23f529d4c7a20e019f41a57e2af8",
+  "sources": [
+    {
+      "path": "tests/fixtures/actor_profile_adversarial/frozen_cases.jsonl",
+      "format": "jsonl",
+      "id_key": "case_id",
+      "raw_key": "query",
+      "sha256": "9cd4a21d7553b2d27f84654e0ea21f852adec8d5e3c076fd8326237583f35309",
+      "selected_count": 1150
+    },
+    {
+      "path": "tests/fixtures/contract_activity_admission_v2/frozen_payloads.jsonl",
+      "format": "jsonl",
+      "id_key": "id",
+      "raw_key": "raw",
+      "sha256": "92ac1558f7f56d190acec2e02b336b33e66fea1162c311cdb6ad7f79e54ffba8",
+      "selected_count": 22
+    },
+    {
+      "path": "tests/fixtures/analytic_control_upstream_v1_r1/adversarial.json",
+      "format": "json",
+      "id_key": "id",
+      "raw_key": "raw",
+      "sha256": "23129840c66905f0553d6d34007cba1556434ba386b36e9520f1c00330382989",
+      "selected_count": 33
+    }
+  ],
+  "total_inputs": 1205,
+  "expected_delta_reasons": {
+    "adversarial/A01": "Repeated surface has independent CONTENT and BUYER occurrences; CA must not drop subject.",
+    "adversarial/A02": "Repeated surface has independent CONTENT and BUYER occurrences; CA must not drop subject.",
+    "adversarial/A03": "Repeated surface has independent CONTENT and BUYER occurrences; CA must not drop subject.",
+    "adversarial/A04": "Repeated surface has independent CONTENT and BUYER occurrences; CA must not drop subject.",
+    "adversarial/A05": "Repeated surface has independent CONTENT and BUYER occurrences; CA must not drop subject.",
+    "adversarial/B01": "Accredited object text remains CONTENT instead of analytic control.",
+    "adversarial/B02": "Accredited object text remains CONTENT instead of analytic control.",
+    "adversarial/B03": "Accredited object text remains CONTENT instead of analytic control.",
+    "adversarial/B04": "Accredited object text remains CONTENT instead of analytic control.",
+    "adversarial/B05": "Accredited object text remains CONTENT instead of analytic control.",
+    "adversarial/B06": "Accredited object text remains CONTENT instead of analytic control.",
+    "adversarial/B07": "Accredited object text remains CONTENT instead of analytic control.",
+    "adversarial/B08": "Accredited object text remains CONTENT instead of analytic control.",
+    "adversarial/B09": "Accredited object text remains CONTENT instead of analytic control.",
+    "adversarial/C01": "Negative coordination or ungrounded coordinator retains safe polarity.",
+    "adversarial/C02": "Negative coordination or ungrounded coordinator retains safe polarity.",
+    "adversarial/C03": "Negative coordination or ungrounded coordinator retains safe polarity.",
+    "adversarial/C04": "Negative coordination or ungrounded coordinator retains safe polarity.",
+    "adversarial/C05": "Negative coordination or ungrounded coordinator retains safe polarity.",
+    "adversarial/C06": "Negative coordination or ungrounded coordinator retains safe polarity.",
+    "adversarial/C07": "Negative coordination or ungrounded coordinator retains safe polarity.",
+    "adversarial/C08": "Negative coordination or ungrounded coordinator retains safe polarity.",
+    "adversarial/D05": "Subject introduced by sobre remains material.",
+    "adversarial/D06": "Subject introduced by sobre remains material."
+  },
+  "comparison_fields": [
+    "params",
+    "negation",
+    "analytic_controls",
+    "material_residual",
+    "ca_admission"
+  ]
+}
