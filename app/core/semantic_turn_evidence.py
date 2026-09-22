@@ -22,8 +22,8 @@ _FIELDS = frozenset({
 
 
 def raw_fingerprint(raw: str) -> str:
-    """Bind to the exact bytes of the user query, not a normalized paraphrase."""
-    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+    """Bind to the exact raw string, including lone surrogate code points."""
+    return hashlib.sha256(raw.encode("utf-8", errors="surrogatepass")).hexdigest()
 
 
 @dataclass(frozen=True, slots=True)
