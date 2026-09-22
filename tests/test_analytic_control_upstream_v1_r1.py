@@ -67,6 +67,19 @@ def test_same_lexeme_has_separate_buyer_and_content_spans(word: str, buyer: str)
     assert MaterialEvidence.from_state(parsed.material_evidence.to_state()) == parsed.material_evidence
 
 
+@pytest.mark.parametrize("raw,unowned,forbidden_tail", [
+    ("contratos de CONCEJO MUNICIPIO DE CARMEN DE CARUPA", "concejo", "carupa"),
+    ("contratos de ALCALDIA MUNICIPIO DE SAN FRANCISCO", "alcaldia", "francisco"),
+])
+def test_unresolved_full_buyer_span_does_not_leave_a_truncated_tail(
+    raw: str, unowned: str, forbidden_tail: str,
+) -> None:
+    parsed = _parse(raw)
+    assert unowned in parsed.material_residual
+    assert forbidden_tail not in parsed.material_residual
+    assert forbidden_tail not in (parsed.params.get("objeto") or ())
+
+
 def test_p1_b_quoted_object_text_is_content_not_group() -> None:
     parsed = _parse(
         "¿Cuántos contratos cuyo objeto contenga 'por modalidad' firmó la Alcaldía de Galapa?"

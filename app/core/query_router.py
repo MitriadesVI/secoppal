@@ -808,8 +808,11 @@ class QueryRouter:
                 if identity and len(consumed) <= len(identity.protected_span):
                     # Consume the entire protected identity if no full exact
                     # buyer wins; neither shrink nor later scan may reopen it.
+                    protected_span = (span[0], span[0] + len(identity.protected_span))
+                    if scrubbed[slice(*protected_span)] != identity.protected_span:
+                        continue
                     unresolved_rewrite = (identity.protected_span, identity.protected_span,
-                                          rtype, identity.unresolved(), span)
+                                          rtype, identity.unresolved(), protected_span)
                     if consumed != identity.protected_span:
                         continue
                 if pending_fuzzy and pending_fuzzy[1] != consumed:
