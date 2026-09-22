@@ -375,6 +375,9 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
     }
 
 
+_TOKEN_PUNCTUATION = "¿?¡!.,;:\"'()[]{}"
+
+
 def detect_estado_family(normalized_query: str, dataset: str) -> dict | None:
     """Scan a query for estado-family tokens and return the best match.
 
@@ -393,8 +396,10 @@ def detect_estado_family(normalized_query: str, dataset: str) -> dict | None:
         if multi_token.lower() in normalized_query.lower():
             return resolve_estado(multi_token, dataset)
 
-    # Then single-word tokens by position in query (first occurrence)
-    tokens = normalized_query.split()
+    # Then single-word tokens by position in query (first occurrence).
+    # Punctuation glued to a word is not part of it: "suspendidos?" at the end
+    # of a question named the state and was read as the topic "suspendidos".
+    tokens = [token.strip(_TOKEN_PUNCTUATION) for token in normalized_query.split()]
     for token in tokens:
         result = resolve_estado(token, dataset)
         if result:
