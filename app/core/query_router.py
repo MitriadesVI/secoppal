@@ -36,7 +36,15 @@ from app.core.temporal_semantics import (
     resolve_temporal_scope,
 )
 from app.core.contract_type_resolver import resolve_contract_types
+from app.core.analytic_control import (
+    AnalyticControlSpan,
+    control_spans as analytic_control_spans,
+    locate_analytic_controls,
+)
+from app.core.capability_binding.ranking_criterion import ranking_criterion_spans
 from app.core.control_language import interpret_control_language
+from app.core.material_residual import material_residual
+from app.core.state_predication import state_predicate
 from app.core.money_polarity import (
     MoneyRelation,
     has_money_relation_before,
@@ -255,6 +263,9 @@ class ParsedQuery:
     negation_requests: tuple[NegationRequest, ...] = ()
     positive_text: str = ""
     text_lineage: TextLineageView | None = None
+    # ANALYTIC_CONTROL_UPSTREAM_V1 — evidence, not filters: never in ``params``.
+    analytic_controls: tuple[AnalyticControlSpan, ...] = ()
+    material_residual: tuple[str, ...] = ()
 
 
 class QueryRouter:
@@ -459,6 +470,25 @@ class QueryRouter:
             for match in re.finditer(re.escape(amount_text), normalized)
         })
         actor_document_matches = self._find_identifier_spans(normalized)
+        # ── 1.c.0 Analytic control (count / group by) ──────────────────
+        # Located before negation so an instruction about the results can
+        # neither be excluded as content nor be swallowed by a preceding
+        # ``sin``.  Spans owned by other authorities — the SUPPLIERS ranking
+        # metric, proper names, municipal names, resolved modality aliases —
+        # are never claimed.
+        analytic_controls = locate_analytic_controls(
+            normalized,
+            protected_spans=(
+                *ranking_criterion_spans(normalized),
+                *(
+                    self.entity_resolver.proper_names.spans_in(normalized)
+                    if self.entity_resolver else ()
+                ),
+            ),
+            modality_spans=modality_result.interpretation.consumed_spans,
+            candidate_spans=municipal_geography.name_spans(normalized),
+        )
+        analytic_spans = analytic_control_spans(analytic_controls)
         negation_binding = bind_negations(
             normalized,
             city_pattern=_CITY_PATTERN_RE,
@@ -467,8 +497,11 @@ class QueryRouter:
             actor_document_spans=tuple(
                 match.span() for match in actor_document_matches
             ),
+            control_spans=analytic_spans,
         )
-        positive_text = negation_binding.masked_text
+        positive_text = mask_consumed_spans(
+            negation_binding.masked_text, analytic_spans,
+        )
         # Unsupported negation must not erase a monetary request before its
         # authority runs. Recognized money negations are already protected.
         if any(
@@ -511,6 +544,16 @@ class QueryRouter:
             negation_binding.masked_spans,
             lineage=lineage,
             stage="negation",
+        )
+        scrubbed = mask_consumed_spans(
+            scrubbed,
+            analytic_spans,
+            lineage=lineage,
+            stage="analytic_control",
+        )
+        consumed_spans.extend(control.evidence_text for control in analytic_controls)
+        actor_modifier_spans.extend(
+            control.evidence_text for control in analytic_controls
         )
         if universe_request and universe_request.span != (0, 0):
             control = normalize_text(user_query[slice(*universe_request.span)])
@@ -979,6 +1022,15 @@ class QueryRouter:
                 params["estado_field"] = "estado_contrato"
             # Scrub the consumed span from text
             span = estado_family_result["consumed_span"]
+            predicate = state_predicate(scrubbed, span)
+            if predicate:
+                # "figuran actualmente suspendidos": the copula reports the
+                # state it precedes and has no topical reading.  Removed by
+                # offset before the state scrub shifts the text.
+                start, end = predicate
+                consumed_spans.append(scrubbed[start:end])
+                actor_modifier_spans.append(scrubbed[start:end])
+                scrubbed = scrubbed[:start] + " " + scrubbed[end:]
             consumed_spans.append(span)
             actor_modifier_spans.append(span)
             scrubbed = re.sub(r"\b" + re.escape(span) + r"\b", " ", scrubbed, flags=re.IGNORECASE)
@@ -1012,7 +1064,7 @@ class QueryRouter:
             # ── 7b. OLD State extractor (dataset-aware keyword match) ────────
             state_scan_text = mask_consumed_spans(
                 modality_result.masked_text,
-                negation_binding.masked_spans,
+                (*negation_binding.masked_spans, *analytic_spans),
             )
             primary_state = True
             while state_result := self._extract_state(
@@ -1203,6 +1255,10 @@ class QueryRouter:
         objeto_phrases, objeto_text = detect_phrases(source_owned_text)
         if objeto_phrases:
             params["objeto_phrases"] = objeto_phrases
+        # Lossless twin of the extractor below: ``objeto`` may come back empty
+        # for "contratos de gas" (short token) and must not be read as "no
+        # subject" by any consumer.
+        residual_material = material_residual(objeto_text, objeto_phrases)
 
         # ── 12. Object terms (whatever remains after all extractions) ───
         object_terms = self._extract_object_terms(objeto_text)
@@ -1249,6 +1305,8 @@ class QueryRouter:
             negation_requests=negation_requests,
             positive_text=positive_text,
             text_lineage=text_lineage,
+            analytic_controls=analytic_controls,
+            material_residual=residual_material,
         )
 
     # ─── Helper methods (only for non-entity extractions) ───────────────

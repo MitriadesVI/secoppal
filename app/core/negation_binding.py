@@ -316,7 +316,12 @@ def _actor_contrast_start(text: str, marker: NegativeMarker) -> int | None:
     return prefix_start + match.start("contrast")
 
 
-def _target_end(text: str, marker: NegativeMarker, next_marker_start: int) -> tuple[int, tuple[int, int] | None]:
+def _target_end(
+    text: str,
+    marker: NegativeMarker,
+    next_marker_start: int,
+    control_spans: tuple[tuple[int, int], ...] = (),
+) -> tuple[int, tuple[int, int] | None]:
     end = next_marker_start
     local = text[marker.end:end]
     sino = _SINO_RE.search(local)
@@ -335,6 +340,12 @@ def _target_end(text: str, marker: NegativeMarker, next_marker_start: int) -> tu
     command = command_boundary(text[marker.end:end])
     if command is not None:
         end = marker.end + command
+    # ANALYTIC_CONTROL_UPSTREAM_V1: an accredited analytic instruction is a
+    # command too. "sin alimentación desglosados por modalidad" excludes
+    # `alimentación`; the breakdown after it is not part of what is excluded.
+    for start, _ in control_spans:
+        if marker.end <= start < end:
+            end = start
     return end, sino_span
 
 
@@ -411,8 +422,16 @@ def bind_negations(
     modality_spans: Iterable[tuple[int, int]] = (),
     protected_spans: Iterable[tuple[int, int]] = (),
     actor_document_spans: Iterable[tuple[int, int]] = (),
+    control_spans: Iterable[tuple[int, int]] = (),
 ) -> NegationBinding:
-    """Bind every resolvable external marker and isolate its governed text."""
+    """Bind every resolvable external marker and isolate its governed text.
+
+    ``control_spans`` are analytic instructions accredited before binding
+    (:mod:`app.core.analytic_control`). A negated instruction owns its own
+    ``no``/``sin``, so no marker is read inside one, and any of them ends the
+    target of a marker that precedes it.
+    """
+    controls = tuple(sorted(control_spans))
     modality = tuple(sorted(modality_spans))
     actor_documents = actor_negation_group.validate_document_spans(
         text, actor_document_spans,
@@ -421,6 +440,7 @@ def bind_negations(
         *modality,
         *tuple(protected_spans),
         *protected_money_spans(text),
+        *controls,
     )
     markers = find_dimensional_negative_markers(text, protected_spans=protected)
     requests: list[NegationRequest] = []
@@ -433,7 +453,7 @@ def bind_negations(
         # Alcance CRUDO del marcador, antes de repartir dimensiones. Es la
         # referencia del sello de estado: da igual cómo acabe repartido, nada
         # de aquí dentro puede llegar al extractor positivo de estado.
-        raw_end, sino_span = _target_end(text, marker, next_start)
+        raw_end, sino_span = _target_end(text, marker, next_start, controls)
         actor_group = actor_negation_group.locate_group(
             text,
             marker_end=marker.end,
