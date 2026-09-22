@@ -30,18 +30,21 @@ from app.core.entity_resolver import EntityResolver
 from app.core.query_router import QueryRouter
 
 router = QueryRouter(EntityResolver(Path("app/data/aliases_db.json")))
-accepts_material_evidence = "material_evidence" in inspect.signature(admit_contract_activity).parameters
+admission_parameters = inspect.signature(admit_contract_activity).parameters
 out = []
 for item in json.load(sys.stdin):
     raw = item["raw"]
     try:
         parsed = router.parse(raw, today=date(2026, 9, 22))
-        admission_kwargs = {
-            "analytic_controls": parsed.analytic_controls,
-            "material_residual": parsed.material_residual,
-        }
-        if accepts_material_evidence:
-            admission_kwargs["material_evidence"] = parsed.material_evidence
+        if "semantic_evidence" in admission_parameters:
+            admission_kwargs = {"semantic_evidence": parsed.semantic_evidence}
+        else:
+            admission_kwargs = {
+                "analytic_controls": parsed.analytic_controls,
+                "material_residual": parsed.material_residual,
+            }
+            if "material_evidence" in admission_parameters:
+                admission_kwargs["material_evidence"] = parsed.material_evidence
         admission = admit_contract_activity(raw, parsed.params, **admission_kwargs)
         value = {
             "params": parsed.params,

@@ -9,6 +9,7 @@ from app.core.analytics.contract_activity import handle_contract_activity
 from app.core.analytics.contract_activity.models import DecisionKind
 from app.core.entity_resolver import EntityResolver
 from app.core.query_router import QueryRouter
+from tests.contract_activity_evidence import parsed_turn
 
 
 _FROZEN_SHA256 = "6eb583aab81acae3eeedc17c2ee7d3c9d7df4354e56ddffe86e1204e3b457116"
@@ -119,7 +120,11 @@ def test_frozen_acceptance_corpus() -> None:
     failures: list[str] = []
     for case in _cases():
         client = CorpusClient()
-        decision = handle_contract_activity(case["raw"], _adapt_params(case), client)
+        parsed = parsed_turn(case["raw"])
+        decision = handle_contract_activity(
+            case["raw"], _adapt_params(case), client,
+            semantic_evidence=parsed.semantic_evidence,
+        )
         actual = "READY" if decision.kind is DecisionKind.ANSWER else decision.kind.value
         observations = {
             "expected": actual,
@@ -142,9 +147,12 @@ def test_full_v2_corpus_through_product_query_router() -> None:
     router = QueryRouter(EntityResolver(Path("app/data/aliases_db.json")))
     failures: list[str] = []
     for case in _cases():
-        params = router.parse(case["raw"], today=date(2026, 9, 20)).params
+        parsed = router.parse(case["raw"], today=date(2026, 9, 20))
+        params = parsed.params
         client = CorpusClient()
-        decision = handle_contract_activity(case["raw"], params, client)
+        decision = handle_contract_activity(
+            case["raw"], params, client, semantic_evidence=parsed.semantic_evidence,
+        )
         actual = "READY" if decision.kind is DecisionKind.ANSWER else decision.kind.value
         observations = {
             "expected": actual,

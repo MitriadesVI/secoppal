@@ -49,6 +49,7 @@ from app.core.material_residual import (
     material_evidence,
     material_residual,
 )
+from app.core.semantic_turn_evidence import SemanticTurnEvidence
 from app.core.explicit_content import explicit_content_occurrences
 from app.core.state_predication import state_predicate
 from app.core.money_polarity import (
@@ -269,10 +270,20 @@ class ParsedQuery:
     negation_requests: tuple[NegationRequest, ...] = ()
     positive_text: str = ""
     text_lineage: TextLineageView | None = None
-    # ANALYTIC_CONTROL_UPSTREAM_V1 — evidence, not filters: never in ``params``.
-    analytic_controls: tuple[AnalyticControlSpan, ...] = ()
-    material_residual: tuple[str, ...] = ()
-    material_evidence: MaterialEvidence | None = None
+    # One parse-owned receipt beside params, never inside executable params.
+    semantic_evidence: SemanticTurnEvidence | None = None
+
+    @property
+    def analytic_controls(self) -> tuple[AnalyticControlSpan, ...]:
+        return self.semantic_evidence.analytic_controls if self.semantic_evidence else ()
+
+    @property
+    def material_residual(self) -> tuple[str, ...]:
+        return self.semantic_evidence.material_residual if self.semantic_evidence else ()
+
+    @property
+    def material_evidence(self) -> MaterialEvidence | None:
+        return self.semantic_evidence.material_evidence if self.semantic_evidence else None
 
 
 class QueryRouter:
@@ -1354,9 +1365,9 @@ class QueryRouter:
             negation_requests=negation_requests,
             positive_text=positive_text,
             text_lineage=text_lineage,
-            analytic_controls=analytic_controls,
-            material_residual=residual_material,
-            material_evidence=occurrence_material,
+            semantic_evidence=SemanticTurnEvidence.from_parse(
+                user_query, analytic_controls, residual_material, occurrence_material,
+            ),
         )
 
     # ─── Helper methods (only for non-entity extractions) ───────────────

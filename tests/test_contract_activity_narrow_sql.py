@@ -11,12 +11,25 @@ from app.core.analytics.contract_activity.models import AdmissionStatus, Decisio
 from app.core.analytics.contract_activity.planning import build_plan
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.result_ownership import ResultOwner, result_owner
+from tests.contract_activity_evidence import accredited_turn, parsed_turn
 from tests.test_contract_activity_narrow_corpus import BUYER_PARAMS, CorpusClient
 
 
+def _admit(raw: str):
+    parsed = accredited_turn(raw)
+    return admit_contract_activity(raw, parsed.params, semantic_evidence=parsed.semantic_evidence)
+
+
+def _handle(raw: str, client):
+    parsed = accredited_turn(raw)
+    return handle_contract_activity(
+        raw, parsed.params, client, semantic_evidence=parsed.semantic_evidence,
+    )
+
+
 def test_plan_owns_exact_shared_where_and_has_no_limit() -> None:
-    raw = "¿Cuántos contratos superiores a 200 millones firmó Galapa en agosto de 2026?"
-    admission = admit_contract_activity(raw, BUYER_PARAMS)
+    raw = "¿Cuántos contratos superiores a 200 millones firmó la Alcaldía de Galapa en agosto de 2026?"
+    admission = _admit(raw)
     assert admission.status is AdmissionStatus.READY and admission.request is not None
     plan = build_plan(admission.request)
 
@@ -33,9 +46,8 @@ def test_plan_owns_exact_shared_where_and_has_no_limit() -> None:
 
 
 def test_group_jobs_share_the_exact_where_and_fingerprint() -> None:
-    admission = admit_contract_activity(
-        "Distribuye por modalidad los contratos firmados por Galapa en 2025.",
-        BUYER_PARAMS,
+    admission = _admit(
+        "Distribuye por modalidad los contratos firmados por la Alcaldía de Galapa en 2025."
     )
     assert admission.request is not None
     plan = build_plan(admission.request)
@@ -47,13 +59,11 @@ def test_group_jobs_share_the_exact_where_and_fingerprint() -> None:
 
 
 def test_known_modality_and_current_reported_state_reach_the_where() -> None:
-    modality = admit_contract_activity(
-        "¿Cuántos contratos por contratación directa firmó Galapa en 2026?",
-        BUYER_PARAMS,
+    modality = _admit(
+        "¿Cuántos contratos por contratación directa firmó la Alcaldía de Galapa en 2026?"
     )
-    state = admit_contract_activity(
-        "¿Cuántos contratos de Galapa figuran actualmente suspendidos?",
-        BUYER_PARAMS,
+    state = _admit(
+        "¿Cuántos contratos de la Alcaldía de Galapa figuran actualmente suspendidos?"
     )
     assert modality.request is not None and state.request is not None
     modality_where = build_plan(modality.request).where
@@ -64,9 +74,7 @@ def test_known_modality_and_current_reported_state_reach_the_where() -> None:
 
 
 def test_request_plan_and_result_are_immutable() -> None:
-    decision = handle_contract_activity(
-        "¿Cuántos contratos tiene Galapa?", BUYER_PARAMS, CorpusClient()
-    )
+    decision = _handle("¿Cuántos contratos tiene la Alcaldía de Galapa?", CorpusClient())
     assert decision.kind is DecisionKind.ANSWER
     with pytest.raises(FrozenInstanceError):
         decision.request.buyer_display = "otro"  # type: ignore[misc,union-attr]
@@ -83,9 +91,7 @@ def test_identity_witness_failure_stops_after_one_call() -> None:
             return [{"id_contrato": "DUP", "row_count": "2"}]
 
     client = DuplicateClient()
-    decision = handle_contract_activity(
-        "¿Cuántos contratos tiene Galapa?", BUYER_PARAMS, client
-    )
+    decision = _handle("¿Cuántos contratos tiene la Alcaldía de Galapa?", client)
     assert decision.kind is DecisionKind.CLARIFY
     assert decision.reason == "SOURCE_GRAIN_UNACCREDITED"
     assert len(client.calls) == 1
@@ -93,12 +99,15 @@ def test_identity_witness_failure_stops_after_one_call() -> None:
 
 def test_registry_hook_is_first_and_contract_activity_is_terminal_owner() -> None:
     client = CorpusClient()
+    raw = "¿Cuántos contratos tiene la Alcaldía de Galapa?"
+    parsed = accredited_turn(raw)
     payload = maybe_handle_analytical_query(
-        "¿Cuántos contratos tiene Galapa?",
-        BUYER_PARAMS,
+        raw,
+        parsed.params,
         "p6dx-8zbt",
         client,
         SoQLBuilder(),
+        semantic_evidence=parsed.semantic_evidence,
     )
     assert payload is not None
     assert payload["analytical_intent"] == "contract_activity"
@@ -114,16 +123,21 @@ def test_unowned_neighbors_still_handoff_without_source_calls() -> None:
         "¿Qué proveedores contrataron con Galapa en 2026?",
     ):
         client = CorpusClient()
-        decision = handle_contract_activity(raw, BUYER_PARAMS, client)
+        parsed = parsed_turn(raw)
+        decision = handle_contract_activity(
+            raw, parsed.params, client, semantic_evidence=parsed.semantic_evidence,
+        )
         assert decision.kind is DecisionKind.HANDOFF
         assert client.calls == []
 
 
 def test_unowned_material_topic_clarifies_without_source_calls() -> None:
     client = CorpusClient()
-    params = {**BUYER_PARAMS, "objeto": ["aseo"]}
+    raw = "¿Cuántos contratos de aseo firmó la Alcaldía de Galapa en 2026?"
+    parsed = accredited_turn(raw)
+    params = {**parsed.params, "objeto": ["aseo"]}
     decision = handle_contract_activity(
-        "¿Cuántos contratos de aseo firmó Galapa en 2026?", params, client
+        raw, params, client, semantic_evidence=parsed.semantic_evidence,
     )
     assert decision.kind is DecisionKind.CLARIFY
     assert decision.reason == "UNSUPPORTED_MATERIAL_FILTER"

@@ -111,7 +111,7 @@ _EMPTY_VALUES = (None, "", [], {}, (), False)
         "parsed_params", "needs_llm", "route_reason",
         "modality_interpretation", "modality_followup_instruction", "timings_ms",
         "negation_requests", "positive_query",
-        "analytic_controls", "material_residual", "material_evidence",
+        "semantic_evidence",
     ],
 )
 def parse_query(state: State, query_router: QueryRouter) -> State:
@@ -139,12 +139,9 @@ def parse_query(state: State, query_router: QueryRouter) -> State:
         modality_followup_instruction=modality_wiring.instruction_to_state(instruction),
         negation_requests=[request.to_state() for request in result.negation_requests],
         positive_query=result.positive_text,
-        # Evidence for the capability that will own the turn, never filters:
-        # it travels beside ``parsed_params``, not inside it.
-        analytic_controls=[control.to_state() for control in result.analytic_controls],
-        material_residual=list(result.material_residual),
-        material_evidence=(
-            result.material_evidence.to_state() if result.material_evidence else None
+        # Atomic evidence travels beside executable params, never inside them.
+        semantic_evidence=(
+            result.semantic_evidence.to_state() if result.semantic_evidence else None
         ),
     )
 

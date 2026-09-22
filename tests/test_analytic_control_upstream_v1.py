@@ -165,14 +165,13 @@ def test_short_material_survives_even_when_objeto_is_empty(raw, operation, mater
     assert not parsed.params.get("objeto")
     admission = admit_contract_activity(
         raw, parsed.params,
-        analytic_controls=parsed.analytic_controls,
-        material_residual=parsed.material_residual,
+        semantic_evidence=parsed.semantic_evidence,
     )
     assert admission.status is AdmissionStatus.CLARIFY
     assert admission.reason in {"UNSUPPORTED_MATERIAL_FILTER", "BUYER_SCOPE_REQUIRED"}
     # Same turn, same buyer, without the material: Contract Activity would run.
     forced = admit_contract_activity(
-        raw, BUYER_PARAMS, analytic_controls=parsed.analytic_controls, material_residual=material,
+        raw, BUYER_PARAMS, semantic_evidence=parsed.semantic_evidence,
     )
     assert forced.reason == "UNSUPPORTED_MATERIAL_FILTER"
 

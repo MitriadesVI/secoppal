@@ -18,16 +18,23 @@ from app.core.workflow.result_ownership import (
     owns_execution_and_presentation,
     result_owner,
 )
+from tests.contract_activity_evidence import accredited_turn
 from tests.test_contract_activity_narrow_corpus import BUYER_PARAMS, CorpusClient
 
 
-def test_complete_groups_publish_null_and_blank_buckets_visibly() -> None:
-    modality = handle_contract_activity(
-        "Desglosa los contratos de Galapa por modalidad.", BUYER_PARAMS, CorpusClient()
+def _handle(raw: str, client):
+    parsed = accredited_turn(raw)
+    return handle_contract_activity(
+        raw, parsed.params, client, semantic_evidence=parsed.semantic_evidence,
     )
-    state = handle_contract_activity(
-        "Desglosa por estado reportado los contratos de Galapa.",
-        BUYER_PARAMS,
+
+
+def test_complete_groups_publish_null_and_blank_buckets_visibly() -> None:
+    modality = _handle(
+        "Desglosa los contratos de la Alcaldía de Galapa por modalidad.", CorpusClient()
+    )
+    state = _handle(
+        "Desglosa por estado reportado los contratos de la Alcaldía de Galapa.",
         CorpusClient(),
     )
     assert modality.kind is DecisionKind.ANSWER
@@ -46,10 +53,8 @@ def test_group_mismatch_never_publishes_scalar_as_an_answer() -> None:
                 rows[0]["id_count"] = "1"
             return rows
 
-    decision = handle_contract_activity(
-        "Desglosa los contratos de Galapa por modalidad.",
-        BUYER_PARAMS,
-        MismatchClient(),
+    decision = _handle(
+        "Desglosa los contratos de la Alcaldía de Galapa por modalidad.", MismatchClient()
     )
     payload = as_analytics_payload(decision)
     assert decision.kind is DecisionKind.CLARIFY
@@ -71,9 +76,7 @@ def test_malformed_scalar_and_source_error_never_become_zero_answers() -> None:
             raise TimeoutError("source timeout")
 
     for client in (MalformedClient(), ErrorClient()):
-        decision = handle_contract_activity(
-            "¿Cuántos contratos tiene Galapa?", BUYER_PARAMS, client
-        )
+        decision = _handle("¿Cuántos contratos tiene la Alcaldía de Galapa?", client)
         payload = as_analytics_payload(decision)
         assert decision.kind is DecisionKind.CLARIFY
         assert payload is not None and payload["needs_clarification"] is True
@@ -91,9 +94,7 @@ def test_legitimate_zero_requires_both_successful_calls() -> None:
             return [{"row_count": "0", "id_count": "0", "distinct_contract_count": "0"}]
 
     client = ZeroClient()
-    decision = handle_contract_activity(
-        "¿Cuántos contratos tiene Galapa?", BUYER_PARAMS, client
-    )
+    decision = _handle("¿Cuántos contratos tiene la Alcaldía de Galapa?", client)
     assert decision.kind is DecisionKind.ANSWER
     assert decision.result is not None and decision.result.total == 0
     assert len(client.calls) == 2
@@ -101,9 +102,10 @@ def test_legitimate_zero_requires_both_successful_calls() -> None:
 
 def test_product_router_timeout_is_terminal_and_preserves_unknown_total() -> None:
     raw = "¿Cuántos contratos tiene el Municipio de Galapa?"
-    params = QueryRouter(
+    parsed = QueryRouter(
         EntityResolver(Path("app/data/aliases_db.json"))
-    ).parse(raw, today=date(2026, 9, 20)).params
+    ).parse(raw, today=date(2026, 9, 20))
+    params = parsed.params
 
     class TimeoutClient:
         def __init__(self) -> None:
@@ -128,6 +130,7 @@ def test_product_router_timeout_is_terminal_and_preserves_unknown_total() -> Non
         "dataset_id": "jbjy-vk9h",
         "soql_query": "UNEXECUTED TABULAR QUERY",
         "user_query": raw,
+        "semantic_evidence": parsed.semantic_evidence.to_state(),
         "timings_ms": {},
     })
     result = execute_query(state, client, SoQLBuilder())

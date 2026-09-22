@@ -17,7 +17,6 @@ from typing import TYPE_CHECKING
 from app.core.analytic_control import (
     AnalyticControlSpan,
     AnalyticDimension,
-    controls_from_state,
 )
 from app.core.analytic_operation import (
     AnalyticOperation,
@@ -29,6 +28,7 @@ from app.core.contract_universe import CELEBRATED_STATES, fold_state
 from app.core.entity_profile.scope import resolve_profile_scope
 from app.core.estado_families import detect_estado_family
 from app.core.material_residual import MaterialEvidence
+from app.core.semantic_turn_evidence import SemanticTurnEvidence, raw_fingerprint
 from app.core.query_text_consumption import mask_consumed_spans
 from app.core.modality_dataset_projection import project_modality_filter
 from app.core.modality_filter import ModalityFilter
@@ -112,29 +112,22 @@ def admit_contract_activity(
     *,
     binding: ContractActivityBinding | None = None,
     today: Date | None = None,
-    analytic_controls: tuple | None = None,
-    material_residual: tuple[str, ...] | None = None,
-    material_evidence: object = None,
+    semantic_evidence: object = None,
 ) -> Admission:
-    """Claim only the narrow envelope; a claimed invalid request is terminal.
-
-    Direct callers use QueryRouter's same upstream evidence producer when they
-    do not supply a parsed turn.  They cannot use a weaker local grammar.
-    """
+    """Claim only the narrow envelope from a complete upstream parse receipt."""
+    if semantic_evidence is None:
+        return _clarify("SEMANTIC_EVIDENCE_REQUIRED")
+    receipt = SemanticTurnEvidence.from_state(semantic_evidence)
+    if receipt is None:
+        return _clarify("SEMANTIC_EVIDENCE_INVALID")
+    if receipt.raw_fingerprint != raw_fingerprint(raw):
+        return _clarify("SEMANTIC_EVIDENCE_RAW_MISMATCH")
+    if not receipt.valid_for(raw):
+        return _clarify("SEMANTIC_EVIDENCE_INVALID")
     text = normalize_text(raw)
-    if analytic_controls is None or material_residual is None:
-        from app.core.query_router import QueryRouter
-
-        parsed = QueryRouter().parse(raw, today=today)
-        if analytic_controls is None:
-            analytic_controls = parsed.analytic_controls
-        if material_residual is None:
-            material_residual = parsed.material_residual
-        if material_evidence is None:
-            material_evidence = parsed.material_evidence
-    controls = controls_from_state(analytic_controls)
-    if material_evidence is not None and MaterialEvidence.from_state(material_evidence) is None:
-        return _clarify("INVALID_MATERIAL_EVIDENCE")
+    controls = receipt.analytic_controls
+    material_residual = receipt.material_residual
+    material_evidence = receipt.material_evidence
     analytic = derive_operation(controls)
     content = _without_controls(text, controls)
     if content is None:

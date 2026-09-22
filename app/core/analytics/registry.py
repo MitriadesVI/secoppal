@@ -101,9 +101,7 @@ def maybe_handle_analytical_query(
     *,
     capability_binding: object = LEGACY_CONTRACT_ACTIVITY_DIRECT,
     today: Date | None = None,
-    analytic_controls: tuple | None = None,
-    material_residual: tuple[str, ...] | None = None,
-    material_evidence: object = None,
+    semantic_evidence: object = None,
 ) -> dict | None:
     """Punto de entrada controlado para queries analíticas.
 
@@ -113,8 +111,9 @@ def maybe_handle_analytical_query(
         ContractActivityBinding,
     )
 
-    if capability_binding is LEGACY_CONTRACT_ACTIVITY_DIRECT or isinstance(
-        capability_binding, ContractActivityBinding
+    if (
+        (capability_binding is LEGACY_CONTRACT_ACTIVITY_DIRECT and semantic_evidence is not None)
+        or isinstance(capability_binding, ContractActivityBinding)
     ):
         contract_activity = handle_contract_activity(
             user_query,
@@ -126,9 +125,7 @@ def maybe_handle_analytical_query(
                 else None
             ),
             today=today,
-            analytic_controls=analytic_controls,
-            material_residual=material_residual,
-            material_evidence=material_evidence,
+            semantic_evidence=semantic_evidence,
         )
         contract_activity_payload = as_analytics_payload(contract_activity)
         if contract_activity_payload is not None:

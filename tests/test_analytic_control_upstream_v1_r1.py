@@ -40,8 +40,7 @@ def test_p1_a_distinct_galapa_subject_must_block_buyer_count() -> None:
     assert "galapa" in parsed.material_residual
     admission = admit_contract_activity(
         raw, BUYER_PARAMS,
-        analytic_controls=parsed.analytic_controls,
-        material_residual=parsed.material_residual,
+        semantic_evidence=parsed.semantic_evidence,
     )
     assert admission.status is AdmissionStatus.CLARIFY
     assert admission.reason == "UNSUPPORTED_MATERIAL_FILTER"
@@ -113,7 +112,9 @@ def test_p1_c_tampoco_preserves_negative_group_and_positive_count() -> None:
 ])
 def test_direct_ca_reuses_upstream_evidence_and_makes_zero_source_calls(raw: str) -> None:
     source = RecordingContractSource()
-    decision = handle_contract_activity(raw, BUYER_PARAMS, source)
+    decision = handle_contract_activity(
+        raw, BUYER_PARAMS, source, semantic_evidence=_parse(raw).semantic_evidence,
+    )
     assert decision.kind is DecisionKind.CLARIFY
     assert source.calls == []
 
@@ -124,6 +125,10 @@ def test_direct_ca_negative_coordination_executes_only_count() -> None:
         "No agrupes por modalidad; tampoco por estado reportado; "
         "cuenta los contratos de la Alcaldía de Galapa",
         BUYER_PARAMS, source,
+        semantic_evidence=_parse(
+            "No agrupes por modalidad; tampoco por estado reportado; "
+            "cuenta los contratos de la Alcaldía de Galapa"
+        ).semantic_evidence,
     )
     assert decision.kind is DecisionKind.ANSWER
     assert decision.request is not None and decision.request.operation.value == "TOTAL"
@@ -165,9 +170,7 @@ def test_adversarial_corpus(case: dict) -> None:
     if case["family"] == "same_lexeme":
         admission = admit_contract_activity(
             case["raw"], parsed.params,
-            analytic_controls=controls,
-            material_residual=parsed.material_residual,
-            material_evidence=parsed.material_evidence,
+            semantic_evidence=parsed.semantic_evidence,
         )
         expected = (
             AdmissionStatus(case["admission"]) if case.get("admission")

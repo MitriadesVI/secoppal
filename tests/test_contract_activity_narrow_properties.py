@@ -6,6 +6,7 @@ from app.core.analytics.contract_activity.admission import admit_contract_activi
 from app.core.analytics.contract_activity.models import AdmissionStatus
 from app.core.analytics.contract_activity.planning import build_plan
 from app.core.analytics.contract_activity.runtime import execute_plan
+from tests.contract_activity_evidence import accredited_turn
 from tests.test_contract_activity_narrow_corpus import BUYER_PARAMS, CorpusClient
 
 
@@ -23,8 +24,11 @@ from tests.test_contract_activity_narrow_corpus import BUYER_PARAMS, CorpusClien
 )
 def test_money_comparator_survives_raw_request_and_sql(amount, phrase) -> None:
     surface, operator = phrase
-    raw = f"¿Cuántos contratos {surface} {amount} pesos firmó Galapa en 2026?"
-    admission = admit_contract_activity(raw, BUYER_PARAMS)
+    raw = f"¿Cuántos contratos {surface} {amount} pesos firmó la Alcaldía de Galapa en 2026?"
+    parsed = accredited_turn(raw)
+    admission = admit_contract_activity(
+        raw, parsed.params, semantic_evidence=parsed.semantic_evidence,
+    )
     assert admission.status is AdmissionStatus.READY and admission.request is not None
     assert admission.request.money is not None
     assert admission.request.money.operator == operator
@@ -34,8 +38,10 @@ def test_money_comparator_survives_raw_request_and_sql(amount, phrase) -> None:
 @settings(max_examples=30, deadline=None)
 @given(parts=st.lists(st.integers(min_value=1, max_value=25), min_size=1, max_size=8))
 def test_any_complete_group_partition_reconciles(parts) -> None:
+    raw = "Desglosa los contratos de la Alcaldía de Galapa por modalidad."
+    parsed = accredited_turn(raw)
     admission = admit_contract_activity(
-        "Desglosa los contratos de Galapa por modalidad.", BUYER_PARAMS
+        raw, parsed.params, semantic_evidence=parsed.semantic_evidence,
     )
     assert admission.request is not None
     plan = build_plan(admission.request)
@@ -72,9 +78,10 @@ def test_any_complete_group_partition_reconciles(parts) -> None:
 
 @given(suffix=st.text(alphabet=st.characters(whitelist_categories=("Ll",)), min_size=1, max_size=12))
 def test_unknown_modality_is_absorbing_and_makes_no_plan(suffix) -> None:
+    raw = f"¿Cuántos contratos de modalidad zzz{suffix} firmó la Alcaldía de Galapa en 2026?"
+    parsed = accredited_turn(raw)
     admission = admit_contract_activity(
-        f"¿Cuántos contratos de modalidad zzz{suffix} firmó Galapa en 2026?",
-        BUYER_PARAMS,
+        raw, parsed.params, semantic_evidence=parsed.semantic_evidence,
     )
     assert admission.status is AdmissionStatus.CLARIFY
     assert admission.request is None

@@ -10,6 +10,7 @@ from app.core.analytics.contract_activity.models import AdmissionStatus, Operati
 from app.core.analytics.contract_activity.planning import build_plan
 from app.core.capability_binding.contract_activity_binding import ContractActivityBinding
 from app.core.natural_alpha.models import GroundedJob
+from tests.contract_activity_evidence import parsed_turn
 from tests.test_contract_activity_narrow_corpus import BUYER_PARAMS, CorpusClient
 
 
@@ -26,21 +27,29 @@ def _binding(raw: str, aspect: str, quote: str | None = None) -> ContractActivit
 
 
 def _admit(raw: str, params: dict, aspect: str = "CONTRACT_COUNT"):
+    parsed = parsed_turn(raw, today=TODAY)
+    # Test-specific filter overrides remain inputs to admission; buyer identity
+    # comes from the same configured parser that produced semantic evidence.
+    overrides = {
+        key: value for key, value in params.items()
+        if key not in {"entidad_resolved", "entidad_resolution"}
+    }
     return admit_contract_activity(
         raw,
-        params,
+        {**parsed.params, **overrides},
         binding=_binding(raw, aspect),
         today=TODAY,
+        semantic_evidence=parsed.semantic_evidence,
     )
 
 
 def test_strict_and_inclusive_money_survive_request_plan_and_fingerprint() -> None:
     strict = _admit(
-        "¿Cuántos contratos superiores a 200 millones firmó Galapa?",
+        "¿Cuántos contratos superiores a 200 millones firmó la Alcaldía de Galapa?",
         {**BUYER_PARAMS, "valor_min": 200_000_000},
     )
     inclusive = _admit(
-        "¿Cuántos contratos de al menos 200 millones firmó Galapa?",
+        "¿Cuántos contratos de al menos 200 millones firmó la Alcaldía de Galapa?",
         {**BUYER_PARAMS, "valor_min": 200_000_000},
     )
     assert strict.status is AdmissionStatus.READY and strict.request is not None
@@ -56,10 +65,10 @@ def test_strict_and_inclusive_money_survive_request_plan_and_fingerprint() -> No
 
 def test_complete_signing_period_survives_and_missing_period_stays_absent() -> None:
     period = _admit(
-        "¿Cuántos contratos firmó Galapa en agosto de 2026?",
+        "¿Cuántos contratos firmó la Alcaldía de Galapa en agosto de 2026?",
         {**BUYER_PARAMS, "fecha_desde": "2026-08-01", "fecha_hasta": "2026-08-31"},
     )
-    absent = _admit("¿Cuántos contratos firmó Galapa?", BUYER_PARAMS)
+    absent = _admit("¿Cuántos contratos firmó la Alcaldía de Galapa?", BUYER_PARAMS)
     assert period.request is not None and absent.request is not None
     assert (period.request.date_from, period.request.date_to) == (
         "2026-08-01", "2026-08-31",
@@ -71,13 +80,13 @@ def test_complete_signing_period_survives_and_missing_period_stays_absent() -> N
 
 def test_positive_modality_and_current_state_filters_survive() -> None:
     modality = _admit(
-        "¿Cuántos contratos por contratación directa firmó Galapa?",
+        "¿Cuántos contratos por contratación directa firmó la Alcaldía de Galapa?",
         {**BUYER_PARAMS, "modalidad_include_procedure_ids": [
             "contratacion_directa", "contratacion_directa_con_ofertas",
         ]},
     )
     state = _admit(
-        "¿Cuántos contratos de Galapa figuran actualmente suspendidos?",
+        "¿Cuántos contratos de la Alcaldía de Galapa figuran actualmente suspendidos?",
         {**BUYER_PARAMS, "estado_contrato": ["Suspendido"]},
     )
     assert modality.request is not None and modality.request.modality_values
@@ -99,7 +108,7 @@ def test_historical_state_forced_to_bound_operation_is_terminal_clarify() -> Non
 
 
 def test_unknown_material_inside_overbroad_quote_remains_blocking_residual() -> None:
-    raw = "¿Cuántos contratos de aseo firmó Galapa?"
+    raw = "¿Cuántos contratos de aseo firmó la Alcaldía de Galapa?"
     admission = _admit(raw, {**BUYER_PARAMS, "objeto": ["aseo"]})
     assert admission.status is AdmissionStatus.CLARIFY
     # Material is now judged from upstream evidence on both paths, with the
@@ -128,7 +137,7 @@ def test_alpha_operation_that_the_host_grounds_differently_never_runs() -> None:
     CONTRACT_COUNT on "¿cuántos contratos hay en cada modalidad?" executed a
     bare TOTAL, i.e. an incomplete reading of what the user asked.
     """
-    raw = "¿Cuántos contratos hay en cada modalidad para Galapa?"
+    raw = "¿Cuántos contratos hay en cada modalidad para la Alcaldía de Galapa?"
     total = _admit(raw, BUYER_PARAMS, "CONTRACT_COUNT")
     grouped = _admit(raw, BUYER_PARAMS, "CONTRACTS_BY_MODALITY")
     assert total.status is AdmissionStatus.CLARIFY
@@ -139,9 +148,9 @@ def test_alpha_operation_that_the_host_grounds_differently_never_runs() -> None:
 
 
 def test_operation_changes_the_plan_fingerprint_but_not_the_where() -> None:
-    total = _admit("¿Cuántos contratos firmó Galapa?", BUYER_PARAMS, "CONTRACT_COUNT")
+    total = _admit("¿Cuántos contratos firmó la Alcaldía de Galapa?", BUYER_PARAMS, "CONTRACT_COUNT")
     grouped = _admit(
-        "Desglosa por modalidad los contratos que firmó Galapa.",
+        "Desglosa por modalidad los contratos que firmó la Alcaldía de Galapa.",
         BUYER_PARAMS,
         "CONTRACTS_BY_MODALITY",
     )
@@ -154,12 +163,13 @@ def test_operation_changes_the_plan_fingerprint_but_not_the_where() -> None:
 
 
 def test_alpha_receipt_is_separate_from_request_plan_and_sql() -> None:
-    raw = "¿Cuántos contratos firmó Galapa?"
+    raw = "¿Cuántos contratos firmó la Alcaldía de Galapa?"
     quote = "Cuántos contratos"
     binding = _binding(raw, "CONTRACT_COUNT", quote)
     start = raw.index(quote)
     decision = handle_contract_activity(
-        raw, BUYER_PARAMS, CorpusClient(), binding=binding, today=TODAY,
+        raw, parsed_turn(raw).params, CorpusClient(), binding=binding, today=TODAY,
+        semantic_evidence=parsed_turn(raw).semantic_evidence,
     )
     assert decision.request is not None and decision.plan is not None
     assert decision.binding_receipt == {
@@ -185,7 +195,7 @@ def test_filter_combinatorics_preserve_comparator_or_absorb_unknown_material(
     amount: int, inclusive: bool, unknown_topic: bool,
 ) -> None:
     comparator = "al menos" if inclusive else "más de"
-    raw = f"¿Cuántos contratos de {comparator} {amount} pesos firmó Galapa?"
+    raw = f"¿Cuántos contratos de {comparator} {amount} pesos firmó la Alcaldía de Galapa?"
     params = {**BUYER_PARAMS, "valor_min": amount}
     if unknown_topic:
         params["objeto"] = ["residuoz"]
