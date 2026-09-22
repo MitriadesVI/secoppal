@@ -16,16 +16,22 @@
   },
   "superseded": {
     "app/core/natural_alpha/prompt.py": {
-      "successor_manifest": "experiments/natural_job_prelegacy_v2/manifest.json",
-      "successor_version": "V3",
-      "superseded_at": "2026-09-16",
-      "reason": "La mision NATURAL_JOB_PRELEGACY_V2 congela el prompt V3 antes de cualquier replay (C0). El sha historico queda como registro de lo que V1 midio, pero deja de pinnear el archivo vivo. El guard de evaluation.py exige que el manifest sucesor pinnee el sha vigente."
+      "successor_manifest": "experiments/natural_alpha_v1_r1/manifest.json",
+      "successor_version": "ANALYTIC_CONTROL_UPSTREAM_V1_R1",
+      "superseded_at": "2026-09-22",
+      "reason": "The CA WIP imported at 849627f changed the live Alpha catalog and prompt. V1 hashes remain historical; this successor pins the current files without changing the V1 corpus or oracle."
     },
     "experiments/natural_alpha_v1/evaluation.py": {
       "successor_manifest": null,
       "successor_version": null,
       "superseded_at": "2026-09-16",
       "reason": "El guard gano el mecanismo explicito de supersesion que el C0 de V2 exige; la semantica de medicion de V1 no cambio. Sin manifest sucesor: queda cubierto por tests/test_natural_alpha_evaluation.py y por el skip explicito de load_frozen()."
+    },
+    "app/core/natural_alpha/catalog.py": {
+      "successor_manifest": "experiments/natural_alpha_v1_r1/manifest.json",
+      "successor_version": "ANALYTIC_CONTROL_UPSTREAM_V1_R1",
+      "superseded_at": "2026-09-22",
+      "reason": "The CA WIP imported at 849627f changed the live Alpha catalog and prompt. V1 hashes remain historical; this successor pins the current files without changing the V1 corpus or oracle."
     }
   }
 }

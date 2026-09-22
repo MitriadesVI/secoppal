@@ -50,9 +50,15 @@ def test_superseded_artifact_names_a_live_successor_that_pins_it():
         successor = ROOT / note["successor_manifest"]
         assert successor.is_file(), f"MISSING_SUCCESSOR:{note['successor_manifest']}"
         successor_manifest = json.loads(successor.read_text())
-        assert successor_manifest["alpha_prompt_file"] == name
-        assert successor_manifest["alpha_prompt_file_sha256"] == sha256(ROOT / name), (
-            f"SUCCESSOR_SHA_STALE:{name}")
+        pins = successor_manifest.get("sha256")
+        if pins is None:
+            # Historical V2 prompt-only schema remains readable.
+            pins = {successor_manifest["alpha_prompt_file"]:
+                    successor_manifest["alpha_prompt_file_sha256"]}
+        assert pins[name] == sha256(ROOT / name), f"SUCCESSOR_SHA_STALE:{name}"
+        frozen = successor_manifest.get("frozen_copies", {}).get(name)
+        if frozen is not None:
+            assert sha256(ROOT / frozen["path"]) == frozen["sha256"] == pins[name]
 
 
 def test_fabricated_perfect_replay_zero_calls_and_all_records_consumed():
