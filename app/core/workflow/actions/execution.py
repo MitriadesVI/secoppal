@@ -26,6 +26,9 @@ from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.actor_profile.turn import maybe_handle_actor_profile
 from app.core.analytics import maybe_handle_analytical_query
 from app.core.analytics.registry import LEGACY_CONTRACT_ACTIVITY_DIRECT
+from app.core.analytic_control import controls_from_state
+from app.core.analytic_operation import derive_operation
+from app.core.analytic_ownership import limitation_notice, owner_limitation
 from app.core.entity_profile.turn import classify_entity_profile_turn
 from app.core.entity_profile.followup import is_supplier_followup
 from app.core.observer import observe as observe_universe_fn
@@ -59,7 +62,7 @@ from app.core.workflow.actions.entity_profile import (
 ACTOR_PROFILE_INTENT = "actor_profile"
 
 
-@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "today", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "entity_profile_view", "route_reason", "resolved_params", "timings_ms"])
+@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "today", "analytic_controls", "material_residual", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "entity_profile_view", "route_reason", "resolved_params", "analytic_limitation", "timings_ms"])
 def execute_query(
     state: State, secop_client: SecopClient, soql_builder: SoQLBuilder,
     capability_binding: object = LEGACY_CONTRACT_ACTIVITY_DIRECT,
@@ -70,6 +73,15 @@ def execute_query(
     """
     start_total = time.perf_counter()
     from app.core.capability_binding.workflow_hook import bound_profile_turn
+
+    # INV-ANALYTIC-CONTROL-HAS-OWNER-OR-LIMITATION: until an owner claims the
+    # turn, every answer carries the limitation of the operation it skipped.
+    # Absent keys mean "no parse evidence" (a caller that built the State by
+    # hand), which is not the same as "parsed, nothing found".
+    evidence_present = "analytic_controls" in state
+    analytic_controls = controls_from_state(state.get("analytic_controls"))
+    analytic_operation = derive_operation(analytic_controls)
+    state = state.update(analytic_limitation=limitation_notice(analytic_operation))
 
     bound = bound_profile_turn(
         capability_binding, state.get("user_query", ""), state.get("resolved_params", {}),
@@ -102,6 +114,11 @@ def execute_query(
         soql_builder=soql_builder,
         capability_binding=capability_binding,
         today=state.get("today"),
+        analytic_controls=analytic_controls if evidence_present else None,
+        material_residual=(
+            tuple(state.get("material_residual") or ())
+            if "material_residual" in state else None
+        ),
     )
     if analytics:
         analytical_total = analytics.get("total_count")
@@ -123,6 +140,9 @@ def execute_query(
             soql_query=analytics.get("soql_query", ""),
             route_reason=analytics.get("route_reason", state.get("route_reason", "")),
             resolved_params=params,
+            analytic_limitation=owner_limitation(
+                analytic_operation, analytics.get("analytical_intent", ""),
+            ),
         )
 
     # ── Entity Analysis V1 ────────────────────────────────────────────────

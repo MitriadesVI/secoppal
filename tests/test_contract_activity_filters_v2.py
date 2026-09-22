@@ -90,7 +90,11 @@ def test_historical_state_forced_to_bound_operation_is_terminal_clarify() -> Non
     raw = "¿En qué estado estaban los contratos de Galapa al cierre de 2024?"
     admission = _admit(raw, BUYER_PARAMS, "CONTRACTS_BY_STATE")
     assert admission.status is AdmissionStatus.CLARIFY
-    assert admission.reason == "HISTORICAL_REPORTED_STATE_UNSUPPORTED"
+    # ANALYTIC_CONTROL_UPSTREAM_V1: the host no longer lets Alpha's label stand
+    # in for a breakdown it cannot ground ("en qué estado estaban" names no
+    # criterion), so the refusal happens one step earlier than the historical
+    # check.  Still terminal, still zero source calls.
+    assert admission.reason == "HOST_OPERATION_NOT_ACCREDITED"
     assert admission.request is None
 
 
@@ -98,7 +102,9 @@ def test_unknown_material_inside_overbroad_quote_remains_blocking_residual() -> 
     raw = "¿Cuántos contratos de aseo firmó Galapa?"
     admission = _admit(raw, {**BUYER_PARAMS, "objeto": ["aseo"]})
     assert admission.status is AdmissionStatus.CLARIFY
-    assert admission.reason == "UNACCREDITED_RESIDUAL"
+    # Material is now judged from upstream evidence on both paths, with the
+    # reason the legacy path already used (no per-operation artifact list).
+    assert admission.reason == "UNSUPPORTED_MATERIAL_FILTER"
 
 
 def test_unsupported_exclusion_and_multiple_money_constraints_fail_closed() -> None:
@@ -115,14 +121,31 @@ def test_unsupported_exclusion_and_multiple_money_constraints_fail_closed() -> N
     assert modality.request is None and money.request is None
 
 
-def test_operation_is_not_reinferred_after_binding() -> None:
+def test_alpha_operation_that_the_host_grounds_differently_never_runs() -> None:
+    """Alpha proposes; the host accredits.  Disagreement is a clarification.
+
+    Before ANALYTIC_CONTROL_UPSTREAM_V1 this test pinned the opposite: Alpha's
+    CONTRACT_COUNT on "¿cuántos contratos hay en cada modalidad?" executed a
+    bare TOTAL, i.e. an incomplete reading of what the user asked.
+    """
     raw = "¿Cuántos contratos hay en cada modalidad para Galapa?"
     total = _admit(raw, BUYER_PARAMS, "CONTRACT_COUNT")
     grouped = _admit(raw, BUYER_PARAMS, "CONTRACTS_BY_MODALITY")
-    assert total.status is AdmissionStatus.READY
-    assert total.request is not None and grouped.request is not None
-    assert total.request.operation is Operation.TOTAL
+    assert total.status is AdmissionStatus.CLARIFY
+    assert total.reason == "ALPHA_HOST_OPERATION_MISMATCH"
+    assert total.request is None
+    assert grouped.request is not None
     assert grouped.request.operation is Operation.BY_MODALITY
+
+
+def test_operation_changes_the_plan_fingerprint_but_not_the_where() -> None:
+    total = _admit("¿Cuántos contratos firmó Galapa?", BUYER_PARAMS, "CONTRACT_COUNT")
+    grouped = _admit(
+        "Desglosa por modalidad los contratos que firmó Galapa.",
+        BUYER_PARAMS,
+        "CONTRACTS_BY_MODALITY",
+    )
+    assert total.request is not None and grouped.request is not None
     total_plan = build_plan(total.request)
     grouped_plan = build_plan(grouped.request)
     assert total_plan.groups_sql is None and grouped_plan.groups_sql is not None

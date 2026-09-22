@@ -291,8 +291,12 @@ SEARCH_SH1_MODIFIED_FILE_SHA256 = {
     # ambos turnos. No cambian los oráculos de ranking/conteo/paginación.
     # Executive UX V1 optional view transport; inverse-byte guard in
     # test_entity_profile_executive_ux_boundary preserves the old contract.
+    # ANALYTIC_CONTROL_UPSTREAM_V1 prepends ``analytic_limitation`` — empty
+    # unless the turn carried a count/group instruction nobody executed — so
+    # every oracle below stays byte-identical; the same inverse-byte guard
+    # strips exactly that block.
     "app/core/workflow/handlers/normal_flow.py": (
-        "7eb77c411ac03d9bbef20341bfc6e243bd43e1efde6c5da32157a252d24582cf"
+        "b8affdff94dc19fee03f3209d1604a37239a0ed0b2d512749ec4fd303b15b4fd"
     ),
 }
 

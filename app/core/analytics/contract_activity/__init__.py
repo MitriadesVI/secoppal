@@ -30,10 +30,17 @@ def handle_contract_activity(
     *,
     binding: ContractActivityBinding | None = None,
     today: Date | None = None,
+    analytic_controls: tuple | None = None,
+    material_residual: tuple[str, ...] | None = None,
 ) -> ContractActivityDecision:
     receipt = binding.receipt(user_query) if binding is not None else None
     admission = admit_contract_activity(
-        user_query, params, binding=binding, today=today,
+        user_query,
+        params,
+        binding=binding,
+        today=today,
+        analytic_controls=analytic_controls,
+        material_residual=material_residual,
     )
     if admission.status is AdmissionStatus.HANDOFF:
         if binding is not None:

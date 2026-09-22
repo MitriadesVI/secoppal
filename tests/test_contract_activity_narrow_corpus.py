@@ -11,8 +11,8 @@ from app.core.entity_resolver import EntityResolver
 from app.core.query_router import QueryRouter
 
 
-_FROZEN_SHA256 = "b872a0ef206dfafd41d575f5a6a456032c494308867e57818ea0b046002fdc13"
-_FROZEN_ACCEPTANCE = '''{"record_type":"meta","contract":"CONTRACT_ACTIVITY_V1_NARROW","version":2,"supersedes_sha256":"a09ad535f762eea12c7110a3dd6381268f9a293568f07228edabe1ce27df5439","corrections":{"NAR-003":"explicit BuyerUnit; bare Galapa was an invalid READY oracle","NAR-007":"explicit BuyerUnit; corpus may not inject absent buyer authority"},"case_count":30,"frozen_before_repair_writer":true}
+_FROZEN_SHA256 = "6eb583aab81acae3eeedc17c2ee7d3c9d7df4354e56ddffe86e1204e3b457116"
+_FROZEN_ACCEPTANCE = '''{"record_type":"meta","contract":"CONTRACT_ACTIVITY_V1_NARROW","version":3,"supersedes_sha256":"b872a0ef206dfafd41d575f5a6a456032c494308867e57818ea0b046002fdc13","corrections":{"NAR-003":"explicit BuyerUnit; bare Galapa was an invalid READY oracle","NAR-007":"explicit BuyerUnit; corpus may not inject absent buyer authority","NAR-020":"ANALYTIC_CONTROL_UPSTREAM_V1 mandatory case 4 (frozen cc05): a negated GROUP plus a positive COUNT is a COUNT, not a negated operation"},"case_count":30,"frozen_before_repair_writer":true}
 {"id":"NAR-001","family":"TOTAL_TIME","raw":"¿Cuántos contratos firmó Galapa en agosto de 2026?","expected":"READY","operation":"TOTAL","calls":2}
 {"id":"NAR-002","family":"TOTAL_TIME","raw":"Dime el total de contratos de Galapa durante 2025.","expected":"READY","operation":"TOTAL","calls":2}
 {"id":"NAR-003","family":"TOTAL_NO_TIME","raw":"¿Cuántos contratos tiene el Municipio de Galapa?","expected":"READY","operation":"TOTAL","calls":2}
@@ -32,7 +32,7 @@ _FROZEN_ACCEPTANCE = '''{"record_type":"meta","contract":"CONTRACT_ACTIVITY_V1_N
 {"id":"NAR-017","family":"SUPPLIERS_NEIGHBOR","raw":"¿Qué proveedores contrataron con Galapa en 2026?","expected":"HANDOFF","calls":0}
 {"id":"NAR-018","family":"MULTI_OPERATION","raw":"Cuenta los contratos de Galapa en 2026 y enuméralos.","expected":"CLARIFY","calls":0}
 {"id":"NAR-019","family":"MULTI_OPERATION","raw":"Cuenta los contratos de Galapa en 2026 y agrúpalos por modalidad.","expected":"CLARIFY","calls":0}
-{"id":"NAR-020","family":"NEGATED_OPERATION","raw":"No los agrupe por modalidad; cuente los contratos de Galapa en 2026.","expected":"CLARIFY","calls":0}
+{"id":"NAR-020","family":"NEGATED_OPERATION","raw":"No los agrupe por modalidad; cuente los contratos de Galapa en 2026.","expected":"READY","operation":"TOTAL","calls":2}
 {"id":"NAR-021","family":"TWO_GROUPS","raw":"Desglosa los contratos de Galapa por modalidad y estado reportado.","expected":"CLARIFY","calls":0}
 {"id":"NAR-022","family":"RANKING","raw":"Ordena las dos modalidades con más contratos de Galapa en 2026.","expected":"CLARIFY","calls":0}
 {"id":"NAR-023","family":"HISTORICAL_STATE","raw":"¿Cuántos contratos de Galapa estaban suspendidos el 10 de octubre de 2024?","expected":"CLARIFY","calls":0}
@@ -94,11 +94,15 @@ def _cases() -> list[dict]:
     assert meta == {
         "record_type": "meta",
         "contract": "CONTRACT_ACTIVITY_V1_NARROW",
-        "version": 2,
-        "supersedes_sha256": "a09ad535f762eea12c7110a3dd6381268f9a293568f07228edabe1ce27df5439",
+        "version": 3,
+        "supersedes_sha256": "b872a0ef206dfafd41d575f5a6a456032c494308867e57818ea0b046002fdc13",
         "corrections": {
             "NAR-003": "explicit BuyerUnit; bare Galapa was an invalid READY oracle",
             "NAR-007": "explicit BuyerUnit; corpus may not inject absent buyer authority",
+            "NAR-020": (
+                "ANALYTIC_CONTROL_UPSTREAM_V1 mandatory case 4 (frozen cc05): a "
+                "negated GROUP plus a positive COUNT is a COUNT, not a negated operation"
+            ),
         },
         "case_count": 30,
         "frozen_before_repair_writer": True,

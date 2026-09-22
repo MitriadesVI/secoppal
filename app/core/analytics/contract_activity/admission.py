@@ -1,4 +1,12 @@
-"""Atomic, raw-grounded admission for CONTRACT_ACTIVITY_V1_NARROW."""
+"""Atomic, raw-grounded admission for CONTRACT_ACTIVITY_V1_NARROW.
+
+ANALYTIC_CONTROL_UPSTREAM_V1: the operation (count / group by) and the subject
+matter are evidence produced upstream (``app.core.analytic_control`` and
+``app.core.material_residual``).  This module no longer decides whether
+"desglosa" is an instruction or whether "modalidad" was control or topic; it
+maps the derived operation onto its narrow capability and refuses whatever
+subject matter it cannot filter.
+"""
 from __future__ import annotations
 
 import calendar
@@ -6,10 +14,22 @@ import re
 from datetime import date as Date
 from typing import TYPE_CHECKING
 
+from app.core.analytic_control import (
+    AnalyticControlSpan,
+    AnalyticDimension,
+    controls_from_state,
+    locate_analytic_controls,
+)
+from app.core.analytic_operation import (
+    AnalyticOperation,
+    AnalyticOperationKind,
+    derive_operation,
+)
 from app.core.buyer_source_names import project_buyer_names
 from app.core.contract_universe import CELEBRATED_STATES, fold_state
 from app.core.entity_profile.scope import resolve_profile_scope
 from app.core.estado_families import detect_estado_family
+from app.core.material_residual import material_residual as structural_split
 from app.core.modality_dataset_projection import project_modality_filter
 from app.core.modality_filter import ModalityFilter
 from app.core.modality_resolution_models import ResolutionStatus
@@ -31,16 +51,10 @@ if TYPE_CHECKING:
     )
 
 
-_COUNT = re.compile(r"\b(?:cuantos|cuantas|cuente|cuenta|total\s+de)\b")
 _SEARCH = re.compile(r"\b(?:lista|listar|liste|muestra|mostrar|enumera|enumerar|enumeralos)\b")
 _TOTAL_VALUE = re.compile(r"\b(?:cuanto\s+suman?|valor\s+total|suma\s+de)\b")
 _SUPPLIERS = re.compile(r"\b(?:proveedores?|contratistas?)\b")
 _RANKING = re.compile(r"\b(?:ordena|ranking|top|con\s+mas|mayores?)\b")
-_GROUP_VERB = re.compile(r"\b(?:desglosa|distribuye|agrupa|agrupar|agrupalos)\b")
-_GROUP_MODALITY = re.compile(r"\b(?:por\s+modalidad|segun\s+(?:su\s+)?modalidad)\b")
-_GROUP_STATE = re.compile(
-    r"\b(?:por\s+estado(?:\s+reportado)?|segun\s+(?:su\s+)?estado(?:\s+actual)?)\b"
-)
 _CURRENT = re.compile(r"\b(?:actualmente|actual|hoy|figuran)\b")
 _HISTORICAL_STATE = re.compile(
     r"\b(?:estaban|seguian|permanecian|se\s+encontraban)\b"
@@ -80,13 +94,12 @@ _GENERIC_BUYER_WORDS = frozenset({
     "alcaldia", "municipio", "municipal", "gobernacion", "departamento",
     "distrito", "distrital", "entidad", "unidad", "de", "del", "la", "el",
 })
-_FUNCTIONAL_TOPIC_WORDS = frozenset({
-    "actual", "actualmente", "agrupa", "agrupar", "agrupalos", "contrato",
-    "contratos", "cuantos", "cuanto", "cuenta", "cuente", "desglosa",
-    "distribuye", "estado", "figuran", "firmado", "firmados", "firmo",
-    "modalidad", "modalidades", "reportado", "reportados", "segun",
-    "suspendido", "suspendidos", "total",
-})
+_HOST_OPERATION = {
+    (AnalyticOperationKind.COUNT, None): Operation.TOTAL,
+    (AnalyticOperationKind.GROUP, AnalyticDimension.MODALITY): Operation.BY_MODALITY,
+    (AnalyticOperationKind.GROUP, AnalyticDimension.REPORTED_STATE): Operation.BY_REPORTED_STATE,
+}
+_TOPIC_KEYS = ("objeto", "objeto_or", "objeto_phrases", "objeto_exclude")
 _ACTOR_KEYS = (
     "contratista", "actor_name", "actor_document", "documento_proveedor",
     "proveedor_adjudicado",
@@ -99,11 +112,26 @@ def admit_contract_activity(
     *,
     binding: ContractActivityBinding | None = None,
     today: Date | None = None,
+    analytic_controls: tuple | None = None,
+    material_residual: tuple[str, ...] | None = None,
 ) -> Admission:
-    """Claim only the narrow envelope; a claimed invalid request is terminal."""
+    """Claim only the narrow envelope; a claimed invalid request is terminal.
+
+    ``analytic_controls`` / ``material_residual`` are the parser's evidence for
+    this turn; the workflow always passes them.  A direct caller that has no
+    parse gets the controls from the same upstream authority (without the
+    parser's protected spans) and no material evidence beyond ``params``.
+    """
     text = normalize_text(raw)
+    controls = (
+        locate_analytic_controls(text)
+        if analytic_controls is None
+        else controls_from_state(analytic_controls)
+    )
+    analytic = derive_operation(controls)
+    content = _without_controls(text, controls)
     if binding is None:
-        operation, disposition = _operation(text)
+        operation, disposition = _operation(content, analytic)
         if disposition is not None:
             return disposition
         assert operation is not None
@@ -115,6 +143,15 @@ def admit_contract_activity(
         unit = accredit_contract_unit(raw, binding)
         if not unit.accredited:
             return _clarify(unit.reason)
+        # Alpha proposes the operation; the host accredits it from spans.  A
+        # proposal the host cannot ground, or grounds differently, never runs.
+        if analytic.reason:
+            return _clarify(analytic.reason)
+        host_operation = _HOST_OPERATION.get((analytic.kind, analytic.dimension))
+        if host_operation is None:
+            return _clarify("HOST_OPERATION_NOT_ACCREDITED")
+        if host_operation is not binding.operation:
+            return _clarify("ALPHA_HOST_OPERATION_MISMATCH")
         operation = binding.operation
 
     if any(params.get(key) for key in _ACTOR_KEYS):
@@ -136,17 +173,27 @@ def admit_contract_activity(
         money, money_error = _money(text)
         if money_error:
             return _clarify(money_error)
-        modalities, modality_error = _modalities(raw, text, operation)
+        modalities, modality_error = _modalities(raw, content, operation)
         if modality_error:
             return _clarify(modality_error)
-        states, state_error = _states(text, operation)
+        states, state_error = _states(content, operation)
         if state_error:
             return _clarify(state_error)
         if _has_unowned_topic(
-            params, resolution.identity.display_name, resolution.scope.buyer_units
+            params,
+            material_residual,
+            resolution.identity.display_name,
+            resolution.scope.buyer_units,
         ):
             return _clarify("UNSUPPORTED_MATERIAL_FILTER")
     else:
+        if _has_unowned_topic(
+            params,
+            material_residual,
+            resolution.identity.display_name,
+            resolution.scope.buyer_units,
+        ):
+            return _clarify("UNSUPPORTED_MATERIAL_FILTER")
         filters = accredit_filters(raw, params, operation, today=today)
         if not filters.ok:
             return _clarify(filters.reason)
@@ -174,51 +221,57 @@ def admit_contract_activity(
     return Admission(AdmissionStatus.READY, request=request)
 
 
-def _operation(text: str) -> tuple[Operation | None, Admission | None]:
-    has_contract = bool(re.search(r"\bcontratos?\b", text))
-    ambiguous_unit = bool(re.search(r"\bcontrataciones?\b", text))
-    count = bool(_COUNT.search(text))
-    if re.search(r"\bprocesos?\b", text) and not has_contract:
+def _operation(
+    content: str, analytic: AnalyticOperation,
+) -> tuple[Operation | None, Admission | None]:
+    """Map the upstream operation onto the narrow envelope.
+
+    ``content`` is the turn without its accredited analytic spans, so the unit
+    and neighbor checks below never read an instruction ("sin listar cada
+    contrato") as a neighbor request.
+    """
+    has_contract = bool(re.search(r"\bcontratos?\b", content))
+    ambiguous_unit = bool(re.search(r"\bcontrataciones?\b", content))
+    requested = analytic.requested
+    if re.search(r"\bprocesos?\b", content) and not has_contract:
         return None, Admission(AdmissionStatus.HANDOFF, reason="PROCESS_NEIGHBOR")
     if not has_contract and not ambiguous_unit:
         return None, Admission(AdmissionStatus.HANDOFF, reason="NOT_CONTRACT_ACTIVITY")
     if ambiguous_unit and not has_contract:
-        return None, _clarify("CONTRACT_UNIT_REQUIRED") if count else Admission(
+        return None, _clarify("CONTRACT_UNIT_REQUIRED") if requested else Admission(
             AdmissionStatus.HANDOFF, reason="AMBIGUOUS_NEIGHBOR"
         )
-    search = bool(_SEARCH.search(text))
-    total_value = bool(_TOTAL_VALUE.search(text))
-    suppliers = bool(_SUPPLIERS.search(text))
+    search = bool(_SEARCH.search(content))
+    total_value = bool(_TOTAL_VALUE.search(content))
+    suppliers = bool(_SUPPLIERS.search(content))
     if search or total_value or suppliers:
-        if count or _GROUP_VERB.search(text):
+        if requested:
             return None, _clarify("MULTIPLE_OPERATIONS")
         reason = "SEARCH_NEIGHBOR" if search else "TOTAL_VALUE_NEIGHBOR"
         if suppliers:
             reason = "SUPPLIERS_NEIGHBOR"
         return None, Admission(AdmissionStatus.HANDOFF, reason=reason)
-    if _RANKING.search(text) and re.search(r"\bmodalidades?\b", text):
+    if _RANKING.search(content) and re.search(r"\bmodalidades?\b", content):
         return None, _clarify("RANKING_UNSUPPORTED")
+    if analytic.reason:
+        return None, _clarify(analytic.reason)
+    operation = _HOST_OPERATION.get((analytic.kind, analytic.dimension))
+    if operation is None:
+        return None, Admission(AdmissionStatus.HANDOFF, reason="UNCLAIMED_CONTRACT_NEIGHBOR")
+    return operation, None
 
-    modality_group = bool(_GROUP_MODALITY.search(text)) or bool(
-        _GROUP_VERB.search(text) and re.search(r"\bmodalidades?\b", text)
-    )
-    state_group = bool(_GROUP_STATE.search(text)) or bool(
-        _GROUP_VERB.search(text) and re.search(r"\bestado\b", text)
-    )
-    if re.search(r"\bno\b[^.;]{0,40}\b(?:agrup|desglos|distribu)", text):
-        return None, _clarify("NEGATED_OPERATION")
-    operation_count = int(count) + int(modality_group) + int(state_group)
-    if operation_count > 1:
-        return None, _clarify("MULTIPLE_OPERATIONS")
-    if modality_group and state_group:
-        return None, _clarify("MULTIPLE_BREAKDOWNS")
-    if modality_group:
-        return Operation.BY_MODALITY, None
-    if state_group:
-        return Operation.BY_REPORTED_STATE, None
-    if count:
-        return Operation.TOTAL, None
-    return None, Admission(AdmissionStatus.HANDOFF, reason="UNCLAIMED_CONTRACT_NEIGHBOR")
+
+def _without_controls(text: str, controls: tuple[AnalyticControlSpan, ...]) -> str:
+    """``text`` with each accredited analytic span blanked out.
+
+    Offsets were taken over the parser's corrected text, which may differ from
+    ``normalize_text(raw)``; the evidence surface is therefore located again
+    rather than trusted by position.
+    """
+    content = text
+    for control in controls:
+        content = content.replace(control.evidence_text, " " * len(control.evidence_text), 1)
+    return content
 
 
 def _period(text: str) -> tuple[tuple[str, str] | None, str | None]:
@@ -329,22 +382,31 @@ def _buyer_is_present(text: str, display: str, buyer_units: tuple[str, ...]) -> 
     return any(re.search(rf"\b{re.escape(token)}\b", text) for token in tokens)
 
 
-def _has_unowned_topic(params: dict, display: str, buyer_units: tuple[str, ...]) -> bool:
+def _has_unowned_topic(
+    params: dict,
+    material_residual: tuple[str, ...] | None,
+    display: str,
+    buyer_units: tuple[str, ...],
+) -> bool:
+    """Any subject matter this capability cannot filter on.
+
+    Two sources, both upstream: the lossless material residual of the turn
+    ("gas", "TIC" never reach ``objeto``), and every executable topic filter in
+    ``params`` (follow-up or LLM-proposed topics included).  Only the resolved
+    buyer's own name may appear there; there is no list of functional words.
+    """
     authority = normalize_text(" ".join((display, *buyer_units)))
     buyer_tokens = set(re.findall(r"\b\w+\b", authority)) | set(_GENERIC_BUYER_WORDS)
-    values: list[str] = []
-    for key in ("objeto", "objeto_or", "objeto_phrases", "objeto_exclude"):
+    values: list[str] = list(material_residual or ())
+    for key in _TOPIC_KEYS:
         value = params.get(key) or ()
         if isinstance(value, str):
             values.append(value)
         else:
             for item in value:
                 values.extend(item if isinstance(item, list) else (item,))
-    for value in values:
-        for token in re.findall(r"\b\w+\b", normalize_text(str(value))):
-            if token not in buyer_tokens and token not in _FUNCTIONAL_TOPIC_WORDS:
-                return True
-    return False
+    text = " ".join(normalize_text(str(value)) for value in values)
+    return any(token not in buyer_tokens for token in structural_split(text))
 
 
 def _clarify(reason: str) -> Admission:

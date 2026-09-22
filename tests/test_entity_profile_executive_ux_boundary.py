@@ -116,6 +116,17 @@ def test_normal_flow_divergence_is_only_view_transport():
     addition = '        "entity_profile_view": state.get("entity_profile_view"),\n'
     assert text.count(addition) == 1
     text = text.replace(addition, "", 1)
+    # ANALYTIC_CONTROL_UPSTREAM_V1: the declared limitation block, and nothing else.
+    limitation = (
+        "    # INV-ANALYTIC-CONTROL-HAS-OWNER-OR-LIMITATION: a count or breakdown the\n"
+        "    # serving capability did not perform is declared, never silently dropped.\n"
+        '    limitation = state.get("analytic_limitation") or ""\n'
+        '    if limitation and not result.get("needs_clarification"):\n'
+        '        result["response"] = limitation + result.get("response", "")\n'
+        "\n"
+    )
+    assert text.count(limitation) == 1
+    text = text.replace(limitation, "", 1)
     assert hashlib.sha256(text.encode()).hexdigest() == (
         "807b0e91cfda5351a5e271722d551bec7146213ccb80bf1362f638b05a1a78f6"
     )

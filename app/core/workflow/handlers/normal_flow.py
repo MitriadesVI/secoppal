@@ -429,6 +429,12 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         if universe_label not in result.get("response", ""):
             result["response"] = universe_label + "\n\n" + result.get("response", "")
 
+    # INV-ANALYTIC-CONTROL-HAS-OWNER-OR-LIMITATION: a count or breakdown the
+    # serving capability did not perform is declared, never silently dropped.
+    limitation = state.get("analytic_limitation") or ""
+    if limitation and not result.get("needs_clarification"):
+        result["response"] = limitation + result.get("response", "")
+
     trace_id = deps.feedback.log_trace(
         ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
     )

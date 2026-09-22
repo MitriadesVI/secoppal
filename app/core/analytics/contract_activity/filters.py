@@ -19,7 +19,6 @@ from app.core.modality_resolver import resolve as resolve_modality
 from app.core.money_polarity import MoneyRelation, resolve_money_polarity
 from app.core.money_admission import is_admissible_amount
 from app.core.temporal_semantics import resolve_temporal_scope
-from app.data.stopwords import STOPWORDS
 from app.utils.money import money_to_cop, normalize_text
 
 from .models import MoneyConstraint, Operation
@@ -38,28 +37,6 @@ _MONEY_INCLUSIVE_LOWER = re.compile(
 _MONEY_INCLUSIVE_UPPER = re.compile(
     r"(?:<=|igual|a\s+lo\s+sumo|maxim|hasta)"
 )
-_TOPIC_KEYS = ("objeto", "objeto_or", "objeto_phrases", "objeto_exclude")
-
-# These are the finite surface artifacts of the three typed operations, not a
-# sentence recognizer.  They can only discharge parser residue after Alpha has
-# already fixed the Operation; all other material remains blocking residue.
-_OPERATION_ARTIFACTS = {
-    Operation.TOTAL: frozenset({
-        "cuenta", "cuente", "cuentame", "numero", "agrupe", "agrupes",
-        "agrupa", "agrupar", "modalidad", "cada",
-    }),
-    Operation.BY_MODALITY: frozenset({
-        "cuenta", "cuente", "desglosa", "distribuye", "distribucion",
-        "agrupa", "agrupar", "reparto", "modalidad", "modalidades", "cada",
-        "segun",
-    }),
-    Operation.BY_REPORTED_STATE: frozenset({
-        "cuenta", "cuente", "desglosa", "distribuye", "distribucion",
-        "agrupa", "agrupar", "reparto", "estado", "estados", "reportado",
-        "reportados", "observado", "vigente", "vigentes", "cada", "consultar",
-        "modalidad",
-    }),
-}
 
 
 @dataclass(frozen=True, slots=True)
@@ -96,7 +73,7 @@ def accredit_filters(
     states, reason = _states(raw, params, operation)
     if reason:
         return AccreditedFilters(reason=reason)
-    reason = _residual_reason(raw, params, operation)
+    reason = _residual_reason(raw, params)
     if reason:
         return AccreditedFilters(reason=reason)
     return AccreditedFilters(
@@ -245,20 +222,13 @@ def _states(
     return values, None
 
 
-def _topic_values(params: dict) -> tuple[str, ...]:
-    values: list[str] = []
-    for key in _TOPIC_KEYS:
-        raw = params.get(key) or ()
-        items = (raw,) if isinstance(raw, str) else raw
-        for item in items:
-            if isinstance(item, (list, tuple)):
-                values.extend(str(value) for value in item)
-            else:
-                values.append(str(item))
-    return tuple(value for value in values if value.strip())
+def _residual_reason(raw: str, params: dict) -> str | None:
+    """Typed dimensions this capability cannot execute.
 
-
-def _residual_reason(raw: str, params: dict, operation: Operation) -> str | None:
+    Subject matter is not judged here: admission already refused any material
+    residual or topic filter from the upstream evidence
+    (ANALYTIC_CONTROL_UPSTREAM_V1 removed the per-operation artifact list).
+    """
     if params.get("money_clarification"):
         return "MONEY_FILTER_UNRESOLVED"
     ordering = locate_control_span(normalize_text(raw))
@@ -271,11 +241,4 @@ def _residual_reason(raw: str, params: dict, operation: Operation) -> str | None
     ):
         if params.get(key) not in (None, "", (), [], {}):
             return "UNSUPPORTED_MATERIAL_FILTER"
-
-    artifacts = _OPERATION_ARTIFACTS[operation]
-    unknown: list[str] = []
-    for value in _topic_values(params):
-        for token in re.findall(r"\b\w+\b", normalize_text(value)):
-            if token not in STOPWORDS and token not in artifacts:
-                unknown.append(token)
-    return "UNACCREDITED_RESIDUAL" if unknown else None
+    return None

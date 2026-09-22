@@ -161,6 +161,9 @@ def build_application(
             followup_mutation={},
             analytical_response="",
             analytical_intent="",
+            analytic_controls=[],
+            material_residual=[],
+            analytic_limitation="",
             entity_profile_view=None,
             timings_ms={},
         )
