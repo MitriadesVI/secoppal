@@ -1,0 +1,613 @@
+{
+  "historical_sha": "a83cc4f806bb23f529d4c7a20e019f41a57e2af8",
+  "rows": [
+    {
+      "id": "T01B01",
+      "raw": "sobre la Alcaldía de Galapa",
+      "entity_resolved": "MUNICIPIO DE GALAPA.",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T01B02",
+      "raw": "sobre la alcaldía de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T01B03",
+      "raw": "sobre la Gobernación del Atlántico",
+      "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T01B04",
+      "raw": "sobre la Gobernación de Antioquia",
+      "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T01B05",
+      "raw": "sobre el municipio de Soledad",
+      "entity_resolved": "MUNICIPIO DE SOLEDAD",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T01B06",
+      "raw": "sobre la Alcaldía de Cartagena",
+      "entity_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T01B07",
+      "raw": "sobre el Distrito de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T01B08",
+      "raw": "sobre la Alcaldía de Medellín",
+      "entity_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T02B01",
+      "raw": "información sobre la Alcaldía de Galapa",
+      "entity_resolved": "MUNICIPIO DE GALAPA.",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T02B02",
+      "raw": "información sobre la alcaldía de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T02B03",
+      "raw": "información sobre la Gobernación del Atlántico",
+      "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T02B04",
+      "raw": "información sobre la Gobernación de Antioquia",
+      "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T02B05",
+      "raw": "información sobre el municipio de Soledad",
+      "entity_resolved": "MUNICIPIO DE SOLEDAD",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T02B06",
+      "raw": "información sobre la Alcaldía de Cartagena",
+      "entity_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T02B07",
+      "raw": "información sobre el Distrito de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T02B08",
+      "raw": "información sobre la Alcaldía de Medellín",
+      "entity_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T03B01",
+      "raw": "contratos sobre la Alcaldía de Galapa",
+      "entity_resolved": "MUNICIPIO DE GALAPA.",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T03B02",
+      "raw": "contratos sobre la alcaldía de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T03B03",
+      "raw": "contratos sobre la Gobernación del Atlántico",
+      "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T03B04",
+      "raw": "contratos sobre la Gobernación de Antioquia",
+      "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T03B05",
+      "raw": "contratos sobre el municipio de Soledad",
+      "entity_resolved": "MUNICIPIO DE SOLEDAD",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T03B06",
+      "raw": "contratos sobre la Alcaldía de Cartagena",
+      "entity_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T03B07",
+      "raw": "contratos sobre el Distrito de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T03B08",
+      "raw": "contratos sobre la Alcaldía de Medellín",
+      "entity_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T04B01",
+      "raw": "¿Cuántos contratos sobre la Alcaldía de Galapa?",
+      "entity_resolved": "MUNICIPIO DE GALAPA.",
+      "ca_status": "READY",
+      "ca_reason": "",
+      "ca_operation": "TOTAL",
+      "ca_calls": 2
+    },
+    {
+      "id": "T04B02",
+      "raw": "¿Cuántos contratos sobre la alcaldía de Barranquilla?",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "READY",
+      "ca_reason": "",
+      "ca_operation": "TOTAL",
+      "ca_calls": 2
+    },
+    {
+      "id": "T04B03",
+      "raw": "¿Cuántos contratos sobre la Gobernación del Atlántico?",
+      "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+      "ca_status": "CLARIFY",
+      "ca_reason": "BUYER_SOURCE_PROJECTION_REQUIRED",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T04B04",
+      "raw": "¿Cuántos contratos sobre la Gobernación de Antioquia?",
+      "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+      "ca_status": "CLARIFY",
+      "ca_reason": "BUYER_SOURCE_PROJECTION_REQUIRED",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T04B05",
+      "raw": "¿Cuántos contratos sobre el municipio de Soledad?",
+      "entity_resolved": "MUNICIPIO DE SOLEDAD",
+      "ca_status": "READY",
+      "ca_reason": "",
+      "ca_operation": "TOTAL",
+      "ca_calls": 2
+    },
+    {
+      "id": "T04B06",
+      "raw": "¿Cuántos contratos sobre la Alcaldía de Cartagena?",
+      "entity_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "ca_status": "READY",
+      "ca_reason": "",
+      "ca_operation": "TOTAL",
+      "ca_calls": 2
+    },
+    {
+      "id": "T04B07",
+      "raw": "¿Cuántos contratos sobre el Distrito de Barranquilla?",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "READY",
+      "ca_reason": "",
+      "ca_operation": "TOTAL",
+      "ca_calls": 2
+    },
+    {
+      "id": "T04B08",
+      "raw": "¿Cuántos contratos sobre la Alcaldía de Medellín?",
+      "entity_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+      "ca_status": "CLARIFY",
+      "ca_reason": "BUYER_SOURCE_PROJECTION_REQUIRED",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T05B01",
+      "raw": "¿Qué contratos hay sobre la Alcaldía de Galapa?",
+      "entity_resolved": "MUNICIPIO DE GALAPA.",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T05B02",
+      "raw": "¿Qué contratos hay sobre la alcaldía de Barranquilla?",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T05B03",
+      "raw": "¿Qué contratos hay sobre la Gobernación del Atlántico?",
+      "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T05B04",
+      "raw": "¿Qué contratos hay sobre la Gobernación de Antioquia?",
+      "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T05B05",
+      "raw": "¿Qué contratos hay sobre el municipio de Soledad?",
+      "entity_resolved": "MUNICIPIO DE SOLEDAD",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T05B06",
+      "raw": "¿Qué contratos hay sobre la Alcaldía de Cartagena?",
+      "entity_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T05B07",
+      "raw": "¿Qué contratos hay sobre el Distrito de Barranquilla?",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T05B08",
+      "raw": "¿Qué contratos hay sobre la Alcaldía de Medellín?",
+      "entity_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+      "ca_status": "HANDOFF",
+      "ca_reason": "UNCLAIMED_CONTRACT_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T06B01",
+      "raw": "procesos sobre la Alcaldía de Galapa en 2025",
+      "entity_resolved": "MUNICIPIO DE GALAPA.",
+      "ca_status": "HANDOFF",
+      "ca_reason": "PROCESS_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T06B02",
+      "raw": "procesos sobre la alcaldía de Barranquilla en 2025",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "PROCESS_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T06B03",
+      "raw": "procesos sobre la Gobernación del Atlántico en 2025",
+      "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+      "ca_status": "HANDOFF",
+      "ca_reason": "PROCESS_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T06B04",
+      "raw": "procesos sobre la Gobernación de Antioquia en 2025",
+      "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+      "ca_status": "HANDOFF",
+      "ca_reason": "PROCESS_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T06B05",
+      "raw": "procesos sobre el municipio de Soledad en 2025",
+      "entity_resolved": "MUNICIPIO DE SOLEDAD",
+      "ca_status": "HANDOFF",
+      "ca_reason": "PROCESS_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T06B06",
+      "raw": "procesos sobre la Alcaldía de Cartagena en 2025",
+      "entity_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "ca_status": "HANDOFF",
+      "ca_reason": "PROCESS_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T06B07",
+      "raw": "procesos sobre el Distrito de Barranquilla en 2025",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "PROCESS_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T06B08",
+      "raw": "procesos sobre la Alcaldía de Medellín en 2025",
+      "entity_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+      "ca_status": "HANDOFF",
+      "ca_reason": "PROCESS_NEIGHBOR",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T07B01",
+      "raw": "dime algo sobre la Alcaldía de Galapa",
+      "entity_resolved": "MUNICIPIO DE GALAPA.",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T07B02",
+      "raw": "dime algo sobre la alcaldía de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T07B03",
+      "raw": "dime algo sobre la Gobernación del Atlántico",
+      "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T07B04",
+      "raw": "dime algo sobre la Gobernación de Antioquia",
+      "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T07B05",
+      "raw": "dime algo sobre el municipio de Soledad",
+      "entity_resolved": "MUNICIPIO DE SOLEDAD",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T07B06",
+      "raw": "dime algo sobre la Alcaldía de Cartagena",
+      "entity_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T07B07",
+      "raw": "dime algo sobre el Distrito de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T07B08",
+      "raw": "dime algo sobre la Alcaldía de Medellín",
+      "entity_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T08B01",
+      "raw": "quiero saber sobre la Alcaldía de Galapa",
+      "entity_resolved": "MUNICIPIO DE GALAPA.",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T08B02",
+      "raw": "quiero saber sobre la alcaldía de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T08B03",
+      "raw": "quiero saber sobre la Gobernación del Atlántico",
+      "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T08B04",
+      "raw": "quiero saber sobre la Gobernación de Antioquia",
+      "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T08B05",
+      "raw": "quiero saber sobre el municipio de Soledad",
+      "entity_resolved": "MUNICIPIO DE SOLEDAD",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T08B06",
+      "raw": "quiero saber sobre la Alcaldía de Cartagena",
+      "entity_resolved": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T08B07",
+      "raw": "quiero saber sobre el Distrito de Barranquilla",
+      "entity_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    },
+    {
+      "id": "T08B08",
+      "raw": "quiero saber sobre la Alcaldía de Medellín",
+      "entity_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+      "ca_status": "HANDOFF",
+      "ca_reason": "NOT_CONTRACT_ACTIVITY",
+      "ca_operation": null,
+      "ca_calls": 0
+    }
+  ],
+  "strong_content": [
+    {
+      "id": "S01",
+      "raw": "contratos cuyo objeto contenga 'Alcaldía de Galapa'",
+      "historical_entity_resolved": null
+    },
+    {
+      "id": "S02",
+      "raw": "busca \"Galapa\" en el objeto",
+      "historical_entity_resolved": null
+    },
+    {
+      "id": "S03",
+      "raw": "contratos objeto que mencione Galapa",
+      "historical_entity_resolved": "MUNICIPIO DE GALAPA."
+    },
+    {
+      "id": "S04",
+      "raw": "¿Cuántos contratos cuyo objeto contenga 'Galapa' firmó la Alcaldía de Galapa?",
+      "historical_entity_resolved": "MUNICIPIO DE GALAPA."
+    },
+    {
+      "id": "S05",
+      "raw": "¿Cuántos contratos cuyo objeto contenga 'Alcaldía de Galapa' firmó la Gobernación del Atlántico?",
+      "historical_entity_resolved": "DEPARTAMENTO DEL ATLANTICO**"
+    },
+    {
+      "id": "S06",
+      "raw": "¿Cuántos contratos objeto que mencione Galapa firmó la Alcaldía de Galapa?",
+      "historical_entity_resolved": "MUNICIPIO DE GALAPA."
+    }
+  ]
+}

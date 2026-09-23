@@ -168,7 +168,9 @@ def admit_contract_activity(
     if not source_names:
         return _clarify("BUYER_SOURCE_PROJECTION_REQUIRED")
 
-    if _has_unowned_topic(params, material_residual, material_evidence):
+    if not receipt.material_accredited or _has_unowned_topic(
+        params, material_residual, material_evidence,
+    ):
         return _clarify("UNSUPPORTED_MATERIAL_FILTER")
 
     if binding is None:

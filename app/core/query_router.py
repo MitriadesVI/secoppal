@@ -47,10 +47,13 @@ from app.core.material_residual import (
     MaterialEvidence,
     OccurrenceOwnership,
     material_evidence,
-    material_residual,
 )
 from app.core.semantic_turn_evidence import SemanticTurnEvidence
-from app.core.explicit_content import explicit_content_occurrences
+from app.core.explicit_content import (
+    adjudicate_buyer_ownership,
+    explicit_content_occurrences,
+    strong_content_spans,
+)
 from app.core.state_predication import state_predicate
 from app.core.money_polarity import (
     MoneyRelation,
@@ -874,18 +877,14 @@ class QueryRouter:
                     district = identity.district_alias(self.entity_resolver, municipal_geography)
                     if district:
                         rewritten_entity = (district[0], consumed, rtype, district[1], span)
+            if rewritten_entity and adjudicate_buyer_ownership(
+                scrubbed, rewritten_entity[4],
+            ) is None:
+                rewritten_entity = None
             if rewritten_entity:
                 canonical, consumed, rtype, match, span = rewritten_entity
-                buyer_ownership = OccurrenceOwnership(
-                    snapshot=scrubbed,
-                    buyer_span=span,
-                    content_spans=tuple(
-                        occurrence.span
-                        for occurrence in explicit_content_occurrences(scrubbed)
-                    ),
-                )
-                if not buyer_ownership.valid():
-                    raise RuntimeError("buyer/content occurrence ownership overlaps")
+                buyer_ownership = adjudicate_buyer_ownership(scrubbed, span)
+                assert buyer_ownership is not None and buyer_ownership.valid()
                 params["entidad"] = canonical
                 params["entidad_resolved"] = match.value
                 params["entidad_resolution"] = {
@@ -932,23 +931,18 @@ class QueryRouter:
         #    against 10K+ aliases, NOT by regex pattern matching.
         #    Skip if entity was already resolved by rewrite (step 4.5).
         if self.entity_resolver and "entidad_resolved" not in params:
-            entity_scan = self.entity_resolver.scan_entity(scrubbed)
+            scan_text = mask_consumed_spans(scrubbed, strong_content_spans(scrubbed))
+            entity_scan = self.entity_resolver.scan_entity(scan_text)
             if entity_scan:
                 if (
                     entity_scan.occurrence_span is None
                     or scrubbed[slice(*entity_scan.occurrence_span)] != entity_scan.matched_alias
                 ):
                     raise RuntimeError("entity scan occurrence does not match its source")
-                buyer_ownership = OccurrenceOwnership(
-                    snapshot=scrubbed,
-                    buyer_span=entity_scan.occurrence_span,
-                    content_spans=tuple(
-                        occurrence.span
-                        for occurrence in explicit_content_occurrences(scrubbed)
-                    ),
+                buyer_ownership = adjudicate_buyer_ownership(
+                    scrubbed, entity_scan.occurrence_span,
                 )
-                if not buyer_ownership.valid():
-                    raise RuntimeError("buyer/content occurrence ownership overlaps")
+                assert buyer_ownership is not None and buyer_ownership.valid()
                 params["entidad"] = entity_scan.matched_alias
                 params["entidad_resolved"] = entity_scan.official_name
                 params["entidad_resolution"] = {
@@ -959,7 +953,8 @@ class QueryRouter:
                     "like_value": None,
                     "metadata": {},
                 }
-                scrubbed = entity_scan.remaining_text
+                scrubbed = mask_consumed_spans(scrubbed, (entity_scan.occurrence_span,))
+                scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
         # ── 6. GAZETTEER SCAN: Region/zone (BEFORE department) ──────────
         #    Runs before the department scan so a multi-word zone whose head
@@ -1309,15 +1304,28 @@ class QueryRouter:
         # Lossless twin of the extractor below: ``objeto`` may come back empty
         # for "contratos de gas" (short token) and must not be read as "no
         # subject" by any consumer.
-        residual_material = material_residual(objeto_text, objeto_phrases)
         occurrence_material = material_evidence(objeto_text)
+        residual_material = tuple(dict.fromkeys((
+            *objeto_phrases,
+            *(occurrence.surface.lower() for occurrence in occurrence_material.occurrences),
+        )))
         if buyer_ownership is not None:
             occurrence_material = replace(occurrence_material, ownership=buyer_ownership)
         # A governed literal remains evidence even if the legacy object
         # extractor projects only some of its words.
+        content_surfaces = (
+            (
+                buyer_ownership.snapshot[start:end]
+                for start, end in buyer_ownership.content_spans
+            )
+            if buyer_ownership is not None
+            else (
+                occurrence.surface for occurrence in explicit_content_occurrences(normalized)
+            )
+        )
         residual_material = tuple(dict.fromkeys((
             *residual_material,
-            *(occurrence.surface for occurrence in explicit_content_occurrences(normalized)),
+            *content_surfaces,
         )))
 
         # ── 12. Object terms (whatever remains after all extractions) ───

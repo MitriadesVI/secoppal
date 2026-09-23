@@ -18,6 +18,7 @@ from app.utils.money import normalize_text
 _FINGERPRINT = re.compile(r"[0-9a-f]{64}\Z")
 _FIELDS = frozenset({
     "raw_fingerprint", "analytic_controls", "material_residual", "material_evidence",
+    "material_accredited",
 })
 
 
@@ -32,6 +33,7 @@ class SemanticTurnEvidence:
     analytic_controls: tuple[AnalyticControlSpan, ...]
     material_residual: tuple[str, ...]
     material_evidence: MaterialEvidence
+    material_accredited: bool = True
 
     @classmethod
     def from_parse(
@@ -42,7 +44,8 @@ class SemanticTurnEvidence:
         material: MaterialEvidence,
     ) -> "SemanticTurnEvidence":
         """Called by QueryRouter only, after all three projections are final."""
-        result = cls(raw_fingerprint(raw), controls, residual, material)
+        material_accredited = not (material.occurrences and not residual)
+        result = cls(raw_fingerprint(raw), controls, residual, material, material_accredited)
         if not result.valid_for(raw):
             raise ValueError("SEMANTIC_EVIDENCE_INVALID")
         return result
@@ -57,7 +60,12 @@ class SemanticTurnEvidence:
             and all(isinstance(item, str) for item in self.material_residual)
             and isinstance(self.material_evidence, MaterialEvidence)
             and MaterialEvidence.from_state(self.material_evidence) is not None
-            and (not self.material_evidence.occurrences or bool(self.material_residual))
+            and isinstance(self.material_accredited, bool)
+            and (
+                not self.material_accredited
+                or not self.material_evidence.occurrences
+                or bool(self.material_residual)
+            )
         )
 
     def valid_for(self, raw: str) -> bool:
@@ -76,6 +84,7 @@ class SemanticTurnEvidence:
             "analytic_controls": [item.to_state() for item in self.analytic_controls],
             "material_residual": list(self.material_residual),
             "material_evidence": self.material_evidence.to_state(),
+            "material_accredited": self.material_accredited,
         }
 
     @classmethod
@@ -87,12 +96,14 @@ class SemanticTurnEvidence:
         controls = value["analytic_controls"]
         residual = value["material_residual"]
         material = value["material_evidence"]
+        accredited = value["material_accredited"]
         if (
             not isinstance(controls, list)
             or not isinstance(residual, list)
             or not all(isinstance(item, str) for item in residual)
             or not isinstance(material, dict)
             or frozenset(material) != {"snapshot", "occurrences", "ownership"}
+            or not isinstance(accredited, bool)
         ):
             return None
         try:
@@ -104,6 +115,7 @@ class SemanticTurnEvidence:
                 return None
             result = cls(
                 value["raw_fingerprint"], parsed_controls, tuple(residual), parsed_material,
+                accredited,
             )
         except (KeyError, TypeError, ValueError):
             return None

@@ -17,7 +17,7 @@ from app.core.analytics.contract_activity.admission import admit_contract_activi
 from app.core.analytics.contract_activity.models import AdmissionStatus, DecisionKind
 from app.core.entity_resolver import EntityResolver
 from app.core.explicit_content import ContentOccurrence, explicit_content_occurrences
-from app.core.material_residual import MaterialEvidence, material_evidence
+from app.core.material_residual import MaterialEvidence
 from app.core.query_router import QueryRouter
 from app.core.query_text_consumption import mask_consumed_spans
 from app.utils.money import normalize_text
@@ -217,7 +217,32 @@ def test_property_masking_buyer_span_keeps_identical_material(word: str) -> None
     residual = mask_consumed_spans(text, ((buyer, len(text)),))
     (content,) = explicit_content_occurrences(residual)
     assert residual[content.start:content.end] == normalize_text(word)
-    assert material_evidence(residual).occurrences
+    buyer_name = {
+        "Galapa": "Alcaldía de Galapa",
+        "Barranquilla": "Alcaldía de Barranquilla",
+        "Atlántico": "Gobernación del Atlántico",
+        "Lunaria": "Alcaldía de Galapa",
+    }[word]
+    raw = f"¿Cuántos contratos sobre {word} firmó {buyer_name}?"
+    parsed = _parse(raw)
+    receipt = parsed.semantic_evidence
+    assert receipt is not None
+    assert normalize_text(word) in receipt.material_residual
+    ownership = receipt.material_evidence.ownership
+    assert ownership is not None and ownership.valid()
+    content_spans = [
+        (start, end) for start, end in ownership.content_spans
+        if ownership.snapshot[start:end] == normalize_text(word)
+    ]
+    assert content_spans
+    buyer_start, buyer_end = ownership.buyer_span
+    assert all(end <= buyer_start or buyer_end <= start for start, end in content_spans)
+    source = RecordingContractSource()
+    decision = handle_contract_activity(
+        raw, parsed.params, source, semantic_evidence=receipt,
+    )
+    assert decision.kind is not DecisionKind.ANSWER
+    assert source.calls == []
 
 
 def test_mutation_a_last_equal_surface_would_fail_offset_property(monkeypatch) -> None:

@@ -8,6 +8,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from app.core.material_residual import OccurrenceOwnership
+
 
 _OBJECT_LITERAL = re.compile(
     r"\b(?:cuyo\s+objeto|objeto\s+que)\s+"
@@ -34,6 +36,7 @@ class ContentOccurrence:
     start: int
     end: int
     surface: str
+    strong: bool = False
 
     @property
     def span(self) -> tuple[int, int]:
@@ -48,11 +51,11 @@ def explicit_content_occurrences(text: str) -> tuple[ContentOccurrence, ...]:
             if _CLOSE[match.group("open")] != match.group("close"):
                 continue
             start, end = match.span("value")
-            found.append(ContentOccurrence(start, end, text[start:end]))
+            found.append(ContentOccurrence(start, end, text[start:end], strong=True))
     for match in _OBJECT_WORD.finditer(text):
         start, end = match.span("value")
         if not any(start < item.end and item.start < end for item in found):
-            found.append(ContentOccurrence(start, end, text[start:end]))
+            found.append(ContentOccurrence(start, end, text[start:end], strong=True))
     for match in _SUBJECT_WORD.finditer(text):
         if not _CONTRACT_HEAD.search(text[:match.start()]):
             continue
@@ -62,4 +65,29 @@ def explicit_content_occurrences(text: str) -> tuple[ContentOccurrence, ...]:
     return tuple(sorted(found, key=lambda item: item.start))
 
 
-__all__ = ["ContentOccurrence", "explicit_content_occurrences"]
+def strong_content_spans(text: str) -> tuple[tuple[int, int], ...]:
+    return tuple(item.span for item in explicit_content_occurrences(text) if item.strong)
+
+
+def adjudicate_buyer_ownership(
+    snapshot: str, buyer_span: tuple[int, int],
+) -> OccurrenceOwnership | None:
+    """Strong content wins a shared span; weak content yields to the buyer."""
+    start, end = buyer_span
+    content = explicit_content_occurrences(snapshot)
+    def overlaps(item: ContentOccurrence) -> bool:
+        return start < item.end and item.start < end
+
+    if any(item.strong and overlaps(item) for item in content):
+        return None
+    return OccurrenceOwnership(
+        snapshot=snapshot,
+        buyer_span=buyer_span,
+        content_spans=tuple(item.span for item in content if not overlaps(item)),
+    )
+
+
+__all__ = [
+    "ContentOccurrence", "explicit_content_occurrences", "strong_content_spans",
+    "adjudicate_buyer_ownership",
+]

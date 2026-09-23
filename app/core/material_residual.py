@@ -211,24 +211,14 @@ def material_evidence(residual_text: str) -> MaterialEvidence:
     for pattern in (_NUMBER, _MONEY_UNIT, _PUNCTUATION):
         cleaned = pattern.sub(lambda match: " " * len(match.group()), cleaned)
     remaining = Counter(material_tokens(cleaned))
-    topical_spans = tuple(
-        match.span("value")
-        for match in re.finditer(
-            r"\bsobre\s+(?:(?:el|la|los|las|un|una)\s+)?(?P<value>\w+)\b",
-            cleaned,
-        )
-    )
     occurrences: list[MaterialOccurrence] = []
     for match in re.finditer(r"\b\w+\b", cleaned):
         token = match.group()
-        topical = any(
-            match.start() < end and start < match.end()
-            for start, end in topical_spans
-        )
-        if topical or (remaining[token] > 0 and not _is_structural(token, procurement_words)):
+        # A word after "sobre" is only a candidate.  The same material
+        # classifier used by the residual must authorize its occurrence.
+        if remaining[token] > 0 and not _is_structural(token, procurement_words):
             occurrences.append(MaterialOccurrence(match.start(), match.end(), residual_text[slice(*match.span())]))
-            if remaining[token] > 0:
-                remaining[token] -= 1
+            remaining[token] -= 1
     return MaterialEvidence(residual_text, tuple(occurrences))
 
 
