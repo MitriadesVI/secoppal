@@ -50,7 +50,7 @@ no BuyerUnits were merged. ICBF `899999239` remains at 32 observations.
 Exactly 60 entries changed: 4 accreditations and 56 observations. A
 structural comparison against `8fd906d` proved that only `base_number` and
 `check_digit` changed. Canonicals, source names, projection evidence, raw
-forms, source, outcome, `shared`, and source provenance were preserved.
+forms, `scheme`, source, outcome, `shared`, and source provenance were preserved.
 
 ## Independent gates
 
@@ -68,13 +68,24 @@ forms, source, outcome, `shared`, and source provenance were preserved.
 
 - R1 plus Schema 3/source/dogfood focal: 128 passed.
 - Expanded Schema 3, Buyer Groups, Contract Activity, source projection,
-  dogfood, municipal audit consumers: 384 passed, 4 explicit skips for
+  dogfood, municipal audit consumers: 386 passed, 4 explicit skips for
   Gazetteer-Wide V1.
 - Ruff on touched Python: PASS. `make lint-core`: PASS. `git diff --check`:
   PASS. Semgrep: baseline 39, candidate 39, delta 0, scan errors 0.
-- Global suite: 15,979 passed, 119 failed, 2 errors, 23 skipped, 23 xfailed.
+- Global suite after the bounded oracle repair: 15,981 passed, 119 failed,
+  2 errors, 23 skipped, 23 xfailed.
   The 120 red nodeids and statuses match the `8fd906d` global run exactly:
   candidate delta 0. The suite remains red on baseline failures.
+
+Fresh ZEUS review of `a385550e` found a local oracle defect: changing an
+entry's document `scheme` from `NIT` to `PASSPORT` could still yield PASS.
+Two regression mutations first reproduced that false PASS (one accreditation,
+one observation). The gate now records and protects `scheme`, requires `NIT`
+for each historical accreditation, and classifies any other scheme as
+`REVIEW`. The frozen before matrix was regenerated from the exact `8fd906d`
+Git blob with the added field. Both mutations now fail the gate, and the
+complete focal and global gates were repeated. This was a bounded oracle
+repair; it did not alter product data or the normalization policy.
 
 `GAZETTEER_WIDE_V1_SCHEMA3_COMPATIBLE = NO`. The auditor was neither run nor
 adapted. The 570 `ADMISSIBLE` remain `NOT_EVALUATED`; promoted = 0.

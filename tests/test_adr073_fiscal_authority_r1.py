@@ -1,6 +1,7 @@
 """Regression for Schema 2 fiscal authority preserved by Schema 3."""
 
 import json
+from copy import deepcopy
 from pathlib import Path
 
 import pytest
@@ -25,6 +26,18 @@ def _fiscal_report():
     payload = json.loads(SIDECAR.read_text(encoding="utf-8"))
     before = [json.loads(line) for line in BEFORE.read_text(encoding="utf-8").splitlines()]
     return verify(payload, audit_entries(payload), before)
+
+
+@pytest.mark.parametrize("kind", ["ACCREDITATION", "SOURCE_OBSERVATION"])
+def test_fiscal_gate_rejects_document_scheme_reinterpretation(kind):
+    payload = deepcopy(json.loads(SIDECAR.read_text(encoding="utf-8")))
+    before = [json.loads(line) for line in BEFORE.read_text(encoding="utf-8").splitlines()]
+    changed = next(entry for unit in payload["buyer_units"]
+                   for entry in unit["fiscal_evidence"] if entry["kind"] == kind)
+    changed["scheme"] = "PASSPORT"
+    report = verify(payload, audit_entries(payload), before)
+    assert report["verdict"] == "FAIL"
+    assert report["review_after"] >= 1
 
 
 @pytest.mark.parametrize("canonical,accredited_nit", [

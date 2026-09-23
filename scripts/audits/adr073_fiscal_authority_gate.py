@@ -89,10 +89,13 @@ def audit_entries(payload: dict[str, Any]) -> list[dict[str, Any]]:
                 status = "UNAUTHORIZED_9_TO_8_SPLIT"
             else:
                 status = "REVIEW"
+            if entry.get("scheme") != "NIT":
+                status = "REVIEW"
             rows.append({
                 "canonical_name": canonical,
                 "evidence_index": index,
                 "kind": entry["kind"],
+                "scheme": entry.get("scheme"),
                 "source": entry["source"],
                 "raw_forms": forms,
                 "current_base_number": entry["base_number"],
@@ -153,7 +156,7 @@ def _fiscal_parity(payload: dict[str, Any], rows: list[dict[str, Any]]) -> dict[
         audit = audit_index.get((canonical, attestations[0][0])) if entry else None
         raw_preserved = bool(entry and entry["raw_forms"] == [previous["schema2_nit"]])
         authority_preserved = bool(
-            raw_preserved and audit and audit["status"] in {
+            raw_preserved and audit and entry["scheme"] == "NIT" and audit["status"] in {
                 "PRESERVED", "VALID_10_TO_9_DV_SPLIT", "INVALID_10_DIGIT_PRESERVED"
             } and entry["source"] == SCHEMA2_SOURCE
             and entry["evidence"] == previous["evidence"]
@@ -181,7 +184,7 @@ def _fiscal_parity(payload: dict[str, Any], rows: list[dict[str, Any]]) -> dict[
 def verify(payload: dict[str, Any], rows: list[dict[str, Any]], before: list[dict[str, Any]]) -> dict:
     before_index = {_baseline_key(row): row for row in before}
     after_index = {_baseline_key(row): row for row in rows}
-    protected = ("kind", "source", "raw_forms", "shared", "observed_at",
+    protected = ("kind", "scheme", "source", "raw_forms", "shared", "observed_at",
                  "evidence", "outcome", "outcome_note")
     unchanged = (before_index.keys() == after_index.keys()
                  and all(all(before_index[key][field] == after_index[key][field]
