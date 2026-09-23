@@ -73,7 +73,7 @@ def main():
     import tempfile
     from unittest.mock import patch
 
-    from app.core.buyer_source_names import parse_registry
+    from scripts.audits.adr073_historical_projection import parse_historical_projection
     from app.core.entity_resolver import EntityResolver
     from app.core.soql_builder import UnsafeGlobalQueryError
     from scripts.audits.promote_municipal_m1a import load_inputs, transform
@@ -99,7 +99,7 @@ def main():
         path = Path(temp) / 'candidate.json'
         path.write_bytes(encode(candidate))
         routers = {'production': QueryRouter(), 'candidate': QueryRouter(EntityResolver(path))}
-        registry = parse_registry(sources)
+        registry = parse_historical_projection(sources)
         builder = SoQLBuilder()
         for p in proposals:
             if p['town'] not in required:

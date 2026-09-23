@@ -68,7 +68,7 @@ def build_indexes(ctx):
     for a in ctx['aliases']:
         ix['claims'][a['official_name']].add(a['official_name'])
     for b in ctx['bindings']:
-        for names in b['sources'].values():
+        for names in b['source_names'].values():
             for name in names:
                 ix['claims'][name].add(b['canonical_name'])
     for p in ctx['profiles']:

@@ -322,27 +322,29 @@ def test_sidecar_grows_without_touching_previous_provenance() -> None:
     por descuido al reescribir el archivo.
     """
     payload = json.loads(SOURCE_NAMES.read_text(encoding="utf-8"))
-    assert payload["schema_version"] == 2
+    assert payload["schema_version"] == 3
     assert "evidence" not in payload
 
-    by_canonical = {row["canonical_name"]: row for row in payload["bindings"]}
+    by_canonical = {row["canonical_name"]: row for row in payload["buyer_units"]}
     historical = set(R2FA_CANONICALS) | set(SOURCE_BINDINGS)
     assert historical <= set(by_canonical)
-    assert len(by_canonical) == len(payload["bindings"])
+    assert len(by_canonical) == len(payload["buyer_units"])
 
     for canonical, evidence in R2FA_CANONICALS.items():
-        assert by_canonical[canonical]["evidence"] == evidence
+        assert by_canonical[canonical]["projection_evidence"]["evidence"] == evidence
     for canonical in SOURCE_BINDINGS:
-        assert by_canonical[canonical]["evidence"] == R2FB_ARTIFACT
+        assert by_canonical[canonical]["projection_evidence"]["evidence"] == R2FB_ARTIFACT
 
 
 @pytest.mark.parametrize("canonical", sorted(SOURCE_BINDINGS))
-def test_new_bindings_carry_complete_schema_2_evidence(canonical: str) -> None:
+def test_new_bindings_carry_complete_schema_3_evidence(canonical: str) -> None:
     payload = json.loads(SOURCE_NAMES.read_text(encoding="utf-8"))
-    binding = {row["canonical_name"]: row for row in payload["bindings"]}[canonical]
+    binding = {row["canonical_name"]: row for row in payload["buyer_units"]}[canonical]
 
-    assert binding["identity_key"]["type"] == "NIT"
-    assert binding["observed_at"] == "2026-09-02"
-    assert binding["evidence"] == R2FB_ARTIFACT
-    assert set(binding["observed_rows"]) <= set(binding["sources"])
-    assert all(rows > 0 for rows in binding["observed_rows"].values())
+    assert any(item["scheme"] == "NIT" and item["kind"] == "ACCREDITATION"
+               for item in binding["fiscal_evidence"])
+    projection = binding["projection_evidence"]
+    assert projection["observed_at"] == "2026-09-02"
+    assert projection["evidence"] == R2FB_ARTIFACT
+    assert set(projection["observed_rows"]) <= set(binding["source_names"])
+    assert all(rows > 0 for rows in projection["observed_rows"].values())

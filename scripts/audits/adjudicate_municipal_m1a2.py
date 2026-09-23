@@ -14,7 +14,7 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from app.core.buyer_source_names import parse_registry
+from scripts.audits.adr073_historical_projection import parse_historical_projection
 from app.core.entity_resolver import EntityResolver
 from app.core.query_plan import compute_query_plan
 from app.core.query_router import QueryRouter
@@ -43,7 +43,7 @@ def main():
             path.write_bytes(encode(records))
             resolver = EntityResolver(path)
             router = QueryRouter(resolver)
-            registry = parse_registry(sidecar)
+            registry = parse_historical_projection(sidecar)
             with patch('app.core.soql_builder.project_buyer_names', registry.project):
                 for name in ('Baranoa', 'Nuevo Colón', 'Villa de Leyva'):
                     proposal = next(p for p in proposals if normalize_text(p['town']) == normalize_text(name))

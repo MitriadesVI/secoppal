@@ -19,7 +19,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from app.core.buyer_source_names import parse_registry
+from scripts.audits.adr073_historical_projection import parse_historical_projection
 from app.core.entity_resolver import EntityResolver
 from app.utils.money import normalize_text
 from scripts.audits.audit_gazetteer_alias_ownership import Entity
@@ -300,7 +300,7 @@ def transform(records, sidecar, proposals, analysis, observed_at):
                 scan_evidence=conflicts[p['code']],
             )
         )
-    parse_registry(sidecar)
+    parse_historical_projection(sidecar)
     return records, sidecar, accepted, rejected
 
 
@@ -397,7 +397,7 @@ def pipeline_gate(before_records, records, sidecar, proposals):
     from app.core.query_router import QueryRouter
     from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 
-    registry = parse_registry(sidecar)
+    registry = parse_historical_projection(sidecar)
     failures = []
     checks = 0
     with tempfile.TemporaryDirectory(prefix='m1a-pipeline-') as temp:

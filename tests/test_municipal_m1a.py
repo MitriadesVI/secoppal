@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from app.core.buyer_source_names import parse_registry
+from scripts.audits.adr073_historical_projection import parse_historical_projection
 from app.core.entity_resolver import EntityResolver
 from app.core.query_plan import compute_query_plan
 from app.core.query_router import QueryRouter
@@ -40,7 +40,7 @@ def prediction(tmp_path_factory):
         sources=sources,
         result=result,
         resolver=EntityResolver(path),
-        registry=parse_registry(sidecar),
+        registry=parse_historical_projection(sidecar),
         accepted=accepted,
         rejected=rejected,
     )

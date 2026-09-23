@@ -303,7 +303,7 @@ def test_unknown_identity_returns_none_not_empty_tuple():
 
 def test_bound_identity_in_unbound_dataset_returns_none():
     registry = parse_registry(_sidecar(
-        canonical_name="SOLO PROCESOS", sources={PROCESOS: ["SOLO P"]},
+        canonical_name="SOLO PROCESOS", source_names={PROCESOS: ["SOLO P"]},
     ))
     assert registry.project("SOLO PROCESOS", PROCESOS) == ("SOLO P",)
     assert registry.project("SOLO PROCESOS", CONTRATOS) is None
@@ -313,14 +313,14 @@ def test_bound_identity_in_unbound_dataset_returns_none():
 # VALIDACIÓN DEL SIDECAR — fail fast, nunca silently malformed
 # =====================================================================
 
-# `evidence` ya NO es raíz: en schema 2 la procedencia es por binding, así que
-# un override de `evidence` tiene que aterrizar en el record, no en el root.
+# La procedencia de proyección vive en projection_evidence por BuyerUnit.
 _ROOT_KEYS = ("schema_version", "authority")
+_PROJECTION_KEYS = ("observed_at", "evidence", "observed_rows")
 _UNSET = object()
 
 
 def _sidecar(**overrides):
-    """Un sidecar VÁLIDO de un binding, con las claves pedidas sobrescritas.
+    """Un sidecar Schema 3 válido de una BuyerUnit.
 
     Que el caso base sea válido es lo que da valor a los negativos: si al
     payload le faltara metadata de raíz, cada caso reventaría en la validación
@@ -333,18 +333,22 @@ def _sidecar(**overrides):
     }
     record = {
         "canonical_name": "X",
-        "identity_key": {"type": "NIT", "value": "1"},
-        "observed_at": "2026-09-02",
-        "evidence": "artifacts/audits/source_name_projection_v1.json",
-        "sources": {PROCESOS: ["NAME"]},
+        "source_names": {PROCESOS: ["NAME"]},
+        "projection_evidence": {
+            "observed_at": "2026-09-02",
+            "evidence": "artifacts/audits/source_name_projection_v1.json",
+        },
+        "fiscal_evidence": [],
     }
     for key, value in overrides.items():
-        target = root if key in _ROOT_KEYS else record
+        target = root if key in _ROOT_KEYS else (
+            record["projection_evidence"] if key in _PROJECTION_KEYS else record
+        )
         if value is _UNSET:
             target.pop(key, None)
         else:
             target[key] = value
-    return {**root, "bindings": [record]}
+    return {**root, "buyer_units": [record]}
 
 
 def test_the_negative_baseline_is_actually_valid():
@@ -359,20 +363,19 @@ def test_the_negative_baseline_is_actually_valid():
     (_sidecar(canonical_name=""), "canonical_name"),
     (_sidecar(canonical_name=_UNSET), "canonical_name"),
     (_sidecar(identity_key={}), "identity_key"),
-    (_sidecar(identity_key={"type": "NIT"}), "identity_key"),
-    (_sidecar(sources={}), "sources"),
-    (_sidecar(sources={"no-existe": ["NAME"]}), "dataset desconocido"),
-    (_sidecar(sources={PROCESOS: []}), "lista vacía"),
-    (_sidecar(sources={PROCESOS: [""]}), PROCESOS),
-    (_sidecar(sources={PROCESOS: ["NAME", "name"]}), "duplicados"),
-    (_sidecar(sources={PROCESOS: "NAME"}), "deben venir en una lista"),
+    (_sidecar(source_names={}), "source_names"),
+    (_sidecar(source_names={"no-existe": ["NAME"]}), "dataset desconocido"),
+    (_sidecar(source_names={PROCESOS: []}), "lista vacía"),
+    (_sidecar(source_names={PROCESOS: [""]}), PROCESOS),
+    (_sidecar(source_names={PROCESOS: ["NAME", "name"]}), "duplicados"),
+    (_sidecar(source_names={PROCESOS: "NAME"}), "deben venir en una lista"),
     # --- contratos de metadata que ADR-073 exigía y V1 no validaba ---
     (_sidecar(schema_version=_UNSET), "schema_version"),
     # Schema 1 es el que declaraba procedencia acumulativa en la raíz: leerlo
     # con las reglas de hoy resucitaría exactamente el defecto que V2 cierra.
     (_sidecar(schema_version=1), "schema_version"),
-    (_sidecar(schema_version=3), "schema_version"),
-    (_sidecar(schema_version="2"), "schema_version"),
+    (_sidecar(schema_version=2), "schema_version"),
+    (_sidecar(schema_version="3"), "schema_version"),
     (_sidecar(schema_version=True), "schema_version"),
     (_sidecar(evidence=_UNSET), "evidence"),
     (_sidecar(evidence=""), "evidence"),
@@ -399,14 +402,14 @@ def test_the_negative_baseline_is_actually_valid():
     (_sidecar(observed_rows={PROCESOS: True}), "observed_rows"),
     (_sidecar(observed_rows=[1, 2]), "observed_rows"),
     # --- raíz ---
-    ({"schema_version": SCHEMA_VERSION, "bindings": "no-es-lista"}, "bindings"),
+    ({"schema_version": SCHEMA_VERSION, "buyer_units": "no-es-lista"}, "buyer_units"),
     ({}, "schema_version"),
     # Un `evidence` de raíz no se tolera en silencio: aceptarlo dejaría que un
     # lote futuro volviera a declarar una procedencia que no acredita a los
     # bindings anteriores, que es el defecto que V2 vino a cerrar.
     (
         {**_sidecar(), "evidence": "artifacts/audits/public_university_pilot_r2fa.json"},
-        "'evidence' de raíz no existe en schema 2",
+        "'evidence' de raíz no existe en schema 3",
     ),
 ])
 def test_malformed_sidecar_fails_loudly(payload, expected_fragment):
@@ -418,7 +421,7 @@ def test_malformed_sidecar_fails_loudly(payload, expected_fragment):
 def test_observed_rows_is_optional():
     """Ausente es válido: es evidencia, no contrato de proyección."""
     registry = parse_registry(_sidecar(observed_rows=_UNSET))
-    assert registry.binding_for("X").observed_rows == {}
+    assert registry.binding_for("X").projection_evidence.observed_rows == {}
 
 
 def test_observed_metadata_is_not_query_semantics(builder):
@@ -435,8 +438,8 @@ def test_provenance_is_exposed_for_audit():
     assert registry.provenance.authority == "ADR-073"
     assert not hasattr(registry.provenance, "evidence")
     binding = registry.binding_for(DAPRE_CANONICAL)
-    assert binding.observed_at == date(2026, 9, 2)
-    assert binding.observed_rows == {PROCESOS: 17128, CONTRATOS: 4351}
+    assert binding.projection_evidence.observed_at == date(2026, 9, 2)
+    assert binding.projection_evidence.observed_rows == {PROCESOS: 17128, CONTRATOS: 4351}
 
 
 # =====================================================================
@@ -464,7 +467,7 @@ def test_each_binding_names_the_artifact_that_accredits_it(canonical, artifact):
     """La procedencia es por binding y la adjudicación está congelada."""
     binding = load_registry().binding_for(canonical)
     assert binding is not None, canonical
-    assert binding.evidence == artifact
+    assert binding.projection_evidence.evidence == artifact
 
 
 def test_dapre_provenance_is_not_the_university_pilot():
@@ -475,8 +478,8 @@ def test_dapre_provenance_is_not_the_university_pilot():
     colapsar los cinco bindings en una sola procedencia raíz.
     """
     dapre = load_registry().binding_for(DAPRE_CANONICAL)
-    assert dapre.evidence == "artifacts/audits/source_name_projection_v1.json"
-    assert dapre.evidence != "artifacts/audits/public_university_pilot_r2fa.json"
+    assert dapre.projection_evidence.evidence == "artifacts/audits/source_name_projection_v1.json"
+    assert dapre.projection_evidence.evidence != "artifacts/audits/public_university_pilot_r2fa.json"
 
 
 def test_no_binding_lacks_provenance():
@@ -485,7 +488,7 @@ def test_no_binding_lacks_provenance():
     # Sin este piso, un sidecar vacío pasaría el bucle sin probar nada.
     assert {binding.canonical_name for binding in bindings} >= set(EXPECTED_EVIDENCE)
     for binding in bindings:
-        assert binding.evidence.strip(), binding.canonical_name
+        assert binding.projection_evidence.evidence.strip(), binding.canonical_name
 
 
 def test_provenance_is_not_query_semantics():
@@ -495,10 +498,10 @@ def test_provenance_is_not_query_semantics():
     assert "artifacts" not in soql
 
 
-def test_duplicate_identity_key_is_rejected():
+def test_duplicate_canonical_is_rejected():
     payload = _sidecar()
-    payload["bindings"].append(dict(payload["bindings"][0], canonical_name="B"))
-    with pytest.raises(BuyerSourceNameError, match="identity_key duplicada"):
+    payload["buyer_units"].append(dict(payload["buyer_units"][0], canonical_name="x"))
+    with pytest.raises(BuyerSourceNameError, match="canonical duplicado"):
         parse_registry(payload)
 
 

@@ -71,7 +71,7 @@ def load():
                 territories=read(M2A / 'territory_profiles.json')['territories'],
                 towns={t['divipola']: t for t in read(ROOT / 'app/data/municipal_territories_v1.json')['territories']},
                 aliases=read(ROOT / 'app/data/aliases_db.json'),
-                bindings=read(ROOT / 'app/data/buyer_source_names.json')['bindings'])
+                bindings=read(ROOT / 'app/data/buyer_source_names.json')['buyer_units'])
 
 
 def index(items, key):

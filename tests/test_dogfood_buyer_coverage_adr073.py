@@ -43,10 +43,12 @@ def test_each_binding_is_derived_from_its_own_evidence(canonical, observations):
     observation = observations[canonical]
     binding = load_registry().binding_for(canonical)
     assert binding is not None, f"{canonical} no tiene binding"
-    assert binding.evidence == ARTIFACT.as_posix()
-    # El loader compone {type, value} en una clave tipada: `NIT:8901...`.
+    assert binding.projection_evidence.evidence == ARTIFACT.as_posix()
+    # El artefacto histórico declara el NIT; Schema 3 lo conserva como
+    # acreditación fiscal, separada de la identidad operacional BuyerUnit.
     declared = observation["identity_key"]
-    assert binding.identity_key == f"{declared['type']}:{declared['value']}"
+    assert declared["type"] == "NIT"
+    assert any(declared["value"] in entry.raw_forms for entry in binding.fiscal_attestations)
     for dataset, names in observation["proposed_binding"].items():
         assert binding.names_for(dataset) == tuple(names)
         assert project_buyer_names(canonical, dataset) == tuple(names)

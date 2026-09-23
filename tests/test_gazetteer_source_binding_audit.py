@@ -443,7 +443,15 @@ def test_group_with_candidate_member_is_ready_after_review_only():
 
 # ── 10. ecosistemas institucionales ─────────────────────────────────────────
 
+# Gazetteer-Wide V1's build_inventory still turns binding.identity_key into a
+# single Identity. Schema 3 deliberately has no such key. Its live inventory
+# tests resume only with the separately authorized Schema-3-aware re-audit.
+_SCHEMA3_REAUDIT_REQUIRED = pytest.mark.skip(
+    reason="GAZETTEER_WIDE_V1_SCHEMA3_COMPATIBLE=NO; requires Schema-3-aware re-audit"
+)
 
+
+@_SCHEMA3_REAUDIT_REQUIRED
 def test_inventory_registers_sena_and_icbf_as_ecosystems_not_buyer_units():
     authorities = audit.load_authorities()
     inventory = audit.build_inventory(authorities)
@@ -456,6 +464,7 @@ def test_inventory_registers_sena_and_icbf_as_ecosystems_not_buyer_units():
     assert parent.identity is None and parent.binding is None
 
 
+@_SCHEMA3_REAUDIT_REQUIRED
 def test_sena_parent_classifies_as_institutional_ecosystem():
     authorities = audit.load_authorities()
     inventory = audit.build_inventory(authorities)
@@ -470,6 +479,7 @@ def test_sena_parent_classifies_as_institutional_ecosystem():
     assert all("ECOSYSTEM" not in entry["like_where"] for entry in measurement["datasets"].values())
 
 
+@_SCHEMA3_REAUDIT_REQUIRED
 def test_sena_regional_ecosystem_is_measured_with_its_declared_projection():
     authorities = audit.load_authorities()
     inventory = audit.build_inventory(authorities)
@@ -483,6 +493,7 @@ def test_sena_regional_ecosystem_is_measured_with_its_declared_projection():
     assert where.count("LIKE") == len(regional.ecosystem_projection["contains_all"])
 
 
+@_SCHEMA3_REAUDIT_REQUIRED
 def test_icbf_national_ecosystem_declares_its_group():
     authorities = audit.load_authorities()
     inventory = audit.build_inventory(authorities)

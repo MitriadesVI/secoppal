@@ -28,6 +28,12 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from app.core.buyer_fiscal_evidence import (
+    FiscalAccreditation,
+    FiscalEvidence,
+    SourceObservation,
+    parse_fiscal_evidence,
+)
 from app.utils.money import normalize_text
 
 logger = logging.getLogger(__name__)
@@ -44,11 +50,9 @@ KNOWN_DATASET_IDS: frozenset[str] = frozenset({"p6dx-8zbt", "jbjy-vk9h"})
 # se interpreta "lo mejor posible": se rechaza. Leer un schema futuro con las
 # reglas de hoy es la forma silenciosa de proyectar un filtro que nadie revisó.
 #
-# V2 mueve la procedencia de la raíz al binding. En V1 el archivo declaraba UN
-# `evidence` para todo el sidecar, lo que sólo responde "qué lote tocó el
-# archivo al final", no "qué artefacto acredita ESTE binding" — y con dos lotes
-# la respuesta de raíz pasó a ser falsa para el binding más antiguo.
-SCHEMA_VERSION = 2
+# Schema 3 separates operational BuyerUnit identity, fiscal attestations,
+# source observations and exact source-name projection.
+SCHEMA_VERSION = 3
 
 _ISO_DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 
@@ -59,40 +63,41 @@ class BuyerSourceNameError(ValueError):
 
 @dataclass(frozen=True, slots=True)
 class BuyerSourceBinding:
-    """Los nombres físicos de UNA identidad, declarados por dataset.
-
-    `observed_at`, `evidence` y `observed_rows` son evidencia de auditoría, no
-    semántica de consulta: dicen cuándo se verificó el binding, qué artefacto
-    lo acredita y cuántas filas devolvía entonces. Nada en el runtime los lee
-    para filtrar. Existen porque un binding sin fecha es indistinguible de un
-    binding que dejó de ser cierto, y uno sin artefacto propio no puede
-    contestar quién lo acreditó.
-
-    `evidence` es POR BINDING a propósito. La procedencia contesta "¿qué
-    artefacto acredita ESTE binding?", no "¿qué lote editó el archivo por
-    última vez?": son preguntas distintas y la segunda miente sobre todos los
-    bindings salvo el más reciente.
-    """
+    """One BuyerUnit, keyed operationally by its normalized canonical name."""
 
     canonical_name: str
-    identity_key: str
-    sources: dict[str, tuple[str, ...]]
+    source_names: dict[str, tuple[str, ...]]
+    projection_evidence: ProjectionEvidence
+    fiscal_evidence: tuple[FiscalEvidence, ...]
+
+    @property
+    def fiscal_attestations(self) -> tuple[FiscalAccreditation, ...]:
+        return tuple(e for e in self.fiscal_evidence if isinstance(e, FiscalAccreditation))
+
+    @property
+    def source_observations(self) -> tuple[SourceObservation, ...]:
+        return tuple(e for e in self.fiscal_evidence if isinstance(e, SourceObservation))
+
+    def names_for(self, dataset_id: str) -> tuple[str, ...] | None:
+        return self.source_names.get(dataset_id)
+
+
+@dataclass(frozen=True, slots=True)
+class ProjectionEvidence:
+    """Provenance of exact source names, independent of fiscal evidence."""
+
     observed_at: date
     evidence: str
     observed_rows: dict[str, int]
-
-    def names_for(self, dataset_id: str) -> tuple[str, ...] | None:
-        return self.sources.get(dataset_id)
 
 
 @dataclass(frozen=True, slots=True)
 class SidecarProvenance:
     """Metadata del REGISTRO. Deliberadamente sin `evidence`.
 
-    La procedencia de una identidad vive en su binding. Un `evidence` de raíz
-    sólo podría nombrar un artefacto, y en un sidecar acumulativo ese artefacto
-    acredita a lo sumo el último lote: para todos los demás bindings sería una
-    afirmación de auditoría falsa con forma de metadata válida.
+    La procedencia de los nombres físicos vive en `projection_evidence` de
+    cada BuyerUnit; la evidencia fiscal vive en sus registros tipados. Un
+    `evidence` de raíz atribuiría falsamente un mismo artefacto a otros lotes.
     """
 
     schema_version: int
@@ -216,9 +221,7 @@ def _parse_provenance(payload: dict[str, Any]) -> SidecarProvenance:
     # defecto reaparezca por copiar el archivo viejo.
     if "evidence" in payload:
         raise BuyerSourceNameError(
-            "'evidence' de raíz no existe en schema 2: la procedencia es por "
-            "binding, porque un artefacto de raíz no acredita bindings de otros "
-            "lotes"
+            "'evidence' de raíz no existe en schema 3: la procedencia es por BuyerUnit"
         )
 
     authority = payload.get("authority")
@@ -230,7 +233,7 @@ def _parse_provenance(payload: dict[str, Any]) -> SidecarProvenance:
 
 def _parse_sources(raw: Any, canonical: str) -> dict[str, tuple[str, ...]]:
     if not isinstance(raw, dict) or not raw:
-        raise BuyerSourceNameError(f"{canonical}: 'sources' debe ser un objeto no vacío")
+        raise BuyerSourceNameError(f"{canonical}: 'source_names' debe ser un objeto no vacío")
 
     sources: dict[str, tuple[str, ...]] = {}
     for dataset_id, names in raw.items():
@@ -257,14 +260,6 @@ def _parse_sources(raw: Any, canonical: str) -> dict[str, tuple[str, ...]]:
     return sources
 
 
-def _parse_identity_key(raw: Any, canonical: str) -> str:
-    if not isinstance(raw, dict):
-        raise BuyerSourceNameError(f"{canonical}: 'identity_key' debe ser un objeto")
-    key_type = _require_str(raw.get("type"), f"{canonical}/identity_key.type")
-    key_value = _require_str(raw.get("value"), f"{canonical}/identity_key.value")
-    return f"{key_type}:{key_value}"
-
-
 def parse_registry(payload: Any) -> BuyerSourceNameRegistry:
     """Valida el payload del sidecar. Falla fuerte: nada malformado pasa."""
     if not isinstance(payload, dict):
@@ -272,39 +267,43 @@ def parse_registry(payload: Any) -> BuyerSourceNameRegistry:
 
     provenance = _parse_provenance(payload)
 
-    raw_bindings = payload.get("bindings")
-    if not isinstance(raw_bindings, list):
-        raise BuyerSourceNameError("'bindings' debe ser una lista")
+    if "identity_key" in payload:
+        raise BuyerSourceNameError("'identity_key' de raíz no existe en schema 3")
+    raw_bindings = payload.get("buyer_units")
+    if not isinstance(raw_bindings, list) or not raw_bindings:
+        raise BuyerSourceNameError("'buyer_units' debe ser una lista no vacía")
 
     bindings: list[BuyerSourceBinding] = []
-    identity_keys: set[str] = set()
     for record in raw_bindings:
         if not isinstance(record, dict):
-            raise BuyerSourceNameError(f"binding inválido: {record!r}")
+            raise BuyerSourceNameError(f"BuyerUnit inválida: {record!r}")
         canonical = _require_str(record.get("canonical_name"), "canonical_name")
-        identity_key = _parse_identity_key(record.get("identity_key"), canonical)
-        if identity_key in identity_keys:
-            raise BuyerSourceNameError(f"identity_key duplicada: {identity_key}")
-        identity_keys.add(identity_key)
-        sources = _parse_sources(record.get("sources"), canonical)
+        if "identity_key" in record:
+            raise BuyerSourceNameError(f"{canonical}: 'identity_key' no existe en schema 3")
+        sources = _parse_sources(record.get("source_names"), canonical)
+        raw_projection = record.get("projection_evidence")
+        if not isinstance(raw_projection, dict):
+            raise BuyerSourceNameError(f"{canonical}: 'projection_evidence' debe ser un objeto")
+        try:
+            fiscal = parse_fiscal_evidence(record.get("fiscal_evidence"), canonical)
+        except ValueError as exc:
+            raise BuyerSourceNameError(str(exc)) from exc
         bindings.append(
             BuyerSourceBinding(
                 canonical_name=canonical,
-                identity_key=identity_key,
-                sources=sources,
-                observed_at=_require_iso_date(
-                    record.get("observed_at"), f"{canonical}/observed_at",
+                source_names=sources,
+                projection_evidence=ProjectionEvidence(
+                    observed_at=_require_iso_date(
+                        raw_projection.get("observed_at"), f"{canonical}/projection_evidence.observed_at",
+                    ),
+                    evidence=_require_str(
+                        raw_projection.get("evidence"), f"{canonical}/projection_evidence.evidence",
+                    ),
+                    observed_rows=_parse_observed_rows(
+                        raw_projection.get("observed_rows"), canonical, set(sources),
+                    ),
                 ),
-                # Igual que en V1, la procedencia se valida como metadata
-                # declarada y no como archivo en disco: un despliegue puede no
-                # empaquetar artifacts/, y exigir el fichero convertiría una
-                # afirmación de auditoría en una dependencia de runtime.
-                evidence=_require_str(
-                    record.get("evidence"), f"{canonical}/evidence",
-                ),
-                observed_rows=_parse_observed_rows(
-                    record.get("observed_rows"), canonical, set(sources),
-                ),
+                fiscal_evidence=fiscal,
             )
         )
     return BuyerSourceNameRegistry(bindings, provenance)

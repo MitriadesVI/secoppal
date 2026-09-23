@@ -217,16 +217,16 @@ def test_sidecar_binds_each_identity_to_its_own_artifact() -> None:
     afirmaría una evidencia que ese archivo no contiene.
     """
     payload = json.loads(SOURCE_NAMES.read_text(encoding="utf-8"))
-    assert payload["schema_version"] == 2
+    assert payload["schema_version"] == 3
     assert payload["authority"] == "ADR-073"
     assert "evidence" not in payload
 
-    by_canonical = {row["canonical_name"]: row for row in payload["bindings"]}
+    by_canonical = {row["canonical_name"]: row for row in payload["buyer_units"]}
     # Pertenencia, no censo: un lote posterior puede sumar bindings sin que eso
     # sea una regresión de este piloto. Lo que no puede es tocar estos cuatro.
     assert set(by_canonical) >= set(SOURCE_BINDINGS) | {DAPRE}
     for canonical in SOURCE_BINDINGS:
-        assert by_canonical[canonical]["evidence"] == R2FA_ARTIFACT
+        assert by_canonical[canonical]["projection_evidence"]["evidence"] == R2FA_ARTIFACT
 
 
 def test_pilot_artifact_does_not_accredit_bindings_from_other_batches() -> None:
@@ -234,7 +234,7 @@ def test_pilot_artifact_does_not_accredit_bindings_from_other_batches() -> None:
     payload = json.loads(SOURCE_NAMES.read_text(encoding="utf-8"))
     foreign = [
         row
-        for row in payload["bindings"]
+        for row in payload["buyer_units"]
         if row["canonical_name"] not in SOURCE_BINDINGS
     ]
     assert DAPRE in {row["canonical_name"] for row in foreign}
@@ -246,4 +246,4 @@ def test_pilot_artifact_does_not_accredit_bindings_from_other_batches() -> None:
     # ajeno al piloto —ni DAPRE ni los que lleguen después— puede adjudicarse
     # este artefacto, porque este artefacto no los acredita.
     for row in foreign:
-        assert row["evidence"] != R2FA_ARTIFACT, row["canonical_name"]
+        assert row["projection_evidence"]["evidence"] != R2FA_ARTIFACT, row["canonical_name"]
