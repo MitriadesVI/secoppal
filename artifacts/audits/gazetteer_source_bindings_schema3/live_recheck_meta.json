@@ -1,0 +1,24 @@
+{
+  "health": {
+    "p6dx-8zbt": {
+      "status": "OK",
+      "count": 9207780,
+      "floor": 5000000,
+      "healthy": true
+    },
+    "jbjy-vk9h": {
+      "status": "OK",
+      "count": 1000,
+      "floor": 1000000,
+      "healthy": false
+    }
+  },
+  "telemetry": {
+    "calls": 255,
+    "ok": 255,
+    "timeouts": 0,
+    "errors": 0,
+    "retries": 0
+  },
+  "measured_at": "2026-09-23T17:24:22.883687+00:00"
+}

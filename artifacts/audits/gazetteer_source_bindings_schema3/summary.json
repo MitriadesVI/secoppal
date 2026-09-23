@@ -1,0 +1,98 @@
+{
+  "audit": "ADR073_GAZETTEER_WIDE_SOURCE_BINDING_AUDIT_SCHEMA3",
+  "total_identities": 1134,
+  "buyer_units": 1111,
+  "ecosystems": 23,
+  "verdicts": {
+    "BOUND_VERIFIED": 593,
+    "BOUND_REVIEW": 0,
+    "INSTITUTIONAL_ECOSYSTEM": 23,
+    "SOURCE_BINDING_CANDIDATE": 253,
+    "INCOMPLETE_OBSERVATION": 1,
+    "NO_SOURCE_PRESENCE": 8,
+    "CANONICAL_COLLISION": 0,
+    "MULTI_NIT_REVIEW": 13,
+    "NO_OBSERVED_NIT": 0,
+    "MULTI_FORM_REVIEW": 4,
+    "NAME_EXTENSION_REVIEW": 1,
+    "CROSS_UNIT_FORM_COLLISION": 0,
+    "DECLARED_GROUP_MEMBER_REVIEW": 0,
+    "FISCAL_CONFLICT_REVIEW": 0,
+    "STRUCTURAL_SAFE_UNCORROBORATED": 238
+  },
+  "bound": {
+    "verified": 593,
+    "review": 0
+  },
+  "unbound_buyer_units": 518,
+  "directory_admissible_unbound": 251,
+  "directory_admissible_unbound_to_candidate": 251,
+  "candidates": 253,
+  "candidates_by_corroboration": {
+    "SECOP_DIRECTORY_ADMISSIBLE": 251,
+    "DECLARED_CATALOG": 2
+  },
+  "candidate_rows": {
+    "p6dx-8zbt": 2613927,
+    "jbjy-vk9h": 1768335
+  },
+  "candidates_single_dataset": 45,
+  "candidates_absent_in_dataset": {
+    "jbjy-vk9h": 10
+  },
+  "candidates_withheld_dataset": {
+    "jbjy-vk9h": 35
+  },
+  "candidates_low_volume_lt_50_rows": [
+    "GOBERNACION DEL GUAVIARE",
+    "GOBERNACION DEL VAUPES"
+  ],
+  "failed_gate_hits_unbound": {
+    "CROSS_UNIT_FORM_COLLISION": 5,
+    "INCOMPLETE_OBSERVATION": 1,
+    "MULTI_FORM_REVIEW": 18,
+    "MULTI_NIT_REVIEW": 14,
+    "NAME_EXTENSION_REVIEW": 19,
+    "NO_SOURCE_PRESENCE": 8,
+    "STRUCTURAL_SAFE_UNCORROBORATED": 264
+  },
+  "directory_admissibility_x_verdict": {
+    "ADMISSIBLE→BOUND_VERIFIED": 319,
+    "ADMISSIBLE→SOURCE_BINDING_CANDIDATE": 251,
+    "NO_EVIDENCE→BOUND_VERIFIED": 61,
+    "NO_EVIDENCE→MULTI_NIT_REVIEW": 1,
+    "NO_EVIDENCE→NAME_EXTENSION_REVIEW": 1,
+    "NO_EVIDENCE→NO_SOURCE_PRESENCE": 8,
+    "NO_EVIDENCE→STRUCTURAL_SAFE_UNCORROBORATED": 46,
+    "REVIEW→BOUND_VERIFIED": 213,
+    "REVIEW→INCOMPLETE_OBSERVATION": 1,
+    "REVIEW→MULTI_FORM_REVIEW": 4,
+    "REVIEW→MULTI_NIT_REVIEW": 12,
+    "REVIEW→SOURCE_BINDING_CANDIDATE": 2,
+    "REVIEW→STRUCTURAL_SAFE_UNCORROBORATED": 192
+  },
+  "shared_nit_x_verdict_unbound": {
+    "NOT_SHARED→MULTI_NIT_REVIEW": 3,
+    "NOT_SHARED→NAME_EXTENSION_REVIEW": 1,
+    "NOT_SHARED→NO_SOURCE_PRESENCE": 8,
+    "NOT_SHARED→SOURCE_BINDING_CANDIDATE": 251,
+    "NOT_SHARED→STRUCTURAL_SAFE_UNCORROBORATED": 129,
+    "SHARED→INCOMPLETE_OBSERVATION": 1,
+    "SHARED→MULTI_FORM_REVIEW": 4,
+    "SHARED→MULTI_NIT_REVIEW": 10,
+    "SHARED→SOURCE_BINDING_CANDIDATE": 2,
+    "SHARED→STRUCTURAL_SAFE_UNCORROBORATED": 109
+  },
+  "promotion": "NONE — este artefacto no modifica product data",
+  "answers_limits": {
+    "forms_lost_vs_identity_unbound": "NOT_MEASURED: V1 sólo buscó formas por NIT con NIT acreditado; para candidatos la pérdida frente al fallback productivo es 0 por construcción",
+    "observation_date": "2026-09-18 (lote V1); jbjy-vk9h no se re-observa mientras siga degradado"
+  },
+  "live_recheck": {
+    "PASS": 253
+  },
+  "live_recheck_by_dataset": {
+    "p6dx-8zbt:PASS": 253,
+    "jbjy-vk9h:SOURCE_DEGRADED": 243
+  }
+}
