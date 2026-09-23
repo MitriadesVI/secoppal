@@ -1,0 +1,15 @@
+{
+  "candidate_before": "8fd906de4d5c7950d9f424504bd18b5ebef906ac",
+  "entries": 612,
+  "kinds": {
+    "SOURCE_OBSERVATION": 594,
+    "ACCREDITATION": 18
+  },
+  "status_counts": {
+    "INVALID_10_DIGIT_PRESERVED": 2,
+    "PRESERVED": 538,
+    "REVIEW": 1,
+    "UNAUTHORIZED_9_TO_8_SPLIT": 59,
+    "VALID_10_TO_9_DV_SPLIT": 12
+  }
+}

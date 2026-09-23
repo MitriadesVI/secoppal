@@ -1,0 +1,54 @@
+{
+  "base_sha": "c9bac8a97d465ae8388d47d22a5f57c7fcd0d72c",
+  "schema_version_before": 2,
+  "schema_version_after": 3,
+  "sidecar_sha256_before": "9f45bd7978743a9c0c4ca2e739b83ca2ef21270e25e71b22e1d1d049440efcb5",
+  "sidecar_sha256_after": "48e018c876f375cf69cbed83aa4acbfdd3f78ead3394323f7c1e714fedc336cd",
+  "bindings_before": 593,
+  "bindings_after": 593,
+  "canonical_set_diff": [],
+  "source_projection_diff": [],
+  "dataset_diff": [],
+  "projection_provenance_diff": [],
+  "binding": {
+    "comparisons": 1186,
+    "semantic_diffs": []
+  },
+  "complement_identities": 518,
+  "complement": {
+    "comparisons": 1036,
+    "semantic_diffs": []
+  },
+  "census_identities": 1111,
+  "census_sweep": {
+    "comparisons": 2222,
+    "semantic_diffs": []
+  },
+  "consistency": {
+    "binding_plus_complement_equals_sweep": true,
+    "with_binding_plus_without_binding_equals_census": true
+  },
+  "semantic_projection_diff_count": 0,
+  "fiscal_evidence_kinds": {
+    "SOURCE_OBSERVATION": 594,
+    "ACCREDITATION": 18
+  },
+  "directory_observation_outcomes": {
+    "FOUND_MULTI": 150,
+    "FOUND_UNIQUE": 383,
+    "NOT_FOUND": 61
+  },
+  "shared_nit_canaries": {
+    "899999061": 38,
+    "899999239": 32
+  },
+  "d0_canary_canonicals": [
+    "UNIATLANTICO",
+    "UNIVERSIDAD DE CÓRDOBA",
+    "UNIVERSIDAD DE LA AMAZONIA",
+    "UNIVERSIDAD DEL PACÍFICO",
+    "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+    "UNIVERSIDAD POPULAR DEL CESAR"
+  ],
+  "verdict": "PASS"
+}

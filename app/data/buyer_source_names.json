@@ -704,14 +704,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80009659",
+          "base_number": "800096595",
           "raw_forms": [
             "800096595"
           ],
           "check_digit": {
-            "declared": "5",
-            "computed": 5,
-            "split_validated": true
+            "declared": null,
+            "computed": 4,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -944,14 +944,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "81200168",
+          "base_number": "812001681",
           "raw_forms": [
             "812001681"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 6,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -1064,14 +1064,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89020532",
+          "base_number": "890205326",
           "raw_forms": [
             "890205326"
           ],
           "check_digit": {
-            "declared": "6",
+            "declared": null,
             "computed": 6,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": true,
           "kind": "SOURCE_OBSERVATION",
@@ -1544,14 +1544,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89999970",
+          "base_number": "899999700",
           "raw_forms": [
             "899999700"
           ],
           "check_digit": {
-            "declared": "0",
-            "computed": 0,
-            "split_validated": true
+            "declared": null,
+            "computed": 7,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -2744,14 +2744,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89011237",
+          "base_number": "890112371",
           "raw_forms": [
             "890112371"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 8,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -2984,14 +2984,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80600070",
+          "base_number": "806000701",
           "raw_forms": [
             "806000701"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 9,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -3624,14 +3624,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80009468",
+          "base_number": "800094685",
           "raw_forms": [
             "800094685"
           ],
           "check_digit": {
-            "declared": "5",
-            "computed": 5,
-            "split_validated": true
+            "declared": null,
+            "computed": 1,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -4024,14 +4024,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89180136",
+          "base_number": "891801368",
           "raw_forms": [
             "891801368"
           ],
           "check_digit": {
-            "declared": "8",
-            "computed": 8,
-            "split_validated": true
+            "declared": null,
+            "computed": 5,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -5304,14 +5304,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89185647",
+          "base_number": "891856472",
           "raw_forms": [
             "891856472"
           ],
           "check_digit": {
-            "declared": "2",
-            "computed": 2,
-            "split_validated": true
+            "declared": null,
+            "computed": 1,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -5664,14 +5664,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80009675",
+          "base_number": "800096753",
           "raw_forms": [
             "800096753"
           ],
           "check_digit": {
-            "declared": "3",
-            "computed": 3,
-            "split_validated": true
+            "declared": null,
+            "computed": 1,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -5744,14 +5744,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89020894",
+          "base_number": "890208947",
           "raw_forms": [
             "890208947"
           ],
           "check_digit": {
-            "declared": "7",
-            "computed": 7,
-            "split_validated": true
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
           },
           "shared": true,
           "kind": "SOURCE_OBSERVATION",
@@ -5944,14 +5944,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89098229",
+          "base_number": "890982294",
           "raw_forms": [
             "890982294"
           ],
           "check_digit": {
-            "declared": "4",
-            "computed": 4,
-            "split_validated": true
+            "declared": null,
+            "computed": 0,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -6184,14 +6184,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89999971",
+          "base_number": "899999718",
           "raw_forms": [
             "899999718"
           ],
           "check_digit": {
-            "declared": "8",
-            "computed": 8,
-            "split_validated": true
+            "declared": null,
+            "computed": 9,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -6744,14 +6744,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80009963",
+          "base_number": "800099631",
           "raw_forms": [
             "800099631"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 5,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -7144,14 +7144,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80009948",
+          "base_number": "800099489",
           "raw_forms": [
             "800099489"
           ],
           "check_digit": {
-            "declared": "9",
-            "computed": 9,
-            "split_validated": true
+            "declared": null,
+            "computed": 5,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -7304,14 +7304,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89050310",
+          "base_number": "890503106",
           "raw_forms": [
             "890503106"
           ],
           "check_digit": {
-            "declared": "6",
-            "computed": 6,
-            "split_validated": true
+            "declared": null,
+            "computed": 0,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -7881,14 +7881,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89098188",
+          "base_number": "890981880",
           "raw_forms": [
             "890981880"
           ],
           "check_digit": {
-            "declared": "0",
-            "computed": 0,
-            "split_validated": true
+            "declared": null,
+            "computed": 2,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -8281,14 +8281,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80002843",
+          "base_number": "800028432",
           "raw_forms": [
             "800028432"
           ],
           "check_digit": {
-            "declared": "2",
+            "declared": null,
             "computed": 2,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -8641,14 +8641,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80010318",
+          "base_number": "800103180",
           "raw_forms": [
             "800103180"
           ],
           "check_digit": {
-            "declared": "0",
-            "computed": 0,
-            "split_validated": true
+            "declared": null,
+            "computed": 2,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -9201,14 +9201,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80000068",
+          "base_number": "800000681",
           "raw_forms": [
             "800000681"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 8,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -9481,14 +9481,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80009921",
+          "base_number": "800099210",
           "raw_forms": [
             "800099210"
           ],
           "check_digit": {
-            "declared": "0",
-            "computed": 0,
-            "split_validated": true
+            "declared": null,
+            "computed": 8,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -9601,14 +9601,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89999908",
+          "base_number": "899999083",
           "raw_forms": [
             "899999083"
           ],
           "check_digit": {
-            "declared": "3",
-            "computed": 3,
-            "split_validated": true
+            "declared": null,
+            "computed": 0,
+            "split_validated": false
           },
           "shared": false,
           "kind": "ACCREDITATION",
@@ -9618,14 +9618,14 @@
         },
         {
           "scheme": "NIT",
-          "base_number": "89999908",
+          "base_number": "899999083",
           "raw_forms": [
             "899999083"
           ],
           "check_digit": {
-            "declared": "3",
-            "computed": 3,
-            "split_validated": true
+            "declared": null,
+            "computed": 0,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -11349,14 +11349,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89021094",
+          "base_number": "890210946",
           "raw_forms": [
             "890210946"
           ],
           "check_digit": {
-            "declared": "6",
-            "computed": 6,
-            "split_validated": true
+            "declared": null,
+            "computed": 2,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -11429,14 +11429,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89020814",
+          "base_number": "890208148",
           "raw_forms": [
             "890208148"
           ],
           "check_digit": {
-            "declared": "8",
-            "computed": 8,
-            "split_validated": true
+            "declared": null,
+            "computed": 5,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -11789,14 +11789,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89070201",
+          "base_number": "890702017",
           "raw_forms": [
             "890702017"
           ],
           "check_digit": {
-            "declared": "7",
+            "declared": null,
             "computed": 7,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -12069,14 +12069,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89068023",
+          "base_number": "890680236",
           "raw_forms": [
             "890680236"
           ],
           "check_digit": {
-            "declared": "6",
-            "computed": 6,
-            "split_validated": true
+            "declared": null,
+            "computed": 7,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -12309,14 +12309,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89080265",
+          "base_number": "890802650",
           "raw_forms": [
             "890802650"
           ],
           "check_digit": {
-            "declared": "0",
-            "computed": 0,
-            "split_validated": true
+            "declared": null,
+            "computed": 9,
+            "split_validated": false
           },
           "shared": true,
           "kind": "SOURCE_OBSERVATION",
@@ -12629,14 +12629,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80009596",
+          "base_number": "800095961",
           "raw_forms": [
             "800095961"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 2,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -13869,14 +13869,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89091091",
+          "base_number": "890910913",
           "raw_forms": [
             "890910913"
           ],
           "check_digit": {
-            "declared": "3",
+            "declared": null,
             "computed": 3,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -14349,14 +14349,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89098422",
+          "base_number": "890984221",
           "raw_forms": [
             "890984221"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 2,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -15246,14 +15246,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89185776",
+          "base_number": "891857764",
           "raw_forms": [
             "891857764"
           ],
           "check_digit": {
-            "declared": "4",
-            "computed": 4,
-            "split_validated": true
+            "declared": null,
+            "computed": 1,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -15486,14 +15486,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89098383",
+          "base_number": "890983830",
           "raw_forms": [
             "890983830"
           ],
           "check_digit": {
-            "declared": "0",
-            "computed": 0,
-            "split_validated": true
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -16166,14 +16166,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80010365",
+          "base_number": "800103657",
           "raw_forms": [
             "800103657"
           ],
           "check_digit": {
-            "declared": "7",
-            "computed": 7,
-            "split_validated": true
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -16366,14 +16366,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80004411",
+          "base_number": "800044113",
           "raw_forms": [
             "800044113"
           ],
           "check_digit": {
-            "declared": "3",
-            "computed": 3,
-            "split_validated": true
+            "declared": null,
+            "computed": 5,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -16446,14 +16446,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89999940",
+          "base_number": "899999401",
           "raw_forms": [
             "899999401"
           ],
           "check_digit": {
-            "declared": "1",
+            "declared": null,
             "computed": 1,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -16646,14 +16646,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89080114",
+          "base_number": "890801147",
           "raw_forms": [
             "890801147"
           ],
           "check_digit": {
-            "declared": "7",
-            "computed": 7,
-            "split_validated": true
+            "declared": null,
+            "computed": 0,
+            "split_validated": false
           },
           "shared": true,
           "kind": "SOURCE_OBSERVATION",
@@ -17566,14 +17566,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80006541",
+          "base_number": "800065411",
           "raw_forms": [
             "800065411"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 5,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -18486,14 +18486,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80009546",
+          "base_number": "800095461",
           "raw_forms": [
             "800095461"
           ],
           "check_digit": {
-            "declared": "1",
+            "declared": null,
             "computed": 1,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -18726,14 +18726,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89080113",
+          "base_number": "890801131",
           "raw_forms": [
             "890801131"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
           },
           "shared": true,
           "kind": "SOURCE_OBSERVATION",
@@ -18806,14 +18806,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80001675",
+          "base_number": "800016757",
           "raw_forms": [
             "800016757"
           ],
           "check_digit": {
-            "declared": "7",
-            "computed": 7,
-            "split_validated": true
+            "declared": null,
+            "computed": 9,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -19046,14 +19046,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89050187",
+          "base_number": "890501876",
           "raw_forms": [
             "890501876"
           ],
           "check_digit": {
-            "declared": "6",
-            "computed": 6,
-            "split_validated": true
+            "declared": null,
+            "computed": 4,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -19166,14 +19166,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89092081",
+          "base_number": "890920814",
           "raw_forms": [
             "890920814"
           ],
           "check_digit": {
-            "declared": "4",
-            "computed": 4,
-            "split_validated": true
+            "declared": null,
+            "computed": 5,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -19246,14 +19246,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89180215",
+          "base_number": "891802151",
           "raw_forms": [
             "891802151"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 9,
+            "split_validated": false
           },
           "shared": true,
           "kind": "SOURCE_OBSERVATION",
@@ -19486,14 +19486,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80003921",
+          "base_number": "800039213",
           "raw_forms": [
             "800039213"
           ],
           "check_digit": {
-            "declared": "3",
+            "declared": null,
             "computed": 3,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": true,
           "kind": "SOURCE_OBSERVATION",
@@ -19646,14 +19646,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80010052",
+          "base_number": "800100527",
           "raw_forms": [
             "800100527"
           ],
           "check_digit": {
-            "declared": "7",
-            "computed": 7,
-            "split_validated": true
+            "declared": null,
+            "computed": 0,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -19863,14 +19863,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89185501",
+          "base_number": "891855016",
           "raw_forms": [
             "891855016"
           ],
           "check_digit": {
-            "declared": "6",
-            "computed": 6,
-            "split_validated": true
+            "declared": null,
+            "computed": 1,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -19903,14 +19903,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80002691",
+          "base_number": "800026911",
           "raw_forms": [
             "800026911"
           ],
           "check_digit": {
-            "declared": "1",
+            "declared": null,
             "computed": 1,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -20280,14 +20280,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89118019",
+          "base_number": "891180191",
           "raw_forms": [
             "891180191"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 2,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -20520,14 +20520,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80010280",
+          "base_number": "800102801",
           "raw_forms": [
             "800102801"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -21360,14 +21360,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89180178",
+          "base_number": "891801787",
           "raw_forms": [
             "891801787"
           ],
           "check_digit": {
-            "declared": "7",
-            "computed": 7,
-            "split_validated": true
+            "declared": null,
+            "computed": 8,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -21680,14 +21680,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89098076",
+          "base_number": "890980764",
           "raw_forms": [
             "890980764"
           ],
           "check_digit": {
-            "declared": "4",
-            "computed": 4,
-            "split_validated": true
+            "declared": null,
+            "computed": 1,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -22457,14 +22457,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89020669",
+          "base_number": "890206696",
           "raw_forms": [
             "890206696"
           ],
           "check_digit": {
-            "declared": "6",
-            "computed": 6,
-            "split_validated": true
+            "declared": null,
+            "computed": 0,
+            "split_validated": false
           },
           "shared": true,
           "kind": "SOURCE_OBSERVATION",
@@ -23316,7 +23316,7 @@
         },
         {
           "scheme": "NIT",
-          "base_number": "0899999061",
+          "base_number": "899999061",
           "raw_forms": [
             "0899999061"
           ],
@@ -23436,14 +23436,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89010225",
+          "base_number": "890102257",
           "raw_forms": [
             "890102257"
           ],
           "check_digit": {
-            "declared": "7",
-            "computed": 7,
-            "split_validated": true
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
           },
           "shared": false,
           "kind": "ACCREDITATION",
@@ -23453,14 +23453,14 @@
         },
         {
           "scheme": "NIT",
-          "base_number": "89010225",
+          "base_number": "890102257",
           "raw_forms": [
             "890102257"
           ],
           "check_digit": {
-            "declared": "7",
-            "computed": 7,
-            "split_validated": true
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -23586,14 +23586,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "80014482",
+          "base_number": "800144829",
           "raw_forms": [
             "800144829"
           ],
           "check_digit": {
-            "declared": "9",
+            "declared": null,
             "computed": 9,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": false,
           "kind": "ACCREDITATION",
@@ -23603,14 +23603,14 @@
         },
         {
           "scheme": "NIT",
-          "base_number": "80014482",
+          "base_number": "800144829",
           "raw_forms": [
             "800144829"
           ],
           "check_digit": {
-            "declared": "9",
+            "declared": null,
             "computed": 9,
-            "split_validated": true
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",
@@ -23643,14 +23643,14 @@
       "fiscal_evidence": [
         {
           "scheme": "NIT",
-          "base_number": "89108003",
+          "base_number": "891080031",
           "raw_forms": [
             "891080031"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
           },
           "shared": false,
           "kind": "ACCREDITATION",
@@ -23660,14 +23660,14 @@
         },
         {
           "scheme": "NIT",
-          "base_number": "89108003",
+          "base_number": "891080031",
           "raw_forms": [
             "891080031"
           ],
           "check_digit": {
-            "declared": "1",
-            "computed": 1,
-            "split_validated": true
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
           },
           "shared": false,
           "kind": "SOURCE_OBSERVATION",

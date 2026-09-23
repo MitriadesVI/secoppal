@@ -184,7 +184,9 @@ def test_real_shared_nit_canaries_are_observations_not_fiscal_identity():
     reg = load_registry()
     counts = Counter(ob.base_number for binding in reg.bindings()
                      for ob in binding.source_observations)
-    assert counts["899999061"] == 37
+    # The declared census leading-zero form 0899999061 now normalizes to this
+    # same nine-digit base, adding one observation to the Schema 3 draft count.
+    assert counts["899999061"] == 38
     assert counts["899999239"] == 32
     assert len({b.canonical_name for b in reg.bindings()
                 if any(o.base_number == "899999061" for o in b.source_observations)}) == 37

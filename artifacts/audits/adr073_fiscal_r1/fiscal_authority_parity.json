@@ -1,0 +1,507 @@
+{
+  "entries_before": 612,
+  "entries_after": 612,
+  "source_observations_audited": 594,
+  "source_facts_unchanged": true,
+  "before_status_counts": {
+    "INVALID_10_DIGIT_PRESERVED": 2,
+    "PRESERVED": 538,
+    "REVIEW": 1,
+    "UNAUTHORIZED_9_TO_8_SPLIT": 59,
+    "VALID_10_TO_9_DV_SPLIT": 12
+  },
+  "after_status_counts": {
+    "INVALID_10_DIGIT_PRESERVED": 2,
+    "PRESERVED": 597,
+    "VALID_10_TO_9_DV_SPLIT": 12,
+    "VALID_LEADING_ZERO_NORMALIZATION": 1
+  },
+  "unauthorized_9_to_8_before": 59,
+  "unauthorized_9_to_8_after": 0,
+  "review_after": 0,
+  "fiscal_authority": {
+    "schema2_nit_authorities": 18,
+    "schema3_accreditations": 18,
+    "preserved": 18,
+    "comparisons": [
+      {
+        "canonical": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+        "schema2_nit": "890480184",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "890480184",
+          "raw_forms": [
+            "890480184"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 4,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-17",
+          "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+        "schema2_nit": "899999083",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "899999083",
+          "raw_forms": [
+            "899999083"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 0,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-02",
+          "evidence": "artifacts/audits/source_name_projection_v1.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "schema2_nit": "890102018",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "890102018",
+          "raw_forms": [
+            "890102018"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 1,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-17",
+          "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "FONDO FINANCIERO DISTRITAL DE SALUD",
+        "schema2_nit": "8002469532",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "800246953",
+          "raw_forms": [
+            "8002469532"
+          ],
+          "check_digit": {
+            "declared": "2",
+            "computed": 2,
+            "split_validated": true
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-03",
+          "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "VALID_10_TO_9_DV_SPLIT",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "MINISTERIO DE JUSTICIA Y DEL DERECHO",
+        "schema2_nit": "900457461",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "900457461",
+          "raw_forms": [
+            "900457461"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 9,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-03",
+          "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "MUNICIPIO DE GALAPA.",
+        "schema2_nit": "890102472",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "890102472",
+          "raw_forms": [
+            "890102472"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 0,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-17",
+          "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "MUNICIPIO DE SOACHA",
+        "schema2_nit": "800094755",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "800094755",
+          "raw_forms": [
+            "800094755"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 7,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-03",
+          "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "MUNICIPIO DE SOLEDAD",
+        "schema2_nit": "890106291",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "890106291",
+          "raw_forms": [
+            "890106291"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 2,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-17",
+          "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "MUNICIPIO DE YOPAL",
+        "schema2_nit": "891855017",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "891855017",
+          "raw_forms": [
+            "891855017"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 7,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-03",
+          "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "UNIATLANTICO",
+        "schema2_nit": "890102257",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "890102257",
+          "raw_forms": [
+            "890102257"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-02",
+          "evidence": "artifacts/audits/public_university_pilot_r2fa.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS",
+        "schema2_nit": "900126860",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "900126860",
+          "raw_forms": [
+            "900126860"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 4,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-03",
+          "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+        "schema2_nit": "800144829",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "800144829",
+          "raw_forms": [
+            "800144829"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 9,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-02",
+          "evidence": "artifacts/audits/public_university_completion_r2fb.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "UNIVERSIDAD DE CÓRDOBA",
+        "schema2_nit": "891080031",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "891080031",
+          "raw_forms": [
+            "891080031"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 3,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-02",
+          "evidence": "artifacts/audits/public_university_pilot_r2fa.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "UNIVERSIDAD DE LA AMAZONIA",
+        "schema2_nit": "891190346",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "891190346",
+          "raw_forms": [
+            "891190346"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 1,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-02",
+          "evidence": "artifacts/audits/public_university_pilot_r2fa.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "UNIVERSIDAD DEL PACÍFICO",
+        "schema2_nit": "835000300",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "835000300",
+          "raw_forms": [
+            "835000300"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 4,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-02",
+          "evidence": "artifacts/audits/public_university_completion_r2fb.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+        "schema2_nit": "8001631300",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "800163130",
+          "raw_forms": [
+            "8001631300"
+          ],
+          "check_digit": {
+            "declared": "0",
+            "computed": 0,
+            "split_validated": true
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-02",
+          "evidence": "artifacts/audits/public_university_pilot_r2fa.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "VALID_10_TO_9_DV_SPLIT",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "UNIVERSIDAD POPULAR DEL CESAR",
+        "schema2_nit": "8923002856",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "892300285",
+          "raw_forms": [
+            "8923002856"
+          ],
+          "check_digit": {
+            "declared": "6",
+            "computed": 6,
+            "split_validated": true
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-02",
+          "evidence": "artifacts/audits/public_university_completion_r2fb.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "VALID_10_TO_9_DV_SPLIT",
+        "authority_preserved": true
+      },
+      {
+        "canonical": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+        "schema2_nit": "891680089",
+        "schema3_accreditation": {
+          "scheme": "NIT",
+          "base_number": "891680089",
+          "raw_forms": [
+            "891680089"
+          ],
+          "check_digit": {
+            "declared": null,
+            "computed": 4,
+            "split_validated": false
+          },
+          "shared": false,
+          "kind": "ACCREDITATION",
+          "source": "buyer_source_names.json#schema2:identity_key",
+          "observed_at": "2026-09-02",
+          "evidence": "artifacts/audits/public_university_completion_r2fb.json"
+        },
+        "raw_preserved": true,
+        "normalization_class": "PRESERVED",
+        "authority_preserved": true
+      }
+    ],
+    "pass": true
+  },
+  "d0_concrete_authorities": [
+    {
+      "canonical": "UNIATLANTICO",
+      "schema2_nit": "890102257",
+      "accreditation_raw_preserved": true,
+      "accreditation_authority_preserved": true,
+      "directory_not_found_preserved": true
+    },
+    {
+      "canonical": "UNIVERSIDAD DE CÓRDOBA",
+      "schema2_nit": "891080031",
+      "accreditation_raw_preserved": true,
+      "accreditation_authority_preserved": true,
+      "directory_not_found_preserved": true
+    },
+    {
+      "canonical": "UNIVERSIDAD DE LA AMAZONIA",
+      "schema2_nit": "891190346",
+      "accreditation_raw_preserved": true,
+      "accreditation_authority_preserved": true,
+      "directory_not_found_preserved": true
+    },
+    {
+      "canonical": "UNIVERSIDAD DEL PACÍFICO",
+      "schema2_nit": "835000300",
+      "accreditation_raw_preserved": true,
+      "accreditation_authority_preserved": true,
+      "directory_not_found_preserved": true
+    },
+    {
+      "canonical": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+      "schema2_nit": "8001631300",
+      "accreditation_raw_preserved": true,
+      "accreditation_authority_preserved": true,
+      "directory_not_found_preserved": true
+    },
+    {
+      "canonical": "UNIVERSIDAD POPULAR DEL CESAR",
+      "schema2_nit": "8923002856",
+      "accreditation_raw_preserved": true,
+      "accreditation_authority_preserved": true,
+      "directory_not_found_preserved": true
+    }
+  ],
+  "verdict": "PASS"
+}

@@ -1,0 +1,114 @@
+{
+  "schema2_commit": "c9bac8a97d465ae8388d47d22a5f57c7fcd0d72c",
+  "schema2_sidecar_sha256": "9f45bd7978743a9c0c4ca2e739b83ca2ef21270e25e71b22e1d1d049440efcb5",
+  "authorities": [
+    {
+      "canonical_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+      "schema2_nit": "890480184",
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json",
+      "observed_at": "2026-09-17"
+    },
+    {
+      "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+      "schema2_nit": "899999083",
+      "evidence": "artifacts/audits/source_name_projection_v1.json",
+      "observed_at": "2026-09-02"
+    },
+    {
+      "canonical_name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "schema2_nit": "890102018",
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json",
+      "observed_at": "2026-09-17"
+    },
+    {
+      "canonical_name": "FONDO FINANCIERO DISTRITAL DE SALUD",
+      "schema2_nit": "8002469532",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "observed_at": "2026-09-03"
+    },
+    {
+      "canonical_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO",
+      "schema2_nit": "900457461",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "observed_at": "2026-09-03"
+    },
+    {
+      "canonical_name": "MUNICIPIO DE GALAPA.",
+      "schema2_nit": "890102472",
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json",
+      "observed_at": "2026-09-17"
+    },
+    {
+      "canonical_name": "MUNICIPIO DE SOACHA",
+      "schema2_nit": "800094755",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "observed_at": "2026-09-03"
+    },
+    {
+      "canonical_name": "MUNICIPIO DE SOLEDAD",
+      "schema2_nit": "890106291",
+      "evidence": "artifacts/audits/dogfood_buyer_coverage_adr073.json",
+      "observed_at": "2026-09-17"
+    },
+    {
+      "canonical_name": "MUNICIPIO DE YOPAL",
+      "schema2_nit": "891855017",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "observed_at": "2026-09-03"
+    },
+    {
+      "canonical_name": "UNIATLANTICO",
+      "schema2_nit": "890102257",
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
+      "observed_at": "2026-09-02"
+    },
+    {
+      "canonical_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS",
+      "schema2_nit": "900126860",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "observed_at": "2026-09-03"
+    },
+    {
+      "canonical_name": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+      "schema2_nit": "800144829",
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+      "observed_at": "2026-09-02"
+    },
+    {
+      "canonical_name": "UNIVERSIDAD DE CÓRDOBA",
+      "schema2_nit": "891080031",
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
+      "observed_at": "2026-09-02"
+    },
+    {
+      "canonical_name": "UNIVERSIDAD DE LA AMAZONIA",
+      "schema2_nit": "891190346",
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
+      "observed_at": "2026-09-02"
+    },
+    {
+      "canonical_name": "UNIVERSIDAD DEL PACÍFICO",
+      "schema2_nit": "835000300",
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+      "observed_at": "2026-09-02"
+    },
+    {
+      "canonical_name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+      "schema2_nit": "8001631300",
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
+      "observed_at": "2026-09-02"
+    },
+    {
+      "canonical_name": "UNIVERSIDAD POPULAR DEL CESAR",
+      "schema2_nit": "8923002856",
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+      "observed_at": "2026-09-02"
+    },
+    {
+      "canonical_name": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+      "schema2_nit": "891680089",
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+      "observed_at": "2026-09-02"
+    }
+  ]
+}
