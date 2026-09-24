@@ -1,21 +1,21 @@
 # TEST_INVENTORY_V1 — inventario automático
 
 > Generado por `scripts/audits/test_architecture_inventory.py render`. **Heurística, no autoridad.**
-> `BASELINE_HEAD = 04426d1` · 506 archivos · 16187 nodeids.
+> `BASELINE_HEAD = 9de4066` · 507 archivos · 16221 nodeids.
 > La adjudicación humana/agente vive en `TEST_ARCHITECTURE_V1.md`; nada aquí autoriza retiros.
 
 ## Clases por nodeid
 
 | Clase | nodeids | archivos (clase primaria) |
 |---|---:|---:|
-| ARCHITECTURE | 228 | 14 |
-| AUDIT_HISTORICAL | 2214 | 88 |
+| ARCHITECTURE | 230 | 14 |
+| AUDIT_HISTORICAL | 2237 | 89 |
 | DOMAIN_INVARIANT | 12320 | 336 |
-| PRODUCT | 1194 | 53 |
+| PRODUCT | 1203 | 53 |
 | PROPERTY | 186 | 10 |
 | UNKNOWN | 45 | 5 |
 
-Confianza: high=1435, low=2166, medium=12541, none=45
+Confianza: high=1469, low=2166, medium=12541, none=45
 
 ## Familias
 
@@ -32,8 +32,8 @@ Confianza: high=1435, low=2166, medium=12541, none=45
 | truth_layer | 20 | 791 | 7 | 0.0 |
 | ranking_results_presentation | 35 | 683 | 75 | 0.0 |
 | entity_profile_frame | 35 | 626 | 269 | 0.0 |
+| geo_territory | 24 | 558 | 8 | 0.0 |
 | radar | 14 | 536 | 0 | 0.0 |
-| geo_territory | 23 | 535 | 8 | 0.0 |
 | money_value | 17 | 473 | 25 | 0.0 |
 | soql_source_execution | 29 | 459 | 21 | 0.0 |
 | negation_control | 12 | 429 | 55 | 0.0 |
@@ -41,8 +41,8 @@ Confianza: high=1435, low=2166, medium=12541, none=45
 | buyer_actor_arbitration | 10 | 260 | 216 | 0.0 |
 | channels_auth | 8 | 239 | 14 | 0.0 |
 | time_state_opportunity | 17 | 222 | 14 | 0.0 |
+| product_contract | 3 | 52 | 27 | 0.0 |
 | architecture_meta | 7 | 42 | 3 | 0.0 |
-| product_contract | 3 | 41 | 18 | 0.0 |
 
 ## Top candidatos de duplicación (score estructural, sin adjudicar)
 
@@ -355,6 +355,7 @@ Confianza: high=1435, low=2166, medium=12541, none=45
 | `test_gazetteer_ownership_gate_r2a.py` | geo_territory | DOMAIN_INVARIANT | DOMA=9 | 9 | 0 | 0 | 0 | 0/0 | 0.0 | R2A — la puerta de ownership múltiple mira el CONJUNTO, no el cardinal. |
 | `test_gazetteer_source_binding_audit.py` | geo_territory | AUDIT_HISTORICAL | AUDI=40 | 40 | 0 | 0 | 0 | 4/0 | 0.0 | Auditoría ADR-073 gazetteer-wide: los contratos que el auditor NO puede romper. |
 | `test_gazetteer_source_binding_audit_regressions.py` | geo_territory | AUDIT_HISTORICAL | AUDI=34 | 34 | 8 | 0 | 0 | 0/0+rt | 0.0 | ADR-073 gazetteer-wide — regresiones de la REMEDIACIÓN (revisión independiente). |
+| `test_gazetteer_source_binding_audit_schema3.py` | geo_territory | AUDIT_HISTORICAL | AUDI=23 | 23 | 2 | 0 | 0 | 0/0 | 0.0 | Gazetteer-Wide Schema-3-aware: la adjudicación, gate por gate. |
 | `test_geo_mention_resolution.py` | geo_territory | DOMAIN_INVARIANT | DOMA=13 | 13 | 4 | 0 | 0 | 0/0 | 0.0 | Tests for typed and untyped pure geography gazetteer lookups. |
 | `test_geo_vs_entity_typed.py` | geo_territory | DOMAIN_INVARIANT | DOMA=14 | 14 | 6 | 0 | 0 | 0/0 | 0.0 | Etapa 7 — resolución TIPADA: territorio (departamento) vs comprador (entidad). |
 | `test_municipal_language_capture.py` | geo_territory | DOMAIN_INVARIANT | DOMA=47 | 47 | 46 | 0 | 0 | 0/0 | 0.0 | M1A.1 predictive capture cases, frozen before changing runtime. |
@@ -480,9 +481,9 @@ Confianza: high=1435, low=2166, medium=12541, none=45
 | `test_text_lineage_v1_2_contract.py` | other | DOMAIN_INVARIANT | DOMA=137 | 137 | 114 | 0 | 0 | 0/0 | 0.0 |  |
 | `test_zeus_adr073_adversarial.py` | other | AUDIT_HISTORICAL | AUDI=26 | 26 | 13 | 0 | 0 | 0/0 | 0.0 | ZEUS — pruebas adversariales independientes sobre la auditoría ADR-073. |
 | `test_zeus_adr073_recheck.py` | other | AUDIT_HISTORICAL | AUDI=1 | 1 | 0 | 0 | 0 | 0/0 | 0.0 | ZEUS recheck — ataques al mecanismo de integridad introducido en la remediación. |
-| `contracts/test_invariant_registry.py` | product_contract | ARCHITECTURE | ARCH=5 | 5 | 0 | 0 | 0 | 0/0 | 0.0 | F2 — el registro canónico de invariantes es válido y sus defensas existen. |
-| `product_contract/test_product_contract_v1.py` | product_contract | PRODUCT | PROD=13 | 13 | 13 | 0 | 13 | 0/0 | 0.0 | F3 gate: only accredited READY scenarios, each with a killed seam mutant. |
-| `product_contract/test_product_harness_safety.py` | product_contract | ARCHITECTURE | ARCH=23 | 23 | 3 | 1 | 5 | 0/0 | 0.0 | F2.5 — Product Harness Safety: el harness demuestra sus garantías antes de F3. |
+| `contracts/test_invariant_registry.py` | product_contract | ARCHITECTURE | ARCH=6 | 6 | 0 | 0 | 0 | 0/0 | 0.0 | F2 — el registro canónico de invariantes es válido y sus defensas existen. |
+| `product_contract/test_product_contract_v1.py` | product_contract | PRODUCT | PROD=22 | 22 | 22 | 0 | 22 | 0/0 | 0.0 | F3 gate: only accredited READY scenarios, each with a killed seam mutant. |
+| `product_contract/test_product_harness_safety.py` | product_contract | ARCHITECTURE | ARCH=24 | 24 | 3 | 2 | 5 | 0/0 | 0.0 | F2.5 — Product Harness Safety: el harness demuestra sus garantías antes de F3. |
 | `test_accent_normalization.py` | query_frame_parsing | DOMAIN_INVARIANT | DOMA=19 | 19 | 12 | 0 | 0 | 0/0 | 0.0 | Tests ACCENT-NORMALIZATION-001 — unaccent() en SoQL + strip_accents Python. |
 | `test_bidder_intent.py` | query_frame_parsing | DOMAIN_INVARIANT | DOMA=4 | 4 | 0 | 0 | 0 | 0/0 | 0.0 | BIDDER-INTENT-002 tests: para poder presentarme + mantenimiento vial. |
 | `test_bidder_intent_commercial.py` | query_frame_parsing | DOMAIN_INVARIANT | DOMA=5 | 5 | 0 | 0 | 0 | 0/0 | 0.0 | BIDDER-INTENT-003: commercial verbs must not pollute objeto in opportunity queri |

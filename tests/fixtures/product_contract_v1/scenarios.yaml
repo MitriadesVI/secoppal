@@ -158,19 +158,33 @@ scenarios:
 
   - id: PC-MONEY-002
     title: "Rango monetario atómico; contradicción no ejecuta"
-    status: DESIGN
+    status: READY
     severity: high
     family: money
     mandatory_item: 8
     source: {kind: audit, reference: "ADR-063 / money_range_atomicity"}
     invariants: [INV-MONEY-RANGE-ATOMIC]
-    fixtures: {source_rows: TBD_RUNTIME}
+    fixtures: {source_rows: source_rows/f3_money_time.jsonl}
     turns:
-      - text: "contratos de obra entre 100 y 150 millones"
-        expect: {params: {valor_min: 100000000, valor_max: 150000000}}
       - text: "contratos de obra de más de 500 y menos de 100 millones"
         chat_id: contradiction
-        expect: {source_calls: {exact: 0}}
+        expect:
+          outcome: clarification
+          params: {valor_min: 500000000, valor_max: 100000000}
+          source_calls: {exact: 0}
+      - text: "contratos de obra entre 100 y 150 millones"
+        chat_id: valid_range
+        expect:
+          outcome: success
+          params: {valor_min: 100000000, valor_max: 150000000}
+          source_calls: {min: 1}
+          datasets_called: {only: [jbjy-vk9h]}
+          soql: {contains: ["valor_del_contrato >= 100000000", "valor_del_contrato <= 150000000"]}
+          results: {must_include_ids: [PC-RANGE-125], must_exclude_ids: [PC-RANGE-175]}
+    mutation:
+      law: INV-MONEY-RANGE-ATOMIC
+      kind: drop_range_upper
+      expected_failure: params.valor_max
     mine_from: [tests/test_money_range_atomicity.py::test_partial_range_blocks_instead_of_degrading]
 
   - id: PC-DS-001
@@ -303,35 +317,56 @@ scenarios:
 
   - id: PC-OPP-001
     title: "Oportunidad vigente por fecha civil colombiana sin certificar apertura"
-    status: DESIGN
+    status: READY
     severity: high
     family: opportunity_truth
     mandatory_item: 16
     source: {kind: audit, reference: "ADR-056/058 O1B"}
     invariants: [INV-TIME-OPPORTUNITY-VIGENCIA-NOT-CERTIFICATION]
     today: "2026-09-08"
-    fixtures: {source_rows: processes_deadline_today_future_past_null}
+    reference_instant: "2026-09-08T12:00:00Z"
+    fixtures: {source_rows: source_rows/f3_opportunities.jsonl}
     turns:
-      - text: "procesos abiertos de mantenimiento vial"
+      - text: "oportunidades de mantenimiento vial"
         expect:
+          outcome: success
+          params: {intent_type: opportunity_search, dataset: procesos}
           datasets_called: {only: [p6dx-8zbt]}
-          results: {must_exclude_ids: [TBD_RUNTIME]}
+          source_calls: {min: 1}
+          soql: {contains: ["fecha_de_recepcion_de >= '2026-09-08T00:00:00.000'", "fecha_de_publicacion_del >= '2026-06-10T00:00:00.000'"]}
+          results:
+            must_include_ids: [PC-OPP-TODAY, PC-OPP-FUTURE, PC-OPP-UNKNOWN-RECENT]
+            must_exclude_ids: [PC-OPP-PAST, PC-OPP-UNKNOWN-OLD]
+          response: {contains: ["Vigencia por verificar"], not_contains: ["Recepción de ofertas"]}
+    mutation:
+      law: INV-TIME-OPPORTUNITY-VIGENCIA-NOT-CERTIFICATION
+      kind: drop_opportunity_deadline
+      expected_failure: soql.contains
     mine_from: [tests/test_current_opportunity_retrieval.py::test_red_5_known_expired_deadline_is_excluded]
 
   - id: PC-TIME-001
     title: "Histórico firmado filtra por fecha de firma, no por estado"
-    status: DESIGN
+    status: READY
     severity: high
     family: opportunity_truth
     mandatory_item: 17
     source: {kind: audit, reference: "ADR-026 / ADR-065"}
     invariants: [INV-STATE-FIRMADO-IS-NOT-A-STATE]
-    fixtures: {source_rows: TBD_RUNTIME}
+    fixtures: {source_rows: source_rows/f3_money_time.jsonl}
     turns:
-      - text: "contratos firmados en 2023 por la alcaldia de baranoa"
+      - text: "contratos firmados en 2023 de mantenimiento vial"
         expect:
-          params: {dataset: contratos}
+          outcome: success
+          params: {dataset: contratos, fecha_desde: "2023-01-01", fecha_hasta: "2023-12-31"}
           absent_params: [estado]
+          datasets_called: {only: [jbjy-vk9h]}
+          source_calls: {min: 1}
+          soql: {contains: ["fecha_de_firma >= '2023-01-01'", "fecha_de_firma <= '2023-12-31'"]}
+          results: {must_include_ids: [PC-SIGNED-2023], must_exclude_ids: [PC-SIGNED-2024]}
+    mutation:
+      law: INV-STATE-FIRMADO-IS-NOT-A-STATE
+      kind: signed_to_state
+      expected_failure: absent_params.estado
     mine_from: [tests/test_firmado_signed_semantics.py::test_firmados_en_mayo_no_aplica_estado_filtra_fecha]
 
   - id: PC-PAG-001

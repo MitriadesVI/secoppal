@@ -34,7 +34,7 @@ FAMILIES = {"search", "followup_scope", "authority_arbitration", "money", "modal
 SEVERITIES = {"critical", "high", "medium"}
 SOURCE_KINDS = {"incident", "dogfood", "feedback", "audit", "synthetic"}
 SCENARIO_KEYS = {"id", "title", "status", "severity", "family", "mandatory_item", "source",
-                 "invariants", "fixtures", "today", "frame", "turns", "mine_from", "open_questions",
+                 "invariants", "fixtures", "today", "reference_instant", "frame", "turns", "mine_from", "open_questions",
                  "red_first", "mutation"}
 TURN_KEYS = {"text", "chat_id", "expect", "run_kwargs"}
 

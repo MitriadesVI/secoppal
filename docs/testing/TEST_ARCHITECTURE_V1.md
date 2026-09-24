@@ -1,6 +1,6 @@
 # TEST_ARCHITECTURE_V1 — Fase 0 + Fase 1
 
-> **Actualización F3 sobre main `04426d19`:** este documento conserva las
+> **Actualización F3 continuation sobre main `0e5c7420`:** este documento conserva las
 > decisiones y mediciones F0–F2.5 como historia. La portabilidad, el inventario
 > fresco, los escenarios READY y los gaps actuales están en
 > [TEST_ARCHITECTURE_V1_F3.md](TEST_ARCHITECTURE_V1_F3.md). La condición antigua

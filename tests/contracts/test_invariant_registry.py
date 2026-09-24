@@ -17,6 +17,14 @@ def test_the_registry_is_valid_and_every_named_defense_exists():
     assert registry.validate(registry.load(), scenario_ids=scenario_ids, gap_ids=gap_ids) == []
 
 
+def test_pending_process_state_law_is_recorded_outside_the_main_registry():
+    document = registry.load()
+    pending = document["candidate_pending_main"]
+    assert [item["id"] for item in pending] == ["INV-PROCESS-STATE-NO-SILENT-LOSS"]
+    assert all(item["status"] == "CANDIDATE_PENDING_MAIN" for item in pending)
+    assert all(item["id"] not in document["invariants"] for item in pending)
+
+
 def test_every_p0_p1_invariant_has_an_owner_and_a_defense_or_a_declared_gap():
     invariants = registry.load()["invariants"]
     critical = {k: v for k, v in invariants.items() if v["criticality"] in {"P0", "P1"}}

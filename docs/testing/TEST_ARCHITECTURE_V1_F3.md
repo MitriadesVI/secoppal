@@ -1,5 +1,9 @@
 # TEST_ARCHITECTURE_V1_F3 — port ledger
 
+> **Continuation:** the later main reconciliation, 8 READY scenarios,
+> invariant revalidation and global closeout are recorded in
+> [TEST_ARCHITECTURE_V1_F3_CONTINUATION.md](TEST_ARCHITECTURE_V1_F3_CONTINUATION.md).
+
 Base: `04426d19aec5cad104f6e4cb973d4fd84b7eaa34`. Historical source:
 `59363501` on `chore/test-architecture-v1-f2-f2-5`. This ledger records the
 decision **before** copying historical files; execution evidence and the

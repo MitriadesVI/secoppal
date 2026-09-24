@@ -11,6 +11,11 @@
 # re_home_before_f6: el primario vive en una suite con nombre histórico; F6 no puede
 #   moverla a audit sin antes darle un hogar vigente a esa defensa.
 version: "1.0"
+candidate_pending_main:
+  - id: INV-PROCESS-STATE-NO-SILENT-LOSS
+    status: CANDIDATE_PENDING_MAIN
+    source_branch: fix/process-state-request-integrity-v1
+    note: "Candidato separado; no es ley integrada ni cuenta entre los 28 invariantes de main."
 invariants:
 
   # ── P0 ────────────────────────────────────────────────────────────────

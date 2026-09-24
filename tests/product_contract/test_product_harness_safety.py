@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import json
 import socket
+from datetime import date
 
 import pytest
 from hypothesis import given, strategies as st
@@ -111,6 +112,25 @@ def test_soql_is_evaluated_not_canned():
     assert [r["id_contrato"] for r in rows] == ["PC-CANARY-001", "PC-CANARY-002"]
     count = transport.count("jbjy-vk9h", "SELECT count(*) AS total WHERE valor_del_contrato >= 500000000")
     assert count == [{"total": "2"}]
+
+
+@given(
+    deadline=st.one_of(st.none(), st.dates(min_value=date(2026, 9, 6), max_value=date(2026, 9, 10))),
+    published=st.dates(min_value=date(2026, 6, 8), max_value=date(2026, 9, 10)),
+)
+def test_frozen_opportunity_case_keeps_deadline_and_null_semantics(deadline, published):
+    row = {
+        "_dataset": "p6dx-8zbt", "id_del_proceso": "synthetic-opportunity",
+        "fecha_de_recepcion_de": f"{deadline.isoformat()}T00:00:00.000" if deadline else None,
+        "fecha_de_publicacion_del": f"{published.isoformat()}T00:00:00.000",
+    }
+    transport = FrozenTransport({"p6dx-8zbt": [row]})
+    soql = ("SELECT id_del_proceso WHERE case(fecha_de_recepcion_de IS NULL, "
+            "fecha_de_publicacion_del >= '2026-06-10T00:00:00.000', true, "
+            "fecha_de_recepcion_de >= '2026-09-08T00:00:00.000')")
+    got = transport.query("p6dx-8zbt", soql)
+    expected = (deadline >= date(2026, 9, 8) if deadline else published >= date(2026, 6, 10))
+    assert bool(got) is expected
 
 
 def test_unevaluable_soql_and_unfrozen_datasets_fail_loudly():
@@ -269,7 +289,7 @@ def test_the_design_corpus_is_valid_and_covers_the_twenty_mandatory_items():
     scenarios = document["scenarios"]
     assert sorted(s["mandatory_item"] for s in scenarios) == list(range(1, 21))
     assert {s["status"] for s in scenarios} == {"DESIGN", "READY"}
-    assert sum(s["status"] == "READY" for s in scenarios) == 5
+    assert sum(s["status"] == "READY" for s in scenarios) == 8
 
 
 def test_known_product_defects_are_quarantined_and_never_green():

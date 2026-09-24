@@ -2,7 +2,8 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from datetime import date
+from datetime import date, datetime
+import re
 
 import pytest
 
@@ -39,7 +40,9 @@ def _harness(case, root, monkeypatch):
     return ProductHarness(root, monkeypatch, rows_by_dataset=rows,
                           failures=failures, actor_index=actor_index,
                           frame=case.get("frame", False),
-                          today=date.fromisoformat(case.get("today", "2026-09-08")))
+                          today=date.fromisoformat(case.get("today", "2026-09-08")),
+                          reference_instant=(datetime.fromisoformat(case["reference_instant"].replace("Z", "+00:00"))
+                                             if case.get("reference_instant") else None))
 
 
 def _run(case, tmp_path, monkeypatch):
@@ -66,6 +69,13 @@ def _mutate(turn: Turn, kind: str) -> Turn:
         params.pop("valor_min", None)
     elif kind == "drop_modality":
         params.pop("modalidad_include_procedure_ids", None)
+    elif kind == "drop_range_upper":
+        params.pop("valor_max", None)
+    elif kind == "signed_to_state":
+        params["estado"] = "Firmado"
+    elif kind == "drop_opportunity_deadline":
+        broken.source_calls = [dict(call, soql=_without_opportunity_deadline(call["soql"]))
+                               for call in broken.source_calls]
     elif kind == "timeout_to_zero":
         broken.result.update(outcome="empty", outcome_reason="zero_results", response="0 contratos")
     elif kind == "drop_contract_dataset":
@@ -73,6 +83,13 @@ def _mutate(turn: Turn, kind: str) -> Turn:
     else:
         raise ValueError(f"unaccredited mutant {kind!r}")
     return broken
+
+
+def _without_opportunity_deadline(soql: str) -> str:
+    return re.sub(
+        r" AND case\(fecha_de_recepcion_de IS NULL, .*?fecha_de_recepcion_de >= '[^']+'\)",
+        "", soql,
+    )
 
 
 @pytest.mark.parametrize("case", READY, ids=lambda case: case["id"])
@@ -90,21 +107,30 @@ def test_ready_mutation_is_detected(case, tmp_path, monkeypatch):
     )
 
 
-@pytest.mark.parametrize("scenario_id", ["PC-MONEY-001", "PC-MOD-001", "PC-DUAL-001"])
+@pytest.mark.parametrize("scenario_id", [
+    "PC-MONEY-001", "PC-MOD-001", "PC-DUAL-001", "PC-MONEY-002", "PC-OPP-001", "PC-TIME-001",
+])
 def test_ready_execution_mutant_is_detected(scenario_id, tmp_path, monkeypatch):
     """Mutate the source wire or client call before running the real workflow."""
     case = READY_BY_ID[scenario_id]
     harness = _harness(case, tmp_path / f"mutant-{scenario_id}", monkeypatch)
-    if scenario_id in {"PC-MONEY-001", "PC-MOD-001"}:
+    if scenario_id in {"PC-MONEY-001", "PC-MOD-001", "PC-MONEY-002", "PC-OPP-001", "PC-TIME-001"}:
         original = harness.transport._execute
 
         def ignore_filter(operation, dataset, soql):
             if scenario_id == "PC-MONEY-001":
                 soql = soql.replace(" AND valor_del_contrato >= 500000000", "")
-            else:
+            elif scenario_id == "PC-MOD-001":
                 soql = soql.replace(
                     " AND modalidad_de_contratacion IN ('Licitación pública', 'Licitación pública Obra Publica')", ""
                 )
+            elif scenario_id == "PC-MONEY-002":
+                soql = soql.replace(" AND valor_del_contrato <= 150000000", "")
+            elif scenario_id == "PC-TIME-001":
+                soql = soql.replace(" AND fecha_de_firma >= '2023-01-01'", "")
+                soql = soql.replace(" AND fecha_de_firma <= '2023-12-31'", "")
+            else:
+                soql = _without_opportunity_deadline(soql)
             return original(operation, dataset, soql)
 
         monkeypatch.setattr(harness.transport, "_execute", ignore_filter)
@@ -124,5 +150,8 @@ def test_ready_execution_mutant_is_detected(scenario_id, tmp_path, monkeypatch):
         "PC-MONEY-001": "results.must_exclude_ids",
         "PC-MOD-001": "results.must_exclude_ids",
         "PC-DUAL-001": "datasets_called.includes",
+        "PC-MONEY-002": "results.must_exclude_ids",
+        "PC-OPP-001": "results.must_exclude_ids",
+        "PC-TIME-001": "results.must_exclude_ids",
     }[scenario_id]
     assert any(v.startswith(detector) for v in violations), (scenario_id, violations)

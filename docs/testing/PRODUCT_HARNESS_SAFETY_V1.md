@@ -1,7 +1,7 @@
 # PRODUCT_HARNESS_SAFETY_V1 — Fase 2.5
 
-> **Revalidación F3:** los tests de seguridad del harness se ejecutan en main
-> `04426d19`, con sondas explícitas para Socrata, proveedor LLM y Burr, y
+> **Revalidación F3 continuation:** los tests de seguridad del harness se ejecutan sobre main
+> `0e5c7420`, con sondas explícitas para Socrata, proveedor LLM y Burr, y
 > equivalencia de Text Lineage opt-in. Ver resultados y límites en
 > [TEST_ARCHITECTURE_V1_F3.md](TEST_ARCHITECTURE_V1_F3.md). El estado WAIT que
 > aparece abajo describe la entrega histórica F2.5.
@@ -90,6 +90,10 @@ de modo que ninguna derivación puede abrir un Socrata nuevo.
   `InjectedFailure`, por operación y dataset.
 - Todo SoQL no evaluable o dataset no congelado se registra como error, y el
   harness rompe el turno.
+- La expresión `case()` exacta de O1B se traduce a `CASE WHEN` sólo en el cable
+  SQLite. El ledger conserva el SoQL original. Hypothesis compara fechas con
+  plazo conocido y NULL contra la política civil colombiana; el reloj de F3 se
+  fija únicamente en el harness.
 
 **Límite conocido (L1):** `LIKE` de SQLite ignora mayúsculas en ASCII y el de
 Socrata no. Un predicado sin `upper()` podría pasar aquí y fallar en vivo. El

@@ -9,13 +9,14 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
 from app.config import Settings, get_settings
 from app.core.conversation_store import ConversationStore
 from app.core.orchestrator import SecopalWorkflow
+from app.core.workflow.actions import planning
 from tests.product_contract.assertions import evaluate
 from tests.product_contract.frozen_source import FrozenTransport, InjectedFailure, frozen_client
 
@@ -49,12 +50,22 @@ class ProductHarness:
     actor_index: Path | None = None
     frame: bool = False
     today: date = DEFAULT_TODAY
+    reference_instant: datetime | None = None
     turns: list[Turn] = field(default_factory=list)
     lineage_views: list[Any] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         self.root = Path(self.root)
         mp = self.monkeypatch
+        if self.reference_instant is not None:
+            instant = self.reference_instant
+
+            class FrozenDateTime(datetime):
+                @classmethod
+                def now(cls, tz=None):
+                    return instant.astimezone(tz) if tz is not None else instant.replace(tzinfo=None)
+
+            mp.setattr(planning, "datetime", FrozenDateTime)
         mp.setenv("SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED", "true" if self.frame else "false")
         mp.setenv("SECOPPAL_ACTOR_PROFILE_ENABLED", "true")
         mp.setenv("CONVERSATION_STORE_DIR", str(self.root / "conversations"))

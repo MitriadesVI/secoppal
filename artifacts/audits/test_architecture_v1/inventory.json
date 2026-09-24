@@ -2704,10 +2704,10 @@
    "artifacts": [],
    "blocks_network": false,
    "class_mix": {
-    "ARCHITECTURE": 5
+    "ARCHITECTURE": 6
    },
    "confidence_mix": {
-    "high": 5
+    "high": 6
    },
    "corpora": [],
    "distinct_queries": 2,
@@ -2724,14 +2724,16 @@
     "tests.contracts",
     "tests.product_contract"
    ],
-   "invariants": [],
-   "lines": 54,
+   "invariants": [
+    "INV-PROCESS-STATE-NO-SILENT-LOSS"
+   ],
+   "lines": 62,
    "live_opt_in": false,
    "loads_app_by_path": false,
    "mentions_mutation": false,
    "module_doc_head": "F2 — el registro canónico de invariantes es válido y sus defensas existen.",
    "network_imports": [],
-   "nodeids": 5,
+   "nodeids": 6,
    "parametrized_nodeids": 0,
    "primary_class": "ARCHITECTURE",
    "reads_app_data": false,
@@ -2742,7 +2744,7 @@
    ],
    "static_skips": 0,
    "static_xfails": 0,
-   "test_functions": 5,
+   "test_functions": 6,
    "uses_workflow": false,
    "workflow_nodeids": 0
   },
@@ -2751,10 +2753,10 @@
    "artifacts": [],
    "blocks_network": false,
    "class_mix": {
-    "PRODUCT": 13
+    "PRODUCT": 22
    },
    "confidence_mix": {
-    "high": 13
+    "high": 22
    },
    "corpora": [],
    "distinct_queries": 4,
@@ -2777,14 +2779,14 @@
     "tests.product_contract.scenario_schema"
    ],
    "invariants": [],
-   "lines": 129,
+   "lines": 158,
    "live_opt_in": false,
    "loads_app_by_path": false,
    "mentions_mutation": true,
    "module_doc_head": "F3 gate: only accredited READY scenarios, each with a killed seam mutant.",
    "network_imports": [],
-   "nodeids": 13,
-   "parametrized_nodeids": 13,
+   "nodeids": 22,
+   "parametrized_nodeids": 22,
    "primary_class": "PRODUCT",
    "reads_app_data": false,
    "runtime_skip_functions": [],
@@ -2793,17 +2795,17 @@
    "static_xfails": 0,
    "test_functions": 3,
    "uses_workflow": false,
-   "workflow_nodeids": 13
+   "workflow_nodeids": 22
   },
   "tests/product_contract/test_product_harness_safety.py": {
    "adr": [],
    "artifacts": [],
    "blocks_network": true,
    "class_mix": {
-    "ARCHITECTURE": 23
+    "ARCHITECTURE": 24
    },
    "confidence_mix": {
-    "high": 23
+    "high": 24
    },
    "corpora": [],
    "distinct_queries": 12,
@@ -2815,7 +2817,7 @@
     "host"
    ],
    "hypothesis": true,
-   "hypothesis_functions": 1,
+   "hypothesis_functions": 2,
    "imports_app": [
     "app.config",
     "app.core.actor_name",
@@ -2833,7 +2835,7 @@
     "tests.product_contract.harness"
    ],
    "invariants": [],
-   "lines": 283,
+   "lines": 303,
    "live_opt_in": false,
    "loads_app_by_path": false,
    "mentions_mutation": true,
@@ -2841,7 +2843,7 @@
    "network_imports": [
     "socket"
    ],
-   "nodeids": 23,
+   "nodeids": 24,
    "parametrized_nodeids": 3,
    "primary_class": "ARCHITECTURE",
    "reads_app_data": false,
@@ -2849,7 +2851,7 @@
    "severity_tokens": [],
    "static_skips": 0,
    "static_xfails": 0,
-   "test_functions": 21,
+   "test_functions": 22,
    "uses_workflow": true,
    "workflow_nodeids": 5
   },
@@ -14203,6 +14205,50 @@
    "static_skips": 0,
    "static_xfails": 0,
    "test_functions": 27,
+   "uses_workflow": false,
+   "workflow_nodeids": 0
+  },
+  "tests/test_gazetteer_source_binding_audit_schema3.py": {
+   "adr": [],
+   "artifacts": [],
+   "blocks_network": false,
+   "class_mix": {
+    "AUDIT_HISTORICAL": 23
+   },
+   "confidence_mix": {
+    "high": 23
+   },
+   "corpora": [],
+   "distinct_queries": 8,
+   "duration_hist_s": 0,
+   "family": "geo_territory",
+   "fixtures_top": [
+    "tmp_path_factory",
+    "admissibility"
+   ],
+   "hypothesis": false,
+   "hypothesis_functions": 0,
+   "imports_app": [
+    "app.core.buyer_source_names"
+   ],
+   "imports_scripts": [],
+   "imports_tests_helpers": [],
+   "invariants": [],
+   "lines": 253,
+   "live_opt_in": false,
+   "loads_app_by_path": true,
+   "mentions_mutation": false,
+   "module_doc_head": "Gazetteer-Wide Schema-3-aware: la adjudicación, gate por gate.",
+   "network_imports": [],
+   "nodeids": 23,
+   "parametrized_nodeids": 2,
+   "primary_class": "AUDIT_HISTORICAL",
+   "reads_app_data": true,
+   "runtime_skip_functions": [],
+   "severity_tokens": [],
+   "static_skips": 0,
+   "static_xfails": 0,
+   "test_functions": 22,
    "uses_workflow": false,
    "workflow_nodeids": 0
   },
@@ -27996,6 +28042,9 @@
   "INV-PII": [
    "tests/test_actor_profile.py"
   ],
+  "INV-PROCESS-STATE-NO-SILENT-LOSS": [
+   "tests/contracts/test_invariant_registry.py"
+  ],
   "INV-PROVENANCE-SEPARATION": [
    "tests/test_actor_identity.py"
   ],
@@ -28089,23 +28138,23 @@
  "summary": {
   "class_by_file": {
    "ARCHITECTURE": 14,
-   "AUDIT_HISTORICAL": 88,
+   "AUDIT_HISTORICAL": 89,
    "DOMAIN_INVARIANT": 336,
    "PRODUCT": 53,
    "PROPERTY": 10,
    "UNKNOWN": 5
   },
   "class_by_nodeid": {
-   "ARCHITECTURE": 228,
-   "AUDIT_HISTORICAL": 2214,
+   "ARCHITECTURE": 230,
+   "AUDIT_HISTORICAL": 2237,
    "DOMAIN_INVARIANT": 12320,
-   "PRODUCT": 1194,
+   "PRODUCT": 1203,
    "PROPERTY": 186,
    "UNKNOWN": 45
   },
   "collect_errors": [],
   "confidence_by_nodeid": {
-   "high": 1435,
+   "high": 1469,
    "low": 2166,
    "medium": 12541,
    "none": 45
@@ -28120,7 +28169,7 @@
    "entity_profile": 33,
    "entity_profile_frame": 35,
    "followup_conversation": 27,
-   "geo_territory": 23,
+   "geo_territory": 24,
    "modality": 16,
    "money_value": 17,
    "negation_control": 12,
@@ -28144,13 +28193,13 @@
    "entity_profile": 862,
    "entity_profile_frame": 626,
    "followup_conversation": 322,
-   "geo_territory": 535,
+   "geo_territory": 558,
    "modality": 3371,
    "money_value": 473,
    "negation_control": 429,
    "notify": 832,
    "other": 1174,
-   "product_contract": 41,
+   "product_contract": 52,
    "query_frame_parsing": 994,
    "radar": 536,
    "ranking_results_presentation": 683,
@@ -28158,7 +28207,7 @@
    "time_state_opportunity": 222,
    "truth_layer": 791
   },
-  "head": "04426d19aec5cad104f6e4cb973d4fd84b7eaa34",
+  "head": "9de40664a6871b486e0c93b12905b1801a7db506",
   "invariant_mentions_in_tests": {
    "INV-001": 1,
    "INV-002": 1,
@@ -28200,6 +28249,7 @@
    "INV-ORDERING-FOLLOWUP-PRESERVES-UNIVERSE": 1,
    "INV-PARTIAL": 2,
    "INV-PII": 1,
+   "INV-PROCESS-STATE-NO-SILENT-LOSS": 1,
    "INV-PROVENANCE-SEPARATION": 1,
    "INV-PURE": 1,
    "INV-PURE-ORDERING-PRESERVES-SOURCE-UNIVERSE": 2,
@@ -28237,10 +28287,10 @@
   },
   "live_opt_in_nodeids": 22,
   "markers": {
-   "hypothesis": 232,
-   "parametrize": 10336,
+   "hypothesis": 233,
+   "parametrize": 10347,
    "skip": 6,
-   "skipif": 6,
+   "skipif": 8,
    "xfail": 23
   },
   "pytest": "9.0.2",
@@ -28248,8 +28298,8 @@
   "static_skips": 7,
   "static_xfails": 23,
   "static_xfails_strict": 13,
-  "total_nodeids": 16187,
-  "total_test_files": 506,
+  "total_nodeids": 16221,
+  "total_test_files": 507,
   "worktree_dirty_at_collection": true
  }
 }

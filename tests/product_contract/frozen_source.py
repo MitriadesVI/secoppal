@@ -27,6 +27,10 @@ _NUMERIC_COLUMN = re.compile(r"^(valor_|precio_)")
 _CLAUSE = re.compile(r"\b(WHERE|GROUP\s+BY|HAVING|ORDER\s+BY|LIMIT|OFFSET)\b", re.IGNORECASE)
 _STRING = re.compile(r"'(?:[^']|'')*'")
 _CAST = re.compile(r"::(number|text|floating_timestamp|double)\b", re.IGNORECASE)
+_OPPORTUNITY_CASE = re.compile(
+    r"case\(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= ('[^']+'), "
+    r"true, fecha_de_recepcion_de >= ('[^']+')\)", re.IGNORECASE,
+)
 
 
 class FrozenSourceError(AssertionError):
@@ -54,7 +58,18 @@ def soql_to_sql(soql: str, table: str) -> str:
     masked = _STRING.sub(lambda m: "'" + "_" * (len(m.group()) - 2) + "'", soql)
     match = _CLAUSE.search(masked)
     position = match.start() if match else len(soql)
-    return _CAST.sub("", f"{soql[:position].rstrip()} FROM {table} {soql[position:]}".strip())
+    sql = f"{soql[:position].rstrip()} FROM {table} {soql[position:]}".strip()
+    # Socrata's four-argument case(predicate, value, true, fallback) is not
+    # SQLite syntax. Translate only the exact O1B predicate; retain raw SoQL
+    # in the call ledger so assertions still inspect what runtime emitted.
+    sql = _OPPORTUNITY_CASE.sub(
+        lambda match: (
+            "(CASE WHEN fecha_de_recepcion_de IS NULL THEN "
+            f"fecha_de_publicacion_del >= {match.group(1)} ELSE "
+            f"fecha_de_recepcion_de >= {match.group(2)} END)"
+        ), sql,
+    )
+    return _CAST.sub("", sql)
 
 
 def load_rows_jsonl(path: Path) -> dict[str, list[dict]]:
