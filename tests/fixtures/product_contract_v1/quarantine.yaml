@@ -1,0 +1,98 @@
+# Cuarentena del Product Contract V1 (decisión del asesor, 2026-09-12).
+#
+# OPEN_PRODUCT_GAP: el producto está mal. Backlog con reproducción RED; nunca
+#   cuenta como contrato verde. Se promueve a scenarios.yaml sólo cuando la
+#   conducta se arregle (sprint con autorización de runtime).
+# HARNESS_DEBT: el test está incompleto, el producto no se acusa. Se repara o
+#   se mueve a audit; no se conserva como xfail no estricto indefinido.
+version: "1.0"
+open_product_gaps:
+  - id: OPG-ACTOR-001
+    status: OPEN_PRODUCT_GAP
+    title: "Actor + región explícita + comprador explícito termina en CANDIDATES"
+    observed: "La consulta queda en candidatos en vez de resolver actor y comprador (preexistente desde f9cb8c9)."
+    expected: "Actor, región y comprador coexisten como roles distintos y la consulta resuelve."
+    reproduction:
+      kind: xfail
+      nodeid: tests/test_actor_hardening_v2_1_remediation.py::test_actor_region_and_buyer_together_still_resolve
+    invariants: [INV-GEO-BARE-GEOGRAPHY-PRECEDENCE, INV-BUYER-NOT-ACTOR]
+    promotes_to: null
+  - id: OPG-CTRL-001
+    status: OPEN_PRODUCT_GAP
+    title: "Un change_scope que trae un tema nuevo pierde el tema"
+    observed: "La mutación de change_scope descarta el tema genuinamente nuevo del follow-up."
+    expected: "El tema nuevo del turno explícito prevalece sobre el heredado."
+    reproduction:
+      kind: xfail
+      nodeid: tests/test_control_language.py::test_scope_change_carrying_a_new_topic_keeps_that_topic
+    invariants: [INV-CONV-EXPLICIT-TURN-PARAMS-PREVAIL]
+    promotes_to: null
+  - id: OPG-BUYER-001
+    status: OPEN_PRODUCT_GAP
+    title: "SENA Chocó y SENA Casanare resuelven a SENA Secretaría General"
+    observed: "El alias 'sena' gana antes que la regional nombrada."
+    expected: "La regional nombrada resuelve a su propia unidad compradora."
+    reproduction:
+      kind: xfail_strict
+      nodeid: tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves
+    invariants: [INV-SEM-NO-SILENT-FALLBACK]
+    promotes_to: null
+  - id: OPG-BUYER-002
+    status: OPEN_PRODUCT_GAP
+    title: "El alias 'hospital municipal' de otra entidad roba 'hospital municipal de acacias'"
+    observed: "Un alias genérico existente gana sobre la entidad nombrada completa."
+    expected: "La mención completa resuelve a su dueño o falla cerrado."
+    reproduction:
+      kind: xfail
+      nodeid: tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves
+    invariants: [INV-SEM-NO-SILENT-FALLBACK]
+    promotes_to: null
+  - id: OPG-TIME-001
+    status: OPEN_PRODUCT_GAP
+    title: "OPP-003: follow-up de oportunidades no hereda el tema"
+    observed: "'alguno en atlántico' tras una búsqueda de oportunidades pierde el tema."
+    expected: "El follow-up territorial hereda el tema de la oportunidad previa."
+    reproduction:
+      kind: xfail
+      nodeid: tests/test_opportunity_queries.py::test_opportunity_followup_alguno_en_atlantico_inherits_topic
+    invariants: [INV-CONV-EXPLICIT-TURN-PARAMS-PREVAIL]
+    promotes_to: null
+  - id: OPG-LOOKUP-001
+    status: OPEN_PRODUCT_GAP
+    title: "REFERENCE-001: búsqueda exacta por referencia de proceso"
+    observed: "Una referencia de proceso no se trata como lookup exacto."
+    expected: "La referencia exacta se busca como identificador, no como tema."
+    reproduction:
+      kind: xfail
+      nodeid: tests/test_opportunity_queries.py::test_dicar_reference_query
+    invariants: [INV-LOOKUP-DIRECT-ID-IS-NOT-TOPIC-SEARCH]
+    promotes_to: null
+harness_debt:
+  - id: HD-BUYER-001
+    status: HARNESS_DEBT
+    title: "Buyer-Actor test_seeds usa dialecto SQLite anterior a Contract Universe V1.1"
+    nodeids:
+      - tests/test_buyer_actor_role_arbitration_v1.py::test_seeds
+    decision: REPAIR_MOCKS
+    options: [REPAIR_MOCKS, MOVE_TO_AUDIT]
+    rule: "El SoQL vigente usa date_extract_y; source_for sólo registra date_trunc_y. Veinte parametrizaciones fallan antes de producir source_rows. Reparación fuera del scope F3."
+  - id: HD-DEMO-001
+    status: HARNESS_DEBT
+    title: "Seis xfail(strict=False) de los demos: 'Observer 2.0 signals requieren mock de aggregate() adicional'"
+    nodeids:
+      - tests/test_demo_alcalde.py::test_turno2_contiene_insights_entity_concentration
+      - tests/test_demo_alcalde.py::test_turno2_contiene_insights_modality_dominance
+      - tests/test_demo_proponente.py::test_turno1_insights_modality_dominance
+      - tests/test_demo_proponente.py::test_turno1_insights_entity_concentration
+      - tests/test_demo_veedor.py::test_turno1_insights_entity_concentration
+      - tests/test_demo_veedor.py::test_turno1_insights_modality_dominance
+    decision: UNDECIDED
+    options: [REPAIR_MOCKS, MOVE_TO_AUDIT]
+    rule: "No se conservan como xfail no estricto indefinido (F6)."
+  - id: HD-OPP-001
+    status: HARNESS_DEBT
+    title: "test_opportunity_followup_soql parsea 'alguno en atlantico' aislado, sin contexto de follow-up"
+    nodeids: [tests/test_opportunity_queries.py::test_opportunity_followup_soql]
+    decision: UNDECIDED
+    options: [REPAIR_MOCKS, MOVE_TO_AUDIT]
+    rule: "La conducta real queda cubierta por OPG-TIME-001; este test mide el harness equivocado."

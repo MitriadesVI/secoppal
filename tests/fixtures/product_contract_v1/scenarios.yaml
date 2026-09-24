@@ -1,0 +1,392 @@
+# Product Contract V1 — primer lote de 20 (plan §14.1).
+# Sólo READY entra al gate; DESIGN conserva preguntas y valores por acreditar.
+# TBD_RUNTIME = valor canónico a tomar del runtime acreditado; nunca inventarlo.
+# Valores concretos citados aquí ya son oráculo en un test del gate (ver mine_from).
+version: "1.0-design"
+scenarios:
+  - id: PC-AUTH-001
+    title: "Alcaldía de Barranquilla en Entity Profile no se interpreta como actor persona"
+    status: DESIGN
+    severity: critical
+    family: authority_arbitration
+    mandatory_item: 1
+    red_first: true
+    source: {kind: incident, reference: "TEST_ARCHITECTURE_V1 H1; Buyer-Actor V1 47e46a1 (ruta search)"}
+    invariants: [INV-BUYER-NOT-ACTOR, INV-ACTOR-NAME-NO-GUESS]
+    fixtures: {actor_pack: incident_barranquilla_collisions, source_rows: TBD_RUNTIME}
+    turns:
+      - text: "analiza la alcaldía de barranquilla"
+        expect:
+          route: entity_profile
+          forbidden_routes: [actor_profile]
+          params: {entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"}
+          absent_params: [actor_scope, actor_pending, contratista]
+          source_calls: {min: 1}
+          response: {not_contains: [TBD_RUNTIME]}
+    mine_from:
+      - tests/test_buyer_actor_role_arbitration_v1.py::test_seeds
+      - tests/test_entity_profile_workflow.py::test_integration_preserves_explicit_intent_precedence
+    open_questions:
+      - "Forma exacta de las colisiones del incidente: derivar del índice real (pack minimizado, §9.3)."
+      - "El canónico citado está acreditado en la ruta search; reverificar en la ruta entity_profile."
+
+  - id: PC-AUTH-002
+    title: "Comprador explícito con proveedores homónimos no se vuelve actor"
+    status: DESIGN
+    severity: critical
+    family: authority_arbitration
+    mandatory_item: 2
+    source: {kind: audit, reference: "Buyer-Actor Role Arbitration V1"}
+    invariants: [INV-BUYER-NOT-ACTOR]
+    fixtures: {actor_pack: buyer_mention_homonyms_x3, source_rows: barranquilla_contracts_with_decoys}
+    turns:
+      - text: "que ha contratado alcaldia de barranquilla por mas de 2000 millones"
+        expect:
+          params:
+            dataset: contratos
+            entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+            valor_min: 2000000000
+          absent_params: [actor_scope, actor_pending, contratista]
+          datasets_called: {only: [jbjy-vk9h]}
+          source_calls: {min: 1}
+    mine_from: [tests/test_buyer_actor_role_arbitration_v1.py::test_seeds]
+
+  - id: PC-AUTH-003
+    title: "Dos personas con el mismo nombre: candidatos, nunca identidad elegida"
+    status: READY
+    severity: critical
+    family: authority_arbitration
+    mandatory_item: 3
+    source: {kind: dogfood, reference: "Beta entity/actor conversation"}
+    invariants: [INV-ACTOR-NAME-NO-GUESS]
+    fixtures: {actor_pack: actor_alias_rows.jsonl}
+    turns:
+      - text: "contratos del proveedor lucia margarita quintero sintetica"
+        expect:
+          needs_clarification: true
+          actor_unresolved: true
+          params: {actor_resolution_status: AMBIGUOUS}
+          absent_params: [contratista]
+          source_calls: {exact: 0}
+          lineage: {raw_text: "contratos del proveedor lucia margarita quintero sintetica"}
+    mutation:
+      law: INV-ACTOR-NAME-NO-GUESS
+      kind: select_top_actor
+      expected_failure: actor_unresolved
+    mine_from: [tests/test_beta_entity_actor_conversation.py]
+
+  - id: PC-AUTH-004
+    title: "El mejor candidato difuso nunca es autoridad de identidad"
+    status: DESIGN
+    severity: critical
+    family: authority_arbitration
+    mandatory_item: 4
+    red_first: true
+    source: {kind: dogfood, reference: "AP3-F R7 LMP (hoy sólo con índice real, siempre en skip)"}
+    invariants: [INV-ACTOR-NAME-NO-GUESS, INV-ACTOR-COMPLETE-MENTION]
+    fixtures: {actor_pack: fuzzy_top_candidate_misspelling}
+    turns:
+      - text: TBD_RUNTIME
+        expect:
+          absent_params: [actor_scope, contratista]
+          source_calls: {exact: 0}
+    mine_from: [tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority]
+
+  - id: PC-FU-001
+    title: "Cambio de actor tras selección conserva una sola identidad y el comprador"
+    status: DESIGN
+    severity: critical
+    family: followup_scope
+    mandatory_item: 5
+    source: {kind: audit, reference: "Actor Dogfood Hardening V2 (A) / V2.1"}
+    invariants: [INV-ACTOR-SINGLE-IDENTITY]
+    fixtures: {actor_pack: prefix_family_pending, source_rows: TBD_RUNTIME}
+    turns:
+      - text: "contratos del proveedor beatriz solano con alcaldia de barranquilla"
+        expect: {needs_clarification: true, source_calls: {exact: 0}}
+      - text: TBD_RUNTIME
+        run_kwargs: {actor_candidate_selection: TBD_RUNTIME}
+        expect:
+          params: {entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"}
+          followup: {preserves: [entidad_resolved]}
+    mine_from:
+      - tests/test_actor_dogfood_hardening_v2.py::test_split_brain_frame_fails_closed_before_soql
+      - tests/test_actor_pending_document_selection.py
+
+  - id: PC-FU-002
+    title: "Cambio de comprador en Entity Profile no hereda predicados del anterior"
+    status: DESIGN
+    severity: critical
+    family: followup_scope
+    mandatory_item: 6
+    source: {kind: dogfood, reference: "Beta entity/actor conversation (SqlProfileClient)"}
+    invariants: [INV-CONV-EXPLICIT-TURN-PARAMS-PREVAIL, INV-BUYER-NOT-ACTOR]
+    fixtures: {source_rows: galapa_baranoa_profiles}
+    turns:
+      - text: "analiza la alcaldia de galapa"
+        expect: {route: entity_profile}
+      - text: "analiza la alcaldia de baranoa"
+        expect:
+          route: entity_profile
+          params: {entidad_resolved: TBD_RUNTIME}
+          absent_params: [actor_scope, contratista]
+    mine_from: [tests/test_beta_entity_actor_conversation.py]
+
+  - id: PC-MONEY-001
+    title: "\"Más de\" fija sólo el mínimo y no inventa máximo"
+    status: READY
+    severity: critical
+    family: money
+    mandatory_item: 7
+    source: {kind: feedback, reference: "Money Polarity V2 (ADR-093); 18 pedidos vs 2.766 entregados"}
+    invariants: [INV-MONEY-POLARITY-PRESERVES-INTENT]
+    fixtures: {source_rows: source_rows/harness_canary.jsonl}
+    turns:
+      - text: "contratos de mantenimiento vial de más de 500 millones"
+        expect:
+          params: {valor_min: 500000000}
+          absent_params: [valor_max]
+          source_calls: {min: 1}
+          datasets_called: {only: [jbjy-vk9h]}
+          results: {must_include_ids: [PC-CANARY-001], must_exclude_ids: [PC-CANARY-002, PC-DECOY-001]}
+          lineage: {raw_text: "contratos de mantenimiento vial de más de 500 millones"}
+    mutation:
+      law: INV-MONEY-POLARITY-PRESERVES-INTENT
+      kind: drop_money_floor
+      expected_failure: params.valor_min
+    mine_from: [tests/test_money_polarity_v2.py::test_upper_cannot_produce_lower]
+
+  - id: PC-MONEY-002
+    title: "Rango monetario atómico; contradicción no ejecuta"
+    status: DESIGN
+    severity: high
+    family: money
+    mandatory_item: 8
+    source: {kind: audit, reference: "ADR-063 / money_range_atomicity"}
+    invariants: [INV-MONEY-RANGE-ATOMIC]
+    fixtures: {source_rows: TBD_RUNTIME}
+    turns:
+      - text: "contratos de obra entre 100 y 150 millones"
+        expect: {params: {valor_min: 100000000, valor_max: 150000000}}
+      - text: "contratos de obra de más de 500 y menos de 100 millones"
+        chat_id: contradiction
+        expect: {source_calls: {exact: 0}}
+    mine_from: [tests/test_money_range_atomicity.py::test_partial_range_blocks_instead_of_degrading]
+
+  - id: PC-DS-001
+    title: "Pivote a solo contratos conserva la entidad del perfil"
+    status: DESIGN
+    severity: high
+    family: followup_scope
+    mandatory_item: 9
+    source: {kind: dogfood, reference: "Beta entity/actor conversation (procesos/contratos)"}
+    invariants: [INV-CONV-EXPLICIT-TURN-PARAMS-PREVAIL]
+    fixtures: {source_rows: galapa_baranoa_profiles}
+    turns:
+      - text: "analiza la alcaldia de galapa"
+        expect: {route: entity_profile}
+      - text: "solo contratos"
+        expect:
+          datasets_called: {only: [jbjy-vk9h]}
+          followup: {preserves: [entidad_resolved]}
+    mine_from: [tests/test_beta_entity_actor_conversation.py, tests/test_frame_leak_canary.py::test_canary_dataset_pivot]
+
+  - id: PC-EP-001
+    title: "Proveedores del perfil acotados al comprador; placeholders no son proveedores"
+    status: DESIGN
+    severity: high
+    family: authority_arbitration
+    mandatory_item: 10
+    source: {kind: dogfood, reference: "Entity Profile supplier placeholders"}
+    invariants: [INV-ENTITY-RENDERED-SCOPE-EQUALS-EXECUTED, INV-BUYER-NOT-ACTOR]
+    fixtures: {source_rows: TBD_RUNTIME}
+    turns:
+      - text: "analiza la alcaldia de baranoa"
+        expect: {route: entity_profile}
+      - text: TBD_RUNTIME
+        expect:
+          followup: {preserves: [entidad_resolved]}
+          response: {not_contains: [TBD_RUNTIME]}
+    mine_from: [tests/test_entity_profile_supplier_placeholders.py]
+
+  - id: PC-MOD-001
+    title: "Licitación pública entra como modalidad, no como tema"
+    status: READY
+    severity: high
+    family: modality_control
+    mandatory_item: 11
+    source: {kind: audit, reference: "ADR-054 modality_resolver_corpus_v1"}
+    invariants: [INV-SEM-STRUCTURED-DIMENSION-NOT-TOPIC]
+    fixtures: {source_rows: source_rows/f3_processes.jsonl}
+    turns:
+      - text: "licitaciones públicas de mantenimiento vial en 2025"
+        expect:
+          params: {modalidad_include_procedure_ids: [licitacion_publica, licitacion_publica_obra]}
+          absent_params: [modalidad, modalidad_exclude_procedure_ids]
+          datasets_called: {only: [p6dx-8zbt]}
+          source_calls: {min: 1}
+          soql: {contains: ["modalidad_de_contratacion IN ('Licitación pública', 'Licitación pública Obra Publica')"], not_contains: ["LICITACION%"]}
+          results: {must_include_ids: [PC-PROC-MOD-001], must_exclude_ids: [PC-PROC-MOD-DECOY]}
+    mutation:
+      law: INV-SEM-STRUCTURED-DIMENSION-NOT-TOPIC
+      kind: drop_modality
+      expected_failure: params.modalidad_include_procedure_ids
+    mine_from: [tests/test_modality_resolver.py]
+
+  - id: PC-MOD-002
+    title: "Excluir contratación directa es null-safe"
+    status: DESIGN
+    severity: high
+    family: modality_control
+    mandatory_item: 12
+    source: {kind: audit, reference: "ADR-064; NOT LIKE no es null-safe; 'No Definido' no es NULL"}
+    invariants: [INV-NEG-NO-SILENT-DROP]
+    fixtures: {source_rows: modality_with_null_and_no_definido}
+    turns:
+      - text: "contratos de obra que no sean contratación directa"
+        expect:
+          results: {must_include_ids: [TBD_RUNTIME], must_exclude_ids: [TBD_RUNTIME]}
+    mine_from: [tests/test_safe_negation_policies.py]
+
+  - id: PC-NEG-001
+    title: "Negación de objeto se conserva como dimensión y no se descarta"
+    status: DESIGN
+    severity: high
+    family: modality_control
+    mandatory_item: 13
+    source: {kind: audit, reference: "negation_focal_v1 / ADR-064"}
+    invariants: [INV-NEG-NO-SILENT-DROP, INV-SEM-NO-SILENT-FALLBACK]
+    fixtures: {source_rows: TBD_RUNTIME}
+    turns:
+      - text: "contratos de alimentación que no sean de refrigerios"
+        expect:
+          results: {must_exclude_ids: [TBD_RUNTIME]}
+    mine_from: [tests/test_object_negation.py::test_object_only_exclusion_is_a_real_retrieval_predicate]
+
+  - id: PC-FAIL-001
+    title: "Timeout de la fuente no se presenta como cero resultados"
+    status: READY
+    severity: critical
+    family: failure_source
+    mandatory_item: 14
+    source: {kind: incident, reference: "ADR-039; timeout_transparency"}
+    invariants: [INV-SOURCE-FAILURE-IS-NOT-ABSENCE]
+    fixtures: {source_rows: source_rows/harness_canary.jsonl, failures: [{operation: query, exception: TimeoutError}]}
+    turns:
+      - text: "contratos de mantenimiento vial en 2026"
+        expect:
+          outcome: error
+          outcome_reason: fetch_timeout
+          response: {not_contains: ["0 contratos"]}
+          source_calls: {min: 1}
+    mutation:
+      law: INV-SOURCE-FAILURE-IS-NOT-ABSENCE
+      kind: timeout_to_zero
+      expected_failure: outcome
+    mine_from: [tests/test_timeout_transparency.py::test_timeout_does_not_claim_zero_results]
+
+  - id: PC-FAIL-002
+    title: "Fuente no disponible no se presenta como vacío"
+    status: DESIGN
+    severity: critical
+    family: failure_source
+    mandatory_item: 15
+    source: {kind: feedback, reference: "outcome.py SOURCE_UNAVAILABLE"}
+    invariants: [INV-SOURCE-FAILURE-IS-NOT-ABSENCE]
+    fixtures: {source_rows: TBD_RUNTIME, failures: [{operation: null, exception: TBD_RUNTIME}]}
+    turns:
+      - text: "contratos de mantenimiento vial en 2026"
+        expect:
+          outcome: error
+          outcome_reason: source_unavailable
+    mine_from: [tests/test_direct_lookup_entity_scope.py::test_reference_all_sources_fail_is_source_unavailable]
+
+  - id: PC-OPP-001
+    title: "Oportunidad vigente por fecha civil colombiana sin certificar apertura"
+    status: DESIGN
+    severity: high
+    family: opportunity_truth
+    mandatory_item: 16
+    source: {kind: audit, reference: "ADR-056/058 O1B"}
+    invariants: [INV-TIME-OPPORTUNITY-VIGENCIA-NOT-CERTIFICATION]
+    today: "2026-09-08"
+    fixtures: {source_rows: processes_deadline_today_future_past_null}
+    turns:
+      - text: "procesos abiertos de mantenimiento vial"
+        expect:
+          datasets_called: {only: [p6dx-8zbt]}
+          results: {must_exclude_ids: [TBD_RUNTIME]}
+    mine_from: [tests/test_current_opportunity_retrieval.py::test_red_5_known_expired_deadline_is_excluded]
+
+  - id: PC-TIME-001
+    title: "Histórico firmado filtra por fecha de firma, no por estado"
+    status: DESIGN
+    severity: high
+    family: opportunity_truth
+    mandatory_item: 17
+    source: {kind: audit, reference: "ADR-026 / ADR-065"}
+    invariants: [INV-STATE-FIRMADO-IS-NOT-A-STATE]
+    fixtures: {source_rows: TBD_RUNTIME}
+    turns:
+      - text: "contratos firmados en 2023 por la alcaldia de baranoa"
+        expect:
+          params: {dataset: contratos}
+          absent_params: [estado]
+    mine_from: [tests/test_firmado_signed_semantics.py::test_firmados_en_mayo_no_aplica_estado_filtra_fecha]
+
+  - id: PC-PAG-001
+    title: "Paginación tras refinamiento pertenece al universo refinado"
+    status: DESIGN
+    severity: high
+    family: followup_scope
+    mandatory_item: 18
+    source: {kind: dogfood, reference: "SEARCH-SH1 R4"}
+    invariants: [INV-PAG-FILTER-MUTATION-INVALIDATES-PAGINATION]
+    fixtures: {source_rows: TBD_RUNTIME}
+    turns:
+      - text: "contratos de mantenimiento vial en 2026"
+        expect: {source_calls: {min: 1}}
+      - text: "de más de 500 millones"
+        expect: {params: {valor_min: 500000000}}
+      - text: "muéstrame más"
+        expect:
+          followup: {preserves: [valor_min]}
+          results: {must_exclude_ids: [TBD_RUNTIME]}
+    mine_from: [tests/test_search_sh1_dogfood_regressions.py::test_r4_pagination_after_money_uses_the_filtered_universe]
+
+  - id: PC-DUAL-001
+    title: "Procesos y contratos se ejecutan como universos separados"
+    status: READY
+    severity: high
+    family: dual_dataset
+    mandatory_item: 19
+    source: {kind: audit, reference: "ADR-038"}
+    invariants: [INV-DUAL-DATASET-SEPARATE-UNIVERSES]
+    fixtures: {source_rows: [source_rows/harness_canary.jsonl, source_rows/f3_processes.jsonl]}
+    turns:
+      - text: "procesos y contratos de mantenimiento vial en 2026"
+        expect:
+          params: {dataset_scope: [procesos, contratos]}
+          datasets_called: {includes: [p6dx-8zbt, jbjy-vk9h]}
+          source_calls: {min: 2}
+    mutation:
+      law: INV-DUAL-DATASET-SEPARATE-UNIVERSES
+      kind: drop_contract_dataset
+      expected_failure: datasets_called.includes
+    mine_from: [tests/test_dual_dataset_execution.py::test_build_groups_runs_both_independently]
+
+  - id: PC-LOOKUP-001
+    title: "Identificador SECOP va a lookup directo, no a búsqueda temática"
+    status: DESIGN
+    severity: high
+    family: search
+    mandatory_item: 20
+    source: {kind: audit, reference: "direct_lookup / ADR-071"}
+    invariants: [INV-LOOKUP-DIRECT-ID-IS-NOT-TOPIC-SEARCH]
+    fixtures: {source_rows: TBD_RUNTIME}
+    turns:
+      - text: "CO1.PCCNTR.1234567"
+        expect:
+          route_reason: TBD_RUNTIME
+          absent_params: [objeto]
+    mine_from: [tests/test_direct_lookup.py::TestDetection::test_detect_id_co1_pccntr]

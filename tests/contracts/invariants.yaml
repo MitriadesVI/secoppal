@@ -1,0 +1,539 @@
+# Registro canónico de invariantes — TEST_ARCHITECTURE_V1 F2.
+#
+# Espacio de nombres: INV-<DOMAIN>-<SLUG>. Los IDs heredados (INV-7, INV-001,
+# INV-W16, INV-NAME-NO-GUESS…) no se reescriben en su origen: se mapean aquí con
+# `legacy_ids` {id, scope}, porque el mismo literal significa cosas distintas en
+# documentos distintos. Espacios locales no mapeados: docs/testing/INVARIANT_REGISTRY_V1.md.
+#
+# primary_tests: la defensa que debe fallar si el invariante se rompe.
+# supporting_tests: defensas adicionales; ninguna se retira sin TEST_RETIREMENT_PROOF.
+# product_cases: escenarios de tests/fixtures/product_contract_v1/scenarios.yaml.
+# re_home_before_f6: el primario vive en una suite con nombre histórico; F6 no puede
+#   moverla a audit sin antes darle un hogar vigente a esa defensa.
+version: "1.0"
+invariants:
+
+  # ── P0 ────────────────────────────────────────────────────────────────
+  INV-ACTOR-NAME-NO-GUESS:
+    title: "Un nombre nunca se convierte en identidad sin autoridad exacta o selección del usuario"
+    description: "Recuperación difusa, ambigüedad o top candidate no deciden identidad; el nombre no resuelto no ejecuta."
+    criticality: P0
+    owner: actor
+    authority: [ADR-060, docs/audits/2026-08-26_HCA_R7_ACTOR_HYGIENE.md]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_actor_routing.py::test_inv_name_no_guess_a_named_actor_is_declared_never_resolved
+      - tests/test_actor_routing.py::test_inv_name_no_guess_an_unresolved_name_never_executes
+      - tests/test_actor_name_resolver.py::test_frequency_heavy_exact_ambiguity_never_selects_an_identity
+    supporting_tests:
+      - tests/test_actor_resolution_orchestration.py::test_full_fuzzy_candidates_are_pending_and_not_authoritative
+      - tests/test_actor_exact_prefix_properties.py::test_fuzzy_only_aliases_do_not_change_exact_authority
+      - tests/test_actor_conversation.py::test_r7_ambiguous_pending_reply_never_selects_or_mutates_frame
+    product_cases: [PC-AUTH-003, PC-AUTH-004]
+    legacy_ids:
+      - {id: INV-NAME-NO-GUESS, scope: "ADR-060 / ACTOR_PROFILE_V1"}
+      - {id: INV-FUZZY-NEVER-DECIDES-IDENTITY, scope: "HCA_R7_ACTOR_HYGIENE"}
+      - {id: INV-NAME-FUZZY-NOT-AUTHORITY, scope: "ACTOR_NAME_RESOLUTION_BENCHMARK"}
+      - {id: INV-NAME-AMBIGUOUS, scope: "ACTOR_NAME_RESOLUTION_BENCHMARK"}
+    notes: "El único test con índice real (test_actor_conversation_dogfood R7) está siempre en skip (H2)."
+
+  INV-ACTOR-ID-TYPE:
+    title: "Mismo número con distinto tipo documental no es el mismo actor"
+    description: "La identidad es (tipo, número); normalizar nunca fusiona tipos declarados distintos."
+    criticality: P0
+    owner: actor
+    authority: [ADR-060]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_actor_identity.py::test_inv_id_type_same_number_with_different_types_are_different_actors
+      - tests/test_actor_identity.py::test_inv_id_type_declared_types_do_not_merge_through_normalization
+    supporting_tests:
+      - tests/test_actor_routing.py::test_inv_id_type_the_same_number_declared_differently_is_not_one_actor
+      - tests/test_actor_profile.py::test_inv_id_type_mixed_document_types_are_declared_not_merged
+      - tests/test_actor_typed_projection.py::test_a_nit_identity_excludes_personal_document_types
+    product_cases: []
+    product_case_justification: "Sin escenario en el lote de 20; entra en el lote de 50 (identidad por documento)."
+    legacy_ids:
+      - {id: INV-ID-TYPE, scope: "ADR-060 / ACTOR_PROFILE_V1"}
+      - {id: INV-TYPED-PROJECTION, scope: "tests/test_actor_typed_projection.py"}
+
+  INV-ACTOR-SINGLE-IDENTITY:
+    title: "actor_scope y contratista son una sola identidad"
+    description: "Un frame con identidades divergentes falla cerrado antes de emitir SoQL."
+    criticality: P0
+    owner: actor
+    authority: [docs/architecture/ACTOR_PROFILE_V1.md, docs/audits/ACTOR_DOGFOOD_HARDENING_V2.md]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_actor_dogfood_hardening_v2.py::test_split_brain_frame_fails_closed_before_soql
+      - tests/test_actor_hardening_v2_1_remediation.py::test_cross_scalar_split_brain_blocks_both_doors
+    supporting_tests:
+      - tests/test_actor_dogfood_hardening_v2.py::test_split_brain_frame_reaches_no_source_call
+      - tests/test_actor_hardening_v2_1_properties.py::test_an_absent_or_empty_projection_is_never_a_split_brain
+    product_cases: [PC-FU-001]
+    re_home_before_f6: true
+    legacy_ids:
+      - {id: INV-ACTOR-SINGLE-IDENTITY, scope: "ACTOR_PROFILE_V1 / actor_identity_coherence.py"}
+
+  INV-BUYER-NOT-ACTOR:
+    title: "Una intención institucional de comprador no se vuelve actor en silencio"
+    description: "La mención completa de un comprador acreditado se arbitra antes de la resolución de actores, en toda ruta."
+    criticality: P0
+    owner: authority_arbitration
+    authority: [ADR-074, "Buyer-Actor Role Arbitration V1 (47e46a1, aab5d41)"]
+    status: PARTIAL
+    gap_justification: "La ruta search/follow-up tiene defensa conductual; Entity Profile con directorio colisionante sigue sin gate READY. El viejo test_seeds está rojo por dialecto SQLite obsoleto (date_extract_y), clasificado HARNESS_DEBT, no evidencia de bug productivo."
+    primary_tests:
+      - tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor
+    supporting_tests:
+      - tests/test_buyer_actor_role_arbitration_v1.py::test_seeds
+      - tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor
+      - tests/test_actor_routing.py::test_inv_actor_precision_a_buyer_name_is_never_read_as_a_contractor
+      - tests/test_actor_resolution_orchestration.py::test_article_led_buyer_survives_an_exact_actor_miss
+    product_cases: [PC-AUTH-001, PC-AUTH-002, PC-FU-002]
+    open_product_gaps: [OPG-ACTOR-001]
+    legacy_ids:
+      - {id: INV-BUYER-NOT-ACTOR, scope: "TEST_ARCHITECTURE_V1 plan §7/§10"}
+      - {id: INV-ACTOR-PRECISION, scope: "tests/test_actor_routing.py"}
+
+  INV-SEM-NO-SILENT-FALLBACK:
+    title: "Una forma lingüística que una autoridad no resuelve no se degrada en silencio"
+    description: "Vocabulario acotado + degradación silenciosa está prohibido: falla cerrado o aclara."
+    criticality: P0
+    owner: semantics
+    authority: [ADR-069, ADR-074]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_qualified_buyer_fail_closed.py::test_missing_governorship_del_fails_closed
+      - tests/test_entity_candidates_no_silent_collapse.py::test_group_over_cap_never_collapses_silently
+    supporting_tests:
+      - tests/test_buyer_territory_tail.py::TestFragmentPredicate::test_strict_fragments_are_detected
+      - tests/test_entity_candidates_no_silent_collapse.py::test_geographic_ecosystem_never_truncates_silently
+    product_cases: [PC-NEG-001]
+    open_product_gaps: [OPG-BUYER-001, OPG-BUYER-002]
+    legacy_ids:
+      - {id: INV-NO-SILENT-SEMANTIC-FALLBACK, scope: "ADR-069"}
+      - {id: INV-NO-SILENT-SEMANTIC, scope: "docs/gazetteer/ENTITY_CORE_COVERAGE_R0.md"}
+
+  INV-MONEY-POLARITY-PRESERVES-INTENT:
+    title: "Normalizar dinero conserva la dirección pedida y nunca inventa un extremo"
+    description: "'más de' fija sólo el mínimo; un monto sin lectura monetaria no ejecuta un límite."
+    criticality: P0
+    owner: money
+    authority: [ADR-063, ADR-093]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_money_polarity_v2.py::test_upper_cannot_produce_lower
+      - tests/test_money_polarity_v2.py::test_unknown_amount_has_no_executable_bound
+      - tests/test_money_polarity_v2.py::test_money_polarity_corpus
+    supporting_tests:
+      - tests/test_money_v2_invariants.py::test_polarity_classes_must_not_regress
+      - tests/test_money_v2_invariants.py::test_verbal_amount_must_keep_min_polarity
+    product_cases: [PC-MONEY-001]
+    legacy_ids:
+      - {id: INV-NORMALIZATION-PRESERVES-INTENT, scope: "ADR-063"}
+      - {id: INV-NO-SILENT-MONEY-POLARITY-GUESS, scope: "Money Polarity V2"}
+      - {id: INV-NO-SILENT-EXPLICIT-MONEY-DROP, scope: "HCA_FINAL_P1_RUNTIME_FIXES"}
+      - {id: INV-EXPLICIT-MONEY-IS-NOT-DROPPED-BY-MAGNITUDE, scope: "HCA_FINAL_P1_RUNTIME_FIXES"}
+
+  INV-ENTITY-RENDERED-SCOPE-EQUALS-EXECUTED:
+    title: "El bloque 'qué analizamos' se deriva del plan ejecutado"
+    description: "El perfil nunca declara una fuente, periodo o filtro que no ejecutó, ni omite uno que sí."
+    criticality: P0
+    owner: entity_profile
+    authority: [ADR-095]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_entity_profile_semantic_properties.py::test_p11_the_rendered_scope_equals_the_executed_scope
+    supporting_tests:
+      - tests/test_entity_profile_conversation_scope.py::test_the_rendered_scope_never_offers_a_source_the_plan_did_not_cover
+      - tests/test_entity_profile_semantic_properties.py::test_p9_a_source_that_was_not_requested_never_renders_a_zero
+    product_cases: [PC-EP-001]
+    legacy_ids:
+      - {id: INV-RENDERED-SCOPE-EQUALS-EXECUTED-SCOPE, scope: "ADR-095"}
+      - {id: INV-FILTER-IN-SQL-IMPLIES-FILTER-DECLARED, scope: "app/core/entity_profile/material_filters.py"}
+    notes: "F1 H9 lo reportó sin mención nominal; sí está defendido por la propiedad P11."
+
+  INV-SOURCE-FAILURE-IS-NOT-ABSENCE:
+    title: "Timeout, fallo o indisponibilidad de la fuente nunca se presentan como cero"
+    description: "Sin certeza de ausencia no hay EMPTY: el resultado es ERROR/PARTIAL y lo declara."
+    criticality: P0
+    owner: source_semantics
+    authority: [ADR-039, app/core/outcome.py]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_timeout_transparency.py::test_timeout_does_not_claim_zero_results
+      - tests/test_dual_dataset_execution.py::test_execute_child_timeout_is_error_not_empty
+      - tests/test_direct_lookup_entity_scope.py::test_reference_all_sources_fail_is_source_unavailable
+    supporting_tests:
+      - tests/test_actor_profile.py::test_inv_partial_a_failed_aggregate_is_error_never_empty
+      - tests/test_entity_profile_semantic_properties.py::test_p10_an_unusable_metric_never_becomes_zero
+      - tests/test_observer_partial.py::TestObserverPartial::test_partial_when_all_aggregations_fail
+    product_cases: [PC-FAIL-001, PC-FAIL-002]
+    legacy_ids:
+      - {id: INV-PARTIAL, scope: "ACTOR_PROFILE_DIAGNOSTIC / outcome.py"}
+
+  INV-PERSIST-TESTS-NEVER-WRITE-PROJECT-DATA:
+    title: "Ninguna prueba ni auditoría escribe en los datos reales del proyecto"
+    description: "Feedback, conversaciones, radar e índice de actores de una prueba viven bajo su directorio temporal."
+    criticality: P0
+    owner: architecture
+    authority: [AGENTS.md, tests/conftest.py]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_feedback_isolation.py::test_workflow_uses_configured_feedback_path_not_real_data_file
+      - tests/test_audit_runner_isolation.py::test_runner_writes_nothing_into_repo_data
+      - tests/product_contract/test_product_harness_safety.py::test_persistence_is_confined_to_the_scenario_root
+    supporting_tests:
+      - tests/test_actor_index_isolation.py::test_the_configured_index_path_is_never_the_production_artifact
+    product_cases: []
+    product_case_justification: "Invariante del harness, no de conducta visible; lo acredita el autotest F2.5."
+    legacy_ids:
+      - {id: INV-AUDIT-RUNNER-NO-PRODUCTION-WRITES, scope: "tests/test_audit_runner_isolation.py"}
+
+  INV-HARNESS-PRODUCT-CONTRACT-OFFLINE:
+    title: "Ningún socket externo se abre durante un Product Contract"
+    description: "La red está prohibida por construcción; un intento atrapado por el runtime también falla el test."
+    criticality: P0
+    owner: test_architecture
+    authority: [docs/testing/PRODUCT_HARNESS_SAFETY_V1.md, "TEST_ARCHITECTURE_V1 H10"]
+    status: DEFENDED
+    primary_tests:
+      - tests/product_contract/test_product_harness_safety.py::test_a_swallowed_connection_attempt_still_fails_the_ledger
+      - tests/product_contract/test_product_harness_safety.py::test_an_unmocked_production_workflow_is_caught_reaching_the_network
+      - tests/product_contract/test_product_harness_safety.py::test_the_real_workflow_runs_on_the_frozen_source_without_network
+    supporting_tests:
+      - tests/product_contract/test_product_harness_safety.py::test_timeout_derivation_keeps_the_frozen_wire
+    product_cases: []
+    product_case_justification: "Precondición de todo escenario; se verifica en el conftest de tests/product_contract."
+    legacy_ids: []
+
+  # ── P1 ────────────────────────────────────────────────────────────────
+  INV-ACTOR-COMPLETE-MENTION:
+    title: "Un fragmento de una mención nunca toma la identidad de otro actor"
+    description: "La resolución de actor exige la mención completa; un prefijo o fragmento falla cerrado."
+    criticality: P1
+    owner: actor
+    authority: [ADR-094]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_actor_mention_completeness.py::test_a_truncated_fragment_never_takes_the_identity_of_another_actor
+      - tests/test_actor_mention_completeness.py::test_a_fragmented_mention_fails_closed_instead_of_executing
+    supporting_tests:
+      - tests/test_actor_routing.py::test_inv_actor_mention_atomicity_name_plus_document_cannot_leak
+    product_cases: [PC-AUTH-004]
+    legacy_ids:
+      - {id: INV-ACTOR-RESOLUTION-REQUIRES-COMPLETE-MENTION, scope: "ADR-094"}
+      - {id: INV-ACTOR-MENTION-ATOMICITY, scope: "tests/test_actor_routing.py"}
+      - {id: INV-ACTOR-SPAN-OWNERSHIP, scope: "ACTOR_PROFILE_V1"}
+
+  INV-ACTOR-DATASET-CAPABILITY-NO-SILENT-DROP:
+    title: "Un filtro de actor que el dataset no soporta bloquea o migra; jamás se descarta"
+    description: "Nunca se ejecuta el WHERE sin el actor por el que se preguntó."
+    criticality: P1
+    owner: actor
+    authority: [docs/audits/2026-08-18_ACTOR_PROFILE_DIAGNOSTIC.md]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_actor_routing.py::test_inv_no_silent_drop_the_actor_survives_a_dataset_that_cannot_serve_it
+      - tests/test_actor_routing.py::test_inv_dataset_capability_an_unsupported_dataset_blocks_instead_of_executing
+    supporting_tests:
+      - tests/test_actor_routing.py::test_the_where_never_executes_without_the_actor_it_was_asked_about
+    product_cases: []
+    product_case_justification: "Lote de 50 (actor sobre procesos)."
+    legacy_ids:
+      - {id: INV-NO-SILENT-DROP, scope: "ACTOR_PROFILE_DIAGNOSTIC"}
+      - {id: INV-DATASET-CAPABILITY, scope: "tests/test_actor_routing.py"}
+      - {id: INV-NO-TOPIC-FALLBACK, scope: "ACTOR_PROFILE_DIAGNOSTIC"}
+
+  INV-ACTOR-PROFILE-DECLARES-LIMITS:
+    title: "El perfil de actor declara qué no consultó, su corte y no emite veredictos"
+    description: "Alcance, fecha de corte y ausencia de juicio agregado son parte del producto; los documentos personales se enmascaran."
+    criticality: P1
+    owner: actor_profile
+    authority: [docs/audits/2026-08-18_ACTOR_PROFILE_DIAGNOSTIC.md, ADR-060]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_actor_profile_render.py::test_inv_scope_declared_the_profile_always_says_what_it_did_not_consult
+      - tests/test_actor_profile_render.py::test_inv_no_verdict_the_profile_never_grades_the_actor
+      - tests/test_actor_profile_render.py::test_inv_pii_a_personal_document_is_masked
+    supporting_tests:
+      - tests/test_actor_profile_render.py::test_inv_cutoff_the_query_timestamp_is_visible_to_the_reader
+      - tests/test_actor_profile_render.py::test_inv_pii_no_legal_representative_data_reaches_the_text
+    product_cases: []
+    product_case_justification: "Lote de 50 (perfil de actor por documento)."
+    legacy_ids:
+      - {id: INV-SCOPE-DECLARED, scope: "ACTOR_PROFILE_DIAGNOSTIC"}
+      - {id: INV-NO-VERDICT, scope: "ACTOR_PROFILE_DIAGNOSTIC"}
+      - {id: INV-PII, scope: "ACTOR_PROFILE_DIAGNOSTIC"}
+      - {id: INV-CUTOFF, scope: "tests/test_actor_profile_render.py"}
+
+  INV-GEO-BARE-GEOGRAPHY-PRECEDENCE:
+    title: "Una geografía canónica desnuda sigue siendo territorio, nunca actor"
+    description: "'contratos de Barranquilla' no depende del directorio de actores."
+    criticality: P1
+    owner: geography
+    authority: ["e1dc3e1 fix(actor): preserve canonical bare geography precedence"]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_actor_geography_precedence.py::test_bare_canonical_geography_never_becomes_actor_intent
+      - tests/test_actor_geography_precedence.py::test_routing_of_canonical_geography_does_not_depend_on_the_directory
+    supporting_tests:
+      - tests/test_actor_geography_precedence.py::test_the_territorial_frame_survives_intact
+    product_cases: []
+    product_case_justification: "La composición actor + región + comprador está abierta como OPG-ACTOR-001."
+    open_product_gaps: [OPG-ACTOR-001]
+    legacy_ids:
+      - {id: INV-BARE-GEOGRAPHY-PRECEDENCE, scope: "decisions_log / actor_arbitration.py"}
+
+  INV-GEO-TERRITORY-IS-NOT-BUYER:
+    title: "Territorio y comprador son autoridades tipadas distintas"
+    description: "Una lectura territorial y una de comprador producen WHERE distintos; lo no tipado pide tipo."
+    criticality: P1
+    owner: geography
+    authority: [ADR-040]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_geo_vs_entity_typed.py::test_inv7_buyer_and_territory_produce_distinct_where
+      - tests/test_geo_vs_entity_typed.py::test_untyped_arauca_preserves_department_candidate_but_requires_type
+    supporting_tests:
+      - tests/test_qualified_buyer_fail_closed.py::test_territorial_del_still_territorial
+    product_cases: []
+    product_case_justification: "Lote de 50 (gobernación vs departamento)."
+    legacy_ids:
+      - {id: INV-7, scope: "app/core/query_router.py / tests/test_geo_vs_entity_typed.py (Etapa 7)"}
+
+  INV-NEG-NO-SILENT-DROP:
+    title: "Una negación inequívoca se conserva como dimensión o aclara; nunca se descarta"
+    description: "Negar preserva qué dimensión se excluye; una negación no soportada bloquea sin mutar la consulta."
+    criticality: P1
+    owner: negation
+    authority: [ADR-064]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_negation_workflow.py::test_first_turn_unsupported_negation_blocks_before_execution
+      - tests/test_object_negation.py::test_object_only_exclusion_is_a_real_retrieval_predicate
+      - tests/test_state_polarity_safety.py::test_negated_state_never_projects_a_positive_filter
+    supporting_tests:
+      - tests/test_negation_lifecycle.py::test_object_remove_is_dimensional_and_traced
+      - tests/test_negation_lifecycle.py::test_failed_clear_is_transactional_and_truthful
+    product_cases: [PC-MOD-002, PC-NEG-001]
+    legacy_ids:
+      - {id: INV-NO-SILENT-NEGATION-DROP, scope: "ADR-064"}
+      - {id: INV-NEGATION-PRESERVES-DIMENSION, scope: "ADR-064"}
+      - {id: INV-UNSUPPORTED-NEGATION-DOES-NOT-MUTATE-QUERY, scope: "ADR-064"}
+      - {id: INV-NEGATION-REMOVAL-IS-DIMENSIONAL, scope: "ADR-064"}
+      - {id: INV-NEGATION-CLARIFY-IS-TRANSACTIONAL, scope: "ADR-064"}
+      - {id: INV-NEGATION-LIFECYCLE-SYMMETRIC, scope: "ADR-064"}
+
+  INV-SEM-STRUCTURED-DIMENSION-NOT-TOPIC:
+    title: "Un tramo consumido como dimensión estructurada no reaparece como tema"
+    description: "Modalidad, tipo contractual, actor, estado o control consumidos no se proyectan como objeto."
+    criticality: P1
+    owner: semantics
+    authority: [ADR-061]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_contractual_dimension_pipeline.py::test_convenio_modality_money_buyer_and_time_all_compose
+      - tests/test_entity_profile_semantic_properties.py::test_p7_an_action_or_state_word_is_never_the_topic
+    supporting_tests:
+      - tests/test_search_sh1_dogfood_regressions.py::test_r1_convenios_is_not_inferred_as_topic
+      - tests/test_actor_routing.py::test_inv_actor_not_topic_actor_vocabulary_never_reaches_objeto
+      - tests/test_generic_buyer_punctuation.py::test_generic_in_query_stays_unresolved_buyer_not_topic
+    product_cases: [PC-MOD-001]
+    legacy_ids:
+      - {id: INV-STRUCTURED-DIMENSION-NOT-TOPIC, scope: "ADR-061"}
+      - {id: INV-ACTOR-NOT-TOPIC, scope: "tests/test_actor_routing.py"}
+      - {id: INV-INCOMPLETE-BUYER-CANNOT-BECOME-TOPIC, scope: "hca_final_p1_fixes.yaml / generic_buyer.py"}
+    notes: "F1 H9 lo reportó sin mención nominal; está defendido sin nombrarlo."
+
+  INV-MONEY-RANGE-ATOMIC:
+    title: "Un rango monetario explícito sobrevive entero o bloquea"
+    description: "Nunca queda un solo extremo por conversión parcial; la unidad se hereda entre operandos."
+    criticality: P1
+    owner: money
+    authority: [ADR-063, ADR-093]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_money_range_atomicity.py::test_partial_range_blocks_instead_of_degrading
+      - tests/test_money_range_atomicity.py::test_explicit_range_survives_every_connector_and_scale
+    supporting_tests:
+      - tests/test_money_polarity_v2.py::test_range_is_atomic_and_unit_inheritance_preserves_scale
+      - tests/test_money_polarity_v2.py::test_partial_conversion_cannot_leave_one_side
+    product_cases: [PC-MONEY-002]
+    legacy_ids:
+      - {id: INV-MONEY-RANGE-ATOMIC, scope: "app/core/money_admission.py"}
+
+  INV-STATE-FIRMADO-IS-NOT-A-STATE:
+    title: "'Firmado' no es un estado: se resuelve por fecha de firma en contratos"
+    description: "Firmados no emite filtro de estado salvo estado explícito adicional."
+    criticality: P1
+    owner: state
+    authority: [ADR-026]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_firmado_signed_semantics.py::test_firmados_en_mayo_no_aplica_estado_filtra_fecha
+      - tests/test_query_plan.py::test_p10_signed_query_forces_contracts_and_purges_invalid_state
+    supporting_tests:
+      - tests/test_query_plan.py::test_p10_firmados_en_ejecucion_preserves_active_states
+      - tests/test_truth_layer_contract_signature.py::test_missing_date_alone_never_means_not_signed
+    product_cases: [PC-TIME-001]
+    legacy_ids: []
+
+  INV-STATE-EXACT-DOES-NOT-WIDEN-TO-FAMILY:
+    title: "Un estado exacto no se amplía a su familia; una familia se proyecta completa"
+    description: "Suspendido es exactamente suspendido; una familia semántica proyecta todos sus miembros por dataset."
+    criticality: P1
+    owner: state
+    authority: [ADR-067]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_suspended_contract_semantics.py::test_a_suspended_contract_query_never_widens_to_cancelado
+      - tests/test_state_polarity_safety.py::test_liveness_is_dataset_aware
+    supporting_tests:
+      - tests/test_suspended_contract_semantics.py::test_suspendido_belongs_to_exactly_one_contractual_family
+    product_cases: []
+    product_case_justification: "Lote de 50 (estados contractuales)."
+    legacy_ids:
+      - {id: INV-EXACT-STATE-DOES-NOT-WIDEN-TO-FAMILY, scope: "ADR-067 / hca_final_p1_fixes.yaml"}
+      - {id: INV-STATE-FAMILY-PROJECTS-COMPLETE, scope: "ADR-067 / estado_projection.py"}
+      - {id: INV-STATE-SUSPENDED-IS-DATASET-AWARE, scope: "tests/test_suspended_contract_semantics.py"}
+      - {id: INV-LIVENESS-STATE-IS-DATASET-AWARE, scope: "app/core/estado_families.py"}
+
+  INV-CTRL-PURE-ORDERING-PRESERVES-UNIVERSE:
+    title: "Un follow-up que sólo ordena conserva el universo de la fuente"
+    description: "Ordenar no toca el WHERE, no inyecta ecosistema y reinicia la paginación."
+    criticality: P1
+    owner: control_language
+    authority: [ADR-066]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_control_language.py::test_ordering_followup_preserves_the_universe
+      - tests/test_control_language.py::test_ordering_followup_leaves_the_where_clause_identical
+    supporting_tests:
+      - tests/test_ordering_followup_source_universe.py::test_ordering_followup_does_not_inject_entity_ecosystem
+      - tests/test_control_language.py::test_ordering_followup_resets_pagination
+    product_cases: []
+    product_case_justification: "Lote de 50 (control de orden)."
+    legacy_ids:
+      - {id: INV-PURE-ORDERING-PRESERVES-SOURCE-UNIVERSE, scope: "ADR-066 / derived_execution_state.py"}
+      - {id: INV-ORDERING-FOLLOWUP-PRESERVES-UNIVERSE, scope: "HCA_R6_CONTROL_LANGUAGE"}
+
+  INV-CTRL-LANGUAGE-IS-NOT-CONTENT:
+    title: "El lenguaje de control no es contenido de búsqueda"
+    description: "Verbos de intención y órdenes se consumen por span y nunca llegan a objeto."
+    criticality: P1
+    owner: control_language
+    authority: [ADR-066]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_control_language.py::test_ordering_never_reaches_objeto
+      - tests/test_control_language.py::test_intent_verbs_never_reach_objeto
+    supporting_tests:
+      - tests/test_control_language.py::test_control_vocabulary_is_span_based_not_a_stopword_list
+      - tests/test_control_language.py::test_nominal_readings_of_the_command_family_survive
+    product_cases: []
+    product_case_justification: "Lote de 50 (control + tema)."
+    legacy_ids:
+      - {id: INV-CONTROL-LANGUAGE-NOT-CONTENT, scope: "ADR-066"}
+      - {id: INV-CONTROL-SPAN-DOES-NOT-CLASSIFY-CONTENT, scope: "HCA_R6_CONTROL_LANGUAGE"}
+
+  INV-CONV-EXPLICIT-TURN-PARAMS-PREVAIL:
+    title: "Los parámetros explícitos del turno prevalecen sobre estado o framing heredado"
+    description: "Un pivote explícito (entidad, ciudad, fecha, dataset, estado) reemplaza lo heredado sin fuga."
+    criticality: P1
+    owner: conversation
+    authority: [ADR-037]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_frame_leak_canary.py::test_canary_estado_pivot
+      - tests/test_frame_leak_canary.py::test_canary_entidad_pivot
+    supporting_tests:
+      - tests/test_frame_leak_canary.py::test_canary_dataset_pivot
+      - tests/test_query_frame.py::TestMergeFrames::test_switch_dataset_replaces_dataset
+    product_cases: [PC-FU-002, PC-DS-001]
+    open_product_gaps: [OPG-CTRL-001, OPG-TIME-001]
+    legacy_ids: []
+
+  INV-PAG-FILTER-MUTATION-INVALIDATES-PAGINATION:
+    title: "Si cambia el filtro, cambia el universo de la paginación"
+    description: "'muéstrame más' tras un refinamiento pagina el universo refinado; un cursor incompatible se reinicia."
+    criticality: P1
+    owner: pagination
+    authority: [ADR-041, ADR-061]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_search_sh1_dogfood_regressions.py::test_r4_pagination_after_money_uses_the_filtered_universe
+      - tests/test_pagination_buffer.py::test_pagination_resets_on_incompatible_cursor
+    supporting_tests:
+      - tests/test_control_language.py::test_ordering_followup_resets_pagination
+    product_cases: [PC-PAG-001]
+    legacy_ids:
+      - {id: INV-FILTER-MUTATION-INVALIDATES-PAGINATION, scope: "decisions_log (SEARCH-SH1)"}
+
+  INV-TIME-OPPORTUNITY-VIGENCIA-NOT-CERTIFICATION:
+    title: "Oportunidad vigente se prioriza por fecha civil colombiana; no se certifica apertura"
+    description: "Plazo vencido se excluye, plazo desconocido usa respaldo de publicación reciente y nada afirma recepción."
+    criticality: P1
+    owner: opportunity
+    authority: [ADR-056, ADR-057, ADR-058]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_current_opportunity_retrieval.py::test_red_5_known_expired_deadline_is_excluded
+      - tests/test_current_opportunity_retrieval.py::test_red_8_offer_phase_without_deadline_does_not_claim_reception
+      - tests/test_current_opportunity_retrieval.py::test_red_b_colombia_date_changes_only_at_0500_utc
+    supporting_tests:
+      - tests/test_current_opportunity_retrieval.py::test_red_9_zero_results_do_not_trigger_automatic_broader_query
+    product_cases: [PC-OPP-001]
+    legacy_ids: []
+
+  INV-DUAL-DATASET-SEPARATE-UNIVERSES:
+    title: "Procesos y contratos se ejecutan y presentan como universos separados"
+    description: "Un hijo que falla no borra al otro ni se presenta como vacío; no hay sumas mezcladas."
+    criticality: P1
+    owner: dual_dataset
+    authority: [ADR-038]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_dual_dataset_execution.py::test_build_groups_runs_both_independently
+      - tests/test_dual_dataset_execution.py::test_build_groups_partial_failure_keeps_successful
+    supporting_tests:
+      - tests/test_dual_dataset_conversation.py::test_mas_after_dual_asks_which
+    product_cases: [PC-DUAL-001]
+    legacy_ids: []
+
+  INV-LOOKUP-DIRECT-ID-IS-NOT-TOPIC-SEARCH:
+    title: "Un identificador SECOP va a lookup directo y el lenguaje natural no se captura como id"
+    description: "IDs/URLs SECOP evitan la búsqueda temática; CO1.REQ no se usa como noticeUID ni implica publicación."
+    criticality: P1
+    owner: direct_lookup
+    authority: [ADR-071]
+    status: DEFENDED
+    primary_tests:
+      - tests/test_direct_lookup.py::TestDetection::test_detect_id_co1_pccntr
+      - tests/test_dialogue_e2e_invariants.py::test_direct_lookup_does_not_capture_natural_language
+    supporting_tests:
+      - tests/test_url_fallback_channel_parity.py::test_co1_req_without_a_view_never_claims_prepublication
+      - tests/test_orchestrator_golden.py::test_golden_direct_lookup_id_hit
+    product_cases: [PC-LOOKUP-001]
+    open_product_gaps: [OPG-LOOKUP-001]
+    legacy_ids: []
+
+  INV-STATE-CONTRACT-UNIVERSE-CELEBRATED:
+    title: "El universo por defecto de contratos es el celebrado según la política V1.1"
+    description: "Aprobado sólo con fecha usable; estados de ejecución incluidos; borrador/cancelado fuera, antes del límite."
+    criticality: P1
+    owner: contract_universe
+    authority: [docs/audits/contract_universe_v1_1_final_closeout/FINAL.md]
+    status: DEFENDED
+    notes: "Adjudicación F3: test_contract_universe_product.py::test_seeds_before_limit es el primario de producto vigente; R5 verifica exclusiones y consumidores. La duplicación histórica no cambia el dueño."
+    primary_tests:
+      - tests/test_contract_universe_product.py::test_seeds_before_limit
+    supporting_tests:
+      - tests/test_contract_universe_product.py::test_explicit_records
+      - tests/test_contract_universe_r5_profile_compatibility.py::test_an_excluded_state_does_not_grow_the_celebrated_total
+    product_cases: []
+    product_case_justification: "Lote de 50, tras adjudicar la suite (R2 del plan §20)."
+    legacy_ids:
+      - {id: INV-CU1, scope: "docs/audits/contract_universe_v1*"}
+      - {id: INV-CONDITION-REPRESENTABLE-IMPLIES-MATERIALIZABLE, scope: "app/core/contract_conditions.py"}

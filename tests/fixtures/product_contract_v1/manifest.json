@@ -1,0 +1,13 @@
+{
+  "version": "1.1-f3",
+  "purpose": "offline regression only (Product Contract V1 / F3 READY gate)",
+  "created_from": "synthetic placeholders authored in TEST_ARCHITECTURE_V1 F2.5; real-derived packs arrive in F3",
+  "contains_personal_data": false,
+  "sha256": {
+    "actor_alias_rows.jsonl": "ef9d8f06f49ca979ea87a833b75d22ef1da88c1222d96c4279657f1aa48459a8",
+    "quarantine.yaml": "74a55d151c9b583e9d1137d7d16c48d6f5d5a9263102a7fe2eb548871bb6db15",
+    "scenarios.yaml": "64a8228cdb37bae11c8873d766127b50572d3ea21e1cd4f70dcee51f7db67779",
+    "source_rows/f3_processes.jsonl": "895efd077cb8bae8fd2ab71c7255298c29f9992920daa75c6f7d86b65064244f",
+    "source_rows/harness_canary.jsonl": "857d53ad1a629d80d15271505d37298fe203f7dfc161842209865290a3cf95da"
+  }
+}

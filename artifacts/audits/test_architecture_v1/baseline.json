@@ -1,0 +1,50 @@
+{
+ "baseline_head": "04426d19aec5cad104f6e4cb973d4fd84b7eaa34",
+ "collection_kind": "working_tree",
+ "worktree_dirty_at_collection": true,
+ "branch": "chore/test-architecture-v1-f3",
+ "tracked_status_clean": false,
+ "python": "3.14.7",
+ "pytest": "9.0.2",
+ "total_test_files": 506,
+ "total_nodeids": 16187,
+ "collect_errors": 0,
+ "static_skips": 7,
+ "static_xfails": 23,
+ "static_xfails_strict": 13,
+ "live_opt_in_nodeids": 22,
+ "markers": {
+  "hypothesis": 232,
+  "parametrize": 10336,
+  "skip": 6,
+  "skipif": 6,
+  "xfail": 23
+ },
+ "makefile_targets": [
+  "lint-core",
+  "test",
+  "smoke",
+  "smoke-fast",
+  "lint",
+  "audit-negation-v1",
+  "audit-time-v2",
+  "audit-control-language-v1",
+  "audit-actor-hygiene-v1",
+  "audit-hca-final-p1",
+  "dev",
+  "restart"
+ ],
+ "ci": {
+  "workflow": ".github/workflows/ci.yml",
+  "python": "3.12",
+  "command": "pytest tests/ -q --tb=short"
+ },
+ "full_suite_duration": {
+  "measured_on_baseline_head": false,
+  "historical": {
+   "head": null,
+   "matched_nodeids": 0,
+   "path": null
+  }
+ }
+}
