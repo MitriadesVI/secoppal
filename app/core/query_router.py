@@ -1089,14 +1089,22 @@ class QueryRouter:
         #    "vigentes" and maps them to SECOP-accurate estado filters.
         #    The matched token is scrubbed so it doesn't leak into 'objeto'.
         from app.core.estado_families import detect_estado_family
-        from app.core.process_state_request import CLARIFICATION_KEY, decide_process_states
+        from app.core.process_state_request import (
+            CLARIFICATION_KEY, OPPORTUNITY_HEAD_SURFACES, decide_process_states,
+        )
         # INV-PROCESS-STATE-NO-SILENT-LOSS: read every named process state
         # before the single-answer producers below choose one of them. A dual
         # scope is still scalar procesos here (1.b); only the contract
         # universe moves it to contratos, at the end of the parse.
-        process_states = (
-            read_process_state_mentions(scrubbed) if params["dataset"] == DATASET_PROCESOS else ()
-        )
+        # An opportunity head the opportunity authority already read
+        # ("convocatorias", like "oportunidades") is a source noun, not a
+        # second state: it is dropped by occurrence. "en convocatoria" is its
+        # own multiword mention and stays a state reading.
+        process_states = tuple(
+            mention for mention in read_process_state_mentions(scrubbed)
+            if mention.surface.lower() not in OPPORTUNITY_HEAD_SURFACES
+            or mention.surface.lower() not in opportunity_hits
+        ) if params["dataset"] == DATASET_PROCESOS else ()
         seeded_families = {str(params["estado_family"])} if params.get("estado_family") else set()
         # The intent an independent authority set before any state word was
         # read; the process-state decision may add the funnel's intent, never

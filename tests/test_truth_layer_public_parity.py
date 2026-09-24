@@ -249,10 +249,19 @@ CONTROL_LANGUAGE_REPINNED_SHA256 = {
 # proves the gate answers False for every non-profile intent and that an
 # ordinary dual query still expands; the oracles in this module stay
 # byte-identical because none of them is a profile turn.
+#
+# PROCESS_STATE_SINGLE_REQUEST_V1 re-pins it for one more early return: when
+# the turn needs clarification (a process state it cannot represent, raised
+# after planning), the secondary child does not run. It used to execute the
+# half the primary refused. Bounded by
+# tests/test_process_state_request_integrity_v1.py::test_dual_child_does_not_
+# run_after_a_clarification and test_dual_multi_state_reaches_neither_child;
+# test_entity_profile_ownership_gate_is_inert_for_tabular_turns still proves
+# an ordinary dual query expands, and every oracle here stays byte-identical.
 BASELINE_FILE_SHA256 = {
     "app/core/pagination_buffer.py": "802e763ace630368eada377319a715d3ca1bcdca00cb90dd4187236988e2f25c",
     "app/core/phrase_ranking.py": "0a99c8f4ebc10dd71556f1796a40c9192404475831a424964871954bab598c5a",
-    "app/core/workflow/dual_dataset.py": "17320c3e694de6d1a0c6bae0c749230b546373be4517428691e6620ed6cf1957",
+    "app/core/workflow/dual_dataset.py": "f8c216fc05a6b419af7252bcfa2d0f09f8b77ad526d0ebc1d5cf6d2468a6c6de",
     "app/core/workflow/handlers/refinement.py": "fe1a08d26550d5a39fb4fdddbcb40fd623b89e7ab09c634d0bba7a95db00e076",
     # Executive UX V1: optional presentation transport/UI hook only.
     # test_entity_profile_executive_ux_boundary restores the prior exact bytes.

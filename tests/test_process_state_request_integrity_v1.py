@@ -323,14 +323,13 @@ def test_family_mention_is_a_state_request(router, text):
         assert word not in topic(params), params
 
 
-@pytest.mark.parametrize('text', [
-    'procesos abiertos publicados de obra',
-    'convocatorias publicadas de obra',
-])
-def test_literal_inside_the_funnel_is_applied_exactly(router, text):
-    params, result = plan(router, text)
+def test_literal_inside_a_seeded_funnel_is_applied_exactly(router):
+    # "convocatorias" is the opportunity head (like "oportunidades"), not a
+    # second state: Publicado is the only explicit reading (SINGLE_REQUEST_V1).
+    params, result = plan(router, 'convocatorias publicadas de obra')
     assert state_values(params) == {'Publicado'}, params
     assert result.reason != 'process_state_unrepresentable'
+    assert params.get('intent_type') == 'opportunity_search'
     assert "'Borrador'" not in soql(params)
 
 
@@ -456,56 +455,50 @@ _CONTRACT_LIFECYCLE_ROUTED = 'en ejecucion'
 
 
 def _never_partial_params():
+    # SINGLE_REQUEST_V1: the open funnel is no exception. Two explicit
+    # readings clarify even when one would contain the other.
     for first, second in HUMAN_PAIRS:
-        funnel = {m.family for m in (first[1], second[1]) if not m.literal} & FUNNEL_FAMILIES
-        if funnel:
-            continue
         marks = ()
-        if _CONTRACT_LIFECYCLE_ROUTED in (first[0], second[0]):
+        # An open-funnel word keeps the head on procesos ("abiertos y en
+        # ejecución" clarifies there); only the other pairs move to contratos.
+        funnel = {m.family for m in (first[1], second[1]) if not m.literal} & FUNNEL_FAMILIES
+        if _CONTRACT_LIFECYCLE_ROUTED in (first[0], second[0]) and not funnel:
             marks = pytest.mark.xfail(strict=True, reason='PROCESS_HEAD_CONTRACT_LIFECYCLE_ROUTING_V1')
         yield pytest.param(first[0], second[0], marks=marks, id=f'{first[0]}-{second[0]}')
 
 
 @pytest.mark.parametrize('a, b', list(_never_partial_params()))
-def test_two_non_funnel_readings_never_execute_partially(router, a, b):
+def test_two_explicit_readings_never_execute(router, a, b):
     signature = executable_signature(router, f'procesos {a} y {b} de obra')
     assert signature[1] == 'process_state_unrepresentable', signature[:10]
 
 
 # ── R3: the shared decision is the producer, not an auditor ──────────────
-
-CANONICAL_OPEN_APPROVED = {
-    'estado_del_procedimiento': ['Aprobado'],
-    'estado': 'Aprobado',
-    'estado_field': 'estado_del_procedimiento',
-    'estado_family': 'oferta_abierta',
-    'intent_type': 'opportunity_search',
-}
-
+#
+# R3 used to narrow "abiertos y aprobados" to Aprobado ∧ Abierto. ZEUS (R3.1)
+# showed that is composition: "abiertos o (abiertos y aprobados)" collapsed to
+# the same intersection. SINGLE_REQUEST_V1 clarifies both, in both orders.
 
 @pytest.mark.parametrize('text', [
     'procesos abiertos y aprobados de obra',
     'procesos aprobados y abiertos de obra',
+    'procesos abiertos aprobados de obra',
+    'procesos abiertos publicados de obra',
 ])
-def test_open_funnel_narrowed_by_literal_is_one_request(router, text):
-    # Source probe p6dx-8zbt (2026-09-24): Aprobado ∧ apertura=Abierto = 7.458
-    # of 7.568 Aprobado, so the intersection is a real request, not a guess.
-    _params, result = plan(router, text)
-    assert result.should_execute, result.reason
-    for key, value in CANONICAL_OPEN_APPROVED.items():
-        assert result.params.get(key) == value, (key, result.params.get(key))
-    where = soql(result.params)
-    assert "estado_de_apertura_del_proceso = 'Abierto'" in where
-    assert "'Aprobado'" in where
-    for automatic in ("'Publicado'", "'Borrador'"):
-        assert automatic not in where  # O1B does not replace the named literal
-    assert 'fecha_de_recepcion_de >=' not in where  # nor adds its currency default
+def test_open_funnel_plus_explicit_literal_clarifies(router, text):
+    params, result = plan(router, text)
+    assert result.should_execute is False, params
+    assert result.reason == 'process_state_unrepresentable'
+    assert 'más de un estado' in result.clarification_question
+    assert not state_values(params) and not params.get('estado_family'), params
+    assert params.get('intent_type') is None, params
 
 
-def test_open_approved_orders_emit_the_same_soql(router):
+def test_open_approved_orders_emit_the_same_verdict(router):
     forward = executable_signature(router, 'procesos abiertos y aprobados de obra')
     backward = executable_signature(router, 'procesos aprobados y abiertos de obra')
     assert forward == backward
+    assert forward[1] == 'process_state_unrepresentable'
 
 
 def test_lemma_reading_widens_recognition_not_priority():
@@ -622,3 +615,193 @@ def test_dual_child_does_not_run_after_a_clarification():
         'resolved_params': {'dataset': 'contratos', 'dataset_scope': ['procesos', 'contratos']},
     }
     assert build_dataset_groups(Deps(), result, {'dataset_id': 'jbjy-vk9h'}) is None
+
+
+# ── PROCESS_STATE_SINGLE_REQUEST_V1: cardinality, not grammar ────────────
+#
+# One explicit reading executes; two or more distinct explicit readings
+# clarify, whatever joins them. A funnel seeded by another authority is not a
+# reading: it only checks compatibility. R3.1's "o" guard is not ported; its
+# cases are pinned here and hold by cardinality alone.
+
+MULTI_BLOCKED = [
+    # ZEUS NO_GO_R3 (e53e6316): used to execute Aprobado ∧ Abierto.
+    'procesos abiertos o (abiertos y aprobados) de obra',
+    'procesos abiertos o (abiertos y aprobados) de obra en antioquia',
+    'procesos (abiertos y aprobados) o abiertos de obra',
+    # R3.1 OR regressions.
+    'procesos abiertos o aprobados de obra',
+    'procesos aprobados o abiertos de obra',
+    'procesos cancelados o suspendidos de obra',
+    'procesos suspendidos o cancelados de obra',
+    'procesos publicados o aprobados de obra',
+    'procesos aprobados o publicados de obra',
+    'procesos abiertos ó aprobados de obra',
+    'procesos cancelados y publicados o aprobados de obra',
+    'procesos abiertos o aprobados y publicados de obra',
+    # AND, juxtaposition, comma: the same cardinality.
+    'procesos abiertos y aprobados de obra',
+    'procesos abiertos aprobados de obra',
+    'procesos abiertos, aprobados de obra',
+    'procesos cancelados y suspendidos de obra',
+    'procesos abiertos publicados de obra',
+    'procesos en convocatoria aprobados de obra',
+    'oportunidades abiertas aprobadas de obra',
+]
+
+
+@pytest.mark.parametrize('text', MULTI_BLOCKED)
+def test_two_explicit_readings_clarify_whatever_joins_them(router, text):
+    params, result = plan(router, text)
+    assert result.should_execute is False, params
+    assert result.reason == 'process_state_unrepresentable', result.reason
+    assert 'más de un estado' in (result.clarification_question or '')
+    assert not state_values(params) and not params.get('estado_family'), params
+    for word in ('abiert', 'aprobad', 'cancelad', 'suspendid', 'publicad'):
+        assert word not in topic(params), params
+
+
+@settings(max_examples=60, derandomize=True, deadline=None)
+@given(
+    pair=st.sampled_from([p for p in HUMAN_PAIRS
+                          if (p[0][0], p[1][0]) not in _CONTRACT_ROUTED_ORDER_DEPENDENT
+                          and _CONTRACT_LIFECYCLE_ROUTED not in (p[0][0], p[1][0])]),
+    shape=st.sampled_from(['{a} y {b}', '{a} o {b}', '{a}, {b}', '{a} ó {b}',
+                           '{a} o ({a} y {b})', '({a} y {b}) o {a}', '{b} o {a} y {b}']),
+)
+def test_cardinality_does_not_depend_on_connector_or_grouping(router, pair, shape):
+    (a, _mention_a), (b, _mention_b) = pair
+    signature = executable_signature(router, f"procesos {shape.format(a=a, b=b)} de obra")
+    assert signature[0] is False and signature[2] == 'multi', (shape, a, b, signature[:3])
+
+
+@pytest.mark.parametrize('text, literal, field', [
+    ('procesos cancelados de obra', 'Cancelado', 'estado_del_procedimiento'),
+    ('procesos aprobados de obra', 'Aprobado', 'estado_del_procedimiento'),
+    ('procesos publicados de obra', 'Publicado', 'estado_del_procedimiento'),
+    ('procesos seleccionados de obra', 'Seleccionado', 'estado_del_procedimiento'),
+    ('procesos suspendidos de obra', 'Suspendido', 'estado_del_procedimiento'),
+])
+def test_one_explicit_literal_executes_exactly(router, text, literal, field):
+    params, result = plan(router, text)
+    assert result.should_execute, result.reason
+    assert result.params.get(field) == [literal], result.params
+    assert f"'{literal}'" in soql(result.params)
+
+
+@pytest.mark.parametrize('text', [
+    'procesos abiertos de obra',
+    'procesos en convocatoria de obra',
+    'procesos abiertos o convocatorias de obra',
+    'procesos abiertos o abiertos de obra',
+])
+def test_one_funnel_reading_projects_the_funnel(router, text):
+    params, result = plan(router, text)
+    assert result.should_execute, result.reason
+    assert params.get('estado_family') == 'oferta_abierta', params
+    assert params.get('intent_type') == 'opportunity_search', params
+    assert 'convocatoria' not in topic(params)
+
+
+@pytest.mark.parametrize('text, literal', [
+    ('oportunidades aprobadas de software', 'Aprobado'),
+    ('oportunidades publicadas de software', 'Publicado'),
+    ('convocatorias publicadas de obra', 'Publicado'),
+    ('convocatorias aprobadas de obra', 'Aprobado'),
+])
+def test_seeded_funnel_does_not_count_and_admits_its_literal(router, text, literal):
+    # Source probe p6dx-8zbt (2026-09-24): Aprobado ∧ apertura=Abierto = 7.458
+    # of 7.568 Aprobado; the seeded funnel frames the one literal named.
+    params, result = plan(router, text)
+    assert result.should_execute, result.reason
+    assert result.params.get('estado_del_procedimiento') == [literal], result.params
+    assert result.params.get('intent_type') == 'opportunity_search'
+    assert "estado_de_apertura_del_proceso = 'Abierto'" in soql(result.params)
+
+
+@pytest.mark.parametrize('text, conflict', [
+    ('oportunidades canceladas de software', 'también pide'),
+    ('convocatorias canceladas de obra', 'también pide'),
+    ('oportunidades adjudicadas de obra', 'más de un estado'),
+])
+def test_seeded_funnel_incompatible_with_the_reading_clarifies(router, text, conflict):
+    params, result = plan(router, text)
+    assert result.should_execute is False, params
+    assert result.reason == 'process_state_unrepresentable'
+    assert conflict in result.clarification_question
+    assert params['dataset'] == 'procesos' and not params.get('contract_universe')
+
+
+@pytest.mark.parametrize('text', [
+    'procesos que no esten en convocatoria de obra',
+    'procesos de obra que no esten en convocatoria',
+])
+def test_negated_en_convocatoria_never_seeds_a_positive_funnel(router, text):
+    # Identical on main f70dd9d5: the negated phrase leaves no positive state
+    # and no opportunity intent; SINGLE_REQUEST_V1 does not read it as a head.
+    params, result = plan(router, text)
+    assert result.reason != 'process_state_unrepresentable'
+    assert params.get('intent_type') != 'opportunity_search', params
+    assert params.get('estado_family') != 'oferta_abierta', params
+    assert not state_values(params), params
+
+
+def test_decision_ignores_seed_for_cardinality():
+    from app.core.process_state_request import decide_process_states
+    (aprobado,) = read_process_state_mentions('aprobados')
+    decision = decide_process_states((aprobado,), {'oferta_abierta'})
+    assert decision.clarification is None
+    assert (decision.literal, decision.family, decision.funnel) == ('Aprobado', 'oferta_abierta', True)
+    (abierto,) = read_process_state_mentions('abiertos')
+    assert decide_process_states((abierto, aprobado), set()).clarification
+    assert decide_process_states((abierto, abierto, aprobado), set()).clarification
+
+
+CLARIFY_END_TO_END = [
+    'procesos abiertos o (abiertos y aprobados) de obra',
+    'procesos abiertos y aprobados de obra',
+    'procesos abiertos o aprobados de obra',
+    'procesos abiertos publicados de obra',
+    'procesos cancelados y suspendidos de obra',
+    'convocatorias canceladas de obra',
+    'oportunidades adjudicadas de obra',
+]
+
+
+@pytest.mark.parametrize('text', CLARIFY_END_TO_END)
+def test_every_clarification_reaches_no_source(flow, text):
+    result = flow.run_query(text, chat_id='psri-single', today=TODAY)
+    assert result.get('needs_clarification'), result
+    assert (result.get('query_plan') or {}).get('reason') == 'process_state_unrepresentable'
+    assert flow.source_calls == []
+
+
+def test_dual_multi_state_reaches_neither_child(flow):
+    result = flow.run_query('procesos o contratos abiertos o aprobados de obra',
+                            chat_id='psri-single-dual', today=TODAY)
+    assert result.get('needs_clarification'), result
+    assert (result.get('query_plan') or {}).get('reason') == 'process_state_unrepresentable'
+    assert flow.source_calls == []
+
+
+def test_followup_multi_state_reaches_no_source(flow):
+    flow.run_query('procesos de obra', chat_id='psri-single-fu', today=TODAY)
+    flow.source_calls.clear()
+    result = flow.run_query('abiertos o aprobados', chat_id='psri-single-fu', today=TODAY)
+    assert result.get('needs_clarification'), result
+    assert (result.get('query_plan') or {}).get('reason') == 'process_state_unrepresentable'
+    assert flow.source_calls == []
+
+
+def test_followup_state_replaces_the_previous_one(flow):
+    # Observed follow-up policy (R3, kept): a new state replaces the old one;
+    # it never composes with it. Inherited-intent loss on "oportunidades →
+    # y las aprobadas" is SHARED_CONTINUATION_STATE_V1 debt, not asserted here.
+    flow.run_query('procesos abiertos de obra', chat_id='psri-single-rep', today=TODAY)
+    flow.source_calls.clear()
+    flow.run_query('y los aprobados?', chat_id='psri-single-rep', today=TODAY)
+    assert flow.source_calls
+    for _dataset, soql_text in flow.source_calls:
+        where = soql_text.split(' WHERE ', 1)[1].split(' ORDER BY ', 1)[0]
+        assert "estado_del_procedimiento = 'Aprobado'" in where
+        assert "'Publicado'" not in where and 'estado_de_apertura_del_proceso' not in where

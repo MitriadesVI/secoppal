@@ -246,7 +246,6 @@ def test_real_publication_state_survives_explicit_modality_and_open_state():
     for query in (
         "licitación publicada",
         "licitación pública publicada",
-        "licitación pública abierta publicada",
     ):
         parsed = _parse(query)
         assert parsed.params[_INCLUDE] == [
@@ -255,6 +254,18 @@ def test_real_publication_state_survives_explicit_modality_and_open_state():
         ]
         assert parsed.params.get("estado") in {"Publicado", "Abierto"}
         assert "publicada" not in parsed.params.get("objeto", [])
+
+
+def test_open_and_published_is_two_states_and_clarifies():
+    # PROCESS_STATE_SINGLE_REQUEST_V1: "abierta" (open funnel) and "publicada"
+    # (Publicado) are two explicit readings, like "procesos abiertos
+    # publicados". The modality still owns "licitación pública", and neither
+    # state word leaks into the topic.
+    parsed = _parse("licitación pública abierta publicada")
+    assert parsed.params[_INCLUDE] == ["licitacion_publica", "licitacion_publica_obra"]
+    assert parsed.params.get("_process_state_clarification")
+    assert parsed.params.get("estado") is None
+    assert not {"abierta", "publicada"} & set(parsed.params.get("objeto", []))
 
 
 def _blocked_workflow(tmp_path: Path):

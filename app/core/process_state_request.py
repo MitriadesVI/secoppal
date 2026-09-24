@@ -17,18 +17,26 @@ another authority —"sobre cerrado"— is never read as a state. V1 enumerated
 only literals: "cancelados y adjudicados" looked like one state because
 "adjudicados" is family vocabulary, and the verdict depended on word order.
 
-Rule, deliberately conservative — no union is invented:
-  * the open funnel (``oferta_abierta``, declared by "abiertos",
-    "convocatorias", … or by an opportunity search) describes availability, so
-    a literal inside it narrows it and a literal outside it clarifies;
-  * any other set of two or more distinct readings clarifies;
-  * one reading left is the request; a literal is applied exactly.
+Rule (PROCESS_STATE_SINGLE_REQUEST_V1) — cardinality, not grammar:
+  * two or more distinct explicit readings clarify, whatever joins them ("y",
+    "o", a comma, parentheses) and in any order. Composing states is outside
+    this contract: "abiertos o (abiertos y aprobados)" is not an intersection
+    the parser may invent (ZEUS, R3.1);
+  * one explicit reading is the request: a literal is applied exactly, a
+    family projects as a family;
+  * a funnel seeded by another authority ("oportunidades", bidder intent) is
+    not a second reading. It only checks compatibility: a literal it contains
+    narrows it, anything else clarifies.
+
+An opportunity head ("convocatorias", like "oportunidades") is read by the
+opportunity authority, not counted here; the phrase "en convocatoria" is a
+different occurrence and stays a state reading.
 
 The decision is the ONLY writer of what those mentions mean (R3): filters,
 ``estado``/``estado_field``, ``estado_family`` and the opportunity intent the
 funnel implies. A single-answer producer may run first, but nothing it picked
 by position survives: "abiertos y aprobados" and "aprobados y abiertos" name
-the same states, so they are the same request.
+the same states, so they get the same verdict.
 """
 from __future__ import annotations
 
@@ -50,6 +58,9 @@ FAMILY_CONFLICT_QUESTION = (
 # Families whose vocabulary describes availability rather than naming a state.
 # Only these absorb a literal they contain.
 FUNNEL_FAMILIES = frozenset({"oferta_abierta"})
+# Bare opportunity heads the state lexicon also reads. As a source noun they
+# are the opportunity authority's, never an explicit state of the turn.
+OPPORTUNITY_HEAD_SURFACES = frozenset({"convocatoria", "convocatorias"})
 _FAMILY_LABELS = {
     "oferta_abierta": "oportunidades abiertas",
     "en_evaluacion": "procesos en evaluación o adjudicados",
@@ -91,38 +102,36 @@ def decide_process_states(
     mentions: tuple[ProcessStateMention, ...],
     seeded_families: set[str],
 ) -> ProcessStateDecision:
-    """Decide once, over every mention, whether the named states are representable."""
+    """Decide once, over every explicit mention of the turn.
+
+    ``seeded_families`` never adds to the cardinality: a seed is another
+    authority's frame, checked for compatibility with the one reading named.
+    """
     distinct = tuple({mention.reading: mention for mention in mentions}.values())
-    literals = [mention for mention in distinct if mention.literal]
-    funnels = {
-        *(family for family in seeded_families if family in FUNNEL_FAMILIES),
-        *(str(m.family) for m in distinct if not m.literal and m.family in FUNNEL_FAMILIES),
-    }
-    requests = [m for m in distinct if m.literal or m.family not in FUNNEL_FAMILIES]
-    if len(requests) > 1:
+    if len(distinct) > 1:
         return ProcessStateDecision(clarification=MULTI_STATE_QUESTION.format(
-            states=", ".join(_label(mention) for mention in requests),
+            states=", ".join(_label(mention) for mention in distinct),
         ))
-    for family in sorted(funnels):
-        for mention in literals:
-            if mention.literal not in _family_members(family):
-                label = _FAMILY_LABELS.get(family, family.replace("_", " "))
-                return ProcessStateDecision(clarification=FAMILY_CONFLICT_QUESTION.format(
-                    state=mention.literal, family=label,
-                ))
-        for mention in requests:
-            if not mention.literal:
-                return ProcessStateDecision(clarification=MULTI_STATE_QUESTION.format(
-                    states=f"{_FAMILY_LABELS.get(family, family)}, {_label(mention)}",
-                ))
-    # Executable: at most one non-funnel reading is left, and a literal with a
-    # funnel lies inside it. The funnel frames the request; a literal narrows it.
-    # A literal that belongs to the funnel ("publicados") frames it too.
-    funnel = min(funnels) if funnels else next(
-        (str(m.family) for m in requests if m.family in FUNNEL_FAMILIES), None,
-    )
-    family = funnel or (requests[0].family if requests else None)
-    if literals:
-        return ProcessStateDecision(literal=literals[0].literal, field=literals[0].field,
+    if not distinct:
+        return ProcessStateDecision()
+    (mention,) = distinct
+    seeded_funnel = min((f for f in seeded_families if f in FUNNEL_FAMILIES), default=None)
+    if seeded_funnel is not None:
+        label = _FAMILY_LABELS.get(seeded_funnel, seeded_funnel.replace("_", " "))
+        if mention.literal and mention.literal not in _family_members(seeded_funnel):
+            return ProcessStateDecision(clarification=FAMILY_CONFLICT_QUESTION.format(
+                state=mention.literal, family=label,
+            ))
+        if not mention.literal and mention.family != seeded_funnel:
+            return ProcessStateDecision(clarification=MULTI_STATE_QUESTION.format(
+                states=f"{label}, {_label(mention)}",
+            ))
+    # A literal of the funnel ("publicados") frames it too; one outside it
+    # ("aprobados" alone) invents no opportunity search.
+    own_funnel = mention.family if mention.family in FUNNEL_FAMILIES else None
+    funnel = seeded_funnel or own_funnel
+    family = funnel or mention.family
+    if mention.literal:
+        return ProcessStateDecision(literal=mention.literal, field=mention.field,
                                     family=family, funnel=funnel is not None)
     return ProcessStateDecision(family=family, funnel=funnel is not None)
