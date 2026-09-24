@@ -122,6 +122,23 @@ Garantía acotada, declarada: LIST y RUN no toman dimensiones del texto. Si la
 persona añade un filtro («revisa PAE Caribe pero sólo Cali»), el radar corre con
 su propio frame y el filtro no se aplica. La respuesta nombra el radar que corrió.
 
+### R2 (remediación del NO_GO de integración)
+
+- La watchlist sintética (`frequency='follows'`, «📌 Procesos seguidos») no es un
+  radar de búsqueda: nunca es candidata de FOLLOW/RUN natural. Antes, «revisa mis
+  procesos seguidos» la ejecutaba con su frame vacío y cada turno contaba un
+  fallo permanente; al tercero quedaba `needs_attention=1, enabled=0` y el
+  scheduler dejaba de refrescarla. LIST no cambia.
+- Controles nuevos que matan mutantes que antes sobrevivían: cabeza de nombre
+  («revisa PAE» con «PAE Caribe» → nada corre) y alcance de owner en el
+  call-site (radar homónimo de otro owner). Matriz M1–M8 (+M4b): 9/9 muertos.
+- Nota: la identidad cruzada ya estaba protegida en segunda línea (`_do_run`
+  re-resuelve por `(owner, name)`), así que sin el scoping un radar ajeno no se
+  ejecutaba; el turno terminaba en ambigüedad o `radar_run_not_found`.
+- Fuera de alcance, preexistente en main: el comando literal «revisa radar 📌
+  procesos seguidos» alcanza la watchlist por `NOCASE` y la pausa igual al
+  tercer intento.
+
 ## Siguientes 5 capacidades, por palanca de producto
 
 1. **FOLLOW/SAVE natural** — cierra J2/J3 y es la función de retención. Contrato:

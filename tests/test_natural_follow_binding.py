@@ -285,3 +285,83 @@ def test_name_authority_is_literal_whole_word_and_accent_blind():
     assert names("novedades de pae  caribe?") == ["PAE Caribe"]
     assert names("revisa educacion atlantico") == ["Educación-Atlántico"]
     assert names("OBRAS y PAE Caribe") == ["Obras", "PAE Caribe"]
+
+
+# ── R2: prefix names, owner scoping at the call-site, the follows watchlist ─
+
+def test_run_with_only_the_head_of_a_name_runs_nothing(make_flow):
+    # «PAE» is the head of «PAE Caribe», not its name: first-token matching
+    # would run the radar the person did not name.
+    flow = make_flow(("FOLLOW", "RUN", "revisa PAE"), radars=("PAE Caribe",))
+    result = _run(flow, "revisa PAE")
+    assert result["route_reason"] == "radar_run_name_required"
+    assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+    assert [r.name for r in radars_named_in("revisa PAE", (_radar("PAE Caribe"),))] == []
+
+
+FOREIGN = {"channel_user_key": "email:otro@example.test"}
+FOREIGN_CHAT = "chat-ajeno"
+
+
+def _save(flow, owner, name):
+    save_radar_from_params(
+        flow.radar_store, owner=owner, name=name,
+        params={"objeto": ["alimentacion escolar"], "departamento_resolved": "Atlántico"},
+    )
+    return flow.radar_store.get_radar_by_name(owner, name)
+
+
+def test_run_uses_only_the_owners_radar_when_another_owner_has_the_same_name(make_flow):
+    text = "revisa PAE Caribe"
+    flow = make_flow(("FOLLOW", "RUN", text), radars=("PAE Caribe",))
+    foreign = _save(flow, radar_owner(FOREIGN, FOREIGN_CHAT), "PAE Caribe")
+    result = _run(flow, text)
+    assert result["route_reason"] not in {"radar_run_name_required", "radar_run_name_ambiguous",
+                                          "radar_run_not_found"}
+    own = flow.radar_store.get_radar_by_name(radar_owner(IDENTITY, CHAT), "PAE Caribe")
+    assert own.last_run_at is not None
+    assert flow.radar_store.get_radar(foreign.id) == foreign
+
+
+@pytest.mark.parametrize("own_radars, reason", [
+    (("Obras Cesar",), "radar_run_name_required"),
+    ((), "radar_list_empty"),
+])
+def test_another_owners_radar_is_never_a_run_candidate(make_flow, own_radars, reason):
+    text = "revisa PAE Caribe"
+    flow = make_flow(("FOLLOW", "RUN", text), radars=own_radars)
+    foreign = _save(flow, radar_owner(FOREIGN, FOREIGN_CHAT), "PAE Caribe")
+    result = _run(flow, text)
+    assert result["route_reason"] == reason
+    assert flow.secop_client.calls == []
+    assert flow.radar_store.get_radar(foreign.id) == foreign
+
+
+def test_follows_watchlist_is_not_runnable_by_natural_run(make_flow):
+    from app.core.radar.follows import get_or_create_follows_radar
+
+    text = "revisa mis procesos seguidos"
+    flow = make_flow(("FOLLOW", "RUN", text), radars=("Obras Cesar",))
+    watchlist = get_or_create_follows_radar(flow.radar_store, radar_owner(IDENTITY, CHAT))
+    for _ in range(3):  # three permanent failures would pause the watchlist
+        result = _run(flow, text)
+        assert result["route_reason"] == "radar_run_name_required"
+        assert result["needs_clarification"] is True
+    assert flow.secop_client.calls == []
+    after = flow.radar_store.get_radar(watchlist.id)
+    assert (after.failure_count, after.permanent_failure_streak, after.needs_attention,
+            after.enabled, after.last_run_at) == (0, 0, 0, 1, None)
+
+
+def test_search_radar_named_like_the_watchlist_runs_by_its_full_name(make_flow):
+    from app.core.radar.follows import get_or_create_follows_radar
+
+    text = "revisa procesos seguidos Cartagena"
+    flow = make_flow(("FOLLOW", "RUN", text), radars=("Procesos seguidos Cartagena",))
+    watchlist = get_or_create_follows_radar(flow.radar_store, radar_owner(IDENTITY, CHAT))
+    result = _run(flow, text)
+    assert result["route_reason"] not in {"radar_run_name_required", "radar_run_name_ambiguous",
+                                          "radar_run_not_found"}
+    assert flow.secop_client.calls
+    assert flow.radar_store.get_radar(watchlist.id) == watchlist
