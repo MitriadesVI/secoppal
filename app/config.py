@@ -101,6 +101,11 @@ class Settings(BaseSettings):
     secoppal_contract_activity_binding_enabled: bool = Field(
         default=False, alias="SECOPPAL_CONTRACT_ACTIVITY_BINDING_ENABLED",
     )
+    # FOLLOW/LIST and FOLLOW/RUN open the existing Radar commands. Separate
+    # line: neither analytical pilot may make them reachable as a side effect.
+    secoppal_natural_follow_binding_enabled: bool = Field(
+        default=False, alias="SECOPPAL_NATURAL_FOLLOW_BINDING_ENABLED",
+    )
     # ── Transporte Socrata (SODA3_TRANSPORT_V1) ──────────────────────────────
     # `soda3`   = transporte productivo default validado.
     # `classic` = rollback explicito sobre sodapy y GET /resource/.

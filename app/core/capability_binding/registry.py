@@ -12,6 +12,11 @@ Deliberately NOT bound yet:
   ranking the person wants.
 - VALUES/TOTAL_VALUE, MODALITIES, OVERVIEW, RECENT, TEMPORAL: promoted one by one
   after SUPPLIERS survives dogfood.
+- FOLLOW/SAVE: the Radar store requires a name the person did not give, and
+  naming it is a product decision, not a binding.
+- RESULT_ACTION/PAGINATE: the continuation words are the job itself, and no
+  deterministic authority separates them from a new topic, so a quote would
+  have to consume residual.
 """
 from __future__ import annotations
 
@@ -22,8 +27,16 @@ from app.core.capability_binding.contract_activity_binding import (
 )
 
 SUPPLIERS = "entity_profile.suppliers"
+# Radar commands take no dimension from the text: LIST reads the owner's radars
+# and RUN's only input, the radar name, is accredited by the owner's own store.
+FOLLOW_LIST = "radar.list"
+FOLLOW_RUN = "radar.run"
 
 _BINDINGS = MappingProxyType({("ANALYZE", "SUPPLIERS"): SUPPLIERS})
+_FOLLOW_BINDINGS = MappingProxyType({
+    ("FOLLOW", "LIST"): FOLLOW_LIST,
+    ("FOLLOW", "RUN"): FOLLOW_RUN,
+})
 
 
 def capability_for(observation, settings) -> object | None:
@@ -41,6 +54,11 @@ def capability_for(observation, settings) -> object | None:
     if contract_activity is not None:
         if getattr(settings, "secoppal_contract_activity_binding_enabled", False) is True:
             return contract_activity
+        return None
+    follow = _FOLLOW_BINDINGS.get((job.action, job.aspect))
+    if follow is not None:
+        if getattr(settings, "secoppal_natural_follow_binding_enabled", False) is True:
+            return follow
         return None
     if getattr(settings, "secoppal_a2_suppliers_binding_enabled", False) is not True:
         return None

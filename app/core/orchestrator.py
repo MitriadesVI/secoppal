@@ -26,6 +26,7 @@ from app.core.workflow.deps import WorkflowDeps
 from app.core.workflow.handlers.direct_lookup import handle_direct_lookup
 from app.core.workflow.handlers.actor_selection import handle_actor_selection
 from app.core.workflow.handlers.normal_flow import handle_normal_flow
+from app.core.workflow.handlers.natural_follow import handle_bound_follow
 from app.core.workflow.handlers.natural_alpha import (
     multi_job_result, note_seam, observed_deps, observe_turn,
 )
@@ -415,6 +416,10 @@ class SecopalWorkflow:
         from app.core.capability_binding.registry import capability_for
 
         binding = capability_for(observation, deps.settings)
+        followed = handle_bound_follow(deps, ctx, binding, observation)
+        if followed is not None:
+            followed["_continuation_owner"] = "RADAR"
+            return followed
         with legacy_budget(observation is not None):
             result = handle_normal_flow(observed_deps(deps, observation, binding), ctx)
         params = result.get("resolved_params") or {}
