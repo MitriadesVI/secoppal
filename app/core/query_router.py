@@ -138,6 +138,23 @@ if TYPE_CHECKING:
 DATASET_PROCESOS = "procesos"
 DATASET_CONTRATOS = "contratos"
 
+# Opportunity keywords that are also source words (source_occurrence): they
+# seed an opportunity search only through an accredited process occurrence.
+_OPPORTUNITY_SOURCE_WORDS = frozenset({"convocatoria", "convocatorias"})
+
+
+def opportunity_head_occurrences(occurrences) -> tuple:
+    """The occurrences of "convocatoria(s)" accredited as a PROCESS request.
+
+    Ownership is per occurrence (span), never per surface: in "convocatorias
+    de obra y servicios de publicación de convocatorias" only the first one is
+    a head. ``occurrences`` comes from ``source_request_occurrences``.
+    """
+    return tuple(
+        occurrence for occurrence in occurrences
+        if occurrence.is_process and occurrence.surface in _OPPORTUNITY_SOURCE_WORDS
+    )
+
 # Dual-dataset: el usuario pide procesos Y contratos en el mismo turno.
 # Conjunción explícita ("contratos o procesos", "procesos y contratos") o un
 # marcador de cobertura total ("ambos", "todo lo relacionado con").
@@ -406,7 +423,18 @@ class QueryRouter:
             "licitaciones publicas abiertos",
             "procesos abiertos",
         )
-        opportunity_hits = [kw for kw in opportunity_keywords if kw in normalized]
+        # OPPORTUNITY_HEAD_OCCURRENCE_AUTHORITY_V1: "convocatoria(s)" is a
+        # source word, so presence proves nothing ("contratos de publicación
+        # de convocatorias" asks for contratos). Only an occurrence that
+        # source_request_occurrences accredits as a PROCESS request may seed
+        # the opportunity search; a topic occurrence of the same word may not.
+        opportunity_hits = [
+            kw for kw in opportunity_keywords
+            if kw not in _OPPORTUNITY_SOURCE_WORDS and kw in normalized
+        ]
+        opportunity_hits.extend(dict.fromkeys(
+            occurrence.surface for occurrence in opportunity_head_occurrences(source_occurrences)
+        ))
         if opportunity_hits:
             state_seed_spans.extend(opportunity_hits)
             params["intent_type"] = "opportunity_search"
