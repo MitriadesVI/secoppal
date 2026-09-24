@@ -60,7 +60,7 @@ from app.core.money_polarity import (
     has_money_relation_before,
     resolve_money_polarity,
 )
-from app.core.estado_projection import project_estado_family
+from app.core.estado_projection import STATE_FILTER_FIELDS, project_estado_family
 from app.core.generic_buyer import (
     build_incomplete_buyer_resolution,
     detect_incomplete_buyer,
@@ -435,6 +435,20 @@ class QueryRouter:
         opportunity_hits.extend(dict.fromkeys(
             occurrence.surface for occurrence in opportunity_head_occurrences(source_occurrences)
         ))
+        # "procesos abiertos" is a state phrase as much as an opportunity
+        # keyword: the intent it sets belongs to the process-state decision
+        # (step 7), which reads the same word wherever it stands in the text.
+        # "oportunidades" or a bidder intent is an independent authority.
+        from app.core.estado_families import read_process_state_mentions
+        intent_from_state_words = (
+            bool(opportunity_hits)
+            and params.get("intent_type") != "opportunity_search"
+            and all(
+                any(m.family == "oferta_abierta" and not m.literal
+                    for m in read_process_state_mentions(kw))
+                for kw in opportunity_hits
+            )
+        )
         if opportunity_hits:
             state_seed_spans.extend(opportunity_hits)
             params["intent_type"] = "opportunity_search"
@@ -1075,6 +1089,19 @@ class QueryRouter:
         #    "vigentes" and maps them to SECOP-accurate estado filters.
         #    The matched token is scrubbed so it doesn't leak into 'objeto'.
         from app.core.estado_families import detect_estado_family
+        from app.core.process_state_request import CLARIFICATION_KEY, decide_process_states
+        # INV-PROCESS-STATE-NO-SILENT-LOSS: read every named process state
+        # before the single-answer producers below choose one of them. A dual
+        # scope is still scalar procesos here (1.b); only the contract
+        # universe moves it to contratos, at the end of the parse.
+        process_states = (
+            read_process_state_mentions(scrubbed) if params["dataset"] == DATASET_PROCESOS else ()
+        )
+        seeded_families = {str(params["estado_family"])} if params.get("estado_family") else set()
+        # The intent an independent authority set before any state word was
+        # read; the process-state decision may add the funnel's intent, never
+        # remove this one.
+        intent_before_states = None if intent_from_state_words else params.get("intent_type")
         estado_family_result = detect_estado_family(scrubbed, str(params["dataset"]))
         if estado_family_result and not state_authorized(
             params['dataset'], estado_family_result['filters'].get('estado_contrato', ()), universe_request,
@@ -1172,6 +1199,45 @@ class QueryRouter:
                     flags=re.IGNORECASE,
                 )
                 primary_state = False
+
+        if process_states:
+            decision = decide_process_states(process_states, seeded_families)
+            # R3: the decision is the only writer of what the mentions mean.
+            # The producer above answered with the FIRST state; whatever it
+            # derived by position (family, funnel intent) is rewritten here
+            # from the set of readings, so word order cannot reach the SoQL.
+            if decision.clarification:
+                params[CLARIFICATION_KEY] = decision.clarification
+                # The clarified frame persists as context: it must not carry
+                # the one state a single-answer producer happened to pick.
+                for key in (*STATE_FILTER_FIELDS, "estado", "estado_field", "estado_family"):
+                    params.pop(key, None)
+            else:
+                if decision.literal:
+                    # A named literal is the exact filter, also inside the
+                    # funnel it narrows ("abiertos publicados").
+                    for key in STATE_FILTER_FIELDS:
+                        params.pop(key, None)
+                    params[decision.field] = [decision.literal]
+                    params["estado"] = decision.literal
+                    params["estado_field"] = decision.field
+                if decision.family:
+                    params["estado_family"] = decision.family
+            if decision.funnel and not decision.clarification:
+                params["intent_type"] = "opportunity_search"
+            elif intent_before_states is None:
+                params.pop("intent_type", None)
+            else:
+                params["intent_type"] = intent_before_states
+            # Every named state belongs to the state authority, applied or
+            # clarified; none of them is topic.
+            for mention in process_states:
+                consumed_spans.append(mention.surface)
+                actor_modifier_spans.append(mention.surface)
+                scrubbed = re.sub(
+                    rf"\b{re.escape(mention.surface)}\b", " ", scrubbed,
+                    count=1, flags=re.IGNORECASE,
+                )
 
         # ── 9. Amounts ──────────────────────────────────────────────────
         # Amounts run over the progressively scrubbed text. Identifier-shaped

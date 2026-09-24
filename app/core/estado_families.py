@@ -14,6 +14,16 @@ Discrepancies from specification (documented):
   - "Liquidado": NOT in SECOP contratos. Closest is "Cerrado" / "terminado".
     NOTE: contratos use "terminado" (lowercase, exact SECOP value).
 """
+from dataclasses import dataclass
+import re
+import unicodedata
+
+from app.data.estados import (
+    ESTADO_APERTURA_SYNONYMS,
+    ESTADO_PROCEDIMIENTO_SYNONYMS,
+    VALID_ESTADOS_APERTURA,
+    VALID_ESTADOS_PROCEDIMIENTO,
+)
 
 ESTADO_FAMILIES = {
     "oferta_abierta": {
@@ -282,6 +292,71 @@ LEXICAL_EXACT_STATE: dict[str, str] = {
 }
 
 
+# ── Literales de PROCESO nombrados explícitamente ────────────────────────
+#
+# INV-PROCESS-STATE-NO-SILENT-LOSS (PROCESS_STATE_REQUEST_INTEGRITY_V1).
+#
+# Misma regla que LEXICAL_EXACT_STATE, aplicada al ciclo de vida de procesos:
+# "procesos cancelados" pide ``Cancelado``, no Cancelado + Suspendido;
+# "procesos seleccionados" pide ``Seleccionado``, no el funnel de evaluación.
+# La familia conserva su etiqueta —el follow-up la usa para releer la petición
+# en otro dataset— pero su proyección se estrecha al literal nombrado.
+#
+# El catálogo no es una lista nueva de alias: se deriva del léxico que ya
+# declara esos valores (``app/data/estados.py``), tomando sólo la forma que ES
+# el nombre del literal. "adjudicado" o "vigente" también llevan a un valor,
+# pero no lo nombran. ``Abierto`` queda fuera por la regla (3) de arriba:
+# "abiertos" es el lenguaje natural de la oferta abierta, no un literal.
+# Las flexiones de género y número se leen por lema, no por enumeración.
+_FAMILY_VOCABULARY_LITERALS = frozenset({"Abierto"})
+
+
+def _fold(value: str) -> str:
+    decomposed = unicodedata.normalize("NFD", value.lower())
+    return "".join(char for char in decomposed if not unicodedata.combining(char))
+
+
+def _names_literal(alias: str, literal: str) -> bool:
+    return alias in (_fold(literal), "en " + _fold(literal))
+
+
+PROCESS_EXACT_STATE: dict[str, str] = {
+    alias: literal
+    for alias, literal in {
+        **ESTADO_APERTURA_SYNONYMS, **ESTADO_PROCEDIMIENTO_SYNONYMS,
+    }.items()
+    if _names_literal(alias, literal) and literal not in _FAMILY_VOCABULARY_LITERALS
+}
+
+
+def _inflection_lemmas(token: str) -> tuple[str, ...]:
+    """El token y su forma masculina singular: cancelad{a,os,as} -> cancelado."""
+    lemmas = [token]
+    if token.endswith(("os", "as")):
+        lemmas.append(token[:-2] + "o")
+    elif token.endswith("a"):
+        lemmas.append(token[:-1] + "o")
+    if token.endswith("es"):
+        lemmas.append(token[:-2])  # borradores -> borrador
+    return tuple(lemmas)
+
+
+def process_state_literal(token: str) -> str | None:
+    """El literal de ``procesos`` que ``token`` nombra, o None."""
+    for lemma in _inflection_lemmas(token.lower().strip()):
+        literal = PROCESS_EXACT_STATE.get(lemma)
+        if literal is not None:
+            return literal
+    return None
+
+
+def process_state_field(literal: str) -> str:
+    """Campo de ``procesos`` que transporta ``literal``, según el léxico."""
+    if literal in VALID_ESTADOS_APERTURA and literal not in VALID_ESTADOS_PROCEDIMIENTO:
+        return "estado_de_apertura_del_proceso"
+    return "estado_del_procedimiento"
+
+
 def locate_state_literal(literal: str, dataset: str) -> tuple[str, str] | None:
     """Devuelve (familia, campo) donde ``literal`` vive para ``dataset``.
 
@@ -344,12 +419,19 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
             }
 
     # Vigencia: misma petición, proyección distinta según el ciclo de vida.
-    dataset_aware = DATASET_AWARE_FAMILY.get(token_lower)
-    family_name = (
-        dataset_aware.get(dataset)
-        if dataset_aware is not None
-        else NATURAL_TO_FAMILY.get(token_lower)
-    )
+    # Sobre procesos, cada flexión de un literal nombra el mismo estado; el
+    # vocabulario contractual conserva su propia superficie (Contract Universe).
+    lemmas = _inflection_lemmas(token_lower) if dataset == "procesos" else (token_lower,)
+    family_name = None
+    for lemma in lemmas:
+        dataset_aware = DATASET_AWARE_FAMILY.get(lemma)
+        family_name = (
+            dataset_aware.get(dataset)
+            if dataset_aware is not None
+            else NATURAL_TO_FAMILY.get(lemma)
+        )
+        if family_name is not None:
+            break
     if family_name is None:
         return None
 
@@ -367,6 +449,17 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
     if not filters:
         return None
 
+    # Un literal de proceso nombrado no se ensancha a su familia.
+    literal = process_state_literal(token_lower) if dataset == "procesos" else None
+    for field, values in filters.items():
+        if literal is not None and literal in values:
+            return {
+                "family": family_name,
+                "filters": {field: [literal]},
+                "consumed_span": natural_token,
+                "kind": "exact",
+            }
+
     return {
         "family": family_name,
         "filters": filters,
@@ -376,6 +469,88 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
 
 
 _TOKEN_PUNCTUATION = "¿?¡!.,;:\"'()[]{}"
+
+# Vocabulario que lee ``detect_estado_family``. Es también el que enumera
+# ``read_process_state_mentions``: una sola superficie para el productor y para
+# el guard.
+FAMILY_TOKENS = frozenset({*NATURAL_TO_FAMILY, *LEXICAL_EXACT_STATE, *DATASET_AWARE_FAMILY})
+
+
+# ── Todas las MENCIONES de estado de proceso, no sólo la primera ──────────
+#
+# INV-PROCESS-STATE-NO-SILENT-LOSS (PROCESS_STATE_REQUEST_INTEGRITY_V1.1).
+#
+# ``detect_estado_family`` responde una pregunta —el primer estado— y el
+# extractor legacy consume el segundo sin aplicarlo. Un guard que sólo sabía
+# enumerar LITERALES veía "cancelados y adjudicados" como un único estado:
+# "adjudicados" es vocabulario de familia, el productor lo reconoce y el guard
+# no. El resultado dependía del orden de las palabras.
+#
+# La lectura de cada mención es la que le dan los productores de procesos, en
+# su mismo orden: ``resolve_estado`` (literal exacto o familia) y, si no
+# resuelve, el léxico legacy de ``_extract_state``.
+_LEGACY_PROCESS_SYNONYMS: dict[str, str] = {
+    **ESTADO_PROCEDIMIENTO_SYNONYMS, **ESTADO_APERTURA_SYNONYMS,
+}
+_MENTION_TOKENS = frozenset({*FAMILY_TOKENS, *_LEGACY_PROCESS_SYNONYMS})
+
+
+@dataclass(frozen=True, slots=True)
+class ProcessStateMention:
+    """Una mención de estado sobre ``procesos``: literal exacto o familia."""
+
+    span: tuple[int, int]
+    surface: str
+    literal: str | None
+    field: str | None
+    family: str | None
+
+    @property
+    def reading(self) -> str:
+        return self.literal or f"familia:{self.family}"
+
+
+def _process_reading(token: str) -> tuple[str | None, str | None, str | None]:
+    """(literal, campo, familia) que los productores de procesos dan a ``token``."""
+    resolved = resolve_estado(token, "procesos")
+    if resolved is not None:
+        if resolved["kind"] == "exact":
+            ((field, values),) = resolved["filters"].items()
+            return values[0], field, resolved["family"]
+        return None, None, resolved["family"]
+    legacy = _LEGACY_PROCESS_SYNONYMS.get(token)
+    if legacy is not None:
+        return legacy, process_state_field(legacy), None
+    return None, None, None
+
+
+def read_process_state_mentions(text: str) -> tuple[ProcessStateMention, ...]:
+    """Cada mención de estado de proceso en ``text``, en orden textual.
+
+    Las formas de varias palabras ganan su span antes que las sueltas, igual
+    que en ``detect_estado_family``; las flexiones se leen por lema dentro de
+    ``resolve_estado``.
+    """
+    lowered = text.lower()
+    taken: list[tuple[int, int]] = []
+    mentions: list[ProcessStateMention] = []
+
+    def claim(start: int, end: int) -> None:
+        if any(a < end and start < b for a, b in taken):
+            return
+        surface = text[start:end]
+        literal, field, family = _process_reading(surface.lower())
+        if literal is None and family is None:
+            return
+        taken.append((start, end))
+        mentions.append(ProcessStateMention((start, end), surface, literal, field, family))
+
+    for token in sorted((t for t in _MENTION_TOKENS if " " in t), key=len, reverse=True):
+        for match in re.finditer(rf"\b{re.escape(token)}\b", lowered):
+            claim(*match.span())
+    for match in re.finditer(r"\b\w+\b", lowered):
+        claim(*match.span())
+    return tuple(sorted(mentions, key=lambda mention: mention.span))
 
 
 def detect_estado_family(normalized_query: str, dataset: str) -> dict | None:
@@ -389,8 +564,7 @@ def detect_estado_family(normalized_query: str, dataset: str) -> dict | None:
     consumed span can be scrubbed from the query before object extraction.
     """
     # Check multi-word tokens first (longest match wins)
-    known_tokens = {*NATURAL_TO_FAMILY, *LEXICAL_EXACT_STATE, *DATASET_AWARE_FAMILY}
-    for multi_token in sorted(known_tokens, key=len, reverse=True):
+    for multi_token in sorted(FAMILY_TOKENS, key=len, reverse=True):
         if " " not in multi_token:
             continue
         if multi_token.lower() in normalized_query.lower():

@@ -14,6 +14,7 @@ from typing import Any
 _TRANSIENT = frozenset({
     "offset", "limit", "_display_offset", "_shown_total", "_page_fingerprint",
     "_temporal_replace_scope", "_temporal_error", "_temporal_clarification",
+    "_process_state_clarification",
 })
 
 _EMPTY = (None, [], "", {}, False)

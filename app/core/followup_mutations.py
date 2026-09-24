@@ -16,6 +16,9 @@ from app.core.followup_control_tokens import (
 )
 from app.core.negation_followup import is_object_exclusion_replace
 from app.core.followup_universe_trace import derived_universe_fields
+from app.core.process_state_request import CLARIFICATION_KEY as PROCESS_STATE_BLOCKER
+
+_TURN_BLOCKERS = frozenset({"money_clarification", PROCESS_STATE_BLOCKER})
 
 
 TOPIC_FIELDS = frozenset({"objeto", "objeto_or", "objeto_phrases", "objeto_exclude", "topic_facets"})
@@ -264,12 +267,17 @@ def _normalize_filter_for_dataset(
     # never ran — and delivered Cancelado to someone who asked for Suspendido.
     # Re-reading the same words under the inherited dataset asks the one
     # authority that knows both lifecycles.
-    if text:
-        reread = detect_estado_family(text, str(dataset))
-        if reread and reread["family"] != family_name:
-            family_name = reread["family"]
+    reread = detect_estado_family(text, str(dataset)) if text else None
+    if reread and reread["family"] != family_name:
+        family_name = reread["family"]
 
     filters = _project(str(family_name))
+    # INV-PROCESS-STATE-NO-SILENT-LOSS: a process literal the user named keeps
+    # its exact projection; only concepts widen. Contract states stay governed
+    # by the Contract Universe.
+    if (dataset == "procesos" and reread and reread.get("kind") == "exact"
+            and reread["family"] == family_name):
+        filters = dict(reread["filters"])
     if not filters:
         # La familia no existe en el dataset heredado. Conservarla dejaría los
         # campos del otro dataset colgando de la consulta; releerla en este
@@ -309,7 +317,7 @@ def gate_delta(
     rejected: dict[str, str] = {}
     control_only = policy.allows_topic_mutation() and is_control_only_turn(text, delta)
     for key, value in delta.items():
-        if key == "money_clarification":
+        if key in _TURN_BLOCKERS:
             # A blocker is evidence about this turn, never an executable
             # mutation to prune. P16 must see it even on a follow-up.
             accepted[key] = value

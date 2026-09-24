@@ -10,6 +10,12 @@ _PATTERNS = (
     (rf'\b(?:registros?|contratos?)\s+(?P<states>{_STATE}(?:\s+y\s+(?:(?:registros?|contratos?)\s+)?{_STATE})*)\b', 'states'),
     (rf'\b(?P<states>{_STATE})\s+(?=de\s+(?:la\s+)?\w+\b)', 'states'),
 )
+# The bare state pattern names no source of its own.
+_HEADLESS = _PATTERNS[-1][0]
+# An opportunity search is a PROCESS request (QueryRouter OPP-002). It is an
+# intent, not a dataset noun, so source_occurrence does not list it; here it
+# only has to be recognised as a head that is not contractual.
+_OPPORTUNITY_HEAD = re.compile(r'\boportunidad(?:es)?\b')
 
 
 def _state(text):
@@ -37,8 +43,9 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
     for surface in protected_surfaces:
         needle = normalize_with_offsets(surface).text
         protected.extend((m.start(), m.end()) for m in re.finditer(re.escape(needle), normalized.text) if needle)
-    from app.core.contract_conditions import read_conditions
+    from app.core.contract_conditions import denotes, read_conditions
     from app.core.entity_profile.clauses import split_clauses
+    from app.core.estado_families import PROCESS_STATE_VALUES
     from app.core.source_occurrence import _is_request_framing, source_request_occurrences
     occurrences = source_request_occurrences(normalized.text)
     # Every condition the request states, read before any of them is selected.
@@ -46,8 +53,19 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
                                   protected=tuple(protected))
     process_only = (occurrences and all(o.is_process for o in occurrences)
                     and composition.lead is None)
-    composition_conflict = (not composition.representable
-                            or (not process_only and not composition.materializable))
+    # INV-PROCESS-STATE-NO-SILENT-LOSS: source and state are independent. A
+    # state word with no source noun of its own inherits the nearest head
+    # before it, and a request headed only by processes/opportunities never
+    # becomes a contract request because of the states it names.
+    heads = sorted([(o.span[0], o.is_process) for o in occurrences]
+                   + [(m.start(), True) for m in _OPPORTUNITY_HEAD.finditer(normalized.text)])
+    process_request = bool(heads) and all(is_process for _, is_process in heads)
+    process_states = (process_request and composition.lead is None
+                      and all(denotes(c.surface) in PROCESS_STATE_VALUES
+                              for c in composition.conditions))
+    composition_conflict = not process_states and (
+        not composition.representable
+        or (not process_only and not composition.materializable))
     for occurrence in occurrences:
         if occurrence.is_process or any(a < occurrence.span[1] and occurrence.span[0] < b for a, b in protected):
             continue
@@ -63,6 +81,9 @@ def request(text: str, *, protected_surfaces=()) -> UniverseRequest | None:
             prefix = normalized.text[clause.start:match.start()]
             if any(clause.start <= o.span[0] < match.start() for o in occurrences):
                 continue  # A prior source head owns its following object complement.
+            preceding = [is_process for start, is_process in heads if start < match.start()]
+            if pattern == _HEADLESS and preceding and preceding[-1]:
+                continue  # "procesos aprobados y cancelados", "oportunidades canceladas".
             if any(a < match.end() and match.start() < b for a, b in protected):
                 continue
             if re.search(r'\b(?:ha contratado|proveedor|contratista)\s*$', prefix):

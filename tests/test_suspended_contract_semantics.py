@@ -45,7 +45,9 @@ def test_a_suspended_contract_query_never_widens_to_cancelado(query):
 def test_the_process_reading_of_suspension_is_unchanged():
     params = parse("procesos suspendidos")
     assert params["dataset"] == "procesos"
-    assert params["estado_del_procedimiento"] == ["Cancelado", "Suspendido"]
+    # PROCESS_STATE_REQUEST_INTEGRITY_V1: the process axis is unchanged
+    # (no_procede), but a named literal no longer widens to its family.
+    assert params["estado_del_procedimiento"] == ["Suspendido"]
     assert params["estado_family"] == "no_procede"
 
 

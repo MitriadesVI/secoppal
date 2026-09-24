@@ -9,11 +9,20 @@ from app.core.municipal_territory import municipal_clarification
 from app.core.object_negation_policy import (
     OBJECT_NEGATION_CONTRADICTION_QUESTION, object_negation_overlap,
 )
+from app.core.process_state_request import CLARIFICATION_KEY as PROCESS_STATE_KEY
 from app.core.query_plan_types import QueryPlan
 from app.core.temporal_gate import temporal_plan_block
 
 
 def semantic_preflight(params: dict, signals: list) -> QueryPlan | None:
+    # Private parser evidence: consumed here so it never reaches the builder.
+    if question := params.pop(PROCESS_STATE_KEY, None):
+        return QueryPlan(
+            should_execute=False, params=params, signals=signals,
+            risk_flags=['PROCESS_STATE_UNREPRESENTABLE'],
+            clarification_question=str(question), missing_slots=['estado'],
+            reason='process_state_unrepresentable',
+        )
     if actor_identity_split_brain(params):
         return QueryPlan(
             should_execute=False, params=params, signals=signals,

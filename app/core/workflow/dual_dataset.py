@@ -137,6 +137,11 @@ def build_dataset_groups(deps, result: dict, state) -> dict[str, DatasetGroupRes
         return None
     if (result.get("query_plan", {}) or {}).get("should_execute") is False:
         return None
+    # A clarification raised after planning (contract universe conflict in
+    # resolve_entities) blocks the whole turn: the secondary child is not an
+    # exception to it. It used to run with the half the primary refused.
+    if result.get("needs_clarification") or state.get("needs_clarification"):
+        return None
 
     primary_name = _DATASET_NAME_BY_ID.get(state.get("dataset_id", ""), "procesos")
     other_name = "contratos" if primary_name == "procesos" else "procesos"
