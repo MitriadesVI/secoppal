@@ -1,0 +1,50 @@
+{
+  "audit": "ADR073_GAZETTEER_WIDE_SOURCE_BINDING_AUDIT_SCHEMA3",
+  "head": "04426d19aec5cad104f6e4cb973d4fd84b7eaa34",
+  "branch": "audit/adr073-gazetteer-wide-schema3",
+  "script": "scripts/audits/audit_gazetteer_source_bindings_schema3.py",
+  "script_sha256": "751c6d2e3511ccdf06bf6f809a443295b46ba6200c34b9074a769f88d3a02071",
+  "generated_at": "2026-09-23T17:24:48.904253+00:00",
+  "network": "none en esta invocación (readjudicación offline del lote V1; live_recheck previo incorporado)",
+  "inputs": {
+    "v1_records_sha256_index": "f2015effa7870ee18b3f6200cae16889eb9fe5670cce7709367bf37b8810323c",
+    "v1_records_verified": 1134,
+    "v1_batch": "06bd882bc238e2f80767b52eb552b17fb6a21543",
+    "directory_attestations": {
+      "path": "/Users/rodrigoortiz/Documents/secoppal/artifacts/audits/adr073_directory_identity_attestations_v1/directory_identity_attestations.jsonl",
+      "sha256": "68686a44dfeaa435923715ad4752bbe965aad294c3390fe47a1edf3056164166",
+      "rows": 1111
+    },
+    "authority_sha256": {
+      "app/data/aliases_db.json": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
+      "app/data/buyer_source_names.json": "48e018c876f375cf69cbed83aa4acbfdd3f78ead3394323f7c1e714fedc336cd",
+      "app/data/buyer_groups.json": "627ad644e96e1967261bae926c4f6180af39c5ca0ebcc2e8114167be8cedeade",
+      "app/data/icbf_regionals.json": "ec755371aae17d1cfafcfa1f08b9b991d66da99f4cf054ed28b3ae89e7c3c78f",
+      "app/data/sena_units.json": "7a3f874c7a35ba22a5ea67f48b1da6fa7323679712bfad80cf66a48f3e41d003"
+    }
+  },
+  "live_recheck": {
+    "health": {
+      "p6dx-8zbt": {
+        "status": "OK",
+        "count": 9207780,
+        "floor": 5000000,
+        "healthy": true
+      },
+      "jbjy-vk9h": {
+        "status": "OK",
+        "count": 1000,
+        "floor": 1000000,
+        "healthy": false
+      }
+    },
+    "telemetry": {
+      "calls": 255,
+      "ok": 255,
+      "timeouts": 0,
+      "errors": 0,
+      "retries": 0
+    },
+    "measured_at": "2026-09-23T17:24:22.883687+00:00"
+  }
+}
