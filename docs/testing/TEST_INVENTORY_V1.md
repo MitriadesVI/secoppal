@@ -1,21 +1,21 @@
 # TEST_INVENTORY_V1 — inventario automático
 
 > Generado por `scripts/audits/test_architecture_inventory.py render`. **Heurística, no autoridad.**
-> `BASELINE_HEAD = 9de4066` · 507 archivos · 16221 nodeids.
+> `BASELINE_HEAD = eca8589` · 507 archivos · 16227 nodeids.
 > La adjudicación humana/agente vive en `TEST_ARCHITECTURE_V1.md`; nada aquí autoriza retiros.
 
 ## Clases por nodeid
 
 | Clase | nodeids | archivos (clase primaria) |
 |---|---:|---:|
-| ARCHITECTURE | 230 | 14 |
+| ARCHITECTURE | 231 | 14 |
 | AUDIT_HISTORICAL | 2237 | 89 |
 | DOMAIN_INVARIANT | 12320 | 336 |
-| PRODUCT | 1203 | 53 |
+| PRODUCT | 1208 | 53 |
 | PROPERTY | 186 | 10 |
 | UNKNOWN | 45 | 5 |
 
-Confianza: high=1469, low=2166, medium=12541, none=45
+Confianza: high=1475, low=2166, medium=12541, none=45
 
 ## Familias
 
@@ -41,7 +41,7 @@ Confianza: high=1469, low=2166, medium=12541, none=45
 | buyer_actor_arbitration | 10 | 260 | 216 | 0.0 |
 | channels_auth | 8 | 239 | 14 | 0.0 |
 | time_state_opportunity | 17 | 222 | 14 | 0.0 |
-| product_contract | 3 | 52 | 27 | 0.0 |
+| product_contract | 3 | 58 | 32 | 0.0 |
 | architecture_meta | 7 | 42 | 3 | 0.0 |
 
 ## Top candidatos de duplicación (score estructural, sin adjudicar)
@@ -97,18 +97,18 @@ Confianza: high=1469, low=2166, medium=12541, none=45
 | 23 | `analiza contratos de` | entity_profile, entity_profile_frame, other |
 | 23 | `contratación directa` | actor, buyer_actor_arbitration, contract_universe, entity_profile, followup_conversation, modality, other, query_frame_parsing, radar |
 | 22 | `licitación pública` | entity_profile, followup_conversation, modality, notify, radar, soql_source_execution, truth_layer |
+| 17 | `alcaldia de barranquilla` | actor, buyer_actor_arbitration, followup_conversation, geo_territory, negation_control, product_contract, query_frame_parsing, radar, ranking_results_presentation, soql_source_execution |
 | 17 | `alcaldia municipal de baranoa` | buyer_actor_arbitration, entity_profile, entity_profile_frame, geo_territory |
 | 17 | `contratos de` | actor, buyer_actor_arbitration, buyer_entity_resolution, entity_profile, entity_profile_frame, money_value, other |
-| 16 | `alcaldia de barranquilla` | actor, buyer_actor_arbitration, followup_conversation, geo_territory, negation_control, query_frame_parsing, radar, ranking_results_presentation, soql_source_execution |
 | 15 | `alcaldia de baranoa` | buyer_actor_arbitration, entity_profile, entity_profile_frame, geo_territory, negation_control, other |
 | 15 | `licitacion publica` | followup_conversation, modality, other, ranking_results_presentation, soql_source_execution |
 | 15 | `muestrame mas` | buyer_entity_resolution, entity_profile_frame, followup_conversation, modality, negation_control, other, query_frame_parsing, ranking_results_presentation |
 | 15 | `valle del cauca` | actor, buyer_entity_resolution, entity_profile, geo_territory, modality, negation_control, query_frame_parsing |
 | 14 | `cédula de ciudadanía` | actor, entity_profile |
 | 14 | `en aprobación` | contract_universe, soql_source_execution, time_state_opportunity, truth_layer |
+| 13 | `distrito especial industrial y portuario de barranquilla` | actor, buyer_actor_arbitration, buyer_entity_resolution, followup_conversation, money_value, product_contract, ranking_results_presentation, soql_source_execution |
 | 13 | `no definido` | actor, contract_universe, entity_profile, money_value, soql_source_execution, truth_layer |
 | 12 | `analiza contratos firmados de` | entity_profile, entity_profile_frame |
-| 12 | `distrito especial industrial y portuario de barranquilla` | actor, buyer_actor_arbitration, buyer_entity_resolution, followup_conversation, money_value, ranking_results_presentation, soql_source_execution |
 | 12 | `group by modalidad_de_contratacion` | actor, entity_profile, other |
 | 12 | `mantenimiento vial` | architecture_meta, channels_auth, followup_conversation, query_frame_parsing, radar, ranking_results_presentation, soql_source_execution |
 | 12 | `muéstrame más` | buyer_actor_arbitration, contract_universe, entity_profile_frame, followup_conversation, modality, product_contract |
@@ -482,8 +482,8 @@ Confianza: high=1469, low=2166, medium=12541, none=45
 | `test_zeus_adr073_adversarial.py` | other | AUDIT_HISTORICAL | AUDI=26 | 26 | 13 | 0 | 0 | 0/0 | 0.0 | ZEUS — pruebas adversariales independientes sobre la auditoría ADR-073. |
 | `test_zeus_adr073_recheck.py` | other | AUDIT_HISTORICAL | AUDI=1 | 1 | 0 | 0 | 0 | 0/0 | 0.0 | ZEUS recheck — ataques al mecanismo de integridad introducido en la remediación. |
 | `contracts/test_invariant_registry.py` | product_contract | ARCHITECTURE | ARCH=6 | 6 | 0 | 0 | 0 | 0/0 | 0.0 | F2 — el registro canónico de invariantes es válido y sus defensas existen. |
-| `product_contract/test_product_contract_v1.py` | product_contract | PRODUCT | PROD=22 | 22 | 22 | 0 | 22 | 0/0 | 0.0 | F3 gate: only accredited READY scenarios, each with a killed seam mutant. |
-| `product_contract/test_product_harness_safety.py` | product_contract | ARCHITECTURE | ARCH=24 | 24 | 3 | 2 | 5 | 0/0 | 0.0 | F2.5 — Product Harness Safety: el harness demuestra sus garantías antes de F3. |
+| `product_contract/test_product_contract_v1.py` | product_contract | PRODUCT | PROD=27 | 27 | 26 | 0 | 27 | 0/0 | 0.0 | F3 gate: only accredited READY scenarios, each with a killed seam mutant. |
+| `product_contract/test_product_harness_safety.py` | product_contract | ARCHITECTURE | ARCH=25 | 25 | 3 | 2 | 5 | 0/0 | 0.0 | F2.5 — Product Harness Safety: el harness demuestra sus garantías antes de F3. |
 | `test_accent_normalization.py` | query_frame_parsing | DOMAIN_INVARIANT | DOMA=19 | 19 | 12 | 0 | 0 | 0/0 | 0.0 | Tests ACCENT-NORMALIZATION-001 — unaccent() en SoQL + strip_accents Python. |
 | `test_bidder_intent.py` | query_frame_parsing | DOMAIN_INVARIANT | DOMA=4 | 4 | 0 | 0 | 0 | 0/0 | 0.0 | BIDDER-INTENT-002 tests: para poder presentarme + mantenimiento vial. |
 | `test_bidder_intent_commercial.py` | query_frame_parsing | DOMAIN_INVARIANT | DOMA=5 | 5 | 0 | 0 | 0 | 0/0 | 0.0 | BIDDER-INTENT-003: commercial verbs must not pollute objeto in opportunity queri |

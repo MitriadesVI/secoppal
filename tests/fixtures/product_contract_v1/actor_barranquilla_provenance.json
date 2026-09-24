@@ -1,0 +1,16 @@
+{
+  "source": "read-only exact lookup of local production actor_alias_index.sqlite",
+  "source_artifact": "main checkout data/actor_alias_index.sqlite (SQLite mode=ro&immutable=1)",
+  "metadata_hash_method": "sha256(json.dumps(metadata, sort_keys=True, default=str).encode('utf-8'))",
+  "source_artifact_metadata_sha256": "aa85da5c4942f2693d8a4431c5d522b2390e8ddd1dcbc3cea6c5aecb36fe9735",
+  "source_artifact_bytes": 662409216,
+  "source_schema_version": "1",
+  "source_normalization_version": "N2",
+  "lookup": "alcaldia de barranquilla",
+  "observed_status": "AMBIGUOUS",
+  "observed_method": "exact_ambiguous_alias",
+  "observed_candidate_count": 4,
+  "observed_document_types": {"CC": 4},
+  "minimization": "Two distinct CC identities preserve exact ambiguity. Documents and occurrence/date fields are synthetic; no source document numbers, candidate names beyond the public buyer mention, or other personal data were copied.",
+  "fixture": "actor_barranquilla_derived.jsonl"
+}

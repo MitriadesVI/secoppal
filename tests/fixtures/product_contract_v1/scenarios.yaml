@@ -6,29 +6,36 @@ version: "1.0-design"
 scenarios:
   - id: PC-AUTH-001
     title: "Alcaldía de Barranquilla en Entity Profile no se interpreta como actor persona"
-    status: DESIGN
+    status: READY
     severity: critical
     family: authority_arbitration
     mandatory_item: 1
     red_first: true
-    source: {kind: incident, reference: "TEST_ARCHITECTURE_V1 H1; Buyer-Actor V1 47e46a1 (ruta search)"}
+    source: {kind: incident, reference: "TEST_ARCHITECTURE_V1 H1; Buyer-Actor V1 47e46a1; actor_barranquilla_provenance.json"}
     invariants: [INV-BUYER-NOT-ACTOR, INV-ACTOR-NAME-NO-GUESS]
-    fixtures: {actor_pack: incident_barranquilla_collisions, source_rows: TBD_RUNTIME}
+    frame: false
+    fixtures: {actor_pack: actor_barranquilla_derived.jsonl, source_rows: source_rows/f3_barranquilla_profile.jsonl}
     turns:
       - text: "analiza la alcaldía de barranquilla"
         expect:
           route: entity_profile
+          route_reason: entity_profile_overview
           forbidden_routes: [actor_profile]
           params: {entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"}
           absent_params: [actor_scope, actor_pending, contratista]
-          source_calls: {min: 1}
-          response: {not_contains: [TBD_RUNTIME]}
+          datasets_called: {includes: [p6dx-8zbt, jbjy-vk9h]}
+          source_calls: {min: 2}
+          soql: {contains: ["entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA'", "nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA'"]}
+          response:
+            contains: ["DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA", "Publicó 1 procesos", "Se observan 1 contratos"]
+            not_contains: ["CC 70070801", "CC 70070802"]
+    mutation:
+      law: INV-BUYER-NOT-ACTOR
+      kind: force_buyer_as_actor_at_parser
+      expected_failure: route
     mine_from:
       - tests/test_buyer_actor_role_arbitration_v1.py::test_seeds
       - tests/test_entity_profile_workflow.py::test_integration_preserves_explicit_intent_precedence
-    open_questions:
-      - "Forma exacta de las colisiones del incidente: derivar del índice real (pack minimizado, §9.3)."
-      - "El canónico citado está acreditado en la ruta search; reverificar en la ruta entity_profile."
 
   - id: PC-AUTH-002
     title: "Comprador explícito con proveedores homónimos no se vuelve actor"
@@ -77,19 +84,27 @@ scenarios:
 
   - id: PC-AUTH-004
     title: "El mejor candidato difuso nunca es autoridad de identidad"
-    status: DESIGN
+    status: READY
     severity: critical
     family: authority_arbitration
     mandatory_item: 4
     red_first: true
     source: {kind: dogfood, reference: "AP3-F R7 LMP (hoy sólo con índice real, siempre en skip)"}
     invariants: [INV-ACTOR-NAME-NO-GUESS, INV-ACTOR-COMPLETE-MENTION]
-    fixtures: {actor_pack: fuzzy_top_candidate_misspelling}
+    fixtures: {actor_pack: actor_lmp_fuzzy.jsonl, source_rows: source_rows/f3_lmp_contracts.jsonl}
     turns:
-      - text: TBD_RUNTIME
+      - text: "contratos de lmp ingieneria en 2025"
         expect:
+          needs_clarification: true
+          params: {actor_resolution_status: CANDIDATES, actor_resolution_method: fts5_trigram_bm25}
           absent_params: [actor_scope, contratista]
           source_calls: {exact: 0}
+          response: {contains: ["nombres similares", "LMP INGENIERIA SAS", "LMP INGENIERIA LTDA"]}
+          lineage: {raw_text: "contratos de lmp ingieneria en 2025"}
+    mutation:
+      law: INV-ACTOR-NAME-NO-GUESS
+      kind: promote_fuzzy_top_at_projection
+      expected_failure: source_calls.exact
     mine_from: [tests/test_actor_conversation_dogfood.py::test_r7_real_lmp_top_candidate_is_never_identity_authority]
 
   - id: PC-FU-001

@@ -1,5 +1,9 @@
 # TEST_ARCHITECTURE_V1_F3_CONTINUATION
 
+> **Later closeout:** `PC-AUTH-001` and `PC-AUTH-004` are READY in
+> [TEST_ARCHITECTURE_V1_F3_AUTHORITY_CLOSEOUT.md](TEST_ARCHITECTURE_V1_F3_AUTHORITY_CLOSEOUT.md).
+> The eight-READY measurements below are a prior snapshot.
+
 ## Scope and topology
 
 F3 started at `474a3edf680b7f0fa2cab57be44dbcad20f96b09` on

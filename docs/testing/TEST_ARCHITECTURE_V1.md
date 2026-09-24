@@ -4,7 +4,9 @@
 > decisiones y mediciones F0–F2.5 como historia. La portabilidad, el inventario
 > fresco, los escenarios READY y los gaps actuales están en
 > [TEST_ARCHITECTURE_V1_F3.md](TEST_ARCHITECTURE_V1_F3.md). La condición antigua
-> de espera por Text Lineage ya se levantó en esta base.
+> de espera por Text Lineage ya se levantó en esta base. El cierre de las tres
+> condiciones de aceptación F3 está en
+> [TEST_ARCHITECTURE_V1_F3_AUTHORITY_CLOSEOUT.md](TEST_ARCHITECTURE_V1_F3_AUTHORITY_CLOSEOUT.md).
 
 **Estado:** F0 + F1 GO (asesor, 2026-09-12). F2 + F2.5 entregadas (§10). F3 en **WAIT** hasta que Text Lineage V1.2 esté en `main`.
 **Plan:** [`docs/planes/TEST_ARCHITECTURE_V1_IMPLEMENTATION_PLAN.md`](../planes/TEST_ARCHITECTURE_V1_IMPLEMENTATION_PLAN.md)

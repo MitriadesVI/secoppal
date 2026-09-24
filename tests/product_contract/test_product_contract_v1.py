@@ -10,6 +10,7 @@ import pytest
 from tests.product_contract.actor_pack import build_pack_index, load_pack
 from tests.product_contract.frozen_source import InjectedFailure, load_rows_jsonl
 from tests.product_contract.harness import ProductHarness, Turn
+from tests.product_contract.runtime_mutations import RUNTIME_MUTATIONS, install
 from tests.product_contract.scenario_schema import FIXTURE_DIR, SCENARIOS, load
 
 READY = [case for case in load(SCENARIOS)["scenarios"] if case["status"] == "READY"]
@@ -101,10 +102,43 @@ def test_ready_contract(case, tmp_path, monkeypatch):
 def test_ready_mutation_is_detected(case, tmp_path, monkeypatch):
     turn, expect = _run(case, tmp_path, monkeypatch)
     mutation = case["mutation"]
-    violations = _mutate(turn, mutation["kind"]).violations(expect)
+    if mutation["kind"] in RUNTIME_MUTATIONS:
+        if case["id"] == "PC-AUTH-004":
+            candidates = turn.params["actor_pending"]["candidates"]
+            assert len(candidates) == 2 and candidates[0]["base_number"] == "90070801"
+        harness = _harness(case, tmp_path / f"mutant-{case['id']}", monkeypatch)
+        hits = install(mutation["kind"], monkeypatch)
+        instruction = case["turns"][0]
+        mutant = harness.say(instruction["text"], chat_id=f"mutant-{case['id']}")
+        assert hits["count"] > 0, mutation["kind"]
+        violations = mutant.violations(expect)
+    else:
+        violations = _mutate(turn, mutation["kind"]).violations(expect)
     assert any(v.startswith(mutation["expected_failure"]) for v in violations), (
         case["id"], mutation, violations
     )
+
+
+def test_barranquilla_collision_keeps_buyer_authority_with_frame_on(tmp_path, monkeypatch):
+    case = dict(READY_BY_ID["PC-AUTH-001"], frame=True)
+    harness = _harness(case, tmp_path / "frame-on", monkeypatch)
+    turn = harness.say(case["turns"][0]["text"], chat_id="frame-on")
+    buyer = "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+    assert turn.result["analytical_intent"] == "entity_profile"
+    assert buyer in turn.result["response"]
+    assert {call["dataset"] for call in turn.source_calls} == {"p6dx-8zbt", "jbjy-vk9h"}
+    assert all(call["rows"] == 1 for call in turn.source_calls)
+    assert all(buyer in call["soql"] for call in turn.source_calls)
+    assert all("7007080" not in call["soql"] for call in turn.source_calls)
+    assert "CC 7007080" not in turn.result["response"]
+
+    mutant_harness = _harness(case, tmp_path / "frame-on-mutant", monkeypatch)
+    hits = install("force_buyer_as_actor_at_parser", monkeypatch)
+    mutant = mutant_harness.say(case["turns"][0]["text"], chat_id="frame-on-mutant")
+    assert hits["count"] > 0
+    assert mutant.result["analytical_intent"] != "entity_profile"
+    assert len(mutant.params["actor_pending"]["candidates"]) == 2
+    assert mutant.source_calls == []
 
 
 @pytest.mark.parametrize("scenario_id", [

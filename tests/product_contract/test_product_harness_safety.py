@@ -223,6 +223,18 @@ def test_the_actor_pack_builds_through_the_real_index_builder(tmp_path):
     assert resolver.resolve("LUCIA MARGARITA QUINTERO SINTETICA").status != ActorResolutionStatus.RESOLVED
 
 
+def test_derived_buyer_collision_pack_keeps_only_the_accredited_shape():
+    provenance = json.loads((FIXTURES / "actor_barranquilla_provenance.json").read_text())
+    rows = load_pack(FIXTURES / provenance["fixture"])
+    assert provenance["observed_status"] == "AMBIGUOUS"
+    assert provenance["observed_candidate_count"] == 4
+    assert provenance["observed_document_types"] == {"CC": 4}
+    assert len(rows) == 2
+    assert {row["tipodocproveedor"] for row in rows} == {"CC"}
+    assert {row["documento_proveedor"] for row in rows} == {"70070801", "70070802"}
+    assert {row["proveedor_adjudicado"] for row in rows} == {"ALCALDIA DE BARRANQUILLA"}
+
+
 def test_pack_rows_must_declare_their_collision_shape(tmp_path):
     bad = tmp_path / "bad.jsonl"
     record = {k: v for k, v in json.loads(PACK.read_text().splitlines()[0]).items() if k != "_shape"}
@@ -289,7 +301,7 @@ def test_the_design_corpus_is_valid_and_covers_the_twenty_mandatory_items():
     scenarios = document["scenarios"]
     assert sorted(s["mandatory_item"] for s in scenarios) == list(range(1, 21))
     assert {s["status"] for s in scenarios} == {"DESIGN", "READY"}
-    assert sum(s["status"] == "READY" for s in scenarios) == 8
+    assert sum(s["status"] == "READY" for s in scenarios) == 10
 
 
 def test_known_product_defects_are_quarantined_and_never_green():

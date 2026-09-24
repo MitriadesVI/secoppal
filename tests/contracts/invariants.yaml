@@ -87,9 +87,10 @@ invariants:
     owner: authority_arbitration
     authority: [ADR-074, "Buyer-Actor Role Arbitration V1 (47e46a1, aab5d41)"]
     status: PARTIAL
-    gap_justification: "La ruta search/follow-up tiene defensa conductual; Entity Profile con directorio colisionante sigue sin gate READY. El viejo test_seeds está rojo por dialecto SQLite obsoleto (date_extract_y), clasificado HARNESS_DEBT, no evidencia de bug productivo."
+    gap_justification: "Entity Profile con directorio colisionante ya tiene gate READY OFF/ON. La ley amplia sigue PARTIAL por la composición actor + región + comprador en OPG-ACTOR-001 y los casos PC-AUTH-002/PC-FU-002 aún DESIGN. El viejo test_seeds permanece rojo por dialecto SQLite obsoleto (date_extract_y), clasificado HARNESS_DEBT."
     primary_tests:
       - tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor
+      - tests/product_contract/test_product_contract_v1.py::test_barranquilla_collision_keeps_buyer_authority_with_frame_on
     supporting_tests:
       - tests/test_buyer_actor_role_arbitration_v1.py::test_seeds
       - tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor

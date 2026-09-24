@@ -1254,6 +1254,32 @@
    },
    {
     "families": [
+     "actor",
+     "buyer_actor_arbitration",
+     "followup_conversation",
+     "geo_territory",
+     "negation_control",
+     "product_contract",
+     "query_frame_parsing",
+     "radar",
+     "ranking_results_presentation",
+     "soql_source_execution"
+    ],
+    "files": 17,
+    "query": "alcaldia de barranquilla",
+    "sample_files": [
+     "tests/product_contract/test_product_harness_safety.py",
+     "tests/test_actor_dogfood_hardening_v2.py",
+     "tests/test_buyer_actor_role_arbitration_v1.py",
+     "tests/test_city_detection.py",
+     "tests/test_demo_alcalde.py",
+     "tests/test_e2e_followup_context.py",
+     "tests/test_followup_delta_queries.py",
+     "tests/test_followup_post_merge.py"
+    ]
+   },
+   {
+    "families": [
      "buyer_actor_arbitration",
      "entity_profile",
      "entity_profile_frame",
@@ -1293,31 +1319,6 @@
      "tests/test_buyer_actor_role_controls_v1.py",
      "tests/test_buyer_intent_sdis.py",
      "tests/test_car_core_r2d.py"
-    ]
-   },
-   {
-    "families": [
-     "actor",
-     "buyer_actor_arbitration",
-     "followup_conversation",
-     "geo_territory",
-     "negation_control",
-     "query_frame_parsing",
-     "radar",
-     "ranking_results_presentation",
-     "soql_source_execution"
-    ],
-    "files": 16,
-    "query": "alcaldia de barranquilla",
-    "sample_files": [
-     "tests/test_actor_dogfood_hardening_v2.py",
-     "tests/test_buyer_actor_role_arbitration_v1.py",
-     "tests/test_city_detection.py",
-     "tests/test_demo_alcalde.py",
-     "tests/test_e2e_followup_context.py",
-     "tests/test_followup_delta_queries.py",
-     "tests/test_followup_post_merge.py",
-     "tests/test_negation_binding.py"
     ]
    },
    {
@@ -1451,6 +1452,30 @@
    {
     "families": [
      "actor",
+     "buyer_actor_arbitration",
+     "buyer_entity_resolution",
+     "followup_conversation",
+     "money_value",
+     "product_contract",
+     "ranking_results_presentation",
+     "soql_source_execution"
+    ],
+    "files": 13,
+    "query": "distrito especial industrial y portuario de barranquilla",
+    "sample_files": [
+     "tests/product_contract/test_product_contract_v1.py",
+     "tests/test_actor_contracted_action_ownership.py",
+     "tests/test_actor_conversation_dogfood.py",
+     "tests/test_actor_dogfood_hardening_v2.py",
+     "tests/test_buyer_actor_role_arbitration_v1.py",
+     "tests/test_dogfood_buyer_coverage_adr073.py",
+     "tests/test_followup_engine.py",
+     "tests/test_money_polarity_e2e.py"
+    ]
+   },
+   {
+    "families": [
+     "actor",
      "contract_universe",
      "entity_profile",
      "money_value",
@@ -1486,29 +1511,6 @@
      "tests/test_entity_profile_frame_coordinator_clock.py",
      "tests/test_entity_profile_frame_core.py",
      "tests/test_entity_profile_frame_independent_review.py"
-    ]
-   },
-   {
-    "families": [
-     "actor",
-     "buyer_actor_arbitration",
-     "buyer_entity_resolution",
-     "followup_conversation",
-     "money_value",
-     "ranking_results_presentation",
-     "soql_source_execution"
-    ],
-    "files": 12,
-    "query": "distrito especial industrial y portuario de barranquilla",
-    "sample_files": [
-     "tests/test_actor_contracted_action_ownership.py",
-     "tests/test_actor_conversation_dogfood.py",
-     "tests/test_actor_dogfood_hardening_v2.py",
-     "tests/test_buyer_actor_role_arbitration_v1.py",
-     "tests/test_dogfood_buyer_coverage_adr073.py",
-     "tests/test_followup_engine.py",
-     "tests/test_money_polarity_e2e.py",
-     "tests/test_newsearch_pagination.py"
     ]
    },
    {
@@ -2753,13 +2755,13 @@
    "artifacts": [],
    "blocks_network": false,
    "class_mix": {
-    "PRODUCT": 22
+    "PRODUCT": 27
    },
    "confidence_mix": {
-    "high": 22
+    "high": 27
    },
    "corpora": [],
-   "distinct_queries": 4,
+   "distinct_queries": 5,
    "duration_hist_s": 0,
    "family": "product_contract",
    "fixtures_top": [
@@ -2776,39 +2778,40 @@
     "tests.product_contract.actor_pack",
     "tests.product_contract.frozen_source",
     "tests.product_contract.harness",
+    "tests.product_contract.runtime_mutations",
     "tests.product_contract.scenario_schema"
    ],
    "invariants": [],
-   "lines": 158,
+   "lines": 192,
    "live_opt_in": false,
    "loads_app_by_path": false,
    "mentions_mutation": true,
    "module_doc_head": "F3 gate: only accredited READY scenarios, each with a killed seam mutant.",
    "network_imports": [],
-   "nodeids": 22,
-   "parametrized_nodeids": 22,
+   "nodeids": 27,
+   "parametrized_nodeids": 26,
    "primary_class": "PRODUCT",
    "reads_app_data": false,
    "runtime_skip_functions": [],
    "severity_tokens": [],
    "static_skips": 0,
    "static_xfails": 0,
-   "test_functions": 3,
+   "test_functions": 4,
    "uses_workflow": false,
-   "workflow_nodeids": 22
+   "workflow_nodeids": 27
   },
   "tests/product_contract/test_product_harness_safety.py": {
    "adr": [],
    "artifacts": [],
    "blocks_network": true,
    "class_mix": {
-    "ARCHITECTURE": 24
+    "ARCHITECTURE": 25
    },
    "confidence_mix": {
-    "high": 24
+    "high": 25
    },
    "corpora": [],
-   "distinct_queries": 12,
+   "distinct_queries": 13,
    "duration_hist_s": 0,
    "family": "product_contract",
    "fixtures_top": [
@@ -2835,7 +2838,7 @@
     "tests.product_contract.harness"
    ],
    "invariants": [],
-   "lines": 303,
+   "lines": 315,
    "live_opt_in": false,
    "loads_app_by_path": false,
    "mentions_mutation": true,
@@ -2843,7 +2846,7 @@
    "network_imports": [
     "socket"
    ],
-   "nodeids": 24,
+   "nodeids": 25,
    "parametrized_nodeids": 3,
    "primary_class": "ARCHITECTURE",
    "reads_app_data": false,
@@ -2851,7 +2854,7 @@
    "severity_tokens": [],
    "static_skips": 0,
    "static_xfails": 0,
-   "test_functions": 22,
+   "test_functions": 23,
    "uses_workflow": true,
    "workflow_nodeids": 5
   },
@@ -28145,16 +28148,16 @@
    "UNKNOWN": 5
   },
   "class_by_nodeid": {
-   "ARCHITECTURE": 230,
+   "ARCHITECTURE": 231,
    "AUDIT_HISTORICAL": 2237,
    "DOMAIN_INVARIANT": 12320,
-   "PRODUCT": 1203,
+   "PRODUCT": 1208,
    "PROPERTY": 186,
    "UNKNOWN": 45
   },
   "collect_errors": [],
   "confidence_by_nodeid": {
-   "high": 1469,
+   "high": 1475,
    "low": 2166,
    "medium": 12541,
    "none": 45
@@ -28199,7 +28202,7 @@
    "negation_control": 429,
    "notify": 832,
    "other": 1174,
-   "product_contract": 52,
+   "product_contract": 58,
    "query_frame_parsing": 994,
    "radar": 536,
    "ranking_results_presentation": 683,
@@ -28207,7 +28210,7 @@
    "time_state_opportunity": 222,
    "truth_layer": 791
   },
-  "head": "9de40664a6871b486e0c93b12905b1801a7db506",
+  "head": "eca85896eb0ca1579345d98ea534c72fc3af471a",
   "invariant_mentions_in_tests": {
    "INV-001": 1,
    "INV-002": 1,
@@ -28288,7 +28291,7 @@
   "live_opt_in_nodeids": 22,
   "markers": {
    "hypothesis": 233,
-   "parametrize": 10347,
+   "parametrize": 10351,
    "skip": 6,
    "skipif": 8,
    "xfail": 23
@@ -28298,7 +28301,7 @@
   "static_skips": 7,
   "static_xfails": 23,
   "static_xfails_strict": 13,
-  "total_nodeids": 16221,
+  "total_nodeids": 16227,
   "total_test_files": 507,
   "worktree_dirty_at_collection": true
  }

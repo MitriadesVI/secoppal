@@ -1,5 +1,5 @@
 {
- "baseline_head": "9de40664a6871b486e0c93b12905b1801a7db506",
+ "baseline_head": "eca85896eb0ca1579345d98ea534c72fc3af471a",
  "collection_kind": "working_tree",
  "worktree_dirty_at_collection": true,
  "branch": "chore/test-architecture-v1-f3",
@@ -7,7 +7,7 @@
  "python": "3.14.7",
  "pytest": "9.0.2",
  "total_test_files": 507,
- "total_nodeids": 16221,
+ "total_nodeids": 16227,
  "collect_errors": 0,
  "static_skips": 7,
  "static_xfails": 23,
@@ -15,7 +15,7 @@
  "live_opt_in_nodeids": 22,
  "markers": {
   "hypothesis": 233,
-  "parametrize": 10347,
+  "parametrize": 10351,
   "skip": 6,
   "skipif": 8,
   "xfail": 23

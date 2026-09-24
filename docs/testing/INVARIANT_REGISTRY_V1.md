@@ -1,16 +1,16 @@
 # INVARIANT_REGISTRY_V1 — revalidación F3
 
 **Base productiva revalidada:** `0e5c7420`. **Carril F2:** `59363501`. **Total:** 28 leyes (10 P0, 18 P1).
-**Ejecución F3 continuation:** las 61 referencias primarias de las 28 leyes expandieron a 299 casos verdes; 8 leyes tienen además escenario READY con mutante rojo. La existencia de un nodeid por sí sola no se contabilizó como defensa.
+**Ejecución F3 authority closeout:** las 62 referencias primarias de las 28 leyes expandieron a 300 casos verdes; 9 leyes tienen además escenario READY con mutante rojo. La existencia de un nodeid por sí sola no se contabilizó como defensa.
 
-Las 28 leyes siguen vigentes bajo los owners registrados. El estado actual es 27 `DEFENDED`, 1 `PARTIAL`, 0 `UNDEFENDED` y 0 `SUPERSEDED`. `DEFENDED` denota al menos una prueba conductual vigente ejecutada en este candidate; sólo las ocho filas marcadas READY tienen prueba de mutación F3. No se autoriza retirar suites antiguas con este registro.
+Las 28 leyes siguen vigentes bajo los owners registrados. El estado actual es 27 `DEFENDED`, 1 `PARTIAL`, 0 `UNDEFENDED` y 0 `SUPERSEDED`. `DEFENDED` denota al menos una prueba conductual vigente ejecutada en este candidate; nueve leyes tienen prueba de mutación F3. No se autoriza retirar suites antiguas con este registro.
 
 | Ley | Owner | Estado | Defensa ejecutada | Mutación F3 |
 |---|---|---|---|---|
-| `INV-ACTOR-NAME-NO-GUESS` | actor | DEFENDED | `tests/test_actor_routing.py::test_inv_name_no_guess_a_named_actor_is_declared_never_resolved` | PC-AUTH-003 |
+| `INV-ACTOR-NAME-NO-GUESS` | actor | DEFENDED | `tests/test_actor_routing.py::test_inv_name_no_guess_a_named_actor_is_declared_never_resolved` | PC-AUTH-003, PC-AUTH-004 |
 | `INV-ACTOR-ID-TYPE` | actor | DEFENDED | `tests/test_actor_identity.py::test_inv_id_type_same_number_with_different_types_are_different_actors` | pendiente |
 | `INV-ACTOR-SINGLE-IDENTITY` | actor | DEFENDED | `tests/test_actor_dogfood_hardening_v2.py::test_split_brain_frame_fails_closed_before_soql` | pendiente |
-| `INV-BUYER-NOT-ACTOR` | authority_arbitration | PARTIAL | `tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor` | pendiente |
+| `INV-BUYER-NOT-ACTOR` | authority_arbitration | PARTIAL | `tests/test_buyer_actor_role_controls_v1.py::test_new_buyer_after_legitimate_actor` y `tests/product_contract/test_product_contract_v1.py::test_barranquilla_collision_keeps_buyer_authority_with_frame_on` | PC-AUTH-001 |
 | `INV-SEM-NO-SILENT-FALLBACK` | semantics | DEFENDED | `tests/test_qualified_buyer_fail_closed.py::test_missing_governorship_del_fails_closed` | pendiente |
 | `INV-MONEY-POLARITY-PRESERVES-INTENT` | money | DEFENDED | `tests/test_money_polarity_v2.py::test_upper_cannot_produce_lower` | PC-MONEY-001 |
 | `INV-ENTITY-RENDERED-SCOPE-EQUALS-EXECUTED` | entity_profile | DEFENDED | `tests/test_entity_profile_semantic_properties.py::test_p11_the_rendered_scope_equals_the_executed_scope` | pendiente |
@@ -39,8 +39,8 @@ Las 28 leyes siguen vigentes bajo los owners registrados. El estado actual es 27
 ## Adjudicaciones que cambian F2
 
 - `INV-STATE-CONTRACT-UNIVERSE-CELEBRATED`: `DEFENDED`. El primario de producto `test_seeds_before_limit` verifica filas, límite y universo celebrado; R5 agrega exclusiones y continuidad de consumidores. Los 951 nodeids históricos no son el argumento de defensa.
-- `INV-BUYER-NOT-ACTOR`: `PARTIAL`. `test_new_buyer_after_legitimate_actor` pasa y conserva comprador tras actor legítimo; falta un READY de Entity Profile con índice que colisiona. El antiguo `test_seeds` falla en 20 parametrizaciones porque su dialecto SQLite no registra `date_extract_y`; la traza llega a SoQL con comprador y monto correctos y falla antes de producir filas. Se registró `HD-BUYER-001`; no se declara bug de runtime con esa evidencia.
-- Las otras 26 leyes conservan owner y defensa primaria de F2. Se ejecutaron todas las referencias primarias; esto confirma el camino conductual vigente, mientras que la sensibilidad por mutación queda probada sólo para las ocho leyes de READY. Ninguna ley nueva de `PROCESS_STATE_REQUEST_INTEGRITY_V1` se integra: `INV-PROCESS-STATE-NO-SILENT-LOSS` aparece separado en `candidate_pending_main` con estado `CANDIDATE_PENDING_MAIN`.
+- `INV-BUYER-NOT-ACTOR`: `PARTIAL`. Entity Profile de Barranquilla ya pasa con índice colisionante y Frame OFF/ON; su mutante de parser lo convierte en candidatos CC. La ley amplia conserva un gap por actor + región + comprador (`OPG-ACTOR-001`) y por PC-AUTH-002/PC-FU-002 aún DESIGN. El antiguo `test_seeds` falla por dialecto SQLite sin `date_extract_y`; es `HD-BUYER-001`, sin cambio de runtime.
+- Las otras 26 leyes conservan owner y defensa primaria de F2. Se ejecutaron todas las referencias primarias; esto confirma el camino conductual vigente, mientras que la sensibilidad por mutación queda probada sólo para las nueve leyes con READY. Ninguna ley nueva de `PROCESS_STATE_REQUEST_INTEGRITY_V1` se integra: `INV-PROCESS-STATE-NO-SILENT-LOSS` aparece separado en `candidate_pending_main` con estado `CANDIDATE_PENDING_MAIN`.
 
 ## Brechas y límites
 
