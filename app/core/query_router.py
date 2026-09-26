@@ -1100,8 +1100,9 @@ class QueryRouter:
         # ("convocatorias", like "oportunidades") is a source noun, not a
         # second state: it is dropped by occurrence. "en convocatoria" is its
         # own multiword mention and stays a state reading.
+        process_state_text = scrubbed
         process_states = tuple(
-            mention for mention in read_process_state_mentions(scrubbed)
+            mention for mention in read_process_state_mentions(process_state_text)
             if mention.surface.lower() not in OPPORTUNITY_HEAD_SURFACES
             or mention.surface.lower() not in opportunity_hits
         ) if params["dataset"] == DATASET_PROCESOS else ()
@@ -1209,7 +1210,7 @@ class QueryRouter:
                 primary_state = False
 
         if process_states:
-            decision = decide_process_states(process_states, seeded_families)
+            decision = decide_process_states(process_states, seeded_families, process_state_text)
             # R3: the decision is the only writer of what the mentions mean.
             # The producer above answered with the FIRST state; whatever it
             # derived by position (family, funnel intent) is rewritten here

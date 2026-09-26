@@ -26,7 +26,15 @@ Rule (PROCESS_STATE_SINGLE_REQUEST_V1) — cardinality, not grammar:
     family projects as a family;
   * a funnel seeded by another authority ("oportunidades", bidder intent) is
     not a second reading. It only checks compatibility: a literal it contains
-    narrows it, anything else clarifies.
+    narrows it, anything else clarifies;
+  * one exception to cardinality (PROCESS_STATE_INTEGRITY_CLOSE_V1): exactly
+    two mentions joined by a bare "o"/"u", one naming the open funnel and the
+    other a literal of that same funnel ("en convocatoria o publicados"), are
+    one request for the funnel. It is not a set union — the funnel carries the
+    current-opportunity policy (O1B) that a lone "publicados" does not — but it
+    keeps the effective query a real turn has had since May 2026. Any other
+    connector, a third mention, a literal of another family or a family that
+    is not the funnel still clarifies.
 
 An opportunity head ("convocatorias", like "oportunidades") is read by the
 opportunity authority, not counted here; the phrase "en convocatoria" is a
@@ -98,16 +106,38 @@ def _label(mention: ProcessStateMention) -> str:
     return _FAMILY_LABELS.get(family, family.replace("_", " "))
 
 
+def _funnel_absorbing_its_literal(
+    mentions: tuple[ProcessStateMention, ...], text: str | None,
+) -> ProcessStateMention | None:
+    """The funnel mention of "<funnel> o <its literal>", in either order."""
+    if text is None or len(mentions) != 2:
+        return None
+    first, second = sorted(mentions, key=lambda mention: mention.span)
+    if text[first.span[1]:second.span[0]].strip().lower() not in {"o", "u"}:
+        return None
+    funnel = next((m for m in mentions if not m.literal and m.family in FUNNEL_FAMILIES), None)
+    literal = next((m for m in mentions if m.literal), None)
+    # The literal's own family is the funnel, so it is one of its members.
+    if funnel is None or literal is None or literal.family != funnel.family:
+        return None
+    return funnel
+
+
 def decide_process_states(
     mentions: tuple[ProcessStateMention, ...],
     seeded_families: set[str],
+    text: str | None = None,
 ) -> ProcessStateDecision:
     """Decide once, over every explicit mention of the turn.
 
     ``seeded_families`` never adds to the cardinality: a seed is another
     authority's frame, checked for compatibility with the one reading named.
+    ``text`` is the text the mentions were read from; without it no connector
+    is read and cardinality alone decides.
     """
     distinct = tuple({mention.reading: mention for mention in mentions}.values())
+    if len(distinct) > 1 and (funnel := _funnel_absorbing_its_literal(mentions, text)):
+        distinct = (funnel,)
     if len(distinct) > 1:
         return ProcessStateDecision(clarification=MULTI_STATE_QUESTION.format(
             states=", ".join(_label(mention) for mention in distinct),

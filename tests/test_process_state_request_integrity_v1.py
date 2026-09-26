@@ -670,9 +670,25 @@ def test_two_explicit_readings_clarify_whatever_joins_them(router, text):
                            '{a} o ({a} y {b})', '({a} y {b}) o {a}', '{b} o {a} y {b}']),
 )
 def test_cardinality_does_not_depend_on_connector_or_grouping(router, pair, shape):
-    (a, _mention_a), (b, _mention_b) = pair
+    (a, mention_a), (b, mention_b) = pair
     signature = executable_signature(router, f"procesos {shape.format(a=a, b=b)} de obra")
+    if shape in _BARE_DISJUNCTIONS and _funnel_and_its_literal(mention_a, mention_b):
+        # PROCESS_STATE_INTEGRITY_CLOSE_V1, declared contract change: "<open
+        # funnel> o <literal of that funnel>" is one request for the funnel.
+        # Only a bare disjunction of exactly these two; grouping, conjunction
+        # and comma keep the cardinality verdict below.
+        assert signature[0] is True and signature[6] == 'oferta_abierta', (shape, a, b, signature[:7])
+        return
     assert signature[0] is False and signature[2] == 'multi', (shape, a, b, signature[:3])
+
+
+_BARE_DISJUNCTIONS = frozenset({'{a} o {b}', '{a} ó {b}'})
+
+
+def _funnel_and_its_literal(first, second):
+    funnels = [m for m in (first, second) if not m.literal and m.family in FUNNEL_FAMILIES]
+    literals = [m for m in (first, second) if m.literal]
+    return bool(funnels and literals and literals[0].family == funnels[0].family)
 
 
 @pytest.mark.parametrize('text, literal, field', [

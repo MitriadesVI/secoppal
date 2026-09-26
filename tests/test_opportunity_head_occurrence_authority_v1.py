@@ -56,9 +56,8 @@ def test_accredited_convocatorias_head_seeds_the_opportunity(router, text):
     assert params.get('estado_family') == 'oferta_abierta', params
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    'PROCESS_STATE_SINGLE_REQUEST_V1 (rebuilt on this fix): the named literal '
-    'narrows the seeded funnel. On main the funnel still wins.'))
+# PROCESS_STATE_SINGLE_REQUEST_V1: the named literal narrows the seeded funnel
+# (the strict xfail that froze this on main retires with PSRI).
 def test_convocatorias_publicadas_is_exactly_published(router):
     params = parse(router, 'convocatorias publicadas de obra')
     assert params.get('estado_del_procedimiento') == ['Publicado'], params
