@@ -40,4 +40,18 @@ Candidato de código `f1911a15`, congelado en el run `r-20260926-131149-f983` (`
 - **Mutaciones** de la regla de absorción: 5/5 muertas. **Ruff:** 0 nuevos. **Semgrep delta** `--base 74a9e4d4`: `NEW_DELTA = 0`.
 - **Contratos cambiados y declarados:** la propiedad de conectores de PSRI exige el embudo sólo para ese par bajo «o» desnuda; se retira el `xfail(strict)` «convocatorias publicadas → Publicado», que ya estaba en XPASS-strict (rojo) en `99a10b02`.
 
+## R1 — la decisión se aplica completa (tras ZEUS `NO_GO` sobre `4402f1e1`)
+
+**Hallazgo de ZEUS (P1, clase B, `MODEL_GAP=NO`).** «procesos abiertos o publicados de obra» consultaba el embudo completo, pero «procesos publicados o abiertos de obra» ejecutaba con `estado_del_procedimiento = 'Publicado'`: la garantía del punto 2 no se cumplía en ambos órdenes. La decisión PSRI era la misma en los dos; el defecto estaba al aplicarla.
+
+**Causa.** El productor de familias escribe los filtros del primer estado que lee, y las formas de varias palabras («en borrador») van antes que cualquier palabra suelta. La decisión sólo reemplazaba los filtros cuando elegía un literal; con una familia, dejaba los del productor, y `project_estado_family` respeta, por contrato, cualquier filtro que encuentre. Sobre las 266 parejas que admite la excepción, enumeradas desde el léxico en ambos órdenes, fallaban 128: 112 con el literal primero y 16 con un literal de varias palabras.
+
+**Arreglo, sin nueva regla lingüística.** `apply_process_state_decision` (en `process_state_request.py`) es el único punto que aplica la decisión. Reemplaza todas las claves de estado y escribe el literal exacto o la familia, ésta a través de la autoridad de proyección existente; entidad, fechas, tema y demás condiciones no se tocan. El escalar heredado `estado`/`estado_field` lo calcula una sola función (`legacy_estado_scalar`), que comparten productor y decisión.
+
+**Evidencia R1.**
+- Propiedad enumerada desde el léxico (19 superficies de embudo × 7 literales × 2 órdenes = 266), con consulta efectiva vía `run_query`, cliente falso y persistencia temporal: 0 diferencias frente al embudo solo, con tema solo y con comprador y fechas. En `4402f1e1`: 128.
+- El literal solo sigue exacto (`= 'Publicado'`, `= 'Borrador'`); comprador y rango de fechas se conservan.
+- Planes completos de 665 textos (571 consultas reales únicas de `data/feedback.jsonl` y 94 textos de tests): cambian 3, todos textos de test del caso de ZEUS; 0 consultas reales.
+- Mutaciones: 6 de 6 no equivalentes muertas. La séptima (`setdefault` en lugar de asignación del literal) es equivalente por construcción, porque todas las claves se borran antes.
+
 Rollback: revertir la rama; no hay flag ni migración.

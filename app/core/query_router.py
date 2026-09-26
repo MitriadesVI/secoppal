@@ -60,7 +60,7 @@ from app.core.money_polarity import (
     has_money_relation_before,
     resolve_money_polarity,
 )
-from app.core.estado_projection import STATE_FILTER_FIELDS, project_estado_family
+from app.core.estado_projection import legacy_estado_scalar, project_estado_family
 from app.core.generic_buyer import (
     build_incomplete_buyer_resolution,
     detect_incomplete_buyer,
@@ -1090,7 +1090,7 @@ class QueryRouter:
         #    The matched token is scrubbed so it doesn't leak into 'objeto'.
         from app.core.estado_families import detect_estado_family
         from app.core.process_state_request import (
-            CLARIFICATION_KEY, OPPORTUNITY_HEAD_SURFACES, decide_process_states,
+            OPPORTUNITY_HEAD_SURFACES, apply_process_state_decision, decide_process_states,
         )
         # INV-PROCESS-STATE-NO-SILENT-LOSS: read every named process state
         # before the single-answer producers below choose one of them. A dual
@@ -1121,15 +1121,9 @@ class QueryRouter:
                 params[field] = values
             params["estado_family"] = estado_family_result["family"]
             # Backward compat: set legacy estado/estado_field for old tests
-            if "estado_de_apertura_del_proceso" in estado_family_result["filters"]:
-                params["estado"] = estado_family_result["filters"]["estado_de_apertura_del_proceso"][0]
-                params["estado_field"] = "estado_de_apertura_del_proceso"
-            elif "estado_del_procedimiento" in estado_family_result["filters"]:
-                params["estado"] = estado_family_result["filters"]["estado_del_procedimiento"][0]
-                params["estado_field"] = "estado_del_procedimiento"
-            elif "estado_contrato" in estado_family_result["filters"]:
-                params["estado"] = estado_family_result["filters"]["estado_contrato"][0]
-                params["estado_field"] = "estado_contrato"
+            scalar = legacy_estado_scalar(estado_family_result["filters"])
+            if scalar is not None:
+                params["estado"], params["estado_field"] = scalar
             # Scrub the consumed span from text
             span = estado_family_result["consumed_span"]
             predicate = state_predicate(scrubbed, span)
@@ -1211,27 +1205,11 @@ class QueryRouter:
 
         if process_states:
             decision = decide_process_states(process_states, seeded_families, process_state_text)
-            # R3: the decision is the only writer of what the mentions mean.
-            # The producer above answered with the FIRST state; whatever it
-            # derived by position (family, funnel intent) is rewritten here
-            # from the set of readings, so word order cannot reach the SoQL.
-            if decision.clarification:
-                params[CLARIFICATION_KEY] = decision.clarification
-                # The clarified frame persists as context: it must not carry
-                # the one state a single-answer producer happened to pick.
-                for key in (*STATE_FILTER_FIELDS, "estado", "estado_field", "estado_family"):
-                    params.pop(key, None)
-            else:
-                if decision.literal:
-                    # A named literal is the exact filter, also inside the
-                    # funnel it narrows ("abiertos publicados").
-                    for key in STATE_FILTER_FIELDS:
-                        params.pop(key, None)
-                    params[decision.field] = [decision.literal]
-                    params["estado"] = decision.literal
-                    params["estado_field"] = decision.field
-                if decision.family:
-                    params["estado_family"] = decision.family
+            # R3/R1: the decision is the only writer of what the mentions
+            # mean. The producer above answered with the FIRST state; every
+            # state key it derived by position is replaced, whole, so word
+            # order cannot reach the SoQL.
+            apply_process_state_decision(params, decision)
             if decision.funnel and not decision.clarification:
                 params["intent_type"] = "opportunity_search"
             elif intent_before_states is None:

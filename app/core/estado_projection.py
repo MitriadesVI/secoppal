@@ -40,7 +40,7 @@ from typing import Any
 
 from app.core.estado_families import ESTADO_FAMILIES
 
-__all__ = ["STATE_FILTER_FIELDS", "project_estado_family"]
+__all__ = ["STATE_FILTER_FIELDS", "legacy_estado_scalar", "project_estado_family"]
 
 # Campos por los que una familia puede materializarse en la fuente.
 STATE_FILTER_FIELDS: tuple[str, ...] = (
@@ -49,6 +49,27 @@ STATE_FILTER_FIELDS: tuple[str, ...] = (
     "estado_contrato",
     "estado_contrato_adicional",
 )
+
+
+# Orden en que el escalar heredado (``estado``/``estado_field``) elige campo.
+_LEGACY_SCALAR_FIELDS: tuple[str, ...] = (
+    "estado_de_apertura_del_proceso",
+    "estado_del_procedimiento",
+    "estado_contrato",
+)
+
+
+def legacy_estado_scalar(filters: dict[str, Any]) -> tuple[str, str] | None:
+    """``(estado, estado_field)`` que los tests antiguos leen de unos filtros.
+
+    El productor de familias y la decisión de estados de proceso lo derivan
+    aquí, para que ambos escriban lo mismo sobre los mismos filtros.
+    """
+    for field in _LEGACY_SCALAR_FIELDS:
+        values = filters.get(field)
+        if values:
+            return values[0], field
+    return None
 
 
 def _has_value(params: dict[str, Any], field: str) -> bool:

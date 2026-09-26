@@ -21,7 +21,14 @@ from app.config import Settings, get_settings
 from app.core.conversation_store import ConversationStore
 from app.core.estado_families import read_process_state_mentions
 from app.core.orchestrator import SecopalWorkflow
-from app.core.process_state_request import CLARIFICATION_KEY, decide_process_states
+from itertools import count
+
+from app.core.estado_families import ESTADO_FAMILIES, _MENTION_TOKENS, _process_reading
+from app.core.estado_projection import legacy_estado_scalar
+from app.core.process_state_request import (
+    CLARIFICATION_KEY, FUNNEL_FAMILIES, OPPORTUNITY_HEAD_SURFACES, ProcessStateDecision,
+    apply_process_state_decision, decide_process_states,
+)
 from app.core.query_plan import compute_query_plan
 from app.core.query_router import QueryRouter
 
@@ -88,6 +95,8 @@ PAIRS = [
     ('procesos en convocatoria o publicados de obra', 'procesos en convocatoria de obra'),
     ('procesos publicados o en convocatoria de obra', 'procesos en convocatoria de obra'),
     ('procesos abiertos o publicados de obra', 'procesos abiertos de obra'),
+    # ZEUS NO_GO on 4402f1e1: the literal first left its own filter behind.
+    ('procesos publicados o abiertos de obra', 'procesos abiertos de obra'),
 ]
 
 
@@ -156,3 +165,101 @@ def test_another_family_still_clarifies_with_no_source_call(flow):
     result = flow.run_query('procesos publicados o adjudicados de obra', chat_id='psc-other', today=TODAY)
     assert result.get('needs_clarification'), result
     assert flow.source_calls == []
+
+
+# ── R1 (ZEUS NO_GO on 4402f1e1): the decision is applied whole ───────────
+# The producer answers with the first state it reads, a multiword form before
+# any single word; the family projection respects any filter it finds. So a
+# funnel decision over "publicados o abiertos" still sent 'Publicado' alone.
+# The pairs are enumerated from the lexicon, not sampled: every pair the
+# exception admits, in both orders (266 on 4402f1e1, 128 of them wrong).
+
+def _admitted_surfaces():
+    funnel, literals = [], []
+    for token in sorted(_MENTION_TOKENS):
+        literal, _, family = _process_reading(token)
+        if family in FUNNEL_FAMILIES and token not in OPPORTUNITY_HEAD_SURFACES:
+            (funnel if literal is None else literals).append(token)
+    return funnel, literals
+
+
+FUNNEL_SURFACES, FUNNEL_LITERALS = _admitted_surfaces()
+
+
+def test_the_enumeration_is_not_vacuous():
+    assert {'abiertos', 'en convocatoria', 'vigentes'} <= set(FUNNEL_SURFACES)
+    assert {'publicados', 'borrador', 'en borrador'} <= set(FUNNEL_LITERALS)
+
+
+def both_orders(funnel, literal, suffix):
+    return (f'procesos {funnel} o {literal} {suffix}', f'procesos {literal} o {funnel} {suffix}')
+
+
+@pytest.mark.parametrize('funnel', FUNNEL_SURFACES)
+def test_every_admitted_pair_plans_the_funnel_alone(router, funnel):
+    alone, _ = plan(router, f'procesos {funnel} de obra')
+    expected = {k: alone.get(k) for k in STATE_KEYS}
+    for literal in FUNNEL_LITERALS:
+        for text in both_orders(funnel, literal, 'de obra'):
+            params, result = plan(router, text)
+            assert {k: params.get(k) for k in STATE_KEYS} == expected, text
+            assert result.should_execute, (text, result.reason)
+
+
+_CHATS = count()
+
+
+@pytest.mark.parametrize('suffix', ['de obra', 'de la alcaldia de manizales en 2026'])
+def test_every_admitted_pair_reaches_the_source_as_the_funnel_alone(flow, suffix):
+    wrong = []
+    for funnel in FUNNEL_SURFACES:
+        alone = source_calls(flow, f'procesos {funnel} {suffix}', f'psc-r1-{next(_CHATS)}')
+        assert alone, funnel
+        for literal in FUNNEL_LITERALS:
+            for text in both_orders(funnel, literal, suffix):
+                if source_calls(flow, text, f'psc-r1-{next(_CHATS)}') != alone:
+                    wrong.append(text)
+    assert not wrong, wrong
+
+
+def test_the_other_conditions_survive_the_absorption(flow):
+    query = source_calls(flow, 'procesos publicados o abiertos de la alcaldia de manizales en 2026',
+                         'psc-r1-conditions')[0][1]
+    assert "entidad = 'MUNICIPIO DE MANIZALES'" in query, query
+    assert "fecha_de_publicacion_del >= '2026-01-01'" in query, query
+    assert "fecha_de_publicacion_del <= '2026-12-31'" in query, query
+
+
+@pytest.mark.parametrize('literal', FUNNEL_LITERALS)
+def test_a_lone_literal_of_the_funnel_stays_exact(flow, literal):
+    value = _process_reading(literal)[0]
+    query = source_calls(flow, f'procesos {literal} de obra', f'psc-r1-{next(_CHATS)}')[0][1]
+    assert f"estado_del_procedimiento = '{value}'" in query, query
+
+
+def test_a_family_decision_replaces_what_the_producer_left():
+    params = {'dataset': 'procesos', 'estado_del_procedimiento': ['Publicado'], 'estado': 'Publicado',
+              'estado_field': 'estado_del_procedimiento', 'estado_family': 'oferta_abierta',
+              'entidad': 'MUNICIPIO DE MANIZALES', 'fecha_desde': '2026-01-01'}
+    apply_process_state_decision(params, ProcessStateDecision(family='oferta_abierta', funnel=True))
+    members = ESTADO_FAMILIES['oferta_abierta']['procesos']['estado_del_procedimiento']
+    assert params['estado_del_procedimiento'] == list(members)
+    assert (params['estado'], params['estado_field']) == (members[0], 'estado_del_procedimiento')
+    assert params['entidad'] == 'MUNICIPIO DE MANIZALES' and params['fecha_desde'] == '2026-01-01'
+
+
+def test_a_decision_that_decides_nothing_leaves_the_params_alone():
+    params = {'dataset': 'procesos', 'estado': 'Publicado', 'estado_del_procedimiento': ['Publicado']}
+    apply_process_state_decision(params, ProcessStateDecision())
+    assert params == {'dataset': 'procesos', 'estado': 'Publicado', 'estado_del_procedimiento': ['Publicado']}
+
+
+def test_the_legacy_scalar_keeps_the_producers_precedence():
+    # contrato_activo projects two process fields; the producer always took
+    # the opening state first. The decision and the producer share this rule.
+    filters = {field: list(values)
+               for field, values in ESTADO_FAMILIES['contrato_activo']['procesos'].items() if values}
+    assert set(filters) == {'estado_de_apertura_del_proceso', 'estado_del_procedimiento'}
+    assert legacy_estado_scalar(filters) == (
+        filters['estado_de_apertura_del_proceso'][0], 'estado_de_apertura_del_proceso')
+

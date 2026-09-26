@@ -45,12 +45,23 @@ The decision is the ONLY writer of what those mentions mean (R3): filters,
 funnel implies. A single-answer producer may run first, but nothing it picked
 by position survives: "abiertos y aprobados" and "aprobados y abiertos" name
 the same states, so they get the same verdict.
+
+Same verdict is not enough; it must be the same query (R1, ZEUS NO_GO on
+4402f1e1). The producer answers with the first state it reads, a multiword
+form before any single word, so "publicados o abiertos" left
+``estado_del_procedimiento = ['Publicado']`` behind a funnel decision, and the
+family projection respects any filter it finds. ``apply_process_state_decision``
+therefore replaces every state key before writing the decision: a literal
+exactly, a family through the one projection authority.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 
 from app.core.estado_families import ESTADO_FAMILIES, ProcessStateMention
+from app.core.estado_projection import (
+    STATE_FILTER_FIELDS, legacy_estado_scalar, project_estado_family,
+)
 
 CLARIFICATION_KEY = "_process_state_clarification"
 
@@ -92,6 +103,10 @@ class ProcessStateDecision:
     field: str | None = None
     family: str | None = None
     funnel: bool = False
+
+
+# Every key a producer may have derived from a process-state word.
+STATE_KEYS = (*STATE_FILTER_FIELDS, "estado", "estado_field", "estado_family")
 
 
 def _family_members(family: str) -> set[str]:
@@ -165,3 +180,35 @@ def decide_process_states(
         return ProcessStateDecision(literal=mention.literal, field=mention.field,
                                     family=family, funnel=funnel is not None)
     return ProcessStateDecision(family=family, funnel=funnel is not None)
+
+
+def apply_process_state_decision(params: dict, decision: ProcessStateDecision) -> None:
+    """Write ``decision`` over whatever a single-answer producer left.
+
+    Only the state keys change: entity, dates, topic and every other condition
+    stay as they are. A decision that decides nothing leaves ``params`` alone.
+    The opportunity intent is not written here: it depends on what other
+    authorities read before the state words (QueryRouter).
+    """
+    if not (decision.clarification or decision.literal or decision.family):
+        return
+    for key in STATE_KEYS:
+        params.pop(key, None)
+    if decision.clarification:
+        # The clarified frame persists as context: it must not carry the one
+        # state a single-answer producer happened to pick.
+        params[CLARIFICATION_KEY] = decision.clarification
+        return
+    if decision.literal:
+        # A named literal is the exact filter, also inside the funnel it
+        # narrows ("abiertos publicados").
+        params[decision.field] = [decision.literal]
+        params["estado"] = decision.literal
+        params["estado_field"] = decision.field
+    if decision.family:
+        params["estado_family"] = decision.family
+    if not decision.literal:
+        project_estado_family(params)
+        scalar = legacy_estado_scalar(params)
+        if scalar is not None:
+            params["estado"], params["estado_field"] = scalar
