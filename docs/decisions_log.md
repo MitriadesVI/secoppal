@@ -4674,3 +4674,14 @@ Documentar no activa. Rollback: `SECOPPAL_NATURAL_ALPHA_MODE=off`.
 **Evidencia:** paridad BASE↔AFTER sin regresiones (30 pares; deltas esperados: métrica explícita = un solo job, fetch interno = corte+1); dogfood de 68 consultas standalone con los siete ceros duros en cero; corpus + propiedades + integración por `SecopalWorkflow.run_query`; Ruff limpio; Semgrep sin findings nuevos. La limitación `ACTOR_BUYER_SPAN_CONFLICT` («quién ha contratado por mayor valor con la Alcaldía de X») quedó adjudicada como preexistente: idéntica en BASE y candidato, con las autoridades de actor y comprador intactas.
 **Fuera de alcance:** follow-ups y continuidad, filtros nuevos (dinero/modalidad/tema), composición con otras capabilities, nuevos LLM o prompts, gazetteer, ADR-073 y Actor Profile. Documentar no activa: la activación productiva es una decisión posterior y de otro gate.
 [Decisión completa](decisions/2026-09-18_ADR-097_suppliers-request-flex-v1.md).
+
+---
+
+## ADR-100: Integridad de estados de proceso (PSRI) y cierre de la cadena «convocatoria»
+
+**Fecha:** 2026-09-26
+**Contexto:** la pila de «convocatoria» (PSRI + papeles de ocurrencia + NCE R1–R3) recibió cinco NO_GO de ZEUS; el último mostró que el MARKER borra «convocatoria» del objeto en una sola petición, donde `main` la conserva. PSRI es independiente de esos papeles y cierra una pérdida real: `main` descarta o mezcla el segundo estado de proceso.
+**Decisión:** se integra sólo PSRI. Los papeles de ocurrencia y NCE quedan aparcados, sus NO_GO se conservan y sus contraejemplos pasan al gold de la base de interpretación por petición. El embudo abierto absorbe su propio literal bajo «o»/«u» desnuda, lo que conserva el turno real de Manizales como en `main`. No es una unión de conjuntos, porque O1B da al embudo una política temporal.
+**Evidencia:** 569 consultas reales: 4 cambios (3 arreglos, 1 ambigüedad real); 56 cambios en tests adjudicados uno a uno, ninguno de aclarar a ejecutar; consulta efectiva igual a `main` en el embudo; global `CANDIDATE_ONLY = 0`; Ruff y Semgrep sin nuevos.
+**Deuda declarada:** errores previos de «convocatoria» sin cambios frente a `main`; fronteras entre peticiones; fricción en uniones dentro de una familia distinta del embudo (4 sintéticos, 0 reales).
+[Decisión completa](decisions/2026-09-26_ADR-100_process-state-integrity-close.md).
