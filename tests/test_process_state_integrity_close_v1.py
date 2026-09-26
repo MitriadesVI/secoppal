@@ -262,4 +262,3 @@ def test_the_legacy_scalar_keeps_the_producers_precedence():
     assert set(filters) == {'estado_de_apertura_del_proceso', 'estado_del_procedimiento'}
     assert legacy_estado_scalar(filters) == (
         filters['estado_de_apertura_del_proceso'][0], 'estado_de_apertura_del_proceso')
-
