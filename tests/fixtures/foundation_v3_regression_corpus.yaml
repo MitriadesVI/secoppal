@@ -1,0 +1,191 @@
+# Foundation V3 promotion regression corpus (ADR-102). NOT a held-out set.
+#
+# Each case states the producer proposal the host receives (quotes are cited
+# spans of `raw`) and what the host must do with it through the real workflow
+# route. Written for the promotion from product rules; it never tunes the prompt.
+#
+# condition: [dimension, operator, [quote, ...], polarity]   quote "text#2" = 2nd occurrence
+# expect:
+#   route: foundation | legacy
+#   terminal, reason (internal), datasets, topics (host-resolved), buyer
+#   objeto_not_contains: words no host-resolved topic may contain
+#   soql_contains / soql_not_contains: over every executed query SoQL (lowercased)
+#   calls: exact number of source calls ("any" for legacy)
+version: 1
+cases:
+  - id: FI-001
+    note: canonical first-infancy case, clean producer topic
+    raw: contratos de primera infancia de la alcaldía de barranquilla
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [TOPIC, contains, [primera infancia], POSITIVE]
+      - [BUYER, is, [alcaldía de barranquilla], POSITIVE]
+    expect:
+      route: foundation
+      terminal: READY
+      datasets: [jbjy-vk9h]
+      topics: [primera infancia]
+      buyer: DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA
+      objeto_not_contains: [contratos]
+      soql_contains: ["%primera infancia%", "nombre_entidad"]
+      soql_not_contains: ["'%contratos%'"]
+      row_ids: [K-PI]
+      calls: 1
+  - id: FI-002
+    note: canonical case, producer also cites the universe occurrence as topic (G2 omits it)
+    raw: contratos de primera infancia de la alcaldía de barranquilla
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [TOPIC, contains, [contratos, primera infancia], POSITIVE]
+      - [BUYER, is, [alcaldía de barranquilla], POSITIVE]
+    expect:
+      route: foundation
+      terminal: READY
+      topics: [primera infancia]
+      objeto_not_contains: [contratos]
+      soql_not_contains: ["'%contratos%'"]
+      row_ids: [K-PI]
+      calls: 1
+  - id: FI-003
+    note: canonical case, producer topic swallows the universe occurrence -> ask, no call
+    raw: contratos de primera infancia de la alcaldía de barranquilla
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [TOPIC, contains, [contratos de primera infancia], POSITIVE]
+      - [BUYER, is, [alcaldía de barranquilla], POSITIVE]
+    expect:
+      route: foundation
+      terminal: NEEDS_CLARIFICATION
+      reason: TOPIC_OVERLAPS_REQUEST_UNIVERSE
+      calls: 0
+  - id: NC-001
+    note: another occurrence of «contratos» is real topic content
+    raw: contratos para implementar un sistema de gestión de contratos laborales
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [TOPIC, contains, [sistema de gestión de contratos laborales], POSITIVE]
+    expect:
+      route: foundation
+      terminal: READY
+      topics: [sistema de gestion de contratos laborales]
+      soql_contains: ["%sistema de gestion de contratos laborales%"]
+      soql_not_contains: ["'%contratos%'"]
+      calls: 1
+  - id: NC-002
+    note: dual processes and contracts of first infancy
+    raw: procesos y contratos de primera infancia
+    requests: [{id: r1, subject: processes, universe: procesos, scope: s1},
+               {id: r2, subject: contracts, universe: contratos, scope: s1}]
+    conditions:
+      - [TOPIC, contains, [primera infancia], POSITIVE, [r1]]
+      - [TOPIC, contains, [primera infancia], POSITIVE, [r2]]
+    expect:
+      route: foundation
+      terminal: READY
+      datasets: [p6dx-8zbt, jbjy-vk9h]
+      topics: [primera infancia, primera infancia]
+      soql_contains: ["%primera infancia%"]
+      soql_not_contains: ["'%contratos%'", "'%procesos%'"]
+      calls: 2
+  - id: NC-003
+    note: «administración de contratos» is the topic, not the universe word
+    raw: contratos sobre administración de contratos
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [TOPIC, contains, [administración de contratos], POSITIVE]
+    expect:
+      route: foundation
+      terminal: READY
+      topics: [administracion de contratos]
+      soql_contains: ["%administracion de contratos%"]
+      calls: 1
+  - id: NC-004
+    note: «firmados» is not topic; the celebrated universe already applies
+    raw: contratos firmados de primera infancia
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [TOPIC, contains, [primera infancia], POSITIVE]
+    expect:
+      route: foundation
+      terminal: READY
+      topics: [primera infancia]
+      soql_not_contains: ["'%contratos%'", "%firmados%"]
+      calls: 1
+  - id: NC-005
+    note: no dataset noun -> not a Foundation-shaped first turn; legacy keeps it
+    raw: primera infancia en barranquilla
+    requests: [{id: r1, subject: contracts, universe: primera infancia}]
+    conditions: []
+    expect:
+      route: legacy
+  - id: NC-006
+    note: a secretariat the host only matches fuzzily is asked, never hijacked
+    raw: contratos de la Secretaría de Gestión Social sobre primera infancia
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [BUYER, is, [Secretaría de Gestión Social], POSITIVE]
+      - [TOPIC, contains, [primera infancia], POSITIVE]
+    expect:
+      route: foundation
+      terminal: NEEDS_CLARIFICATION
+      reason: "UNRESOLVED_HOST_DIMENSION:BUYER"
+      calls: 0
+  - id: ST-001
+    note: «publicados o abiertos» with the literal operator is asked, never «Publicado» alone
+    raw: procesos publicados o abiertos de primera infancia
+    requests: [{id: r1, subject: processes, universe: procesos}]
+    conditions:
+      - [STATE, is, [publicados, abiertos], POSITIVE]
+      - [TOPIC, contains, [primera infancia], POSITIVE]
+    expect:
+      route: foundation
+      terminal: NEEDS_CLARIFICATION
+      reason: STATE_COMPOSITION_UNSUPPORTED
+      calls: 0
+  - id: VA-001
+    note: an inverted value operator is asked, never executed
+    raw: contratos de primera infancia de más de 300 millones
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [TOPIC, contains, [primera infancia], POSITIVE]
+      - [VALUE, less_than, [más de 300 millones], POSITIVE]
+    expect:
+      route: foundation
+      terminal: NEEDS_CLARIFICATION
+      reason: VALUE_OPERATOR_EVIDENCE_MISMATCH
+      calls: 0
+  - id: VA-002
+    note: the accredited direction executes an exclusive bound
+    raw: contratos de primera infancia de más de 300 millones
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [TOPIC, contains, [primera infancia], POSITIVE]
+      - [VALUE, greater_than, [más de 300 millones], POSITIVE]
+    expect:
+      route: foundation
+      terminal: READY
+      soql_contains: ["valor_del_contrato > 300000000"]
+      calls: 1
+  - id: TO-001
+    note: two separate topics in one condition are asked
+    raw: contratos de primera infancia y de alimentación escolar
+    requests: [{id: r1, subject: contracts, universe: contratos}]
+    conditions:
+      - [TOPIC, contains, [primera infancia, alimentación escolar], POSITIVE]
+    expect:
+      route: foundation
+      terminal: NEEDS_CLARIFICATION
+      reason: MULTI_EVIDENCE_TOPIC_UNSUPPORTED
+      calls: 0
+  - id: OP-001
+    note: current opportunities stay processes-only (H7 O3)
+    raw: oportunidades de primera infancia
+    requests: [{id: r1, subject: processes, universe: oportunidades, kind: opportunities}]
+    conditions:
+      - [TOPIC, contains, [primera infancia], POSITIVE]
+    expect:
+      route: foundation
+      terminal: READY
+      datasets: [p6dx-8zbt]
+      soql_contains: ["estado_de_apertura_del_proceso = 'abierto'"]
+      calls: 1
