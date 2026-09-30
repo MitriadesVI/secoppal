@@ -1,0 +1,151 @@
+{
+ "baseline": {
+  "commit": "680907653b190a277993ce813b070b1984aee2b5",
+  "summary": "119 failed, 16512 passed, 23 skipped, 36 xfailed, 2 errors in 938.67s"
+ },
+ "candidate": {
+  "code_commit": "0dc5985a4a42335e813597bc0fc95ac4adf2a3b4",
+  "note": "later commits on the branch add only docs and scripts/audits instruments; no app/ or tests/ change",
+  "summary": "120 failed, 18366 passed, 23 skipped, 36 xfailed, 2 errors in 949.61s",
+  "network_attempts_blocked": 77
+ },
+ "protocol": "same interpreter, same env -i environment, TZ=America/Bogota, PYTHONHASHSEED=0, same netblock plugin directory (netblock.py only), clean detached worktrees, serial, no concurrent jobs",
+ "delta": {
+  "BASE_ONLY_FAILURES": [],
+  "COMMON_FAILURES": 120,
+  "COMMON_FAILURES_IDENTICAL_TO_BASELINE_EXCEPT": [],
+  "CANDIDATE_ONLY_BY_NODEID": [
+   "tests/test_supplier_request_authority.py::test_arbitrary_digit_boundaries_never_raise_or_silently_authorize"
+  ],
+  "NEW_ERRORS": [],
+  "BASE_PASSED_NOW_MISSING": [],
+  "NEW_TESTS_PASSED": 1855,
+  "HANGS": "none (959 s vs 942 s wall)"
+ },
+ "adjudication": {
+  "tests/test_supplier_request_authority.py::test_arbitrary_digit_boundaries_never_raise_or_silently_authorize": {
+   "classification": "PRE_EXISTING_LATENT_DEFECT_EXPOSED_BY_HYPOTHESIS_SAMPLING",
+   "evidence": [
+    "the supplier request authority is not in the promotion diff",
+    "assess_supplier_request('001 proveedores') == EXECUTABLE on main 68090765 and on the candidate (also '010', '0001')",
+    "--hypothesis-seed=19: 1 failed on main and 1 failed on the candidate; the baseline run sampled no leading-zero example",
+    "the same test passed in the contended candidate run (different random examples)"
+   ],
+   "action": "out of scope; reported as a separate task"
+  }
+ },
+ "contended_run_note": {
+  "description": "a first candidate run happened with an extra sitecustomize.py in the plugin dir and parity jobs competing for CPU; discarded as not equal-environment",
+  "its_candidate_only": [
+   "tests/test_actor_identity.py::test_inv_pure_cold_import_pulls_in_no_app_or_io_modules",
+   "tests/test_actor_pending_document_selection.py::test_a_document_outside_the_list_never_matches"
+  ],
+  "explanations": {
+   "tests/test_actor_identity.py::test_inv_pure_cold_import_pulls_in_no_app_or_io_modules": "instrument artifact: sitecustomize imported socket in the test's cold subprocess; fails on main too with that plugin dir, passes on both without it",
+   "tests/test_actor_pending_document_selection.py::test_a_document_outside_the_list_never_matches": "deadline under CPU contention ('No pude calcular el total'); passes in the clean run"
+  }
+ },
+ "verdict": "ZERO_CANDIDATE_ONLY (1 node id differs by Hypothesis sampling; seed-matched replay shows identical behavior on main and candidate)",
+ "flag_off_parity": {
+  "default": {
+   "queries": 785,
+   "differing_after_clock_mask_and_call_multiset": [],
+   "call_order_only_diffs": 40,
+   "exceptions_base_cand": [
+    2,
+    2
+   ],
+   "calls_total_base_cand": [
+    896,
+    896
+   ],
+   "foundation_keys_in_candidate": 0
+  },
+  "frame_actor": {
+   "queries": 785,
+   "differing_after_clock_mask_and_call_multiset": [],
+   "call_order_only_diffs": 36,
+   "exceptions_base_cand": [
+    2,
+    2
+   ],
+   "calls_total_base_cand": [
+    909,
+    909
+   ],
+   "foundation_keys_in_candidate": 0
+  }
+ },
+ "audit_corpora": {
+  "negation_focal_v1": {
+   "cases": 24,
+   "base": [
+    22,
+    2,
+    0
+   ],
+   "cand": [
+    22,
+    2,
+    0
+   ],
+   "status_diffs": []
+  },
+  "time_v2_focal": {
+   "cases": 32,
+   "base": [
+    31,
+    1,
+    0
+   ],
+   "cand": [
+    31,
+    1,
+    0
+   ],
+   "status_diffs": []
+  },
+  "control_language_v1": {
+   "cases": 42,
+   "base": [
+    41,
+    1,
+    0
+   ],
+   "cand": [
+    41,
+    1,
+    0
+   ],
+   "status_diffs": []
+  },
+  "actor_hygiene_v1": {
+   "cases": 36,
+   "base": [
+    35,
+    1,
+    0
+   ],
+   "cand": [
+    35,
+    1,
+    0
+   ],
+   "status_diffs": []
+  },
+  "hca_final_p1_fixes": {
+   "cases": 40,
+   "base": [
+    40,
+    0,
+    0
+   ],
+   "cand": [
+    40,
+    0,
+    0
+   ],
+   "status_diffs": []
+  }
+ }
+}

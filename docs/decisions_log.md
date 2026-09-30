@@ -4686,3 +4686,25 @@ Documentar no activa. Rollback: `SECOPPAL_NATURAL_ALPHA_MODE=off`.
 **Deuda declarada:** errores previos de «convocatoria» sin cambios frente a `main`; fronteras entre peticiones; fricción en uniones dentro de una familia distinta del embudo (4 sintéticos, 0 reales).
 **R1 (ZEUS NO_GO sobre `4402f1e1`):** el orden «literal o embudo» dejaba el filtro del literal (128 de 266 parejas admitidas). La decisión ahora se aplica completa en un solo punto (`apply_process_state_decision`), sin nueva regla lingüística; la propiedad enumerada desde el léxico da 0 diferencias y ninguna consulta real cambia.
 [Decisión completa](decisions/2026-09-26_ADR-100_process-state-integrity-close.md).
+
+---
+
+## ADR-101: Foundation V3 — el host decide el universo de la cita (H7)
+
+**Fecha:** 2026-09-29
+**Contexto:** el paso B intentó enseñar al productor LLM las reglas de oportunidad (O3, O6, O7) en tres versiones de prompt y ninguna pasó el filtro. Las capturas muestran que el productor cita el núcleo del universo de forma estable y que lo que oscila es el bit de oportunidad.
+**Decisión:** cambia P4. El productor cita el universo y declara `universe_kind`, que pasa a ser obligatorio. El host decide el universo efectivo con un léxico cerrado aplicado solo a esa cita (`RequestUniverseDecision`, autoridad `PRODUCER` o `HOST_CLOSED_POLICY`). Dos reglas cerradas que discrepan piden aclaración. La vista de contratos de unas «licitaciones» históricas es una política aparte (`HISTORICAL_TENDER_COMPLEMENT`, `WIDENING`, con recibo y nota visible). El paso B de solo prompt queda `CLOSED / NO_GO`; v4.2 + H7 es un candidato nuevo.
+**Evidencia:** gate offline fijado antes del replay y mutaciones 11/11 (`docs/audits/foundation_v3_bc_v4/H7_POLITICA_UNIVERSO.md`). Es una cota en desarrollo; la evidencia es el held-out.
+**Fuera de alcance:** activación (flag `off`), merge a `main`, intención comercial y expansión con VALUE, STATE o modalidad.
+[Decisión completa](decisions/2026-09-29_ADR-101_foundation-host-universe-policy.md).
+
+---
+
+## ADR-102: Foundation V3 — promoción selectiva detrás de un solo flag
+
+**Fecha:** 2026-09-29
+**Contexto:** `f703504b` cerró con `FOUNDATION_PROMOTION = GO_PROMOTION_ONLY`; la rama es un laboratorio que no se mergea.
+**Decisión:** trasplante por archivo desde `main` `68090765`. Un perfil (`SECOPPAL_FOUNDATION_MODE=foundation_v3`): productor B con prompt v4.2 congelado (`a5867d40…`), `universe_kind` obligatorio y H7 inseparable; rollback `legacy` (default). Foundation entra después de los dueños vigentes y sólo reclama el SEARCH de primer turno que todos declinan. Se excluyen el complemento histórico y B_GUARDAS. Se cierran cuatro rutas silenciosas del host, los terminales hablan en español determinista y una caída del proveedor puede ejecutar una búsqueda básica rotulada dentro de un contrato cerrado.
+**Evidencia:** `docs/audits/foundation_v3_promotion/` (baseline, inventario, matriz de rutas, contrato del fallback, mutaciones 20/20, delta global, paridad flag OFF).
+**Fuera de alcance:** activación, dogfood, canary, merge, follow-ups de Foundation, ampliación de `eligible_first_search`.
+[Decisión completa](decisions/2026-09-29_ADR-102_foundation-v3-selective-promotion.md).

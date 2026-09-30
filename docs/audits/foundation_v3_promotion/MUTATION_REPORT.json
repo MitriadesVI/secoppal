@@ -1,0 +1,365 @@
+{
+ "candidate_head_at_run": "0dc5985a (tests of b469886d runtime + ownership tests)",
+ "protocol": "each mutant edits app/ bytes in the promotion worktree, runs the killer test files with the netblock plugin, then restores the exact bytes; a mutant counts as killed only when a designated killer test fails by assertion (not an incidental exception)",
+ "instrument": "scripts/audits/foundation_promotion_mutants.py + foundation_promotion_run_mutants.py",
+ "summary": {
+  "total": 20,
+  "killed": 20,
+  "killed_by_assertion": 20,
+  "survived": []
+ },
+ "history": [
+  "first run: M13 survived (a capability binding always comes with a non-SEARCH Alpha job, so the route-level check is a redundant defense) -> unit test test_natural_alpha_owner_keeps_capabilities_and_non_search_jobs added; M14 died by a stub ValueError -> test producer stub made non-throwing; second run 20/20 by assertion"
+ ],
+ "mutants": [
+  {
+   "mutant": "M01_universe_kind_default",
+   "files": [
+    "app/core/foundation_universe_kind.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_prompts.py::test_universe_kind_records_adds_nothing_and_bad_shapes_are_rejected",
+    "tests/test_foundation_promotion_boundary.py::test_universe_kind_has_no_default_anywhere_in_the_runtime"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_promotion_boundary.py::test_universe_kind_has_no_default_anywhere_in_the_runtime",
+    "tests/test_foundation_prompts.py::test_universe_kind_records_adds_nothing_and_bad_shapes_are_rejected[B]",
+    "tests/test_foundation_prompts.py::test_universe_kind_records_adds_nothing_and_bad_shapes_are_rejected[C]"
+   ]
+  },
+  {
+   "mutant": "M02_h7_not_applied",
+   "files": [
+    "app/core/foundation_runtime.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_universe_policy.py::test_runtime_always_applies_h7_and_never_adds_the_contracts_view",
+    "tests/test_foundation_universe_policy.py::test_runtime_turns_a_rule_conflict_into_a_clarification_without_calls",
+    "tests/test_foundation_route_ownership.py::test_a_simple_first_turn_search_is_foundation_only_when_on"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_route_ownership.py::test_a_simple_first_turn_search_is_foundation_only_when_on[None]",
+    "tests/test_foundation_route_ownership.py::test_a_simple_first_turn_search_is_foundation_only_when_on[{\"jobs\": [{\"action\": \"SEARCH\", \"aspect\": \"CONTRACTS\", \"evidence_quote\": \"busca contratos de aseo\", \"occurrence\": 1}]}]",
+    "tests/test_foundation_universe_policy.py::test_runtime_always_applies_h7_and_never_adds_the_contracts_view",
+    "tests/test_foundation_universe_policy.py::test_runtime_turns_a_rule_conflict_into_a_clarification_without_calls"
+   ]
+  },
+  {
+   "mutant": "M03_h7_reads_whole_request_text",
+   "files": [
+    "app/core/foundation_universe_policy.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_universe_policy.py::test_a_closed_word_outside_every_citation_decides_nothing"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_universe_policy.py::test_a_closed_word_outside_every_citation_decides_nothing[aplicar]",
+    "tests/test_foundation_universe_policy.py::test_a_closed_word_outside_every_citation_decides_nothing[aplicarme]",
+    "tests/test_foundation_universe_policy.py::test_a_closed_word_outside_every_citation_decides_nothing[concursar]",
+    "tests/test_foundation_universe_policy.py::test_a_closed_word_outside_every_citation_decides_nothing[convocatoria]",
+    "tests/test_foundation_universe_policy.py::test_a_closed_word_outside_every_citation_decides_nothing[convocatorias]",
+    "tests/test_foundation_universe_policy.py::test_a_closed_word_outside_every_citation_decides_nothing[licitacion]"
+   ]
+  },
+  {
+   "mutant": "M04_h7_opportunity_on_contracts",
+   "files": [
+    "app/core/foundation_universe_policy.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_universe_policy.py::test_no_closed_word_makes_a_contracts_request_an_opportunity"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_universe_policy.py::test_no_closed_word_makes_a_contracts_request_an_opportunity[aplicar]",
+    "tests/test_foundation_universe_policy.py::test_no_closed_word_makes_a_contracts_request_an_opportunity[aplicarme]",
+    "tests/test_foundation_universe_policy.py::test_no_closed_word_makes_a_contracts_request_an_opportunity[concursar]",
+    "tests/test_foundation_universe_policy.py::test_no_closed_word_makes_a_contracts_request_an_opportunity[convocatoria]",
+    "tests/test_foundation_universe_policy.py::test_no_closed_word_makes_a_contracts_request_an_opportunity[convocatorias]",
+    "tests/test_foundation_universe_policy.py::test_no_closed_word_makes_a_contracts_request_an_opportunity[licitar]"
+   ]
+  },
+  {
+   "mutant": "M05_structural_noun_back_to_topic",
+   "files": [
+    "app/core/foundation_admission.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_silent_paths.py::test_first_infancy_topic_never_carries_the_universe_word",
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[FI-002]",
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[FI-003]"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[FI-002]",
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[FI-003]",
+    "tests/test_foundation_silent_paths.py::test_first_infancy_topic_never_carries_the_universe_word[topic_spans1-host-dimension:universe-span-omitted]"
+   ]
+  },
+  {
+   "mutant": "M06_multi_evidence_takes_first",
+   "files": [
+    "app/core/foundation_evidence.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_silent_paths.py::test_two_separate_topics_in_one_condition_ask_instead_of_keeping_the_first",
+    "tests/test_foundation_silent_paths.py::test_material_phrase_never_silently_drops_a_citation",
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[TO-001]"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[TO-001]",
+    "tests/test_foundation_silent_paths.py::test_two_separate_topics_in_one_condition_ask_instead_of_keeping_the_first[contratos de aseo y de vigilancia-aseo-vigilancia]",
+    "tests/test_foundation_silent_paths.py::test_two_separate_topics_in_one_condition_ask_instead_of_keeping_the_first[contratos de vigilancia o aseo-vigilancia-aseo]",
+    "tests/test_foundation_silent_paths.py::test_material_phrase_never_silently_drops_a_citation"
+   ]
+  },
+  {
+   "mutant": "M07_or_takes_first_state",
+   "files": [
+    "app/core/foundation_state_composition.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_silent_paths.py::test_two_states_in_one_condition_are_asked_never_collapsed",
+    "tests/test_foundation_silent_paths.py::test_every_two_state_composition_of_the_lexicon_is_asked_or_is_the_funnel",
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[ST-001]"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[ST-001]",
+    "tests/test_foundation_silent_paths.py::test_two_states_in_one_condition_are_asked_never_collapsed[procesos publicados o abiertos de aseo-words0-is]",
+    "tests/test_foundation_silent_paths.py::test_two_states_in_one_condition_are_asked_never_collapsed[procesos publicados o abiertos de aseo-words1-is]",
+    "tests/test_foundation_silent_paths.py::test_two_states_in_one_condition_are_asked_never_collapsed[procesos publicados y abiertos de aseo-words2-family]",
+    "tests/test_foundation_silent_paths.py::test_two_states_in_one_condition_are_asked_never_collapsed[procesos publicados y abiertos de aseo-words3-family]",
+    "tests/test_foundation_silent_paths.py::test_two_states_in_one_condition_are_asked_never_collapsed[procesos publicados, abiertos de aseo-words4-family]"
+   ]
+  },
+  {
+   "mutant": "M08_value_operator_inverted_accepted",
+   "files": [
+    "app/core/foundation_value_direction.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_silent_paths.py::test_the_value_operator_follows_its_own_comparator",
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[VA-001]"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[VA-001]",
+    "tests/test_foundation_silent_paths.py::test_the_value_operator_follows_its_own_comparator[m\\xe1s de-less_than-VALUE_OPERATOR_EVIDENCE_MISMATCH]",
+    "tests/test_foundation_silent_paths.py::test_the_value_operator_follows_its_own_comparator[menos de-greater_than-VALUE_OPERATOR_EVIDENCE_MISMATCH]",
+    "tests/test_foundation_silent_paths.py::test_the_value_operator_follows_its_own_comparator[al menos-less_than-VALUE_OPERATOR_EVIDENCE_MISMATCH]",
+    "tests/test_foundation_silent_paths.py::test_the_value_operator_follows_its_own_comparator[a lo sumo-greater_than-VALUE_OPERATOR_EVIDENCE_MISMATCH]",
+    "tests/test_foundation_silent_paths.py::test_the_value_operator_follows_its_own_comparator[no m\\xe1s de-greater_than-VALUE_OPERATOR_EVIDENCE_MISMATCH]"
+   ]
+  },
+  {
+   "mutant": "M09_raw_code_reaches_user",
+   "files": [
+    "app/core/foundation_runtime.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_messages.py::test_terminals_without_a_proposal_answer_in_plain_spanish",
+    "tests/test_foundation_messages.py::test_a_clarification_keeps_the_code_internal"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_messages.py::test_terminals_without_a_proposal_answer_in_plain_spanish[invalid-produced0-INVALID_PROPOSAL-RAW_HASH_MISMATCH]",
+    "tests/test_foundation_messages.py::test_terminals_without_a_proposal_answer_in_plain_spanish[no_action-produced1-NO_ACTION-NO_REQUEST]",
+    "tests/test_foundation_messages.py::test_a_clarification_keeps_the_code_internal"
+   ]
+  },
+  {
+   "mutant": "M10_provider_error_silently_legacy",
+   "files": [
+    "app/core/foundation_runtime.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_basic_fallback.py::test_an_outage_on_a_safe_search_runs_a_labeled_basic_search",
+    "tests/test_foundation_basic_fallback.py::test_an_outage_outside_the_contract_makes_no_call"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_basic_fallback.py::test_an_outage_on_a_safe_search_runs_a_labeled_basic_search[timeout]",
+    "tests/test_foundation_basic_fallback.py::test_an_outage_on_a_safe_search_runs_a_labeled_basic_search[unavailable]",
+    "tests/test_foundation_basic_fallback.py::test_an_outage_on_a_safe_search_runs_a_labeled_basic_search[http]",
+    "tests/test_foundation_basic_fallback.py::test_an_outage_outside_the_contract_makes_no_call[contratos-NO_ANCHOR]",
+    "tests/test_foundation_basic_fallback.py::test_an_outage_outside_the_contract_makes_no_call[contratos de 2025-NO_ANCHOR]",
+    "tests/test_foundation_basic_fallback.py::test_an_outage_outside_the_contract_makes_no_call[contratos de aseo sin vigilancia-NEGATION]"
+   ]
+  },
+  {
+   "mutant": "M11_fallback_second_llm_call",
+   "files": [
+    "app/core/foundation_basic_fallback.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_basic_fallback.py::test_an_outage_on_a_safe_search_runs_a_labeled_basic_search"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_basic_fallback.py::test_an_outage_on_a_safe_search_runs_a_labeled_basic_search[timeout]",
+    "tests/test_foundation_basic_fallback.py::test_an_outage_on_a_safe_search_runs_a_labeled_basic_search[unavailable]",
+    "tests/test_foundation_basic_fallback.py::test_an_outage_on_a_safe_search_runs_a_labeled_basic_search[http]"
+   ]
+  },
+  {
+   "mutant": "M12_fallback_global_query",
+   "files": [
+    "app/core/foundation_basic_fallback.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_basic_fallback.py::test_an_outage_outside_the_contract_makes_no_call"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_basic_fallback.py::test_an_outage_outside_the_contract_makes_no_call[contratos-NO_ANCHOR]",
+    "tests/test_foundation_basic_fallback.py::test_an_outage_outside_the_contract_makes_no_call[contratos de 2025-NO_ANCHOR]"
+   ]
+  },
+  {
+   "mutant": "M13_foundation_preempts_suppliers",
+   "files": [
+    "app/core/foundation_route_owner.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_route_ownership.py::test_natural_alpha_owner_keeps_capabilities_and_non_search_jobs"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_route_ownership.py::test_natural_alpha_owner_keeps_capabilities_and_non_search_jobs"
+   ]
+  },
+  {
+   "mutant": "M14_foundation_preempts_actor",
+   "files": [
+    "app/core/foundation_route_owner.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_route_ownership.py::test_existing_owners_keep_their_turn_with_foundation_on",
+    "tests/test_foundation_basic_fallback.py::test_actor_and_supplier_owners_are_never_reached_by_the_fallback"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_route_ownership.py::test_existing_owners_keep_their_turn_with_foundation_on[actor-profile-contracts-noun]",
+    "tests/test_foundation_route_ownership.py::test_existing_owners_keep_their_turn_with_foundation_on[legacy-actor-parse-keeps-the-turn]",
+    "tests/test_foundation_route_ownership.py::test_existing_owners_keep_their_turn_with_foundation_on[actor-profile-nit]"
+   ]
+  },
+  {
+   "mutant": "M15_historical_complement_reachable",
+   "files": [
+    "app/core/foundation_tender_complement.py",
+    "app/core/foundation_universe_policy.py",
+    "app/core/foundation_runtime.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_promotion_boundary.py",
+    "tests/test_foundation_universe_policy.py::test_runtime_always_applies_h7_and_never_adds_the_contracts_view"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_promotion_boundary.py::test_the_historical_tender_complement_is_not_importable",
+    "tests/test_foundation_promotion_boundary.py::test_no_runtime_module_names_the_complement[foundation_tender_complement]",
+    "tests/test_foundation_promotion_boundary.py::test_no_runtime_module_names_the_complement[with_tender_complement]",
+    "tests/test_foundation_promotion_boundary.py::test_no_runtime_module_names_the_complement[HISTORICAL_TENDER_COMPLEMENT]",
+    "tests/test_foundation_promotion_boundary.py::test_no_runtime_module_names_the_complement[RequestComplement]",
+    "tests/test_foundation_universe_policy.py::test_runtime_always_applies_h7_and_never_adds_the_contracts_view"
+   ]
+  },
+  {
+   "mutant": "M16_flag_off_still_runs",
+   "files": [
+    "app/core/foundation_runtime.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_route_ownership.py::test_a_simple_first_turn_search_is_foundation_only_when_on",
+    "tests/test_foundation_product_gates.py::test_first_infancy_gate_flag_off_keeps_legacy"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_product_gates.py::test_first_infancy_gate_flag_off_keeps_legacy",
+    "tests/test_foundation_route_ownership.py::test_a_simple_first_turn_search_is_foundation_only_when_on[None]",
+    "tests/test_foundation_route_ownership.py::test_a_simple_first_turn_search_is_foundation_only_when_on[{\"jobs\": [{\"action\": \"SEARCH\", \"aspect\": \"CONTRACTS\", \"evidence_quote\": \"busca contratos de aseo\", \"occurrence\": 1}]}]"
+   ]
+  },
+  {
+   "mutant": "M17_builder_optin_ungated",
+   "files": [
+    "app/core/soql_builder.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_runtime.py::test_without_the_foundation_optin_the_legacy_global_guard_is_unchanged"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_runtime.py::test_without_the_foundation_optin_the_legacy_global_guard_is_unchanged[build]",
+    "tests/test_foundation_runtime.py::test_without_the_foundation_optin_the_legacy_global_guard_is_unchanged[build_count]"
+   ]
+  },
+  {
+   "mutant": "M18_continuation_guard_removed",
+   "files": [
+    "app/core/foundation_route_owner.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_route_ownership.py::test_a_fragment_after_a_foundation_turn_clarifies_instead_of_losing_the_topic"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_route_ownership.py::test_a_fragment_after_a_foundation_turn_clarifies_instead_of_losing_the_topic"
+   ]
+  },
+  {
+   "mutant": "M19_prompt_byte_changed",
+   "files": [
+    "app/core/foundation_prompts.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_prompts.py::test_the_prompt_is_byte_frozen"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_prompts.py::test_the_prompt_is_byte_frozen"
+   ]
+  },
+  {
+   "mutant": "M20_fallback_on_invalid_proposal",
+   "files": [
+    "app/core/foundation_runtime.py"
+   ],
+   "designated_killers": [
+    "tests/test_foundation_basic_fallback.py::test_a_malformed_answer_is_invalid_and_never_falls_back",
+    "tests/test_foundation_basic_fallback.py::test_no_other_terminal_ever_runs_the_fallback"
+   ],
+   "killed": true,
+   "killed_by_assertion": true,
+   "killer_failures": [
+    "tests/test_foundation_basic_fallback.py::test_a_malformed_answer_is_invalid_and_never_falls_back",
+    "tests/test_foundation_basic_fallback.py::test_no_other_terminal_ever_runs_the_fallback[invalid]"
+   ]
+  }
+ ]
+}

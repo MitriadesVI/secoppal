@@ -55,3 +55,21 @@ Candidato de código `f1911a15`, congelado en el run `r-20260926-131149-f983` (`
 - Mutaciones: 6 de 6 no equivalentes muertas. La séptima (`setdefault` en lugar de asignación del literal) es equivalente por construcción, porque todas las claves se borran antes.
 
 Rollback: revertir la rama; no hay flag ni migración.
+
+## Aclaración (2026-09-26)
+
+Por decisión humana de Rodrigo Ortiz para Foundation V3, la expresión «lleva O1B»
+del punto 2 se refiere a la semántica de oferta abierta (familia `oferta_abierta`
++ apertura `Abierto`), no a la ventana de vigencia de fechas. El estado explícito
+reemplaza esa ventana, también cuando el embudo absorbe su literal en D03/D04.
+La absorción sigue sin ser una unión de conjuntos.
+
+La paridad byte a byte con el embudo de main `68090765` lo confirma. La evidencia
+offline aportada con la decisión muestra que ambos órdenes del par, los procesos
+abiertos y las oportunidades con estado abierto explícito no emiten la ventana
+temporal en el WHERE; las oportunidades sin estado explícito sí la aplican.
+El Gold adjudicado por HERMES en `d24653e` ya incluye F3-P16 (2025, recepción
+desconocida), de la misma clase que F3-P20 (2015), que permanece incluido.
+
+Exigir vigencia temporal a «abiertos» sería una decisión de producto aparte,
+no incluida aquí. Esta aclaración conserva el cuerpo y la evidencia del ADR.
