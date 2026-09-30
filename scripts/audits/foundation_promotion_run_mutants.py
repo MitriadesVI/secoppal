@@ -10,7 +10,10 @@ from foundation_promotion_mutants import MUTANTS, SP
 WT = Path(sys.argv[1])
 out = []
 PY = "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python"
+ONLY = set(filter(None, os.environ.get("MUTANT_ONLY", "").split(",")))
 for name, edits, killers in MUTANTS:
+    if ONLY and name.split("_")[0] not in ONLY:
+        continue
     saved = {}
     try:
         for path, old, new in edits:
