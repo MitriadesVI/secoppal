@@ -17,6 +17,27 @@ def _parse(workflow, ctx):
     return workflow.deps.query_router.parse(ctx.user_query, today=ctx.today)
 
 
+def actor_claims(workflow, ctx, parsed) -> bool:
+    """True when the Actor owner would keep this turn, decided by its own resolution.
+
+    The parse alone does not say: a corporate name gets its ``actor_scope`` only when
+    the graph runs ``resolve_actor_params``. This runs that same function (read-only
+    directory lookups, no source call) and applies the predicate the orchestrator uses
+    to name the ACTOR continuation owner, so no actor vocabulary lives in Foundation.
+    """
+    from app.core.workflow.actions.actor_resolution import resolve_actor_params
+
+    params = parsed.params
+    if params.get("actor_scope") or params.get("actor_pending") or params.get("contratista"):
+        return True
+    projected = resolve_actor_params(
+        ctx.user_query, dict(params), workflow.actor_name_resolver,
+        [request.to_state() for request in getattr(parsed, "negation_requests", ())],
+    )
+    return projected is not None and bool(
+        projected.get("actor_scope") or projected.get("actor_pending") or projected.get("actor_intent_conflict"))
+
+
 def specialized_owner(workflow, ctx, parsed) -> str | None:
     """The first existing owner whose detector claims this text, in runtime order."""
     from app.core.analytics.contract_activity.admission import admit_contract_activity
@@ -25,7 +46,7 @@ def specialized_owner(workflow, ctx, parsed) -> str | None:
     from app.core.entity_profile.turn import detect_entity_profile_turn
 
     params = parsed.params
-    if params.get("actor_scope") or params.get("actor_pending") or params.get("contratista"):
+    if actor_claims(workflow, ctx, parsed):
         return "ACTOR"
     if detect_entity_profile_turn(ctx.user_query, params)[0]:
         return "ENTITY_PROFILE"
