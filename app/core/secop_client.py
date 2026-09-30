@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import time
+from copy import deepcopy
 from typing import Any
 
 try:
@@ -9,6 +10,7 @@ except ImportError:  # pragma: no cover - guarded for environments without deps
     Socrata = None
 
 from app.core.instrumentation import http_span, record_http
+from app.core.source_call_receipts import logical_source_call
 from app.core.socrata_transport import (
     DEFAULT_ORDERING_SPECIFIER,
     ClassicSocrataTransport,
@@ -18,6 +20,24 @@ from app.core.socrata_transport import (
 from app.utils.logging import get_logger
 
 logger = get_logger(__name__)
+
+
+def _guard_call(operation: str, dataset: str, soql: str) -> None:
+    from app.core.foundation_guard import verify_effective_source_call
+
+    verify_effective_source_call(operation, dataset, soql)
+
+
+def _foundation_count_value(rows: Any) -> int:
+    """Require the one COUNT scalar that Foundation declares as an exact total."""
+    if type(rows) is not list or len(rows) != 1 or type(rows[0]) is not dict or len(rows[0]) != 1:
+        raise ValueError("FOUNDATION_COUNT_PAYLOAD_INVALID")
+    scalar = next(iter(rows[0].values()))
+    if type(scalar) is int and scalar >= 0:
+        return scalar
+    if type(scalar) is str and scalar.isascii() and scalar.isdecimal():
+        return int(scalar)
+    raise ValueError("FOUNDATION_COUNT_PAYLOAD_INVALID")
 
 
 class SecopClient:
@@ -135,14 +155,20 @@ class SecopClient:
         midió para los 37 ``aggregate`` del corpus. Un ``aggregate`` sin
         ``ORDER BY`` **no** es un fallback H4 y no hereda su política.
         """
-        with http_span("aggregate", dataset_id, soql) as span:
-            rows = list(self.transport.aggregate(
-                dataset_id, soql,
-                timeout_seconds=self.timeout,
-                ordering_specifier=ordering_specifier,
-            ))
-            span["rows_received"] = len(rows)
-        return rows
+        _guard_call("aggregate", dataset_id, soql)
+        with logical_source_call("aggregate", dataset_id, soql) as receipt:
+            if receipt is not None:
+                receipt.attempts = 1
+            with http_span("aggregate", dataset_id, soql) as span:
+                rows = list(self.transport.aggregate(
+                    dataset_id, soql,
+                    timeout_seconds=self.timeout,
+                    ordering_specifier=ordering_specifier,
+                ))
+                span["rows_received"] = len(rows)
+            if receipt is not None:
+                receipt.rows_received = len(rows)
+            return rows
 
     def count(
         self,
@@ -156,34 +182,47 @@ class SecopClient:
         Declara ``TOTAL`` de forma consciente. Un ``count`` no lleva
         ``ORDER BY`` por naturaleza: esa ausencia **no** lo convierte en H4.
         """
-        last_error: Exception | None = None
+        _guard_call("count", dataset_id, soql_count_query)
+        with logical_source_call("count", dataset_id, soql_count_query) as receipt:
+            last_error: Exception | None = None
 
-        for attempt in range(self.max_retries):
-            try:
-                with http_span("count", dataset_id, soql_count_query, attempt=attempt + 1) as span:
-                    rows = self.transport.count(
-                        dataset_id, soql_count_query,
-                        timeout_seconds=self.timeout,
-                        ordering_specifier=ordering_specifier,
-                    )
-                    span["rows_received"] = len(rows)
-                if rows:
-                    raw = list(rows[0].values())[0]
-                    return int(raw)
-                return 0
-            except Exception as exc:  # pragma: no cover - network/runtime path
-                last_error = exc
-                logger.warning("SECOP count failed on attempt %s/%s: %s", attempt + 1, self.max_retries, exc)
-                if attempt < self.max_retries - 1:
-                    delay = 2**attempt
-                    record_http({
-                        "operation": "retry_delay", "dataset": dataset_id,
-                        "attempt": attempt + 1, "duration_ms": float(delay * 1000),
-                        "status": "completed", "rows_received": 0,
-                    })
-                    time.sleep(delay)
+            for attempt in range(self.max_retries):
+                try:
+                    if receipt is not None:
+                        receipt.attempts = attempt + 1
+                    with http_span("count", dataset_id, soql_count_query, attempt=attempt + 1) as span:
+                        rows = self.transport.count(
+                            dataset_id, soql_count_query,
+                            timeout_seconds=self.timeout,
+                            ordering_specifier=ordering_specifier,
+                        )
+                        span["rows_received"] = len(rows)
+                    from app.core.foundation_guard import foundation_source_active, validate_foundation_count_total
 
-        raise RuntimeError(f"Unable to count SECOP dataset {dataset_id}") from last_error
+                    if foundation_source_active():
+                        value = _foundation_count_value(rows)
+                        validate_foundation_count_total(value)
+                    else:
+                        value = int(list(rows[0].values())[0]) if rows else 0
+                    if receipt is not None:
+                        receipt.rows_received = len(rows)
+                        receipt.count_value = value
+                    return value
+                except Exception as exc:  # pragma: no cover - network/runtime path
+                    last_error = exc
+                    logger.warning("SECOP count failed on attempt %s/%s: %s", attempt + 1, self.max_retries, exc)
+                    if attempt < self.max_retries - 1:
+                        delay = 2**attempt
+                        record_http({
+                            "operation": "retry_delay", "dataset": dataset_id,
+                            "attempt": attempt + 1, "duration_ms": float(delay * 1000),
+                            "status": "completed", "rows_received": 0,
+                        })
+                        time.sleep(delay)
+
+            if receipt is not None and last_error is not None:
+                receipt.error_type = type(last_error).__name__
+            raise RuntimeError(f"Unable to count SECOP dataset {dataset_id}") from last_error
 
     def query(
         self,
@@ -199,32 +238,44 @@ class SecopClient:
         normal; solo el fallback H4 —que retira el ``ORDER BY`` a propósito—
         pasa ``NO_PRESERVE``, y lo hace explícitamente desde ``execution.py``.
         """
-        last_error: Exception | None = None
+        _guard_call("query", dataset_id, soql_query)
+        with logical_source_call("query", dataset_id, soql_query) as receipt:
+            last_error: Exception | None = None
 
-        for attempt in range(self.max_retries):
-            try:
-                logger.info("Executing SECOP query against %s", dataset_id)
-                with http_span("query", dataset_id, soql_query, attempt=attempt + 1) as span:
-                    rows = self.transport.query(
-                        dataset_id, soql_query,
-                        timeout_seconds=self.timeout,
-                        ordering_specifier=ordering_specifier,
-                    )
-                    span["rows_received"] = len(rows)
-                return [self._normalize_row(dataset_id, row) for row in rows]
-            except Exception as exc:  # pragma: no cover - network/runtime path
-                last_error = exc
-                logger.warning("SECOP query failed on attempt %s/%s: %s", attempt + 1, self.max_retries, exc)
-                if attempt < self.max_retries - 1:
-                    delay = 2**attempt
-                    record_http({
-                        "operation": "retry_delay", "dataset": dataset_id,
-                        "attempt": attempt + 1, "duration_ms": float(delay * 1000),
-                        "status": "completed", "rows_received": 0,
-                    })
-                    time.sleep(delay)
+            for attempt in range(self.max_retries):
+                try:
+                    if receipt is not None:
+                        receipt.attempts = attempt + 1
+                    logger.info("Executing SECOP query against %s", dataset_id)
+                    with http_span("query", dataset_id, soql_query, attempt=attempt + 1) as span:
+                        rows = self.transport.query(
+                            dataset_id, soql_query,
+                            timeout_seconds=self.timeout,
+                            ordering_specifier=ordering_specifier,
+                        )
+                        span["rows_received"] = len(rows)
+                    if receipt is not None:
+                        receipt.rows_received = len(rows)
+                    from app.core.foundation_guard import foundation_source_active
 
-        raise RuntimeError(f"Unable to query SECOP dataset {dataset_id}") from last_error
+                    if foundation_source_active():
+                        return deepcopy(rows)
+                    return [self._normalize_row(dataset_id, row) for row in rows]
+                except Exception as exc:  # pragma: no cover - network/runtime path
+                    last_error = exc
+                    logger.warning("SECOP query failed on attempt %s/%s: %s", attempt + 1, self.max_retries, exc)
+                    if attempt < self.max_retries - 1:
+                        delay = 2**attempt
+                        record_http({
+                            "operation": "retry_delay", "dataset": dataset_id,
+                            "attempt": attempt + 1, "duration_ms": float(delay * 1000),
+                            "status": "completed", "rows_received": 0,
+                        })
+                        time.sleep(delay)
+
+            if receipt is not None and last_error is not None:
+                receipt.error_type = type(last_error).__name__
+            raise RuntimeError(f"Unable to query SECOP dataset {dataset_id}") from last_error
 
     def _normalize_row(self, dataset_id: str, row: dict) -> dict:
         normalized = dict(row)

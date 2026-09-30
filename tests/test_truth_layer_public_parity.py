@@ -121,7 +121,15 @@ M2_MODIFIED_FILE_SHA256 = {
     # previous 15 fields and proves that removing this one column restores the
     # query byte for byte, with identical count, WHERE, ORDER BY and LIMIT.
     # The process/public oracles below and all other pins remain unchanged.
-    "app/core/soql_builder.py": "e7672dda139464c071b64336d5dc315fe7ac8eed093b20cc5b539962ad293754",
+    # Foundation V3 adds optional traced clauses, exclusive money/time bounds,
+    # exact Foundation topic predicates and a validated explicit SELECT catalog.
+    # O1B's real predicates satisfy the nonempty guard only under Foundation's
+    # explicit ``allow_opportunity_only`` opt-in (ADR-102); every other caller
+    # keeps main's guard (tests/test_foundation_runtime.py pins both sides).
+    # The default legacy builder path is bounded by the unchanged public SoQL,
+    # count/ranking/pagination oracles below; Foundation guards and projection
+    # controls independently cover the opt-in execution surface.
+    "app/core/soql_builder.py": "c76209e1843b77627f0097911ab79b194bfbe76be588b1cbf0c8abc38e88aa08",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de
@@ -261,7 +269,10 @@ CONTROL_LANGUAGE_REPINNED_SHA256 = {
 BASELINE_FILE_SHA256 = {
     "app/core/pagination_buffer.py": "802e763ace630368eada377319a715d3ca1bcdca00cb90dd4187236988e2f25c",
     "app/core/phrase_ranking.py": "0a99c8f4ebc10dd71556f1796a40c9192404475831a424964871954bab598c5a",
-    "app/core/workflow/dual_dataset.py": "f8c216fc05a6b419af7252bcfa2d0f09f8b77ad526d0ebc1d5cf6d2468a6c6de",
+    # Foundation native receipts annotate the existing child query/count call
+    # with dual_child:<dataset>. This adds correlation metadata; predicates,
+    # child outputs and ordinary dual expansion remain pinned below.
+    "app/core/workflow/dual_dataset.py": "fbfd211e0829cc78e7ec77c3866edc84dacb6c01be45712d6f389778bf7ff25f",
     "app/core/workflow/handlers/refinement.py": "fe1a08d26550d5a39fb4fdddbcb40fd623b89e7ab09c634d0bba7a95db00e076",
     # Executive UX V1: optional presentation transport/UI hook only.
     # test_entity_profile_executive_ux_boundary restores the prior exact bytes.

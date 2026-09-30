@@ -13,6 +13,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
+from app.core.source_call_receipts import last_call_id, source_call_scope, submit_with_source_context
 from app.utils.logging import get_logger
 
 if TYPE_CHECKING:
@@ -207,13 +208,18 @@ def _compute_from_aggregation(
     }
 
     agg_results: dict[str, list[dict] | None] = {k: None for k in queries}
+    parent_call_id = last_call_id()
+
+    def run_aggregate(name: str, soql: str) -> list[dict]:
+        with source_call_scope(
+            reason=f"observer:{name}", scope_id=dataset_id,
+            parent_call_id=parent_call_id,
+        ):
+            return secop_client.with_timeout(OBSERVER_AGG_TIMEOUT_PER_TASK).aggregate(dataset_id, soql)
 
     with ThreadPoolExecutor(max_workers=5) as executor:
         futures = {
-            executor.submit(
-                secop_client.with_timeout(OBSERVER_AGG_TIMEOUT_PER_TASK).aggregate,
-                dataset_id, q,
-            ): name
+            submit_with_source_context(executor, run_aggregate, name, q): name
             for name, q in queries.items()
         }
         try:

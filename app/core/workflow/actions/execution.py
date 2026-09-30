@@ -33,6 +33,7 @@ from app.core.entity_profile.turn import classify_entity_profile_turn
 from app.core.entity_profile.followup import is_supplier_followup
 from app.core.observer import observe as observe_universe_fn
 from app.core.secop_client import SecopClient
+from app.core.source_call_receipts import last_call_id
 from app.core.socrata_transport import Soda3OrderingSpecifier
 from app.core.soql_builder import SoQLBuilder
 from app.core.deadline import FALLBACK_FETCH_SECONDS
@@ -264,6 +265,7 @@ def execute_query(
                     secop_client, did, fb_count_soql, fb_soql,
                     limit=int(fb_params["limit"]),
                     fetch_cap_s=FALLBACK_FETCH_SECONDS,
+                    call_reason="h4_fallback", parent_call_id=last_call_id(),
                     # Esta rama —y solo esta— es la que el discovery adjudicó como
                     # H4: aquí el ORDER BY se retira A PROPÓSITO. La señal se
                     # declara desde el control flow, no leyendo el SoQL: la
@@ -405,7 +407,8 @@ def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
         soql = soql_builder.build(state["dataset_id"], relaxed)
         count_soql = soql_builder.build_count(state["dataset_id"], relaxed)
         total, results, _timings, _approx = _query_first_then_count(
-            secop_client, state["dataset_id"], count_soql, soql
+            secop_client, state["dataset_id"], count_soql, soql,
+            call_reason="zero_result_relaxation", parent_call_id=last_call_id(),
         )
         if results:
             return _with_timing(

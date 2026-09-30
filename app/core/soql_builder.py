@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 
 from app.core.actor_document_types import incompatible_source_types
 from app.core.buyer_candidate_execution import (
@@ -68,7 +68,7 @@ NONEMPTY_WHERE_KEYS: frozenset[str] = frozenset({
     "contratista",
     "contract_type_include",
     # topic
-    "objeto", "objeto_or", "objeto_phrases", "objeto_exclude",
+    "objeto", "objeto_or", "objeto_phrases", "objeto_exclude", "foundation_topic_terms",
     # estado
     "estado", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_contrato", "estado_contrato_adicional",
@@ -149,6 +149,19 @@ class DatasetSpec:
     contractor_document_type: str | None = None
     city: str | None = None
     select_fields: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class ClauseOrigin:
+    condition_ids: tuple[str, ...] = ()
+    policy_ids: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class WhereClauseReceipt:
+    clause: str
+    condition_ids: tuple[str, ...]
+    policy_ids: tuple[str, ...]
 
 
 class SoQLBuilder:
@@ -246,11 +259,28 @@ class SoQLBuilder:
         return cls.CONTRATOS_DATASET if dataset_name == "contratos" else cls.PROCESOS_DATASET
 
     def build(self, dataset_id: str, params: dict, *, allow_global: bool = False,
-              include_order: bool = True) -> str:
+              include_order: bool = True, allow_time_only: bool = False,
+              allow_opportunity_only: bool = False,
+              clause_origins: dict[str, ClauseOrigin] | None = None,
+              clause_receipts: list[WhereClauseReceipt] | None = None,
+              select_fields: tuple[str, ...] | None = None) -> str:
         spec = self.SPECS[dataset_id]
-        where_clause = self._build_where(spec, params, allow_global=allow_global)
+        if select_fields is not None:
+            known = set(spec.select_fields) | {getattr(spec, field.name) for field in fields(spec)
+                                               if isinstance(getattr(spec, field.name), str)}
+            identity = "id_contrato" if dataset_id == self.CONTRATOS_DATASET else "id_del_proceso"
+            if (type(select_fields) is not tuple or not select_fields
+                    or any(type(column) is not str or not column.isidentifier() or column not in known
+                           for column in select_fields)
+                    or len(set(select_fields)) != len(select_fields) or identity not in select_fields):
+                raise ValueError("INVALID_SOURCE_SELECT_FIELDS")
+        where_clause = self._build_where(
+            spec, params, allow_global=allow_global, allow_time_only=allow_time_only,
+            allow_opportunity_only=allow_opportunity_only,
+            clause_origins=clause_origins, clause_receipts=clause_receipts,
+        )
 
-        select_clause = ", ".join(spec.select_fields)
+        select_clause = ", ".join(spec.select_fields if select_fields is None else select_fields)
 
         # Default: date DESC (most recent first).
         # valor_desc: value DESC, date DESC
@@ -321,13 +351,23 @@ class SoQLBuilder:
 
         return f"SELECT {select_clause} WHERE {where_clause} ORDER BY {order_expr} {limit_clause}"
 
-    def build_count(self, dataset_id: str, params: dict, *, allow_global: bool = False) -> str:
+    def build_count(self, dataset_id: str, params: dict, *, allow_global: bool = False,
+                    allow_time_only: bool = False, allow_opportunity_only: bool = False,
+                    clause_origins: dict[str, ClauseOrigin] | None = None,
+                    clause_receipts: list[WhereClauseReceipt] | None = None) -> str:
         """Build a SELECT count(*) query with the same filters as build(), no LIMIT/ORDER."""
         spec = self.SPECS[dataset_id]
-        where_clause = self._build_where(spec, params, allow_global=allow_global)
+        where_clause = self._build_where(
+            spec, params, allow_global=allow_global, allow_time_only=allow_time_only,
+            allow_opportunity_only=allow_opportunity_only,
+            clause_origins=clause_origins, clause_receipts=clause_receipts,
+        )
         return f"SELECT count(*) WHERE {where_clause}"
 
-    def _build_where(self, spec: DatasetSpec, params: dict, *, allow_global: bool = False) -> str:
+    def _build_where(self, spec: DatasetSpec, params: dict, *, allow_global: bool = False,
+                     allow_time_only: bool = False, allow_opportunity_only: bool = False,
+                     clause_origins: dict[str, ClauseOrigin] | None = None,
+                     clause_receipts: list[WhereClauseReceipt] | None = None) -> str:
         """Build the WHERE clause string shared by build() and build_count().
 
         Raises UnsafeGlobalQueryError if the resulting clause would collapse to
@@ -344,6 +384,21 @@ class SoQLBuilder:
             and params.get(legacy_key) not in (None, "", [], {}, (), False)
         ):
             raise ValueError("legacy modality field 'modalidad' is not accepted")
+
+        for lower, upper in (("valor_min", "valor_min_exclusive"),
+                             ("valor_max", "valor_max_exclusive")):
+            if params.get(lower) is not None and params.get(upper) is not None:
+                raise ValueError("CONFLICTING_VALUE_BOUND")
+        if allow_time_only:
+            from datetime import date
+
+            try:
+                start = date.fromisoformat(params["fecha_desde"])
+                end = date.fromisoformat(params["fecha_hasta_exclusive"])
+            except (KeyError, TypeError, ValueError) as exc:
+                raise ValueError("INVALID_TIME_ONLY_SCOPE") from exc
+            if not start < end or (end - start).days > 366:
+                raise ValueError("INVALID_TIME_ONLY_SCOPE")
 
         modality_filter = ModalityFilter.from_params(params)
         dataset_name = (
@@ -367,12 +422,19 @@ class SoQLBuilder:
                 field for field in (spec.object_name, spec.description) if field
             ),
         )
-        if not allow_global and not _has_nonempty_where_filter(
+        opportunity_policy = evaluate_current_opportunity_policy(
+            params, spec.dataset_id,
+            reference_instant=parse_reference_instant(params.get(REFERENCE_INSTANT_PARAM)),
+        )
+        # O1B's own predicates bound an opportunity search only for a caller that
+        # opts in (Foundation projection); every other caller keeps the old guard.
+        opportunity_bounded = allow_opportunity_only and opportunity_policy.applies
+        if not allow_global and not (allow_time_only or opportunity_bounded or _has_nonempty_where_filter(
             params,
             modality_effective=(
                 modality_effective or bool(contract_type_projection.clause)
             ),
-        ):
+        )):
             raise UnsafeGlobalQueryError(
                 "SoQL build refused: no WHERE predicate "
                 "(scope/topic/estado/modalidad/contract_type). "
@@ -380,20 +442,27 @@ class SoQLBuilder:
             )
         from app.core.contract_universe import predicate, universe_from_params
         where_clauses: list[str] = []
+        if clause_receipts is not None and clause_origins is None:
+            raise ValueError("MISSING_CLAUSE_ORIGINS")
+
+        def emit(clause: str, key: str) -> None:
+            where_clauses.append(clause)
+            if clause_receipts is not None:
+                origin = clause_origins.get(key) if clause_origins is not None else None
+                if (type(origin) is not ClauseOrigin
+                        or not (origin.condition_ids or origin.policy_ids)):
+                    raise ValueError(f"UNATTRIBUTED_WHERE_CLAUSE:{key}")
+                clause_receipts.append(WhereClauseReceipt(
+                    clause, origin.condition_ids, origin.policy_ids,
+                ))
+
         if spec.dataset_id == self.CONTRATOS_DATASET:
             universe_clause = predicate(universe_from_params(params))
             if universe_clause:
-                where_clauses.append(universe_clause)
-        opportunity_policy = evaluate_current_opportunity_policy(
-            params,
-            spec.dataset_id,
-            reference_instant=parse_reference_instant(
-                params.get(REFERENCE_INSTANT_PARAM)
-            ),
-        )
-
+                emit(universe_clause, "contract_universe")
         if params.get("departamento_resolved"):
-            where_clauses.append(f"{spec.department} = '{self._escape(params['departamento_resolved'])}'")
+            emit(f"{spec.department} = '{self._escape(params['departamento_resolved'])}'",
+                 "departamento_resolved")
         elif params.get("departamentos_in"):
             # Region search: filter across every department of a region.
             # _add_estado_clause emits `field IN ('a','b',...)` for lists.
@@ -431,9 +500,8 @@ class SoQLBuilder:
             )
             where_clauses.append(f"({entity_likes})")
         elif entidad_value:
-            where_clauses.append(
-                self._entity_clause(spec, entidad_value, is_like_fallback=bool(entidad_like))
-            )
+            emit(self._entity_clause(spec, entidad_value, is_like_fallback=bool(entidad_like)),
+                 "entidad_resolved" if not entidad_like else "entidad_like")
 
         # G7C: entity ecosystem contains_all — AND of LIKEs (e.g. SENA + MAGDALENA)
         entidad_contains_all = params.get("entidad_contains_all")
@@ -458,6 +526,18 @@ class SoQLBuilder:
                 where_clauses.append(f"({entity_likes})")
 
         objeto_terms = params.get("objeto", []) or []
+        foundation_terms = params.get("foundation_topic_terms") or []
+        if foundation_terms:
+            if (type(foundation_terms) is not list
+                    or any(type(term) is not str or not term.strip() or
+                           any(char in term for char in ("%", "_")) for term in foundation_terms)
+                    or any(params.get(key) for key in ("objeto", "objeto_or", "objeto_phrases", "objeto_exclude"))):
+                raise ValueError("INVALID_FOUNDATION_TOPIC_TERMS")
+            fields = tuple(field for field in (spec.object_name, spec.description) if field)
+            from app.core.foundation_text_predicates import folded_contains_clause
+
+            for at, term in enumerate(foundation_terms):
+                emit(folded_contains_clause(fields, term), f"foundation_topic_terms:{at}")
         if self._should_demote_objeto(objeto_terms):
             rare_terms, common_terms = self._split_objeto_by_rarity(objeto_terms)
             # With 3+ rare terms, AND between them is too strict
@@ -467,17 +547,15 @@ class SoQLBuilder:
                 all_conditions: list[str] = []
                 for term in rare_terms:
                     all_conditions.extend(self._object_term_conditions(spec, term))
-                where_clauses.append(f"({' OR '.join(all_conditions)})")
+                emit(f"({' OR '.join(all_conditions)})", "objeto")
             else:
                 for term in rare_terms:
-                    where_clauses.append(
-                        f"({' OR '.join(self._object_term_conditions(spec, term))})"
-                    )
+                    emit(f"({' OR '.join(self._object_term_conditions(spec, term))})", "objeto")
             if common_terms:
                 common_conditions: list[str] = []
                 for term in common_terms:
                     common_conditions.extend(self._object_term_conditions(spec, term))
-                where_clauses.append(f"({' OR '.join(common_conditions)})")
+                emit(f"({' OR '.join(common_conditions)})", "objeto")
         else:
             for term in objeto_terms:
                 # str = required term (AND with other object entries)
@@ -488,7 +566,7 @@ class SoQLBuilder:
                     term_conditions.extend(
                         self._object_term_conditions(spec, str(sub_term))
                     )
-                where_clauses.append(f"({' OR '.join(term_conditions)})")
+                emit(f"({' OR '.join(term_conditions)})", "objeto")
 
         objeto_or = params.get("objeto_or") or []
         if objeto_or:
@@ -522,9 +600,16 @@ class SoQLBuilder:
                     where_clauses.append(clause)
 
         if params.get("valor_min") is not None:
-            where_clauses.append(f"{spec.value} >= {int(params['valor_min'])}")
+            emit(f"{spec.value} >= {int(params['valor_min'])}", "valor_min")
         if params.get("valor_max") is not None:
-            where_clauses.append(f"{spec.value} <= {int(params['valor_max'])}")
+            emit(f"{spec.value} <= {int(params['valor_max'])}", "valor_max")
+        for key, comparator in (("valor_min_exclusive", ">"),
+                                ("valor_max_exclusive", "<")):
+            if params.get(key) is not None:
+                value = params[key]
+                if type(value) is not int or value < 0:
+                    raise ValueError("INVALID_EXCLUSIVE_VALUE_BOUND")
+                emit(f"{spec.value} {comparator} {value}", key)
 
         if params.get("estado"):
             # Use the specific field identified by QueryRouter, or fall back to spec default
@@ -540,7 +625,10 @@ class SoQLBuilder:
                     "estado_contrato_adicional",
                 )
             ):
+                before = len(where_clauses)
                 self._add_estado_clause(where_clauses, estado_field, estado_val)
+                if clause_receipts is not None and len(where_clauses) != before:
+                    raise ValueError("UNATTRIBUTED_WHERE_CLAUSE:estado")
 
         # NUEVO: estado_families filters — puede ser lista o simple
         for field in ("estado_de_apertura_del_proceso", "estado_del_procedimiento",
@@ -548,21 +636,24 @@ class SoQLBuilder:
             if opportunity_policy.applies and field == "estado_del_procedimiento":
                 continue  # O1B replaces only the automatically-derived bundle.
             if field in params and params[field]:
-                self._add_estado_clause(where_clauses, field, params[field])
+                clauses: list[str] = []
+                self._add_estado_clause(clauses, field, params[field])
+                for clause in clauses:
+                    emit(clause, field)
 
         if opportunity_policy.applies:
-            self._add_estado_clause(
-                where_clauses,
-                "estado_del_procedimiento",
-                list(opportunity_policy.allowed_states),
-            )
+            clauses = []
+            self._add_estado_clause(clauses, "estado_del_procedimiento",
+                                    list(opportunity_policy.allowed_states))
+            for clause in clauses:
+                emit(clause, "opportunity_policy")
 
         modality_clause = self._modality_clause(modality_projection)
         if modality_clause:
-            where_clauses.append(modality_clause)
+            emit(modality_clause, "modality")
 
         if contract_type_projection.clause:
-            where_clauses.append(contract_type_projection.clause)
+            emit(contract_type_projection.clause, "contract_type")
 
         # STATE-PRIORITY-001: oportunidades en procesos requieren apertura=Abierto
         if (
@@ -570,7 +661,7 @@ class SoQLBuilder:
             and spec.dataset_id == self.PROCESOS_DATASET
             and not params.get("estado_de_apertura_del_proceso")
         ):
-            where_clauses.append("estado_de_apertura_del_proceso = 'Abierto'")
+            emit("estado_de_apertura_del_proceso = 'Abierto'", "opportunity_policy")
 
         if opportunity_policy.applies:
             current_colombia_date = format_socrata_calendar_date(
@@ -583,16 +674,20 @@ class SoQLBuilder:
             # predicate. On p6dx-8zbt this avoids the severe planner penalty of
             # OR across two calendar-date columns while preserving NULL/future
             # semantics exactly.
-            where_clauses.append(
+            emit(
                 "case(fecha_de_recepcion_de IS NULL, "
                 f"fecha_de_publicacion_del >= '{publication_since}', "
-                f"true, fecha_de_recepcion_de >= '{current_colombia_date}')"
+                f"true, fecha_de_recepcion_de >= '{current_colombia_date}')",
+                "opportunity_policy",
             )
 
         if params.get("fecha_desde"):
-            where_clauses.append(f"{spec.date} >= '{self._escape(params['fecha_desde'])}'")
+            emit(f"{spec.date} >= '{self._escape(params['fecha_desde'])}'", "fecha_desde")
         if params.get("fecha_hasta"):
-            where_clauses.append(f"{spec.date} <= '{self._escape(params['fecha_hasta'])}'")
+            emit(f"{spec.date} <= '{self._escape(params['fecha_hasta'])}'", "fecha_hasta")
+        if params.get("fecha_hasta_exclusive"):
+            emit(f"{spec.date} < '{self._escape(params['fecha_hasta_exclusive'])}'",
+                 "fecha_hasta_exclusive")
 
         if params.get("contratista") and spec.contractor:
             contratista = params["contratista"]
@@ -624,6 +719,8 @@ class SoQLBuilder:
             if type_clause:
                 where_clauses.append(type_clause)
 
+        if clause_receipts is not None and len(clause_receipts) != len(where_clauses):
+            raise ValueError("UNATTRIBUTED_WHERE_CLAUSE")
         return " AND ".join(where_clauses) if where_clauses else "1=1"
 
     @classmethod

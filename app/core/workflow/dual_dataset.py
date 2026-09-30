@@ -86,6 +86,7 @@ def execute_dataset_child(dataset_name: str, common_params: dict, deps) -> Datas
         count_soql = deps.soql_builder.build_count(dataset_id, child)
         total, rows, timings, approx = _query_first_then_count(
             deps.secop_client, dataset_id, count_soql, soql, limit=limit,
+            call_reason=f"dual_child:{dataset_name}",
         )
     except Exception as exc:
         return DatasetGroupResult(dataset_name, "error", [], [], {}, "", str(exc)[:120], {})

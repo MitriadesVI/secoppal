@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 from functools import lru_cache
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
 from pydantic import Field, TypeAdapter, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -82,6 +82,17 @@ class Settings(BaseSettings):
     # activación productiva es una decisión posterior y de otro gate.
     secoppal_entity_profile_frame_enabled: bool = Field(
         default=False, alias="SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED",
+    )
+
+    # Observational source-call receipts (no effect on execution).
+    secoppal_foundation_source_receipts_enabled: bool = Field(
+        default=False, alias="SECOPPAL_FOUNDATION_SOURCE_RECEIPTS_ENABLED",
+    )
+    # ADR-102: one switch for Foundation SEARCH. "foundation_v3" means producer B
+    # with prompt v4.2, mandatory universe_kind and mandatory H7; there is no
+    # partial profile. The supported rollback is "legacy".
+    secoppal_foundation_mode: Literal["legacy", "foundation_v3"] = Field(
+        default="legacy", alias="SECOPPAL_FOUNDATION_MODE",
     )
 
     # Natural Alpha observes human jobs; the existing runtime keeps execution.

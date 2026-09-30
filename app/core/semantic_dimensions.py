@@ -10,6 +10,9 @@ from enum import Enum
 
 
 class SemanticDimension(str, Enum):
+    # Material named by the user but not mapped to an executable dimension.
+    UNSUPPORTED = "UNSUPPORTED"
+    RETRIEVAL_INTENT = "RETRIEVAL_INTENT"
     TOPIC = "TOPIC"
     MODALITY = "MODALITY"
     CONTRACT_TYPE_OR_NATURE = "CONTRACT_TYPE_OR_NATURE"

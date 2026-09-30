@@ -8,6 +8,7 @@ La red la prohíbe ``conftest.py`` (ledger autouse); aquí no se mockea ninguna 
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from copy import deepcopy
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
@@ -31,6 +32,7 @@ class Turn:
     source_calls: list[dict]
     previous_params: dict | None = None
     lineage_views: tuple[Any, ...] = ()
+    transport_calls: tuple[Mapping[str, Any], ...] = ()
 
     @property
     def params(self) -> dict:
@@ -51,12 +53,19 @@ class ProductHarness:
     frame: bool = False
     today: date = DEFAULT_TODAY
     reference_instant: datetime | None = None
+    settings_overrides: Mapping[str, Any] = field(default_factory=dict)
+    foundation_producer: Any = None
+    schemas: Mapping[str, Mapping[str, str]] | None = None
     turns: list[Turn] = field(default_factory=list)
     lineage_views: list[Any] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         self.root = Path(self.root)
         mp = self.monkeypatch
+        mp.setenv("BURR_TELEMETRY_ENABLED", "false")
+        import burr.telemetry
+
+        mp.setattr(burr.telemetry, "g_telemetry_enabled", False)
         if self.reference_instant is not None:
             instant = self.reference_instant
 
@@ -70,16 +79,19 @@ class ProductHarness:
         mp.setenv("SECOPPAL_ACTOR_PROFILE_ENABLED", "true")
         mp.setenv("CONVERSATION_STORE_DIR", str(self.root / "conversations"))
         get_settings.cache_clear()
-        self.settings = Settings(
-            deepseek_api_key=None,
-            secop_app_token=None,
-            secop_actor_alias_index_path=self.actor_index or self.root / "no_actor_index.sqlite",
-            secop_feedback_path=self.root / "feedback.jsonl",
-            secop_feedback_db_path=self.root / "secoppal.db",
-            secoppal_entity_profile_frame_enabled=self.frame,
-        )
-        self.transport = FrozenTransport(self.rows_by_dataset, failures=self.failures)
+        settings_args = {
+            "deepseek_api_key": None, "secop_app_token": None,
+            "secop_actor_alias_index_path": self.actor_index or self.root / "no_actor_index.sqlite",
+            "secop_feedback_path": self.root / "feedback.jsonl",
+            "secop_feedback_db_path": self.root / "secoppal.db",
+            "secoppal_entity_profile_frame_enabled": self.frame,
+            **dict(self.settings_overrides),
+        }
+        self.settings = Settings(**settings_args)
+        self.transport = FrozenTransport(self.rows_by_dataset, failures=self.failures, schemas=self.schemas)
         self.flow = SecopalWorkflow(self.settings)
+        self.flow.foundation_producer = self.foundation_producer
+        self.flow.foundation_reference_instant = self.reference_instant
         self.flow.conv_store = ConversationStore(self.root / "conversations")
         self.flow.secop_client = frozen_client(self.transport, timeout=self.settings.secop_timeout_seconds)
         # QueryRouter's public opt-in returns the product's own immutable trace.
@@ -115,12 +127,17 @@ class ProductHarness:
         start = len(self.transport.calls)
         lineage_start = len(self.lineage_views)
         result = self.flow.run_query(text, chat_id=chat_id, today=self.today, **run_kwargs)
-        calls = self.transport.calls[start:]
+        transport_calls = self.transport.snapshot(start)
+        # Stable legacy assertion view; E2b receives the complete attempt capture.
+        keys = {"operation", "dataset", "soql", "rows", "injected", "error"}
+        calls = [{key: value for key, value in call.items() if key in keys}
+                 for call in transport_calls]
         errors = [call for call in calls if "error" in call]
         if errors:
             raise AssertionError(f"frozen source rejected emitted SoQL: {errors}")
         previous = next((t for t in reversed(self.turns) if t.chat_id == chat_id), None)
-        turn = Turn(text, chat_id, result, calls, dict(previous.params) if previous else None,
-                    tuple(self.lineage_views[lineage_start:]))
+        turn = Turn(text, chat_id, deepcopy(result), calls,
+                    dict(previous.params) if previous else None,
+                    tuple(self.lineage_views[lineage_start:]), tuple(transport_calls))
         self.turns.append(turn)
         return turn

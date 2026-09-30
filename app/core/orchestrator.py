@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import logging
 import time
 from datetime import date as Date
@@ -259,9 +260,17 @@ class SecopalWorkflow:
             attach_a2_telemetry, begin_turn, end_turn,
         )
         from app.core.instrumentation import attach_telemetry, begin_collection, end_collection
+        from app.core.source_call_receipts import begin_source_calls, end_source_calls
         token = begin_collection()
         a2_token = begin_turn()  # A2 dogfood receipt; inactive unless bound.
         dl_tokens = begin_deadline(ctx.run_started_at)  # H2: deadline monotónico del turno
+        source_token = (
+            begin_source_calls(hashlib.sha256(
+                ctx.user_query.encode("utf-8", errors="surrogatepass")
+            ).hexdigest())
+            if (getattr(self.settings, "secoppal_foundation_source_receipts_enabled", False) is True
+                or getattr(self.settings, "secoppal_foundation_mode", "legacy") == "foundation_v3") else None
+        )
         try:
             result = self._admit_and_dispatch(ctx, seed_resolved_params)
         except BaseException:
@@ -271,16 +280,22 @@ class SecopalWorkflow:
             metrics = end_collection(token)
             end_turn(a2_token)
             end_deadline(dl_tokens)
+            source_calls = end_source_calls(source_token) if source_token is not None else []
             if metrics:
                 logger.warning(
                     "run_query abortado tras capturar %d métricas HTTP: %s",
                     len(metrics), [dict(m) for m in metrics],
                 )
+            if source_calls:
+                logger.warning("run_query abortado tras %d llamadas SECOP", len(source_calls))
             raise
         metrics = end_collection(token)
         a2_receipt = end_turn(a2_token)
         dl_tel = end_deadline(dl_tokens)
+        source_calls = end_source_calls(source_token) if source_token is not None else None
         attach_telemetry(result, metrics)
+        if source_calls is not None:
+            result["source_call_receipts"] = source_calls
         attach_a2_telemetry(result, a2_receipt)
         attach_deadline_telemetry(result, dl_tel, ctx.run_started_at)
         from app.core.buyer_groups import BuyerGroupError, group_declaration, group_for_params

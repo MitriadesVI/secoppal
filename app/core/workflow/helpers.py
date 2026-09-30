@@ -183,6 +183,8 @@ def _query_first_then_count(
     count_budget_s: int = COUNT_BUDGET_SECONDS,
     fetch_cap_s: float | None = None,
     query_ordering_specifier: "Soda3OrderingSpecifier | None" = None,
+    call_reason: str = "search",
+    parent_call_id: str | None = None,
 ) -> tuple[int, list[dict], dict[str, float], bool]:
     """Run query first; skip count if <limit rows. If ==limit, count within a short
     budget so it never blocks the delivery of valid rows (Etapa 6 H1).
@@ -209,6 +211,7 @@ def _query_first_then_count(
         current_deadline,
         record_deadline,
     )
+    from app.core.source_call_receipts import last_call_id, source_call_scope
 
     dl = current_deadline()
     cap = PRIMARY_FETCH_SECONDS if fetch_cap_s is None else fetch_cap_s
@@ -232,10 +235,14 @@ def _query_first_then_count(
 
     query_start = time.perf_counter()
     try:
-        results = _query_with_ordering(
-            _client_for(secop_client, query_budget),
-            dataset_id, soql_query, query_ordering_specifier,
-        )
+        with source_call_scope(
+            reason=f"{call_reason}:query", scope_id=dataset_id,
+            parent_call_id=parent_call_id,
+        ):
+            results = _query_with_ordering(
+                _client_for(secop_client, query_budget),
+                dataset_id, soql_query, query_ordering_specifier,
+            )
     except Exception as exc:
         if dl is not None:
             record_deadline(
@@ -245,6 +252,7 @@ def _query_first_then_count(
             )
         raise
     query_ms = _elapsed_ms(query_start)
+    query_call_id = last_call_id()
     if dl is not None:
         record_deadline(fetch_elapsed_ms=round(query_ms, 1), fetch_status="completed")
     # rows_ready_ms: momento en que las filas están disponibles (alias de query_ms).
@@ -268,7 +276,11 @@ def _query_first_then_count(
     count_start = time.perf_counter()
     try:
         count_client = _client_for(secop_client, max(1, math.ceil(effective_count_budget)))
-        total = count_client.count(dataset_id, count_soql)
+        with source_call_scope(
+            reason=f"{call_reason}:count", scope_id=dataset_id,
+            parent_call_id=query_call_id,
+        ):
+            total = count_client.count(dataset_id, count_soql)
         base_timings["secop_count_ms"] = _elapsed_ms(count_start)
         return total, results, base_timings, False
     except Exception:

@@ -258,6 +258,11 @@ class FeedbackStore:
             "rated_at": None,
         }
 
+        from app.core.source_call_receipts import source_calls_snapshot
+        source_calls = source_calls_snapshot()
+        if source_calls is not None:
+            trace["source_call_receipts"] = source_calls
+
         if self.jsonl_dual_write:
             self._append(trace)
         if self.sqlite_enabled:

@@ -151,7 +151,7 @@ def test_ready_execution_mutant_is_detected(scenario_id, tmp_path, monkeypatch):
     if scenario_id in {"PC-MONEY-001", "PC-MOD-001", "PC-MONEY-002", "PC-OPP-001", "PC-TIME-001"}:
         original = harness.transport._execute
 
-        def ignore_filter(operation, dataset, soql):
+        def ignore_filter(operation, dataset, soql, **kwargs):
             if scenario_id == "PC-MONEY-001":
                 soql = soql.replace(" AND valor_del_contrato >= 500000000", "")
             elif scenario_id == "PC-MOD-001":
@@ -165,7 +165,7 @@ def test_ready_execution_mutant_is_detected(scenario_id, tmp_path, monkeypatch):
                 soql = soql.replace(" AND fecha_de_firma <= '2023-12-31'", "")
             else:
                 soql = _without_opportunity_deadline(soql)
-            return original(operation, dataset, soql)
+            return original(operation, dataset, soql, **kwargs)
 
         monkeypatch.setattr(harness.transport, "_execute", ignore_filter)
     else:
