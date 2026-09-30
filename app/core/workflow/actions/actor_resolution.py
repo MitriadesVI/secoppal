@@ -106,29 +106,36 @@ def _parse_exact_boundary_modifier_suffix(
     return modifiers or None
 
 
-@action(
-    reads=["parsed_params", "raw_query", "negation_requests"],
-    writes=["parsed_params"],
-)
-def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> State:
-    """Resolve exact identity or expose candidates after semantic arbitration."""
+def resolve_actor_params(
+    raw_query: str,
+    parsed_params: dict,
+    actor_name_resolver: ActorNameResolver,
+    negation_requests: list | tuple = (),
+) -> dict | None:
+    """Actor projection of one parse: the params to publish, or None to leave them as they are.
+
+    Pure over its arguments (the resolver is a read-only directory lookup). The graph
+    action below and the Foundation route gate both call this one function, so the
+    owner that legacy would give a turn to ACTOR and the owner Foundation declines to
+    contest cannot diverge.
+    """
     # Negative ACTOR/BUYER spans are already bound. No directory probe,
     # candidate retrieval or actor_pending projection may run before the
     # fail-closed policy clarification.
-    if requests_require_policy(state.get("negation_requests") or []):
-        return state
+    if requests_require_policy(negation_requests or []):
+        return None
     if not actor_profile_enabled():
-        return state
+        return None
 
-    params = dict(state.get("parsed_params", {}) or {})
-    raw_query = str(state.get("raw_query", "") or "")
+    params = dict(parsed_params or {})
+    raw_query = str(raw_query or "")
     method = actor_resolution_method(params)
 
     if method == METHOD_NAME_UNRESOLVED:
         scope = params.get("actor_scope")
         actor_name = scope.get("observed_name") if isinstance(scope, dict) else None
         if not isinstance(actor_name, str) or not actor_name.strip():
-            return state
+            return None
         result = None
         recovered_modifiers: dict = {}
         # Give the strong mention a chance to claim its longest exact alias
@@ -174,7 +181,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
             original_query=raw_query,
             origin="strong_actor_syntax",
         )
-        return state.update(parsed_params=projected)
+        return projected
 
     # Any already-classified actor (especially an explicit document) bypasses
     # the optional bare-name probe.
@@ -184,8 +191,8 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
         ):
             params["actor_resolution_method"] = METHOD_EXPLICIT_DOCUMENT
             params["actor_resolution_status"] = ActorResolutionStatus.RESOLVED
-            return state.update(parsed_params=params)
-        return state
+            return params
+        return None
 
     conversation_probe = params.pop("actor_conversation_probe", None)
     if isinstance(conversation_probe, dict):
@@ -207,22 +214,22 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
                     original_query=raw_query,
                     origin="actor_conversation_exact_probe",
                 )
-                return state.update(parsed_params=projected)
+                return projected
         # A probe is not actor evidence by itself.  An exact miss/unavailable
         # keeps the generic interpretation and never opens fuzzy retrieval.
         params.pop("actor_conversation_operation", None)
         params.pop("actor_conversation_construction", None)
-        return state.update(parsed_params=params)
+        return params
 
     probe = detect_bare_actor_probe(raw_query, params)
     if probe is None:
-        return state
+        return None
     if has_canonical_geography_evidence(probe.actor_name, params):
         # INV-BARE-GEOGRAPHY-PRECEDENCE: el frame territorial del parser se
         # conserva intacto. La sonda desnuda es evidencia opcional, y un
         # topónimo canónico no deja de serlo porque alguien se llame así en
         # el directorio.
-        return state
+        return None
     actor_name = probe.unbounded_name
     result = actor_name_resolver.resolve_exact(actor_name)
     if (
@@ -243,13 +250,13 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
             replace(probe, name_only=False),
         )
         if has_strong_search_intent(raw_query, params) and not entity_like:
-            return state
+            return None
         if has_strong_topic_evidence(probe.actor_name, params) and not entity_like:
-            return state
+            return None
         if not entity_like:
-            return state
+            return None
         if person_shape_only and result.status == ActorResolutionStatus.INDEX_UNAVAILABLE:
-            return state
+            return None
         if not params.get("dataset_explicit"):
             params["dataset"] = "contratos"
         actor_name = probe.actor_name
@@ -263,7 +270,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
                 # evidence. Substrings/BM25 alone cannot establish intention.
                 words = set(actor_name.split()) - {"de", "del", "la", "las", "los", "el", "y"}
                 if not any(words <= set(c.matched_alias.split()) for c in fuzzy.candidates):
-                    return state
+                    return None
             if fuzzy.status in {
                 ActorResolutionStatus.CANDIDATES,
                 ActorResolutionStatus.AMBIGUOUS,
@@ -280,7 +287,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
                     original_query=raw_query,
                     origin="bare_actor_like",
                 )
-                return state.update(parsed_params=projected)
+                return projected
         projected = scrub_strong_actor_leaks(params, actor_name, raw_query=raw_query)
         projected.pop("objeto", None)
         projected.pop("objeto_phrases", None)
@@ -299,7 +306,7 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
                 "actor_name": actor_name,
                 "resolution_status": result.status,
             }
-        return state.update(parsed_params=projected)
+        return projected
 
     baseline_params = params
     params = scrub_strong_actor_leaks(params, actor_name, raw_query=raw_query)
@@ -333,4 +340,19 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
             # actor/topic question. Do not expose ranks before that arbitration.
             # Existing exact_ambiguous_alias UI retains its baseline behavior.
             projected.pop("actor_pending", None)
-    return state.update(parsed_params=projected)
+    return projected
+
+
+@action(
+    reads=["parsed_params", "raw_query", "negation_requests"],
+    writes=["parsed_params"],
+)
+def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> State:
+    """Resolve exact identity or expose candidates after semantic arbitration."""
+    projected = resolve_actor_params(
+        str(state.get("raw_query", "") or ""),
+        state.get("parsed_params", {}) or {},
+        actor_name_resolver,
+        state.get("negation_requests") or [],
+    )
+    return state if projected is None else state.update(parsed_params=projected)
