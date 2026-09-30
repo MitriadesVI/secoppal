@@ -8,6 +8,7 @@ from app.core.contract_type_resolver import resolve_contract_types
 from app.core.contract_universe import POLICY_VERSION
 from app.core.entity_resolver import EntityResolver, department_mention_resolution
 from app.core.foundation_evidence import UNIVERSE_SPAN_OMITTED, material_phrase, topic_spans
+from app.core.foundation_state_composition import composition_reason
 from app.core.interpretation_contract import (
     AcceptanceStatus, ConditionRole, ContractError, Effect, HostPolicy, HostResolution,
     InterpretationAcceptance, InterpretationProposal, Polarity, RelationKind, ResolutionDecision,
@@ -133,6 +134,9 @@ def admit_proposal(proposal: InterpretationProposal, raw: str, *,
             types = resolve_contract_types(text)
             value = types.include_ids[0] if len(types.include_ids) == 1 else None
         elif dimension is SemanticDimension.STATE:
+            composed = composition_reason(condition, raw)
+            if composed is not None:  # never collapse «A o B» to its first state
+                return _stop(proposal, AcceptanceStatus.NEEDS_CLARIFICATION, composed)
             value = state_value(condition)
             if value == "oferta_abierta" and len(condition.evidence) > 1:
                 policies.append(HostPolicy("ADR-100", "1", (condition.condition_id,), Effect.EQUIVALENT))

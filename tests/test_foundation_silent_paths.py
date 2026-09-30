@@ -201,3 +201,109 @@ def test_a_swallowing_topic_makes_no_source_call(tmp_path, monkeypatch):
     turn, harness = harness_run(tmp_path, monkeypatch, INFANCIA, produced)
     assert turn.result["foundation_internal_reason"] == "TOPIC_OVERLAPS_REQUEST_UNIVERSE"
     assert harness.transport.snapshot() == []
+
+
+# ── 10.3 State disjunction ─────────────────────────────────────────────────────
+
+def _state_resolution(accepted, cid="c0"):
+    return [r.resolved_ids for r in accepted.resolutions if r.target_id == cid]
+
+
+@pytest.mark.parametrize("raw,words,operator", [
+    ("procesos publicados o abiertos de aseo", ["publicados o abiertos"], "is"),       # literal operator
+    ("procesos publicados o abiertos de aseo", ["publicados", "abiertos"], "is"),
+    ("procesos publicados y abiertos de aseo", ["publicados", "abiertos"], "family"),   # «y» is not the funnel
+    ("procesos publicados y abiertos de aseo", ["publicados y abiertos"], "family"),
+    ("procesos publicados, abiertos de aseo", ["publicados", "abiertos"], "family"),
+    ("procesos publicados o cerrados de aseo", ["publicados", "cerrados"], "is"),
+])
+def test_two_states_in_one_condition_are_asked_never_collapsed(raw, words, operator):
+    accepted = admit(raw, [("STATE", operator, [span(raw, w) for w in words], "POSITIVE"),
+                           ("TOPIC", "contains", [span(raw, "aseo")], "POSITIVE")],
+                     subject="processes", noun="procesos")
+    assert accepted.status is AcceptanceStatus.NEEDS_CLARIFICATION
+    assert accepted.reason == "STATE_COMPOSITION_UNSUPPORTED"
+
+
+@pytest.mark.parametrize("words", [["publicados o abiertos"], ["publicados", "abiertos"]])
+@pytest.mark.parametrize("raw", ["procesos publicados o abiertos de aseo", "procesos abiertos o publicados de aseo"])
+def test_the_accredited_funnel_under_a_bare_o_is_kept(raw, words):
+    if words == ["publicados o abiertos"] and "abiertos o publicados" in raw:
+        words = ["abiertos o publicados"]
+    accepted = admit(raw, [("STATE", "family", [span(raw, w) for w in words], "POSITIVE"),
+                           ("TOPIC", "contains", [span(raw, "aseo")], "POSITIVE")],
+                     subject="processes", noun="procesos")
+    assert accepted.status is AcceptanceStatus.READY, accepted.reason
+    assert _state_resolution(accepted) == [("oferta_abierta",)]
+    soql = _query_soql(accepted)
+    assert "estado_de_apertura_del_proceso = 'Abierto'" in soql
+
+
+def test_a_single_literal_state_is_unchanged():
+    raw = "procesos publicados de aseo"
+    accepted = admit(raw, [("STATE", "is", [span(raw, "publicados")], "POSITIVE"),
+                           ("TOPIC", "contains", [span(raw, "aseo")], "POSITIVE")],
+                     subject="processes", noun="procesos")
+    assert accepted.status is AcceptanceStatus.READY and _state_resolution(accepted) == [("Publicado",)]
+
+
+def test_a_negated_state_is_unsupported_not_silently_positive(tmp_path, monkeypatch):
+    raw = "procesos no publicados de aseo"
+    produced = proposal(raw, [("STATE", "is", [span(raw, "publicados")], "NEGATIVE"),
+                              ("TOPIC", "contains", [span(raw, "aseo")], "POSITIVE")],
+                        subject="processes", noun="procesos")
+    turn, harness = harness_run(tmp_path, monkeypatch, raw, produced)
+    assert turn.result["foundation_terminal"] == "UNSUPPORTED"
+    assert harness.transport.snapshot() == []
+
+
+@pytest.mark.parametrize("operator", ["OR", "NOT"])
+def test_state_under_or_or_not_is_unsupported_without_calls(tmp_path, monkeypatch, operator):
+    raw = "procesos publicados o de aseo"
+    payload_conditions = [("STATE", "is", [span(raw, "publicados")], "POSITIVE"),
+                          ("TOPIC", "contains", [span(raw, "aseo")], "POSITIVE")]
+    base = proposal(raw, payload_conditions, subject="processes", noun="procesos")
+    from dataclasses import replace
+    from app.core.interpretation_contract import ConditionExpression, LogicOperator
+    atoms = tuple(ConditionExpression(LogicOperator.ATOM, c) for c in ("c0", "c1"))
+    expression = (ConditionExpression(LogicOperator.OR, None, atoms) if operator == "OR" else
+                  ConditionExpression(LogicOperator.AND, None, (
+                      ConditionExpression(LogicOperator.NOT, None, (atoms[0],)), atoms[1])))
+    produced = replace(base, requests=(replace(base.requests[0], condition_expression=expression),))
+    turn, harness = harness_run(tmp_path, monkeypatch, raw, produced)
+    assert turn.result["foundation_terminal"] == "UNSUPPORTED"
+    assert harness.transport.snapshot() == []
+
+
+_FORMS = {name: [stem + end for end in ("o", "a", "os", "as")]
+          for name, stem in (("Publicado", "publicad"), ("abierto", "abiert"),
+                             ("Terminado", "terminad"), ("cerrado", "cerrad"))}
+
+
+def test_every_two_state_composition_of_the_lexicon_is_asked_or_is_the_funnel():
+    """Exhaustive over the finite lexicon: forms x ordered pairs x connectors x operators x span layout."""
+    checked = 0
+    for left_name, left_forms in _FORMS.items():
+        for right_name, right_forms in _FORMS.items():
+            if left_name == right_name:
+                continue
+            for left in left_forms:
+                for right in right_forms:
+                    for connector in (" o ", " y ", ", ", " u "):
+                        raw = f"procesos {left}{connector}{right} de aseo"
+                        layouts = ([span(raw, f"{left}{connector}{right}")], [span(raw, left), span(raw, right)])
+                        for operator in ("is", "family"):
+                            for layout in layouts:
+                                accepted = admit(raw, [("STATE", operator, layout, "POSITIVE"),
+                                                       ("TOPIC", "contains", [span(raw, "aseo")], "POSITIVE")],
+                                                 subject="processes", noun="procesos")
+                                funnel = ({left_name, right_name} == {"Publicado", "abierto"}
+                                          and operator == "family" and connector == " o ")
+                                if funnel:
+                                    assert accepted.status is AcceptanceStatus.READY, raw
+                                    assert _state_resolution(accepted) == [("oferta_abierta",)], raw
+                                else:
+                                    assert accepted.status is AcceptanceStatus.NEEDS_CLARIFICATION, (raw, operator)
+                                    assert accepted.reason == "STATE_COMPOSITION_UNSUPPORTED", (raw, operator)
+                                checked += 1
+    assert checked == 4 * 3 * 4 * 4 * 4 * 2 * 2
