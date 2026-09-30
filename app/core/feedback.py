@@ -258,6 +258,9 @@ class FeedbackStore:
             "rated_at": None,
         }
 
+        if workflow_result.get("foundation_telemetry") is not None:
+            trace["foundation_telemetry"] = _safe_serialize(workflow_result["foundation_telemetry"])
+
         from app.core.source_call_receipts import source_calls_snapshot
         source_calls = source_calls_snapshot()
         if source_calls is not None:

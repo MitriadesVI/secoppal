@@ -435,6 +435,15 @@ class SecopalWorkflow:
         if followed is not None:
             followed["_continuation_owner"] = "RADAR"
             return followed
+        # ADR-102: Foundation SEARCH may claim only what every owner above
+        # declined; it asks the in-graph owners' own detectors before claiming.
+        from app.core.foundation_runtime import run_foundation_search
+
+        foundation = run_foundation_search(self, ctx, seed_resolved_params,
+                                           observation=observation, binding=binding)
+        if foundation is not None:
+            foundation["_continuation_owner"] = "NONE"
+            return foundation
         with legacy_budget(observation is not None):
             result = handle_normal_flow(observed_deps(deps, observation, binding), ctx)
         params = result.get("resolved_params") or {}

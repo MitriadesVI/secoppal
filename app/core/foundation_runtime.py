@@ -6,17 +6,19 @@ One profile only: producer B v4.2, mandatory universe_kind and mandatory H7.
 from __future__ import annotations
 
 import re
+import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from app.core.foundation_admission import admit_proposal
+from app.core.foundation_route_owner import FOUNDATION_TURN_MARK
 from app.core.foundation_guard import ExecutionGuard, FoundationGuardError, execution_guard
 from app.core.foundation_projection import ProjectionError, project_accepted
 from app.core.foundation_token_plan import select_members
 from app.core.foundation_universe_policy import apply_universe_policy
 from app.core.interpretation_contract import AcceptanceStatus, InterpretationAcceptance
 from app.core.socrata_transport import Soda3OrderingSpecifier
-from app.core.source_call_receipts import last_call_id, source_call_scope
+from app.core.source_call_receipts import last_call_id, source_call_scope, source_calls_snapshot
 from app.core.workflow.results import empty_result
 from app.utils.money import normalize_text
 
@@ -182,10 +184,76 @@ def execute_accepted(workflow, ctx, accepted: InterpretationAcceptance, *, refer
     return result
 
 
-def run_foundation_search(workflow, ctx, seed) -> dict | None:
-    if (getattr(workflow.settings, "secoppal_foundation_mode", "legacy") != "foundation_v3"
-            or not eligible_first_search(workflow, ctx, seed)):
+def _telemetry(producer, accepted, universe, result) -> dict:
+    """Dogfood fields; no raw text and no provider payload."""
+    from app.core.foundation_producers import ProducerReceipt
+
+    receipt = getattr(producer, "receipt", None)
+    receipt = receipt if isinstance(receipt, ProducerReceipt) else None
+    decisions = universe.decisions if universe is not None else ()
+    telemetry = {
+        "foundation_called": True,
+        **(receipt.to_dict() if receipt is not None else {"producer_version": None, "prompt_sha256": None,
+                                                           "provider_model_reported": None,
+                                                           "provider_latency_ms": None,
+                                                           "provider_error": None, "provider_calls": None}),
+        "proposal_valid": accepted.status not in (AcceptanceStatus.INVALID_PROPOSAL,
+                                                  AcceptanceStatus.PROVIDER_ERROR),
+        "acceptance_status": accepted.status.value,
+        "internal_reason_code": accepted.reason or None,
+        "h7_authority": [item.authority for item in decisions],
+        "h7_rule_ids": [list(item.rules) for item in decisions],
+        "h7_model_disagreement": any(item.disagrees_with_producer for item in decisions),
+        "h7_conflict": universe.conflict if universe is not None else None,
+        "route": "accepted",
+        "source_calls": len(source_calls_snapshot() or ()),
+    }
+    return telemetry
+
+
+def _record(workflow, ctx, result: dict) -> dict:
+    """One trace per Foundation turn; the history turn carries no legacy params."""
+    feedback = getattr(workflow, "feedback", None)
+    if feedback is not None:
+        result["trace_id"] = feedback.log_trace(ctx.user_query, ctx.channel, result,
+                                                user_identity=ctx.user_identity)
+    if ctx.chat_id:
+        workflow.conv_store.append_turn(
+            ctx.chat_id, ctx.user_query, result["response"], {},
+            result_ids=[identifier for group in result.get("groups", []) for identifier in group["row_ids"]],
+            trace_id=result.get("trace_id", ""), outcome=result.get("outcome", ""),
+            outcome_reason=FOUNDATION_TURN_MARK, result_count=len(result.get("rows", [])),
+        )
+    return result
+
+
+def _continuation_clarification(workflow, ctx) -> dict:
+    result = empty_result(
+        response=("La búsqueda anterior la resolvió el intérprete avanzado, que todavía no admite "
+                  "ajustes sobre su resultado. Escribe la consulta completa (qué buscas, de qué entidad "
+                  "y de qué periodo) y la ejecuto como una búsqueda nueva."),
+        route_reason="foundation_continuation_unsupported", needs_clarification=True, total_count=None)
+    result.update(foundation_mode="foundation_v3", foundation_terminal="NEEDS_CLARIFICATION",
+                  foundation_internal_reason="FOUNDATION_CONTINUATION_UNSUPPORTED",
+                  foundation_telemetry={"foundation_called": False, "route": "continuation_blocked",
+                                        "internal_reason_code": "FOUNDATION_CONTINUATION_UNSUPPORTED"},
+                  state="needs_clarification", groups=[], rows=[], total_quality="not_applicable")
+    return _record(workflow, ctx, result)
+
+
+def run_foundation_search(workflow, ctx, seed, *, observation=None, binding=None) -> dict | None:
+    """Claim a first-turn SEARCH that every existing owner declined; otherwise None."""
+    if getattr(workflow.settings, "secoppal_foundation_mode", "legacy") != "foundation_v3":
         return None
+    from app.core.foundation_route_owner import continues_foundation_turn, decline_reason
+
+    if seed is None and ctx.actor_candidate_selection is None and continues_foundation_turn(workflow, ctx):
+        return _continuation_clarification(workflow, ctx)
+    if not eligible_first_search(workflow, ctx, seed):
+        return None
+    if decline_reason(workflow, ctx, observation=observation, binding=binding) is not None:
+        return None
+    started = time.perf_counter()
     producer = getattr(workflow, "foundation_producer", None)
     if producer is None:
         from app.core.foundation_producers import configured_producer
@@ -203,11 +271,7 @@ def run_foundation_search(workflow, ctx, seed) -> dict | None:
     instant = getattr(workflow, "foundation_reference_instant", None)
     instant = instant or datetime.now(ZoneInfo("America/Bogota"))
     result = execute_accepted(workflow, ctx, accepted, reference_instant=instant, universe_policy=universe)
-    if ctx.chat_id:
-        workflow.conv_store.append_turn(ctx.chat_id, ctx.user_query, result["response"],
-                                        {"foundation_mode": "foundation_v3",
-                                         "foundation_acceptance": accepted.to_dict(),
-                                         **({"foundation_universe": universe.to_dict()} if universe else {})},
-                                        result_ids=[identifier for group in result["groups"] for identifier in group["row_ids"]],
-                                        outcome=result.get("outcome", ""), result_count=len(result["rows"]))
-    return result
+    result["foundation_internal_reason"] = accepted.reason or None
+    result["foundation_telemetry"] = _telemetry(producer, accepted, universe, result)
+    result["foundation_telemetry"]["foundation_latency_ms"] = round((time.perf_counter() - started) * 1000, 1)
+    return _record(workflow, ctx, result)
