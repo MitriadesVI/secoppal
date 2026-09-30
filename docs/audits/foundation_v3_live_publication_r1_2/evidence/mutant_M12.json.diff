@@ -1,0 +1,12 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_runtime.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_runtime.py [in-memory]
+@@ -177,8 +177,7 @@
+                   result_order_guarantee="ORDER_SAMPLE" if state == "ok_order_sample" else "exact",
+                   fallback_attempted=any(group["fallback_attempted"] for group in groups))
+     result.update(export_fields(groups))
+-    result["response"] = response_text(groups, cards_by_group, channel=ctx.channel,
+-                                       limit=workflow.formatter.max_results)
++    result["response"] = '\n'.join('Referencia: ' + str(r.get('id_del_proceso')) for r in all_rows)
+     return result
+ 
+ 

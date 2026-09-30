@@ -1,0 +1,173 @@
+[
+  {
+    "name": "M01",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "CARD_SHAPE",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M01.json.diff"
+  },
+  {
+    "name": "M02",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "RESULTS_EXACT_SOURCE",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M02.json.diff"
+  },
+  {
+    "name": "M03",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "TURN_REFERENCE_INSTANT_EXPLICIT",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M03.json.diff"
+  },
+  {
+    "name": "M04",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "CARD_MULTIPLICITY_NO_LIMIT_NO_DEDUPE",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M04.json.diff"
+  },
+  {
+    "name": "M05",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "CARD_MULTIPLICITY_NO_LIMIT_NO_DEDUPE",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M05.json.diff"
+  },
+  {
+    "name": "M06",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "RESULTS_EXACT_SOURCE",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M06.json.diff"
+  },
+  {
+    "name": "M07",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "CARD_SOURCE_ORDER",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M07.json.diff"
+  },
+  {
+    "name": "M08",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "CARD_SHAPE",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M08.json.diff"
+  },
+  {
+    "name": "M09",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "TURN_REFERENCE_INSTANT_EXPLICIT",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M09.json.diff"
+  },
+  {
+    "name": "M10",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "VISIBLE_CARDS_NOT_ID_DUMP",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M10.json.diff"
+  },
+  {
+    "name": "M11",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "DUAL_EXPORT: must be blocked",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M11.json.diff"
+  },
+  {
+    "name": "M12",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "VISIBLE_CARDS_NOT_ID_DUMP",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M12.json.diff"
+  },
+  {
+    "name": "M13",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "SOURCE_EXACTNESS: fallback must preserve source values and types",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M13.json.diff"
+  },
+  {
+    "name": "M14",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "SOURCE_EXACTNESS: fallback must preserve source values and types",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M14.json.diff"
+  },
+  {
+    "name": "M15",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "CHANNEL_TRUTH: announced equals visible cards",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M15.json.diff"
+  },
+  {
+    "name": "M16",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "M16 reset failed after normal",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M16.json.diff"
+  },
+  {
+    "name": "M17",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "M17_GLOBAL_RESPONSE_BUDGET",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M17.json.diff"
+  },
+  {
+    "name": "M18",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "M18_REDISTRIBUTE_UNUSED_QUOTA",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M18.json.diff"
+  },
+  {
+    "name": "M19",
+    "control_exit": 0,
+    "mutant_exit": 1,
+    "killed_by_property": true,
+    "assertion": "M19_FAIR_SHARE_AND_REPRESENTATION",
+    "candidate_diff_unchanged": true,
+    "diff": "evidence/mutant_M19.json.diff"
+  }
+]

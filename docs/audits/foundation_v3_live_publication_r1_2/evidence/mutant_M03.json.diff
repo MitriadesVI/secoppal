@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_presentation.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_presentation.py [in-memory]
+@@ -25,7 +25,7 @@
+ def group_cards(formatter: Formatter, groups: list[dict], *,
+                 reference_instant: datetime | None) -> list[list[dict]]:
+     """Una lista de tarjetas por grupo, alineada con ``groups``."""
+-    return [formatter.display_rows(group["rows"], group["dataset"], reference_instant=reference_instant)
++    return [formatter.display_rows(group["rows"], group["dataset"], reference_instant=None)
+             for group in groups]
+ 
+ 

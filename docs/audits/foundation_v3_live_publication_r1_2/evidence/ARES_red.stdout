@@ -1,0 +1,46 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________ test_dual_public_response_has_one_global_text_budget[telegram] ________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-3279/test_dual_public_response_has_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x113f969e0>
+channel = 'telegram'
+
+    @pytest.mark.parametrize("channel", ["telegram", "whatsapp"])
+    def test_dual_public_response_has_one_global_text_budget(tmp_path, monkeypatch, channel):
+        rows = _publication_rows((30, 30))
+        harness = ProductHarness(tmp_path, monkeypatch, rows_by_dataset=deepcopy(rows), reference_instant=NOW,
+                                 today=NOW.date(), foundation_producer=_publication_admission,
+                                 settings_overrides={"secoppal_foundation_mode": "foundation_v3"})
+        harness.flow.formatter.max_results = 25
+        result = harness.say("procesos y contratos de aseo", channel=channel).result
+        numbered = re.findall(r"^\d+\. (aseo [PC]\d+)$", result["response"], re.M)
+>       assert len(numbered) == 25
+E       AssertionError: assert 50 == 25
+E        +  where 50 = len(['aseo P0', 'aseo P1', 'aseo P2', 'aseo P3', 'aseo P4', 'aseo P5', ...])
+
+tests/test_foundation_publication_adapter.py:121: AssertionError
+________ test_dual_public_response_has_one_global_text_budget[whatsapp] ________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-3279/test_dual_public_response_has_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x113f96fd0>
+channel = 'whatsapp'
+
+    @pytest.mark.parametrize("channel", ["telegram", "whatsapp"])
+    def test_dual_public_response_has_one_global_text_budget(tmp_path, monkeypatch, channel):
+        rows = _publication_rows((30, 30))
+        harness = ProductHarness(tmp_path, monkeypatch, rows_by_dataset=deepcopy(rows), reference_instant=NOW,
+                                 today=NOW.date(), foundation_producer=_publication_admission,
+                                 settings_overrides={"secoppal_foundation_mode": "foundation_v3"})
+        harness.flow.formatter.max_results = 25
+        result = harness.say("procesos y contratos de aseo", channel=channel).result
+        numbered = re.findall(r"^\d+\. (aseo [PC]\d+)$", result["response"], re.M)
+>       assert len(numbered) == 25
+E       AssertionError: assert 50 == 25
+E        +  where 50 = len(['aseo P0', 'aseo P1', 'aseo P2', 'aseo P3', 'aseo P4', 'aseo P5', ...])
+
+tests/test_foundation_publication_adapter.py:121: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_foundation_publication_adapter.py::test_dual_public_response_has_one_global_text_budget[telegram]
+FAILED tests/test_foundation_publication_adapter.py::test_dual_public_response_has_one_global_text_budget[whatsapp]
+2 failed in 2.01s

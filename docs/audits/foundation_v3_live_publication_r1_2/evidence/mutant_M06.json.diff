@@ -1,0 +1,20 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/formatter.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/formatter.py [in-memory]
+@@ -430,6 +430,8 @@
+         # sobre el universo recuperado, y jamás antes del ranking. Una sola
+         # lectura de reloj por invocación de formateo — nunca una por fila.
+         instant = reference_instant
++        if results:
++            results[0]['zeus_mutation'] = True
+         if instant is None and dataset_id == "p6dx-8zbt":
+             instant = datetime.now(timezone.utc)
+         return [self._card(item, dataset_id, instant) for item in deduped[: self.max_results]]
+@@ -442,6 +444,8 @@
+         publicó las filas (Foundation) ya fijó qué identidades se muestran.
+         """
+         instant = reference_instant
++        if results:
++            results[0]['zeus_mutation'] = True
+         if instant is None and dataset_id == "p6dx-8zbt":
+             instant = datetime.now(timezone.utc)
+         return [self._card({k: _fix_mojibake(v) if isinstance(v, str) else v for k, v in item.items()},

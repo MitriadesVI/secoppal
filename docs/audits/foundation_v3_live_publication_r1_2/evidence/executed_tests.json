@@ -1,0 +1,17 @@
+{
+  "ares_focal_files": [
+    "tests/test_foundation_publication_adapter.py",
+    "tests/test_formatter_display_rows.py",
+    "tests/test_formatter_no_results.py",
+    "tests/test_foundation_basic_fallback.py",
+    "tests/test_foundation_runtime.py"
+  ],
+  "ares_passed": 132,
+  "hera_passed": 73,
+  "combined_disjoint_passed": 205,
+  "hypothesis_nodeid": "tests/test_foundation_publication_adapter.py::test_global_budget_conserves_prefixes_fairness_and_source",
+  "red_nodeids": [
+    "tests/test_foundation_publication_adapter.py::test_dual_public_response_has_one_global_text_budget[telegram]",
+    "tests/test_foundation_publication_adapter.py::test_dual_public_response_has_one_global_text_budget[whatsapp]"
+  ]
+}

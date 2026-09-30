@@ -1,0 +1,814 @@
+{
+  "docs/audits/foundation_v3_live_publication_r1_2/COMMANDS.jsonl": {
+    "sha256": "28313d4f2d6ca744206a31d8d5f71cabd7bc5fba8ec4b17cb3ed803b4f3dd7a4",
+    "bytes": 51423
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/FLAG_OFF_PARITY.json": {
+    "sha256": "ac79cadaaa4c77a611a528a671b62acf4eb2a61d75f7cfab499a138c8381cff2",
+    "bytes": 283
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/LOCAL_GATES.md": {
+    "sha256": "707d607c40ea0ed2cc18a2e5a9b0d47658e7e42fdc31ac6271d7da374337b884",
+    "bytes": 3638
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/MUTATION_REVIEW.json": {
+    "sha256": "ffb4182066d54110e578d73e7da26e1b010860194f5b04e98b5fa2bb4e5115c5",
+    "bytes": 4533
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/PLAN.md": {
+    "sha256": "bf94e12e4b4aade142d232fdb7446368c486141e0fba384ec81fb0be1725881d",
+    "bytes": 3458
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/PREFLIGHT.json": {
+    "sha256": "6ea3dc0a76a89e9d098226d759b46946b7b713aaeeb95a68dcceca41826a68ce",
+    "bytes": 400
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/PUBLICATION_MATRIX.json": {
+    "sha256": "5b0d28a1337112b3f92350c44e6ee14aa7b827e2ce501d86816254891d18d833",
+    "bytes": 7326
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/STATIC_DELTA.json": {
+    "sha256": "231d93b77fa37fabda81053847fe3c54b593e99d411e1f784bd4e540c6beed2a",
+    "bytes": 675
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_focal.argv.json": {
+    "sha256": "3c0999e304f0fb29eda633f2e12d60a985ec50d4a03512c7af4fd957432aecdc",
+    "bytes": 408
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_focal.exit": {
+    "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "bytes": 1
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_focal.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_focal.stdout": {
+    "sha256": "e9b720328489520466d8dafb8405189e5197b80cc1d534bf753aea4604b74291",
+    "bytes": 181
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red-keyword.argv.json": {
+    "sha256": "b5ee9ce1004d9cda9b8866be970d8e080abf8a14500cdb7e37b309dc2d1d0f22",
+    "bytes": 305
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red-keyword.exit": {
+    "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+    "bytes": 1
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red-keyword.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red-keyword.stdout": {
+    "sha256": "979809fb281ffc076a83bffd3212df4c4a8740ec451052a661e6038a6c99fc0b",
+    "bytes": 3464
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red-schema.argv.json": {
+    "sha256": "b5ee9ce1004d9cda9b8866be970d8e080abf8a14500cdb7e37b309dc2d1d0f22",
+    "bytes": 305
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red-schema.exit": {
+    "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+    "bytes": 1
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red-schema.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red-schema.stdout": {
+    "sha256": "526dda1e3a1fe64c7de707bcd9b8c4ce305f2b34f866abbd36386a72470f3c10",
+    "bytes": 12820
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red.argv.json": {
+    "sha256": "b5ee9ce1004d9cda9b8866be970d8e080abf8a14500cdb7e37b309dc2d1d0f22",
+    "bytes": 305
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red.exit": {
+    "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+    "bytes": 1
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_red.stdout": {
+    "sha256": "f92648e7683d1d69e4f2aa8c47910a8def3891d3af07eaa09d5cb7bed6ab2d02",
+    "bytes": 3066
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_ruff.argv.json": {
+    "sha256": "2642db6f5c77bb7bbca400da18ba882cf315ae0d200c288620c735b581276b1b",
+    "bytes": 200
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_ruff.exit": {
+    "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "bytes": 1
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_ruff.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_ruff.stdout": {
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "bytes": 19
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_semgrep.argv.json": {
+    "sha256": "846e3ced3ecba2b39108f475268e11c38d80d3cc9225c292fb20ed8a86924acb",
+    "bytes": 301
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_semgrep.exit": {
+    "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "bytes": 1
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_semgrep.stderr": {
+    "sha256": "8e44e1bb5cfa30636d048c18fdcfad4fce93f3691e39f5b6852a87d8ed798cd7",
+    "bytes": 593
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ARES_semgrep.stdout": {
+    "sha256": "89b7da7af068ce6a1f3b1e7c894aac32f7ec7e5effdb456582c27e49513f347b",
+    "bytes": 1354
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_budget.json": {
+    "sha256": "7b9fd9c4815be99913dfe0d084d59441a3f60ef96dadd2763a826ec94e632af2",
+    "bytes": 4105644
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_budget_collect.0.stderr": {
+    "sha256": "8f327e98edc43ac8e9a24037f3467617192897eb33b098f4e523a72fafa47ae9",
+    "bytes": 180
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_budget_collect.0.stdout": {
+    "sha256": "13a18945918aea2ac568f5f25eb56e3196c9b4a683fabd7ea231c2cab554454d",
+    "bytes": 42
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_parity_default.0.stderr": {
+    "sha256": "7f2ac6079e3f4daae08698e2c0338b08abfa4db0c45135df8c6527f303a2c952",
+    "bytes": 168
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_parity_default.0.stdout": {
+    "sha256": "e49affabc528de976415a6e66c0601de64b555967e78926cbdc09a5fa6f525e5",
+    "bytes": 193
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_parity_default.json": {
+    "sha256": "d00dc7840e44143ed6e534919f8b09b0e338a836af46656461ef6f115a22fa3d",
+    "bytes": 155565
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_parity_legacy.0.stderr": {
+    "sha256": "7f2ac6079e3f4daae08698e2c0338b08abfa4db0c45135df8c6527f303a2c952",
+    "bytes": 168
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_parity_legacy.0.stdout": {
+    "sha256": "65abd32bb37059b68717b042118bd412d3e8ff8650cf0d97f84a91ee3bf5dbed",
+    "bytes": 192
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_parity_legacy.json": {
+    "sha256": "d00dc7840e44143ed6e534919f8b09b0e338a836af46656461ef6f115a22fa3d",
+    "bytes": 155565
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_ruff.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_ruff.0.stdout": {
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "bytes": 19
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_semgrep.0.stderr": {
+    "sha256": "8e44e1bb5cfa30636d048c18fdcfad4fce93f3691e39f5b6852a87d8ed798cd7",
+    "bytes": 593
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_semgrep.0.stdout": {
+    "sha256": "add0175afd9dd815ab55737d9575853baab8a4b982b8688175b4d2fc44576730",
+    "bytes": 1351
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_source_legacy.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_source_legacy.0.stdout": {
+    "sha256": "cd9a1b450d08bc39dde9b202af28f3d71cf0c0bee214e46ee0e79b6d8438076c",
+    "bytes": 191
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/baseline_source_legacy.json": {
+    "sha256": "5f789f9f9b753085730777e9e59e019274a354a027f18495711326175ca7b90c",
+    "bytes": 10275
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_budget.0.stderr": {
+    "sha256": "8f327e98edc43ac8e9a24037f3467617192897eb33b098f4e523a72fafa47ae9",
+    "bytes": 180
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_budget.0.stdout": {
+    "sha256": "641a05ebc5d06f4c7c61831bceab71ec514b8af3695ebbcd1633e054299706fe",
+    "bytes": 41
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_budget.json": {
+    "sha256": "7a0c2d68e8a4e07fec56474ebd1ee90f736833637b104553306e99547a30116d",
+    "bytes": 4090454
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_channels_legacy.0.stderr": {
+    "sha256": "21bac3df0c0c09467caa9680b00891e2072734cb583edf0848ed6f1f054816ca",
+    "bytes": 648
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_channels_legacy.0.stdout": {
+    "sha256": "702feb7d75cfe1e530e7810723e913172e6f7ac958c4e9ac7a2b5a6a51438aba",
+    "bytes": 197
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_channels_legacy.json": {
+    "sha256": "d690753358f492af5f66d3f4662b5bee02f0c1e02208929e01dc1500e39ad7a8",
+    "bytes": 280318
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_context_legacy.0.stderr": {
+    "sha256": "ea5d5b6410eb8a183102836b6d15927bac00cd4776c4f6d62f94f5926d2a87d4",
+    "bytes": 163
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_context_legacy.0.stdout": {
+    "sha256": "21b1e33b79de8a4997c338cc87112df765e64b42f0fe4ec574346da2faf6b0b2",
+    "bytes": 194
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_context_legacy.json": {
+    "sha256": "c15124c35bc198e1a3d2052f8ed895e4072e7e95c223bac652bc75b441cb9724",
+    "bytes": 4519
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_diff_check.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_diff_check.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_gate_source_hashes.json": {
+    "sha256": "bb855622fe78d382e8dc0c30cff09e7b2349411f7cb2801a642faba78ed6be3f",
+    "bytes": 229
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_parity_default.0.stderr": {
+    "sha256": "7f2ac6079e3f4daae08698e2c0338b08abfa4db0c45135df8c6527f303a2c952",
+    "bytes": 168
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_parity_default.0.stdout": {
+    "sha256": "934e01a44e5794c2037d16ddba64c3c18f69da359af4c1df66783361e4f0620a",
+    "bytes": 194
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_parity_default.json": {
+    "sha256": "d00dc7840e44143ed6e534919f8b09b0e338a836af46656461ef6f115a22fa3d",
+    "bytes": 155565
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_parity_legacy.0.stderr": {
+    "sha256": "7f2ac6079e3f4daae08698e2c0338b08abfa4db0c45135df8c6527f303a2c952",
+    "bytes": 168
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_parity_legacy.0.stdout": {
+    "sha256": "8d802e9358d5f3bc10630f330412f3eab8380462c35db37df82cff93a408100d",
+    "bytes": 193
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_parity_legacy.json": {
+    "sha256": "d00dc7840e44143ed6e534919f8b09b0e338a836af46656461ef6f115a22fa3d",
+    "bytes": 155565
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_ruff.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_ruff.0.stdout": {
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "bytes": 19
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_semgrep.0.stderr": {
+    "sha256": "5cbde55c4a8d621f15649c370e567b222dd1cb33df2d7a751f903206380d695c",
+    "bytes": 693
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_semgrep.0.stdout": {
+    "sha256": "3f1b87b28717f84881c2ef033d0412fccb8d9796a3792ccdd1cf241df9e3466f",
+    "bytes": 1792
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_source_legacy.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_source_legacy.0.stdout": {
+    "sha256": "6408613eb9ee0d75d0f6b8711e1be51e6d2ba2c97af128d723228e9cb61968e7",
+    "bytes": 192
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/candidate_source_legacy.json": {
+    "sha256": "5f789f9f9b753085730777e9e59e019274a354a027f18495711326175ca7b90c",
+    "bytes": 10275
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M01.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M01.0.stdout": {
+    "sha256": "c30fbb36b91e48f3a8cc79d49f4c33435d5409cfa74629b31467d14d4b0d70fd",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M01.json": {
+    "sha256": "c273c99f6bda208616a56e642a5893afca93a130f2f21961f531557d84e516c3",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M02.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M02.0.stdout": {
+    "sha256": "594b6dbdd7eaa6e171b8eaf55acbf9a52cbc4f92b544eeb048c778bfd2ca46d1",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M02.json": {
+    "sha256": "1cd52699f84e47a01cfd0efea61b1d8aa1110ccf263e79a45cd83485b1cfd89b",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M03.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M03.0.stdout": {
+    "sha256": "0d23bff4888dd92bea6ea2665900520952c853dacd28a98474398e7c39520318",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M03.json": {
+    "sha256": "2ec0822ea7fef1fb253aab64b4e9b81a52f09a7a7f619a6a8bf8898f33ef64ca",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M04.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M04.0.stdout": {
+    "sha256": "e4d23dc2b0f8d1b6941acc2f5ad6af177d0e2a00a801eae2cbf02e3a459b3d46",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M04.json": {
+    "sha256": "3a5aee5c0c5fb5a97b013c3975549a34ae0c96f7f26eaf23246b2dfdd6882f73",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M05.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M05.0.stdout": {
+    "sha256": "97641c4a34f1cbc514b81979ea8354c7c79a5df2fdb172d4f68a34149f9a888f",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M05.json": {
+    "sha256": "7148a65e747a2be401561d46e050ff1c84f93b8809bf87bdb0289ebb322d7d3b",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M06.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M06.0.stdout": {
+    "sha256": "1091ce72cc308c81a6618ab846c9f1664514f9b835a33103dd1e1ff7a5a680f1",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M06.json": {
+    "sha256": "495c67482488fc61e74966773164ca980a13c6592f8d0b8bf8166641a9b0a90b",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M07.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M07.0.stdout": {
+    "sha256": "ab6f54acaa913dd0ee11a547dce476a2c0c1031710cbdc93c0b57b53db0071e4",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M07.json": {
+    "sha256": "4311c5eac3568105283e8b8a0a155221ec94d8b1d8d55068c9faa7135034c1eb",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M08.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M08.0.stdout": {
+    "sha256": "25991f252c8f36d5dbeffa40560872b369dda37873636bf8b95073a173957258",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M08.json": {
+    "sha256": "edb667f714bec6aa71520c568c948056c7de4029b93e9f1ceac4c4e130a8fcb1",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M09.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M09.0.stdout": {
+    "sha256": "ac7d7983f0feb6291332b8469921c7d69bb0142432f5c5eb846d73488e43ecc7",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M09.json": {
+    "sha256": "4fa8d546c00519a674c56ddc6b47d7e478a6483aec4464b44f64cf85b0087975",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M10.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M10.0.stdout": {
+    "sha256": "5efe4095c5c27c2523b1af99e8bbc8c10c7059af03cf34fddb80e850b2deab98",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M10.json": {
+    "sha256": "5864534a5a4206889070d1b9da23b70c3abc220f5c1d37f4ff12fc393d490c1e",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M11.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M11.0.stdout": {
+    "sha256": "6e8eb620ef41786effe93f2b242e5354f56d271a5e4090d54375fd65f804ab96",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M11.json": {
+    "sha256": "a38c1a5cbac6c80a12ce5562de7aa102ec2cf8fcf257477de2600e399f2991be",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M12.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M12.0.stdout": {
+    "sha256": "5b682de10a6f6b789897738f0dd7597c021fb73afa55ce0d621727dd37f1734b",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M12.json": {
+    "sha256": "cbe769ef67c56f3158ffed3961c8aca2d7681b5fb3924b62b63f14962f1eb67f",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M13.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M13.0.stdout": {
+    "sha256": "cbfaebe9fcad37a70e63ac61b42069c7be1e15dba8612bb27b61103e46a7a717",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M13.json": {
+    "sha256": "8363c7bd93bef4f1e09ec10d0f94abdb660dfd70961bce6c7399f04254cf48e5",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M14.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M14.0.stdout": {
+    "sha256": "422131f4fba6c3c89ad90f93512f0c62d50f115ef01c9d0031b3ad5dc90cc9d0",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M14.json": {
+    "sha256": "a46c527f0eccd7999c82533000d0347f20cd3f4d30ab94e3e2678e9db0de7de7",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M15.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M15.0.stdout": {
+    "sha256": "d64e44d765e2cf65657c73c30ac79830626693b844b5dc4a36081a5ffa8a5d14",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M15.json": {
+    "sha256": "b7a080a15c6ef87b44773f8e6eddc2837dd21ecff8f14ccf64114f7de6da30b4",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M16.0.stderr": {
+    "sha256": "ea5d5b6410eb8a183102836b6d15927bac00cd4776c4f6d62f94f5926d2a87d4",
+    "bytes": 163
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M16.0.stdout": {
+    "sha256": "0472d3e5a1fa15b82aa1c13f542bfe552491441d2f42ec33e36b18b6044d4c4a",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M16.json": {
+    "sha256": "22515262a2f820636f62c750aafab52ec42a699bc0cdd7b56ca83857920c31e4",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M17.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M17.0.stdout": {
+    "sha256": "a046609689a2405de26f4f3fd2fcc61df9521105400489eed9c4d0c035c9c18a",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M17.json": {
+    "sha256": "bcf3ea61031ecb5507bfba13d5bae4146f4103b37228d4f4a81a83f02971b1d9",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M18.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M18.0.stdout": {
+    "sha256": "49bddf9ad4c7f658b7940d2466dc0d4191accdd684e3f26afc9b94cc5f17d2ad",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M18.json": {
+    "sha256": "516c42e16731d1553eada730645c4b066b552f2e5ac8511ffb1b4b164a33a1fe",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M19.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M19.0.stdout": {
+    "sha256": "4463d4e84c9d8dd6443c805ea8f7a2ab153c9ff9309311cb7884d1582b6853fa",
+    "bytes": 28
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/control_M19.json": {
+    "sha256": "a7f4c3bf879fc82b1d4e996b11b49667188b42b2e7c5efdbd15b823a52746155",
+    "bytes": 54
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/executed_tests.json": {
+    "sha256": "8f8ee2affab1cd595f14dc534ef5909401ab31c6a46a7e8da3b20a03e58a83ee",
+    "bytes": 718
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/focal_channels_receipts_excel.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/focal_channels_receipts_excel.0.stdout": {
+    "sha256": "9d0859a1465a51b8546e1db161d845b67dd3fe7f95acc3f5bd18dc5fb0b0ed95",
+    "bytes": 8700
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/graft_response_callers.0.stderr": {
+    "sha256": "b9f04bce0b2e47d6a4867f532cb3c9301573c74319958a769b9ecd9b8c8f5ded",
+    "bytes": 91041
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/graft_response_callers.0.stdout": {
+    "sha256": "e10413bd88f7857fd4ef1e300c2234b4c8c1fe414e7b7cabec6f301249bf918a",
+    "bytes": 677
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M01.0.stderr": {
+    "sha256": "c4a09fdbe8352dcf4a2a52be3b09be2abc8d7d4fef5827ffd1920e95acfe7ea7",
+    "bytes": 922
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M01.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M01.json.diff": {
+    "sha256": "3377b6d3b989c85473bd28e3c78bc62062017527ef9ce1ca9a341bcc88790eb1",
+    "bytes": 800
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M02.0.stderr": {
+    "sha256": "313ed3be2da6ea48453a523fb378ac82a4587a50f13bf99aa5d47d55b8343753",
+    "bytes": 920
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M02.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M02.json.diff": {
+    "sha256": "7f5ccb31d27fdaf8979ced42a08b06869b8e9cf4ebfe42edaa57f41e0c1457b2",
+    "bytes": 815
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M03.0.stderr": {
+    "sha256": "ca5344622656ea19b5776335a177ab31f16be71cc030f44ab983b72498d4d5e6",
+    "bytes": 3637
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M03.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M03.json.diff": {
+    "sha256": "858bb352b805836ff2a526a059d402b2338e0b5dbd49d5e3053bfde8e310075c",
+    "bytes": 674
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M04.0.stderr": {
+    "sha256": "91188a43ac6e645d7d91ab9268704f86505dafa123f2e8dd342bc9f3166e7af9",
+    "bytes": 948
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M04.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M04.json.diff": {
+    "sha256": "11f7c286a00d116fd2ee3f345bc3652352ab51ca3852cf8adc7e67847d618fad",
+    "bytes": 712
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M05.0.stderr": {
+    "sha256": "91188a43ac6e645d7d91ab9268704f86505dafa123f2e8dd342bc9f3166e7af9",
+    "bytes": 948
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M05.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M05.json.diff": {
+    "sha256": "53c7e49dcf94a61214af291ea80d18f9aca9982f030b33461971405759771ae8",
+    "bytes": 702
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M06.0.stderr": {
+    "sha256": "313ed3be2da6ea48453a523fb378ac82a4587a50f13bf99aa5d47d55b8343753",
+    "bytes": 920
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M06.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M06.json.diff": {
+    "sha256": "322ba237cf7c14c68d59d8f023ca4e9db4ad846c3bc4246f2459252e2841dfc7",
+    "bytes": 1108
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M07.0.stderr": {
+    "sha256": "531685dab455fbe8e5e0102d364e48ee1686c5179f38c47d12f66eee2e66dbcd",
+    "bytes": 1014
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M07.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M07.json.diff": {
+    "sha256": "95a9a9075c00dacd200839d0b8bbc49998a35eb8a3285b844e1d01cbe4cec004",
+    "bytes": 693
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M08.0.stderr": {
+    "sha256": "c4a09fdbe8352dcf4a2a52be3b09be2abc8d7d4fef5827ffd1920e95acfe7ea7",
+    "bytes": 922
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M08.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M08.json.diff": {
+    "sha256": "48c4f52e23bea943ce040fd2e2d04de1ad280a49d966750b60ee7d064b45645a",
+    "bytes": 968
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M09.0.stderr": {
+    "sha256": "7676ec908a8a309d7d6e18e73564d795ae3f3d673c5832f6ea25d8b0f266262e",
+    "bytes": 3333
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M09.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M09.json.diff": {
+    "sha256": "1f8639829cb07c867b70db258741aef9ec4045e251760c19b056233f5e300fc8",
+    "bytes": 941
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M10.0.stderr": {
+    "sha256": "349f3f875cd2e97cd05cb494c579754f6fa59b2a2f842902e5108f4eaedd4262",
+    "bytes": 1032
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M10.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M10.json.diff": {
+    "sha256": "569d3d4167af55ea7ea6f41eb8fe529b6b352731c14097c8c249c1d5c3e835f7",
+    "bytes": 880
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M11.0.stderr": {
+    "sha256": "204090227f3d23a1b7366a76fde9099ef6987e0a3a84587de300b20fa66aa540",
+    "bytes": 1102
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M11.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M11.json.diff": {
+    "sha256": "adb6b2894a6d8f76d289c55b75b0aa32076396882e2a98d5a20535781de8f30e",
+    "bytes": 627
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M12.0.stderr": {
+    "sha256": "349f3f875cd2e97cd05cb494c579754f6fa59b2a2f842902e5108f4eaedd4262",
+    "bytes": 1032
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M12.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M12.json.diff": {
+    "sha256": "bc15475701229992fbb6151d1b0d7b00888749c10e93d83924c6b110d077754a",
+    "bytes": 746
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M13.0.stderr": {
+    "sha256": "76fb16a8271738c3327603f37efcbd0ed58967417ca466f0c09e4575782f388d",
+    "bytes": 964
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M13.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M13.json.diff": {
+    "sha256": "ce803f1a803050acd719eb7b790a6d2d1573fd8dd62e45d537956bfe8905f51f",
+    "bytes": 740
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M14.0.stderr": {
+    "sha256": "76fb16a8271738c3327603f37efcbd0ed58967417ca466f0c09e4575782f388d",
+    "bytes": 964
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M14.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M14.json.diff": {
+    "sha256": "f822a16ddc7c2385ab8853ef443a53c5a8043cc1c1da5fdb000758a836b51194",
+    "bytes": 507
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M15.0.stderr": {
+    "sha256": "a1d4dc056342977cd04ecd3d24c4d5c7deace4d92a0995141afaf93cbc7be23b",
+    "bytes": 972
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M15.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M15.json.diff": {
+    "sha256": "b45327f976f18b720bbc8afd277ff8fc33903e1f5f482d5ae0f0355130af9fd4",
+    "bytes": 906
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M16.0.stderr": {
+    "sha256": "c0e459aab844bf0265e76a1b9dbfb08543795cdf6a9227acce8c9b3ba2a22f6b",
+    "bytes": 1128
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M16.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M16.json.diff": {
+    "sha256": "187304db34e8c2538ebbf9aa9b5a5f261d78e6b8271f7dde72472d1dad1bf1b5",
+    "bytes": 363
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M17.0.stderr": {
+    "sha256": "9b48cc8aa5e755b807e13e86d9d6b04909dd691880dae6bb1f5ca0c549c43a6d",
+    "bytes": 718
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M17.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M17.json.diff": {
+    "sha256": "b5f2aadc35c2a093014929119b58f1bea9cbe4a15ee6c69306d7ff533ac61ca5",
+    "bytes": 1216
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M18.0.stderr": {
+    "sha256": "acfe35b8c6bc967d365c3edd3ddfe11ea8d8aab6718014afbc0d2f31f88d6eb0",
+    "bytes": 724
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M18.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M18.json.diff": {
+    "sha256": "677b4e58fdec9b5ae0dc11ae53b043bc1b150559b967883d1759748a6a1afa44",
+    "bytes": 1487
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M19.0.stderr": {
+    "sha256": "3b457b5d3797e91b6adf20af7f50e8c86825143280f7b9297772d8e608fa84a0",
+    "bytes": 734
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M19.0.stdout": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/mutant_M19.json.diff": {
+    "sha256": "c9d1171c8fd2ded6ed7c29008c0849b022c166a111dbca4417619e22ea8f7bef",
+    "bytes": 1284
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/olympus_run_before_adjudication.json": {
+    "sha256": "753635a0408a57a5248e546f78a18044303ff55824035256759887935f75424a",
+    "bytes": 872
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/protected_paths.json": {
+    "sha256": "539314906aa55afc60ffa1590bc36f482e73b5e6a27fb94fea55e44e39708e75",
+    "bytes": 602
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ruff_final.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/ruff_final.0.stdout": {
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "bytes": 19
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/toolchain.0.stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "docs/audits/foundation_v3_live_publication_r1_2/evidence/toolchain.0.stdout": {
+    "sha256": "210755b6db6896a2538533674de7c832e254070b97683735b975f940c211b146",
+    "bytes": 124
+  },
+  "scripts/audits/foundation_v3_live_publication_r1_2/budget_oracle.py": {
+    "sha256": "e3113766685e451fa29e8cc9e0ef4f0382104781a10fa8bd0d60eaf26566a0b7",
+    "bytes": 4449
+  },
+  "scripts/audits/foundation_v3_live_publication_r1_2/legacy_oracles.py": {
+    "sha256": "8b63f01c269b03aaf0a4caefc49e6590778da0c92c56ed034861b9c64b7e0864",
+    "bytes": 23374
+  },
+  "scripts/audits/foundation_v3_live_publication_r1_2/mutations.py": {
+    "sha256": "521876bb328fdc70ac67cf118a62639441f0c88b1990484e9474d03472ce34bd",
+    "bytes": 3280
+  },
+  "scripts/audits/foundation_v3_live_publication_r1_2/offline.sb": {
+    "sha256": "5c358b8d847211333e7ba22df82d84f796b5f30a41a2682209a949d783adbd08",
+    "bytes": 44
+  },
+  "scripts/audits/foundation_v3_live_publication_r1_2/run_commands.py": {
+    "sha256": "465bf782b13378bf4b47fa1d6b330e447fbab5f314083e34762a4c9ef64d0ed2",
+    "bytes": 1641
+  }
+}

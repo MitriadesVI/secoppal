@@ -1,0 +1,60 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________ test_dual_public_response_has_one_global_text_budget[telegram] ________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-3278/test_dual_public_response_has_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1122b29e0>
+channel = 'telegram'
+
+    @pytest.mark.parametrize("channel", ["telegram", "whatsapp"])
+    def test_dual_public_response_has_one_global_text_budget(tmp_path, monkeypatch, channel):
+>       rows = _publication_rows((30, 30))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_foundation_publication_adapter.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+sizes = (30, 30)
+
+    def _publication_rows(sizes):
+>       return {dataset: [dict(dict.fromkeys({*SoQLBuilder.SPECS[dataset].select_fields,
+                                            *SOURCE_SELECT_FIELDS[dataset]}), **_EXACT_SOURCE[dataset],
+                              **{id_key: f"{prefix}{size - i:03d}", title_key: f"aseo {prefix}{i}"})
+                          for i in range(size)]
+                for (dataset, id_key, title_key, prefix), size in zip((
+                    ("p6dx-8zbt", "id_del_proceso", "nombre_del_procedimiento", "P"),
+                    ("jbjy-vk9h", "id_contrato", "objeto_del_contrato", "C")), sizes)}
+E       TypeError: dict() got multiple values for keyword argument 'id_del_proceso'
+
+tests/test_foundation_publication_adapter.py:103: TypeError
+________ test_dual_public_response_has_one_global_text_budget[whatsapp] ________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-3278/test_dual_public_response_has_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1122b2520>
+channel = 'whatsapp'
+
+    @pytest.mark.parametrize("channel", ["telegram", "whatsapp"])
+    def test_dual_public_response_has_one_global_text_budget(tmp_path, monkeypatch, channel):
+>       rows = _publication_rows((30, 30))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_foundation_publication_adapter.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+sizes = (30, 30)
+
+    def _publication_rows(sizes):
+>       return {dataset: [dict(dict.fromkeys({*SoQLBuilder.SPECS[dataset].select_fields,
+                                            *SOURCE_SELECT_FIELDS[dataset]}), **_EXACT_SOURCE[dataset],
+                              **{id_key: f"{prefix}{size - i:03d}", title_key: f"aseo {prefix}{i}"})
+                          for i in range(size)]
+                for (dataset, id_key, title_key, prefix), size in zip((
+                    ("p6dx-8zbt", "id_del_proceso", "nombre_del_procedimiento", "P"),
+                    ("jbjy-vk9h", "id_contrato", "objeto_del_contrato", "C")), sizes)}
+E       TypeError: dict() got multiple values for keyword argument 'id_del_proceso'
+
+tests/test_foundation_publication_adapter.py:103: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_foundation_publication_adapter.py::test_dual_public_response_has_one_global_text_budget[telegram]
+FAILED tests/test_foundation_publication_adapter.py::test_dual_public_response_has_one_global_text_budget[whatsapp]
+2 failed in 1.57s

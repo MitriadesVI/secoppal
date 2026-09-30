@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_guard.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_guard.py [in-memory]
+@@ -148,7 +148,7 @@
+     try:
+         yield
+     finally:
+-        _RAW_ROWS.reset(token)
++        pass  # mutant: omit reset
+ 
+ 
+ def source_rows_raw() -> bool:

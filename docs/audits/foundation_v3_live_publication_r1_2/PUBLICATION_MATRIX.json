@@ -1,0 +1,485 @@
+[
+  {
+    "sizes": [
+      30,
+      30
+    ],
+    "channel": "telegram",
+    "source_error": false,
+    "before_counts": [
+      25,
+      25
+    ],
+    "after_counts": [
+      13,
+      12
+    ],
+    "after_heads": [
+      13,
+      12
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      2,
+      30
+    ],
+    "channel": "telegram",
+    "source_error": false,
+    "before_counts": [
+      2,
+      25
+    ],
+    "after_counts": [
+      2,
+      23
+    ],
+    "after_heads": [
+      2,
+      23
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      0,
+      30
+    ],
+    "channel": "telegram",
+    "source_error": false,
+    "before_counts": [
+      0,
+      25
+    ],
+    "after_counts": [
+      0,
+      25
+    ],
+    "after_heads": [
+      null,
+      25
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      10,
+      10
+    ],
+    "channel": "telegram",
+    "source_error": false,
+    "before_counts": [
+      10,
+      10
+    ],
+    "after_counts": [
+      10,
+      10
+    ],
+    "after_heads": [
+      10,
+      10
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      30,
+      2
+    ],
+    "channel": "telegram",
+    "source_error": false,
+    "before_counts": [
+      25,
+      2
+    ],
+    "after_counts": [
+      23,
+      2
+    ],
+    "after_heads": [
+      23,
+      2
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      30,
+      0
+    ],
+    "channel": "telegram",
+    "source_error": false,
+    "before_counts": [
+      25,
+      0
+    ],
+    "after_counts": [
+      25,
+      0
+    ],
+    "after_heads": [
+      25,
+      null
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      0,
+      30
+    ],
+    "channel": "telegram",
+    "source_error": true,
+    "before_counts": [
+      0,
+      25
+    ],
+    "after_counts": [
+      0,
+      25
+    ],
+    "after_heads": [
+      null,
+      25
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      30,
+      30
+    ],
+    "channel": "whatsapp",
+    "source_error": false,
+    "before_counts": [
+      25,
+      25
+    ],
+    "after_counts": [
+      13,
+      12
+    ],
+    "after_heads": [
+      13,
+      12
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      2,
+      30
+    ],
+    "channel": "whatsapp",
+    "source_error": false,
+    "before_counts": [
+      2,
+      25
+    ],
+    "after_counts": [
+      2,
+      23
+    ],
+    "after_heads": [
+      2,
+      23
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      0,
+      30
+    ],
+    "channel": "whatsapp",
+    "source_error": false,
+    "before_counts": [
+      0,
+      25
+    ],
+    "after_counts": [
+      0,
+      25
+    ],
+    "after_heads": [
+      null,
+      25
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      10,
+      10
+    ],
+    "channel": "whatsapp",
+    "source_error": false,
+    "before_counts": [
+      10,
+      10
+    ],
+    "after_counts": [
+      10,
+      10
+    ],
+    "after_heads": [
+      10,
+      10
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      30,
+      2
+    ],
+    "channel": "whatsapp",
+    "source_error": false,
+    "before_counts": [
+      25,
+      2
+    ],
+    "after_counts": [
+      23,
+      2
+    ],
+    "after_heads": [
+      23,
+      2
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      30,
+      0
+    ],
+    "channel": "whatsapp",
+    "source_error": false,
+    "before_counts": [
+      25,
+      0
+    ],
+    "after_counts": [
+      25,
+      0
+    ],
+    "after_heads": [
+      25,
+      null
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      0,
+      30
+    ],
+    "channel": "whatsapp",
+    "source_error": true,
+    "before_counts": [
+      0,
+      25
+    ],
+    "after_counts": [
+      0,
+      25
+    ],
+    "after_heads": [
+      null,
+      25
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      30,
+      30
+    ],
+    "channel": "streamlit",
+    "source_error": false,
+    "before_counts": [
+      0,
+      0
+    ],
+    "after_counts": [
+      0,
+      0
+    ],
+    "after_heads": [
+      30,
+      30
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      2,
+      30
+    ],
+    "channel": "streamlit",
+    "source_error": false,
+    "before_counts": [
+      0,
+      0
+    ],
+    "after_counts": [
+      0,
+      0
+    ],
+    "after_heads": [
+      2,
+      30
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      0,
+      30
+    ],
+    "channel": "streamlit",
+    "source_error": false,
+    "before_counts": [
+      0,
+      0
+    ],
+    "after_counts": [
+      0,
+      0
+    ],
+    "after_heads": [
+      null,
+      30
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      10,
+      10
+    ],
+    "channel": "streamlit",
+    "source_error": false,
+    "before_counts": [
+      0,
+      0
+    ],
+    "after_counts": [
+      0,
+      0
+    ],
+    "after_heads": [
+      10,
+      10
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      30,
+      2
+    ],
+    "channel": "streamlit",
+    "source_error": false,
+    "before_counts": [
+      0,
+      0
+    ],
+    "after_counts": [
+      0,
+      0
+    ],
+    "after_heads": [
+      30,
+      2
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      30,
+      0
+    ],
+    "channel": "streamlit",
+    "source_error": false,
+    "before_counts": [
+      0,
+      0
+    ],
+    "after_counts": [
+      0,
+      0
+    ],
+    "after_heads": [
+      30,
+      null
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  },
+  {
+    "sizes": [
+      0,
+      30
+    ],
+    "channel": "streamlit",
+    "source_error": true,
+    "before_counts": [
+      0,
+      0
+    ],
+    "after_counts": [
+      0,
+      0
+    ],
+    "after_heads": [
+      null,
+      30
+    ],
+    "results_groups_rows_rows_equal": true,
+    "typed_equal": true,
+    "transport_calls_equal": true
+  }
+]

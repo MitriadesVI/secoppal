@@ -1,0 +1,16 @@
+{
+  "baseline": 0,
+  "candidate_runtime_and_instruments": 0,
+  "new_delta": 0,
+  "errors": 0,
+  "tests": "EXCLUDED_BY_CONFIG",
+  "baseline_scanned": [
+    "app/core/foundation_presentation.py"
+  ],
+  "candidate_scanned": [
+    "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/budget_oracle.py",
+    "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/legacy_oracles.py",
+    "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py",
+    "app/core/foundation_presentation.py"
+  ]
+}

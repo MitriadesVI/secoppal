@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_basic_fallback.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_basic_fallback.py [in-memory]
+@@ -126,7 +126,7 @@
+     result = empty_result(response="\n".join(lines), route_reason="foundation_basic_fallback",
+                           parsed_params=params, resolved_params=params, soql_query=soql,
+                           dataset_id=dataset_id, total_count=total)
+-    result.update(state="source_error" if error else "degraded_basic", rows=cards, results=rows, groups=[],
++    result.update(state="source_error" if error else "degraded_basic", rows=rows, results=rows, groups=[],
+                   result_row_count=len(rows), total_count_approximate=approximate, degraded=True,
+                   query_error="SOURCE_ERROR" if error else "",
+                   outcome="SOURCE_ERROR" if error else ("RESULTS" if rows else "NO_RESULTS"),

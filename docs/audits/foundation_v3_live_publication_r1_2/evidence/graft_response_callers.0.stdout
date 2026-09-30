@@ -1,0 +1,7 @@
+response_text · function · app/core/foundation_presentation.py:L78-L82
+  calls ← execute_accepted (app/core/foundation_runtime.py:L60-L182)
+      180: result["response"] = response_text(groups, cards_by_group, channel=ctx.channel,
+  calls ← test_lower_bound_and_order_sample_are_declared (tests/test_formatter_display_rows.py:L61-L67)
+      63: text = response_text(lower, group_cards(Formatter(), lower, reference_instant=NOW), channel="streamlit", limit=10)
+  calls ← test_response_never_lists_raw_identifiers_and_text_channels_carry_the_cards (tests/test_formatter_display_rows.py:L51-L58)
+      54: web = response_text(groups, cards, channel="streamlit", limit=10)

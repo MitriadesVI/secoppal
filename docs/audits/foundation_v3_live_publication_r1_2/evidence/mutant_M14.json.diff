@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_guard.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_guard.py [in-memory]
+@@ -153,7 +153,7 @@
+ 
+ def source_rows_raw() -> bool:
+     """Whether a query must return the transport rows untouched (grant or fallback evidence)."""
+-    return _GUARD.get() is not None or _RAW_ROWS.get()
++    return _GUARD.get() is not None
+ 
+ 
+ def validate_foundation_count_total(value: int) -> None:

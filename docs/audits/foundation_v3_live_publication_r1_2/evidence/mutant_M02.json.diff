@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_runtime.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_runtime.py [in-memory]
+@@ -163,7 +163,7 @@
+         state = "ok_order_sample"
+     cards_by_group = group_cards(workflow.formatter, groups, reference_instant=reference_instant)
+     result.update(state=state, groups=groups, rows=[card for cards in cards_by_group for card in cards],
+-                  results=all_rows,
++                  results=[card for cards in cards_by_group for card in cards],
+                   foundation_terminal="SOURCE_ERROR" if failed else "READY",
+                   dataset_id=groups[0]["dataset"] if len(groups) == 1 else None,
+                   dataset_scope=[group["dataset"] for group in groups],

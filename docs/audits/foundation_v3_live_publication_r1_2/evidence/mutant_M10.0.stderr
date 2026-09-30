@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 77, in <module>
+    main()
+    ~~~~^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 71, in main
+    killer(args.name)
+    ~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 46, in killer
+    legacy.killer(name)
+    ~~~~~~~~~~~~~^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/legacy_oracles.py", line 378, in killer
+    assert "Referencia: CO1" not in z["response"] and re.search(r"^1\. ", z["response"], re.M), "VISIBLE_CARDS_NOT_ID_DUMP"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: VISIBLE_CARDS_NOT_ID_DUMP

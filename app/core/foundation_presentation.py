@@ -39,16 +39,32 @@ def export_fields(groups: list[dict]) -> dict:
     return {}
 
 
+def shown_card_groups(cards_by_group: list[list[dict]], *, channel: str, limit: int) -> list[list[dict]]:
+    """Presupuesto global de texto, repartido por turnos y con prefijos estables."""
+    if channel in _CARD_CHANNELS:
+        return cards_by_group
+    quotas = [0] * len(cards_by_group)
+    remaining = min(max(0, limit), sum(len(cards) for cards in cards_by_group))
+    while remaining:
+        for index, cards in enumerate(cards_by_group):
+            if quotas[index] < len(cards):
+                quotas[index] += 1
+                remaining -= 1
+                if not remaining:
+                    break
+    return [cards[:quota] for cards, quota in zip(cards_by_group, quotas)]
+
+
 def shown_cards(cards: list[dict], *, channel: str, limit: int) -> list[dict]:
-    """Las tarjetas que el turno muestra de verdad: todas en la web, ``limit`` en texto."""
-    return cards if channel in _CARD_CHANNELS else cards[:limit]
+    """La misma política de publicación para el fallback de un solo grupo."""
+    return shown_card_groups([cards], channel=channel, limit=limit)[0]
 
 
 def text_card_lines(cards: list[dict], *, channel: str, limit: int) -> list[str]:
     """Las tarjetas dentro del mensaje, sólo para canales sin tarjetas propias."""
     if channel in _CARD_CHANNELS or not cards:
         return []
-    return ["", *Formatter._grouped_card_lines(cards[:limit])]
+    return ["", *Formatter._grouped_card_lines(shown_cards(cards, channel=channel, limit=limit))]
 
 
 def _total_label(group: dict) -> str:
@@ -57,26 +73,30 @@ def _total_label(group: dict) -> str:
     return f"al menos {group['total']:,}"
 
 
-def _group_lines(group: dict, cards: list[dict], *, channel: str, limit: int) -> list[str]:
+def _group_lines(group: dict, cards: list[dict], *, channel: str) -> list[str]:
     label = _LABELS.get(group["universe"], "Resultados")
     if group["state"] == "source_error":
         return [f"{label}: {SOURCE_UNAVAILABLE.get(group['technical_reason'], SOURCE_UNAVAILABLE['source_error'])}"]
-    if not cards:
+    if not group["rows"]:
         return [f"{label}: ninguna fila cumple todas las condiciones."]
-    shown = shown_cards(cards, channel=channel, limit=limit)
     head = f"{label}: encontré {_total_label(group)}."
     if group["fallback_attempted"]:
-        head += f" Te muestro {len(shown)} (muestra sin orden garantizado)."
-    elif group["total_quality"] != "exact" or len(shown) < group["total"]:
-        head += f" Te muestro los {len(shown)} más recientes."
+        head += f" Te muestro {len(cards)} (muestra sin orden garantizado)."
+    elif not cards:
+        head += " Te muestro 0 por el límite de tarjetas del mensaje."
+    else:
+        head += f" Te muestro los {len(cards)} más recientes."
     lines = [head]
     if group["universe"] == "contracts":
         lines.append(universe_label())
-    return lines + text_card_lines(shown, channel=channel, limit=limit)
+    if channel not in _CARD_CHANNELS and cards:
+        lines += ["", *Formatter._grouped_card_lines(cards)]
+    return lines
 
 
 def response_text(groups: list[dict], cards_by_group: list[list[dict]], *, channel: str, limit: int) -> str:
     """El texto visible del turno; nunca identificadores crudos ni códigos."""
-    blocks = [_group_lines(group, cards, channel=channel, limit=limit)
-              for group, cards in zip(groups, cards_by_group)]
+    shown = shown_card_groups(cards_by_group, channel=channel, limit=limit)
+    blocks = [_group_lines(group, cards, channel=channel)
+              for group, cards in zip(groups, shown)]
     return "\n\n".join("\n".join(block) for block in blocks)

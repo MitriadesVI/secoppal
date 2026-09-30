@@ -1,0 +1,38 @@
+run_query abortado tras capturar 1 métricas HTTP: [{'operation': 'query', 'dataset': 'p6dx-8zbt', 'attempt': 1, 'query_hash': '7f02ccbe3544cc7c', 'status': 'completed', 'exception_type': None, 'timeout': False, 'timeout_stage': None, 'rows_received': 31, 'duration_ms': 0.00916607677936554}]
+run_query abortado tras 1 llamadas SECOP
+Traceback (most recent call last):
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 77, in <module>
+    main()
+    ~~~~^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 71, in main
+    killer(args.name)
+    ~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 46, in killer
+    legacy.killer(name)
+    ~~~~~~~~~~~~~^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/legacy_oracles.py", line 370, in killer
+    z = run_turn(f, "procesos de aseo")
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/legacy_oracles.py", line 136, in run_turn
+    return flow.run_query(text, channel=channel, chat_id=chat, today=NOW.date())
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/orchestrator.py", line 245, in run_query
+    result = self._run_turn(ctx, seed_resolved_params)
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/orchestrator.py", line 275, in _run_turn
+    result = self._admit_and_dispatch(ctx, seed_resolved_params)
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/orchestrator.py", line 388, in _admit_and_dispatch
+    return coordinate_turn(self, ctx, seed_resolved_params)
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/workflow/turn_coordination.py", line 46, in coordinate_turn
+    return workflow._dispatch(ctx, seed)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/orchestrator.py", line 442, in _dispatch
+    foundation = run_foundation_search(self, ctx, seed_resolved_params,
+                                       observation=observation, binding=binding)
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_runtime.py", line 263, in run_foundation_search
+    result = run_basic_fallback(workflow, ctx)
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_basic_fallback.py", line 116, in run_basic_fallback
+    cards = workflow.formatter.display_rows(rows, dataset_id, reference_instant=instant)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/legacy_oracles.py", line 366, in observed_display
+    assert reference_instant == NOW, "TURN_REFERENCE_INSTANT_EXPLICIT"
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TURN_REFERENCE_INSTANT_EXPLICIT

@@ -1,0 +1,17 @@
+# HERA — R1.2 global text budget
+
+MISSION: FOUNDATION_V3_LIVE_PUBLICATION_R1_2_GLOBAL_TEXT_BUDGET. BASE_CODE=8e0b9ca3314f986bc8bfc396603996e10264e05b. Auditoría autoritativa f3b250b9842dbca9faf9f36d84d853c8470d7e4f; Z3 P1 adjudicado LOCAL_DEFECT / CONTRACT_APPLICATION. Sin arquitectura nueva.
+
+WORKTREE: /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2, branch fix/foundation-v3-live-publication-r1-2. Baseline detached nuevo y limpio en secoppal-live-publication-r1-2-base. Se preserva main y worktrees auditoría R1.1.
+
+AUTHORITY: dos archivos producto autorizados; no otro runtime, formatter/runtime/fallback/guard/SecopClient/Streamlit/prompt/H7/SoQL/held-out/routing. ARES único writer producto (foundation_presentation.py, test_foundation_publication_adapter.py); HERA writer exclusivo docs/instrumentos R1.2. Sin red, proveedor, global, merge/push/deploy/restart/activación. Destino: candidate local congelado y prompt ZEUS, no certificación semántica ZEUS nueva.
+
+CONTRACT: una asignación global round-robin por response; orden de grupos resuelve el cupo impar 13/12; mantener prefijo/orden de cada grupo y no mutar source/groups/rows. Vacíos y source_error no consumen cupo; redistribuir remanente. Con budget >= número de grupos no vacíos, representar todos. Streamlit conserva todo. Heading distingue ausencia real de fuente de ausencia de cupo: asignación 0 no significa ninguna fila cumple. Siempre anuncia las tarjetas asignadas para cada grupo no vacío. Fallback usa la misma política mediante wrapper de grupo único; no se modifica su archivo.
+
+FRAMING_GATE=FRAMING_CONFIDENT. CAUSALITY: Z3 reproduce 50>25 y primera transición ya ubicada en composición. CAPACITY: sólo adaptar presentación, sin cambiar fuente. PRODUCT_ORACLE: contar response real y encabezados frente a expected explícito 13/12; snapshots material independientes. CONTRARY_EVIDENCE: no está localizada otra falla requerida. CHEAP_DISCRIMINATOR: test rojo sobre BASE antes del cambio runtime. DESIGN_REOPEN=0. ARTEMISA_REQUIRED=NO (causa localizada); METIS_REQUIRED=NO (contrato cerrado, no frontera nueva); HADES_REQUIRED=NO.
+
+DAG: preflight/state → ARES red test → ARES implementación focal → HERA contraejemplos/paridad/M01-M19/focales/Hypothesis/Ruff/Semgrep/diff → CODE commit limpio+freeze → HEAD sólo docs/instrumentos → prompt ZEUS fresco. Un writer producto, sin reviewer falso ni global.
+
+GATES: Z1/Z2 preservados; Z3 25=13+12 Telegram/WhatsApp rojo baseline, verde candidate. Casos 30/30,2/30,0/30,10/10, invertidos, error+30, web y single fallback. Hypothesis independiente sobre capacidades/budget, prefijos y conservación. Mutantes19/19 mediante source overlay, controles por proceso nuevo y AssertionError específico. M01-M16 de auditoría conservan significado; ajustes mínimos de anchors sólo si delta necesario. M17 limite por grupo, M18 no redistribución, M19 greedy primer grupo. Paridad legacy/default completa por material, no enmascarar response/card/order/type/calls. Ruff delta; Semgrep por regla/path/source con multiplicidad baseline/candidate/delta. Nunca global.
+
+LOCAL_REPAIR_BUDGET=1 para falla localizada posterior a candidate; correcciones de instrumento no son reparaciones producto. STOP por ampliación material, autoridad/arquitectura desconocida o agotamiento; no permiso procedural adicional. Registro de decisiones/gates/freeze en olympus-state externo, con --project-dir de lane.

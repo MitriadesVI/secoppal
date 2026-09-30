@@ -1,0 +1,94 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________ test_dual_public_response_has_one_global_text_budget[telegram] ________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-3277/test_dual_public_response_has_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1120f29e0>
+channel = 'telegram'
+
+    @pytest.mark.parametrize("channel", ["telegram", "whatsapp"])
+    def test_dual_public_response_has_one_global_text_budget(tmp_path, monkeypatch, channel):
+        rows = _publication_rows((30, 30))
+        harness = ProductHarness(tmp_path, monkeypatch, rows_by_dataset=deepcopy(rows), reference_instant=NOW,
+                                 today=NOW.date(), foundation_producer=_publication_admission,
+                                 settings_overrides={"secoppal_foundation_mode": "foundation_v3"})
+        harness.flow.formatter.max_results = 25
+>       result = harness.say("procesos y contratos de aseo", channel=channel).result
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_foundation_publication_adapter.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ProductHarness(root=PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-...6cd3a7379eeff1da0a3503b2bc4251aea5', state_sha256='e486272ba9b27da8d1c418d25f048ff0b837dc2d217fe9b5bafd9a493ac3f0f6')])
+text = 'procesos y contratos de aseo', chat_id = 'product-contract'
+run_kwargs = {'channel': 'telegram'}, start = 0, lineage_start = 0
+result = {'_continuation_owner': 'NONE', 'count_completed_before_rows': False, 'count_error_type': None, 'count_status': 'skipped', ...}
+transport_calls = [{'attempt': 1, 'attempts': 1, 'call_id': 'call-1', 'dataset': 'p6dx-8zbt', ...}, {'attempt': 1, 'attempts': 1, 'call_id': 'call-2', 'dataset': 'jbjy-vk9h', ...}]
+keys = {'dataset', 'error', 'injected', 'operation', 'rows', 'soql'}
+
+    def say(self, text: str, *, chat_id: str = "product-contract", **run_kwargs) -> Turn:
+        start = len(self.transport.calls)
+        lineage_start = len(self.lineage_views)
+        result = self.flow.run_query(text, chat_id=chat_id, today=self.today, **run_kwargs)
+        transport_calls = self.transport.snapshot(start)
+        # Stable legacy assertion view; E2b receives the complete attempt capture.
+        keys = {"operation", "dataset", "soql", "rows", "injected", "error"}
+        calls = [{key: value for key, value in call.items() if key in keys}
+                 for call in transport_calls]
+        errors = [call for call in calls if "error" in call]
+        if errors:
+>           raise AssertionError(f"frozen source rejected emitted SoQL: {errors}")
+E           AssertionError: frozen source rejected emitted SoQL: [{'operation': 'query', 'dataset': 'p6dx-8zbt', 'soql': "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50", 'error': "OperationalError('no such column: justificaci_n_modalidad_de')"}, {'operation': 'query', 'dataset': 'jbjy-vk9h', 'soql': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'error': "OperationalError('no such column: justificacion_modalidad_de')"}]
+
+tests/product_contract/harness.py:137: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.secop_client:secop_client.py:266 SECOP query failed on attempt 1/1: frozen source could not evaluate emitted SoQL (no such column: justificaci_n_modalidad_de): SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50
+WARNING  app.core.secop_client:secop_client.py:266 SECOP query failed on attempt 1/1: frozen source could not evaluate emitted SoQL (no such column: justificacion_modalidad_de): SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50
+________ test_dual_public_response_has_one_global_text_budget[whatsapp] ________
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-3277/test_dual_public_response_has_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1120f2fd0>
+channel = 'whatsapp'
+
+    @pytest.mark.parametrize("channel", ["telegram", "whatsapp"])
+    def test_dual_public_response_has_one_global_text_budget(tmp_path, monkeypatch, channel):
+        rows = _publication_rows((30, 30))
+        harness = ProductHarness(tmp_path, monkeypatch, rows_by_dataset=deepcopy(rows), reference_instant=NOW,
+                                 today=NOW.date(), foundation_producer=_publication_admission,
+                                 settings_overrides={"secoppal_foundation_mode": "foundation_v3"})
+        harness.flow.formatter.max_results = 25
+>       result = harness.say("procesos y contratos de aseo", channel=channel).result
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_foundation_publication_adapter.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ProductHarness(root=PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-...6cd3a7379eeff1da0a3503b2bc4251aea5', state_sha256='e486272ba9b27da8d1c418d25f048ff0b837dc2d217fe9b5bafd9a493ac3f0f6')])
+text = 'procesos y contratos de aseo', chat_id = 'product-contract'
+run_kwargs = {'channel': 'whatsapp'}, start = 0, lineage_start = 0
+result = {'_continuation_owner': 'NONE', 'count_completed_before_rows': False, 'count_error_type': None, 'count_status': 'skipped', ...}
+transport_calls = [{'attempt': 1, 'attempts': 1, 'call_id': 'call-1', 'dataset': 'p6dx-8zbt', ...}, {'attempt': 1, 'attempts': 1, 'call_id': 'call-2', 'dataset': 'jbjy-vk9h', ...}]
+keys = {'dataset', 'error', 'injected', 'operation', 'rows', 'soql'}
+
+    def say(self, text: str, *, chat_id: str = "product-contract", **run_kwargs) -> Turn:
+        start = len(self.transport.calls)
+        lineage_start = len(self.lineage_views)
+        result = self.flow.run_query(text, chat_id=chat_id, today=self.today, **run_kwargs)
+        transport_calls = self.transport.snapshot(start)
+        # Stable legacy assertion view; E2b receives the complete attempt capture.
+        keys = {"operation", "dataset", "soql", "rows", "injected", "error"}
+        calls = [{key: value for key, value in call.items() if key in keys}
+                 for call in transport_calls]
+        errors = [call for call in calls if "error" in call]
+        if errors:
+>           raise AssertionError(f"frozen source rejected emitted SoQL: {errors}")
+E           AssertionError: frozen source rejected emitted SoQL: [{'operation': 'query', 'dataset': 'p6dx-8zbt', 'soql': "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50", 'error': "OperationalError('no such column: justificaci_n_modalidad_de')"}, {'operation': 'query', 'dataset': 'jbjy-vk9h', 'soql': "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50", 'error': "OperationalError('no such column: justificacion_modalidad_de')"}]
+
+tests/product_contract/harness.py:137: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  app.core.secop_client:secop_client.py:266 SECOP query failed on attempt 1/1: frozen source could not evaluate emitted SoQL (no such column: justificaci_n_modalidad_de): SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50
+WARNING  app.core.secop_client:secop_client.py:266 SECOP query failed on attempt 1/1: frozen source could not evaluate emitted SoQL (no such column: justificacion_modalidad_de): SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50
+=========================== short test summary info ============================
+FAILED tests/test_foundation_publication_adapter.py::test_dual_public_response_has_one_global_text_budget[telegram]
+FAILED tests/test_foundation_publication_adapter.py::test_dual_public_response_has_one_global_text_budget[whatsapp]
+2 failed in 1.78s

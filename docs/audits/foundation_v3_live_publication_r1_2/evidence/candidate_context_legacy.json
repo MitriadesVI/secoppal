@@ -1,0 +1,192 @@
+{
+  "records": [
+    {
+      "case": "normal",
+      "restored": true
+    },
+    {
+      "case": "exception",
+      "restored": true
+    },
+    {
+      "case": "nested",
+      "restored": true
+    },
+    {
+      "case": "consecutive",
+      "restored": true
+    }
+  ],
+  "legacy_before": {
+    "type": "list",
+    "items": [
+      {
+        "type": "dict",
+        "fields": {
+          "id_contrato": {
+            "type": "str",
+            "value": "CO1.PCCNTR.9"
+          },
+          "objeto_del_contrato": {
+            "type": "str",
+            "value": "aseo"
+          },
+          "nombre_entidad": {
+            "type": "str",
+            "value": "MUNICIPIO DE SOLEDAD"
+          },
+          "valor_del_contrato": {
+            "type": "float",
+            "value": 9007199254740992.0
+          },
+          "urlproceso": {
+            "type": "str",
+            "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+          },
+          "estado_contrato": {
+            "type": "str",
+            "value": "En ejecución"
+          },
+          "fecha_de_firma": {
+            "type": "str",
+            "value": "2026-08-01"
+          }
+        }
+      }
+    ]
+  },
+  "legacy_after": {
+    "type": "list",
+    "items": [
+      {
+        "type": "dict",
+        "fields": {
+          "id_contrato": {
+            "type": "str",
+            "value": "CO1.PCCNTR.9"
+          },
+          "objeto_del_contrato": {
+            "type": "str",
+            "value": "aseo"
+          },
+          "nombre_entidad": {
+            "type": "str",
+            "value": "MUNICIPIO DE SOLEDAD"
+          },
+          "valor_del_contrato": {
+            "type": "float",
+            "value": 9007199254740992.0
+          },
+          "urlproceso": {
+            "type": "str",
+            "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+          },
+          "estado_contrato": {
+            "type": "str",
+            "value": "En ejecución"
+          },
+          "fecha_de_firma": {
+            "type": "str",
+            "value": "2026-08-01"
+          }
+        }
+      }
+    ]
+  },
+  "count_without_grant": -1,
+  "thread": "EXERCISED_NO_COPY_CONTEXT",
+  "async": "EXERCISED_FASTAPI_RUN_IN_THREADPOOL_TWO_REQUESTS",
+  "retry_calls": [
+    {
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT * LIMIT 50",
+      "kwargs": {
+        "timeout_seconds": 30,
+        "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+      },
+      "raw": true,
+      "grant": false
+    },
+    {
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT * LIMIT 50",
+      "kwargs": {
+        "timeout_seconds": 30,
+        "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+      },
+      "raw": true,
+      "grant": false
+    }
+  ],
+  "restored": true,
+  "calls": [
+    {
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT * LIMIT 50",
+      "kwargs": {
+        "timeout_seconds": 30,
+        "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+      },
+      "raw": false,
+      "grant": false
+    },
+    {
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT * LIMIT 50",
+      "kwargs": {
+        "timeout_seconds": 30,
+        "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+      },
+      "raw": true,
+      "grant": false
+    },
+    {
+      "operation": "count",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT count(*)",
+      "kwargs": {
+        "timeout_seconds": 30,
+        "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+      },
+      "raw": true,
+      "grant": false
+    },
+    {
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT * LIMIT 50",
+      "kwargs": {
+        "timeout_seconds": 30,
+        "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+      },
+      "raw": false,
+      "grant": false
+    },
+    {
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT * LIMIT 50",
+      "kwargs": {
+        "timeout_seconds": 30,
+        "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+      },
+      "raw": true,
+      "grant": false
+    },
+    {
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT * LIMIT 50",
+      "kwargs": {
+        "timeout_seconds": 30,
+        "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+      },
+      "raw": false,
+      "grant": false
+    }
+  ]
+}

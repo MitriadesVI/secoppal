@@ -1,0 +1,274 @@
+[
+  {
+    "dataset": "jbjy-vk9h",
+    "source": [
+      {
+        "id_contrato": "CO1.PCCNTR.9",
+        "objeto_del_contrato": "aseo",
+        "nombre_entidad": "MUNICIPIO DE SOLEDAD",
+        "valor_del_contrato": "9007199254740993",
+        "urlproceso": null,
+        "estado_contrato": "En ejecución",
+        "fecha_de_firma": "2026-08-01"
+      }
+    ],
+    "published": [
+      {
+        "id_contrato": "CO1.PCCNTR.9",
+        "objeto_del_contrato": "aseo",
+        "nombre_entidad": "MUNICIPIO DE SOLEDAD",
+        "valor_del_contrato": "9007199254740993",
+        "urlproceso": null,
+        "estado_contrato": "En ejecución",
+        "fecha_de_firma": "2026-08-01"
+      }
+    ],
+    "typed_source": {
+      "type": "list",
+      "items": [
+        {
+          "type": "dict",
+          "fields": {
+            "id_contrato": {
+              "type": "str",
+              "value": "CO1.PCCNTR.9"
+            },
+            "objeto_del_contrato": {
+              "type": "str",
+              "value": "aseo"
+            },
+            "nombre_entidad": {
+              "type": "str",
+              "value": "MUNICIPIO DE SOLEDAD"
+            },
+            "valor_del_contrato": {
+              "type": "str",
+              "value": "9007199254740993"
+            },
+            "urlproceso": {
+              "type": "NoneType",
+              "value": null
+            },
+            "estado_contrato": {
+              "type": "str",
+              "value": "En ejecución"
+            },
+            "fecha_de_firma": {
+              "type": "str",
+              "value": "2026-08-01"
+            }
+          }
+        }
+      ]
+    },
+    "typed_published": {
+      "type": "list",
+      "items": [
+        {
+          "type": "dict",
+          "fields": {
+            "id_contrato": {
+              "type": "str",
+              "value": "CO1.PCCNTR.9"
+            },
+            "objeto_del_contrato": {
+              "type": "str",
+              "value": "aseo"
+            },
+            "nombre_entidad": {
+              "type": "str",
+              "value": "MUNICIPIO DE SOLEDAD"
+            },
+            "valor_del_contrato": {
+              "type": "str",
+              "value": "9007199254740993"
+            },
+            "urlproceso": {
+              "type": "NoneType",
+              "value": null
+            },
+            "estado_contrato": {
+              "type": "str",
+              "value": "En ejecución"
+            },
+            "fecha_de_firma": {
+              "type": "str",
+              "value": "2026-08-01"
+            }
+          }
+        }
+      ]
+    },
+    "exact": true,
+    "source_unchanged": true,
+    "cards": [
+      {
+        "titulo": "aseo",
+        "entidad": "MUNICIPIO DE SOLEDAD",
+        "valor": "$9,007,199,254,740,992",
+        "estado": "En ejecución",
+        "fecha": "2026-08-01",
+        "fecha_label": "Firma",
+        "contratista": "",
+        "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+        "id_contrato": "CO1.PCCNTR.9",
+        "referencia_del_contrato": "",
+        "dataset_id": "jbjy-vk9h"
+      }
+    ],
+    "card_shape": true,
+    "no_id_dump": true,
+    "response": "Búsqueda básica — modo degradado\n\nEl intérprete avanzado no respondió. Ejecuté una búsqueda determinista limitada con estos filtros:\n- dataset: contratos\n- tema: aseo\n\nResultados: encontré 1; te muestro 1.\n\n1. aseo\n🏛️ MUNICIPIO DE SOLEDAD  💰 $9,007,199,254,740,992  ⚪ En ejecución  📅 2026-08-01\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9\n\nPuede no conservar relaciones complejas, exclusiones o matices. Puedes reintentar la interpretación avanzada.",
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": true,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "dataset": "p6dx-8zbt",
+    "source": [
+      {
+        "id_del_proceso": "CO1.REQ.7",
+        "nombre_del_procedimiento": "aseo",
+        "entidad": "MUNICIPIO DE SOLEDAD",
+        "precio_base": "1500000000",
+        "urlproceso": null,
+        "estado_del_procedimiento": "Publicado",
+        "fecha_de_publicacion_del": "2026-09-01T00:00:00.000"
+      }
+    ],
+    "published": [
+      {
+        "id_del_proceso": "CO1.REQ.7",
+        "nombre_del_procedimiento": "aseo",
+        "entidad": "MUNICIPIO DE SOLEDAD",
+        "precio_base": "1500000000",
+        "urlproceso": null,
+        "estado_del_procedimiento": "Publicado",
+        "fecha_de_publicacion_del": "2026-09-01T00:00:00.000"
+      }
+    ],
+    "typed_source": {
+      "type": "list",
+      "items": [
+        {
+          "type": "dict",
+          "fields": {
+            "id_del_proceso": {
+              "type": "str",
+              "value": "CO1.REQ.7"
+            },
+            "nombre_del_procedimiento": {
+              "type": "str",
+              "value": "aseo"
+            },
+            "entidad": {
+              "type": "str",
+              "value": "MUNICIPIO DE SOLEDAD"
+            },
+            "precio_base": {
+              "type": "str",
+              "value": "1500000000"
+            },
+            "urlproceso": {
+              "type": "NoneType",
+              "value": null
+            },
+            "estado_del_procedimiento": {
+              "type": "str",
+              "value": "Publicado"
+            },
+            "fecha_de_publicacion_del": {
+              "type": "str",
+              "value": "2026-09-01T00:00:00.000"
+            }
+          }
+        }
+      ]
+    },
+    "typed_published": {
+      "type": "list",
+      "items": [
+        {
+          "type": "dict",
+          "fields": {
+            "id_del_proceso": {
+              "type": "str",
+              "value": "CO1.REQ.7"
+            },
+            "nombre_del_procedimiento": {
+              "type": "str",
+              "value": "aseo"
+            },
+            "entidad": {
+              "type": "str",
+              "value": "MUNICIPIO DE SOLEDAD"
+            },
+            "precio_base": {
+              "type": "str",
+              "value": "1500000000"
+            },
+            "urlproceso": {
+              "type": "NoneType",
+              "value": null
+            },
+            "estado_del_procedimiento": {
+              "type": "str",
+              "value": "Publicado"
+            },
+            "fecha_de_publicacion_del": {
+              "type": "str",
+              "value": "2026-09-01T00:00:00.000"
+            }
+          }
+        }
+      ]
+    },
+    "exact": true,
+    "source_unchanged": true,
+    "cards": [
+      {
+        "titulo": "aseo",
+        "entidad": "MUNICIPIO DE SOLEDAD",
+        "valor": "$1,500,000,000",
+        "estado": "",
+        "estado_op": "published",
+        "estado_op_label": "Publicado",
+        "estado_op_icono": "🔵",
+        "estado_op_raw": "",
+        "estado_op_mostrar_raw": false,
+        "fecha": "2026-09-01T00:00:00.000",
+        "fecha_label": "Publicación",
+        "url": "",
+        "id_del_proceso": "CO1.REQ.7",
+        "referencia_del_proceso": "",
+        "dataset_id": "p6dx-8zbt"
+      }
+    ],
+    "card_shape": true,
+    "no_id_dump": true,
+    "response": "Búsqueda básica — modo degradado\n\nEl intérprete avanzado no respondió. Ejecuté una búsqueda determinista limitada con estos filtros:\n- dataset: procesos\n- tema: aseo\n\nResultados: encontré 1; te muestro 1.\n\n1. aseo\n🏛️ MUNICIPIO DE SOLEDAD  💰 $1,500,000,000  🔵 Publicado  📅 2026-09-01\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n\nPuede no conservar relaciones complejas, exclusiones o matices. Puedes reintentar la interpretación avanzada.",
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "p6dx-8zbt",
+        "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": true,
+        "grant": false
+      }
+    ]
+  }
+]

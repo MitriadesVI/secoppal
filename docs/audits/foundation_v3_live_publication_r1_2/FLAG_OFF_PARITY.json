@@ -1,0 +1,16 @@
+{
+  "legacy": {
+    "pairs": 15,
+    "differences": 0,
+    "recursive_types": true,
+    "calls_order": true,
+    "normalization": "NONE"
+  },
+  "default": {
+    "pairs": 15,
+    "differences": 0,
+    "recursive_types": true,
+    "calls_order": true,
+    "normalization": "NONE"
+  }
+}

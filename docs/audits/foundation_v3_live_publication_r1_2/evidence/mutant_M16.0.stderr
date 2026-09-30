@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 77, in <module>
+    main()
+    ~~~~^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 71, in main
+    killer(args.name)
+    ~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 46, in killer
+    legacy.killer(name)
+    ~~~~~~~~~~~~~^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/legacy_oracles.py", line 331, in killer
+    context_probe()
+    ~~~~~~~~~~~~~^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/legacy_oracles.py", line 190, in context_probe
+    assert not g.source_rows_raw(), f"M16 reset failed after {case}"
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: M16 reset failed after normal

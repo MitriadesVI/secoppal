@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_presentation.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_presentation.py [in-memory]
+@@ -31,7 +31,7 @@
+ 
+ def export_fields(groups: list[dict]) -> dict:
+     """Lo que la exportación necesita saber del turno: un sello o un bloqueo explícito."""
+-    if len(groups) > 1:
++    if False:
+         return {"export_notice": DUAL_EXPORT_UNSUPPORTED}
+     if groups and groups[0]["universe"] == "contracts":
+         # La proyección siempre compila el universo celebrado; el Excel verifica este sello.

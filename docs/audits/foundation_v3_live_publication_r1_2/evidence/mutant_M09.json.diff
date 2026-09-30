@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_basic_fallback.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_basic_fallback.py [in-memory]
+@@ -113,7 +113,7 @@
+         total, rows, approximate, error = None, [], False, type(exc.__cause__ or exc).__name__
+     # One clock read per turn, the same authority the Foundation search uses.
+     instant = getattr(workflow, "foundation_reference_instant", None) or datetime.now(ZoneInfo("America/Bogota"))
+-    cards = workflow.formatter.display_rows(rows, dataset_id, reference_instant=instant)
++    cards = workflow.formatter.display_rows(rows, dataset_id, reference_instant=None)
+     if error is None:
+         shown = shown_cards(cards, channel=ctx.channel, limit=workflow.formatter.max_results)
+         lines.append(f"Resultados: encontré {'al menos ' if approximate else ''}{total}; te muestro {len(shown)}.")

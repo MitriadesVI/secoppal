@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_basic_fallback.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_basic_fallback.py [in-memory]
+@@ -117,7 +117,7 @@
+     if error is None:
+         shown = shown_cards(cards, channel=ctx.channel, limit=workflow.formatter.max_results)
+         lines.append(f"Resultados: encontré {'al menos ' if approximate else ''}{total}; te muestro {len(shown)}.")
+-        lines += text_card_lines(shown, channel=ctx.channel, limit=workflow.formatter.max_results)
++        lines += [f'Referencia: {r.get("id_del_proceso")}' for r in rows]
+     else:
+         lines.append("SECOP no permitió completar la búsqueda básica. No afirmo que no existan resultados.")
+     lines += ["", "Puede no conservar relaciones complejas, exclusiones o matices. Puedes reintentar la "

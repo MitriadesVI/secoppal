@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 77, in <module>
+    main()
+    ~~~~^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 71, in main
+    killer(args.name)
+    ~~~~~~^^^^^^^^^^^
+  File "/Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/scripts/audits/foundation_v3_live_publication_r1_2/mutations.py", line 53, in killer
+    assert observed["counts"] == [2, 23], "M18_REDISTRIBUTE_UNUSED_QUOTA"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: M18_REDISTRIBUTE_UNUSED_QUOTA

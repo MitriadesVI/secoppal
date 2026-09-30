@@ -1,0 +1,34 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_presentation.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_presentation.py [in-memory]
+@@ -39,20 +39,19 @@
+     return {}
+ 
+ 
+-def shown_card_groups(cards_by_group: list[list[dict]], *, channel: str, limit: int) -> list[list[dict]]:
+-    """Presupuesto global de texto, repartido por turnos y con prefijos estables."""
++def shown_card_groups(cards_by_group, *, channel, limit):
+     if channel in _CARD_CHANNELS:
+         return cards_by_group
+-    quotas = [0] * len(cards_by_group)
+-    remaining = min(max(0, limit), sum(len(cards) for cards in cards_by_group))
+-    while remaining:
+-        for index, cards in enumerate(cards_by_group):
+-            if quotas[index] < len(cards):
+-                quotas[index] += 1
+-                remaining -= 1
+-                if not remaining:
+-                    break
+-    return [cards[:quota] for cards, quota in zip(cards_by_group, quotas)]
++    active = sum(bool(cards) for cards in cards_by_group)
++    if not active:
++        return [[] for cards in cards_by_group]
++    quota, extra = divmod(max(0, limit), active)
++    assigned = []
++    for cards in cards_by_group:
++        assigned.append(cards[:quota + int(extra > 0)] if cards else [])
++        if cards and extra > 0:
++            extra -= 1
++    return assigned
+ 
+ 
+ def shown_cards(cards: list[dict], *, channel: str, limit: int) -> list[dict]:

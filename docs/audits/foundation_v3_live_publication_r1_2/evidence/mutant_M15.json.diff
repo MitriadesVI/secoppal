@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_basic_fallback.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/foundation_basic_fallback.py [in-memory]
+@@ -116,7 +116,7 @@
+     cards = workflow.formatter.display_rows(rows, dataset_id, reference_instant=instant)
+     if error is None:
+         shown = shown_cards(cards, channel=ctx.channel, limit=workflow.formatter.max_results)
+-        lines.append(f"Resultados: encontré {'al menos ' if approximate else ''}{total}; te muestro {len(shown)}.")
++        lines.append(f"Resultados: encontré {'al menos ' if approximate else ''}{total}; te muestro {len(cards)}.")
+         lines += text_card_lines(shown, channel=ctx.channel, limit=workflow.formatter.max_results)
+     else:
+         lines.append("SECOP no permitió completar la búsqueda básica. No afirmo que no existan resultados.")

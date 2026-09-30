@@ -1,0 +1,3 @@
+SECOP query failed on attempt 1/1: query timeout
+SECOP query failed on attempt 1/2: retry first attempt
+SECOP query failed on attempt 1/1: fallback source failure

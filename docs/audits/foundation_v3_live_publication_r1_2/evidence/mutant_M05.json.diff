@@ -1,0 +1,11 @@
+--- /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/formatter.py
++++ /Users/rodrigoortiz/Documents/secoppal-live-publication-r1-2/app/core/formatter.py [in-memory]
+@@ -445,7 +445,7 @@
+         if instant is None and dataset_id == "p6dx-8zbt":
+             instant = datetime.now(timezone.utc)
+         return [self._card({k: _fix_mojibake(v) if isinstance(v, str) else v for k, v in item.items()},
+-                           dataset_id, instant) for item in results]
++                           dataset_id, instant) for item in results[:self.max_results]]
+ 
+     def _card(self, item: dict, dataset_id: str, instant: datetime | None) -> dict:
+         url = self._safe_url(item)

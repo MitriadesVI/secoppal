@@ -1,0 +1,3923 @@
+[
+  {
+    "case": "process",
+    "channel": "streamlit",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "📋 Procesos de aseo\nEncontre 1 resultados más recientes:\n\n\n💡 Sugerencias:\n1. Buscar en contratos",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$1,500,000,000",
+          "estado": "",
+          "estado_op": "published",
+          "estado_op_label": "Publicado",
+          "estado_op_icono": "🔵",
+          "estado_op_raw": "",
+          "estado_op_mostrar_raw": false,
+          "fecha": "2026-09-01T00:00:00.000",
+          "fecha_label": "Publicación",
+          "url": "",
+          "id_del_proceso": "CO1.REQ.7",
+          "referencia_del_proceso": "",
+          "dataset_id": "p6dx-8zbt"
+        }
+      ],
+      "results": [
+        {
+          "id_del_proceso": "CO1.REQ.7",
+          "nombre_del_procedimiento": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "precio_base": 1500000000.0,
+          "urlproceso": "",
+          "estado_del_procedimiento": "Publicado",
+          "fecha_de_publicacion_del": "2026-09-01T00:00:00.000"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+      "dataset_id": "p6dx-8zbt",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "procesos",
+        "objeto": [
+          "aseo"
+        ],
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ]
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "📋 Procesos de aseo\nEncontre 1 resultados más recientes:\n\n\n💡 Sugerencias:\n1. Buscar en contratos"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$1,500,000,000"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op": {
+                  "type": "str",
+                  "value": "published"
+                },
+                "estado_op_label": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "estado_op_icono": {
+                  "type": "str",
+                  "value": "🔵"
+                },
+                "estado_op_raw": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op_mostrar_raw": {
+                  "type": "bool",
+                  "value": false
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Publicación"
+                },
+                "url": {
+                  "type": "str",
+                  "value": ""
+                },
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "referencia_del_proceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "p6dx-8zbt"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "nombre_del_procedimiento": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "precio_base": {
+                  "type": "float",
+                  "value": 1500000000.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_del_procedimiento": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "fecha_de_publicacion_del": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "p6dx-8zbt"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "p6dx-8zbt",
+        "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "contract",
+    "channel": "streamlit",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\nEncontre 1 resultados más recientes:\n\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$9,007,199,254,740,992",
+          "estado": "En ejecución",
+          "fecha": "2026-08-01",
+          "fecha_label": "Firma",
+          "contratista": "",
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "id_contrato": "CO1.PCCNTR.9",
+          "referencia_del_contrato": "",
+          "dataset_id": "jbjy-vk9h"
+        }
+      ],
+      "results": [
+        {
+          "id_contrato": "CO1.PCCNTR.9",
+          "objeto_del_contrato": "aseo",
+          "nombre_entidad": "MUNICIPIO DE SOLEDAD",
+          "valor_del_contrato": 9007199254740992.0,
+          "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "estado_contrato": "En ejecución",
+          "fecha_de_firma": "2026-08-01"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "dataset_id": "jbjy-vk9h",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "contratos",
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1"
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\nEncontre 1 resultados más recientes:\n\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$9,007,199,254,740,992"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Firma"
+                },
+                "contratista": {
+                  "type": "str",
+                  "value": ""
+                },
+                "url": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "referencia_del_contrato": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "jbjy-vk9h"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "objeto_del_contrato": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "nombre_entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor_del_contrato": {
+                  "type": "float",
+                  "value": 9007199254740992.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "estado_contrato": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha_de_firma": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "jbjy-vk9h"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "money",
+    "channel": "streamlit",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\n💰 Filtro económico:\nvalor del contrato ≥ $100,000,000\nEncontre 1 resultados más recientes:\n\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$9,007,199,254,740,992",
+          "estado": "En ejecución",
+          "fecha": "2026-08-01",
+          "fecha_label": "Firma",
+          "contratista": "",
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "id_contrato": "CO1.PCCNTR.9",
+          "referencia_del_contrato": "",
+          "dataset_id": "jbjy-vk9h"
+        }
+      ],
+      "results": [
+        {
+          "id_contrato": "CO1.PCCNTR.9",
+          "objeto_del_contrato": "aseo",
+          "nombre_entidad": "MUNICIPIO DE SOLEDAD",
+          "valor_del_contrato": 9007199254740992.0,
+          "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "estado_contrato": "En ejecución",
+          "fecha_de_firma": "2026-08-01"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 100000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "dataset_id": "jbjy-vk9h",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "contratos",
+        "valor_min": 100000000,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_min": 100000000,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1"
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\n💰 Filtro económico:\nvalor del contrato ≥ $100,000,000\nEncontre 1 resultados más recientes:\n\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$9,007,199,254,740,992"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Firma"
+                },
+                "contratista": {
+                  "type": "str",
+                  "value": ""
+                },
+                "url": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "referencia_del_contrato": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "jbjy-vk9h"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "objeto_del_contrato": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "nombre_entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor_del_contrato": {
+                  "type": "float",
+                  "value": 9007199254740992.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "estado_contrato": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha_de_firma": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 100000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "jbjy-vk9h"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "valor_min": {
+              "type": "int",
+              "value": 100000000
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "valor_min": {
+              "type": "int",
+              "value": 100000000
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 100000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "null_url",
+    "channel": "streamlit",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "📋 Procesos de vigilancia\nEncontre 1 resultados más recientes:\n\n\n💡 Sugerencias:\n1. Buscar en contratos",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$1,500,000,000",
+          "estado": "",
+          "estado_op": "published",
+          "estado_op_label": "Publicado",
+          "estado_op_icono": "🔵",
+          "estado_op_raw": "",
+          "estado_op_mostrar_raw": false,
+          "fecha": "2026-09-01T00:00:00.000",
+          "fecha_label": "Publicación",
+          "url": "",
+          "id_del_proceso": "CO1.REQ.7",
+          "referencia_del_proceso": "",
+          "dataset_id": "p6dx-8zbt"
+        }
+      ],
+      "results": [
+        {
+          "id_del_proceso": "CO1.REQ.7",
+          "nombre_del_procedimiento": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "precio_base": 1500000000.0,
+          "urlproceso": "",
+          "estado_del_procedimiento": "Publicado",
+          "fecha_de_publicacion_del": "2026-09-01T00:00:00.000"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+      "dataset_id": "p6dx-8zbt",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "procesos",
+        "objeto": [
+          "vigilancia"
+        ],
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "objeto": [
+          "vigilancia"
+        ]
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "📋 Procesos de vigilancia\nEncontre 1 resultados más recientes:\n\n\n💡 Sugerencias:\n1. Buscar en contratos"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$1,500,000,000"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op": {
+                  "type": "str",
+                  "value": "published"
+                },
+                "estado_op_label": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "estado_op_icono": {
+                  "type": "str",
+                  "value": "🔵"
+                },
+                "estado_op_raw": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op_mostrar_raw": {
+                  "type": "bool",
+                  "value": false
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Publicación"
+                },
+                "url": {
+                  "type": "str",
+                  "value": ""
+                },
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "referencia_del_proceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "p6dx-8zbt"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "nombre_del_procedimiento": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "precio_base": {
+                  "type": "float",
+                  "value": 1500000000.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_del_procedimiento": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "fecha_de_publicacion_del": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "p6dx-8zbt"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "vigilancia"
+                }
+              ]
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "vigilancia"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "p6dx-8zbt",
+        "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "source_error",
+    "channel": "streamlit",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "Contratos celebrados según las señales publicadas en SECOP.\n\nSECOP no respondio a tiempo. La consulta esta bien formada, pero el portal se demoro.\n\nPuedo intentar:\n1. Reducir el rango a este ano.\n2. Quitar el orden por valor.\n3. Buscar sin filtro de fecha.\n\nEl detalle tecnico queda registrado en el trace para revision.",
+      "rows": [],
+      "results": [],
+      "total_count": 0,
+      "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "dataset_id": "jbjy-vk9h",
+      "state": null,
+      "outcome": "error",
+      "outcome_reason": "query_error",
+      "query_error": "Unable to query SECOP dataset jbjy-vk9h",
+      "technical_reason": null,
+      "result_row_count": 0,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "contratos",
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1"
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "Contratos celebrados según las señales publicadas en SECOP.\n\nSECOP no respondio a tiempo. La consulta esta bien formada, pero el portal se demoro.\n\nPuedo intentar:\n1. Reducir el rango a este ano.\n2. Quitar el orden por valor.\n3. Buscar sin filtro de fecha.\n\nEl detalle tecnico queda registrado en el trace para revision."
+        },
+        "rows": {
+          "type": "list",
+          "items": []
+        },
+        "results": {
+          "type": "list",
+          "items": []
+        },
+        "total_count": {
+          "type": "int",
+          "value": 0
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "jbjy-vk9h"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "error"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "query_error"
+        },
+        "query_error": {
+          "type": "str",
+          "value": "Unable to query SECOP dataset jbjy-vk9h"
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 0
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "process",
+    "channel": "telegram",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "📋 Procesos de aseo\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $1,500,000,000 | 🔵 Publicado | 2026-09-01\n\n💡 Sugerencias:\n1. Buscar en contratos",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$1,500,000,000",
+          "estado": "",
+          "estado_op": "published",
+          "estado_op_label": "Publicado",
+          "estado_op_icono": "🔵",
+          "estado_op_raw": "",
+          "estado_op_mostrar_raw": false,
+          "fecha": "2026-09-01T00:00:00.000",
+          "fecha_label": "Publicación",
+          "url": "",
+          "id_del_proceso": "CO1.REQ.7",
+          "referencia_del_proceso": "",
+          "dataset_id": "p6dx-8zbt"
+        }
+      ],
+      "results": [
+        {
+          "id_del_proceso": "CO1.REQ.7",
+          "nombre_del_procedimiento": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "precio_base": 1500000000.0,
+          "urlproceso": "",
+          "estado_del_procedimiento": "Publicado",
+          "fecha_de_publicacion_del": "2026-09-01T00:00:00.000"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+      "dataset_id": "p6dx-8zbt",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "procesos",
+        "objeto": [
+          "aseo"
+        ],
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ]
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "📋 Procesos de aseo\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $1,500,000,000 | 🔵 Publicado | 2026-09-01\n\n💡 Sugerencias:\n1. Buscar en contratos"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$1,500,000,000"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op": {
+                  "type": "str",
+                  "value": "published"
+                },
+                "estado_op_label": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "estado_op_icono": {
+                  "type": "str",
+                  "value": "🔵"
+                },
+                "estado_op_raw": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op_mostrar_raw": {
+                  "type": "bool",
+                  "value": false
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Publicación"
+                },
+                "url": {
+                  "type": "str",
+                  "value": ""
+                },
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "referencia_del_proceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "p6dx-8zbt"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "nombre_del_procedimiento": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "precio_base": {
+                  "type": "float",
+                  "value": 1500000000.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_del_procedimiento": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "fecha_de_publicacion_del": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "p6dx-8zbt"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "p6dx-8zbt",
+        "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "contract",
+    "channel": "telegram",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $9,007,199,254,740,992 | En ejecución | 2026-08-01\n   https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$9,007,199,254,740,992",
+          "estado": "En ejecución",
+          "fecha": "2026-08-01",
+          "fecha_label": "Firma",
+          "contratista": "",
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "id_contrato": "CO1.PCCNTR.9",
+          "referencia_del_contrato": "",
+          "dataset_id": "jbjy-vk9h"
+        }
+      ],
+      "results": [
+        {
+          "id_contrato": "CO1.PCCNTR.9",
+          "objeto_del_contrato": "aseo",
+          "nombre_entidad": "MUNICIPIO DE SOLEDAD",
+          "valor_del_contrato": 9007199254740992.0,
+          "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "estado_contrato": "En ejecución",
+          "fecha_de_firma": "2026-08-01"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "dataset_id": "jbjy-vk9h",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "contratos",
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1"
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $9,007,199,254,740,992 | En ejecución | 2026-08-01\n   https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$9,007,199,254,740,992"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Firma"
+                },
+                "contratista": {
+                  "type": "str",
+                  "value": ""
+                },
+                "url": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "referencia_del_contrato": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "jbjy-vk9h"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "objeto_del_contrato": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "nombre_entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor_del_contrato": {
+                  "type": "float",
+                  "value": 9007199254740992.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "estado_contrato": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha_de_firma": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "jbjy-vk9h"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "money",
+    "channel": "telegram",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\n💰 Filtro económico:\nvalor del contrato ≥ $100,000,000\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $9,007,199,254,740,992 | En ejecución | 2026-08-01\n   https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$9,007,199,254,740,992",
+          "estado": "En ejecución",
+          "fecha": "2026-08-01",
+          "fecha_label": "Firma",
+          "contratista": "",
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "id_contrato": "CO1.PCCNTR.9",
+          "referencia_del_contrato": "",
+          "dataset_id": "jbjy-vk9h"
+        }
+      ],
+      "results": [
+        {
+          "id_contrato": "CO1.PCCNTR.9",
+          "objeto_del_contrato": "aseo",
+          "nombre_entidad": "MUNICIPIO DE SOLEDAD",
+          "valor_del_contrato": 9007199254740992.0,
+          "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "estado_contrato": "En ejecución",
+          "fecha_de_firma": "2026-08-01"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 100000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "dataset_id": "jbjy-vk9h",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "contratos",
+        "valor_min": 100000000,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_min": 100000000,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1"
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\n💰 Filtro económico:\nvalor del contrato ≥ $100,000,000\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $9,007,199,254,740,992 | En ejecución | 2026-08-01\n   https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$9,007,199,254,740,992"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Firma"
+                },
+                "contratista": {
+                  "type": "str",
+                  "value": ""
+                },
+                "url": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "referencia_del_contrato": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "jbjy-vk9h"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "objeto_del_contrato": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "nombre_entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor_del_contrato": {
+                  "type": "float",
+                  "value": 9007199254740992.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "estado_contrato": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha_de_firma": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 100000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "jbjy-vk9h"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "valor_min": {
+              "type": "int",
+              "value": 100000000
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "valor_min": {
+              "type": "int",
+              "value": 100000000
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 100000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "null_url",
+    "channel": "telegram",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "📋 Procesos de vigilancia\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $1,500,000,000 | 🔵 Publicado | 2026-09-01\n\n💡 Sugerencias:\n1. Buscar en contratos",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$1,500,000,000",
+          "estado": "",
+          "estado_op": "published",
+          "estado_op_label": "Publicado",
+          "estado_op_icono": "🔵",
+          "estado_op_raw": "",
+          "estado_op_mostrar_raw": false,
+          "fecha": "2026-09-01T00:00:00.000",
+          "fecha_label": "Publicación",
+          "url": "",
+          "id_del_proceso": "CO1.REQ.7",
+          "referencia_del_proceso": "",
+          "dataset_id": "p6dx-8zbt"
+        }
+      ],
+      "results": [
+        {
+          "id_del_proceso": "CO1.REQ.7",
+          "nombre_del_procedimiento": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "precio_base": 1500000000.0,
+          "urlproceso": "",
+          "estado_del_procedimiento": "Publicado",
+          "fecha_de_publicacion_del": "2026-09-01T00:00:00.000"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+      "dataset_id": "p6dx-8zbt",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "procesos",
+        "objeto": [
+          "vigilancia"
+        ],
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "objeto": [
+          "vigilancia"
+        ]
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "📋 Procesos de vigilancia\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $1,500,000,000 | 🔵 Publicado | 2026-09-01\n\n💡 Sugerencias:\n1. Buscar en contratos"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$1,500,000,000"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op": {
+                  "type": "str",
+                  "value": "published"
+                },
+                "estado_op_label": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "estado_op_icono": {
+                  "type": "str",
+                  "value": "🔵"
+                },
+                "estado_op_raw": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op_mostrar_raw": {
+                  "type": "bool",
+                  "value": false
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Publicación"
+                },
+                "url": {
+                  "type": "str",
+                  "value": ""
+                },
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "referencia_del_proceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "p6dx-8zbt"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "nombre_del_procedimiento": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "precio_base": {
+                  "type": "float",
+                  "value": 1500000000.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_del_procedimiento": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "fecha_de_publicacion_del": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "p6dx-8zbt"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "vigilancia"
+                }
+              ]
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "vigilancia"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "p6dx-8zbt",
+        "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "source_error",
+    "channel": "telegram",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "Contratos celebrados según las señales publicadas en SECOP.\n\nSECOP no respondio a tiempo. La consulta esta bien formada, pero el portal se demoro.\n\nPuedo intentar:\n1. Reducir el rango a este ano.\n2. Quitar el orden por valor.\n3. Buscar sin filtro de fecha.\n\nEl detalle tecnico queda registrado en el trace para revision.",
+      "rows": [],
+      "results": [],
+      "total_count": 0,
+      "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "dataset_id": "jbjy-vk9h",
+      "state": null,
+      "outcome": "error",
+      "outcome_reason": "query_error",
+      "query_error": "Unable to query SECOP dataset jbjy-vk9h",
+      "technical_reason": null,
+      "result_row_count": 0,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "contratos",
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1"
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "Contratos celebrados según las señales publicadas en SECOP.\n\nSECOP no respondio a tiempo. La consulta esta bien formada, pero el portal se demoro.\n\nPuedo intentar:\n1. Reducir el rango a este ano.\n2. Quitar el orden por valor.\n3. Buscar sin filtro de fecha.\n\nEl detalle tecnico queda registrado en el trace para revision."
+        },
+        "rows": {
+          "type": "list",
+          "items": []
+        },
+        "results": {
+          "type": "list",
+          "items": []
+        },
+        "total_count": {
+          "type": "int",
+          "value": 0
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "jbjy-vk9h"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "error"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "query_error"
+        },
+        "query_error": {
+          "type": "str",
+          "value": "Unable to query SECOP dataset jbjy-vk9h"
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 0
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "process",
+    "channel": "whatsapp",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "📋 Procesos de aseo\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $1,500,000,000 | 🔵 Publicado | 2026-09-01\n\n💡 Sugerencias:\n1. Buscar en contratos",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$1,500,000,000",
+          "estado": "",
+          "estado_op": "published",
+          "estado_op_label": "Publicado",
+          "estado_op_icono": "🔵",
+          "estado_op_raw": "",
+          "estado_op_mostrar_raw": false,
+          "fecha": "2026-09-01T00:00:00.000",
+          "fecha_label": "Publicación",
+          "url": "",
+          "id_del_proceso": "CO1.REQ.7",
+          "referencia_del_proceso": "",
+          "dataset_id": "p6dx-8zbt"
+        }
+      ],
+      "results": [
+        {
+          "id_del_proceso": "CO1.REQ.7",
+          "nombre_del_procedimiento": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "precio_base": 1500000000.0,
+          "urlproceso": "",
+          "estado_del_procedimiento": "Publicado",
+          "fecha_de_publicacion_del": "2026-09-01T00:00:00.000"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+      "dataset_id": "p6dx-8zbt",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "procesos",
+        "objeto": [
+          "aseo"
+        ],
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ]
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "📋 Procesos de aseo\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $1,500,000,000 | 🔵 Publicado | 2026-09-01\n\n💡 Sugerencias:\n1. Buscar en contratos"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$1,500,000,000"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op": {
+                  "type": "str",
+                  "value": "published"
+                },
+                "estado_op_label": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "estado_op_icono": {
+                  "type": "str",
+                  "value": "🔵"
+                },
+                "estado_op_raw": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op_mostrar_raw": {
+                  "type": "bool",
+                  "value": false
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Publicación"
+                },
+                "url": {
+                  "type": "str",
+                  "value": ""
+                },
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "referencia_del_proceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "p6dx-8zbt"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "nombre_del_procedimiento": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "precio_base": {
+                  "type": "float",
+                  "value": 1500000000.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_del_procedimiento": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "fecha_de_publicacion_del": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "p6dx-8zbt"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "p6dx-8zbt",
+        "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "contract",
+    "channel": "whatsapp",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $9,007,199,254,740,992 | En ejecución | 2026-08-01\n   https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$9,007,199,254,740,992",
+          "estado": "En ejecución",
+          "fecha": "2026-08-01",
+          "fecha_label": "Firma",
+          "contratista": "",
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "id_contrato": "CO1.PCCNTR.9",
+          "referencia_del_contrato": "",
+          "dataset_id": "jbjy-vk9h"
+        }
+      ],
+      "results": [
+        {
+          "id_contrato": "CO1.PCCNTR.9",
+          "objeto_del_contrato": "aseo",
+          "nombre_entidad": "MUNICIPIO DE SOLEDAD",
+          "valor_del_contrato": 9007199254740992.0,
+          "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "estado_contrato": "En ejecución",
+          "fecha_de_firma": "2026-08-01"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "dataset_id": "jbjy-vk9h",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "contratos",
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1"
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $9,007,199,254,740,992 | En ejecución | 2026-08-01\n   https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$9,007,199,254,740,992"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Firma"
+                },
+                "contratista": {
+                  "type": "str",
+                  "value": ""
+                },
+                "url": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "referencia_del_contrato": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "jbjy-vk9h"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "objeto_del_contrato": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "nombre_entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor_del_contrato": {
+                  "type": "float",
+                  "value": 9007199254740992.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "estado_contrato": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha_de_firma": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "jbjy-vk9h"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "money",
+    "channel": "whatsapp",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\n💰 Filtro económico:\nvalor del contrato ≥ $100,000,000\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $9,007,199,254,740,992 | En ejecución | 2026-08-01\n   https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$9,007,199,254,740,992",
+          "estado": "En ejecución",
+          "fecha": "2026-08-01",
+          "fecha_label": "Firma",
+          "contratista": "",
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "id_contrato": "CO1.PCCNTR.9",
+          "referencia_del_contrato": "",
+          "dataset_id": "jbjy-vk9h"
+        }
+      ],
+      "results": [
+        {
+          "id_contrato": "CO1.PCCNTR.9",
+          "objeto_del_contrato": "aseo",
+          "nombre_entidad": "MUNICIPIO DE SOLEDAD",
+          "valor_del_contrato": 9007199254740992.0,
+          "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9",
+          "estado_contrato": "En ejecución",
+          "fecha_de_firma": "2026-08-01"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 100000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "dataset_id": "jbjy-vk9h",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "contratos",
+        "valor_min": 100000000,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_min": 100000000,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1"
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "Contratos celebrados según las señales publicadas en SECOP.\n\n📋 Contratos de aseo\n💰 Filtro económico:\nvalor del contrato ≥ $100,000,000\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $9,007,199,254,740,992 | En ejecución | 2026-08-01\n   https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9\n\n💡 Sugerencias:\n1. Ver contratos activos (en ejecución)\n2. Buscar en procesos\n3. Ver contratos cerrados"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$9,007,199,254,740,992"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Firma"
+                },
+                "contratista": {
+                  "type": "str",
+                  "value": ""
+                },
+                "url": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "referencia_del_contrato": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "jbjy-vk9h"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_contrato": {
+                  "type": "str",
+                  "value": "CO1.PCCNTR.9"
+                },
+                "objeto_del_contrato": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "nombre_entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor_del_contrato": {
+                  "type": "float",
+                  "value": 9007199254740992.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9"
+                },
+                "estado_contrato": {
+                  "type": "str",
+                  "value": "En ejecución"
+                },
+                "fecha_de_firma": {
+                  "type": "str",
+                  "value": "2026-08-01"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 100000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "jbjy-vk9h"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "valor_min": {
+              "type": "int",
+              "value": 100000000
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "valor_min": {
+              "type": "int",
+              "value": 100000000
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND valor_del_contrato >= 100000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "null_url",
+    "channel": "whatsapp",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "📋 Procesos de vigilancia\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $1,500,000,000 | 🔵 Publicado | 2026-09-01\n\n💡 Sugerencias:\n1. Buscar en contratos",
+      "rows": [
+        {
+          "titulo": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "valor": "$1,500,000,000",
+          "estado": "",
+          "estado_op": "published",
+          "estado_op_label": "Publicado",
+          "estado_op_icono": "🔵",
+          "estado_op_raw": "",
+          "estado_op_mostrar_raw": false,
+          "fecha": "2026-09-01T00:00:00.000",
+          "fecha_label": "Publicación",
+          "url": "",
+          "id_del_proceso": "CO1.REQ.7",
+          "referencia_del_proceso": "",
+          "dataset_id": "p6dx-8zbt"
+        }
+      ],
+      "results": [
+        {
+          "id_del_proceso": "CO1.REQ.7",
+          "nombre_del_procedimiento": "aseo",
+          "entidad": "MUNICIPIO DE SOLEDAD",
+          "precio_base": 1500000000.0,
+          "urlproceso": "",
+          "estado_del_procedimiento": "Publicado",
+          "fecha_de_publicacion_del": "2026-09-01T00:00:00.000"
+        }
+      ],
+      "total_count": 1,
+      "soql_query": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+      "dataset_id": "p6dx-8zbt",
+      "state": null,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_error": "",
+      "technical_reason": null,
+      "result_row_count": 1,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "procesos",
+        "objeto": [
+          "vigilancia"
+        ],
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "objeto": [
+          "vigilancia"
+        ]
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "📋 Procesos de vigilancia\nEncontre 1 resultados más recientes:\n\n1. aseo\n   MUNICIPIO DE SOLEDAD\n   $1,500,000,000 | 🔵 Publicado | 2026-09-01\n\n💡 Sugerencias:\n1. Buscar en contratos"
+        },
+        "rows": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "titulo": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "valor": {
+                  "type": "str",
+                  "value": "$1,500,000,000"
+                },
+                "estado": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op": {
+                  "type": "str",
+                  "value": "published"
+                },
+                "estado_op_label": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "estado_op_icono": {
+                  "type": "str",
+                  "value": "🔵"
+                },
+                "estado_op_raw": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_op_mostrar_raw": {
+                  "type": "bool",
+                  "value": false
+                },
+                "fecha": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                },
+                "fecha_label": {
+                  "type": "str",
+                  "value": "Publicación"
+                },
+                "url": {
+                  "type": "str",
+                  "value": ""
+                },
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "referencia_del_proceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "dataset_id": {
+                  "type": "str",
+                  "value": "p6dx-8zbt"
+                }
+              }
+            }
+          ]
+        },
+        "results": {
+          "type": "list",
+          "items": [
+            {
+              "type": "dict",
+              "fields": {
+                "id_del_proceso": {
+                  "type": "str",
+                  "value": "CO1.REQ.7"
+                },
+                "nombre_del_procedimiento": {
+                  "type": "str",
+                  "value": "aseo"
+                },
+                "entidad": {
+                  "type": "str",
+                  "value": "MUNICIPIO DE SOLEDAD"
+                },
+                "precio_base": {
+                  "type": "float",
+                  "value": 1500000000.0
+                },
+                "urlproceso": {
+                  "type": "str",
+                  "value": ""
+                },
+                "estado_del_procedimiento": {
+                  "type": "str",
+                  "value": "Publicado"
+                },
+                "fecha_de_publicacion_del": {
+                  "type": "str",
+                  "value": "2026-09-01T00:00:00.000"
+                }
+              }
+            }
+          ]
+        },
+        "total_count": {
+          "type": "int",
+          "value": 1
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "p6dx-8zbt"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "success"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "results_found"
+        },
+        "query_error": {
+          "type": "str",
+          "value": ""
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 1
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "vigilancia"
+                }
+              ]
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "procesos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "vigilancia"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "p6dx-8zbt",
+        "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%vigilancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  },
+  {
+    "case": "source_error",
+    "channel": "whatsapp",
+    "mode_resolved": "legacy",
+    "public": {
+      "route_reason": "heuristic_only",
+      "response": "Contratos celebrados según las señales publicadas en SECOP.\n\nSECOP no respondio a tiempo. La consulta esta bien formada, pero el portal se demoro.\n\nPuedo intentar:\n1. Reducir el rango a este ano.\n2. Quitar el orden por valor.\n3. Buscar sin filtro de fecha.\n\nEl detalle tecnico queda registrado en el trace para revision.",
+      "rows": [],
+      "results": [],
+      "total_count": 0,
+      "soql_query": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "dataset_id": "jbjy-vk9h",
+      "state": null,
+      "outcome": "error",
+      "outcome_reason": "query_error",
+      "query_error": "Unable to query SECOP dataset jbjy-vk9h",
+      "technical_reason": null,
+      "result_row_count": 0,
+      "total_count_approximate": false,
+      "resolved_params": {
+        "dataset": "contratos",
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1",
+        "limit": 50
+      },
+      "parsed_params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "aseo"
+        ],
+        "contract_universe": "celebrated",
+        "contract_universe_version": "contract-universe-1.1"
+      }
+    },
+    "typed_public": {
+      "type": "dict",
+      "fields": {
+        "route_reason": {
+          "type": "str",
+          "value": "heuristic_only"
+        },
+        "response": {
+          "type": "str",
+          "value": "Contratos celebrados según las señales publicadas en SECOP.\n\nSECOP no respondio a tiempo. La consulta esta bien formada, pero el portal se demoro.\n\nPuedo intentar:\n1. Reducir el rango a este ano.\n2. Quitar el orden por valor.\n3. Buscar sin filtro de fecha.\n\nEl detalle tecnico queda registrado en el trace para revision."
+        },
+        "rows": {
+          "type": "list",
+          "items": []
+        },
+        "results": {
+          "type": "list",
+          "items": []
+        },
+        "total_count": {
+          "type": "int",
+          "value": 0
+        },
+        "soql_query": {
+          "type": "str",
+          "value": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+        },
+        "dataset_id": {
+          "type": "str",
+          "value": "jbjy-vk9h"
+        },
+        "state": {
+          "type": "NoneType",
+          "value": null
+        },
+        "outcome": {
+          "type": "str",
+          "value": "error"
+        },
+        "outcome_reason": {
+          "type": "str",
+          "value": "query_error"
+        },
+        "query_error": {
+          "type": "str",
+          "value": "Unable to query SECOP dataset jbjy-vk9h"
+        },
+        "technical_reason": {
+          "type": "NoneType",
+          "value": null
+        },
+        "result_row_count": {
+          "type": "int",
+          "value": 0
+        },
+        "total_count_approximate": {
+          "type": "bool",
+          "value": false
+        },
+        "resolved_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            },
+            "limit": {
+              "type": "int",
+              "value": 50
+            }
+          }
+        },
+        "parsed_params": {
+          "type": "dict",
+          "fields": {
+            "dataset": {
+              "type": "str",
+              "value": "contratos"
+            },
+            "dataset_explicit": {
+              "type": "bool",
+              "value": true
+            },
+            "objeto": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "str",
+                  "value": "aseo"
+                }
+              ]
+            },
+            "contract_universe": {
+              "type": "str",
+              "value": "celebrated"
+            },
+            "contract_universe_version": {
+              "type": "str",
+              "value": "contract-universe-1.1"
+            }
+          }
+        }
+      }
+    },
+    "calls": [
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+        "kwargs": {
+          "timeout_seconds": 8,
+          "ordering_specifier": "Soda3OrderingSpecifier.TOTAL"
+        },
+        "raw": false,
+        "grant": false
+      }
+    ]
+  }
+]
