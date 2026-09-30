@@ -1,0 +1,9 @@
+# Paridad flag OFF (Foundation legacy), 714 consultas, normalizando timestamps ISO, hora impresa y orden de llamadas paralelas
+main 68090765 vs R1 default queries 714 material diffs: 0
+main 68090765 vs R1 frame_actor queries 714 material diffs: 0
+e2673086 vs R1 default queries 714 material diffs: 0
+e2673086 vs R1 frame_actor queries 714 material diffs: 0
+
+eligible 222
+eligible=222 foundation_claimed=219 claimed_while_legacy_specialized=0
+not-claimed but observable differs: 0

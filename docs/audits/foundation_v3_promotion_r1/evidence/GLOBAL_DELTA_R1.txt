@@ -1,0 +1,35 @@
+# Global pareado, seed 19: base e2673086 vs R1 3f7475f3 (serial, worktrees limpios, TZ=America/Bogota, PYTHONHASHSEED=0, netblock)
+base total 18545 cand total 18619
+CANDIDATE_ONLY_FAILURES []
+NEW_ERRORS []
+BASE_PASSED_NOW_MISSING []
+NEW_TESTS 74 NEW_TESTS_FAILED []
+base fail/error 119 2 cand fail/error 119 2
+failing set identical: True
+
+# Subconjunto seed 20260930 (test_actor*, test_foundation*, test_supplier_request_authority*, test_buyer_actor*)
+base total 3250 cand total 3324
+CANDIDATE_ONLY_FAILURES []
+NEW_ERRORS []
+BASE_PASSED_NOW_MISSING []
+NEW_TESTS 74 NEW_TESTS_FAILED []
+base fail/error 118 2 cand fail/error 118 2
+failing set identical: True
+
+# Extra (no es la comparacion pedida): main 68090765 vs R1, seeds 19 y 20260930, corridas ANTES de la orden de una sola comparacion
+seed 19
+base total 16690 cand total 18619
+CANDIDATE_ONLY_FAILURES []
+NEW_ERRORS []
+BASE_PASSED_NOW_MISSING []
+NEW_TESTS 1929 NEW_TESTS_FAILED []
+base fail/error 119 2 cand fail/error 119 2
+failing set identical: True
+seed 20260930
+base total 16690 cand total 18619
+CANDIDATE_ONLY_FAILURES []
+NEW_ERRORS []
+BASE_PASSED_NOW_MISSING []
+NEW_TESTS 1929 NEW_TESTS_FAILED []
+base fail/error 118 2 cand fail/error 118 2
+failing set identical: True
