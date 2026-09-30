@@ -39,6 +39,11 @@ def export_fields(groups: list[dict]) -> dict:
     return {}
 
 
+def shown_cards(cards: list[dict], *, channel: str, limit: int) -> list[dict]:
+    """Las tarjetas que el turno muestra de verdad: todas en la web, ``limit`` en texto."""
+    return cards if channel in _CARD_CHANNELS else cards[:limit]
+
+
 def text_card_lines(cards: list[dict], *, channel: str, limit: int) -> list[str]:
     """Las tarjetas dentro del mensaje, sólo para canales sin tarjetas propias."""
     if channel in _CARD_CHANNELS or not cards:
@@ -58,7 +63,7 @@ def _group_lines(group: dict, cards: list[dict], *, channel: str, limit: int) ->
         return [f"{label}: {SOURCE_UNAVAILABLE.get(group['technical_reason'], SOURCE_UNAVAILABLE['source_error'])}"]
     if not cards:
         return [f"{label}: ninguna fila cumple todas las condiciones."]
-    shown = cards if channel in _CARD_CHANNELS else cards[:limit]
+    shown = shown_cards(cards, channel=channel, limit=limit)
     head = f"{label}: encontré {_total_label(group)}."
     if group["fallback_attempted"]:
         head += f" Te muestro {len(shown)} (muestra sin orden garantizado)."

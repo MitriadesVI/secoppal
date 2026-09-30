@@ -11,7 +11,8 @@ from __future__ import annotations
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from app.core.foundation_presentation import text_card_lines
+from app.core.foundation_guard import raw_source_rows
+from app.core.foundation_presentation import shown_cards, text_card_lines
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 from app.core.workflow.results import empty_result
 from app.utils.money import normalize_text
@@ -103,8 +104,10 @@ def run_basic_fallback(workflow, ctx) -> dict:
     lines = [LABEL, "", "El intérprete avanzado no respondió. Ejecuté una búsqueda determinista limitada con "
              "estos filtros:", *(f"- {name}: {value}" for name, value in filters.items()), ""]
     try:
-        total, rows, _timings, approximate = _query_first_then_count(
-            workflow.secop_client, dataset_id, count_soql, soql, call_reason="foundation_basic_fallback")
+        # `results` is evidence: the transport rows, exactly as a Foundation search publishes them.
+        with raw_source_rows():
+            total, rows, _timings, approximate = _query_first_then_count(
+                workflow.secop_client, dataset_id, count_soql, soql, call_reason="foundation_basic_fallback")
         error = None
     except Exception as exc:  # noqa: BLE001 - a source failure is reported, never read as zero
         total, rows, approximate, error = None, [], False, type(exc.__cause__ or exc).__name__
@@ -112,8 +115,9 @@ def run_basic_fallback(workflow, ctx) -> dict:
     instant = getattr(workflow, "foundation_reference_instant", None) or datetime.now(ZoneInfo("America/Bogota"))
     cards = workflow.formatter.display_rows(rows, dataset_id, reference_instant=instant)
     if error is None:
-        lines.append(f"Resultados: encontré {'al menos ' if approximate else ''}{total}; te muestro {len(cards)}.")
-        lines += text_card_lines(cards, channel=ctx.channel, limit=workflow.formatter.max_results)
+        shown = shown_cards(cards, channel=ctx.channel, limit=workflow.formatter.max_results)
+        lines.append(f"Resultados: encontré {'al menos ' if approximate else ''}{total}; te muestro {len(shown)}.")
+        lines += text_card_lines(shown, channel=ctx.channel, limit=workflow.formatter.max_results)
     else:
         lines.append("SECOP no permitió completar la búsqueda básica. No afirmo que no existan resultados.")
     lines += ["", "Puede no conservar relaciones complejas, exclusiones o matices. Puedes reintentar la "

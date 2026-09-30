@@ -117,6 +117,8 @@ class ExecutionGuard:
 
 
 _GUARD: ContextVar[ExecutionGuard | None] = ContextVar("foundation_execution_guard", default=None)
+# A Foundation turn that queries outside a grant (the basic fallback) still publishes evidence.
+_RAW_ROWS: ContextVar[bool] = ContextVar("foundation_raw_source_rows", default=False)
 
 
 @contextmanager
@@ -137,6 +139,21 @@ def verify_effective_source_call(operation: str, dataset: str, soql: str) -> Non
 def foundation_source_active() -> bool:
     """Identify the admitted source execution that publishes raw source fields."""
     return _GUARD.get() is not None
+
+
+@contextmanager
+def raw_source_rows():
+    """Rows returned inside this block are the source's own, not the legacy normalization."""
+    token = _RAW_ROWS.set(True)
+    try:
+        yield
+    finally:
+        _RAW_ROWS.reset(token)
+
+
+def source_rows_raw() -> bool:
+    """Whether a query must return the transport rows untouched (grant or fallback evidence)."""
+    return _GUARD.get() is not None or _RAW_ROWS.get()
 
 
 def validate_foundation_count_total(value: int) -> None:

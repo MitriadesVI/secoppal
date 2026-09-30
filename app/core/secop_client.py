@@ -256,9 +256,9 @@ class SecopClient:
                         span["rows_received"] = len(rows)
                     if receipt is not None:
                         receipt.rows_received = len(rows)
-                    from app.core.foundation_guard import foundation_source_active
+                    from app.core.foundation_guard import source_rows_raw
 
-                    if foundation_source_active():
+                    if source_rows_raw():
                         return deepcopy(rows)
                     return [self._normalize_row(dataset_id, row) for row in rows]
                 except Exception as exc:  # pragma: no cover - network/runtime path
