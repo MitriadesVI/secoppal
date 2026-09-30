@@ -7,7 +7,7 @@ import re
 from app.core.contract_type_resolver import resolve_contract_types
 from app.core.contract_universe import POLICY_VERSION
 from app.core.entity_resolver import EntityResolver, department_mention_resolution
-from app.core.foundation_evidence import material_phrase
+from app.core.foundation_evidence import UNIVERSE_SPAN_OMITTED, material_phrase, topic_spans
 from app.core.interpretation_contract import (
     AcceptanceStatus, ConditionRole, ContractError, Effect, HostPolicy, HostResolution,
     InterpretationAcceptance, InterpretationProposal, Polarity, RelationKind, ResolutionDecision,
@@ -80,9 +80,17 @@ def admit_proposal(proposal: InterpretationProposal, raw: str, *,
             policies.append(HostPolicy("opportunity-explicit-state" if override else "O1B", "1",
                                        (condition.condition_id,), Effect.EQUIVALENT))
             continue
+        authority, spans = "host-dimension", condition.evidence
+        if dimension is SemanticDimension.TOPIC:
+            # G2: the request's own universe occurrence is never topic content.
+            spans, structural, omitted = topic_spans(condition, proposal.requests)
+            if structural is not None:
+                return _stop(proposal, AcceptanceStatus.NEEDS_CLARIFICATION, structural)
+            if omitted:
+                authority = f"host-dimension:{UNIVERSE_SPAN_OMITTED}"
         if dimension in _PHRASE_DIMENSIONS:
             # G1/T4: every span is read; the host never keeps only one of several citations.
-            phrase, unread = material_phrase(condition.evidence, raw, dimension.value)
+            phrase, unread = material_phrase(spans, raw, dimension.value)
             if unread is not None:
                 return _stop(proposal, AcceptanceStatus.NEEDS_CLARIFICATION, unread)
             text, folded = phrase, normalize_text(phrase)
@@ -140,7 +148,7 @@ def admit_proposal(proposal: InterpretationProposal, raw: str, *,
             return _stop(proposal, AcceptanceStatus.NEEDS_CLARIFICATION,
                          f"UNRESOLVED_HOST_DIMENSION:{dimension.value}")
         resolutions.append(HostResolution(condition.condition_id, ResolutionDecision.RESOLVED,
-                                          "host-dimension", (value,)))
+                                          authority, (value,)))
     if len(datasets) > 1 and len(set(datasets.values())) != 2:
         return _stop(proposal, AcceptanceStatus.UNSUPPORTED, "MULTI_REQUEST")
     return InterpretationAcceptance(proposal, AcceptanceStatus.READY, tuple(resolutions), tuple(policies))

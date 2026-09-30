@@ -5,6 +5,11 @@ The host used to read a TOPIC from its first span only, so a condition citing
 span is accounted for: a repeated citation is one phrase, a phrase cited in
 contiguous pieces is that phrase, and anything else has no declared meaning in
 the contract, so the host asks instead of choosing a part.
+
+A TOPIC span that is the very occurrence the request cites as its universe
+(«contratos» in «contratos de primera infancia») is the request's word, not a
+topic (G2). The rule is by occurrence, never by word: another «contratos» in the
+same text («gestión de contratos laborales») stays topic content.
 """
 
 from __future__ import annotations
@@ -28,3 +33,23 @@ def material_phrase(spans, raw: str, dimension: str) -> tuple[str | None, str | 
             return None, MULTI_EVIDENCE.format(dimension=dimension)
         reach = max(reach, end)
     return raw[ordered[0][0]:reach], None
+
+
+UNIVERSE_SPAN_OMITTED = "universe-span-omitted"
+
+
+def topic_spans(condition, requests) -> tuple[tuple, str | None, bool]:
+    """(material spans, reason, omitted) after removing the request's own universe occurrence."""
+    universe = {(r.universe_evidence.start, r.universe_evidence.end) for r in requests
+                if r.request_id in condition.request_ids and r.universe_evidence is not None}
+    material, omitted = [], False
+    for item in condition.evidence:
+        if (item.start, item.end) in universe:
+            omitted = True  # the universe claim owns this exact occurrence
+            continue
+        if any(item.start < end and start < item.end for start, end in universe):
+            return (), "TOPIC_OVERLAPS_REQUEST_UNIVERSE", omitted
+        material.append(item)
+    if not material:
+        return (), "TOPIC_ONLY_REQUEST_UNIVERSE", omitted
+    return tuple(material), None, omitted

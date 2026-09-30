@@ -15,6 +15,7 @@ from app.core.entity_resolver import EntityResolver
 from app.core.foundation_admission import admit_proposal
 from app.core.foundation_evidence import material_phrase
 from app.core.foundation_producers import decode_proposal
+from app.core.foundation_projection import project_accepted
 from app.core.interpretation_contract import AcceptanceStatus, RawSpan
 from app.utils.money import normalize_text
 
@@ -137,3 +138,66 @@ def test_material_phrase_never_silently_drops_a_citation(words, picks):
         # ...and nothing the user did not cite is added: every non-space char is inside a citation.
         assert all(char.isspace() or any(item.start <= start + at < item.end for item in spans)
                    for at, char in enumerate(phrase))
+
+
+# ── 10.2 G2: the request's universe occurrence never becomes topic ────────────
+
+INFANCIA = "contratos de primera infancia de la alcaldía de barranquilla"
+BARRANQUILLA = "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+
+
+def _query_soql(accepted):
+    outcome = project_accepted(accepted, reference_instant=NOW)
+    return next(m.soql for m in outcome.manifest if m.operation == "query")
+
+
+@pytest.mark.parametrize("topic_spans,authority", [
+    ([span(INFANCIA, "primera infancia")], "host-dimension"),
+    ([span(INFANCIA, "contratos"), span(INFANCIA, "primera infancia")], "host-dimension:universe-span-omitted"),
+])
+def test_first_infancy_topic_never_carries_the_universe_word(topic_spans, authority):
+    accepted = admit(INFANCIA, [("TOPIC", "contains", topic_spans, "POSITIVE"),
+                                ("BUYER", "is", [span(INFANCIA, "alcaldía de barranquilla")], "POSITIVE")])
+    assert accepted.status is AcceptanceStatus.READY, accepted.reason
+    resolved = {r.target_id: r for r in accepted.resolutions}
+    assert resolved["c0"].resolved_ids == ("primera infancia",) and resolved["c0"].authority == authority
+    assert resolved["c1"].resolved_ids == (BARRANQUILLA,)
+    assert resolved["r1"].resolved_ids == ("jbjy-vk9h",)
+    soql = _query_soql(accepted)
+    assert "%primera infancia%" in soql.lower()
+    assert "%contratos%" not in soql.lower()
+    assert BARRANQUILLA in soql
+
+
+@pytest.mark.parametrize("topic", ["contratos de primera infancia", "contratos de primera"])
+def test_a_topic_span_that_swallows_the_universe_occurrence_asks(topic):
+    accepted = admit(INFANCIA, [("TOPIC", "contains", [span(INFANCIA, topic)], "POSITIVE")])
+    assert accepted.status is AcceptanceStatus.NEEDS_CLARIFICATION
+    assert accepted.reason == "TOPIC_OVERLAPS_REQUEST_UNIVERSE"
+
+
+def test_a_topic_that_is_only_the_universe_occurrence_asks():
+    raw = "contratos de la alcaldía de barranquilla"
+    accepted = admit(raw, [("TOPIC", "contains", [span(raw, "contratos")], "POSITIVE")])
+    assert accepted.status is AcceptanceStatus.NEEDS_CLARIFICATION
+    assert accepted.reason == "TOPIC_ONLY_REQUEST_UNIVERSE"
+
+
+def test_another_occurrence_of_the_universe_word_is_real_topic_content():
+    raw = "contratos para implementar un sistema de gestión de contratos laborales"
+    topic = "sistema de gestión de contratos laborales"
+    accepted = admit(raw, [("TOPIC", "contains", [span(raw, topic)], "POSITIVE")])
+    assert accepted.status is AcceptanceStatus.READY
+    assert [r.resolved_ids for r in accepted.resolutions if r.target_id == "c0"] == [
+        ("sistema de gestion de contratos laborales",)]
+    soql = _query_soql(accepted)
+    assert "%sistema de gestion de contratos laborales%" in soql.lower()
+    assert "'%contratos%'" not in soql.lower()
+
+
+def test_a_swallowing_topic_makes_no_source_call(tmp_path, monkeypatch):
+    produced = proposal(INFANCIA, [("TOPIC", "contains", [span(INFANCIA, "contratos de primera infancia")],
+                                    "POSITIVE")])
+    turn, harness = harness_run(tmp_path, monkeypatch, INFANCIA, produced)
+    assert turn.result["foundation_internal_reason"] == "TOPIC_OVERLAPS_REQUEST_UNIVERSE"
+    assert harness.transport.snapshot() == []
