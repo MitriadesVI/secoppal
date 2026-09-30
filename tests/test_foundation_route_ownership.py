@@ -61,6 +61,14 @@ def search_proposal(raw):
     return decode_proposal(payload, raw, arm="C")
 
 
+def producer_stub(raw):
+    """The simple-search proposal; any other text is an unexpected call, never a crash."""
+    if raw == SEARCH:
+        return search_proposal(raw)
+    from app.core.interpretation_contract import AcceptanceStatus, InterpretationAcceptance
+    return InterpretationAcceptance(None, AcceptanceStatus.INVALID_PROPOSAL, reason="UNEXPECTED_PRODUCER_CALL")
+
+
 def jobs(*pairs, quote=None):
     return json.dumps({"jobs": [{"action": action, "aspect": aspect, "evidence_quote": quote_,
                                  "occurrence": 1} for action, aspect, quote_ in pairs]})
@@ -104,7 +112,7 @@ def make_flow(tmp_path, monkeypatch):
         flow.conv_store = ConversationStore(root / "conversations")
         source = RecordingSource()
         flow.secop_client, flow.source = source.client, source
-        flow.foundation_producer = Mock(side_effect=search_proposal)
+        flow.foundation_producer = Mock(side_effect=producer_stub)
         if alpha_payload:
             flow.natural_alpha_provider = Mock(observe=Mock(
                 return_value=ProviderResult(alpha_payload, provider_calls=1)))
@@ -130,6 +138,10 @@ def observable(result):
 OWNER_CASES = [
     pytest.param("quiénes son los principales proveedores de la Alcaldía de Galapa",
                  jobs(("ANALYZE", "SUPPLIERS", "proveedores")), "a2_suppliers_", id="entity-profile-suppliers"),
+    # Passes the frozen lexical gate: only the capability binding keeps it from Foundation.
+    pytest.param("muéstrame los proveedores con más contratos de la alcaldía de Barranquilla en 2025",
+                 jobs(("ANALYZE", "SUPPLIERS", "proveedores")), "entity_profile_suppliers",
+                 id="entity-profile-suppliers-gate-shaped"),
     pytest.param("cuántos contratos celebró la Alcaldía de Soledad en 2026",
                  jobs(("ANALYZE", "CONTRACT_COUNT", "cuántos contratos")), "analytics_contract_activity",
                  id="contract-activity-count"),
@@ -242,3 +254,21 @@ def test_frame_admission_keeps_the_entity_profile_and_delegates_search(make_flow
     assert Counter(on.source.calls) == Counter(off.source.calls)
     searched = run(make_flow("foundation_v3"), SEARCH, chat_id="f2")
     assert searched["foundation_mode"] == "foundation_v3" and searched["foundation_terminal"] == "READY"
+
+
+def test_natural_alpha_owner_keeps_capabilities_and_non_search_jobs():
+    from types import SimpleNamespace
+
+    from app.core.foundation_route_owner import natural_alpha_owner
+
+    def observed(*actions, mode="alpha", status="MATCHED"):
+        return SimpleNamespace(mode=mode, status=status, jobs=tuple(SimpleNamespace(action=a) for a in actions))
+
+    assert natural_alpha_owner(None, object()) == "CAPABILITY_BINDING"
+    assert natural_alpha_owner(observed("SEARCH"), object()) == "CAPABILITY_BINDING"
+    assert natural_alpha_owner(observed("ANALYZE"), None) == "NATURAL_ALPHA_JOB"
+    assert natural_alpha_owner(observed("SEARCH", "SEARCH"), None) == "NATURAL_ALPHA_JOB"
+    assert natural_alpha_owner(observed("SEARCH"), None) is None
+    assert natural_alpha_owner(observed("ANALYZE", mode="shadow"), None) is None
+    assert natural_alpha_owner(observed("ANALYZE", status="NO_MATCH"), None) is None
+    assert natural_alpha_owner(None, None) is None
