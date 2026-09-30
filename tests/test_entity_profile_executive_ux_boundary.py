@@ -47,6 +47,12 @@ def _pre_alpha_streamlit(text: str) -> str:
         '        debug = {**debug, "resolved_params": item["export_params"]}\n',
         "                # Foundation no admite continuaciones: paginar sería un callejón.\n"
         '                and not route_reason.startswith("foundation_")\n',
+        # FOUNDATION-TRACE: a read-only projection of the Foundation fields the
+        # result already carries, rendered inside the trace expander.
+        "    from app.core.foundation_trace_view import project as project_foundation_trace\n\n",
+        '        "foundation_trace": project_foundation_trace(result),\n',
+        "        from app.core.foundation_trace_view import render as render_foundation_trace\n\n"
+        '        render_foundation_trace(st, debug.get("foundation_trace"))\n\n',
     )
     for addition in additions:
         assert text.count(addition) == 1

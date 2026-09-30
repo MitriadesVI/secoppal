@@ -238,7 +238,11 @@ M2_1_MODIFIED_FILE_SHA256 = {
     # Foundation no puede continuar. Sólo adiciones de presentación; no toca
     # Search, ranking, cursor ni fingerprints. Las retira el guard inverso de
     # tests/test_entity_profile_executive_ux_boundary.py.
-    "streamlit_app.py": "9a5add80f6450caa65b1df256243e78da6baa111df4c1215cd53593d9a3ccbd6",
+    # FOUNDATION-TRACE lo repinea otra vez para proyectar, dentro del expander de
+    # trace, los campos Foundation que el resultado ya lleva (terminal, productor,
+    # requests/conditions, resoluciones, H7, grupos, SoQL, recibos, fallback).
+    # Lectura pura; la respuesta pública no cambia.
+    "streamlit_app.py": "f65bebef80490de28d8dcdc1a9a80fafe0011d172cb837c64f4638bc2092ca3e",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

@@ -372,6 +372,10 @@ def _render_trace(debug: dict) -> None:
             st.markdown("**Jobs del perfil (intentado / estado / filas / ms):**")
             st.dataframe(job_receipts, use_container_width=True)
 
+        from app.core.foundation_trace_view import render as render_foundation_trace
+
+        render_foundation_trace(st, debug.get("foundation_trace"))
+
         st.markdown("**Parametros extraidos:**")
         st.json(debug.get("parsed_params", {}))
 
@@ -480,6 +484,8 @@ def _assistant_history_item(result: dict, *, query: str = "") -> dict:
     from app.core.natural_alpha.presentation import project
 
     alpha_view = project(result)
+    from app.core.foundation_trace_view import project as project_foundation_trace
+
     resolved_params = result.get("resolved_params", {})
     debug_payload = {
         "route_reason": result.get("route_reason", ""),
@@ -491,6 +497,7 @@ def _assistant_history_item(result: dict, *, query: str = "") -> dict:
         "results_count": len(result.get("results", [])),
         "natural_alpha_status": result.get("natural_alpha_status", ""),
         "profile_job_receipts": result.get("profile_job_receipts", []),
+        "foundation_trace": project_foundation_trace(result),
     }
     return {
         **({"natural_alpha": alpha_view} if alpha_view else {}),
