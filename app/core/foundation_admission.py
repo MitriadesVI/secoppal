@@ -7,6 +7,7 @@ import re
 from app.core.contract_type_resolver import resolve_contract_types
 from app.core.contract_universe import POLICY_VERSION
 from app.core.entity_resolver import EntityResolver, department_mention_resolution
+from app.core.foundation_evidence import material_phrase
 from app.core.interpretation_contract import (
     AcceptanceStatus, ConditionRole, ContractError, Effect, HostPolicy, HostResolution,
     InterpretationAcceptance, InterpretationProposal, Polarity, RelationKind, ResolutionDecision,
@@ -15,6 +16,9 @@ from app.core.modality_resolver import resolve as resolve_modality
 from app.core.semantic_dimensions import SemanticDimension
 from app.core.soql_builder import SoQLBuilder
 from app.utils.money import money_to_cop, normalize_text
+
+
+_PHRASE_DIMENSIONS = frozenset({SemanticDimension.TOPIC, SemanticDimension.BUYER, SemanticDimension.GEOGRAPHY})
 
 
 def _stop(proposal, status, reason):
@@ -76,8 +80,14 @@ def admit_proposal(proposal: InterpretationProposal, raw: str, *,
             policies.append(HostPolicy("opportunity-explicit-state" if override else "O1B", "1",
                                        (condition.condition_id,), Effect.EQUIVALENT))
             continue
+        if dimension in _PHRASE_DIMENSIONS:
+            # G1/T4: every span is read; the host never keeps only one of several citations.
+            phrase, unread = material_phrase(condition.evidence, raw, dimension.value)
+            if unread is not None:
+                return _stop(proposal, AcceptanceStatus.NEEDS_CLARIFICATION, unread)
+            text, folded = phrase, normalize_text(phrase)
         if dimension is SemanticDimension.TOPIC:
-            value = normalize_text(condition.evidence[0].quote)
+            value = folded
         elif dimension is SemanticDimension.GEOGRAPHY:
             name = re.sub(r"^departamento\s+de\s+", "", folded)
             geo = department_mention_resolution(name)
