@@ -414,11 +414,14 @@ def test_provider_error_is_not_an_accredited_zero(tmp_path, monkeypatch):
     harness = ProductHarness(tmp_path, monkeypatch, rows_by_dataset=ROWS, reference_instant=NOW,
                              foundation_producer=producer,
                              settings_overrides={"secoppal_foundation_mode": "foundation_v3"})
-    turn = harness.say(RAW)
+    # A query outside the basic-fallback contract (a negation) makes no call and claims no total.
+    turn = harness.say("Busca procesos de aseo sin vigilancia")
     assert turn.transport_calls == ()
     assert turn.result["foundation_terminal"] == "PROVIDER_ERROR"
+    assert turn.result["foundation_plan_decision"] == "PROVIDER_ERROR"
     assert turn.result["total_count"] is None
     assert turn.result["total_quality"] == "not_applicable"
+    assert turn.result["foundation_fallback"]["fallback_outcome"] == "BASIC_FALLBACK_NOT_SAFE"
 
 
 @pytest.mark.parametrize("columns", [("foreign",), ("precio_base",), ("id_del_proceso", "id_del_proceso"), ["id_del_proceso"]])

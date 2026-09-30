@@ -66,15 +66,7 @@ def test_multi_topic_message_offers_the_cited_topics():
     assert message.choices[:2] == ("aseo", "vigilancia")
 
 
-def _provider(exc):
-    def raise_(*_):
-        raise exc
-    return raise_
-
-
 @pytest.mark.parametrize("name,produced,terminal,code", [
-    ("provider", InterpretationAcceptance(None, AcceptanceStatus.PROVIDER_ERROR, reason="PROVIDER_ERROR:TimeoutError"),
-     "PROVIDER_ERROR", "PROVIDER_ERROR:TimeoutError"),
     ("invalid", InterpretationAcceptance(None, AcceptanceStatus.INVALID_PROPOSAL, reason="RAW_HASH_MISMATCH"),
      "INVALID_PROPOSAL", "RAW_HASH_MISMATCH"),
     ("no_action", InterpretationAcceptance(None, AcceptanceStatus.NO_ACTION, reason="NO_REQUEST"),

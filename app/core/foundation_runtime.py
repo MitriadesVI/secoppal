@@ -264,6 +264,16 @@ def run_foundation_search(workflow, ctx, seed, *, observation=None, binding=None
 
         producer = configured_producer(workflow)
     accepted = producer(ctx.user_query) if callable(producer) else producer.produce(ctx.user_query)
+    if isinstance(accepted, InterpretationAcceptance) and accepted.status is AcceptanceStatus.PROVIDER_ERROR:
+        # A real provider outage (never a malformed answer) may run the labeled basic search.
+        from app.core.foundation_basic_fallback import run_basic_fallback
+
+        result = run_basic_fallback(workflow, ctx)
+        result.update(foundation_mode="foundation_v3", foundation_terminal="PROVIDER_ERROR",
+                      foundation_plan_decision="PROVIDER_ERROR", foundation_internal_reason=accepted.reason)
+        result["foundation_telemetry"] = {**_telemetry(producer, accepted, None, result), **result["foundation_fallback"],
+                                          "foundation_latency_ms": round((time.perf_counter() - started) * 1000, 1)}
+        return _record(workflow, ctx, result)
     universe = None
     if not isinstance(accepted, InterpretationAcceptance):
         # H7 is part of the profile: every admitted proposal crosses it first.
