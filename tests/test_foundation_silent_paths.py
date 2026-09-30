@@ -53,7 +53,13 @@ def admit(raw, conditions, **kwargs):
 def harness_run(tmp_path, monkeypatch, raw, produced):
     from tests.product_contract.harness import ProductHarness
 
-    harness = ProductHarness(tmp_path, monkeypatch, rows_by_dataset={"p6dx-8zbt": [], "jbjy-vk9h": []},
+    from app.core.foundation_projection import SOURCE_SELECT_FIELDS
+    from app.core.soql_builder import SoQLBuilder
+
+    # One all-NULL row per dataset only declares the columns; no filter matches it.
+    rows = {dataset: [dict.fromkeys({*SoQLBuilder.SPECS[dataset].select_fields, *SOURCE_SELECT_FIELDS[dataset]})]
+            for dataset in (SoQLBuilder.PROCESOS_DATASET, SoQLBuilder.CONTRATOS_DATASET)}
+    harness = ProductHarness(tmp_path, monkeypatch, rows_by_dataset=rows,
                              reference_instant=NOW, today=NOW.date(), foundation_producer=lambda _: produced,
                              settings_overrides={"secoppal_foundation_mode": "foundation_v3"})
     return harness.say(raw), harness

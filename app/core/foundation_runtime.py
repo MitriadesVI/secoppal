@@ -11,6 +11,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from app.core.foundation_admission import admit_proposal
+from app.core.foundation_messages import SOURCE_UNAVAILABLE, user_message
 from app.core.foundation_route_owner import FOUNDATION_TURN_MARK
 from app.core.foundation_guard import ExecutionGuard, FoundationGuardError, execution_guard
 from app.core.foundation_projection import ProjectionError, project_accepted
@@ -61,15 +62,18 @@ def execute_accepted(workflow, ctx, accepted: InterpretationAcceptance, *, refer
     try:
         outcome = project_accepted(accepted, reference_instant=reference_instant, builder=workflow.soql_builder)
     except (ProjectionError, ValueError) as exc:
-        result = empty_result(response="La consulta no se puede materializar conservando sus condiciones.",
-                              route_reason=str(exc), needs_clarification=True, total_count=None)
+        message = user_message("UNSUPPORTED", str(exc), accepted.proposal)
+        result = empty_result(response=message.text, route_reason="foundation_unsupported",
+                              needs_clarification=True, total_count=None)
         result.update(state="unsupported", groups=[], foundation_mode="foundation_v3",
                       foundation_plan_decision="UNSUPPORTED", foundation_terminal="UNSUPPORTED",
+                      foundation_internal_reason=str(exc), foundation_choices=list(message.choices),
                       total_quality="not_applicable")
         if universe_policy is not None:
             result["foundation_universe"] = universe_policy.to_dict()
         return result
-    result = empty_result(response="", route_reason=outcome.reason or "foundation_search",
+    result = empty_result(response="", route_reason=f"foundation_{outcome.status.value.lower()}"
+                          if outcome.status is not AcceptanceStatus.READY else "foundation_search",
                           needs_clarification=outcome.status is AcceptanceStatus.NEEDS_CLARIFICATION,
                           total_count=None)
     result.update(foundation_mode="foundation_v3", foundation_plan_decision=outcome.status.value,
@@ -82,8 +86,10 @@ def execute_accepted(workflow, ctx, accepted: InterpretationAcceptance, *, refer
     if universe_policy is not None:
         result["foundation_universe"] = universe_policy.to_dict()
     if outcome.status is not AcceptanceStatus.READY:
-        result.update(state=outcome.status.value.lower(), response=outcome.reason or outcome.status.value,
-                      total_quality="not_applicable")
+        message = user_message(outcome.status.value, outcome.reason, accepted.proposal)
+        result.update(state=outcome.status.value.lower(), response=message.text,
+                      foundation_internal_reason=outcome.reason or None,
+                      foundation_choices=list(message.choices), total_quality="not_applicable")
         return result
     guard = ExecutionGuard(outcome, ctx.user_query, reference_instant=reference_instant,
                            builder=workflow.soql_builder)
@@ -171,7 +177,7 @@ def execute_accepted(workflow, ctx, accepted: InterpretationAcceptance, *, refer
     for group in groups:
         label = "Procesos" if group["universe"] == "processes" else "Contratos"
         if group["state"] == "source_error":
-            visible.append(f"{label}: la fuente no permitió completar la consulta ({group['technical_reason']}).")
+            visible.append(f"{label}: {SOURCE_UNAVAILABLE.get(group['technical_reason'], SOURCE_UNAVAILABLE['source_error'])}")
             continue
         total_label = (str(group["total"]) if group["total_quality"] == "exact"
                        else f"al menos {group['total']}")
@@ -200,7 +206,7 @@ def _telemetry(producer, accepted, universe, result) -> dict:
         "proposal_valid": accepted.status not in (AcceptanceStatus.INVALID_PROPOSAL,
                                                   AcceptanceStatus.PROVIDER_ERROR),
         "acceptance_status": accepted.status.value,
-        "internal_reason_code": accepted.reason or None,
+        "internal_reason_code": result.get("foundation_internal_reason"),
         "h7_authority": [item.authority for item in decisions],
         "h7_rule_ids": [list(item.rules) for item in decisions],
         "h7_model_disagreement": any(item.disagrees_with_producer for item in decisions),
@@ -229,9 +235,7 @@ def _record(workflow, ctx, result: dict) -> dict:
 
 def _continuation_clarification(workflow, ctx) -> dict:
     result = empty_result(
-        response=("La búsqueda anterior la resolvió el intérprete avanzado, que todavía no admite "
-                  "ajustes sobre su resultado. Escribe la consulta completa (qué buscas, de qué entidad "
-                  "y de qué periodo) y la ejecuto como una búsqueda nueva."),
+        response=user_message("NEEDS_CLARIFICATION", "FOUNDATION_CONTINUATION_UNSUPPORTED").text,
         route_reason="foundation_continuation_unsupported", needs_clarification=True, total_count=None)
     result.update(foundation_mode="foundation_v3", foundation_terminal="NEEDS_CLARIFICATION",
                   foundation_internal_reason="FOUNDATION_CONTINUATION_UNSUPPORTED",
@@ -271,7 +275,7 @@ def run_foundation_search(workflow, ctx, seed, *, observation=None, binding=None
     instant = getattr(workflow, "foundation_reference_instant", None)
     instant = instant or datetime.now(ZoneInfo("America/Bogota"))
     result = execute_accepted(workflow, ctx, accepted, reference_instant=instant, universe_policy=universe)
-    result["foundation_internal_reason"] = accepted.reason or None
+    result.setdefault("foundation_internal_reason", accepted.reason or None)
     result["foundation_telemetry"] = _telemetry(producer, accepted, universe, result)
     result["foundation_telemetry"]["foundation_latency_ms"] = round((time.perf_counter() - started) * 1000, 1)
     return _record(workflow, ctx, result)
