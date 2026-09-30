@@ -9,6 +9,7 @@ from app.core.contract_universe import POLICY_VERSION
 from app.core.entity_resolver import EntityResolver, department_mention_resolution
 from app.core.foundation_evidence import UNIVERSE_SPAN_OMITTED, material_phrase, topic_spans
 from app.core.foundation_state_composition import composition_reason
+from app.core.foundation_value_direction import operator_reason
 from app.core.interpretation_contract import (
     AcceptanceStatus, ConditionRole, ContractError, Effect, HostPolicy, HostResolution,
     InterpretationAcceptance, InterpretationProposal, Polarity, RelationKind, ResolutionDecision,
@@ -109,6 +110,9 @@ def admit_proposal(proposal: InterpretationProposal, raw: str, *,
             years = re.findall(r"\b(?:19|20)\d{2}\b", folded)
             value = years[0] if len(years) == 1 else None
         elif dimension is SemanticDimension.VALUE:
+            misdirected = operator_reason(condition.operator, text)
+            if misdirected is not None:  # the operator must say what its own evidence says
+                return _stop(proposal, AcceptanceStatus.NEEDS_CLARIFICATION, misdirected)
             phrase = re.sub(r"^(?:por\s+)?(?:mas|menos|mayor|menor)\s+(?:de|que)\s+", "", folded)
             amount = money_to_cop(phrase)
             value = str(amount) if amount is not None and amount >= 0 else None

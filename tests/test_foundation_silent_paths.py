@@ -307,3 +307,63 @@ def test_every_two_state_composition_of_the_lexicon_is_asked_or_is_the_funnel():
                                     assert accepted.reason == "STATE_COMPOSITION_UNSUPPORTED", (raw, operator)
                                 checked += 1
     assert checked == 4 * 3 * 4 * 4 * 4 * 2 * 2
+
+
+# ── 10.4 VALUE operator vs its own evidence ────────────────────────────────────
+
+def _value(comparative, operator, amount="300 millones"):
+    raw = f"contratos de aseo de {comparative} {amount}"
+    return admit(raw, [("TOPIC", "contains", [span(raw, "aseo")], "POSITIVE"),
+                       ("VALUE", operator, [span(raw, f"{comparative} {amount}")], "POSITIVE")])
+
+
+# Written by hand from the Spanish meaning, not from the implementation's table.
+@pytest.mark.parametrize("comparative,operator,reason", [
+    ("más de", "greater_than", None), ("mayor que", "greater_than", None), ("superior a", "greater_than", None),
+    ("menos de", "less_than", None), ("menor que", "less_than", None), ("inferior a", "less_than", None),
+    ("más de", "less_than", "VALUE_OPERATOR_EVIDENCE_MISMATCH"),
+    ("menos de", "greater_than", "VALUE_OPERATOR_EVIDENCE_MISMATCH"),
+    ("al menos", "less_than", "VALUE_OPERATOR_EVIDENCE_MISMATCH"),
+    ("a lo sumo", "greater_than", "VALUE_OPERATOR_EVIDENCE_MISMATCH"),
+    ("no más de", "greater_than", "VALUE_OPERATOR_EVIDENCE_MISMATCH"),
+    ("no menos de", "less_than", "VALUE_OPERATOR_EVIDENCE_MISMATCH"),
+    ("al menos", "greater_than", "VALUE_OPERATOR_BOUNDARY_MISMATCH"),
+    ("hasta", "less_than", "VALUE_OPERATOR_BOUNDARY_MISMATCH"),
+    ("exactamente", "greater_than", "VALUE_OPERATOR_EVIDENCE_MISMATCH"),
+    ("valor de", "greater_than", "VALUE_OPERATOR_UNGROUNDED"),
+])
+def test_the_value_operator_follows_its_own_comparator(comparative, operator, reason):
+    accepted = _value(comparative, operator)
+    if reason is None:
+        assert accepted.status is AcceptanceStatus.READY, accepted.reason
+    else:
+        assert accepted.status is AcceptanceStatus.NEEDS_CLARIFICATION and accepted.reason == reason
+
+
+@pytest.mark.parametrize("text", ["entre 100 y 300 millones", "más de 100 y menos de 300 millones"])
+def test_two_bounds_in_one_value_condition_are_asked(text):
+    raw = f"contratos de aseo {text}"
+    accepted = admit(raw, [("TOPIC", "contains", [span(raw, "aseo")], "POSITIVE"),
+                           ("VALUE", "greater_than", [span(raw, text)], "POSITIVE")])
+    assert accepted.status is AcceptanceStatus.NEEDS_CLARIFICATION
+    assert accepted.reason in {"VALUE_OPERATOR_EVIDENCE_MISMATCH", "VALUE_OPERATOR_AMBIGUOUS"}
+
+
+def test_every_comparator_of_the_closed_lexicon_is_ready_only_in_its_own_direction():
+    from app.core.foundation_value_direction import _MARKERS, GT, LT
+
+    for phrase, family in _MARKERS:
+        for operator in ("greater_than", "less_than"):
+            accepted = _value(phrase, operator)
+            ready = (operator, family) in {("greater_than", GT), ("less_than", LT)}
+            assert (accepted.status is AcceptanceStatus.READY) is ready, (phrase, operator, accepted.reason)
+
+
+def test_an_inverted_value_makes_no_source_call(tmp_path, monkeypatch):
+    raw = "contratos de aseo de más de 300 millones"
+    produced = proposal(raw, [("TOPIC", "contains", [span(raw, "aseo")], "POSITIVE"),
+                              ("VALUE", "less_than", [span(raw, "más de 300 millones")], "POSITIVE")])
+    turn, harness = harness_run(tmp_path, monkeypatch, raw, produced)
+    assert turn.result["foundation_internal_reason"] == "VALUE_OPERATOR_EVIDENCE_MISMATCH"
+    assert turn.result["foundation_terminal"] == "NEEDS_CLARIFICATION"
+    assert harness.transport.snapshot() == []
