@@ -1,0 +1,439 @@
+{
+ "head": "a7d4941f9f5fc66434631562ee147c3d62a82ad9",
+ "cases": [
+  {
+   "case": "A",
+   "query": "contratos de primera infancia de la alcaldía de barranquilla",
+   "route_reason": "foundation_search",
+   "terminal": "READY",
+   "total_count": 1372,
+   "cards": 50,
+   "results": 50,
+   "response": "Contratos: encontré 1,372. Te muestro los 50 más recientes.\nContratos celebrados según las señales publicadas en SECOP.",
+   "first_cards": [
+    {
+     "titulo": "PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN PARA ACOMPAÑAR LA ESTRATEGIA DE INCLUSIÓN A LOS PARTICIPANTES CON DISCAPACIDAD EN EL PROGRAMA DE PRIMERA INFANCIA DEL DISTRITO DE BARRANQUILLA EN EL MARCO DE LA POLÍTICA DE ESTADO DE CERO A SIEMPRE",
+     "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+     "valor": "$99,999,925",
+     "fecha": "2026-09-23T00:00:00.000",
+     "fecha_label": "Firma",
+     "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9979007",
+     "estado": "Aprobado",
+     "estado_op_label": null
+    },
+    {
+     "titulo": "PRESTACIÓN DE SERVICIOS PROFESIONALES PARA ASESORAR EL PROYECTO IMPLEMENTACIÓN DE LA POLITICA PÚBLICA DE PRIMERA INFANCIA EN EL MARCO DE LA POLITICA PÚBLICA DE CERO A SIEMPRE Y EL ACUERDO No. 0019 DE 2018 EN EL DISTRITO DE BARRANQUILLA",
+     "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+     "valor": "$18,000,000",
+     "fecha": "2026-08-28T00:00:00.000",
+     "fecha_label": "Firma",
+     "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9871568",
+     "estado": "En ejecución",
+     "estado_op_label": null
+    },
+    {
+     "titulo": "PRESTACIÓN DE SERVICIOS PROFESIONALES PARA ASESORAR EL PROYECTO IMPLEMENTACIÓN DE LA POLITICA PÚBLICA DE PRIMERA INFANCIA EN EL MARCO DE LA POLITICA PÚBLICA DE CERO A SIEMPRE Y EL ACUERDO No. 0019 DE 2018 EN EL DISTRITO DE BARRANQUILLA.",
+     "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+     "valor": "$25,200,000",
+     "fecha": "2026-08-21T00:00:00.000",
+     "fecha_label": "Firma",
+     "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9842299",
+     "estado": "En ejecución",
+     "estado_op_label": null
+    }
+   ],
+   "export": {
+    "export_params": {
+     "dataset": "contratos",
+     "contract_universe": "celebrated",
+     "contract_universe_version": "contract-universe-1.1"
+    }
+   },
+   "soql": [
+    "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+    "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))"
+   ],
+   "trace_view_keys": [
+    "conditions",
+    "datasets",
+    "fallback",
+    "groups",
+    "h7",
+    "internal_reason",
+    "plan",
+    "plan_decision",
+    "policies",
+    "producer",
+    "receipts",
+    "requests",
+    "resolutions",
+    "terminal"
+   ],
+   "checks": {
+    "cards_complete": true,
+    "topic_in_soql": true,
+    "celebrated_universe_in_soql": true,
+    "export_stamped": true,
+    "no_id_dump": true,
+    "results_raw_cards_aligned": true
+   },
+   "pass": true
+  },
+  {
+   "case": "B",
+   "query": "qué licitaciones de más de 1000 millones están para presentarme en atlántico",
+   "route_reason": "foundation_search",
+   "terminal": "READY",
+   "total_count": 43,
+   "cards": 43,
+   "results": 43,
+   "response": "Procesos: encontré 43.",
+   "first_cards": [
+    {
+     "titulo": "Contratar la adquisición de materiales e insumos requeridos para la ejecución del proyecto de Co-Creación de un modelo de economía circular y diversificación productiva en comunidades de los departame",
+     "entidad": "SENA-REGIONAL ATLANTICO -CENTRO PARA EL DESARROLLO AGROECOLOGICO Y AGROINDUSTRIAL",
+     "valor": "$2,912,326,917",
+     "fecha": "2026-09-25T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Publicado"
+    },
+    {
+     "titulo": "PRESTACIÓN DE SERVICIOS PARA DESARROLLAR E IMPLEMENTAR UNA ESTRATEGIA INTEGRAL DE POSICIONAMIENTO DE BARRANQUILLA COMO DESTINO DE EVENTOS; ORIENTADA AL FORTALECIMIENTO DE LA OFERTA TURÍSTICA DE LA CI",
+     "entidad": "PUERTA DE ORO SAS CONTRATANTE",
+     "valor": "$5,000,000,000",
+     "fecha": "2026-09-24T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Publicado · Vigencia por verificar"
+    },
+    {
+     "titulo": "Adquisición equipos de cómputo",
+     "entidad": "SENA REGIONAL ATLANTICO",
+     "valor": "$3,303,421,355",
+     "fecha": "2026-09-24T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Publicado"
+    }
+   ],
+   "export": {},
+   "soql": [
+    "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE departamento_entidad = 'Atlántico' AND precio_base > 1000000000 AND estado_del_procedimiento IN ('Publicado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' AND case(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= '2026-07-02T00:00:00.000', true, fecha_de_recepcion_de >= '2026-09-30T00:00:00.000') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"
+   ],
+   "trace_view_keys": [
+    "conditions",
+    "datasets",
+    "fallback",
+    "groups",
+    "h7",
+    "internal_reason",
+    "plan",
+    "plan_decision",
+    "policies",
+    "producer",
+    "receipts",
+    "requests",
+    "resolutions",
+    "terminal"
+   ],
+   "checks": {
+    "value_visible": true,
+    "all_rows_over_1000M": true,
+    "state_and_date_visible": true,
+    "no_id_dump": true
+   },
+   "pass": true
+  },
+  {
+   "case": "C",
+   "query": "licitaciones de la alcaldía de barranquilla en 2025",
+   "route_reason": "foundation_search",
+   "terminal": "READY",
+   "total_count": 2370,
+   "cards": 50,
+   "results": 50,
+   "response": "Procesos: encontré 2,370. Te muestro los 50 más recientes.",
+   "first_cards": [
+    {
+     "titulo": "INTERVENTORIA TÉCNICA; AMBIENTAL Y JURÍDICA PARA LA CONSTRUCCIÓN OBRAS DE PAVIMENTACIÓN;  AMPLIACIÓN Y/O RECONSTRUCCIÓN DE VÍAS Y/O URBANISMO Y SUS OBRAS COMPLEMENTARIAS  DENTRO DEL PROYECTO CONTEMPLA",
+     "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+     "valor": "$1,982,706,600",
+     "fecha": "2025-12-31T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Seleccionado"
+    },
+    {
+     "titulo": "ALQUILER DE VEHICULOS PARA EL TRANSPORTE DEL PERSONAL DE LA ADMINISTRACION DISTRITAL QUE REQUIERA MOVILIZARSE EN CUMPLIMIENTO DE SUS FUNCIONES",
+     "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+     "valor": "$10,000,000,000",
+     "fecha": "2025-12-30T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Cerrado",
+     "estado_op_label": "En evaluación"
+    },
+    {
+     "titulo": "INTERVENTORÍA TÉCNICA; AMBIENTAL Y JURÍDICA PARA LA EJECUCÍÓN DE LAS OBRAS  DE CONSTRUCCIÓN Y/O REHABILITACIÓN Y/O RECONSTRUCCIÓN DE PAVIMENTO; PASOS  A DESNIVEL; PUENTES Y BOXCOULVERT; ASÍ COMO OBRAS",
+     "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+     "valor": "$1,871,893,800",
+     "fecha": "2025-12-30T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Seleccionado"
+    }
+   ],
+   "export": {},
+   "soql": [
+    "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del < '2026-01-01' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+    "SELECT count(*) WHERE entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del < '2026-01-01'"
+   ],
+   "trace_view_keys": [
+    "conditions",
+    "datasets",
+    "fallback",
+    "groups",
+    "h7",
+    "internal_reason",
+    "plan",
+    "plan_decision",
+    "policies",
+    "producer",
+    "receipts",
+    "requests",
+    "resolutions",
+    "terminal"
+   ],
+   "checks": {
+    "cards_complete": true,
+    "value_matches_source": true,
+    "no_id_dump": true
+   },
+   "pass": true
+  },
+  {
+   "case": "D",
+   "query": "procesos y contratos de alimentación escolar en bolívar durante 2026",
+   "route_reason": "foundation_search",
+   "terminal": "READY",
+   "total_count": 220,
+   "cards": 100,
+   "results": 100,
+   "response": "Procesos: encontré 114. Te muestro los 50 más recientes.\n\nContratos: encontré 106. Te muestro los 50 más recientes.\nContratos celebrados según las señales publicadas en SECOP.",
+   "first_cards": [
+    {
+     "titulo": "PRESTACION DE SERVICIOS PROFESIONALES",
+     "entidad": "GOBERNACIÓN DE BOLÍVAR//",
+     "valor": "$12,000,000",
+     "fecha": "2026-09-22T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Seleccionado"
+    },
+    {
+     "titulo": "LEIDY JOHANNA DE LA HOZ OSPINO",
+     "entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+     "valor": "$12,600,000",
+     "fecha": "2026-09-16T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Seleccionado"
+    },
+    {
+     "titulo": "LEYDY DEL CARMEN MADRID ANAYA",
+     "entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+     "valor": "$13,230,000",
+     "fecha": "2026-09-08T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Seleccionado"
+    }
+   ],
+   "export": {
+    "export_notice": "La exportación a Excel todavía no separa procesos y contratos de una misma búsqueda. Pide cada uno por separado para exportarlo."
+   },
+   "soql": [
+    "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE departamento_entidad = 'Bolívar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion escolar%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion escolar%'))) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del < '2027-01-01' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+    "SELECT count(*) WHERE departamento_entidad = 'Bolívar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion escolar%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion escolar%'))) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del < '2027-01-01'",
+    "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND departamento = 'Bolívar' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion escolar%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion escolar%'))) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma < '2027-01-01' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+    "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND departamento = 'Bolívar' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion escolar%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion escolar%'))) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma < '2027-01-01'"
+   ],
+   "trace_view_keys": [
+    "conditions",
+    "datasets",
+    "fallback",
+    "groups",
+    "h7",
+    "internal_reason",
+    "plan",
+    "plan_decision",
+    "policies",
+    "producer",
+    "receipts",
+    "requests",
+    "resolutions",
+    "terminal"
+   ],
+   "checks": {
+    "two_groups": true,
+    "both_datasets_carded": true,
+    "both_in_text": true,
+    "dual_export_explicitly_blocked": true,
+    "no_id_dump": true
+   },
+   "pass": true
+  },
+  {
+   "case": "D-telegram",
+   "query": "procesos y contratos de alimentación escolar en bolívar durante 2026",
+   "route_reason": "foundation_search",
+   "terminal": "READY",
+   "total_count": 220,
+   "cards": 100,
+   "results": 100,
+   "response": "Procesos: encontré 114. Te muestro los 25 más recientes.\n\n1. PRESTACION DE SERVICIOS PROFESIONALES\n🏛️ GOBERNACIÓN DE BOLÍVAR//  💰 $12,000,000  ⚫ Seleccionado  📅 2026-09-22\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: DF-4751-2026\n2. LEIDY JOHANNA DE LA HOZ OSPINO\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $12,600,000  ⚫ Seleccionado  📅 2026-09-16\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-9114-2026\n3. LEYDY DEL CARMEN MADRID ANAYA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $13,230,000  ⚫ Seleccionado  📅 2026-09-08\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-8754-2026\n4. PRESTACION DE SERVICIOS PROFESIONALES\n🏛️ GOBERNACIÓN DE BOLÍVAR//  💰 $15,750,000  ⚫ Seleccionado  📅 2026-09-03\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: DF-4537-2026\n5. SERVICIOS DE APOYO A LA GESTION\n🏛️ GOBERNACIÓN DE BOLÍVAR//  💰 $15,750,000  ⚫ Seleccionado  📅 2026-09-02\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: DF-4517-2026\n6. PRESTACION DE SERVICIOS PROFESIONALES\n🏛️ GOBERNACIÓN DE BOLÍVAR//  💰 $21,200,000  ⚫ Seleccionado  📅 2026-08-24\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: DF-4276-2026\n7. HAROLD DE JESUS RAMOS GUERRERO\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,000,000  ⚫ Seleccionado  📅 2026-08-22\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7227-2026\n8. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $10,000,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7235-2026\n9. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $10,000,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7245-2026\n10. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $6,000,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7312-2026\n11. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,512,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7250-2026\n12. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,000,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7253-2026\n13. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,000,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7150-2026\n14. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,725,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7264-2026\n15. DIDIER DEL CARMEN ALVAREZ HERNANDEZ\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,500,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7243-2026\n16. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,300,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7335-2026\n17. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,300,000  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7244-2026\n18. PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $3,202,800  ⚫ Seleccionado  📅 2026-08-21\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7237-2026\n19. PRESTACION DE SERVICIOS PROFESIONALES\n🏛️ GOBERNACIÓN DE BOLÍVAR//  💰 $21,200,000  ⚫ Seleccionado  📅 2026-08-20\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: DF-4248-2026\n20. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,500,000  ⚫ Seleccionado  📅 2026-08-20\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7168-2026\n21. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,500,000  ⚫ Seleccionado  📅 2026-08-20\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7211-2026\n22. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DENTRO DEL PR\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $14,000,000  ⚫ Seleccionado  📅 2026-08-19\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7213-2026\n23. PRESTACIÓN DE SERVICIOS PROFESIONALES PARA BRINDAR ASESORIA JURIDICA EN LA DIRECCION DE CO\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $13,650,000  ⚫ Seleccionado  📅 2026-08-19\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7197-2026\n24. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $12,600,000  ⚫ Seleccionado  📅 2026-08-19\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7212-2026\n25. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $12,600,000  ⚫ Seleccionado  📅 2026-08-19\nSECOP reporta apertura: Abierto\n🔎 Buscar en SECOP II:\nhttps://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/Index?currentLanguage=es-CO&Page=login&Country=CO&SkinName=CCE\n🏷️ Referencia: CD-SED-7153-2026\n\nContratos: encontré 106. Te muestro los 25 más recientes.\nContratos celebrados según las señales publicadas en SECOP.\n\n1. Prestación de servicios profesionales para el desarrollo de\nactividades propias del proyec\n🏛️ GOBERNACIÓN DE BOLÍVAR//  💰 $12,000,000  ⚪ Aprobado  📅 2026-09-23\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9976364\n2. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $12,600,000  ⚪ En ejecución  📅 2026-09-18\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9957053\n3. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA SECRETARÍA DE EDUCACIÓN DENTRO DEL PROYECTO DE\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $13,230,000  ⚪ En ejecución  📅 2026-09-09\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9919823\n4. Prestación de servicios profesionales para el desarrollo de actividades propias del proyec\n🏛️ GOBERNACIÓN DE BOLÍVAR//  💰 $15,750,000  ⚪ En ejecución  📅 2026-09-03\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9899239\n5. Prestación de servicios profesionales para el desarrollo de actividades propias del proyec\n🏛️ GOBERNACIÓN DE BOLÍVAR//  💰 $21,200,000  ⚪ En ejecución  📅 2026-08-27\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9839722\n6. PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $3,202,800  ⚪ En ejecución  📅 2026-08-25\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9845455\n7. Prestación de servicios profesionales para el desarrollo de actividades propias del proyec\n🏛️ GOBERNACIÓN DE BOLÍVAR//  💰 $21,200,000  ⚪ En ejecución  📅 2026-08-24\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9851237\n8. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $10,000,000  ⚪ En ejecución  📅 2026-08-24\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9845505\n9. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,000,000  ⚪ En ejecución  📅 2026-08-24\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9847568\n10. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,000,000  ⚪ En ejecución  📅 2026-08-24\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9845419\n11. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,725,000  ⚪ En ejecución  📅 2026-08-24\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9842220\n12. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $10,000,000  ⚪ En ejecución  📅 2026-08-21\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9840966\n13. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $6,000,000  ⚪ En ejecución  📅 2026-08-21\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9840800\n14. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,512,000  ⚪ En ejecución  📅 2026-08-21\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9840836\n15. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,000,000  ⚪ En ejecución  📅 2026-08-21\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9840762\n16. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA\nSECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,500,000  ⚪ En ejecución  📅 2026-08-21\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9840537\n17. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,500,000  ⚪ En ejecución  📅 2026-08-21\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9833965\n18. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,300,000  ⚪ En ejecución  📅 2026-08-21\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9841093\n19. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $4,300,000  ⚪ En ejecución  📅 2026-08-21\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9840764\n20. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DENTRO DEL PR\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $14,000,000  ⚪ En ejecución  📅 2026-08-20\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9832708\n21. PRESTACIÓN DE SERVICIOS PROFESIONALES PARA BRINDAR ASESORIA JURIDICA EN LA DIRECCION DE CO\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $13,650,000  ⚪ En ejecución  📅 2026-08-20\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9832897\n22. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $12,600,000  ⚪ En ejecución  📅 2026-08-20\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9832529\n23. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $12,600,000  ⚪ En ejecución  📅 2026-08-20\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9829633\n24. PRESTACIÓN DE SERVICIOS PROFESIONALES EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA SECRETA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $5,500,000  ⚪ En ejecución  📅 2026-08-20\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9833828\n25. PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN EN LA DIRECCIÓN DE COBERTURA EDUCATIVA DE LA\n🏛️ ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS  💰 $3,400,000  ⚪ En ejecución  📅 2026-08-20\n🔗 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.PCCNTR.9831833",
+   "first_cards": [
+    {
+     "titulo": "PRESTACION DE SERVICIOS PROFESIONALES",
+     "entidad": "GOBERNACIÓN DE BOLÍVAR//",
+     "valor": "$12,000,000",
+     "fecha": "2026-09-22T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Seleccionado"
+    },
+    {
+     "titulo": "LEIDY JOHANNA DE LA HOZ OSPINO",
+     "entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+     "valor": "$12,600,000",
+     "fecha": "2026-09-16T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Seleccionado"
+    },
+    {
+     "titulo": "LEYDY DEL CARMEN MADRID ANAYA",
+     "entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+     "valor": "$13,230,000",
+     "fecha": "2026-09-08T00:00:00.000",
+     "fecha_label": "Publicación",
+     "url": "",
+     "estado": "Abierto",
+     "estado_op_label": "Seleccionado"
+    }
+   ],
+   "export": {
+    "export_notice": "La exportación a Excel todavía no separa procesos y contratos de una misma búsqueda. Pide cada uno por separado para exportarlo."
+   },
+   "soql": [
+    "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE departamento_entidad = 'Bolívar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion escolar%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion escolar%'))) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del < '2027-01-01' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+    "SELECT count(*) WHERE departamento_entidad = 'Bolívar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion escolar%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion escolar%'))) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del < '2027-01-01'",
+    "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND departamento = 'Bolívar' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion escolar%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion escolar%'))) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma < '2027-01-01' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+    "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND departamento = 'Bolívar' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion escolar%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion escolar%'))) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma < '2027-01-01'"
+   ],
+   "trace_view_keys": [
+    "conditions",
+    "datasets",
+    "fallback",
+    "groups",
+    "h7",
+    "internal_reason",
+    "plan",
+    "plan_decision",
+    "policies",
+    "producer",
+    "receipts",
+    "requests",
+    "resolutions",
+    "terminal"
+   ],
+   "checks": {
+    "cards_in_message": true,
+    "no_id_dump": true
+   },
+   "pass": true
+  },
+  {
+   "case": "E",
+   "query": "contratos de primera infancia de la alcaldía de barranquilla",
+   "route_reason": "foundation_basic_fallback",
+   "terminal": "PROVIDER_ERROR",
+   "total_count": 1372,
+   "cards": 50,
+   "results": 50,
+   "response": "Búsqueda básica — modo degradado\n\nEl intérprete avanzado no respondió. Ejecuté una búsqueda determinista limitada con estos filtros:\n- dataset: contratos\n- entidad: DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA\n- tema: primera, infancia\n\nResultados: encontré 1372; te muestro 50.\n\nPuede no conservar relaciones complejas, exclusiones o matices. Puedes reintentar la interpretación avanzada.",
+   "first_cards": [
+    {
+     "titulo": "PRESTACIÓN DE SERVICIOS DE APOYO A LA GESTIÓN PARA ACOMPAÑAR LA ESTRATEGIA DE INCLUSIÓN A LOS PARTICIPANTES CON DISCAPACIDAD EN EL PROGRAMA DE PRIMERA INFANCIA DEL DISTRITO DE BARRANQUILLA EN EL MARCO DE LA POLÍTICA DE ESTADO DE CERO A SIEMPRE",
+     "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+     "valor": "$99,999,925",
+     "fecha": "2026-09-23T00:00:00.000",
+     "fecha_label": "Firma",
+     "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10941613&isFromPublicArea=True&isModal=true&asPopupView=true",
+     "estado": "Aprobado",
+     "estado_op_label": null
+    },
+    {
+     "titulo": "PRESTACIÓN DE SERVICIOS PROFESIONALES PARA ASESORAR EL PROYECTO IMPLEMENTACIÓN DE LA POLITICA PÚBLICA DE PRIMERA INFANCIA EN EL MARCO DE LA POLITICA PÚBLICA DE CERO A SIEMPRE Y EL ACUERDO No. 0019 DE 2018 EN EL DISTRITO DE BARRANQUILLA",
+     "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+     "valor": "$18,000,000",
+     "fecha": "2026-08-28T00:00:00.000",
+     "fecha_label": "Firma",
+     "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10793515&isFromPublicArea=True&isModal=true&asPopupView=true",
+     "estado": "En ejecución",
+     "estado_op_label": null
+    },
+    {
+     "titulo": "PRESTACIÓN DE SERVICIOS PROFESIONALES PARA ASESORAR EL PROYECTO IMPLEMENTACIÓN DE LA POLITICA PÚBLICA DE PRIMERA INFANCIA EN EL MARCO DE LA POLITICA PÚBLICA DE CERO A SIEMPRE Y EL ACUERDO No. 0019 DE 2018 EN EL DISTRITO DE BARRANQUILLA.",
+     "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+     "valor": "$25,200,000",
+     "fecha": "2026-08-21T00:00:00.000",
+     "fecha_label": "Firma",
+     "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10751091&isFromPublicArea=True&isModal=true&asPopupView=true",
+     "estado": "En ejecución",
+     "estado_op_label": null
+    }
+   ],
+   "export": {},
+   "soql": [
+    "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%infancia%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+    "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%infancia%')))"
+   ],
+   "trace_view_keys": [
+    "conditions",
+    "datasets",
+    "fallback",
+    "groups",
+    "h7",
+    "internal_reason",
+    "plan",
+    "plan_decision",
+    "policies",
+    "producer",
+    "receipts",
+    "requests",
+    "resolutions",
+    "terminal"
+   ],
+   "checks": {
+    "labeled_basic_fallback": true,
+    "terminal_provider_error": true,
+    "cards_complete": true,
+    "raw_results_preserved": true,
+    "no_id_dump": true
+   },
+   "pass": true
+  }
+ ]
+}

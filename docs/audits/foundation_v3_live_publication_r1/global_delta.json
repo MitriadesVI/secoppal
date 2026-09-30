@@ -1,0 +1,49 @@
+{
+ "base_total": 18619,
+ "candidate_total": 18631,
+ "new_tests": [
+  "tests/test_formatter_display_rows.py::test_display_rows_emits_the_same_card_as_to_rows",
+  "tests/test_formatter_display_rows.py::test_display_rows_keeps_order_count_duplicates_and_source_untouched",
+  "tests/test_formatter_display_rows.py::test_lower_bound_and_order_sample_are_declared",
+  "tests/test_formatter_display_rows.py::test_response_never_lists_raw_identifiers_and_text_channels_carry_the_cards",
+  "tests/test_foundation_publication_adapter.py::test_basic_fallback_publishes_cards_and_keeps_source_rows",
+  "tests/test_foundation_publication_adapter.py::test_export_is_stamped_for_contracts_and_explicitly_blocked_for_dual[universes0-stamp]",
+  "tests/test_foundation_publication_adapter.py::test_export_is_stamped_for_contracts_and_explicitly_blocked_for_dual[universes1-none]",
+  "tests/test_foundation_publication_adapter.py::test_export_is_stamped_for_contracts_and_explicitly_blocked_for_dual[universes2-blocked]",
+  "tests/test_foundation_publication_adapter.py::test_foundation_turn_publishes_cards_over_untouched_source_rows_with_the_turn_instant",
+  "tests/test_foundation_trace_view.py::test_a_legacy_result_has_no_foundation_trace",
+  "tests/test_foundation_trace_view.py::test_render_shows_every_soql_and_receipt",
+  "tests/test_foundation_trace_view.py::test_the_trace_projects_the_turn_fields_without_changing_the_result"
+ ],
+ "fixed_in_candidate": [],
+ "base_outcomes": {
+  "error": 2,
+  "failed": 121,
+  "passed": 18437,
+  "skipped": 23,
+  "xfailed": 36
+ },
+ "candidate_outcomes": {
+  "error": 2,
+  "failed": 121,
+  "passed": 18449,
+  "skipped": 23,
+  "xfailed": 36
+ },
+ "CANDIDATE_ONLY_FAILURES": {
+  "count": 0,
+  "nodeids": []
+ },
+ "NEW_ERRORS": {
+  "count": 0,
+  "nodeids": []
+ },
+ "BASE_PASSED_NOW_MISSING": {
+  "count": 0,
+  "nodeids": []
+ },
+ "NEW_TESTS_FAILED": {
+  "count": 0,
+  "nodeids": []
+ }
+}
