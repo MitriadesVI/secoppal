@@ -1,0 +1,91 @@
+{
+  "mission": "FOUNDATION_V3_SELECTIVE_PROMOTION_V1",
+  "risk": "HIGH_RISK",
+  "recorded_at_utc": "2026-09-30T03:01:52Z",
+  "writer": "single writer (Claude Code, Opus 5.5); no parallel writers",
+  "worktree": "/Users/rodrigoortiz/Documents/secoppal-foundation-v3-promotion-v1",
+  "branch": "feature/foundation-v3-promotion-v1",
+  "base": {
+    "expected_main": "680907653b190a277993ce813b070b1984aee2b5",
+    "observed_main": "680907653b190a277993ce813b070b1984aee2b5",
+    "main_advanced": false,
+    "overlap_check": "NOT_APPLICABLE (main did not advance)",
+    "worktree_status_at_creation": "clean (0 porcelain lines)"
+  },
+  "refs": {
+    "audit/foundation-v3-heldout-da6-zeus": "f703504b0cbc03876d72ebe098ab6b0bdb8269a8",
+    "custodian/foundation-h7-cd": "52f80983b297be4523db4dd97b8a6ccaec1e95f1",
+    "h7_functional_candidate": "5c85a5104a8b74eacacfb7e020cfd1c22ed1bf0b",
+    "prompt_v42_universe_kind": "56f677555cd4132c2777f64f818ba88788915a40",
+    "d_preflight_instrument": "95c7c7b60919c07827bde8522f07d9dd7d09e68f",
+    "da6_gold_seal": "7210192fc9150bb831f0cb8746aa709a31c04b35",
+    "zeus_final_close": "f703504b0cbc03876d72ebe098ab6b0bdb8269a8",
+    "ancestry": {
+      "5c85a510_in_audit": true,
+      "56f67755_in_audit": true,
+      "95c7c7b6_in_audit": true,
+      "7210192f_in_audit": true,
+      "52f80983_in_audit": true,
+      "merge_base(main, audit)": "680907653b190a277993ce813b070b1984aee2b5",
+      "audit_commits_over_main": 102,
+      "main_commits_over_merge_base": 0
+    }
+  },
+  "prompt": {
+    "expected_sha256_B_v4_2": "a5867d40cb0027c1ebd32714b61efc9d97bfc82730afaee1e9d58007214340f4",
+    "recomputed_from": "f703504b:app/core/foundation_prompts.py system_prompt('B', '4.2')",
+    "recomputed_sha256_B_v4_2": "a5867d40cb0027c1ebd32714b61efc9d97bfc82730afaee1e9d58007214340f4",
+    "match": true,
+    "other_versions_observed_not_promoted": {
+      "3/B": "5e0eb40ab6de728cd674f01fe4556055961eacb843dc2ef0b48d7c0a5b89583b",
+      "4/B": "45c55daf51d381170c6f93163db4e0efd4460331844516657d0b06ba0e2a1c74",
+      "4.1/B": "42fc7a5c540c98619623190744ef7145f4d52b2b10d539b0cca8881128c8e27d",
+      "4.2/C": "35c531e1a367ea4d978e45e19f4677e1362384bbd7cd99c331a8f148d8320036"
+    }
+  },
+  "da6": {
+    "acta_path": "f703504b:artifacts/audits/foundation_v3_da6/ACTA_DA6_HELDOUT_20260929.json",
+    "acta_file_sha256": "908eb5525b8736ce0d8bfe2892aed7afa271a769715b7e5f63403404afca0b9a",
+    "acta_schema": "FOUNDATION_V3_HELDOUT_EXTERNAL_DA6_APPROVAL_V1",
+    "acta_decision": "GO",
+    "acta_scope": "HELDOUT_GOLD_ONLY_WITH_DECLARED_LIMITS",
+    "expected_bundle_sha256": "bc0381e40996b363c5951470c48d8b52ae3f71e1464a92555d91b65efb7db4ef",
+    "recomputed_bundle_sha256": "bc0381e40996b363c5951470c48d8b52ae3f71e1464a92555d91b65efb7db4ef",
+    "recomputed_with": "HeldoutBundle.digest algorithm (length-prefixed name+bytes over sorted FILES) on f703504b:tests/fixtures/interpretation_foundation_v3_heldout/*",
+    "file_hashes_match_acta": {
+      "heldout.yaml": "280ef1b98275a872f8772e24da3582859c43435029ba0726f92ae67a1fa3ada4",
+      "manifest.json": "2d6e91f1b3142289d712aab1ab68a837789540a4f42436bb5c4ad1d07025bec4",
+      "source_rows/search.jsonl": "94d765422c43f878a22fb215ffd2853786ce9af25450ddb5b560c1cff89c6ba7"
+    },
+    "match": true
+  },
+  "environment": {
+    "platform": "darwin (macOS 25.6.0, arm64)",
+    "python": "3.14.7 (/Users/rodrigoortiz/Documents/secoppal/.venv, shared read-only interpreter)",
+    "pytest": "9.0.2",
+    "hypothesis": "6.165.10",
+    "ruff": "0.16.4",
+    "semgrep": "1.176.0",
+    "pytest_xdist": "not installed (serial run)",
+    "pytest_randomly": "not installed (deterministic collection order)",
+    "key_packages": {
+      "burr": "0.40.2", "openai": "2.30.0", "pydantic": "2.12.5",
+      "pydantic-settings": "2.13.1", "sodapy": "2.2.0"
+    },
+    "pip_freeze_sha256": "88b2853c00e2fa688e245b38e43b1dc0606233ccf819248f0c837256b693fbc0",
+    "requirements_txt_sha256": "57e046384af0e6e5dc214d2fb0ff0ada95cb6166cca71f8a87a37925c0cde10b",
+    "requirements_dev_txt_sha256": "5527f6ad7c606c4e3b5277eef90ff67e6c1b90fcc0f56b1cc01a60ab5f0414d6",
+    "pytest_ini_sha256": "1bf75771def1d4a5c48b7478bd76a824888a1b794313af8e9a269ad584e136ca",
+    "semgrep_rules_sha256": "dec55163b07f25d123bef9c86a4acd7345884c3431bf20ee51ccde61868ab179",
+    "dotenv_in_worktree": false,
+    "provider_keys_in_env": false
+  },
+  "suite_protocol": {
+    "runner": "scratchpad/run_suite.sh <detached worktree> <outdir>",
+    "command": "env -i HOME PATH=/usr/bin:/bin:/usr/sbin:/sbin LANG=en_US.UTF-8 TZ=America/Bogota PYTHONHASHSEED=0 PYTHONPATH=<plugins> NETBLOCK_LOG=<out>/netblock.jsonl PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest tests/ -q -p netblock -p no:cacheprovider --junitxml=<out>/junit.xml -rA",
+    "network": "blocked by an explicit pytest plugin (non-loopback connect/connect_ex/getaddrinfo raise OSError and are logged per nodeid); identical for baseline and candidate",
+    "worktrees": "each run in its own clean detached worktree (no untracked data/, no .env)",
+    "seed": "PYTHONHASHSEED=0; no random-order plugin installed",
+    "baseline_worktree": "detached at 680907653b190a277993ce813b070b1984aee2b5, started before any promotion code was written"
+  }
+}
