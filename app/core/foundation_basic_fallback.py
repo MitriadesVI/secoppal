@@ -8,6 +8,10 @@ Anything outside that subset makes no source call.
 
 from __future__ import annotations
 
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+from app.core.foundation_presentation import text_card_lines
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 from app.core.workflow.results import empty_result
 from app.utils.money import normalize_text
@@ -104,10 +108,12 @@ def run_basic_fallback(workflow, ctx) -> dict:
         error = None
     except Exception as exc:  # noqa: BLE001 - a source failure is reported, never read as zero
         total, rows, approximate, error = None, [], False, type(exc.__cause__ or exc).__name__
+    # One clock read per turn, the same authority the Foundation search uses.
+    instant = getattr(workflow, "foundation_reference_instant", None) or datetime.now(ZoneInfo("America/Bogota"))
+    cards = workflow.formatter.display_rows(rows, dataset_id, reference_instant=instant)
     if error is None:
-        lines.append(f"Resultados: {len(rows)} filas; total {'al menos ' if approximate else ''}{total}.")
-        lines.extend(f"Referencia: {row.get('id_contrato') or row.get('id_del_proceso') or row.get('referencia_del_proceso')}"
-                     for row in rows)
+        lines.append(f"Resultados: encontré {'al menos ' if approximate else ''}{total}; te muestro {len(cards)}.")
+        lines += text_card_lines(cards, channel=ctx.channel, limit=workflow.formatter.max_results)
     else:
         lines.append("SECOP no permitió completar la búsqueda básica. No afirmo que no existan resultados.")
     lines += ["", "Puede no conservar relaciones complejas, exclusiones o matices. Puedes reintentar la "
@@ -116,7 +122,7 @@ def run_basic_fallback(workflow, ctx) -> dict:
     result = empty_result(response="\n".join(lines), route_reason="foundation_basic_fallback",
                           parsed_params=params, resolved_params=params, soql_query=soql,
                           dataset_id=dataset_id, total_count=total)
-    result.update(state="source_error" if error else "degraded_basic", rows=rows, results=rows, groups=[],
+    result.update(state="source_error" if error else "degraded_basic", rows=cards, results=rows, groups=[],
                   result_row_count=len(rows), total_count_approximate=approximate, degraded=True,
                   query_error="SOURCE_ERROR" if error else "",
                   outcome="SOURCE_ERROR" if error else ("RESULTS" if rows else "NO_RESULTS"),

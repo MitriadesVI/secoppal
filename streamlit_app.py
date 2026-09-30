@@ -498,6 +498,8 @@ def _assistant_history_item(result: dict, *, query: str = "") -> dict:
         "content": result.get("response", ""),
         "query": query,
         "rows": result.get("rows", []),
+        "export_params": result.get("export_params") or {},
+        "export_notice": result.get("export_notice") or "",
         "debug": debug_payload,
         # La REFERENCIA al resultado publicado, no una copia de sus params. Es
         # lo que permite que un chip de refinamiento diga sobre qué resultado
@@ -534,7 +536,13 @@ def _render_excel_export(item: dict, history_idx: int) -> None:
     rows = item.get("rows") or []
     if not rows:
         return
+    if item.get("export_notice"):
+        st.info(item["export_notice"])
+        return
     debug = item.get("debug") or {}
+    if not debug.get("resolved_params") and item.get("export_params"):
+        # Foundation publica sin params legacy; su sello de universo habilita el Excel.
+        debug = {**debug, "resolved_params": item["export_params"]}
     from app.core.contract_universe import compatible
     if not compatible({**(debug.get("resolved_params") or {}), "dataset": debug.get("dataset_id", "")}):
         st.info("El universo de esta exportación requiere revisión. Repite la búsqueda.")
@@ -1850,6 +1858,8 @@ with tab_buscar:
             if (
                 idx == _last_assistant_idx
                 and not is_direct_lookup
+                # Foundation no admite continuaciones: paginar sería un callejón.
+                and not route_reason.startswith("foundation_")
                 and rows
                 and total_count > len(rows)
             ):

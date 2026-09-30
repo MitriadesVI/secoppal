@@ -35,6 +35,18 @@ def _pre_alpha_streamlit(text: str) -> str:
         "        if job_receipts:\n"
         '            st.markdown("**Jobs del perfil (intentado / estado / filas / ms):**")\n'
         "            st.dataframe(job_receipts, use_container_width=True)\n\n",
+        # FOUNDATION-PRESENTATION: a Foundation turn exports under its universe stamp
+        # and never offers legacy pagination it cannot continue.
+        '        "export_params": result.get("export_params") or {},\n'
+        '        "export_notice": result.get("export_notice") or "",\n',
+        '    if item.get("export_notice"):\n'
+        '        st.info(item["export_notice"])\n'
+        "        return\n",
+        '    if not debug.get("resolved_params") and item.get("export_params"):\n'
+        "        # Foundation publica sin params legacy; su sello de universo habilita el Excel.\n"
+        '        debug = {**debug, "resolved_params": item["export_params"]}\n',
+        "                # Foundation no admite continuaciones: paginar sería un callejón.\n"
+        '                and not route_reason.startswith("foundation_")\n',
     )
     for addition in additions:
         assert text.count(addition) == 1

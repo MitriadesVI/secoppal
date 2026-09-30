@@ -63,7 +63,13 @@ M2_MODIFIED_FILE_SHA256 = {
     # to_rows gains no field, no WHERE/ORDER/LIMIT, ranking, cursor or
     # fingerprint is touched, and the import stays deferred so a normal
     # application import still leaves the layer dormant.
-    "app/core/formatter.py": "90fc5a4160cf7b1e25cbda3d4b5fd60f7eb77326c5e721d625dfd8eb09e41718",
+    # FOUNDATION-PRESENTATION re-pins it for a refactor, not a behaviour change:
+    # the per-row card mapping of to_rows moves verbatim into _card so Foundation
+    # can project rows it already published (display_rows: same order and count,
+    # no dedupe, no cut, source rows untouched). to_rows keeps its dedupe, cut,
+    # mojibake repair and single clock read; tests/test_formatter_display_rows.py
+    # proves both paths emit identical cards for the same row.
+    "app/core/formatter.py": "2dcbca5e0f773b36657b1defbee67c94ad4a136e509646b291d82ba0b479d170",
     # Money V2 / M7 adds a section gated strictly by valor_min/valor_max. The
     # no-money oracle below remains byte-identical and bounds that condition;
     # tests/test_money_presentation.py pins the authorized monetary divergence.
@@ -226,7 +232,13 @@ M2_1_MODIFIED_FILE_SHA256 = {
     # tests/test_entity_profile_executive_ux_boundary.py, que retira esas
     # adiciones exactas y restaura 84ce0fbc, y
     # tests/test_dogfood_001_execution_budget.py.
-    "streamlit_app.py": "4948b388885a0fafd22daefdbce10718f3a8d38676fddbe5d8068365bbccc47f",
+    # FOUNDATION-PRESENTATION lo repinea para que un turno Foundation exporte bajo
+    # su sello de universo (no trae params legacy), bloquee con aviso explícito
+    # el Excel de un turno dual y no ofrezca "Ver más", una paginación legacy que
+    # Foundation no puede continuar. Sólo adiciones de presentación; no toca
+    # Search, ranking, cursor ni fingerprints. Las retira el guard inverso de
+    # tests/test_entity_profile_executive_ux_boundary.py.
+    "streamlit_app.py": "9a5add80f6450caa65b1df256243e78da6baa111df4c1215cd53593d9a3ccbd6",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

@@ -432,58 +432,68 @@ class Formatter:
         instant = reference_instant
         if instant is None and dataset_id == "p6dx-8zbt":
             instant = datetime.now(timezone.utc)
-        rows: list[dict] = []
-        for item in deduped[: self.max_results]:
-            url = self._safe_url(item)
-            fecha_iso, fecha_label = self._best_date_for_row(item, dataset_id)
-            if dataset_id == "p6dx-8zbt":
-                op = _operational_state(item, instant)
-                rows.append(
-                    {
-                        "titulo": _smart_title(item, dataset_id),  # B2
-                        "entidad": item.get("entidad", ""),
-                        "valor": format_cop(item.get("precio_base")),
-                        # `estado` sigue siendo el crudo de SECOP: lo consumen
-                        # el radar (follows) y la persistencia de membresías, y
-                        # M2 no cambia dato persistido. Lo visible se toma de
-                        # los campos aditivos `estado_op_*`.
-                        "estado": item.get("estado_de_apertura_del_proceso", ""),
-                        **op,
-                        "fecha": fecha_iso,
-                        "fecha_label": fecha_label,
-                        "url": url,
-                        # Identidad estable para "seguir proceso" (radar/follows).
-                        # Campos aditivos: no afectan el render de la tarjeta.
-                        "id_del_proceso": item.get("id_del_proceso", ""),
-                        "referencia_del_proceso": item.get("referencia_del_proceso", ""),
-                        "dataset_id": dataset_id,
-                    }
-                )
-            else:
-                anomaly = detect_value_anomaly(item, dataset_id)
-                row_data = {
-                    "titulo": _smart_title(item, dataset_id),  # B2
-                    "entidad": item.get("nombre_entidad", ""),
-                    "valor": format_cop(item.get("valor_del_contrato")),
-                    "estado": item.get("estado_contrato", ""),
-                    "fecha": fecha_iso,
-                    "fecha_label": fecha_label,
-                    "contratista": item.get("proveedor_adjudicado", ""),
-                    "url": url,
-                    # Identidad estable para "seguir proceso" (radar/follows).
-                    "id_contrato": item.get("id_contrato", ""),
-                    "referencia_del_contrato": item.get("referencia_del_contrato", ""),
-                    "dataset_id": dataset_id,
-                }
-                from app.core.contract_universe import eligible
-                if not eligible(item) and fecha_label == "Firma" and fecha_iso:
-                    row_data["contract_universe_note"] = (
-                        "Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación."
-                    )
-                if anomaly:
-                    row_data.update(anomaly)
-                rows.append(row_data)
-        return rows
+        return [self._card(item, dataset_id, instant) for item in deduped[: self.max_results]]
+
+    def display_rows(self, results: list[dict], dataset_id: str, *,
+                     reference_instant: datetime | None = None) -> list[dict]:
+        """Tarjetas de filas YA publicadas: mismo orden, misma cantidad, fuente intacta.
+
+        A diferencia de ``to_rows`` no deduplica, no reordena ni recorta: quien
+        publicó las filas (Foundation) ya fijó qué identidades se muestran.
+        """
+        instant = reference_instant
+        if instant is None and dataset_id == "p6dx-8zbt":
+            instant = datetime.now(timezone.utc)
+        return [self._card({k: _fix_mojibake(v) if isinstance(v, str) else v for k, v in item.items()},
+                           dataset_id, instant) for item in results]
+
+    def _card(self, item: dict, dataset_id: str, instant: datetime | None) -> dict:
+        url = self._safe_url(item)
+        fecha_iso, fecha_label = self._best_date_for_row(item, dataset_id)
+        if dataset_id == "p6dx-8zbt":
+            op = _operational_state(item, instant)
+            return {
+                "titulo": _smart_title(item, dataset_id),  # B2
+                "entidad": item.get("entidad", ""),
+                "valor": format_cop(item.get("precio_base")),
+                # `estado` sigue siendo el crudo de SECOP: lo consumen
+                # el radar (follows) y la persistencia de membresías, y
+                # M2 no cambia dato persistido. Lo visible se toma de
+                # los campos aditivos `estado_op_*`.
+                "estado": item.get("estado_de_apertura_del_proceso", ""),
+                **op,
+                "fecha": fecha_iso,
+                "fecha_label": fecha_label,
+                "url": url,
+                # Identidad estable para "seguir proceso" (radar/follows).
+                # Campos aditivos: no afectan el render de la tarjeta.
+                "id_del_proceso": item.get("id_del_proceso", ""),
+                "referencia_del_proceso": item.get("referencia_del_proceso", ""),
+                "dataset_id": dataset_id,
+            }
+        anomaly = detect_value_anomaly(item, dataset_id)
+        row_data = {
+            "titulo": _smart_title(item, dataset_id),  # B2
+            "entidad": item.get("nombre_entidad", ""),
+            "valor": format_cop(item.get("valor_del_contrato")),
+            "estado": item.get("estado_contrato", ""),
+            "fecha": fecha_iso,
+            "fecha_label": fecha_label,
+            "contratista": item.get("proveedor_adjudicado", ""),
+            "url": url,
+            # Identidad estable para "seguir proceso" (radar/follows).
+            "id_contrato": item.get("id_contrato", ""),
+            "referencia_del_contrato": item.get("referencia_del_contrato", ""),
+            "dataset_id": dataset_id,
+        }
+        from app.core.contract_universe import eligible
+        if not eligible(item) and fecha_label == "Firma" and fecha_iso:
+            row_data["contract_universe_note"] = (
+                "Registro fuera del universo celebrado; la fecha de firma publicada requiere verificación."
+            )
+        if anomaly:
+            row_data.update(anomaly)
+        return row_data
 
     @staticmethod
     def _safe_url(item: dict) -> str:

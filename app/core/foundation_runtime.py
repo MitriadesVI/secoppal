@@ -11,7 +11,8 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from app.core.foundation_admission import admit_proposal
-from app.core.foundation_messages import SOURCE_UNAVAILABLE, user_message
+from app.core.foundation_messages import user_message
+from app.core.foundation_presentation import export_fields, group_cards, response_text
 from app.core.foundation_route_owner import FOUNDATION_TURN_MARK
 from app.core.foundation_guard import ExecutionGuard, FoundationGuardError, execution_guard
 from app.core.foundation_projection import ProjectionError, project_accepted
@@ -160,7 +161,9 @@ def execute_accepted(workflow, ctx, accepted: InterpretationAcceptance, *, refer
     state = "partial" if failed and all_rows else "source_error" if failed else "ok"
     if not failed and any(group["fallback_attempted"] for group in groups):
         state = "ok_order_sample"
-    result.update(state=state, groups=groups, rows=all_rows, results=all_rows,
+    cards_by_group = group_cards(workflow.formatter, groups, reference_instant=reference_instant)
+    result.update(state=state, groups=groups, rows=[card for cards in cards_by_group for card in cards],
+                  results=all_rows,
                   foundation_terminal="SOURCE_ERROR" if failed else "READY",
                   dataset_id=groups[0]["dataset"] if len(groups) == 1 else None,
                   dataset_scope=[group["dataset"] for group in groups],
@@ -173,20 +176,9 @@ def execute_accepted(workflow, ctx, accepted: InterpretationAcceptance, *, refer
                   outcome="SOURCE_ERROR" if failed else "RESULTS" if all_rows else "NO_RESULTS",
                   result_order_guarantee="ORDER_SAMPLE" if state == "ok_order_sample" else "exact",
                   fallback_attempted=any(group["fallback_attempted"] for group in groups))
-    visible = []
-    for group in groups:
-        label = "Procesos" if group["universe"] == "processes" else "Contratos"
-        if group["state"] == "source_error":
-            visible.append(f"{label}: {SOURCE_UNAVAILABLE.get(group['technical_reason'], SOURCE_UNAVAILABLE['source_error'])}")
-            continue
-        total_label = (str(group["total"]) if group["total_quality"] == "exact"
-                       else f"al menos {group['total']}")
-        visible.append(f"{label}: {len(group['rows'])} filas publicadas; total {total_label}.")
-        visible.extend(f"Referencia: {identifier}" for identifier in group["row_ids"])
-        if group["fallback_attempted"]:
-            visible.append("Muestra sin orden garantizado.")
-    visible.append("Límites de cobertura: sólo las filas que satisfacen las condiciones; no se estima cuántas quedaron excluidas.")
-    result["response"] = "\n".join(visible)
+    result.update(export_fields(groups))
+    result["response"] = response_text(groups, cards_by_group, channel=ctx.channel,
+                                       limit=workflow.formatter.max_results)
     return result
 
 

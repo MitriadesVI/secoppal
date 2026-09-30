@@ -68,7 +68,12 @@ def test_foundation_publication_preserves_exact_source_fields_and_legacy_normali
                              settings_overrides={"secoppal_foundation_mode": "foundation_v3"})
     turn = harness.say(RAW)
     source = harness.transport.snapshot()[0]["result"]
-    assert turn.result["groups"][0]["rows"] == turn.result["rows"] == turn.result["results"] == source
+    assert turn.result["groups"][0]["rows"] == turn.result["results"] == source
+    # `rows` are the cards the channels render: same identities, same order, no raw fields.
+    cards = turn.result["rows"]
+    assert [card["id_del_proceso"] for card in cards] == turn.result["groups"][0]["row_ids"]
+    assert cards[0]["titulo"] == source[0]["nombre_del_procedimiento"] and cards[0]["valor"] == "$1,000,000,001"
+    assert "precio_base" not in cards[0]
     assert source[0]["precio_base"] == "1000000001"
     assert "urlproceso" not in source[0]
     legacy = frozen_client(FrozenTransport(rows)).query(DATASET, "SELECT id_del_proceso, precio_base")
