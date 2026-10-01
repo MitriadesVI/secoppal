@@ -1,13 +1,13 @@
 {
-  "schema_version": "m1-search-gold/1.7",
+  "schema_version": "m1-search-gold/1.8",
   "files": {
     "adversarial.jsonl": {
       "records": 92,
       "sha256": "63d7040d314faa1ca42d45d6b0e9a7584bb004216d0e4ff55511c3411c508c6b"
     },
     "minimal_pair.jsonl": {
-      "records": 176,
-      "sha256": "ca057cfd4a6ab68fbd0d7c3d7e36e36ed55cd93d2cb57c64f44bc0272d5e8040"
+      "records": 182,
+      "sha256": "2461e70db034fc6d683780a9708cfc346b32c3136e5a79bc7af84f29e2123611"
     },
     "neighbor.jsonl": {
       "records": 111,
@@ -20,10 +20,11 @@
     "sha256": "6e470e89cb5028914e7f23c60ddbf91d38a2fe785e2458deaf9a4ea89fad1f34",
     "location": "~/Documents/tools/secoppal-diagnostics/m1_search_gold/sealed_v1/gold_v1.jsonl"
   },
-  "total_records": 999,
+  "total_records": 1005,
   "history": [
     "1.4 (2026-09-30) first seal",
     "1.6 (2026-10-01) ACTOR document marker inside quote (contract §16)",
-    "1.7 (2026-10-01) P-ACT-2: PROCESSES+ACTOR executes on CONTRACTS with notice (host_universe_redirect, request level); only N073 changed; 620 REAL records unchanged (sha256 identical)"
+    "1.7 (2026-10-01) P-ACT-2: PROCESSES+ACTOR executes on CONTRACTS with notice (host_universe_redirect, request level); only N073 changed; 620 REAL records unchanged (sha256 identical)",
+    "1.8 (2026-10-01) ACTOR x STATE with the universe not cited: awarded -> CONTRACTS as announced APPROXIMATION (P034 readjudicated), pre-award -> CLARIFY ACTOR_STATE_INCOMPATIBLE; +6 MINIMAL_PAIR records (P176-P181, orchestrator); 999 -> 1005 total; 620 REAL records unchanged (sha256 identical)"
   ]
 }

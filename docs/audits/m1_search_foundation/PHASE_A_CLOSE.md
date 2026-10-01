@@ -15,7 +15,8 @@ Orquestador (HERA): Opus. Nada de esta fase toca `app/`.
 | 6. Spec de failover | ✅ | `A5_PROVIDER_FAILOVER_SPEC.md` |
 
 Contrato vigente: `M1_0_SEARCH_CONTRACT.md` v1.4 (§1–§10 + enmiendas §11–§14). Product views del
-Gold verificadas al 100 % contra la función PV1–PV6.
+Gold verificadas al 100 % contra la función PV1–PV6. **[v1.8: el Gold sellado vigente tiene 1005 registros (+6 pares
+ACTOR × STATE) y P034 deja de seguir PV2 por decisión de producto; ver contrato §18.]**
 
 ## Lo que dice la evidencia
 

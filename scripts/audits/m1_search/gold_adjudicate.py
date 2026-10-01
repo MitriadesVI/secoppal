@@ -1,10 +1,14 @@
 """M1-B adjudication: labels A (+ labels B where adjudicated) → sealed Gold v1.
 
 Usage: python scripts/audits/m1_search/gold_adjudicate.py LABELS_A_DIR LABELS_B_DIR OUT_DIR
+       python scripts/audits/m1_search/gold_adjudicate.py --selftest   # the v1.7/v1.8 host-policy rules of `normalize`
 Applies the mechanical rules of contract v1.3 (C1, C2, C7) to every record and the per-case
 decisions listed in DECISIONS below (log: docs/audits/m1_search_foundation/M1_B_ADJUDICATION.md).
 Writes OUT_DIR/gold_v1.jsonl (contains text; REAL lives outside git) and OUT_DIR/SEAL.json.
 The same `normalize` is importable so synthetic slices get identical treatment.
+
+Gold v1.8 note: six MINIMAL_PAIR records (P176-P181, ACTOR x STATE) were authored by the orchestrator directly in
+minimal_pair.jsonl and have no labels A/B; the sealed files are canonical, `--synthetic` does not regenerate them.
 """
 
 from __future__ import annotations
@@ -16,9 +20,10 @@ import re
 import sys
 from pathlib import Path
 
-from gold_schema import ACTOR_PROCESSES_REDIRECT, REDIRECT_FIELD, SCHEMA_VERSION, needs_redirect
+from gold_schema import (ACTOR_AWARDED_REDIRECT, ACTOR_PROCESSES_REDIRECT, PREAWARD_REASON, REDIRECT_FIELD,
+                         SCHEMA_VERSION, actor_state_policy, needs_redirect)
 
-GOLD_SCHEMA_VERSION = SCHEMA_VERSION  # single source: gold_schema.py (v1.7)
+GOLD_SCHEMA_VERSION = SCHEMA_VERSION  # single source: gold_schema.py (v1.8)
 _ROLE_MARKER = re.compile(
     r"^(?:(?:del|de la|de los|al|el|la|los)\s+)?(?:proveedor(?:es)?|contratista(?:s)?|empresa)\s*[:\-]?\s+",
     re.IGNORECASE)
@@ -39,7 +44,7 @@ def _requests(record: dict):
 
 
 def normalize(record: dict) -> tuple[dict, list[str]]:
-    """Mechanical contract rules (v1.3 C1/C2/C7, v1.7 P-ACT-2); returns (record, applied rule ids)."""
+    """Mechanical contract rules (v1.3 C1/C2/C7, v1.7 P-ACT-2, v1.8 P-ACT-3); returns (record, applied rule ids)."""
     out = copy.deepcopy(record)
     applied: list[str] = []
     text = out.get("text") or ""
@@ -98,6 +103,20 @@ def normalize(record: dict) -> tuple[dict, list[str]]:
         if needs_redirect(request) and request.get(REDIRECT_FIELD) != ACTOR_PROCESSES_REDIRECT:
             request[REDIRECT_FIELD] = dict(ACTOR_PROCESSES_REDIRECT)
             applied.append("P-ACT-2")
+    for request in _requests(out):  # v1.8 P-ACT-3 (ACTOR x STATE, universe not cited); single-request SEARCH sets view/disposition
+        policy = actor_state_policy(request)
+        if policy == "AWARDED" and request.get(REDIRECT_FIELD) != ACTOR_AWARDED_REDIRECT:
+            request[REDIRECT_FIELD] = dict(ACTOR_AWARDED_REDIRECT)
+            applied.append("P-ACT-3")
+        if policy == "AWARDED" and op == "SEARCH" and out.get("product_view") != "CONTRACTS":
+            out["product_view"] = "CONTRACTS"
+            applied.append("P-ACT-3")
+        if policy == "PRE_AWARD":
+            if request.pop(REDIRECT_FIELD, None) is not None:
+                applied.append("P-ACT-3")
+            if op == "SEARCH" and (out.get("expected_disposition"), out.get("disposition_reason")) != ("CLARIFY", PREAWARD_REASON):
+                out["expected_disposition"], out["disposition_reason"] = "CLARIFY", PREAWARD_REASON
+                applied.append("P-ACT-3")
     return out, sorted(set(applied))
 
 
@@ -219,7 +238,56 @@ def main_synthetic(dir_a: str, dir_b: str, out_dir: str) -> int:
     return 0
 
 
+def selftest() -> int:
+    """`normalize` must REPAIR a record that violates the v1.7/v1.8 host-policy rules (and leave a correct one alone)."""
+    def request(universe, *conds, redirect=None):
+        built = [{"id": f"c{at + 1}", "dimension": dim, "operator": "is", "polarity": "POSITIVE", "quote": "q",
+                  "value_hint": hint, "level": None} for at, (dim, hint) in enumerate(conds)]
+        out = {"request_id": "q1", "universe": universe, "view": "RECORDS",
+               "universe_quote": None if universe == "UNSPECIFIED" else "u", "conditions": built,
+               "logic": "AND(" + ",".join(c["id"] for c in built) + ")"}
+        if redirect:
+            out[REDIRECT_FIELD] = redirect
+        return out
+
+    def record(req, pv="CONTRACTS", disposition="EXECUTE", reason=None):
+        return {"gold_id": "T", "operation": "SEARCH", "turn_context": "SELF_CONTAINED", "requests": [req],
+                "product_view": pv, "expected_disposition": disposition, "disposition_reason": reason}
+
+    actor, awarded = ("ACTOR", "X SAS"), ("STATE", "awarded")
+    cases = [  # (label, input record, check on the normalized record)
+        ("awarded: redirect + CONTRACTS restored over PV2", record(request("UNSPECIFIED", actor, awarded), pv="HISTORICAL_PROCESSES"),
+         lambda r: r["requests"][0].get(REDIRECT_FIELD) == ACTOR_AWARDED_REDIRECT and r["product_view"] == "CONTRACTS"
+         and r["expected_disposition"] == "EXECUTE"),
+        ("pre-award: EXECUTE becomes CLARIFY/ACTOR_STATE_INCOMPATIBLE", record(request("UNSPECIFIED", actor, ("STATE", "published"))),
+         lambda r: (r["expected_disposition"], r["disposition_reason"]) == ("CLARIFY", PREAWARD_REASON)
+         and REDIRECT_FIELD not in r["requests"][0]),
+        ("pre-award: a redirect is removed", record(request("UNSPECIFIED", actor, ("STATE", "open"), redirect=ACTOR_AWARDED_REDIRECT),
+                                                    disposition="CLARIFY", reason=PREAWARD_REASON),
+         lambda r: REDIRECT_FIELD not in r["requests"][0]),
+        ("ACTOR alone: untouched (PV3, no redirect)", record(request("UNSPECIFIED", actor)),
+         lambda r: REDIRECT_FIELD not in r["requests"][0] and r["expected_disposition"] == "EXECUTE"),
+        ("explicit CONTRACTS ACTOR+awarded: untouched", record(request("CONTRACTS", actor, awarded), pv=None),
+         lambda r: REDIRECT_FIELD not in r["requests"][0] and r["product_view"] is None),
+        ("pending state (terminated): untouched, never invented", record(request("UNSPECIFIED", actor, ("STATE", "terminated")), pv="HISTORICAL_PROCESSES"),
+         lambda r: REDIRECT_FIELD not in r["requests"][0] and r["product_view"] == "HISTORICAL_PROCESSES"
+         and r["expected_disposition"] == "EXECUTE"),
+        ("v1.7: PROCESSES+ACTOR gets the processes redirect", record(request("PROCESSES", actor), pv=None),
+         lambda r: r["requests"][0].get(REDIRECT_FIELD) == ACTOR_PROCESSES_REDIRECT),
+    ]
+    failures = 0
+    for label, rec, check in cases:
+        out, _ = normalize(rec)
+        good = bool(check(out))
+        failures += not good
+        print(("ok   " if good else "FAIL ") + label)
+    print(f"selftest: {len(cases) - failures}/{len(cases)} passed", file=sys.stderr)
+    return 1 if failures else 0
+
+
 if __name__ == "__main__":
+    if sys.argv[1] == "--selftest":
+        sys.exit(selftest())
     if sys.argv[1] == "--synthetic":
         sys.exit(main_synthetic(*sys.argv[2:5]))
     sys.exit(main(*sys.argv[1:4]))

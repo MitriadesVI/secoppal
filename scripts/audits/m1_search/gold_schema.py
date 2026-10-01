@@ -1,7 +1,7 @@
 """Validator for the M1 SEARCH Gold v1 (docs/audits/m1_search_foundation/M1_0_SEARCH_CONTRACT.md §8).
 
 Usage: python scripts/audits/m1_search/gold_schema.py FILE.jsonl [FILE.jsonl ...]
-       python scripts/audits/m1_search/gold_schema.py --selftest     # negative cases of the v1.7 redirect field
+       python scripts/audits/m1_search/gold_schema.py --selftest     # cases of the v1.7/v1.8 host-policy rules
 Exit 0 when every record is valid; otherwise prints one line per error and exits 1.
 Stdlib only, so it runs from any worktree without the app.
 """
@@ -13,18 +13,65 @@ import json
 import re
 import sys
 
-SCHEMA_VERSION = "m1-search-gold/1.7"
+SCHEMA_VERSION = "m1-search-gold/1.8"
 # Contract v1.7 (P-ACT-2): a PROCESSES request with an ACTOR condition (either polarity) is executed by the
 # HOST on CONTRACTS and announced. Request level, because a MULTI record can carry other requests that do
 # not qualify. The field is absent (or null) everywhere else.
 REDIRECT_FIELD = "host_universe_redirect"
 ACTOR_PROCESSES_REDIRECT = {"executed_universe": "CONTRACTS", "notice": "ACTOR_PROCESSES_TO_CONTRACTS"}
+# Contract v1.8 (ACTOR x STATE, universe NOT cited): ACTOR + an awarded state executes on CONTRACTS as an
+# ANNOUNCED APPROXIMATION ("adjudicada" is not "contrato firmado"); ACTOR + a pre-award state is never executed
+# (CLARIFY / ACTOR_STATE_INCOMPATIBLE, no redirect). Any other state is PENDING adjudication: no rule exists, so
+# the validator refuses to let a record carry one silently.
+ACTOR_AWARDED_REDIRECT = {"executed_universe": "CONTRACTS", "notice": "ACTOR_AWARDED_TO_CONTRACTS",
+                          "effect": "APPROXIMATION"}
+PREAWARD_REASON = "ACTOR_STATE_INCOMPATIBLE"
+AWARDED_HINTS = frozenset({"awarded"})
+PRE_AWARD_HINTS = frozenset({"open", "published", "in_evaluation", "draft"})
+
+
+def has_actor(request: dict, polarity: str | None = None) -> bool:
+    return any(isinstance(c, dict) and c.get("dimension") == "ACTOR" and polarity in (None, c.get("polarity"))
+               for c in request.get("conditions") or [])
 
 
 def needs_redirect(request: dict) -> bool:
     """True when contract v1.7 P-ACT-2 applies: cited universe PROCESSES + any ACTOR condition."""
-    return request.get("universe") == "PROCESSES" and any(
-        isinstance(c, dict) and c.get("dimension") == "ACTOR" for c in request.get("conditions") or [])
+    return request.get("universe") == "PROCESSES" and has_actor(request)
+
+
+def actor_state_policy(request: dict) -> str | None:
+    """Contract v1.8 classification of an UNSPECIFIED request with a POSITIVE ACTOR and a STATE condition.
+
+    "AWARDED"   every STATE is positive and canonical `awarded`      -> CONTRACTS + notice + APPROXIMATION
+    "PRE_AWARD" every STATE is positive and in PRE_AWARD_HINTS       -> CLARIFY (ACTOR_STATE_INCOMPATIBLE)
+    "PENDING"   any other STATE (terminal, contract-lifecycle, other:*, negated, mixed): no rule adjudicated
+    None        no ACTOR, no STATE, or the universe is cited (v1.7 / explicit universe decide)."""
+    if request.get("universe") != "UNSPECIFIED" or not has_actor(request, "POSITIVE"):
+        return None
+    states = [c for c in request.get("conditions") or [] if isinstance(c, dict) and c.get("dimension") == "STATE"]
+    if not states:
+        return None
+    if all(c.get("polarity") == "POSITIVE" for c in states):
+        hints = {c.get("value_hint") for c in states}
+        if hints <= AWARDED_HINTS:
+            return "AWARDED"
+        if hints <= PRE_AWARD_HINTS:
+            return "PRE_AWARD"
+    return "PENDING"
+
+
+def required_redirect(request: dict) -> dict | None:
+    """The exact `host_universe_redirect` object this request must carry (None: it must carry none)."""
+    if needs_redirect(request):
+        return ACTOR_PROCESSES_REDIRECT
+    if actor_state_policy(request) == "AWARDED":
+        return ACTOR_AWARDED_REDIRECT
+    return None
+
+
+def _has_state(request: dict) -> bool:
+    return any(isinstance(c, dict) and c.get("dimension") == "STATE" for c in request.get("conditions") or [])
 
 
 SLICES = {"REAL", "SYNTHETIC", "ADVERSARIAL", "MINIMAL_PAIR", "NEIGHBOR"}
@@ -104,7 +151,7 @@ def _parse_logic(text: str) -> tuple[str, list[str]]:
     return text, atoms
 
 
-def _check_requests(requests, text, where, errors) -> set[str]:
+def _check_requests(requests, text, where, errors, search=True) -> set[str]:
     universes = set()
     if not isinstance(requests, list) or not requests:
         errors.append(f"{where}: REQUESTS_REQUIRED")
@@ -172,15 +219,57 @@ def _check_requests(requests, text, where, errors) -> set[str]:
                     errors.append(f"{where}/{rid}: LOGIC_ATOMS_MISMATCH {logic!r}")
         elif logic not in (None, ""):
             errors.append(f"{where}/{rid}: LOGIC_WITHOUT_CONDITIONS")
-        redirect = request.get(REDIRECT_FIELD)
-        if needs_redirect(request):
-            if REDIRECT_FIELD not in request or redirect is None:
-                errors.append(f"{where}/{rid}: REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES")
-            elif redirect != ACTOR_PROCESSES_REDIRECT:
-                errors.append(f"{where}/{rid}: BAD_REDIRECT {redirect!r}")
-        elif redirect is not None:
-            errors.append(f"{where}/{rid}: REDIRECT_ONLY_FOR_ACTOR_ON_PROCESSES")
+        errors.extend(f"{where}/{rid}: {e}" for e in _redirect_errors(request, search))
     return universes
+
+
+def _redirect_errors(request: dict, search: bool = True) -> list[str]:
+    """Contract v1.7/v1.8 host-policy field of one request: required, forbidden or malformed (one error max).
+    `search=False` (non-SEARCH operations, normalized to UNSPECIFIED by C7) skips the v1.8 ACTOR x STATE policy."""
+    present = request.get(REDIRECT_FIELD) is not None
+    got = request.get(REDIRECT_FIELD)
+    policy = actor_state_policy(request) if search else None
+    if policy == "PENDING" or (needs_redirect(request) and _has_state(request)):
+        return ["ACTOR_STATE_PENDING_ADJUDICATION"]
+    if policy == "PRE_AWARD":
+        return ["REDIRECT_FORBIDDEN_FOR_ACTOR_PREAWARD"] if present else []
+    expected = required_redirect(request) if search else (ACTOR_PROCESSES_REDIRECT if needs_redirect(request) else None)
+    if expected is None:
+        return ["REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"] if present else []
+    awarded = expected is ACTOR_AWARDED_REDIRECT
+    if not present:
+        return ["REDIRECT_REQUIRED_FOR_ACTOR_AWARDED" if awarded else "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"]
+    if got == expected:
+        return []
+    if awarded and isinstance(got, dict):  # the approximation must be announced AND declared: name what is missing
+        if "notice" not in got:
+            return ["REDIRECT_NOTICE_REQUIRED"]
+        if "effect" not in got:
+            return ["REDIRECT_EFFECT_REQUIRED"]
+    return [f"BAD_REDIRECT {got!r}"]
+
+
+def _search_requests(record: dict) -> list[dict]:
+    if record.get("operation") == "SEARCH":
+        return list(record.get("requests") or [])
+    return []
+
+
+def _policy_record_errors(record: dict, gid: str) -> list[str]:
+    """v1.8 record-level coherence (single-request SEARCH records): view and disposition follow the policy."""
+    errors: list[str] = []
+    policies = {actor_state_policy(q) for q in _search_requests(record)}
+    if "AWARDED" in policies:
+        if record.get("product_view") != "CONTRACTS":
+            errors.append(f"{gid}: AWARDED_PRODUCT_VIEW_MUST_BE_CONTRACTS")
+        if record.get("expected_disposition") != "EXECUTE":
+            errors.append(f"{gid}: AWARDED_MUST_EXECUTE")
+    if "PRE_AWARD" in policies:
+        if (record.get("expected_disposition"), record.get("disposition_reason")) != ("CLARIFY", PREAWARD_REASON):
+            errors.append(f"{gid}: PREAWARD_MUST_CLARIFY_{PREAWARD_REASON}")
+    elif record.get("disposition_reason") == PREAWARD_REASON:
+        errors.append(f"{gid}: REASON_{PREAWARD_REASON}_WITHOUT_PREAWARD")
+    return errors
 
 
 def validate(record: dict) -> list[str]:
@@ -221,7 +310,7 @@ def validate(record: dict) -> list[str]:
                     universes |= _check_requests(job.get("requests"), text, f"{gid}/job{at}", errors)
     elif record.get("requests"):
         # Non-SEARCH operations may still carry conditions (e.g. RANK_SUPPLIERS of a buyer).
-        universes |= _check_requests(record.get("requests"), text, gid, errors)
+        universes |= _check_requests(record.get("requests"), text, gid, errors, search=False)
     pv = record.get("product_view")
     if op not in {"SEARCH", "MULTI"}:
         universes = set()  # contract v1.2 B1: product_view only exists for SEARCH requests
@@ -241,6 +330,7 @@ def validate(record: dict) -> list[str]:
         errors.append(f"{gid}: AMBIGUOUS_NEEDS_ALTERNATIVES")
     if not record.get("labeler"):
         errors.append(f"{gid}: LABELER_REQUIRED")
+    errors.extend(_policy_record_errors(record, gid))
     return errors
 
 
@@ -271,30 +361,37 @@ def main(paths: list[str]) -> int:
 
 
 def selftest() -> int:
-    """Positive and negative cases of the v1.7 `host_universe_redirect` rule (P-ACT-2)."""
+    """Positive and negative cases of the v1.7 (P-ACT-2) and v1.8 (ACTOR x STATE) host-policy rules."""
     import copy
 
-    def cond(cid, dim, polarity="POSITIVE"):
-        return {"id": cid, "dimension": dim, "operator": "is", "polarity": polarity, "quote": "X SAS",
-                "value_hint": "X SAS", "level": None}
+    def cond(cid, dim, polarity="POSITIVE", hint="X SAS", op="is"):
+        return {"id": cid, "dimension": dim, "operator": op, "polarity": polarity, "quote": "X SAS",
+                "value_hint": hint, "level": None}
 
-    def record(universe, dim, view="RECORDS", polarity="POSITIVE", redirect="ABSENT", jobs=False):
+    def record(universe, dim, view="RECORDS", polarity="POSITIVE", redirect="ABSENT", jobs=False, state=None,
+               state_polarity="POSITIVE", pv="DEFAULT", disposition="EXECUTE", reason=None, actor_polarity=None):
+        conds = [cond("c1", dim, actor_polarity or polarity)]
+        if state:
+            conds.append(cond("c2", "STATE", state_polarity, hint=state))
         request = {"request_id": "q1", "universe": universe, "view": view,
                    "universe_quote": None if universe == "UNSPECIFIED" else "procesos",
-                   "conditions": [cond("c1", dim, polarity)], "logic": "c1"}
+                   "conditions": conds, "logic": "c1" if len(conds) == 1 else "AND(c1,c2)"}
         if redirect != "ABSENT":
             request[REDIRECT_FIELD] = copy.deepcopy(redirect)
         text = "procesos de X SAS"
         base = {"gold_id": "T", "slice": "SYNTHETIC", "text": text,
                 "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "turn_context": "SELF_CONTAINED",
-                "aspect": None, "expected_disposition": "EXECUTE", "ambiguity": "CLEAR", "labeler": "t",
-                "product_view": "CONTRACTS" if universe == "UNSPECIFIED" else None}
+                "aspect": None, "expected_disposition": disposition, "disposition_reason": reason,
+                "ambiguity": "CLEAR", "labeler": "t",
+                "product_view": ("CONTRACTS" if universe == "UNSPECIFIED" else None) if pv == "DEFAULT" else pv}
         if jobs:
             return {**base, "operation": "MULTI", "requests": [], "jobs": [
                 {"operation": "SEARCH", "requests": [request]}, {"operation": "FOLLOW", "requests": []}]}
         return {**base, "operation": "SEARCH", "requests": [request]}
 
     ok = ACTOR_PROCESSES_REDIRECT
+    aw = ACTOR_AWARDED_REDIRECT
+    clarify = {"disposition": "CLARIFY", "reason": PREAWARD_REASON}
     cases = [  # (label, record, expected error code or None)
         ("valid: PROCESSES+ACTOR with redirect", record("PROCESSES", "ACTOR", redirect=ok), None),
         ("valid: PROCESSES+ACTOR NEGATIVE with redirect", record("PROCESSES", "ACTOR", polarity="NEGATIVE", redirect=ok), None),
@@ -306,14 +403,43 @@ def selftest() -> int:
         ("NEG1 missing: NEGATIVE actor", record("PROCESSES", "ACTOR", polarity="NEGATIVE"), "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"),
         ("NEG1 missing: OPPORTUNITIES view", record("PROCESSES", "ACTOR", view="OPPORTUNITIES"), "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"),
         ("NEG1 missing: inside a MULTI job", record("PROCESSES", "ACTOR", jobs=True), "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"),
-        ("NEG2 surplus: BUYER over PROCESSES", record("PROCESSES", "BUYER", redirect=ok), "REDIRECT_ONLY_FOR_ACTOR_ON_PROCESSES"),
-        ("NEG2 surplus: ACTOR over CONTRACTS", record("CONTRACTS", "ACTOR", redirect=ok), "REDIRECT_ONLY_FOR_ACTOR_ON_PROCESSES"),
-        ("NEG2 surplus: ACTOR UNSPECIFIED", record("UNSPECIFIED", "ACTOR", redirect=ok), "REDIRECT_ONLY_FOR_ACTOR_ON_PROCESSES"),
+        ("NEG2 surplus: BUYER over PROCESSES", record("PROCESSES", "BUYER", redirect=ok), "REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"),
+        ("NEG2 surplus: ACTOR over CONTRACTS", record("CONTRACTS", "ACTOR", redirect=ok), "REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"),
+        ("NEG2 surplus: ACTOR UNSPECIFIED", record("UNSPECIFIED", "ACTOR", redirect=ok), "REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"),
         ("NEG3 malformed: wrong universe", record("PROCESSES", "ACTOR", redirect={**ok, "executed_universe": "PROCESSES"}), "BAD_REDIRECT"),
         ("NEG3 malformed: wrong notice", record("PROCESSES", "ACTOR", redirect={**ok, "notice": "OTHER"}), "BAD_REDIRECT"),
         ("NEG3 malformed: missing key", record("PROCESSES", "ACTOR", redirect={"executed_universe": "CONTRACTS"}), "BAD_REDIRECT"),
         ("NEG3 malformed: extra key", record("PROCESSES", "ACTOR", redirect={**ok, "why": "x"}), "BAD_REDIRECT"),
         ("NEG3 malformed: string instead of object", record("PROCESSES", "ACTOR", redirect="CONTRACTS"), "BAD_REDIRECT"),
+        # ---- v1.8: ACTOR x STATE, universe not cited
+        ("v1.8 valid: ACTOR+awarded -> CONTRACTS, notice+APPROXIMATION", record("UNSPECIFIED", "ACTOR", state="awarded", redirect=aw), None),
+        ("v1.8 valid: ACTOR+published asks, no redirect", record("UNSPECIFIED", "ACTOR", state="published", **clarify), None),
+        ("v1.8 valid: ACTOR+open asks", record("UNSPECIFIED", "ACTOR", state="open", **clarify), None),
+        ("v1.8 valid: ACTOR+in_evaluation asks", record("UNSPECIFIED", "ACTOR", state="in_evaluation", **clarify), None),
+        ("v1.8 valid: ACTOR+draft asks", record("UNSPECIFIED", "ACTOR", state="draft", **clarify), None),
+        ("v1.8 valid: ACTOR alone (PV3) executes, no redirect", record("UNSPECIFIED", "ACTOR"), None),
+        ("v1.8 valid: awarded without ACTOR keeps PV2", record("UNSPECIFIED", "BUYER", state="awarded", pv="HISTORICAL_PROCESSES"), None),
+        ("v1.8 valid: explicit CONTRACTS ACTOR+awarded has no redirect", record("CONTRACTS", "ACTOR", state="awarded"), None),
+        ("v1.8 NEG missing effect", record("UNSPECIFIED", "ACTOR", state="awarded", redirect={k: v for k, v in aw.items() if k != "effect"}), "REDIRECT_EFFECT_REQUIRED"),
+        ("v1.8 NEG missing notice", record("UNSPECIFIED", "ACTOR", state="awarded", redirect={k: v for k, v in aw.items() if k != "notice"}), "REDIRECT_NOTICE_REQUIRED"),
+        ("v1.8 NEG v1.7 object reused for awarded", record("UNSPECIFIED", "ACTOR", state="awarded", redirect=ok), "REDIRECT_EFFECT_REQUIRED"),
+        ("v1.8 NEG missing redirect (STATE_ALWAYS_WINS shape)", record("UNSPECIFIED", "ACTOR", state="awarded"), "REDIRECT_REQUIRED_FOR_ACTOR_AWARDED"),
+        ("v1.8 NEG explicit null redirect", record("UNSPECIFIED", "ACTOR", state="awarded", redirect=None), "REDIRECT_REQUIRED_FOR_ACTOR_AWARDED"),
+        ("v1.8 NEG effect value outside the closed set", record("UNSPECIFIED", "ACTOR", state="awarded", redirect={**aw, "effect": "EXACT"}), "BAD_REDIRECT"),
+        ("v1.8 NEG extra key in redirect", record("UNSPECIFIED", "ACTOR", state="awarded", redirect={**aw, "why": "x"}), "BAD_REDIRECT"),
+        ("v1.8 NEG awarded but product_view = processes", record("UNSPECIFIED", "ACTOR", state="awarded", redirect=aw, pv="HISTORICAL_PROCESSES"), "AWARDED_PRODUCT_VIEW_MUST_BE_CONTRACTS"),
+        ("v1.8 NEG awarded but not EXECUTE", record("UNSPECIFIED", "ACTOR", state="awarded", redirect=aw, disposition="CLARIFY", reason="X"), "AWARDED_MUST_EXECUTE"),
+        ("v1.8 NEG redirect on pre-award", record("UNSPECIFIED", "ACTOR", state="published", redirect=aw, **clarify), "REDIRECT_FORBIDDEN_FOR_ACTOR_PREAWARD"),
+        ("v1.8 NEG pre-award executes (ACTOR_ALWAYS_WINS shape)", record("UNSPECIFIED", "ACTOR", state="published"), "PREAWARD_MUST_CLARIFY"),
+        ("v1.8 NEG pre-award clarified with another reason", record("UNSPECIFIED", "ACTOR", state="open", disposition="CLARIFY", reason="OTHER"), "PREAWARD_MUST_CLARIFY"),
+        ("v1.8 NEG pre-award declined", record("UNSPECIFIED", "ACTOR", state="in_evaluation", disposition="DECLINE", reason=PREAWARD_REASON), "PREAWARD_MUST_CLARIFY"),
+        ("v1.8 NEG reason used without a pre-award state", record("UNSPECIFIED", "ACTOR", **clarify), f"REASON_{PREAWARD_REASON}_WITHOUT_PREAWARD"),
+        ("v1.8 NEG redirect on explicit CONTRACTS ACTOR+awarded", record("CONTRACTS", "ACTOR", state="awarded", redirect=aw), "REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"),
+        ("v1.8 NEG redirect on ACTOR alone", record("UNSPECIFIED", "ACTOR", redirect=aw), "REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"),
+        ("v1.8 NEG pending state (terminated) is not labeled silently", record("UNSPECIFIED", "ACTOR", state="terminated"), "ACTOR_STATE_PENDING_ADJUDICATION"),
+        ("v1.8 NEG pending state (other:seleccionado)", record("UNSPECIFIED", "ACTOR", state="other:seleccionado"), "ACTOR_STATE_PENDING_ADJUDICATION"),
+        ("v1.8 NEG negated state with ACTOR", record("UNSPECIFIED", "ACTOR", state="awarded", state_polarity="NEGATIVE"), "ACTOR_STATE_PENDING_ADJUDICATION"),
+        ("v1.8 NEG explicit PROCESSES+ACTOR+STATE is pending", record("PROCESSES", "ACTOR", state="published", redirect=ok), "ACTOR_STATE_PENDING_ADJUDICATION"),
     ]
     failures = 0
     for label, rec, code in cases:
