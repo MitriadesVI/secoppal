@@ -39,7 +39,7 @@ OPERATORS = {
     "UNSUPPORTED": None,  # free short label
 }
 GEO_LEVELS = {"DEPARTMENT", "MUNICIPALITY", "REGION", "UNKNOWN"}
-STATE_HINT = re.compile(r"(open|published|closed|awarded|terminated|in_execution|cancelled|other:.+)\Z")
+STATE_HINT = re.compile(r"(open|published|closed|awarded|terminated|in_execution|cancelled|draft|in_evaluation|signed|liquidated|other:.+)\Z")
 LOGIC_TOKEN = re.compile(r"AND|OR|NOT|[A-Za-z0-9_.-]+|\(|\)|,")
 
 

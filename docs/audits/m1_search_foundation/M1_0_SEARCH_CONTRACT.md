@@ -206,3 +206,17 @@ El prompt v4.2 está congelado por SHA y medido sobre el held-out sellado DA-6. 
 `UNSPECIFIED`, `during_month`/`between_dates` y los inclusivos **no existen** en su vocabulario.
 El spine V2 es, por tanto, un **productor nuevo (v5)**: exige su propia evaluación sobre el Gold
 sellado de M1 **y** sobre el held-out DA-6 (no regresión), nunca una edición del prompt actual.
+
+## 11. Enmienda v1.1 (2026-09-30, tras shard A del Gold)
+
+Resuelve las dudas recurrentes del primer etiquetado. Ratifica lo que ya se etiquetó salvo donde
+se indica.
+
+| Id | Regla |
+|---|---|
+| A1 | «convocado», «en convocatoria» como estado de un proceso → `STATE family`, `value_hint: open`. «convocatoria(s)» encabezando la petición sigue siendo O7 (oportunidad). |
+| A2 | Tipos SECOP (`suministro`, `prestación de servicios`, `obra` como tipo, `consultoría`, `interventoría`, `compraventa`, `arrendamiento`, `concesión`, `comodato`, `seguros`) son `CONTRACT_TYPE_OR_NATURE` **sólo** cuando califican al universo sin objeto propio («contratos de suministro», «de prestación de servicios»). Con objeto propio («suministro de alimentos», «arrendamiento de maquinaria») la frase entera es `TOPIC contains`. «obra(s)» sola sigue T2/K1 (`TOPIC whole_token_folded`). |
+| A3 | Coordinación con «y» dentro de la materia («aseo y cafetería») es **un** `TOPIC` con la frase completa: la autoridad de tema decide la tokenización. Sólo «o»/«u» produce `OR` de átomos. |
+| A4 | «(del) municipio de X», «distrito de X» como dueño de los registros → `BUYER is`. «en el municipio de X» → `GEOGRAPHY is` con `level MUNICIPALITY`. Mismo patrón que «gobernación de» vs «departamento de». |
+| A5 | Valores canónicos de `STATE` añadidos: `draft` (borrador), `in_evaluation` (en evaluación), `signed` (celebrado/firmado como estado), `liquidated` (liquidado). PV2 cuenta `liquidated` y `signed` como terminales. |
+| A6 | Cola de producto, no reetiquetar: PV1 con el año en curso y la falta de regla BUYER→CONTRACTS quedan para adjudicación M1-B. Lo que depende del turno anterior es M2 (`NEEDS_HISTORY`), no Product View. |
