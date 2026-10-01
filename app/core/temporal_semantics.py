@@ -25,6 +25,9 @@ class TemporalResolution:
     # "" = explícita; "relative" = depende del reloj («este mes»); "inferred_year" =
     # el año salió del reloj porque el texto no lo dice («marzo»).
     clock: str = ""
+    # Sólo con ``clock == "inferred_year"``: primer día de la última unidad nombrada
+    # (día o mes) en el año asumido. La autoridad nueva lo compara con ``today``.
+    anchor: str | None = None
 
     @property
     def should_clarify(self) -> bool:
@@ -161,6 +164,7 @@ def _resolution(
     hasta: Date | str | None,
     precision: str,
     clock: str = "",
+    anchor: Date | None = None,
 ) -> TemporalResolution:
     def _iso(value: Date | str | None) -> str | None:
         return value.isoformat() if isinstance(value, Date) else value
@@ -173,6 +177,7 @@ def _resolution(
         span=match.span(),
         precision=precision,
         clock=clock,
+        anchor=_iso(anchor),
     )
 
 
@@ -268,14 +273,18 @@ def _resolve_base(
     *,
     today: Date | None = None,
     protected_spans: tuple[tuple[int, int], ...] = (),
+    implicit_year: int | None = None,
 ) -> TemporalResolution:
     """Resuelve un scope por precedencia conservadora y sin LLM.
 
     Orden: rangos de día/mes/año → día exacto → relativos → abiertos →
     mes → año. Mes o día sin año usa el año civil actual; rango sin año
-    aclara para no inventar contexto.
+    aclara para no inventar contexto. ``implicit_year`` (sólo la autoridad nueva)
+    reemplaza al año civil en lo que el texto no dice y permite rangos sin año;
+    nunca cambia lo que el texto sí dice.
     """
     clock = civil_today(today)
+    assumed = implicit_year if implicit_year is not None else clock.year
 
     iso_matches = list(re.finditer(r"\b\d{4}-\d{2}-\d{2}\b", text))
     if iso_matches:
@@ -316,16 +325,20 @@ def _resolve_base(
     )
     if match := day_range_re.search(text):
         year1_raw, year2_raw = match.group(3), match.group(6)
-        if not year1_raw and not year2_raw:
+        if not year1_raw and not year2_raw and implicit_year is None:
             return _error_resolution(match, "missing_range_year", _MISSING_YEAR_QUESTION)
-        year1, year2 = int(year1_raw or year2_raw), int(year2_raw or year1_raw)
+        year1, year2 = int(year1_raw or year2_raw or assumed), int(year2_raw or year1_raw or assumed)
         start = _safe_date(year1, _month_number(match.group(2)), int(match.group(1)))
         end = _safe_date(year2, _month_number(match.group(5)), int(match.group(4)))
         if start is None or end is None:
             return _error_resolution(match, "invalid_date", _INVALID_DATE_QUESTION)
         if start > end:
             return _error_resolution(match, "reverse_range", _REVERSE_RANGE_QUESTION)
-        return _resolution(match, desde=start, hasta=end, precision="day_range")
+        implicit = not year1_raw and not year2_raw
+        return _resolution(
+            match, desde=start, hasta=end, precision="day_range",
+            clock="inferred_year" if implicit else "", anchor=end if implicit else None,
+        )
 
     single_month_days_re = re.compile(
         rf"\b(?:entre\s+(?:el\s+)?|del?\s+)?(\d{{1,2}})\s+(?:y|al|a)\s+(?:el\s+)?"
@@ -334,7 +347,7 @@ def _resolve_base(
     )
     if match := single_month_days_re.search(text):
         month = _month_number(match.group(3))
-        year = int(match.group(4) or clock.year)
+        year = int(match.group(4) or assumed)
         start = _safe_date(year, month, int(match.group(1)))
         end = _safe_date(year, month, int(match.group(2)))
         if start is None or end is None:
@@ -344,6 +357,7 @@ def _resolve_base(
         return _resolution(
             match, desde=start, hasta=end, precision="day_range",
             clock="" if match.group(4) else "inferred_year",
+            anchor=None if match.group(4) else end,
         )
 
     month_range_re = re.compile(
@@ -354,15 +368,20 @@ def _resolve_base(
     )
     if match := month_range_re.search(text):
         year1_raw, year2_raw = match.group(2), match.group(4)
-        if not year1_raw and not year2_raw:
+        if not year1_raw and not year2_raw and implicit_year is None:
             return _error_resolution(match, "missing_range_year", _MISSING_YEAR_QUESTION)
-        year1, year2 = int(year1_raw or year2_raw), int(year2_raw or year1_raw)
+        year1, year2 = int(year1_raw or year2_raw or assumed), int(year2_raw or year1_raw or assumed)
         month1, month2 = _month_number(match.group(1)), _month_number(match.group(3))
         start = Date(year1, month1, 1)
         end = Date(year2, month2, _last_day(year2, month2))
         if start > end:
             return _error_resolution(match, "reverse_range", _REVERSE_RANGE_QUESTION)
-        return _resolution(match, desde=start, hasta=end, precision="month_range")
+        implicit = not year1_raw and not year2_raw
+        return _resolution(
+            match, desde=start, hasta=end, precision="month_range",
+            clock="inferred_year" if implicit else "",
+            anchor=Date(year2, month2, 1) if implicit else None,
+        )
 
     year_range_re = re.compile(
         rf"\b(?:entre\s+(?:el\s+)?|de\s+|desde\s+)({_YEAR_TOKEN})\s+"
@@ -394,13 +413,14 @@ def _resolve_base(
             re.IGNORECASE,
         ):
             return TemporalResolution()
-        year = int(match.group(3) or clock.year)
+        year = int(match.group(3) or assumed)
         value = _safe_date(year, _month_number(match.group(2)), int(match.group(1)))
         if value is None:
             return _error_resolution(match, "invalid_date", _INVALID_DATE_QUESTION)
         return _resolution(
             match, desde=value, hasta=value, precision="day",
             clock="" if match.group(3) else "inferred_year",
+            anchor=None if match.group(3) else value,
         )
 
     if (match := _QUARTER.search(text)) and match.group(3):
@@ -433,12 +453,13 @@ def _resolve_base(
         re.IGNORECASE,
     )
     if match := open_month_re.search(text):
-        year, month = int(match.group(3) or clock.year), _month_number(match.group(2))
+        year, month = int(match.group(3) or assumed), _month_number(match.group(2))
         inferred = "" if match.group(3) else "inferred_year"
+        anchor = None if match.group(3) else Date(year, month, 1)
         if match.group(1).lower() == "desde":
             return _resolution(
                 match, desde=Date(year, month, 1), hasta=None, precision="open_from",
-                clock=inferred,
+                clock=inferred, anchor=anchor,
             )
         return _resolution(
             match,
@@ -446,6 +467,7 @@ def _resolve_base(
             hasta=Date(year, month, _last_day(year, month)),
             precision="open_until",
             clock=inferred,
+            anchor=anchor,
         )
 
     month_re = re.compile(
@@ -454,13 +476,14 @@ def _resolve_base(
         re.IGNORECASE,
     )
     if match := month_re.search(text):
-        year, month = int(match.group(2) or clock.year), _month_number(match.group(1))
+        year, month = int(match.group(2) or assumed), _month_number(match.group(1))
         return _resolution(
             match,
             desde=Date(year, month, 1),
             hasta=Date(year, month, _last_day(year, month)),
             precision="month",
             clock="" if match.group(2) else "inferred_year",
+            anchor=None if match.group(2) else Date(year, month, 1),
         )
 
     open_year_re = re.compile(
@@ -513,6 +536,7 @@ def resolve_temporal_scope(
     *,
     today: Date | None = None,
     protected_spans: tuple[tuple[int, int], ...] = (),
+    implicit_year: int | None = None,
 ) -> TemporalResolution:
     """Resuelve el scope y aplica el comparador que gobierna el período, si lo hay.
 
@@ -521,9 +545,13 @@ def resolve_temporal_scope(
     """
     # «desde 2024 hasta hoy»: «hoy» es el fin de la cota, no un día que gane al año.
     masked = _UNTIL_TODAY.sub(lambda hit: " " * len(hit.group(0)), text)
-    found = _resolve_base(masked, today=today, protected_spans=protected_spans)
+    found = _resolve_base(
+        masked, today=today, protected_spans=protected_spans, implicit_year=implicit_year,
+    )
     if not found.matched and masked != text:
-        found = _resolve_base(text, today=today, protected_spans=protected_spans)
+        found = _resolve_base(
+            text, today=today, protected_spans=protected_spans, implicit_year=implicit_year,
+        )
     if found.error_code or not found.matched or found.span is None or not found.fecha_desde:
         return found
     lone_iso = found.precision == "open_from" and _ISO_DAY.fullmatch(found.phrase)

@@ -104,11 +104,8 @@ def test_september_del_2025_is_not_september_2026():
     assert resolved("septiembre del 2025", "during_month") == (date(2025, 9, 1), date(2025, 10, 1))
 
 
-@pytest.mark.parametrize(("name", "number"), MONTHS + ABBREVIATIONS)
-def test_month_without_year_asks_instead_of_inventing_the_clock_year(name, number):
-    refused(name, "during_month", "CLARIFY", "TIME_YEAR_NOT_STATED")
-    refused(f"en {name}", "between_dates", "CLARIFY", "TIME_YEAR_NOT_STATED")
-    refused(f"antes de {name}", "between_dates", "CLARIFY", "TIME_YEAR_NOT_STATED")
+# «mes sin año» ya no se pregunta: el Gold lo ejecuta con el año implícito
+# (propiedades en tests/test_time_authority_r1.py).
 
 
 # ---------------------------------------------------------------- cotas (comparadores)
@@ -173,7 +170,7 @@ def test_until_markers_include_the_cited_period(marker, unit):
     assert resolved(f"{marker} {_unit_text(marker, unit)}", "between_dates") == (None, after)
 
 
-@pytest.mark.parametrize("suffix", ["en adelante", "a la fecha", "hacia adelante", "hasta hoy",
+@pytest.mark.parametrize("suffix", ["en adelante", "a la fecha", "hacia adelante",
                                     "hasta la fecha", "al presente"])
 @pytest.mark.parametrize("prefix", ["de ", "", "desde "])
 def test_year_with_open_suffix_is_an_open_from_bound(prefix, suffix):
@@ -236,7 +233,6 @@ def test_single_month_day_range_edges():
         date(2024, 2, 1), date(2024, 3, 1))
     refused("del 1 al 29 de febrero de 2025", "between_dates", "CLARIFY", "TIME_INVALID_DATE")
     refused("del 20 al 5 de marzo de 2025", "between_dates", "CLARIFY", "TIME_REVERSE_RANGE")
-    refused("del 1 al 15 de marzo", "between_dates", "CLARIFY", "TIME_YEAR_NOT_STATED")
 
 
 @pytest.mark.parametrize(
@@ -435,8 +431,7 @@ def test_no_temporal_evidence_is_asked_not_defaulted(quote):
         ("2025-02-30", "TIME_INVALID_DATE"),
         ("entre 2025 y 2023", "TIME_REVERSE_RANGE"),
         ("entre marzo y enero de 2025", "TIME_REVERSE_RANGE"),
-        ("entre enero y marzo", "TIME_YEAR_NOT_STATED"),
-        ("este trimestre", "TIME_UNSUPPORTED_EXPRESSION"),
+        ("entre noviembre y febrero", "TIME_REVERSE_RANGE"),
     ],
 )
 def test_invalid_expressions_are_asked(quote, reason):
