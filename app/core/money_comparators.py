@@ -94,13 +94,23 @@ HEADS = _heads()
 _SYMBOLS = {">=": GTE, "<=": LTE, "≥": GTE, "≤": LTE, ">": GT, "<": LT}
 
 # Sufijos tras la cifra: «300 millones o más». Inclusivos.
-_SUFFIXES = (
-    *((p, GTE) for p in ("o mas", "y mas", "o mayores", "y mayores", "o superiores", "y superiores",
-                         "o mayor", "y mayor", "o superior", "y superior",
-                         "en adelante", "para arriba", "para mas")),
-    *((p, LTE) for p in ("o menos", "y menos", "o menores", "y menores", "o inferiores", "y inferiores",
-                         "o menor", "y menor", "o inferior", "y inferior",
-                         "para abajo", "para menos")),
+_QUANTIFIER_SUFFIXES = (
+    *((p, GTE) for p in ("o mas", "y mas", "en adelante", "para arriba", "para mas")),
+    *((p, LTE) for p in ("o menos", "y menos", "para abajo", "para menos")),
+)
+# Los sufijos ADJETIVALES («o mayor», «y menor») modifican a un sustantivo si lo
+# tienen detrás: «300 millones y mayor plazo» no es «300 millones o más». Sólo son
+# cota al final de frase, ante puntuación o ante un conector de la lista cerrada
+# ``SUFFIX_CONNECTORS``; cualquier otra continuación NO los lee (se aclara).
+_ADJECTIVE_SUFFIXES = (
+    *((f"{c} {a}", GTE) for c in ("o", "y") for a in ("mayor", "mayores", "superior", "superiores")),
+    *((f"{c} {a}", LTE) for c in ("o", "y") for a in ("menor", "menores", "inferior", "inferiores")),
+)
+_SUFFIXES = (*_QUANTIFIER_SUFFIXES, *_ADJECTIVE_SUFFIXES)
+SUFFIX_CONNECTORS = (
+    "y", "e", "o", "u", "ni", "pero", "sino", "que",
+    "a", "al", "ante", "con", "de", "del", "desde", "durante", "en", "entre",
+    "hasta", "para", "por", "segun", "sin", "sobre", "tras",
 )
 
 _ACCENTED = {"a": "[aá]", "e": "[eé]", "i": "[ií]", "o": "[oó]", "u": "[uúü]"}
@@ -122,6 +132,21 @@ def _alternation(phrases) -> str:
 
 def _literal(phrase: str) -> str:
     return r"\s+".join(re.escape(word) for word in phrase.split(" "))
+
+
+# Qué puede seguir a un sufijo adjetival: fin de texto, puntuación o un conector.
+_ADJECTIVE_TAIL = (
+    r"(?=\s*$|\s*[,.;:!?)\]]|\s+(?:"
+    + "|".join(_accent_tolerant(c) for c in SUFFIX_CONNECTORS)
+    + r")(?!\w))"
+)
+_ADJECTIVE_PHRASES = frozenset(p for p, _ in _ADJECTIVE_SUFFIXES)
+
+
+def _suffix_alternation(family: str) -> str:
+    plain = [p for p, f in _QUANTIFIER_SUFFIXES if f == family]
+    adjective = [p for p, f in _ADJECTIVE_SUFFIXES if f == family]
+    return f"(?:{_alternation(plain)}|(?:{_alternation(adjective)}){_ADJECTIVE_TAIL})"
 
 
 # «>» y «<» sueltos son comparadores; dentro de una flecha («->», «<-», «=>», «<->») no:
@@ -146,8 +171,8 @@ def _head_pattern(families: set[str]) -> str:
 
 UP_PATTERN = _head_pattern({GT, GTE})
 DOWN_PATTERN = _head_pattern({LT, LTE})
-SUFFIX_UP_PATTERN = _alternation(p for p, f in _SUFFIXES if f == GTE)
-SUFFIX_DOWN_PATTERN = _alternation(p for p, f in _SUFFIXES if f == LTE)
+SUFFIX_UP_PATTERN = _suffix_alternation(GTE)
+SUFFIX_DOWN_PATTERN = _suffix_alternation(LTE)
 
 
 # ── lectura sobre texto plegado ──────────────────────────────────────────
@@ -164,6 +189,9 @@ _READING_RE = re.compile(
 _SUFFIX_RE = re.compile(
     rf"(?<![a-z0-9])(?:{'|'.join(_literal(p) for p, _ in _SUFFIXES)})(?![a-z0-9])"
 )
+# La continuación de un sufijo adjetival se mira en el texto ORIGINAL: ``leftover`` ya tiene
+# en blanco las cabezas («desde», «hasta») y no puede decir qué sigue de verdad.
+_ADJECTIVE_TAIL_RE = re.compile(_ADJECTIVE_TAIL)
 _SUFFIX_FAMILY = dict(_SUFFIXES)
 _BETWEEN_RE = re.compile(r"\bentre\b.+\by\b")
 _NEGATION_TOKEN = re.compile(r"(?<![a-z0-9])(?:no|sin|ni|tampoco|nunca|jamas)(?![a-z0-9])")
@@ -201,6 +229,7 @@ class ComparatorScan:
 
 _AMOUNT_NEXT = re.compile(r"\s*[\d$]")
 _O_Y_BEFORE = re.compile(r"(?<![a-z0-9])(?:o|y)\s+$")
+_MAS_O_BEFORE = re.compile(r"(?<![a-z0-9])mas\s+o\s+$")
 
 
 def _is_suffix_not_head(folded: str, match: re.Match[str], head: _Head) -> bool:
@@ -228,6 +257,8 @@ def read_comparators(text: str) -> ComparatorScan:
                                               match.start(), match.end()))
             continue
         head = _BY_PHRASE[re.sub(r"\s+", " ", match.group("head"))]
+        if head.phrase == "menos" and _MAS_O_BEFORE.search(folded[:match.start("head")]):
+            continue  # «más o menos (de) 300 millones» aproxima: ese «menos» no es el comparador
         if head.needs_link and not match.group("link") and not match.group("eq"):
             continue  # «más» o «mayor» sin enlace no es un comparador de monto
         if _is_suffix_not_head(folded, match, head):
@@ -246,6 +277,10 @@ def read_comparators(text: str) -> ComparatorScan:
         masked[reading.start:reading.end] = " " * (reading.end - reading.start)
     leftover = "".join(masked)
     for match in _SUFFIX_RE.finditer(leftover):
+        if re.sub(r"\s+", " ", match.group()) in _ADJECTIVE_PHRASES and not _ADJECTIVE_TAIL_RE.match(
+            folded, match.end(),
+        ):
+            continue  # «300 millones y mayor plazo»: el adjetivo modifica un sustantivo, no es cota
         if re.sub(r"\s+", " ", match.group()) == "o menos" and re.search(
             r"(?<![a-z0-9])mas\s+$", leftover[:match.start()],
         ):

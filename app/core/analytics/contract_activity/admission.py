@@ -44,6 +44,7 @@ from .models import (
     MoneyConstraint,
     Operation,
 )
+from .currentness import currentness_hoy, governs_reported_state
 from .filters import accredit_filters
 
 if TYPE_CHECKING:
@@ -175,7 +176,12 @@ def admit_contract_activity(
         return _clarify("UNSUPPORTED_MATERIAL_FILTER")
 
     if binding is None:
-        period, period_error = _period(text, params, today)
+        grouped = operation is Operation.BY_REPORTED_STATE
+        period, period_error = _period(
+            text, params, today,
+            reported_state=governs_reported_state(content, grouped_by_state=grouped),
+            grouped_by_state=grouped,
+        )
         if period_error:
             return _clarify(period_error)
         money, money_error = _money(text)
@@ -268,7 +274,8 @@ def _without_controls(text: str, controls: tuple[AnalyticControlSpan, ...]) -> s
 
 
 def _period(
-    text: str, params: dict, today: Date | None,
+    text: str, params: dict, today: Date | None, *,
+    reported_state: bool = False, grouped_by_state: bool = False,
 ) -> tuple[tuple[str, str] | None, str | None]:
     """The year/month this module reads, accepted only if it IS the resolved period.
 
@@ -277,6 +284,11 @@ def _period(
     A period the authority resolved and this reader did not read exactly, or that
     the parse carries differently, is asked: never executed as another year and
     never executed without its date (ZEUS P1-1).
+
+    With ``reported_state`` a bare «hoy» in a currentness position (see
+    ``currentness``) is the currentness of the state, not a signature day (R2
+    P2-1): it is set aside here, together with the one-day period the parse
+    derived from it, and nothing else.
     """
     period, error = _written_period(text)
     if error:
@@ -284,9 +296,16 @@ def _period(
     represented = period or (None, None)
     if params.get("_temporal_error"):
         return None, "SIGNATURE_PERIOD_UNRESOLVED"
-    if conflict := period_conflict(_MONEY.sub(" ", text), represented, today=today):
+    authority_text, parsed = text, period_of(params)
+    current = (
+        currentness_hoy(text, today, grouped_by_state=grouped_by_state) if reported_state else None
+    )
+    if current is not None:
+        authority_text = mask_consumed_spans(text, (current[0],))
+        parsed = (None, None) if parsed == current[1] else parsed
+    if conflict := period_conflict(_MONEY.sub(" ", authority_text), represented, today=today):
         return None, f"SIGNATURE_{conflict}"
-    if any(period_of(params)) and period_of(params) != represented:
+    if any(parsed) and parsed != represented:
         return None, "SIGNATURE_PERIOD_AUTHORITY_CONFLICT"
     return period, None
 

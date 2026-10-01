@@ -7,6 +7,7 @@ from dataclasses import dataclass, replace
 from datetime import date as Date, timedelta
 from typing import Any
 
+from app.core import temporal_window_anchor
 from app.core.temporal_bounds import apply_bound, find_bound, open_suffix_end
 
 
@@ -260,6 +261,32 @@ def _relative_resolution(kind: str, match: re.Match[str], clock: Date) -> Tempor
     return _resolution(match, desde=value, hasta=value, precision="day")
 
 
+_RELATIVE_PATTERNS = (
+    (re.compile(r"\b(?:de\s+|del\s+)?este\s+mes\b", re.IGNORECASE), "this_month"),
+    (re.compile(r"\b(?:de\s+|del\s+|el\s+)?mes\s+pasado\b", re.IGNORECASE), "last_month"),
+    (re.compile(r"\b(?:de\s+|del\s+)?este\s+a[nñ]o\b", re.IGNORECASE), "this_year"),
+    (re.compile(r"\b(?:de\s+|del\s+|el\s+)?a[nñ]o\s+pasado\b", re.IGNORECASE), "last_year"),
+    (_HACE_MESES, "months_ago"),
+    (_HACE_ANIOS, "years_ago"),
+    (_ULTIMOS_MESES, "trailing_months"),
+    (_ULTIMOS_ANIOS, "trailing_years"),
+    (_ULTIMA_SEMANA, "last_7_days"),
+    (_ESTA_SEMANA, "this_week"),
+    (_SEMANA_PASADA, "last_week"),
+    (_ULTIMAS_SEMANAS, "trailing_weeks"),
+    (_ULTIMOS_DIAS, "trailing_days"),
+    (_HOY, "today"),
+    (_AYER, "yesterday"),
+)
+# Ventanas contadas hacia atrás desde el reloj; junto a otro periodo se aclaran
+# (``temporal_window_anchor``). «hoy» es vigencia, no un periodo ancla.
+_WINDOW_KINDS = frozenset(
+    {"trailing_months", "trailing_years", "last_7_days", "trailing_weeks", "trailing_days"}
+)
+_WINDOW_PATTERNS = tuple(pattern for pattern, kind in _RELATIVE_PATTERNS if kind in _WINDOW_KINDS)
+_NOT_AN_ANCHOR = (_HOY,)
+
+
 def _overlaps_protected(match: re.Match[str], spans: tuple[tuple[int, int], ...]) -> bool:
     start, end = match.span()
     return any(
@@ -426,24 +453,7 @@ def _resolve_base(
     if (match := _QUARTER.search(text)) and match.group(3):
         return _quarter_resolution(match)
 
-    relative_patterns = (
-        (re.compile(r"\b(?:de\s+|del\s+)?este\s+mes\b", re.IGNORECASE), "this_month"),
-        (re.compile(r"\b(?:de\s+|del\s+|el\s+)?mes\s+pasado\b", re.IGNORECASE), "last_month"),
-        (re.compile(r"\b(?:de\s+|del\s+)?este\s+a[nñ]o\b", re.IGNORECASE), "this_year"),
-        (re.compile(r"\b(?:de\s+|del\s+|el\s+)?a[nñ]o\s+pasado\b", re.IGNORECASE), "last_year"),
-        (_HACE_MESES, "months_ago"),
-        (_HACE_ANIOS, "years_ago"),
-        (_ULTIMOS_MESES, "trailing_months"),
-        (_ULTIMOS_ANIOS, "trailing_years"),
-        (_ULTIMA_SEMANA, "last_7_days"),
-        (_ESTA_SEMANA, "this_week"),
-        (_SEMANA_PASADA, "last_week"),
-        (_ULTIMAS_SEMANAS, "trailing_weeks"),
-        (_ULTIMOS_DIAS, "trailing_days"),
-        (_HOY, "today"),
-        (_AYER, "yesterday"),
-    )
-    for pattern, kind in relative_patterns:
+    for pattern, kind in _RELATIVE_PATTERNS:
         if match := pattern.search(text):
             return replace(_relative_resolution(kind, match, clock), clock="relative")
 
@@ -531,6 +541,32 @@ _ISO_DAY = re.compile(r"\d{4}-\d{2}-\d{2}")
 _UNTIL_TODAY = re.compile(r"(?<=\S)\s+hasta\s+hoy\b", re.IGNORECASE)
 
 
+def _anchored_window(
+    text: str,
+    today: Date | None,
+    protected_spans: tuple[tuple[int, int], ...],
+    implicit_year: int | None,
+) -> TemporalResolution | None:
+    """Error resolution when a relative window sits next to another period, else ``None``."""
+    def rest(masked: str) -> tuple[bool, tuple[int, int] | None]:
+        other = _resolve_base(
+            masked, today=today, protected_spans=protected_spans, implicit_year=implicit_year,
+        )
+        return other.matched, other.span
+
+    found = temporal_window_anchor.find_anchored_window(
+        text, _WINDOW_PATTERNS, _NOT_AN_ANCHOR, rest,
+    )
+    if found is None:
+        return None
+    return TemporalResolution(
+        matched=True, phrase=text[found.span[0]:found.span[1]], span=found.span,
+        precision="invalid",
+        error_code=temporal_window_anchor.ERROR_CODE,
+        clarification=temporal_window_anchor.clarification(found),
+    )
+
+
 def resolve_temporal_scope(
     text: str,
     *,
@@ -552,6 +588,8 @@ def resolve_temporal_scope(
         found = _resolve_base(
             text, today=today, protected_spans=protected_spans, implicit_year=implicit_year,
         )
+    if not found.error_code and (anchored := _anchored_window(masked, today, protected_spans, implicit_year)):
+        return anchored
     if found.error_code or not found.matched or found.span is None or not found.fecha_desde:
         return found
     lone_iso = found.precision == "open_from" and _ISO_DAY.fullmatch(found.phrase)

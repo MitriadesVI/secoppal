@@ -25,6 +25,7 @@ from app.core.entity_profile.semantic_request import (
 from app.core.entity_profile.source_request import SourceProvenance
 from app.core.entity_profile.temporal_event import is_consumed_temporal_term
 from app.core.municipal_territory import get_municipal_territories
+from app.core.temporal_gate import temporal_plan_block
 
 
 PROFILE_ACTIVE_PARAM = "_entity_profile_active"
@@ -245,6 +246,10 @@ def classify_entity_profile_turn(
         return EntityProfileTurn(False, None, clean, None, None)
 
     clean = profile_query_params(params)
+    if (block := temporal_plan_block(clean, [])) is not None:
+        # La autoridad temporal marcó el periodo como no resoluble: se pregunta,
+        # nunca se ejecuta el perfil sin fecha.
+        return EntityProfileTurn(True, focus, clean, None, None, block["clarification_question"])
     resolution = resolve_profile_scope(clean)
     territory_only = territory_only_name(user_query)
     has_geographic_scope = any(params.get(key) for key in GEOGRAPHY_PARAM_KEYS)

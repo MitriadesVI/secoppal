@@ -470,7 +470,9 @@ def test_period_conflict_compares_each_bound_on_its_own(represented):
 
 @pytest.mark.parametrize("represented,text", [
     (("2025-01-01", "2025-12-31"), "contratos en 2025 y en 2024"),
-    (("2026-09-24", "2026-10-01"), "contratos en 2025 la última semana"),
+    # R2: a relative WINDOW plus another period is now an error of the authority itself
+    # (relative_window_explicit_anchor); a calendar period like «el mes pasado» is not a window.
+    (("2026-09-01", "2026-09-30"), "contratos el mes pasado y en 2025"),
     (("2025-03-01", "2025-03-31"), "contratos en marzo de 2025 y en abril de 2025"),
 ])
 def test_a_second_period_in_the_text_is_ambiguous_even_if_the_first_is_represented_exactly(represented, text):

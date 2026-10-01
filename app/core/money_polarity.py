@@ -52,7 +52,12 @@ _PREFIX_RE = re.compile(
     rf"(?<!\w)(?:que\s+)?(?P<neg>no\s+(?:{NEGATION_FILLER})?)?(?:sean?\s+)?(?:por\s+)?"
     rf"(?:(?P<up>{_UP})|(?P<down>{_DOWN})){_LINK}$", re.IGNORECASE,
 )
-_APPROX_RE = re.compile(r"\b(?P<neg>no\s+)?por\s+$", re.IGNORECASE)
+# «por 300 millones» es la aproximación legada autorizada. «más o menos 300 millones»
+# aproxima, no acota: el «menos» de «más o menos» NO es el comparador «menos»
+# (alineado con ``read_comparators``, R2 P3), y no se inventa una banda: se aclara.
+_APPROX_RE = re.compile(
+    r"\b(?P<neg>no\s+)?(?:por|(?P<loose>m[aá]s\s+o\s+menos(?:\s+de)?))\s+$", re.IGNORECASE,
+)
 _SUFFIX_RE = re.compile(
     rf"^\s+(?:(?P<up>{SUFFIX_UP_PATTERN})|(?P<down>{SUFFIX_DOWN_PATTERN}))\b", re.IGNORECASE,
 )
@@ -91,13 +96,17 @@ def _single(text: str, match: re.Match[str]) -> MoneyPolarityDecision:
     relation = MoneyRelation.UNKNOWN
     comparator = None
     negated = False
-    if prefix:
+    approx = _APPROX_RE.search(text[:start])
+    loose = bool(approx and approx.group("loose"))
+    if prefix and not loose:
         relation = _direction(prefix)
         start = prefix.start()
         comparator = prefix.group().strip()
         negated = bool(prefix.group("neg"))
-    elif approx := _APPROX_RE.search(text[:start]):
-        relation = MoneyRelation.UNKNOWN if approx.group("neg") else MoneyRelation.APPROXIMATE
+    elif approx:
+        relation = (
+            MoneyRelation.UNKNOWN if approx.group("neg") or loose else MoneyRelation.APPROXIMATE
+        )
         start = approx.start()
         comparator = approx.group().strip()
         negated = bool(approx.group("neg"))

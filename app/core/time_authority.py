@@ -94,6 +94,8 @@ _LEGACY_REASON = {
     "invalid_date": TIME_INVALID_DATE,
     "reverse_range": TIME_REVERSE_RANGE,
     "unsupported_temporal_expression": "TIME_UNSUPPORTED_EXPRESSION",
+    # R2: una ventana relativa junto a otro periodo son dos hechos temporales, no un conteo.
+    "relative_window_explicit_anchor": TIME_MULTIPLE_TEMPORAL_FACTS,
 }
 
 _DEICTIC = re.compile(
