@@ -53,8 +53,8 @@ cita que resuelve ⇒ mismo valor o CLARIFY `TIME_UNCITED_QUALIFIER`, nunca otro
 H0 («antes de» + «2024» llegaba como «2024») queda cubierto con `left=("antes","de")`.
 
 Reglas (todas fail-closed): operador vs cita por precisión resuelta (`during_year` con cota/mes/rango/
-trimestre → MISMATCH); **el año no se infiere del reloj** («marzo», «hasta marzo» → CLARIFY
-`YEAR_NOT_STATED`; el reloj sólo resuelve expresiones relativas explícitas); «A y B» sin «entre» →
+trimestre → MISMATCH); ~~el año no se infiere del reloj~~ (**R0, reemplazado en R1 §9**: mes/día/rango
+sin año = la ocurrencia más reciente que no es posterior a `today`, con `year_inferred=True`); «A y B» sin «entre» →
 lista-o-rango, CLARIFY; dos hechos temporales sólo se aceptan como cotas opuestas
 («después de 2020 y antes de 2024» → `[2021-01-01, 2024-01-01)`); fechas numéricas (`15/03/2025`,
 `2025-03`, `2025-I`) y palabras calificadoras sobrantes en la cita (`finales de`, `mediados de`,
@@ -63,10 +63,9 @@ lista-o-rango, CLARIFY; dos hechos temporales sólo se aceptan como cotas opuest
 
 ## 3. Decisiones de semántica que conviene confirmar (no son bugs)
 
-1. **Mes sin año → CLARIFY** en la autoridad nueva (recomendado en la misión). El legado conserva
-   la convención ADR-065 (año del reloj). Consecuencia: A2 TIME-007 «en marzo» y TIME-011 «hasta
-   marzo» pasan de PASS a CLARIFY. Si producto prefiere el año del reloj para `between_dates`, es una
-   línea (`_legacy_failure`).
+1. ~~**Mes sin año → CLARIFY**~~ **RECHAZADA por el orquestador contra el Gold sellado** (8 consultas
+   reales con mes sin año son EXECUTE con año implícito). Sustituida en R1 (§9): ocurrencia más
+   reciente no posterior a `today`. El legado conserva la convención ADR-065 (año del reloj).
 2. **«hoy» solo → BLOCK** (C3 literal), aunque el legado lo resuelva como el día (A2 TIME-028 PASS).
    «publicados hoy» (D6) queda como decisión del núcleo: si Gold exige TIME ahí, se invierte en
    `_resolve_quote`.
@@ -74,7 +73,7 @@ lista-o-rango, CLARIFY; dos hechos temporales sólo se aceptan como cotas opuest
    hasta 2023-12-31); `desde/a partir de/hasta` lo incluyen. `últimos N meses/años`: ventana rodante
    `[hoy−N, hoy]` (inclusive, como `últimos N días` ya hacía; `hasta` exclusivo en la autoridad).
    `hace N años/meses`: el año/mes calendario (como `hace 3 meses` ya hacía).
-4. «último año», «este trimestre», `hace dos semanas` siguen **sin resolver** (CLARIFY), declarado.
+4. ~~«último año», «este trimestre», `hace dos semanas` siguen sin resolver~~ **cerrado en R1 (§9)**.
 
 ## 4. Gates (comandos y resultados literales)
 
@@ -170,3 +169,128 @@ ventana/TimeValue/razones C0; C: dos supervivientes de mutación). Ningún halla
 
 `d66a9919` (legado + `temporal_bounds`), `df199987` (autoridad v0), `24965fb6` (ventana, razones C0,
 guardas de cita) y el commit de este documento.
+
+## 9. R1 — año implícito y periodos relativos del Gold sellado
+
+Orden del orquestador tras contrastar §3 con el Gold (autoridad semántica). Rama `mission/m1-d-time`,
+base `4ec99bc1`. Sólo la autoridad nueva cambia de comportamiento; el resolvedor legado conserva el
+año del reloj (`resolve_temporal_scope` sin `implicit_year` = idéntico a R0).
+
+### 9.1 Archivos
+
+| Archivo | Cambio R1 |
+|---|---|
+| `app/core/temporal_semantics.py` | parámetro opcional `implicit_year` (por defecto `None` = legado) en `resolve_temporal_scope`/`_resolve_base`: sustituye al año civil en lo que el texto no dice y permite rangos de meses/días sin año. Campo nuevo `TemporalResolution.anchor` (sólo con `clock="inferred_year"`: primer día de la última unidad nombrada, día o mes). |
+| `app/core/time_relative.py` (nuevo, 91 LoC) | las formas relativas que la legada no resuelve: «este trimestre/semestre», «el último año/mes», «estos dos últimos meses» (número ANTES de «últimos»), «hace N semanas». Devuelve `TemporalResolution(clock="relative")`; sólo se consulta si la legada no resolvió. |
+| `app/core/time_authority.py` | `_read_quote` (una lectura con año dado) + `_resolve_quote` (bucle de año) + cierre «hasta hoy/acá/aquí». `TimeValue.year_inferred` y propiedad `moving_window`. |
+| `tests/test_time_authority_r1.py` (nuevo) | propiedades por reloj × mes/día/rango/forma relativa × N, Hypothesis contra oráculo propio. |
+| `tests/test_time_authority.py` | 4 tests de R0 actualizados (ver 9.4). |
+| `tests/fixtures/legacy_shadow_inventory.json` | 1 entrada (ver 9.5). |
+
+### 9.2 Regla de año implícito
+
+Mes, día, «de X a Y», «desde X hasta Y», cotas («antes de marzo») **sin año** → el año más reciente en
+que **la última unidad nombrada no empieza después de `today`**: mes ≤ mes actual → año en curso,
+posterior → año anterior; día: la fecha no posterior a hoy (el 29 de febrero retrocede hasta el último
+bisiesto, hasta 8 años); rango: un solo año para todo el rango, el que hace que la unidad final no
+empiece después de hoy («de enero a junio» con hoy = 2026-09-30 → 2026-01-01..2026-06-30; con hoy =
+2026-02-10 → 2025). El valor sale con `TimeValue.year_inferred=True` para que el host anuncie
+«agosto de 2026».
+
+Casos del Gold (reloj 2026-09-30): «mayo» → 2026-05; «abril»; «agosto»; «de enero a junio» →
+2026-01-01..2026-06-30; «desde 1 agosto hasta acá» → 2026-08-01..hoy; «desde el 1 de agosto hasta el 9
+de septiembre» → 2026-08-01..2026-09-09.
+
+Decisiones de interpretación (declaradas, no están en la orden):
+* **Mes actual cuenta como no posterior**: «junio» con hoy = 15 de junio es junio de este año; para
+  rangos se usa el mismo criterio sobre el MES final (leyendo «el fin no supere `today`» de la orden
+  literalmente, «de enero a junio» en junio daría el año anterior, y «junio» solo no).
+* **Inicio posterior al fin → CLARIFY `TIME_REVERSE_RANGE`** («de noviembre a febrero», «del 20 al 5 de
+  marzo»): nunca se envuelve el año.
+* **Una cota con año dicho y la otra sin año → CLARIFY `TIME_MULTIPLE_TEMPORAL_FACTS`** («desde
+  2025-03-01 y hasta abril», «después de 2020 y antes de marzo»): no se adivina si el año dicho
+  gobierna a la otra cota. Las dos sin año comparten año (el del final).
+* **«desde X hasta hoy/acá/aquí» cierra la cota en `today` inclusive** (`precision="bounded"`). Cambia
+  un caso de R0: «desde 2024 hasta hoy» era `open_from` sin fin; ahora termina hoy. «a la fecha»,
+  «en adelante», «hasta la fecha», «al presente» siguen abiertos. Un periodo cerrado + «hasta acá»
+  («mayo hasta acá») se pregunta.
+* Fecha inexistente en todos los años («31 de abril») o con año dicho («29 de febrero de 2025») sigue
+  siendo `TIME_INVALID_DATE`.
+
+### 9.3 Periodos relativos (reloj inyectado, `relative_period`)
+
+| Forma | Valor | `precision` |
+|---|---|---|
+| «este mes», «este año» (ya existían) | calendario en curso | `month`, `year` |
+| «este trimestre», «este semestre» | franja calendario en curso | `quarter`, `semester` |
+| «últimos N días/semanas/meses/años», «los últimos…», N cifra o palabra (un..doce, quince, veinte, treinta) | `[hoy−N, hoy]` inclusive, móvil | `trailing_days/weeks/months/years` |
+| «los ultimos dos años» | últimos 24 meses (móvil) | `trailing_years` |
+| «estos dos últimos meses», «los dos últimos años», «3 últimas semanas» | igual que «últimos N» | `trailing_*` |
+| «el último año» / «el último mes» | últimos 12 / 1 meses, MÓVIL (no el año calendario pasado) | `trailing_years/months` |
+| «la última semana» (ya existía) | `[hoy−7, hoy]` | `trailing_weeks` |
+| «hace N semanas» | **ventana** `[hoy−7N, hoy]`, no la semana calendario («hace dos semanas» → hoy−14d..hoy) | `trailing_weeks` |
+
+`TimeValue.moving_window` es verdadero para toda `precision` `trailing_*`; el host debe anunciarlas
+como ventana móvil. Límites de N como en la legada (365 días, 52 semanas, 120 meses, 30 años), fuera de
+ellos `TIME_COUNT_OUT_OF_RANGE`. Todas aceptan sólo `relative_period` como operador salvo «este
+mes/año», que conservan `during_month/during_year`. Una forma relativa junto a otro periodo
+(«este trimestre de 2025», «hace dos semanas en marzo») se pregunta, nunca se descarta.
+
+### 9.4 Tests de R0 actualizados (no se relajó ningún validador)
+
+* `test_month_without_year_asks_…` (36 casos) → eliminado; lo cubre `test_time_authority_r1.py` con la regla nueva.
+* `test_year_with_open_suffix_…[hasta hoy]` → «hasta hoy» sale de la lista de cotas abiertas (ahora cierra en hoy).
+* `test_single_month_day_range_edges` → «del 1 al 15 de marzo» ya no es `YEAR_NOT_STATED`.
+* `test_invalid_expressions_are_asked` → sin «entre enero y marzo» ni «este trimestre»; añade «entre noviembre y febrero» → `REVERSE_RANGE`.
+
+### 9.5 `legacy_shadow_inventory.json`
+
+Cambio legado de R0 (no de R1) que el inventario no reflejaba. Diff de una entrada, comprobado
+re-parseando las 83 consultas con `QueryRouter.parse` (reloj 2026-09-30): sólo cambia
+`contratos de aseo en los últimos 3 meses`: `+_temporal_replace_scope: true`, `+fecha_desde: 2026-06-30`,
+`+fecha_hasta: 2026-09-30`. Las otras 82 coinciden. `tests/test_legacy_shadow.py` 41 passed.
+
+### 9.6 Gates (mismos comandos que §4; corrí estos archivos, no la suite)
+
+* `ruff check` app/core + los dos tests de tiempo → `All checks passed!`
+* `pytest tests/test_time_authority.py tests/test_time_authority_r1.py tests/test_time_semantics_v2.py` →
+  `10397 passed` (R0: 944).
+* **Mutantes del delta** (`dtime_r1_mutants.py`, ejecutados sobre una copia `git archive` del SHA final):
+  **58 mutantes, 58 muertos** (sobre `temporal_semantics`,
+  `time_authority`, `time_relative`: anclas por sitio, año implícito ignorado, `_YEAR_SPAN` 1 y 7, bucle
+  que se detiene/continúa, ancla vs `today` (≤ y <), `year_inferred`, bisiesto, cierre «hasta hoy/acá/aquí»,
+  cota mixta explícita/implícita, marcador de rango sin año, largo de semana/mes/año/días, topes de N,
+  `este trimestre`, pliegue ñ/í, las cuatro formas de `time_relative`). La primera pasada dejó 8
+  supervivientes: 2 eran código redundante (eliminado), 1 equivalente (se excluye: el reintento con
+  `implicit_year` tras enmascarar «hasta hoy» sólo puede hallar «hoy»/«ayer») y 5 hallaron tests
+  faltantes (añadidos). La corrida final es sobre `git archive` del SHA `e84e4840` (el commit siguiente
+  sólo toca el fixture JSON).
+* Consumidores legados (182 archivos de tests, mismo conjunto de R0): `120 failed, 7130 passed, 8 skipped, 8 xfailed, 2 errors`
+  frente a la base `119 failed, 7096+ passed…` de R0 (misma lista de rojos): `comm` de los conjuntos
+  FAILED/ERROR = **un solo rojo nuevo**, `test_supplier_request_authority.py::test_arbitrary_digit_boundaries_never_raise_or_silently_authorize`,
+  que es un test de Hypothesis (20 ejemplos) y **no depende del cambio**: con `digits='001'` la base
+  `4ec99bc1` también devuelve `EXECUTABLE` para «001 proveedores» (reproducido en la base); el ejemplo
+  quedó en `.hypothesis/` del worktree. Rojos desaparecidos: ninguno. Los 121 rojos del baseline
+  (`date_extract_y`) siguen ocultando los caminos que cruzan el workflow, como en R0.
+* Corpus del repo (3 991 cadenas, 34 archivos): `resolve_temporal_scope` base vs rama = los mismos 3
+  cambios declarados en §5b (el resolvedor legado no cambió en R1).
+* Auditoría HCA (6 corpus, `PYTHONHASHSEED=0`, selection_token normalizado, base y rama re-corridas el
+  mismo día porque los turnos llevan el reloj real): `conversation_holistic_v1` 171/195, `time_v2_focal` 31/32,
+  `negation_focal_v1` 22/24, `control_language_v1` 41/42, `actor_hygiene_v1` 35/36, `hca_final_p1_fixes` 40/40
+  en base **y** rama; **0 verdicts distintos y 0 de 442 turnos distintos** (normalizando `selection_token`,
+  «consultado el <fecha>» y `_opportunity_reference_instant`, que son relojes de pared).
+* `olympus-semgrep-delta --base 4ec99bc1 --config .semgrep/secoppal-laws.yml` sobre los 5 módulos y los 3 tests →
+  `TOTAL=0 BASELINE=0 NEW_DELTA=0 FIXED=0`.
+
+### 9.7 Rondas de reparación y riesgos
+
+Rondas R1: 2 (A: supervivientes de mutación → se simplificó el marcador de año —dos señales eran
+redundantes— y se añadieron tests de «hasta acá» sobre periodos cerrados, de 29 de febrero con 7 años de
+hueco y de rangos de días sin año; B: los dos supervivientes restantes → un test y código muerto
+eliminado). Ningún hallazgo C–F.
+
+Riesgos pendientes: (1) la lectura «mes actual no es posterior» en rangos (arriba) difiere de la orden
+si se lee estrictamente; es un cambio de una línea (`anchor` del rango); (2) `hace N semanas` se anuncia
+como ventana, no como «hace N semanas»; (3) la autoridad sigue sin invocarse desde el núcleo
+(integración pendiente de C1); (4) un mutante equivalente excluido (el reintento
+`implicit_year` tras enmascarar «hasta hoy» sólo puede hallar «hoy»/«ayer», sin año implícito).
