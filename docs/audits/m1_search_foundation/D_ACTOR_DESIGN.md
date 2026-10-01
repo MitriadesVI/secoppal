@@ -16,6 +16,10 @@ read-only (`mode=ro&immutable=1`) al índice local `secoppal/data/actor_alias_in
 > sobre CONTRATOS y se anuncia**. Donde este documento diga que PROCESOS + ACTOR bloquea (§1.5, §2, §4.5,
 > §5.4, INV-ACT-8, §9, §10, §11, §12), rige la **§14**.
 
+> **Enmienda 2026-10-01 (contrato v1.8, Gold `m1-search-gold/1.8`).** ACTOR × STATE con el universo **no citado**
+> (P034 y su familia): adjudicada → CONTRATOS como aproximación anunciada; pre-adjudicación → aclarar
+> (`ACTOR_STATE_INCOMPATIBLE`). Rige la **§15**; no cambia la autoridad ACTOR.
+
 ---
 
 ## 0. Precondición
@@ -491,6 +495,43 @@ el universo ni anunciar.
 | D-ACTOR | Ningún cambio de código ni de contrato de la autoridad. La IR oráculo del slice N073 sigue en PROCESOS. |
 | Evaluación (HERA) | `gap_matrix.py` puntúa `UNIVERSE_VIEW` igual en ambos brazos: CONTRATOS + aviso; ejecutar en procesos, bloquear donde el Gold dice EXECUTE o cambiar sin aviso son fallos. |
 
-**Sigue abierto.** P034 (ACTOR con `UNSPECIFIED` y `product_view: HISTORICAL_PROCESSES`, porque PV2 gana a
+~~**Sigue abierto.** P034 (ACTOR con `UNSPECIFIED` y `product_view: HISTORICAL_PROCESSES`, porque PV2 gana a
 PV3) también ejecuta un proveedor sobre procesos; la regla de arriba no lo cubre y el orquestador debe
-decidir si se reordena PV2/PV3 o se readjudica.
+decidir si se reordena PV2/PV3 o se readjudica.~~ **[Resuelto en la §15, v1.8.]**
+
+## 15. Enmienda ACTOR × STATE en universo no citado (v1.8)
+
+Fecha: 2026-10-01. Decisión de producto del usuario. Contrato: `M1_0_SEARCH_CONTRACT.md` §18; Gold
+`m1-search-gold/1.8`. Es coherente con la §14: **la autoridad ACTOR no cambia** (resuelve *quién*, agnóstica
+del universo y del estado); la política es de **vista del host** (F, `product_view_policy.py`).
+
+**Decisión.** En una petición SEARCH sin universo citado con `ACTOR` positivo y `STATE` positivo:
+
+| Estado | Resultado | Aviso / efecto |
+|---|---|---|
+| adjudicado (`awarded`) | CONTRATOS (P034) | `ACTOR_AWARDED_TO_CONTRACTS`, `effect = APPROXIMATION`: «adjudicada» no es «contrato firmado» y la condición de estado se conserva, no se descarta ni se reescribe |
+| `open`, `published`, `in_evaluation`, `draft` | `CLARIFY / ACTOR_STATE_INCOMPATIBLE`; nunca se ejecuta | un proceso no adjudicado no tiene adjudicatario; sin redirect |
+| cualquier otro (cerrado, cancelado, terminado, en ejecución, desierto, seleccionado, aprobado…) | **pendiente de adjudicación** | el Gold no lo admite hasta que el orquestador decida |
+
+Precedencia: universo explícito → (v1.7) ACTOR sobre PROCESOS citado → CONTRATOS con aviso; sin universo
+explícito: ACTOR + pre-adjudicación → aclarar; ACTOR + adjudicada → CONTRATOS con aproximación y aviso;
+ACTOR solo → CONTRATOS (PV3); el resto de PV1–PV6 sin cambios. Las dos primeras reglas con estado preceden
+a PV1/PV2.
+
+**Por qué no es un cambio de identidad.** El ACTOR de P034 sigue resolviéndose igual (INV-ACT-8 y §5.4: sólo
+sobre contratos). Lo que cambia es *dónde* se ejecuta y *si* se ejecuta, y eso lo decide el host después de
+las autoridades (C0 §5.6).
+
+**Dependencias.**
+
+| Carril | Cambio que exige |
+|---|---|
+| Núcleo C1 / METIS (C0 §5.6, **no editado aquí**) | Segunda regla fuera de PV1–PV6, junto a la de la §14: ACTOR + adjudicada con `effect = APPROXIMATION`, `announced = True`, que precede a PV1/PV2; salida `NEEDS_CLARIFICATION` con detalle `ACTOR_STATE_INCOMPATIBLE` para pre-adjudicación (nunca READY). La entrada debe distinguir awarded de pre-adjudicación por `StateValue.canonical_class`, no por la familia del host |
+| F (política y anuncio) | Las dos reglas, el aviso de aproximación («adjudicada» se muestra como contrato; pueden existir adjudicaciones aún sin contrato) y la pregunta de aclaración con la acción hacia cada vista |
+| D-ACTOR / E-ACTOR | Ningún cambio |
+| Evaluación (HERA) | `gap_matrix.py`: adjudicado sobre procesos o sobre contratos sin aviso/aproximación = fallo; pre-adjudicación ejecutada en cualquier universo = fallo; mismo criterio en los dos brazos |
+
+**Pares mínimos** (P176, P034, P177–P179, P181, P180) en `gold/minimal_pair.jsonl`; matan
+`ACTOR_ALWAYS_WINS` y `STATE_ALWAYS_WINS`. **Sigue abierto** (lista completa en el contrato §18):
+`PROCESSES` citado + `ACTOR` + `STATE`; `ACTOR` negativo + `STATE`; `ACTOR` + `TIME` sin estado (PV1 gana a
+PV3); los estados «pendiente» de la tabla de clasificación.
