@@ -12,8 +12,8 @@ from datetime import date
 import pytest
 from hypothesis import HealthCheck, given, settings, strategies as st
 
-from app.core import temporal_semantics
-from app.core.temporal_semantics import resolve_temporal_scope
+from app.core import time_grammar
+from app.core.time_grammar import resolve_temporal_scope
 from app.core.time_authority import (
     AUTHORITY,
     TimeResolution,
@@ -359,7 +359,7 @@ def test_clock_is_mandatory_and_never_read_from_the_machine(monkeypatch):
         def today(cls):
             raise AssertionError("date.today() was read")
 
-    monkeypatch.setattr(temporal_semantics, "Date", NoToday)
+    monkeypatch.setattr(time_grammar, "Date", NoToday)
     assert resolved("hace 3 meses", "relative_period") == (date(2026, 5, 1), date(2026, 6, 1))
 
 

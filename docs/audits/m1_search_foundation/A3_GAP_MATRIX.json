@@ -481,7 +481,8 @@
      "GOLD": 77,
      "LEGACY": {
       "L_MISSING": 9,
-      "L_OK": 68
+      "L_OK": 24,
+      "L_WRONG": 44
      }
     },
     "BUYER": {
@@ -1217,8 +1218,8 @@
    "AMBIGUOUS_SKIPPED": 8,
    "ENTRY_PARITY:BOTH_OK": 60,
    "ENTRY_PARITY:FOUNDATION_ONLY_OK": 41,
-   "ENTRY_PARITY:LEGACY_ONLY_OK": 209,
-   "ENTRY_PARITY:NEITHER_OK": 299,
+   "ENTRY_PARITY:LEGACY_ONLY_OK": 165,
+   "ENTRY_PARITY:NEITHER_OK": 343,
    "EVALUATED": 609,
    "F:F_NOT_PROPOSED": 43,
    "F:F_PROPOSED_HOST_UNRESOLVED": 53,
@@ -1227,8 +1228,8 @@
    "F:IR_CANNOT_EXPRESS": 348,
    "F:OK": 101,
    "L:L_MISSING": 24,
-   "L:L_OK": 269,
-   "L:L_WRONG": 316
+   "L:L_OK": 225,
+   "L:L_WRONG": 360
   },
   "entry_level_by_op_class": {
    "COUNT": {
@@ -1273,8 +1274,8 @@
     "F:IR_CANNOT_EXPRESS": 135,
     "F:OK": 58,
     "L:L_MISSING": 20,
-    "L:L_OK": 202,
-    "L:L_WRONG": 47
+    "L:L_OK": 158,
+    "L:L_WRONG": 91
    },
    "SEARCH:DUAL": {
     "F:OK": 1,
@@ -1731,11 +1732,12 @@
     "GOLD": 79,
     "LEGACY": {
      "L_MISSING": 11,
-     "L_OK": 68
+     "L_OK": 24,
+     "L_WRONG": 44
     },
     "PARITY": {
-     "LEGACY_ONLY_OK": 68,
-     "NEITHER_OK": 11
+     "LEGACY_ONLY_OK": 24,
+     "NEITHER_OK": 55
     }
    },
    "BUYER": {
@@ -4051,12 +4053,6 @@
     "key": "TIME/between_dates"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:TOPIC",
-    "gold_id": "R0317",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0317",
@@ -4073,12 +4069,6 @@
     "detail": "OPERATION_OUTSIDE_IR",
     "gold_id": "R0318",
     "key": "OPERATION/PROFILE_ACTOR"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0324",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4273,12 +4263,6 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0345",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0345",
@@ -4435,12 +4419,6 @@
     "key": "TOPIC"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:BUYER",
-    "gold_id": "R0380",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0380",
@@ -4519,22 +4497,10 @@
     "key": "OPERATION/PROFILE_BUYER"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0405",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0405",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0406",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4567,22 +4533,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0410",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0410",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0411",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4603,12 +4557,6 @@
     "key": "OPERATION/PROFILE_ACTOR"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0413",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0413",
@@ -4627,22 +4575,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:BUYER",
-    "gold_id": "R0415",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0415",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0416",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4663,12 +4599,6 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0421",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0421",
@@ -4681,22 +4611,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0422",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0422",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0423",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4723,22 +4641,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0425",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0425",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_SILENT",
-    "gold_id": "R0426",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4747,22 +4653,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0427",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0427",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0428",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4777,12 +4671,6 @@
     "key": "GEOGRAPHY/MUNICIPALITY"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0430",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0430",
@@ -4795,22 +4683,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0433",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0433",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0434",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4849,12 +4725,6 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0439",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0439",
@@ -4879,22 +4749,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_SILENT",
-    "gold_id": "R0445",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0445",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0446",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4927,12 +4785,6 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0451",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0451",
@@ -4945,22 +4797,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0452",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0452",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0454",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -4981,22 +4821,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0456",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0456",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0457",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -5005,22 +4833,10 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0460",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0460",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_SILENT",
-    "gold_id": "R0461",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -5059,12 +4875,6 @@
     "key": "TIME/between_dates"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0465",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0465",
@@ -5081,12 +4891,6 @@
     "detail": "",
     "gold_id": "R0466",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0468",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -5107,22 +4911,10 @@
     "key": "OPERATION/PROFILE_ACTOR"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:BUYER",
-    "gold_id": "R0470",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0470",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0471",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -5167,12 +4959,6 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0475",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0475",
@@ -5197,12 +4983,6 @@
     "key": "TIME/during_month"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0481",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0481",
@@ -5219,12 +4999,6 @@
     "detail": "",
     "gold_id": "R0485",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0486",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -5581,12 +5355,6 @@
     "key": "BUYER"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:BUYER",
-    "gold_id": "R0565",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "R0565",
@@ -5597,12 +5365,6 @@
     "detail": "",
     "gold_id": "R0565",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:UNSUPPORTED",
-    "gold_id": "R0567",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -5971,34 +5733,16 @@
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:BUYER",
-    "gold_id": "S027",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "S027",
     "key": "UNIVERSE_VIEW"
    },
    {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:BUYER",
-    "gold_id": "S028",
-    "key": "ACTOR"
-   },
-   {
     "culprit": "GATE_EXCLUDED",
     "detail": "",
     "gold_id": "S028",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:BUYER",
-    "gold_id": "S029",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",
@@ -6011,12 +5755,6 @@
     "detail": "",
     "gold_id": "S029",
     "key": "UNIVERSE_VIEW"
-   },
-   {
-    "culprit": "IR_CANNOT_EXPRESS",
-    "detail": "F_PROXY:BUYER",
-    "gold_id": "S030",
-    "key": "ACTOR"
    },
    {
     "culprit": "GATE_EXCLUDED",

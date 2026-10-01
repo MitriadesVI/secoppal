@@ -32,7 +32,8 @@ medir offline y se declara como tal en cada fila (§7).
 3. **Vetos a SEARCH legítimo: 13/47** (más 6 rechazados por la regex léxica; unión = 16/47 no llegan a
    Foundation). Por dueño: ACTOR 11, ANALYTICS 1, ENTITY_PROFILE 1. Sólo 4 son aceptables por contrato (único
    filtro ACTOR, §6), 5 son condicionales (ACTOR + otra dimensión: depende de que Actor Profile la honre) y 4 no
-   lo son (N007 veto falso de ACTOR sobre una búsqueda temática, N012 ANALYTICS, N051 ENTITY_PROFILE, N073).
+   lo son (N007 veto falso de ACTOR sobre una búsqueda temática, N012 ANALYTICS, N051 ENTITY_PROFILE, N073:
+   desde v1.7 el Gold espera ejecución sobre CONTRATOS con aviso, no un veto).
 4. **Los solapes más peligrosos** (§4): (a) la sonda de actor desnudo `contratos de X` + los marcadores
    `la corporación/la fundación/la empresa` reclaman compradores reales y temas; (b) `por año`/`el contrato
    más grande` los reclaman los analyzers legacy; (c) `_OVERVIEW` de Entity Profile («analiza») lo reclama
@@ -213,7 +214,7 @@ Los comandos literales de Radar (N078/N079) y `ver más` siguen protegidos por s
 | N066 | contratos de UNION TEMPORAL PUENTES 2024 con el INVIAS | ACTOR | condicional (ACTOR + BUYER) |
 | N068 | contratos de la empresa X mayores a 100 millones | ACTOR | condicional (ACTOR + VALUE) |
 | N071 | contratos de construcciones andinas sas en huila | ACTOR | condicional (ACTOR + GEO) |
-| N073 | procesos del proveedor CONSORCIO PAE ORIENTE | ACTOR | no: actor sobre PROCESOS |
+| N073 | procesos del proveedor CONSORCIO PAE ORIENTE | ACTOR | no: el Gold v1.7 espera `EXECUTE` por Foundation, con el host ejecutando sobre CONTRATOS y anunciándolo (`host_universe_redirect`, P-ACT-2); un veto no lo cumple |
 | N007 | los 10 contratos de obras más caros en Antioquia | ACTOR | **no — veto falso**: la sonda de actor desnudo toma «obras más caros en antioquia» y pregunta «¿obras como tema o proveedor?» |
 | N012 | el contrato más grande de la Alcaldía de Cali | ANALYTICS (ValueStats) | **no — veto falso** |
 | N051 | analiza contratos de pavimentación en Córdoba | ENTITY_PROFILE | **no — veto falso**: `_OVERVIEW` casa «analiza» sin comprador |
@@ -340,7 +341,9 @@ Marcados con `contract_gap` en el Gold donde aplica.
    en el Gold pero hoy no tiene ejecutor en ninguna ruta (Alpha lo bloquea con «por pasos»).
 9. **Cardinalidad de ranking** («los 10 mayores proveedores»): `limit_n` sólo está definido para `ORDER` de
    SEARCH; en RANK_SUPPLIERS no tiene dónde ir.
-10. **ACTOR sobre PROCESOS** (N073): no se verificó que el dataset lo soporte.
+10. ~~**ACTOR sobre PROCESOS** (N073): no se verificó que el dataset lo soporte.~~ **Resuelto en v1.7
+    (P-ACT-2, contrato §17):** el dataset de procesos no identifica al proveedor (95,3 % «No Definido»),
+    así que PROCESOS + ACTOR se ejecuta sobre CONTRATOS con aviso; N073 sigue `EXECUTE`.
 11. **COUNT/GROUP sobre un ACTOR** (N040): CA lo rechaza (`BUYER_ONLY_SCOPE`); destino M3 sin dueño.
 12. **Preguntas conceptuales** («qué es una licitación pública»): ¿OUT_OF_DOMAIN o una operación `EXPLAIN`?
 13. **Municipio desnudo** («perfil de Montería», N053): alcaldía vs territorio; el contrato no tiene una

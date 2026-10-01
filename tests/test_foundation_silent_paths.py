@@ -355,15 +355,81 @@ def test_two_bounds_in_one_value_condition_are_asked(text):
     assert accepted.reason in {"VALUE_OPERATOR_EVIDENCE_MISMATCH", "VALUE_OPERATOR_AMBIGUOUS"}
 
 
+# FROZEN literal copy of the 44 (phrase, family) tuples of ``foundation_value_direction._MARKERS`` at main
+# (4ec99bc1). Wave1 replaced that lexicon by ``money_comparators.HEADS``; main's protection must not shrink
+# with it, so both are walked: these 44 (same assertion as main) and the new HEADS.
+MAIN_4EC99BC1_MARKERS = (
+    ("no menos de", "GTE"),
+    ("no menos que", "GTE"),
+    ("mayor o igual", "GTE"),
+    ("igual o mayor", "GTE"),
+    ("al menos", "GTE"),
+    ("como minimo", "GTE"),
+    ("por lo menos", "GTE"),
+    ("desde", "GTE"),
+    ("a partir de", "GTE"),
+    ("no mas de", "LTE"),
+    ("no mas que", "LTE"),
+    ("menor o igual", "LTE"),
+    ("igual o menor", "LTE"),
+    ("a lo sumo", "LTE"),
+    ("como maximo", "LTE"),
+    ("hasta", "LTE"),
+    ("mas de", "GT"),
+    ("mas que", "GT"),
+    ("mayor de", "GT"),
+    ("mayor que", "GT"),
+    ("mayor a", "GT"),
+    ("mayores de", "GT"),
+    ("mayores que", "GT"),
+    ("mayores a", "GT"),
+    ("superior a", "GT"),
+    ("superiores a", "GT"),
+    ("por encima de", "GT"),
+    ("supere", "GT"),
+    ("superen", "GT"),
+    ("exceda", "GT"),
+    ("excedan", "GT"),
+    ("menos de", "LT"),
+    ("menos que", "LT"),
+    ("menor de", "LT"),
+    ("menor que", "LT"),
+    ("menor a", "LT"),
+    ("menores de", "LT"),
+    ("menores que", "LT"),
+    ("menores a", "LT"),
+    ("inferior a", "LT"),
+    ("inferiores a", "LT"),
+    ("por debajo de", "LT"),
+    ("exactamente", "EQ"),
+    ("igual a", "EQ"),
+)
+
+
+def _ready_only_in_its_own_direction(phrase, family):
+    from app.core.money_comparators import GT, LT
+
+    for operator in ("greater_than", "less_than"):
+        accepted = _value(phrase, operator)
+        ready = (operator, family) in {("greater_than", GT), ("less_than", LT)}
+        assert (accepted.status is AcceptanceStatus.READY) is ready, (phrase, family, operator, accepted.reason)
+
+
+def test_main_literal_markers_are_frozen_at_44():
+    assert len(MAIN_4EC99BC1_MARKERS) == 44 and len(set(MAIN_4EC99BC1_MARKERS)) == 44
+
+
+def test_every_comparator_of_main_is_ready_only_in_its_own_direction():
+    for phrase, family in MAIN_4EC99BC1_MARKERS:
+        _ready_only_in_its_own_direction(phrase, family)
+
+
 def test_every_comparator_of_the_closed_lexicon_is_ready_only_in_its_own_direction():
-    from app.core.money_comparators import GT, HEADS, LT
+    from app.core.money_comparators import HEADS
 
     for head in HEADS:
         phrase = f"{head.phrase} de" if head.needs_link else head.phrase
-        for operator in ("greater_than", "less_than"):
-            accepted = _value(phrase, operator)
-            ready = (operator, head.family) in {("greater_than", GT), ("less_than", LT)}
-            assert (accepted.status is AcceptanceStatus.READY) is ready, (phrase, operator, accepted.reason)
+        _ready_only_in_its_own_direction(phrase, head.family)
 
 
 def test_an_inverted_value_makes_no_source_call(tmp_path, monkeypatch):

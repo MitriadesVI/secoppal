@@ -1,0 +1,712 @@
+{"text": "--> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "-> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "->300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "300 millones o inferior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "300 millones o inferiores", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "300 millones o mayor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "300 millones o menor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "300 millones o superior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "<-> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "=> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "Más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "bajar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "bajar de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "bajar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "bajar de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos --> 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos -> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos -> 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos ->300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos 300 millones o inferior Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos 300 millones o inferiores Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos 300 millones o mayor Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos 300 millones o menor Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos 300 millones o superior Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos <-> 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos => 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos Más o menos 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos bajar de 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos bajar de 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos bajar de 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos bajar de 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos contratos -> 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos contratos de 300 millones o inferior Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos contratos de 300 millones o mayor firmados en 2025 Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos contratos de 300 millones o mayor, de aseo Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos contratos de 300 millones o superior Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos contratos de por lo menos 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de 300 millones o inferior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de 300 millones o inferiores Barranquilla Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de 300 millones o inferiores suscritos este año Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de 300 millones o mayor firmados Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de 300 millones o mayor firmados en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de 300 millones o mayor, de aseo", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de 300 millones o mayores plazos de ejecución Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de 300 millones o superior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de 300 millones y menores plazos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo --> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo -> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo ->300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo 300 millones o inferior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo 300 millones o inferiores", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo 300 millones o mayor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo 300 millones o menor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo 300 millones o superior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo <-> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo => 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo Más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo bajar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo bajar de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo bajar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo bajar de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo contratos -> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo contratos de 300 millones o inferior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo contratos de 300 millones o mayor firmados en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo contratos de 300 millones o mayor, de aseo", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo contratos de 300 millones o superior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo contratos de por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo de 300 millones o inferiores Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo de 300 millones o inferiores suscritos este año", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo de 300 millones o mayor firmados", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo de 300 millones o mayores plazos de ejecución", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo de 300 millones y menores plazos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo de más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo exceder 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo exceder 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o inferior 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o inferior 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o inferior 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o inferior 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o mayor 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o mayor 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o mayor 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o mayor 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o menor 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o menor 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o menor 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o menor 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o superior 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o superior 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o superior 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo igual o superior 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo mas o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo más o menos 300 millones o mayor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo más o menos 300 millones o menos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo más o menos 300 millones o más", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo más o menos de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de aseo no es mayor a 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo no igual o menor a 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasa de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasa de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasa de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasa de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasan de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasan de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasan de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasan de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasar de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasar de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pase de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pase de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pase de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pase de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasen de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasen de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasen de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo pasen de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo por lo menos 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo por lo menos 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo por lo menos 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo que no deben superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo rebasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo rebasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin exceder 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin exceder 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin pasar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin pasar de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin pasar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin pasar de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin rebasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin rebasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin sobrepasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin sobrepasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin superar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sin superar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sobrepasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo sobrepasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo superar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo superar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo tope 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo tope 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo tope 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo tope 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo tope de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo ≤ 300 millones", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de aseo ≥ 300 millones", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa --> 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT"], "origin": "R1-R4", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa --> 300 millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT"], "origin": "R1-R4", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa -> 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT"], "origin": "R1-R4", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa -> 300 millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT"], "origin": "R1-R4", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa ->300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa ->300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o inferior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o inferior en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o inferiores", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o inferiores en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o mayor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o mayor en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o menor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o menor en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o superior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa 300 millones o superior en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa <-> 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT"], "origin": "R1-R4", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa <-> 300 millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT"], "origin": "R1-R4", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa => 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT"], "origin": "R1-R4", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa => 300 millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT"], "origin": "R1-R4", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa bajar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa bajar de 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa bajar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa bajar de 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa contratos -> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa contratos -> 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa contratos de por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa contratos de por lo menos 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones o inferiores Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones o inferiores Barranquilla en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones o inferiores suscritos este año", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones o inferiores suscritos este año en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones o mayor firmados", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones o mayor firmados en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones o mayores plazos de ejecución", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones o mayores plazos de ejecución en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones y menores plazos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de 300 millones y menores plazos en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa de más o menos 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa exceder 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa exceder 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa exceder 2 mil millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa exceder 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa exceder 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa exceder 50 mil pesos en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa no es mayor a 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa no es mayor a 300 millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa no igual o menor a 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa no igual o menor a 300 millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa pasa de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasa de 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasa de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasa de 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasan de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasan de 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasan de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasan de 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasar de 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasar de 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pase de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pase de 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pase de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pase de 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasen de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasen de 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasen de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa pasen de 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa por lo menos 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa por lo menos 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa por lo menos 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa por lo menos 2 mil millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa por lo menos 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa por lo menos 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa por lo menos 50 mil pesos en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa que no deben superar 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa que no deben superar 300 millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa rebasar 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa rebasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa rebasar 2 mil millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa rebasar 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa rebasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa rebasar 50 mil pesos en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin exceder 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin exceder 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin exceder 2 mil millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin exceder 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin exceder 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin exceder 50 mil pesos en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin pasar de 1.500 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin pasar de 1.500 millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin pasar de 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin pasar de 2 mil millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin pasar de 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin pasar de 300 millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin pasar de 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin pasar de 50 mil pesos en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin rebasar 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin rebasar 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin rebasar 2 mil millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin rebasar 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin rebasar 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin rebasar 50 mil pesos en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin sobrepasar 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin sobrepasar 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin sobrepasar 2 mil millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin sobrepasar 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin sobrepasar 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin sobrepasar 50 mil pesos en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin superar 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin superar 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin superar 2 mil millones en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin superar 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sin superar 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sin superar 50 mil pesos en 2025", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "contratos de la Alcaldía de Galapa sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sobrepasar 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sobrepasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sobrepasar 2 mil millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sobrepasar 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sobrepasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa sobrepasar 50 mil pesos en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa superar 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa superar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa superar 2 mil millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa superar 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa superar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa superar 50 mil pesos en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope 1.500 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope 2 mil millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope 50 mil pesos en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de la Alcaldía de Galapa tope de 300 millones en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos de más o menos 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos de por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos exceder 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos exceder 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos exceder 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos exceder 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o inferior 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o inferior 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o inferior 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o inferior 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o mayor 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o mayor 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o mayor 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o mayor 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o menor 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o menor 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o menor 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o menor 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o superior 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o superior 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o superior 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos igual o superior 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos mas o menos 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos más o menos 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos más o menos 300 millones o mayor Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos más o menos 300 millones o menos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos más o menos 300 millones o más Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos más o menos de 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "contratos no es mayor a 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos no igual o menor a 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasa de 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasa de 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasa de 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasa de 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasan de 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasan de 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasan de 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasan de 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasar de 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasar de 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasar de 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasar de 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pase de 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pase de 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pase de 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pase de 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasen de 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasen de 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasen de 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos pasen de 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos por lo menos 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos por lo menos 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos por lo menos 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos por lo menos 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos que no deben superar 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos rebasar 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos rebasar 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos rebasar 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos rebasar 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin exceder 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin exceder 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin exceder 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin exceder 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin pasar de 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin pasar de 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin pasar de 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin pasar de 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin rebasar 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin rebasar 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin rebasar 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin rebasar 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin sobrepasar 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin sobrepasar 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin sobrepasar 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin sobrepasar 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin superar 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin superar 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin superar 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sin superar 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sobrepasar 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sobrepasar 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sobrepasar 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos sobrepasar 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos superar 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos superar 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos superar 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos superar 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos tope 1.500 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos tope 2 mil millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos tope 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos tope 50 mil pesos Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos tope de 300 millones Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos ≤ 300 millones Barranquilla", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "contratos ≥ 300 millones Barranquilla", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "de 300 millones o inferiores Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "de 300 millones o inferiores suscritos este año", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "de 300 millones o mayor firmados", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "de 300 millones o mayores plazos de ejecución", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "de 300 millones y menores plazos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "de más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "exceder 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "exceder 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o inferior 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o inferior 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o inferior 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o inferior 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o mayor 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o mayor 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o mayor 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o mayor 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o menor 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o menor 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o menor 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o menor 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o superior 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o superior 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o superior 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "igual o superior 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "mas o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "más o menos 300 millones o mayor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "más o menos 300 millones o menos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "más o menos 300 millones o más", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "más o menos de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "no es mayor a 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "no igual o menor a 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasa de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasa de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasa de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasa de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasan de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasan de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasan de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasan de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasar de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasar de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pase de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pase de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pase de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pase de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasen de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasen de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasen de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "pasen de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "por lo menos 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "por lo menos 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "por lo menos 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos --> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos -> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos ->300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos 300 millones o inferior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos 300 millones o inferiores", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos 300 millones o mayor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos 300 millones o menor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos 300 millones o superior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos <-> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos => 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos Más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos bajar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos bajar de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos bajar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos bajar de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos contratos -> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos contratos de 300 millones o inferior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos contratos de 300 millones o mayor firmados en 2025", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos contratos de 300 millones o mayor, de aseo", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos contratos de 300 millones o superior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos contratos de por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos de 300 millones o inferiores Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos de 300 millones o inferiores suscritos este año", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos de 300 millones o mayor firmados", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos de 300 millones o mayores plazos de ejecución", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos de 300 millones y menores plazos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos de más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos exceder 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos exceder 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o inferior 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o inferior 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o inferior 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o inferior 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o mayor 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o mayor 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o mayor 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o mayor 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o menor 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o menor 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o menor 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o menor 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o superior 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o superior 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o superior 300 millones", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos igual o superior 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos mas o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos más o menos 300 millones o mayor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos más o menos 300 millones o menos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos más o menos 300 millones o más", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos más o menos de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "procesos abiertos no es mayor a 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos no igual o menor a 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasa de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasa de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasa de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasa de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasan de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasan de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasan de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasan de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasar de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasar de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pase de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pase de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pase de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pase de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasen de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasen de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasen de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos pasen de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos por lo menos 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos por lo menos 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos por lo menos 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos que no deben superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos rebasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos rebasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin exceder 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin exceder 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin pasar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin pasar de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin pasar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin pasar de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin rebasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin rebasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin sobrepasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin sobrepasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin superar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sin superar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sobrepasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos sobrepasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos superar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos superar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos tope 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos tope 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos tope 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos tope 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos tope de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos ≤ 300 millones", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "procesos abiertos ≥ 300 millones", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico --> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico -> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico ->300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico 300 millones o inferior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico 300 millones o inferiores", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico 300 millones o mayor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico 300 millones o menor", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico 300 millones o superior", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico <-> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico => 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico bajar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico bajar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico contratos -> 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico contratos de por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico de 300 millones o inferiores Barranquilla", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico de 300 millones o inferiores suscritos este año", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico de 300 millones o mayor firmados", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico de 300 millones o mayores plazos de ejecución", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico de 300 millones y menores plazos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico de más o menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "R1-R4", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico exceder 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico exceder 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico no es mayor a 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico no igual o menor a 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico pasa de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico pasa de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico pasan de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico pasan de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico pasar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico pasar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico pase de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico pase de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico pasen de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico pasen de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico por lo menos 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico por lo menos 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico por lo menos 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico por lo menos 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico que no deben superar 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico rebasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico rebasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sin exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sin exceder 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sin exceder 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin pasar de 1.500 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin pasar de 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin pasar de 300 millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin pasar de 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sin rebasar 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sin rebasar 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sin sobrepasar 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sin sobrepasar 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sin superar 2 mil millones", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sin superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sin superar 50 mil pesos", "leaf_categories": ["BUYER", "TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": true}
+{"text": "proveedores de la Gobernación del Atlántico sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sobrepasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico sobrepasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico superar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico superar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico tope 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico tope 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico tope 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico tope 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico tope de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico ≤ 300 millones", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "proveedores de la Gobernación del Atlántico ≥ 300 millones", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "que no deben superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "rebasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "rebasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin exceder 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin exceder 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin exceder 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin exceder 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin pasar de 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin pasar de 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin pasar de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin pasar de 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin rebasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin rebasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin rebasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin rebasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin sobrepasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin sobrepasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin superar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sin superar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sobrepasar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sobrepasar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sobrepasar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "sobrepasar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "superar 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "superar 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "superar 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "superar 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "tope 1.500 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "tope 2 mil millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "tope 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "tope 50 mil pesos", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "tope de 300 millones", "leaf_categories": ["TOPIC_OR_TEXT", "VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "≤ 300 millones", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}
+{"text": "≥ 300 millones", "leaf_categories": ["VALUE_DIRECT"], "origin": "D-MONEY (anterior a R1, ya en 7bd671e6)", "buyer_field_differs": false}

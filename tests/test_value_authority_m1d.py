@@ -22,7 +22,6 @@ from app.core.foundation_value_direction import (
     operator_reason,
 )
 from app.core.money_comparators import BETWEEN, EQ, GT, GTE, HEADS, LT, LTE, read_comparators
-from app.core.money_polarity import MoneyRelation, resolve_money_polarity
 from app.core.value_authority import ValueDecision, resolve_value_condition
 
 OPERATORS = {"greater_than": GT, "greater_or_equal": GTE, "less_than": LT, "less_or_equal": LTE}
@@ -297,45 +296,21 @@ def test_property_the_resolved_bound_is_exactly_the_one_the_quote_names(number, 
             assert result.decision is not ValueDecision.RESOLVED
 
 
-# ── one lexicon for both consumers ────────────────────────────────────────
+# ── one lexicon for the quote route ───────────────────────────────────────
+# M1 wave 1 VALUE PARITY: the legacy scanner (``money_polarity``) is byte-identical to ``main`` and no
+# longer shares this lexicon; the polarity half of the old «both consumers» tests is the E-VALUE contract
+# (docs/audits/m1_wave1/E_VALUE_REGRESSION_CASES.jsonl).
 
-@pytest.mark.parametrize("quote,family", [(q, f) for q, f in QUOTES if f != EQ], ids=[q for q, f in QUOTES if f != EQ])
-def test_money_polarity_and_the_guard_read_the_same_direction(quote, family):
-    decisions = resolve_money_polarity(quote)
-    assert len(decisions) == 1, quote
-    expected = MoneyRelation.LOWER_BOUND if BOUND[family] == "min" else MoneyRelation.UPPER_BOUND
-    assert decisions[0].relation is expected, quote
-
-
-@pytest.mark.parametrize("quote,relation", [
-    ("por lo menos 300 millones", MoneyRelation.LOWER_BOUND),    # was UPPER_BOUND: «menos» alone won
-    ("no es mayor a 300 millones", MoneyRelation.UPPER_BOUND),   # was LOWER_BOUND: «es» hid the «no»
-    ("que no deben superar 300 millones", MoneyRelation.UPPER_BOUND),
-    ("sin superar 300 millones", MoneyRelation.UPPER_BOUND),
-    ("tope de 300 millones", MoneyRelation.UPPER_BOUND),
-    ("300 millones o inferiores", MoneyRelation.UPPER_BOUND),
-])
-def test_legacy_inversions_the_unified_lexicon_corrects(quote, relation):
-    assert resolve_money_polarity(quote)[0].relation is relation
-
-
-def test_every_lexicon_head_is_reached_by_both_consumers():
+def test_every_lexicon_head_is_read_as_its_own_family():
     for head in HEADS:
         if head.family == EQ:
             continue
         quote = f"{head.phrase} {'de ' if head.needs_link else ''}300 millones"
         scan = read_comparators(quote)
         assert [r.family for r in scan.readings] == [head.family], quote
-        relation = resolve_money_polarity(quote)[0].relation
-        assert relation is (MoneyRelation.LOWER_BOUND if BOUND[head.family] == "min" else MoneyRelation.UPPER_BOUND)
 
 
-def test_the_two_consumers_cannot_drift_apart():
-    import app.core.money_polarity as polarity
-
-    from app.core.money_comparators import DOWN_PATTERN, UP_PATTERN
-
-    assert polarity._UP == UP_PATTERN and polarity._DOWN == DOWN_PATTERN
+def test_the_lexicon_has_one_owner_and_no_duplicate_phrase():
     assert not hasattr(__import__("app.core.foundation_value_direction", fromlist=["x"]), "_MARKERS")
     assert len(list(itertools.chain(*[[h] for h in HEADS]))) == len({h.phrase for h in HEADS})
 
