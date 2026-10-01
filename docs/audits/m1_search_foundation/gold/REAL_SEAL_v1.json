@@ -1,8 +1,12 @@
 {
-  "schema_version": "m1-search-gold/1.6",
+  "schema_version": "m1-search-gold/1.7",
   "records": 620,
   "double_labeled": 365,
   "sha256": "6e470e89cb5028914e7f23c60ddbf91d38a2fe785e2458deaf9a4ea89fad1f34",
+  "history": [
+    "1.6 (2026-10-01) ACTOR document marker inside quote (contract §16)",
+    "1.7 (2026-10-01) P-ACT-2: no REAL record carries PROCESSES+ACTOR; records and sha256 unchanged; only the schema version moves"
+  ],
   "decisions": {
     "R0069": {
       "source": "B",

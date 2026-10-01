@@ -11,6 +11,11 @@ read-only (`mode=ro&immutable=1`) al índice local `secoppal/data/actor_alias_in
 `artifacts/audits/relationship_foundation_v0/observations/schema_{p6dx-8zbt,jbjy-vk9h}.json` y
 `tests/fixtures/actor_sources/secop2_contratos_source_contract.json`. No corrí tests.
 
+> **Enmienda 2026-10-01 (contrato v1.7, Gold `m1-search-gold/1.7`).** La decisión de producto P-ACT-2
+> cambió respecto de la recomendación original («bloquear»): una petición PROCESOS + ACTOR **se ejecuta
+> sobre CONTRATOS y se anuncia**. Donde este documento diga que PROCESOS + ACTOR bloquea (§1.5, §2, §4.5,
+> §5.4, INV-ACT-8, §9, §10, §11, §12), rige la **§14**.
+
 ---
 
 ## 0. Precondición
@@ -39,8 +44,8 @@ con Actor Profile).
 4. **`ActorValue` basta para M1. El contrato C1.1 no cambia.** No se modela el grupo (consorcio/UT con
    integrantes). Se declara en el eco y se deja para `actor@2` como cambio aditivo.
 5. **Proyección sólo sobre CONTRATOS** (`jbjy-vk9h`): `documento_proveedor` con las variantes de
-   `document_variants` más la cláusula de tipo de ADR-060. Con **PROCESOS + ACTOR** el host bloquea de
-   forma explícita y ofrece ver contratos. Nunca cambia de dataset en silencio.
+   `document_variants` más la cláusula de tipo de ADR-060. Con **PROCESOS + ACTOR** el host ejecuta
+   sobre CONTRATOS y lo anuncia (enmienda P-ACT-2, §14). Nunca cambia de dataset en silencio.
 6. **Datos personales = P9 = ADR-060 tal cual**. El documento completo aparece sólo en la presentación
    intencional. En trazas y diagnósticos va enmascarado, y en recibos o ledger nunca hay números ni
    nombres.
@@ -57,7 +62,7 @@ con Actor Profile).
 | ADR-060 §1 INV-ID-TYPE, INV-NO-LENGTH; el DV es calidad, no autoridad de tipo | Tipo sólo por marcador citado o por DV con guion; un número desnudo aclara | Legacy acepta un número desnudo cuyo último dígito valida el módulo 11 (≈1/11): Foundation es más estricto (§4.2) |
 | ADR-060 §4 `AUTHORITATIVE_ACTOR_METHODS`, el trigram nunca autoselecciona | Camino de nombre: sólo `exact_unique_alias` y `exact_legal_form_variant` vía `resolve_exact` (sin FTS) | `user_selected_candidate` necesita estado (M2) |
 | ADR-060 §5 mención completa, precedencia de la geografía desnuda | Guarda de completitud con el contexto (sólo retira autoridad) + topónimos genéricos | El marcador de rol no puede «rescatar» un topónimo, porque el contexto no crea autoridad (§4.3) |
-| ADR-060 §2 la huella sale de `jbjy-vk9h`; INV-NO-SILENT-DROP | Proyección sólo en CONTRATOS; con PROCESOS bloquea | Gold N073 (procesos + proveedor) dice EXECUTE: hay que adjudicarlo (§10) |
+| ADR-060 §2 la huella sale de `jbjy-vk9h`; INV-NO-SILENT-DROP | Proyección sólo en CONTRATOS; PROCESOS + ACTOR se redirige a CONTRATOS con aviso (§14) | Gold N073 (procesos + proveedor) dice EXECUTE: adjudicado en v1.7 con `host_universe_redirect` (§10, §14) |
 | ADR-060 §9 documento completo en la UX; `mask_identity_key` para logs/diagnóstico | Igual (§6) | `log_trace` legacy ya persiste `resolved_params.contratista` en claro: deuda preexistente, no se toca |
 | ADR-094 colisión de prefijo personal | La hereda `resolve_exact`. `AMBIGUOUS/INCONCLUSIVE` aclaran | `INCONCLUSIVE` depende de un presupuesto de reloj monotónico (determinismo limitado, §3) |
 | C0 INV-C0-7/7b/8/9, P-7; C1.1 V5a (`excluded`) | Todas las reglas de contexto son existenciales (monótonas); polaridad NEGATIVE soportada | — |
@@ -86,7 +91,7 @@ INV-NO-SILENT-DROP, INV-TYPED-PROJECTION (ADR-060). INV-C0-7, -7b, -8, -9; INV-C
 | INV-ACT-5 | **Conflicto de clase**: un nombre con forma de organización (n-grama de `org_tokens`) que resuelve a una CC no resuelve (ESP → persona natural, A2 -034). | Fixture + sonda A2 -034 sobre el índice real |
 | INV-ACT-6 | **Recibos sin datos personales**: `AuthorityReceipt.rules` sólo usa tokens de un vocabulario cerrado; no contiene tramos de ≥5 dígitos ni tokens de la cita; `digests` sólo del índice y del sidecar, nunca de una `IdentityKey` (una CC de 10 dígitos se recupera por fuerza bruta a partir de su hash). | Propiedad sobre todos los veredictos de la suite; mutante M13 |
 | INV-ACT-7 | **`display` es la cita del usuario** (NFC, recortada), nunca un nombre sacado del directorio. Así el valor no introduce texto nuevo y el único dato derivado es el documento. | Test de valor; mutante M15 |
-| INV-ACT-8 | **ACTOR ⇒ CONTRATOS**: ningún plan ejecuta ACTOR sobre PROCESOS y ninguna petición con ACTOR se ejecuta sin su cláusula (núcleo, E-ACTOR). | Test de proyección y de plan |
+| INV-ACT-8 | **ACTOR ⇒ CONTRATOS**: ningún plan ejecuta ACTOR sobre PROCESOS (una petición PROCESOS + ACTOR se redirige a CONTRATOS con el aviso `ACTOR_PROCESSES_TO_CONTRACTS`, política de vista, §14) y ninguna petición con ACTOR se ejecuta sin su cláusula (núcleo, E-ACTOR). | Test de proyección y de plan |
 | INV-ACT-9 | **Un DV discordante nunca pasa en silencio**: un RESOLVED con DV declarado que no valida lleva la política `actor-dv-unverified@1`, y el eco del núcleo lo anuncia. | Test del autor + test de presentación (E-ACTOR) |
 
 **Determinismo limitado (declarado).** `resolve_exact` hereda el presupuesto de ADR-094: con el índice
@@ -178,8 +183,11 @@ informe, el digest y los recuentos.
 `p6dx-8zbt` tiene `nit_del_proveedor_adjudicado` / `nombre_del_proveedor`, pero: 8.333.841 de
 8.747.640 filas son «No Definido» (95,3 %), sólo 853.421 dicen `adjudicado = Si` (9,8 %) y **no hay
 columna de tipo documental**, así que INV-ID-TYPE no se puede aplicar. `DatasetSpec` de procesos no
-declara `contractor`. **Decisión: BLOCK explícito con la acción «Ver contratos de X»** (paridad con
-`actor_scope_policy`). Proyectar «procesos adjudicados a X» es la decisión de producto P-ACT-2.
+declara `contractor`. ~~**Decisión: BLOCK explícito con la acción «Ver contratos de X»**.~~
+**[SUPERSEDED por la §14: decisión P-ACT-2 del usuario, 2026-10-01.]** Una petición PROCESOS + ACTOR
+(cualquier vista, cualquier polaridad) **se ejecuta sobre CONTRATOS con aviso**; nunca se proyecta
+`nit_del_proveedor_adjudicado`. Lo que no cambia es el motivo: la fuente de procesos no identifica al
+proveedor.
 
 ---
 
@@ -252,8 +260,10 @@ Sólo `jbjy-vk9h`. Siendo V = `document_variants(id)` e I = `incompatible_source
 - NEGATIVE (`actor-exclusion@1`, complemento con trato explícito de nulos):
   `(documento_proveedor IS NULL OR NOT (documento_proveedor IN (V) AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN (I))))`.
   Conserva las filas «No Definido» (2,9 %; proveedor desconocido no es X). La política lo declara.
-- Petición con sujeto PROCESOS + ACTOR → `UNSUPPORTED` con `ACTOR_DATASET_UNSUPPORTED` y la acción
-  «Ver contratos de X». `UNSPECIFIED` ya va a CONTRATOS por PV3.
+- Petición con sujeto PROCESOS + ACTOR → ~~`UNSUPPORTED` con `ACTOR_DATASET_UNSUPPORTED`~~ **[v1.7:
+  la política de vista la redirige a CONTRATOS con el aviso `ACTOR_PROCESSES_TO_CONTRACTS`; la
+  proyección de este punto sólo ve contratos, y `ACTOR_DATASET_UNSUPPORTED` deja de existir (§14)]**.
+  `UNSPECIFIED` ya va a CONTRATOS por PV3.
 - Reglas entre condiciones (núcleo, después de las autoridades): dos ACTOR POSITIVE de identidades
   distintas bajo AND → CLARIFY `CONTRADICTORY_ACTOR` (un contrato tiene un único proveedor). ACTOR con un
   STATE previo a la adjudicación → ya da `STATE_NOT_IN_VIEW`.
@@ -362,7 +372,8 @@ entre condiciones son del NÚCLEO (E-ACTOR).
   índice ausente, sidecar rancio, NEGATIVE, sondas A2 reproducidas en el fixture.
 - **Slice Gold ACTOR por `gold_id`** con IR oráculo:
   - SEARCH: P029, P034, P035, P109, P110, P111, P114, P115, P117, P119, P121, N001, N058, N061, N062,
-    N063, N066, N068, N070, N071, N072, N073, X000, X006, X083.
+    N063, N066, N068, N070, N071, N072, N073, X000, X006, X083. N073 conserva la IR oráculo
+    `PROCESSES` (Foundation transcribe lo citado); el slice la evalúa ya redirigida a CONTRATOS (§14).
   - Fuera del slice: N040 es COUNT; N056, N057, N059, N060, N064, N065, N067 y N069 son
     PROFILE_ACTOR (entrega, no autoridad).
   - Dos corridas: fixture sembrado con los nombres sintéticos → RESOLVED exacto; directorio real →
@@ -405,16 +416,18 @@ restaurar) → `olympus-semgrep-delta --base 7bd671e6`. Antes de entregar: `git 
 - La calibración no muestra hueco: un proveedor legítimo y frecuente queda dentro de G3 y no se puede
   separar con T → informe + METIS. Prohibido ajustar a mano.
 - `INCONCLUSIVE` aparece en el kit/fixture (no determinismo) → STOP.
-- El slice REAL contiene números desnudos, conflictos de clase o PROCESOS + ACTOR con Gold EXECUTE → se
-  pide adjudicación del Gold (HERA/usuario). No se relaja la autoridad.
+- El slice REAL contiene números desnudos o conflictos de clase → se pide adjudicación del Gold
+  (HERA/usuario). No se relaja la autoridad. (PROCESOS + ACTOR ya no es STOP: v1.7 lo adjudica como
+  `host_universe_redirect`; el slice REAL tiene 0 casos.)
 - Un mutante sobrevive dos rondas → se declara la garantía como limitada y se cierra.
 
 ## 10. Adjudicaciones del Gold que el CUTOVER necesita (nueva versión sellada; ADR-103 enm. 2)
 
 - **X083** (y sus equivalentes REAL): la cita pasa a ser «cédula 1000000001» (el marcador de tipo forma
   parte del identificador). Con la cita actual, la IR oráculo aclara.
-- **N073** («procesos del proveedor …», EXECUTE): pasa a BLOCK con oferta de contratos (§4.5), salvo que
-  P-ACT-2 diga otra cosa.
+- **N073** («procesos del proveedor …»): ~~pasa a BLOCK con oferta de contratos (§4.5), salvo que P-ACT-2
+  diga otra cosa~~. **Hecho en v1.7**: sigue `EXECUTE`, con `host_universe_redirect =
+  {executed_universe: CONTRACTS, notice: ACTOR_PROCESSES_TO_CONTRACTS}` (§14).
 - **P114, P115, N063, N064**: no cambian. El DV inventado resuelve con `actor-dv-unverified@1`.
 
 ## 11. Decisiones de producto pendientes (no bloquean D-ACTOR; sí el CUTOVER de ACTOR)
@@ -422,7 +435,7 @@ restaurar) → `olympus-semgrep-delta --base 7bd671e6`. Antes de entregar: `git 
 | Id | Pregunta exacta | Recomendación |
 |---|---|---|
 | P-ACT-1 | Cuando un nombre no tiene coincidencia exacta, Foundation ¿debe ofrecer candidatos seleccionables (como legacy/Actor Profile, ADR-060 §10) o basta con pedir el NIT o la razón social completa? | **Candidatos** antes de retirar el veto de ACTOR. Exige el campo aditivo `alternatives` y un evento de selección (patrón de F). Hasta entonces, el veto de ACTOR no se borra en M1-I aunque la métrica dé 0. |
-| P-ACT-2 | «Procesos de/adjudicados a X»: ¿bloquear con la oferta de contratos, o proyectar `nit_del_proveedor_adjudicado` sólo para NIT y anunciar «sólo procesos adjudicados»? | **Bloquear** en M1 (no hay tipo documental en la fuente; 95 % «No Definido»). |
+| P-ACT-2 | «Procesos de/adjudicados a X»: ¿bloquear con la oferta de contratos, o proyectar `nit_del_proveedor_adjudicado` sólo para NIT y anunciar «sólo procesos adjudicados»? | ~~**Bloquear** en M1~~. **DECIDIDO (usuario, 2026-10-01, v1.7): ni una ni otra. Se ejecuta sobre CONTRATOS con aviso (§14).** |
 
 ## 12. Riesgos y qué haría cambiar la decisión
 
@@ -433,13 +446,51 @@ restaurar) → `olympus-semgrep-delta --base 7bd671e6`. Antes de entregar: `git 
 | Sidecar o índice desincronizados tras un rebuild | INV-ACT-4 (BLOCK por llamada); regenerar el sidecar forma parte del runbook del índice |
 | Legacy sigue resolviendo «proveedor Consorcio» (A2 -053) | Deuda legacy: un ticket aparte reutiliza el sidecar en `resolve_actor_params` (cambia legacy; fuera de M1-D) |
 | Llega una autoridad de relaciones (UT, `ceth-n4bn`) | `actor@2` con `members` (aditivo) y proyección por integrantes, anunciada |
-| El producto quiere procesos por proveedor | P-ACT-2 → proyección NIT-only en procesos |
+| El producto quiere procesos por proveedor | ~~P-ACT-2 → proyección NIT-only en procesos~~ Decidido en v1.7: no. «A qué procesos se presentó X» llegará con un dataset de ofertas o proponentes (fuera de M1); hasta entonces se ejecuta en contratos con aviso. |
 | La ventana K=4 no ve el resto de una razón social larga | Falla hacia aclarar (completitud). Subir K es METIS (C0 §12) |
 
 ## 13. Non-goals
 
-Grupos e integrantes; candidatos y selección en Foundation (M2/P-ACT-1); ACTOR en PROCESOS; ACTOR bajo
+Grupos e integrantes; candidatos y selección en Foundation (M2/P-ACT-1); ACTOR ejecutado sobre procesos
+(se redirige a contratos con aviso, §14; ofertas/proponentes = dataset futuro); ACTOR bajo
 OR; roles distintos de contratista (comprador-actor, representante legal, supervisor); SECOP I; CE,
 pasaporte y otros documentos; corregir legacy (A2 -053, el DV de `actor_identity`, el rebuild con
 exclusión); reclamaciones de dueño (`actor_claims`, C1.4/M3); el registro, la proyección y los mensajes
 (núcleo, E-ACTOR).
+
+## 14. Enmienda P-ACT-2 (v1.7)
+
+Fecha: 2026-10-01. Decisión de producto del usuario (no de este diseño). Contrato: `M1_0_SEARCH_CONTRACT.md`
+§17; Gold `m1-search-gold/1.7`.
+
+**Decisión.** A un proveedor o contratista se le buscan CONTRATOS, no procesos. Un request SEARCH cuyo
+universo citado es PROCESOS (cualquier vista, incluida OPPORTUNITIES) y que lleva una condición ACTOR
+(POSITIVE o NEGATIVE) **se ejecuta sobre CONTRATOS y el host lo anuncia** (`ACTOR_PROCESSES_TO_CONTRACTS`).
+Foundation sigue transcribiendo fielmente lo citado (`universe: PROCESSES`); no se reescribe la IR. BUYER
+sobre procesos no se ve afectado. «A qué procesos se presentó X» exige un dataset de ofertas o
+proponentes y queda fuera de M1.
+
+**Por qué no se cambia la autoridad ACTOR.** La autoridad resuelve *quién* (identidad) y es agnóstica del
+universo: sólo ve una ventana de evidencia y nunca el dataset (invariante 6 y §5.1). Su veredicto es el
+mismo en PROCESOS y en CONTRATOS. La enmienda decide *dónde* se ejecuta, y eso no es identidad.
+
+**Dueño de la redirección: la política de vista del host (carril F, `app/core/product_view_policy.py` y
+`product_view_announcement.py`), no la autoridad ACTOR.** Argumento (C0_SPINE_V5_DESIGN §4.4/§5.6): la
+regla es de producto y de vista, no de identidad. F ya es el único módulo puro, posterior a las
+autoridades y anterior a la proyección, que elige el dataset de una petición, lo registra en la
+aceptación (`HostViewDecision`) y lo anuncia siempre (INV-C0-10); la autoridad ACTOR no puede ni leer
+el universo ni anunciar.
+
+**Dependencias.**
+
+| Carril | Cambio que exige |
+|---|---|
+| Núcleo C1 / METIS | Enmienda de C0 §5.6: hoy la política sólo mira condiciones **POSITIVE** de peticiones `UNSPECIFIED` y «las peticiones con sujeto explícito no tienen decisión». Hace falta una regla nueva (no PV1–PV6; p. ej. `PV_ACTOR_PROCESSES`) que lea ACTOR de **cualquier** polaridad en peticiones `PROCESSES`, con `effect = APPROXIMATION` y `announced = True`. Es un cambio de contrato (`HostViewDecision`, validación de READY): decide METIS antes de que F escriba. |
+| F (política y anuncio) | La regla y el aviso con la acción hacia la vista pedida. No consulta datos. |
+| Núcleo E-ACTOR | INV-ACT-8 y la proyección ven sólo contratos; se elimina `ACTOR_DATASET_UNSUPPORTED` (§5.4). |
+| D-ACTOR | Ningún cambio de código ni de contrato de la autoridad. La IR oráculo del slice N073 sigue en PROCESOS. |
+| Evaluación (HERA) | `gap_matrix.py` puntúa `UNIVERSE_VIEW` igual en ambos brazos: CONTRATOS + aviso; ejecutar en procesos, bloquear donde el Gold dice EXECUTE o cambiar sin aviso son fallos. |
+
+**Sigue abierto.** P034 (ACTOR con `UNSPECIFIED` y `product_view: HISTORICAL_PROCESSES`, porque PV2 gana a
+PV3) también ejecuta un proveedor sobre procesos; la regla de arriba no lo cubre y el orquestador debe
+decidir si se reordena PV2/PV3 o se readjudica.

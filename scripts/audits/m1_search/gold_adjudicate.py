@@ -16,7 +16,9 @@ import re
 import sys
 from pathlib import Path
 
-GOLD_SCHEMA_VERSION = "m1-search-gold/1.6"
+from gold_schema import ACTOR_PROCESSES_REDIRECT, REDIRECT_FIELD, SCHEMA_VERSION, needs_redirect
+
+GOLD_SCHEMA_VERSION = SCHEMA_VERSION  # single source: gold_schema.py (v1.7)
 _ROLE_MARKER = re.compile(
     r"^(?:(?:del|de la|de los|al|el|la|los)\s+)?(?:proveedor(?:es)?|contratista(?:s)?|empresa)\s*[:\-]?\s+",
     re.IGNORECASE)
@@ -37,7 +39,7 @@ def _requests(record: dict):
 
 
 def normalize(record: dict) -> tuple[dict, list[str]]:
-    """Mechanical contract v1.3 rules; returns (record, applied rule ids)."""
+    """Mechanical contract rules (v1.3 C1/C2/C7, v1.7 P-ACT-2); returns (record, applied rule ids)."""
     out = copy.deepcopy(record)
     applied: list[str] = []
     text = out.get("text") or ""
@@ -92,6 +94,10 @@ def normalize(record: dict) -> tuple[dict, list[str]]:
     if op not in {"SEARCH", "MULTI"} and out.get("product_view") is not None:
         out["product_view"] = None
         applied.append("B1")
+    for request in _requests(out):  # v1.7 P-ACT-2: runs after C7 so only genuine SEARCH requests qualify
+        if needs_redirect(request) and request.get(REDIRECT_FIELD) != ACTOR_PROCESSES_REDIRECT:
+            request[REDIRECT_FIELD] = dict(ACTOR_PROCESSES_REDIRECT)
+            applied.append("P-ACT-2")
     return out, sorted(set(applied))
 
 
