@@ -1,0 +1,245 @@
+{
+  "schema_version": "m1-search-gold/1.3",
+  "records": 620,
+  "double_labeled": 365,
+  "sha256": "aef2e2e43c0a9c40d79b51fed50150dfd53a03963dab1d162e86c176f963fe9a",
+  "decisions": {
+    "R0069": {
+      "source": "B",
+      "rule": "A2+C4",
+      "why": "interventoría sin objeto = tipo; «activos» = familia abierta"
+    },
+    "R0191": {
+      "source": "B",
+      "rule": "C3",
+      "why": "«hoy» junto a estado no es TIME"
+    },
+    "R0216": {
+      "source": "B",
+      "rule": "B6+C4",
+      "why": "municipio sujeto = BUYER; «en concurso» = familia abierta"
+    },
+    "R0346": {
+      "source": "B",
+      "rule": "§6",
+      "why": "nombre desnudo = PROFILE_ACTOR ejecutable"
+    },
+    "R0524": {
+      "source": "B",
+      "rule": "§3",
+      "why": "sin sustantivo de universo = UNSPECIFIED (PV6, mismo efecto)"
+    },
+    "R0553": {
+      "source": "B",
+      "rule": "B6",
+      "why": "municipio sujeto que contrata = BUYER"
+    },
+    "R0219": {
+      "source": "A",
+      "rule": "—",
+      "why": "Soledad sin homónimo relevante"
+    },
+    "R0361": {
+      "source": "A",
+      "rule": "—",
+      "why": "número tipo cédula tras «contratos de» = ACTOR"
+    },
+    "R0377": {
+      "source": "A",
+      "rule": "—",
+      "why": "CLARIFY basta; no hay lecturas alternativas enumerables"
+    },
+    "R0389": {
+      "source": "A",
+      "rule": "B5",
+      "why": "CLARIFY por monto sin comparador, no ambigüedad"
+    },
+    "R0415": {
+      "source": "A",
+      "rule": "C1",
+      "why": "persona natural nombrada tras marcador de rol"
+    },
+    "R0435": {
+      "source": "A",
+      "rule": "C2",
+      "why": "fragmento de botón de desambiguación"
+    },
+    "R0510": {
+      "source": "A",
+      "rule": "C7",
+      "why": "ranking por valor, lectura única"
+    },
+    "R0511": {
+      "source": "A",
+      "rule": "C7",
+      "why": "ranking por valor, lectura única"
+    },
+    "R0525": {
+      "source": "A",
+      "rule": "B3",
+      "why": "«qué ha hecho X» = PROFILE_BUYER"
+    },
+    "R0342": {
+      "source": "A",
+      "rule": "C6+B4",
+      "why": "sustantivo explícito manda; «celebrado» = estado signed"
+    }
+  },
+  "normalized": {
+    "R0020": [
+      "C1"
+    ],
+    "R0021": [
+      "C1"
+    ],
+    "R0022": [
+      "C1"
+    ],
+    "R0023": [
+      "C1"
+    ],
+    "R0069": [
+      "DECISION:A2+C4"
+    ],
+    "R0188": [
+      "C7"
+    ],
+    "R0191": [
+      "DECISION:C3"
+    ],
+    "R0216": [
+      "DECISION:B6+C4"
+    ],
+    "R0219": [
+      "DECISION:—"
+    ],
+    "R0323": [
+      "C2"
+    ],
+    "R0338": [
+      "C2"
+    ],
+    "R0342": [
+      "DECISION:C6+B4"
+    ],
+    "R0346": [
+      "DECISION:§6"
+    ],
+    "R0348": [
+      "C2"
+    ],
+    "R0361": [
+      "DECISION:—"
+    ],
+    "R0371": [
+      "C2"
+    ],
+    "R0377": [
+      "DECISION:—"
+    ],
+    "R0389": [
+      "DECISION:B5"
+    ],
+    "R0398": [
+      "C7"
+    ],
+    "R0415": [
+      "DECISION:C1"
+    ],
+    "R0417": [
+      "C2"
+    ],
+    "R0424": [
+      "C1"
+    ],
+    "R0435": [
+      "DECISION:C2"
+    ],
+    "R0469": [
+      "C1"
+    ],
+    "R0482": [
+      "C7"
+    ],
+    "R0510": [
+      "C7",
+      "DECISION:C7"
+    ],
+    "R0511": [
+      "C7",
+      "DECISION:C7"
+    ],
+    "R0518": [
+      "C7"
+    ],
+    "R0520": [
+      "C7"
+    ],
+    "R0522": [
+      "C7"
+    ],
+    "R0524": [
+      "DECISION:§3"
+    ],
+    "R0525": [
+      "DECISION:B3"
+    ],
+    "R0534": [
+      "C7"
+    ],
+    "R0536": [
+      "C2"
+    ],
+    "R0539": [
+      "C7"
+    ],
+    "R0542": [
+      "C2"
+    ],
+    "R0547": [
+      "C7"
+    ],
+    "R0548": [
+      "C7"
+    ],
+    "R0549": [
+      "C7"
+    ],
+    "R0550": [
+      "C7"
+    ],
+    "R0551": [
+      "C7"
+    ],
+    "R0552": [
+      "C7"
+    ],
+    "R0553": [
+      "DECISION:B6"
+    ],
+    "R0554": [
+      "C7"
+    ],
+    "R0559": [
+      "C7"
+    ],
+    "R0563": [
+      "C7"
+    ],
+    "R0566": [
+      "C2"
+    ],
+    "S026": [
+      "C1"
+    ],
+    "S032": [
+      "C7"
+    ],
+    "S033": [
+      "C7"
+    ],
+    "S034": [
+      "C7"
+    ]
+  }
+}

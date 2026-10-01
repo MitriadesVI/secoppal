@@ -1,0 +1,6097 @@
+{
+ "distribution": {
+  "admission": {
+   "NEEDS_CLARIFICATION|TOPIC_ONLY_REQUEST_UNIVERSE": 18,
+   "NEEDS_CLARIFICATION|TOPIC_OVERLAPS_REQUEST_UNIVERSE": 19,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:BUYER": 28,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:CONTRACT_TYPE_OR_NATURE": 4,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:GEOGRAPHY": 30,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:MODALITY": 2,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:STATE": 16,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:TIME": 6,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:VALUE": 3,
+   "NEEDS_CLARIFICATION|VALUE_OPERATOR_BOUNDARY_MISMATCH": 2,
+   "NEEDS_CLARIFICATION|VALUE_OPERATOR_EVIDENCE_MISMATCH": 2,
+   "NEEDS_CLARIFICATION|VALUE_OPERATOR_UNGROUNDED": 29,
+   "NO_ACTION|NO_REQUEST": 73,
+   "READY|NONE": 217,
+   "UNSUPPORTED|MULTI_REQUEST": 1,
+   "UNSUPPORTED|UNACCREDITED_MODALITY_FAMILY": 6,
+   "UNSUPPORTED|UNSUPPORTED_CONDITION": 159,
+   "UNSUPPORTED|UNSUPPORTED_OPERATION": 5
+  },
+  "condition_funnel_by_dimension": {
+   "BUYER": {
+    "gate_admitted": 107,
+    "host_ready": 148,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:BUYER": 37,
+    "host_unresolved:UNSUPPORTED_OPERATION": 4,
+    "projection_unsupported:BUYER_SOURCE_PROJECTION_REQUIRED": 54,
+    "proposed": 189
+   },
+   "CONTRACT_TYPE_OR_NATURE": {
+    "gate_admitted": 0,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:CONTRACT_TYPE_OR_NATURE": 5,
+    "proposed": 5
+   },
+   "GEOGRAPHY": {
+    "gate_admitted": 114,
+    "host_ready": 123,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY": 39,
+    "host_unresolved:UNSUPPORTED_OPERATION": 1,
+    "proposed": 163
+   },
+   "MODALITY": {
+    "gate_admitted": 1,
+    "host_unresolved:UNACCREDITED_MODALITY_FAMILY": 6,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:MODALITY": 3,
+    "proposed": 9
+   },
+   "STATE": {
+    "gate_admitted": 42,
+    "host_ready": 37,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:STATE": 18,
+    "host_unresolved:UNSUPPORTED_OPERATION": 1,
+    "proposed": 56
+   },
+   "TIME": {
+    "gate_admitted": 124,
+    "host_ready": 183,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:TIME": 9,
+    "host_unresolved:UNSUPPORTED_OPERATION": 5,
+    "projection_unsupported:UNSUPPORTED_OPPORTUNITY_OVERRIDE": 3,
+    "proposed": 197
+   },
+   "TOPIC": {
+    "gate_admitted": 164,
+    "host_ready": 220,
+    "host_unresolved:MULTI_REQUEST": 1,
+    "host_unresolved:TOPIC_ONLY_REQUEST_UNIVERSE": 19,
+    "host_unresolved:TOPIC_OVERLAPS_REQUEST_UNIVERSE": 22,
+    "host_unresolved:UNSUPPORTED_OPERATION": 1,
+    "proposed": 263
+   },
+   "UNSUPPORTED": {
+    "gate_admitted": 34,
+    "host_unresolved:UNSUPPORTED_CONDITION": 175,
+    "proposed": 175
+   },
+   "VALUE": {
+    "gate_admitted": 88,
+    "host_ready": 71,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:VALUE": 3,
+    "host_unresolved:UNSUPPORTED_OPERATION": 3,
+    "host_unresolved:VALUE_OPERATOR_BOUNDARY_MISMATCH": 2,
+    "host_unresolved:VALUE_OPERATOR_EVIDENCE_MISMATCH": 2,
+    "host_unresolved:VALUE_OPERATOR_UNGROUNDED": 38,
+    "projection_unsupported:UNSUPPORTED_CONDITION": 1,
+    "proposed": 119
+   }
+  },
+  "foundation_dims": {
+   "BUYER/is/POSITIVE": 189,
+   "CONTRACT_TYPE_OR_NATURE/is/POSITIVE": 5,
+   "GEOGRAPHY/is/POSITIVE": 163,
+   "MODALITY/family/POSITIVE": 9,
+   "STATE/family/POSITIVE": 42,
+   "STATE/is/POSITIVE": 14,
+   "TIME/during_year/POSITIVE": 197,
+   "TOPIC/contains/POSITIVE": 260,
+   "TOPIC/whole_token_folded/POSITIVE": 3,
+   "UNSUPPORTED": 175,
+   "VALUE/greater_than/NEGATIVE": 1,
+   "VALUE/greater_than/POSITIVE": 98,
+   "VALUE/less_than/POSITIVE": 20
+  },
+  "foundation_logic": {
+   "multi_request": 2,
+   "request_with_OR_NOT": 6
+  },
+  "foundation_no_request_vs_legacy": {
+   "legacy_handled_as:ACTOR_PROFILE": 2,
+   "legacy_handled_as:CLARIFY": 43,
+   "legacy_handled_as:ENTITY_PROFILE": 2,
+   "legacy_handled_as:SEARCH": 26
+  },
+  "foundation_ops": {
+   "COUNT": 5,
+   "SEARCH": 542,
+   "SUM_VALUE": 2
+  },
+  "foundation_vs_legacy": {
+   "ACTOR": {
+    "legacy_only": 110,
+    "neither": 437
+   },
+   "BUYER": {
+    "both": 165,
+    "foundation_only": 21,
+    "legacy_only": 8
+   },
+   "CONTRACT_TYPE_OR_NATURE": {
+    "both": 4,
+    "foundation_only": 1,
+    "legacy_only": 8
+   },
+   "GEOGRAPHY": {
+    "both": 151,
+    "foundation_only": 11,
+    "legacy_only": 2
+   },
+   "MODALITY": {
+    "both": 8,
+    "foundation_only": 1,
+    "legacy_only": 15
+   },
+   "ORDER": {
+    "legacy_only": 30,
+    "neither": 517
+   },
+   "STATE": {
+    "both": 50,
+    "foundation_only": 4,
+    "legacy_only": 42
+   },
+   "TIME": {
+    "both": 186,
+    "foundation_only": 4,
+    "legacy_only": 5
+   },
+   "TOPIC": {
+    "both": 245,
+    "foundation_only": 10,
+    "legacy_only": 39
+   },
+   "UNIVERSE": {
+    "agree": 496,
+    "disagree": 51
+   },
+   "UNSUPPORTED": {
+    "foundation_only": 159
+   },
+   "VALUE": {
+    "both": 99,
+    "foundation_only": 12
+   },
+   "VIEW_OPPORTUNITY": {
+    "agree": 477,
+    "foundation_only": 27,
+    "legacy_only": 43
+   }
+  },
+  "gate": {
+   "ADMITTED": 270,
+   "INELIGIBLE_LEXICAL": 280,
+   "VETOED_BY_OWNER": 70,
+   "eligible_but_vetoed:ACTOR": 68,
+   "eligible_but_vetoed:ANALYTICS": 2,
+   "owner_any:ACTOR": 114,
+   "owner_any:ANALYTICS": 2,
+   "owner_any:CONTRACT_ACTIVITY": 3,
+   "owner_any:ENTITY_PROFILE": 12
+  },
+  "h7": {
+   "authority:HOST_CLOSED_POLICY": 54,
+   "authority:PRODUCER": 495,
+   "producer_kind:opportunities->opportunities": 64,
+   "producer_kind:records->opportunities": 5,
+   "producer_kind:records->records": 480,
+   "rule:O3": 20,
+   "rule:O3-INTENT": 14,
+   "rule:O6A": 5,
+   "rule:O6B": 6,
+   "rule:O7": 9
+  },
+  "host_final": {
+   "final:NEEDS_CLARIFICATION|TOPIC_ONLY_REQUEST_UNIVERSE": 18,
+   "final:NEEDS_CLARIFICATION|TOPIC_OVERLAPS_REQUEST_UNIVERSE": 19,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:BUYER": 28,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:CONTRACT_TYPE_OR_NATURE": 4,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:GEOGRAPHY": 30,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:MODALITY": 2,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:STATE": 16,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:TIME": 6,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:VALUE": 3,
+   "final:NEEDS_CLARIFICATION|VALUE_OPERATOR_BOUNDARY_MISMATCH": 2,
+   "final:NEEDS_CLARIFICATION|VALUE_OPERATOR_EVIDENCE_MISMATCH": 2,
+   "final:NEEDS_CLARIFICATION|VALUE_OPERATOR_UNGROUNDED": 29,
+   "final:NO_ACTION|NO_REQUEST": 73,
+   "final:READY|NONE": 160,
+   "final:UNSUPPORTED|BUYER_SOURCE_PROJECTION_REQUIRED": 41,
+   "final:UNSUPPORTED|CONFLICTING_PROJECTION_KEY": 4,
+   "final:UNSUPPORTED|MULTI_REQUEST": 1,
+   "final:UNSUPPORTED|NONCONJUNCTIVE_EXPRESSION": 4,
+   "final:UNSUPPORTED|SOQL_PROJECTION_BLOCKED": 4,
+   "final:UNSUPPORTED|UNACCREDITED_MODALITY_FAMILY": 6,
+   "final:UNSUPPORTED|UNSUPPORTED_CONDITION": 160,
+   "final:UNSUPPORTED|UNSUPPORTED_OPERATION": 5,
+   "final:UNSUPPORTED|UNSUPPORTED_OPPORTUNITY_OVERRIDE": 3
+  },
+  "legacy_condition_ops": {
+   "ACTOR/is": 114,
+   "BUYER/is": 179,
+   "CONTRACT_TYPE_OR_NATURE/is": 12,
+   "GEOGRAPHY/DEPARTMENT": 135,
+   "GEOGRAPHY/MUNICIPALITY": 54,
+   "GEOGRAPHY/REGION": 9,
+   "MODALITY/family": 23,
+   "ORDER/date_desc": 2,
+   "ORDER/value_desc": 31,
+   "STATE/family": 91,
+   "STATE/is": 1,
+   "TIME/between_dates": 20,
+   "TIME/during_month": 23,
+   "TIME/during_year": 165,
+   "TOPIC/contains": 303,
+   "VALUE/greater_or_equal": 90,
+   "VALUE/less_or_equal": 32
+  },
+  "legacy_dims": {
+   "ACTOR/POSITIVE": 114,
+   "BUYER/POSITIVE": 179,
+   "CONTRACT_TYPE_OR_NATURE/POSITIVE": 12,
+   "GEOGRAPHY/POSITIVE": 198,
+   "MODALITY/POSITIVE": 23,
+   "ORDER/POSITIVE": 33,
+   "STATE/POSITIVE": 92,
+   "TIME/POSITIVE": 208,
+   "TOPIC/NEGATIVE": 1,
+   "TOPIC/POSITIVE": 302,
+   "VALUE/POSITIVE": 122
+  },
+  "legacy_handled_as": {
+   "ACTOR_PROFILE": 46,
+   "ANALYTICS": 2,
+   "CLARIFY": 181,
+   "ENTITY_PROFILE": 10,
+   "SEARCH": 381
+  },
+  "legacy_routes": {
+   "actor_profile": 46,
+   "analytics_aggregate_sum": 1,
+   "analytics_temporal": 1,
+   "entity_profile_overview": 9,
+   "entity_profile_scope_clarification": 1,
+   "heuristic_only": 550,
+   "heuristic_plus_llm": 12
+  },
+  "n": 620,
+  "producer": {
+   "PROPOSAL": 620
+  },
+  "producer_latency_ms": {
+   "final_attempt_max": 3009.2,
+   "final_attempt_p50": 1626.4,
+   "final_attempt_p90": 1951.5,
+   "with_retry_p50": 1626.4,
+   "with_retry_p90": 1951.5
+  },
+  "projection": {
+   "NOT_REACHED|NONE": 403,
+   "READY|NONE": 160,
+   "UNSUPPORTED|BUYER_SOURCE_PROJECTION_REQUIRED": 41,
+   "UNSUPPORTED|CONFLICTING_PROJECTION_KEY": 4,
+   "UNSUPPORTED|NONCONJUNCTIVE_EXPRESSION": 4,
+   "UNSUPPORTED|SOQL_PROJECTION_BLOCKED": 4,
+   "UNSUPPORTED|UNSUPPORTED_CONDITION": 1,
+   "UNSUPPORTED|UNSUPPORTED_OPPORTUNITY_OVERRIDE": 3
+  },
+  "ready_but_legacy_saw_dimension_foundation_lacks": {
+   "ACTOR|not_admitted": 3,
+   "CONTRACT_TYPE_OR_NATURE|admitted": 4,
+   "CONTRACT_TYPE_OR_NATURE|not_admitted": 1,
+   "MODALITY|admitted": 6,
+   "MODALITY|not_admitted": 3,
+   "STATE|admitted": 13,
+   "STATE|not_admitted": 8,
+   "TIME_NARROWED_TO_YEAR|admitted": 7,
+   "TOPIC|not_admitted": 2
+  },
+  "retried_calls": 0,
+  "stage_by_gate": {
+   "ADMITTED|F_READY_ADMITTED": 117,
+   "ADMITTED|HOST_NEEDS_CLARIFICATION": 76,
+   "ADMITTED|HOST_UNSUPPORTED": 33,
+   "ADMITTED|PROJECTION_UNSUPPORTED": 44,
+   "NOT_ADMITTED|GATE_EXCLUDED_F_READY": 43,
+   "NOT_ADMITTED|HOST_NEEDS_CLARIFICATION": 83,
+   "NOT_ADMITTED|HOST_NO_ACTION": 73,
+   "NOT_ADMITTED|HOST_UNSUPPORTED": 138,
+   "NOT_ADMITTED|PROJECTION_UNSUPPORTED": 13
+  },
+  "stage_by_slice": {
+   "REAL": {
+    "F_READY_ADMITTED": 110,
+    "GATE_EXCLUDED_F_READY": 37,
+    "HOST_NEEDS_CLARIFICATION": 151,
+    "HOST_NO_ACTION": 72,
+    "HOST_UNSUPPORTED": 166,
+    "PROJECTION_UNSUPPORTED": 49
+   },
+   "SYNTHETIC": {
+    "F_READY_ADMITTED": 7,
+    "GATE_EXCLUDED_F_READY": 6,
+    "HOST_NEEDS_CLARIFICATION": 8,
+    "HOST_NO_ACTION": 1,
+    "HOST_UNSUPPORTED": 5,
+    "PROJECTION_UNSUPPORTED": 8
+   }
+  },
+  "stage_without_gold": {
+   "F_READY_ADMITTED": 117,
+   "GATE_EXCLUDED_F_READY": 43,
+   "HOST_NEEDS_CLARIFICATION": 159,
+   "HOST_NO_ACTION": 73,
+   "HOST_UNSUPPORTED": 171,
+   "PROJECTION_UNSUPPORTED": 57
+  },
+  "time_cross_legacy_vs_foundation": {
+   "legacy:between_dates | foundation:during_year": 12,
+   "legacy:between_dates | foundation:during_year/+UNSUPPORTED": 1,
+   "legacy:between_dates | foundation:none/+UNSUPPORTED": 2,
+   "legacy:during_month | foundation:during_year": 13,
+   "legacy:during_month | foundation:during_year/+UNSUPPORTED": 6,
+   "legacy:during_month | foundation:none/+UNSUPPORTED": 1,
+   "legacy:during_year | foundation:during_year": 129,
+   "legacy:during_year | foundation:during_year/+UNSUPPORTED": 25,
+   "legacy:during_year | foundation:none/+UNSUPPORTED": 2,
+   "legacy:none | foundation:during_year": 2,
+   "legacy:none | foundation:during_year/+UNSUPPORTED": 2,
+   "legacy:none | foundation:none": 232,
+   "legacy:none | foundation:none/+UNSUPPORTED": 120
+  },
+  "unsupported_conditions_by_class": {
+   "ACTOR_LIKE": 116,
+   "ORDER_LIKE": 11,
+   "OTHER": 38,
+   "TIME_LIKE": 10
+  },
+  "unsupported_labels_ge5": {
+   "identificador de proveedor": 5,
+   "mes": 5,
+   "nombre de persona": 6,
+   "proveedor": 41,
+   "proveedor nombrado": 5
+  },
+  "value_operator_rejections_by_class": {
+   "BETWEEN_RANGE": 12,
+   "COMPARATIVE_LEXICON_GAP": 8,
+   "INCLUSIVE_BOUND": 8,
+   "ORDER_LANGUAGE": 11,
+   "OTHER": 3
+  }
+ },
+ "gold": {
+  "by_op_class": {
+   "COUNT": {
+    "OPERATION/COUNT": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 4
+     },
+     "GOLD": 4,
+     "LEGACY": {
+      "L_WRONG": 4
+     }
+    }
+   },
+   "FOLLOW": {
+    "OPERATION/FOLLOW": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_WRONG": 1
+     }
+    }
+   },
+   "FOLLOWUP_DELTA": {
+    "OPERATION/FOLLOWUP_DELTA": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 64
+     },
+     "GOLD": 64,
+     "LEGACY": {
+      "L_WRONG": 64
+     }
+    }
+   },
+   "GROUP_BY": {
+    "OPERATION/GROUP_BY": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_WRONG": 1
+     }
+    }
+   },
+   "PROFILE_ACTOR": {
+    "OPERATION/PROFILE_ACTOR": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 41
+     },
+     "GOLD": 41,
+     "LEGACY": {
+      "L_OK": 22,
+      "L_WRONG": 19
+     }
+    }
+   },
+   "PROFILE_BUYER": {
+    "OPERATION/PROFILE_BUYER": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 12
+     },
+     "GOLD": 12,
+     "LEGACY": {
+      "L_OK": 8,
+      "L_WRONG": 4
+     }
+    }
+   },
+   "PROTOCOL": {
+    "OPERATION/PROTOCOL": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 21
+     },
+     "GOLD": 21,
+     "LEGACY": {
+      "L_WRONG": 21
+     }
+    }
+   },
+   "RANK_SUPPLIERS": {
+    "OPERATION/RANK_SUPPLIERS": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 16
+     },
+     "GOLD": 16,
+     "LEGACY": {
+      "L_WRONG": 16
+     }
+    }
+   },
+   "SEARCH:CONTRACTS": {
+    "ACTOR": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 77
+     },
+     "GOLD": 77,
+     "LEGACY": {
+      "L_MISSING": 9,
+      "L_OK": 68
+     }
+    },
+    "BUYER": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 2,
+      "F_PROPOSED_HOST_UNRESOLVED": 8,
+      "GATE_EXCLUDED": 20,
+      "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 38,
+      "OK": 44
+     },
+     "GOLD": 112,
+     "LEGACY": {
+      "L_MISSING": 2,
+      "L_OK": 106,
+      "L_WRONG": 4
+     }
+    },
+    "CONTRACT_TYPE_OR_NATURE": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 11,
+      "F_PROPOSED_HOST_UNRESOLVED": 1
+     },
+     "GOLD": 12,
+     "LEGACY": {
+      "L_MISSING": 3,
+      "L_OK": 9
+     }
+    },
+    "GEOGRAPHY/DEPARTMENT": {
+     "FOUNDATION": {
+      "GATE_EXCLUDED": 3,
+      "OK": 46
+     },
+     "GOLD": 49,
+     "LEGACY": {
+      "L_OK": 49
+     }
+    },
+    "GEOGRAPHY/MUNICIPALITY": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1,
+      "F_PROPOSED_HOST_UNRESOLVED": 13,
+      "GATE_EXCLUDED": 1,
+      "OK": 5
+     },
+     "GOLD": 20,
+     "LEGACY": {
+      "L_MISSING": 1,
+      "L_OK": 12,
+      "L_WRONG": 7
+     }
+    },
+    "LOGIC_OR_NOT": {
+     "FOUNDATION": {
+      "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 2,
+      "OK": 1
+     },
+     "GOLD": 3,
+     "LEGACY": {
+      "L_WRONG": 3
+     }
+    },
+    "MODALITY": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 3
+     },
+     "GOLD": 3,
+     "LEGACY": {
+      "L_OK": 3
+     }
+    },
+    "OPERATION/MULTI": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_WRONG": 1
+     }
+    },
+    "ORDER/date_desc": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_OK": 1
+     }
+    },
+    "ORDER/value_desc": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 20
+     },
+     "GOLD": 20,
+     "LEGACY": {
+      "L_OK": 20
+     }
+    },
+    "STATE": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 2,
+      "F_PROPOSED_HOST_UNRESOLVED": 5
+     },
+     "GOLD": 7,
+     "LEGACY": {
+      "L_MISSING": 2,
+      "L_OK": 3,
+      "L_WRONG": 2
+     }
+    },
+    "TIME/between_dates": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 13
+     },
+     "GOLD": 13,
+     "LEGACY": {
+      "L_OK": 13
+     }
+    },
+    "TIME/during_month": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 15
+     },
+     "GOLD": 15,
+     "LEGACY": {
+      "L_OK": 10,
+      "L_WRONG": 5
+     }
+    },
+    "TIME/during_year": {
+     "FOUNDATION": {
+      "GATE_EXCLUDED": 25,
+      "OK": 68
+     },
+     "GOLD": 93,
+     "LEGACY": {
+      "L_OK": 93
+     }
+    },
+    "TIME/relative_period": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_MISSING": 2
+     }
+    },
+    "TOPIC": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1,
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 19,
+      "OK": 96
+     },
+     "GOLD": 117,
+     "LEGACY": {
+      "L_MISSING": 4,
+      "L_OK": 105,
+      "L_WRONG": 8
+     }
+    },
+    "UNIVERSE_VIEW": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 102,
+      "OK": 166
+     },
+     "GOLD": 269,
+     "LEGACY": {
+      "L_OK": 263,
+      "L_WRONG": 6
+     }
+    },
+    "UNSUPPORTED": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 3
+     },
+     "GOLD": 3,
+     "LEGACY": {
+      "L_MISSING": 3
+     }
+    },
+    "VALUE/greater_or_equal": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 8
+     },
+     "GOLD": 8,
+     "LEGACY": {
+      "L_OK": 8
+     }
+    },
+    "VALUE/greater_than": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 5,
+      "GATE_EXCLUDED": 5,
+      "OK": 32
+     },
+     "GOLD": 42,
+     "LEGACY": {
+      "L_OK": 40,
+      "L_WRONG": 2
+     }
+    },
+    "VALUE/less_or_equal": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 11
+     },
+     "GOLD": 11,
+     "LEGACY": {
+      "L_OK": 11
+     }
+    },
+    "VALUE/less_than": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "OK": 4
+     },
+     "GOLD": 5,
+     "LEGACY": {
+      "L_OK": 5
+     }
+    }
+   },
+   "SEARCH:DUAL": {
+    "GEOGRAPHY/DEPARTMENT": {
+     "FOUNDATION": {
+      "OK": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 2
+     }
+    },
+    "TOPIC": {
+     "FOUNDATION": {
+      "OK": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 2
+     }
+    },
+    "UNIVERSE_VIEW": {
+     "FOUNDATION": {
+      "OK": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 2
+     }
+    },
+    "VALUE/greater_than": {
+     "FOUNDATION": {
+      "OK": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 2
+     }
+    },
+    "VALUE/less_than": {
+     "FOUNDATION": {
+      "OK": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 2
+     }
+    }
+   },
+   "SEARCH:OPPORTUNITIES": {
+    "BUYER": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 1,
+      "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 2
+     },
+     "GOLD": 4,
+     "LEGACY": {
+      "L_OK": 4
+     }
+    },
+    "CONTRACT_TYPE_OR_NATURE": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_MISSING": 1
+     }
+    },
+    "GEOGRAPHY/DEPARTMENT": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 4,
+      "OK": 4
+     },
+     "GOLD": 9,
+     "LEGACY": {
+      "L_MISSING": 1,
+      "L_OK": 8
+     }
+    },
+    "LOGIC_OR_NOT": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1,
+      "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 2
+     },
+     "GOLD": 3,
+     "LEGACY": {
+      "L_WRONG": 3
+     }
+    },
+    "MODALITY": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_OK": 1
+     }
+    },
+    "OPERATION/MULTI": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_WRONG": 1
+     }
+    },
+    "STATE": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 3,
+      "OK": 2
+     },
+     "GOLD": 6,
+     "LEGACY": {
+      "L_MISSING": 1,
+      "L_OK": 5
+     }
+    },
+    "TIME/during_month": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_WRONG": 1
+     }
+    },
+    "TIME/during_year": {
+     "FOUNDATION": {
+      "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 3
+     },
+     "GOLD": 3,
+     "LEGACY": {
+      "L_OK": 3
+     }
+    },
+    "TOPIC": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1,
+      "GATE_EXCLUDED": 20,
+      "OK": 20
+     },
+     "GOLD": 41,
+     "LEGACY": {
+      "L_OK": 32,
+      "L_WRONG": 9
+     }
+    },
+    "UNIVERSE_VIEW": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1,
+      "GATE_EXCLUDED": 23,
+      "OK": 21
+     },
+     "GOLD": 45,
+     "LEGACY": {
+      "L_OK": 39,
+      "L_WRONG": 6
+     }
+    },
+    "VALUE/greater_or_equal": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 3
+     },
+     "GOLD": 3,
+     "LEGACY": {
+      "L_OK": 3
+     }
+    },
+    "VALUE/greater_than": {
+     "FOUNDATION": {
+      "GATE_EXCLUDED": 1,
+      "OK": 3
+     },
+     "GOLD": 4,
+     "LEGACY": {
+      "L_OK": 4
+     }
+    },
+    "VALUE/less_or_equal": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 2
+     }
+    }
+   },
+   "SEARCH:PROCESSES": {
+    "BUYER": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 6,
+      "F_PROPOSED_HOST_UNRESOLVED": 2,
+      "GATE_EXCLUDED": 1,
+      "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 9,
+      "OK": 8
+     },
+     "GOLD": 26,
+     "LEGACY": {
+      "L_MISSING": 2,
+      "L_OK": 24
+     }
+    },
+    "CONTRACT_TYPE_OR_NATURE": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_MISSING": 1,
+      "L_OK": 1
+     }
+    },
+    "GEOGRAPHY/DEPARTMENT": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 2,
+      "OK": 28
+     },
+     "GOLD": 31,
+     "LEGACY": {
+      "L_MISSING": 1,
+      "L_OK": 30
+     }
+    },
+    "GEOGRAPHY/MUNICIPALITY": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 4,
+      "OK": 1
+     },
+     "GOLD": 5,
+     "LEGACY": {
+      "L_OK": 4,
+      "L_WRONG": 1
+     }
+    },
+    "GEOGRAPHY/REGION": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 3
+     },
+     "GOLD": 3,
+     "LEGACY": {
+      "L_OK": 3
+     }
+    },
+    "LOGIC_OR_NOT": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1,
+      "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 1
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_WRONG": 2
+     }
+    },
+    "MODALITY": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 3,
+      "F_PROPOSED_HOST_UNRESOLVED": 4
+     },
+     "GOLD": 7,
+     "LEGACY": {
+      "L_MISSING": 3,
+      "L_OK": 4
+     }
+    },
+    "STATE": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 8,
+      "F_PROPOSED_HOST_UNRESOLVED": 10,
+      "GATE_EXCLUDED": 3,
+      "OK": 24
+     },
+     "GOLD": 45,
+     "LEGACY": {
+      "L_MISSING": 4,
+      "L_OK": 32,
+      "L_WRONG": 9
+     }
+    },
+    "TIME/during_month": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 2
+     }
+    },
+    "TIME/during_year": {
+     "FOUNDATION": {
+      "GATE_EXCLUDED": 2,
+      "OK": 27
+     },
+     "GOLD": 29,
+     "LEGACY": {
+      "L_OK": 29
+     }
+    },
+    "TOPIC": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 1,
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 4,
+      "OK": 35
+     },
+     "GOLD": 41,
+     "LEGACY": {
+      "L_OK": 35,
+      "L_WRONG": 6
+     }
+    },
+    "UNIVERSE_VIEW": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 3,
+      "GATE_EXCLUDED": 8,
+      "OK": 72
+     },
+     "GOLD": 83,
+     "LEGACY": {
+      "L_OK": 44,
+      "L_WRONG": 39
+     }
+    },
+    "UNSUPPORTED": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 2,
+      "F_PROPOSED_HOST_UNRESOLVED": 1
+     },
+     "GOLD": 3,
+     "LEGACY": {
+      "L_MISSING": 3
+     }
+    },
+    "VALUE/greater_than": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 1,
+      "OK": 10
+     },
+     "GOLD": 12,
+     "LEGACY": {
+      "L_OK": 12
+     }
+    },
+    "VALUE/less_than": {
+     "FOUNDATION": {
+      "OK": 5
+     },
+     "GOLD": 5,
+     "LEGACY": {
+      "L_OK": 5
+     }
+    }
+   },
+   "SEARCH:UNSPECIFIED": {
+    "ACTOR": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_MISSING": 2
+     }
+    },
+    "BUYER": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 4,
+      "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 2
+     },
+     "GOLD": 7,
+     "LEGACY": {
+      "L_OK": 7
+     }
+    },
+    "GEOGRAPHY/DEPARTMENT": {
+     "FOUNDATION": {
+      "GATE_EXCLUDED": 25
+     },
+     "GOLD": 25,
+     "LEGACY": {
+      "L_OK": 25
+     }
+    },
+    "GEOGRAPHY/MUNICIPALITY": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 1
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 1,
+      "L_WRONG": 1
+     }
+    },
+    "GEOGRAPHY/REGION": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 2
+     }
+    },
+    "ORDER/value_desc": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 2
+     },
+     "GOLD": 2,
+     "LEGACY": {
+      "L_OK": 2
+     }
+    },
+    "STATE": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1,
+      "GATE_EXCLUDED": 2
+     },
+     "GOLD": 3,
+     "LEGACY": {
+      "L_OK": 3
+     }
+    },
+    "TIME/during_year": {
+     "FOUNDATION": {
+      "GATE_EXCLUDED": 5
+     },
+     "GOLD": 5,
+     "LEGACY": {
+      "L_OK": 5
+     }
+    },
+    "TOPIC": {
+     "FOUNDATION": {
+      "F_NOT_PROPOSED": 2,
+      "F_PROPOSED_HOST_UNRESOLVED": 39,
+      "GATE_EXCLUDED": 5
+     },
+     "GOLD": 46,
+     "LEGACY": {
+      "L_OK": 35,
+      "L_WRONG": 11
+     }
+    },
+    "UNIVERSE_VIEW": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 50
+     },
+     "GOLD": 50,
+     "LEGACY": {
+      "L_OK": 8,
+      "L_WRONG": 42
+     }
+    },
+    "VALUE/greater_or_equal": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_OK": 1
+     }
+    },
+    "VALUE/greater_than": {
+     "FOUNDATION": {
+      "GATE_EXCLUDED": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_OK": 1
+     }
+    },
+    "VALUE/less_or_equal": {
+     "FOUNDATION": {
+      "IR_CANNOT_EXPRESS": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_OK": 1
+     }
+    },
+    "VALUE/less_than": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_OK": 1
+     }
+    }
+   },
+   "SUM_VALUE": {
+    "OPERATION/SUM_VALUE": {
+     "FOUNDATION": {
+      "F_PROPOSED_HOST_UNRESOLVED": 1
+     },
+     "GOLD": 1,
+     "LEGACY": {
+      "L_OK": 1
+     }
+    }
+   }
+  },
+  "entry_level": {
+   "AMBIGUOUS_SKIPPED": 8,
+   "ENTRY_PARITY:BOTH_OK": 60,
+   "ENTRY_PARITY:FOUNDATION_ONLY_OK": 41,
+   "ENTRY_PARITY:LEGACY_ONLY_OK": 209,
+   "ENTRY_PARITY:NEITHER_OK": 299,
+   "EVALUATED": 609,
+   "F:F_NOT_PROPOSED": 43,
+   "F:F_PROPOSED_HOST_UNRESOLVED": 53,
+   "F:GATE_EXCLUDED": 25,
+   "F:HOST_RESOLVED_PROJECTION_UNSUPPORTED": 39,
+   "F:IR_CANNOT_EXPRESS": 348,
+   "F:OK": 101,
+   "L:L_MISSING": 24,
+   "L:L_OK": 269,
+   "L:L_WRONG": 316
+  },
+  "entry_level_by_op_class": {
+   "COUNT": {
+    "F:F_PROPOSED_HOST_UNRESOLVED": 4,
+    "L:L_WRONG": 4
+   },
+   "FOLLOW": {
+    "F:IR_CANNOT_EXPRESS": 1,
+    "L:L_WRONG": 1
+   },
+   "FOLLOWUP_DELTA": {
+    "F:IR_CANNOT_EXPRESS": 64,
+    "L:L_WRONG": 64
+   },
+   "GROUP_BY": {
+    "F:IR_CANNOT_EXPRESS": 1,
+    "L:L_WRONG": 1
+   },
+   "PROFILE_ACTOR": {
+    "F:IR_CANNOT_EXPRESS": 41,
+    "L:L_OK": 22,
+    "L:L_WRONG": 19
+   },
+   "PROFILE_BUYER": {
+    "F:IR_CANNOT_EXPRESS": 12,
+    "L:L_OK": 8,
+    "L:L_WRONG": 4
+   },
+   "PROTOCOL": {
+    "F:IR_CANNOT_EXPRESS": 21,
+    "L:L_WRONG": 21
+   },
+   "RANK_SUPPLIERS": {
+    "F:IR_CANNOT_EXPRESS": 16,
+    "L:L_WRONG": 16
+   },
+   "SEARCH:CONTRACTS": {
+    "F:F_NOT_PROPOSED": 20,
+    "F:F_PROPOSED_HOST_UNRESOLVED": 24,
+    "F:GATE_EXCLUDED": 6,
+    "F:HOST_RESOLVED_PROJECTION_UNSUPPORTED": 26,
+    "F:IR_CANNOT_EXPRESS": 135,
+    "F:OK": 58,
+    "L:L_MISSING": 20,
+    "L:L_OK": 202,
+    "L:L_WRONG": 47
+   },
+   "SEARCH:DUAL": {
+    "F:OK": 1,
+    "L:L_OK": 1
+   },
+   "SEARCH:OPPORTUNITIES": {
+    "F:F_NOT_PROPOSED": 3,
+    "F:F_PROPOSED_HOST_UNRESOLVED": 3,
+    "F:GATE_EXCLUDED": 17,
+    "F:HOST_RESOLVED_PROJECTION_UNSUPPORTED": 6,
+    "F:IR_CANNOT_EXPRESS": 5,
+    "F:OK": 11,
+    "L:L_MISSING": 1,
+    "L:L_OK": 3,
+    "L:L_WRONG": 41
+   },
+   "SEARCH:PROCESSES": {
+    "F:F_NOT_PROPOSED": 20,
+    "F:F_PROPOSED_HOST_UNRESOLVED": 21,
+    "F:GATE_EXCLUDED": 2,
+    "F:HOST_RESOLVED_PROJECTION_UNSUPPORTED": 7,
+    "F:IR_CANNOT_EXPRESS": 2,
+    "F:OK": 31,
+    "L:L_MISSING": 3,
+    "L:L_OK": 25,
+    "L:L_WRONG": 55
+   },
+   "SEARCH:UNSPECIFIED": {
+    "F:IR_CANNOT_EXPRESS": 50,
+    "L:L_OK": 7,
+    "L:L_WRONG": 43
+   },
+   "SUM_VALUE": {
+    "F:F_PROPOSED_HOST_UNRESOLVED": 1,
+    "L:L_OK": 1
+   }
+  },
+  "foundation_unsupported_labels_ge5": {
+   "proveedor": 15
+  },
+  "gains_foundation_ok_legacy_not": [
+   {
+    "detail": "VIEW",
+    "gold_id": "R0001",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0003",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0006",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0024",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VALUE",
+    "gold_id": "R0025",
+    "key": "STATE",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0025",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0026",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0027",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0028",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VALUE",
+    "gold_id": "R0029",
+    "key": "STATE",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "",
+    "gold_id": "R0029",
+    "key": "GEOGRAPHY/DEPARTMENT",
+    "legacy": "L_MISSING"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0029",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0032",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0034",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0035",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0036",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0037",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0039",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0041",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0043",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "",
+    "gold_id": "R0047",
+    "key": "TOPIC",
+    "legacy": "L_MISSING"
+   },
+   {
+    "detail": "LEVEL:DEPARTMENT",
+    "gold_id": "R0047",
+    "key": "GEOGRAPHY/MUNICIPALITY",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0049",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "LEVEL:DEPARTMENT",
+    "gold_id": "R0052",
+    "key": "GEOGRAPHY/MUNICIPALITY",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "",
+    "gold_id": "R0056",
+    "key": "TOPIC",
+    "legacy": "L_MISSING"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0068",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0088",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0115",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0119",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "CONJUNCTION_ONLY",
+    "gold_id": "R0124",
+    "key": "LOGIC_OR_NOT",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "LEVEL:DEPARTMENT",
+    "gold_id": "R0142",
+    "key": "GEOGRAPHY/MUNICIPALITY",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VALUE",
+    "gold_id": "R0147",
+    "key": "BUYER",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VALUE",
+    "gold_id": "R0149",
+    "key": "BUYER",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VALUE",
+    "gold_id": "R0150",
+    "key": "STATE",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0150",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "LEVEL:DEPARTMENT",
+    "gold_id": "R0151",
+    "key": "GEOGRAPHY/MUNICIPALITY",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0151",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "LEVEL:DEPARTMENT",
+    "gold_id": "R0162",
+    "key": "GEOGRAPHY/MUNICIPALITY",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "LEVEL:DEPARTMENT",
+    "gold_id": "R0175",
+    "key": "GEOGRAPHY/MUNICIPALITY",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0178",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0179",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0190",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0200",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0211",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0213",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "",
+    "gold_id": "R0215",
+    "key": "TOPIC",
+    "legacy": "L_MISSING"
+   },
+   {
+    "detail": "VALUE",
+    "gold_id": "R0234",
+    "key": "STATE",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0234",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0238",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0240",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0243",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0277",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "",
+    "gold_id": "R0279",
+    "key": "TOPIC",
+    "legacy": "L_MISSING"
+   },
+   {
+    "detail": "VALUE",
+    "gold_id": "R0285",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0334",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0352",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0359",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0368",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0429",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0544",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0562",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "R0570",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0572",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "PARTIAL_TOPIC",
+    "gold_id": "R0578",
+    "key": "TOPIC",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VIEW",
+    "gold_id": "S007",
+    "key": "UNIVERSE_VIEW",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VALUE",
+    "gold_id": "S010",
+    "key": "BUYER",
+    "legacy": "L_WRONG"
+   },
+   {
+    "detail": "VALUE",
+    "gold_id": "S021",
+    "key": "BUYER",
+    "legacy": "L_WRONG"
+   }
+  ],
+  "gold_without_capture": [],
+  "matrix": {
+   "ACTOR": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 79
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 79
+    },
+    "GOLD": 79,
+    "LEGACY": {
+     "L_MISSING": 11,
+     "L_OK": 68
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 68,
+     "NEITHER_OK": 11
+    }
+   },
+   "BUYER": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 8,
+     "F_PROPOSED_HOST_UNRESOLVED": 12,
+     "GATE_EXCLUDED": 26,
+     "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 51,
+     "OK": 52
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 8,
+     "F_PROPOSED_HOST_UNRESOLVED": 12,
+     "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 51,
+     "OK": 78
+    },
+    "GOLD": 149,
+    "LEGACY": {
+     "L_MISSING": 4,
+     "L_OK": 141,
+     "L_WRONG": 4
+    },
+    "PARITY": {
+     "BOTH_OK": 48,
+     "FOUNDATION_ONLY_OK": 4,
+     "LEGACY_ONLY_OK": 93,
+     "NEITHER_OK": 4
+    }
+   },
+   "CONTRACT_TYPE_OR_NATURE": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 14,
+     "F_PROPOSED_HOST_UNRESOLVED": 1
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 14,
+     "F_PROPOSED_HOST_UNRESOLVED": 1
+    },
+    "GOLD": 15,
+    "LEGACY": {
+     "L_MISSING": 5,
+     "L_OK": 10
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 10,
+     "NEITHER_OK": 5
+    }
+   },
+   "GEOGRAPHY/DEPARTMENT": {
+    "FOUNDATION": {
+     "F_PROPOSED_HOST_UNRESOLVED": 2,
+     "GATE_EXCLUDED": 34,
+     "OK": 80
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_PROPOSED_HOST_UNRESOLVED": 2,
+     "OK": 114
+    },
+    "GOLD": 116,
+    "LEGACY": {
+     "L_MISSING": 2,
+     "L_OK": 114
+    },
+    "PARITY": {
+     "BOTH_OK": 79,
+     "FOUNDATION_ONLY_OK": 1,
+     "LEGACY_ONLY_OK": 35,
+     "NEITHER_OK": 1
+    }
+   },
+   "GEOGRAPHY/MUNICIPALITY": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 1,
+     "F_PROPOSED_HOST_UNRESOLVED": 18,
+     "GATE_EXCLUDED": 2,
+     "OK": 6
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 1,
+     "F_PROPOSED_HOST_UNRESOLVED": 18,
+     "OK": 8
+    },
+    "GOLD": 27,
+    "LEGACY": {
+     "L_MISSING": 1,
+     "L_OK": 17,
+     "L_WRONG": 9
+    },
+    "PARITY": {
+     "FOUNDATION_ONLY_OK": 6,
+     "LEGACY_ONLY_OK": 17,
+     "NEITHER_OK": 4
+    }
+   },
+   "GEOGRAPHY/REGION": {
+    "FOUNDATION": {
+     "F_PROPOSED_HOST_UNRESOLVED": 5
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_PROPOSED_HOST_UNRESOLVED": 5
+    },
+    "GOLD": 5,
+    "LEGACY": {
+     "L_OK": 5
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 5
+    }
+   },
+   "LOGIC_OR_NOT": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 2,
+     "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 5,
+     "OK": 1
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 2,
+     "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 5,
+     "OK": 1
+    },
+    "GOLD": 8,
+    "LEGACY": {
+     "L_WRONG": 8
+    },
+    "PARITY": {
+     "FOUNDATION_ONLY_OK": 1,
+     "NEITHER_OK": 7
+    }
+   },
+   "MODALITY": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 6,
+     "F_PROPOSED_HOST_UNRESOLVED": 5
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 6,
+     "F_PROPOSED_HOST_UNRESOLVED": 5
+    },
+    "GOLD": 11,
+    "LEGACY": {
+     "L_MISSING": 3,
+     "L_OK": 8
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 8,
+     "NEITHER_OK": 3
+    }
+   },
+   "OPERATION/COUNT": {
+    "FOUNDATION": {
+     "F_PROPOSED_HOST_UNRESOLVED": 4
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_PROPOSED_HOST_UNRESOLVED": 4
+    },
+    "GOLD": 4,
+    "LEGACY": {
+     "L_WRONG": 4
+    },
+    "PARITY": {
+     "NEITHER_OK": 4
+    }
+   },
+   "OPERATION/FOLLOW": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 1
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 1
+    },
+    "GOLD": 1,
+    "LEGACY": {
+     "L_WRONG": 1
+    },
+    "PARITY": {
+     "NEITHER_OK": 1
+    }
+   },
+   "OPERATION/FOLLOWUP_DELTA": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 64
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 64
+    },
+    "GOLD": 64,
+    "LEGACY": {
+     "L_WRONG": 64
+    },
+    "PARITY": {
+     "NEITHER_OK": 64
+    }
+   },
+   "OPERATION/GROUP_BY": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 1
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 1
+    },
+    "GOLD": 1,
+    "LEGACY": {
+     "L_WRONG": 1
+    },
+    "PARITY": {
+     "NEITHER_OK": 1
+    }
+   },
+   "OPERATION/MULTI": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 2
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 2
+    },
+    "GOLD": 2,
+    "LEGACY": {
+     "L_WRONG": 2
+    },
+    "PARITY": {
+     "NEITHER_OK": 2
+    }
+   },
+   "OPERATION/PROFILE_ACTOR": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 41
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 41
+    },
+    "GOLD": 41,
+    "LEGACY": {
+     "L_OK": 22,
+     "L_WRONG": 19
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 22,
+     "NEITHER_OK": 19
+    }
+   },
+   "OPERATION/PROFILE_BUYER": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 12
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 12
+    },
+    "GOLD": 12,
+    "LEGACY": {
+     "L_OK": 8,
+     "L_WRONG": 4
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 8,
+     "NEITHER_OK": 4
+    }
+   },
+   "OPERATION/PROTOCOL": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 21
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 21
+    },
+    "GOLD": 21,
+    "LEGACY": {
+     "L_WRONG": 21
+    },
+    "PARITY": {
+     "NEITHER_OK": 21
+    }
+   },
+   "OPERATION/RANK_SUPPLIERS": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 16
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 16
+    },
+    "GOLD": 16,
+    "LEGACY": {
+     "L_WRONG": 16
+    },
+    "PARITY": {
+     "NEITHER_OK": 16
+    }
+   },
+   "OPERATION/SUM_VALUE": {
+    "FOUNDATION": {
+     "F_PROPOSED_HOST_UNRESOLVED": 1
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_PROPOSED_HOST_UNRESOLVED": 1
+    },
+    "GOLD": 1,
+    "LEGACY": {
+     "L_OK": 1
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 1
+    }
+   },
+   "ORDER/date_desc": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 1
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 1
+    },
+    "GOLD": 1,
+    "LEGACY": {
+     "L_OK": 1
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 1
+    }
+   },
+   "ORDER/value_desc": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 22
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 22
+    },
+    "GOLD": 22,
+    "LEGACY": {
+     "L_OK": 22
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 22
+    }
+   },
+   "STATE": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 10,
+     "F_PROPOSED_HOST_UNRESOLVED": 17,
+     "GATE_EXCLUDED": 8,
+     "OK": 26
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 10,
+     "F_PROPOSED_HOST_UNRESOLVED": 17,
+     "OK": 34
+    },
+    "GOLD": 61,
+    "LEGACY": {
+     "L_MISSING": 7,
+     "L_OK": 43,
+     "L_WRONG": 11
+    },
+    "PARITY": {
+     "BOTH_OK": 22,
+     "FOUNDATION_ONLY_OK": 4,
+     "LEGACY_ONLY_OK": 21,
+     "NEITHER_OK": 14
+    }
+   },
+   "TIME/between_dates": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 13
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 13
+    },
+    "GOLD": 13,
+    "LEGACY": {
+     "L_OK": 13
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 13
+    }
+   },
+   "TIME/during_month": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 18
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 18
+    },
+    "GOLD": 18,
+    "LEGACY": {
+     "L_OK": 12,
+     "L_WRONG": 6
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 12,
+     "NEITHER_OK": 6
+    }
+   },
+   "TIME/during_year": {
+    "FOUNDATION": {
+     "GATE_EXCLUDED": 32,
+     "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 3,
+     "OK": 95
+    },
+    "FOUNDATION_INTRINSIC": {
+     "HOST_RESOLVED_PROJECTION_UNSUPPORTED": 3,
+     "OK": 127
+    },
+    "GOLD": 130,
+    "LEGACY": {
+     "L_OK": 130
+    },
+    "PARITY": {
+     "BOTH_OK": 95,
+     "LEGACY_ONLY_OK": 35
+    }
+   },
+   "TIME/relative_period": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 2
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 2
+    },
+    "GOLD": 2,
+    "LEGACY": {
+     "L_MISSING": 2
+    },
+    "PARITY": {
+     "NEITHER_OK": 2
+    }
+   },
+   "TOPIC": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 5,
+     "F_PROPOSED_HOST_UNRESOLVED": 41,
+     "GATE_EXCLUDED": 48,
+     "OK": 153
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 5,
+     "F_PROPOSED_HOST_UNRESOLVED": 41,
+     "OK": 201
+    },
+    "GOLD": 247,
+    "LEGACY": {
+     "L_MISSING": 4,
+     "L_OK": 209,
+     "L_WRONG": 34
+    },
+    "PARITY": {
+     "BOTH_OK": 136,
+     "FOUNDATION_ONLY_OK": 17,
+     "LEGACY_ONLY_OK": 73,
+     "NEITHER_OK": 21
+    }
+   },
+   "UNIVERSE_VIEW": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 4,
+     "F_PROPOSED_HOST_UNRESOLVED": 1,
+     "GATE_EXCLUDED": 133,
+     "IR_CANNOT_EXPRESS": 50,
+     "OK": 261
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 4,
+     "F_PROPOSED_HOST_UNRESOLVED": 1,
+     "IR_CANNOT_EXPRESS": 50,
+     "OK": 394
+    },
+    "GOLD": 449,
+    "LEGACY": {
+     "L_OK": 356,
+     "L_WRONG": 93
+    },
+    "PARITY": {
+     "BOTH_OK": 227,
+     "FOUNDATION_ONLY_OK": 34,
+     "LEGACY_ONLY_OK": 129,
+     "NEITHER_OK": 59
+    }
+   },
+   "UNSUPPORTED": {
+    "FOUNDATION": {
+     "F_NOT_PROPOSED": 5,
+     "F_PROPOSED_HOST_UNRESOLVED": 1
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_NOT_PROPOSED": 5,
+     "F_PROPOSED_HOST_UNRESOLVED": 1
+    },
+    "GOLD": 6,
+    "LEGACY": {
+     "L_MISSING": 6
+    },
+    "PARITY": {
+     "NEITHER_OK": 6
+    }
+   },
+   "VALUE/greater_or_equal": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 12
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 12
+    },
+    "GOLD": 12,
+    "LEGACY": {
+     "L_OK": 12
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 12
+    }
+   },
+   "VALUE/greater_than": {
+    "FOUNDATION": {
+     "F_PROPOSED_HOST_UNRESOLVED": 6,
+     "GATE_EXCLUDED": 8,
+     "OK": 47
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_PROPOSED_HOST_UNRESOLVED": 6,
+     "OK": 55
+    },
+    "GOLD": 61,
+    "LEGACY": {
+     "L_OK": 59,
+     "L_WRONG": 2
+    },
+    "PARITY": {
+     "BOTH_OK": 47,
+     "LEGACY_ONLY_OK": 12,
+     "NEITHER_OK": 2
+    }
+   },
+   "VALUE/less_or_equal": {
+    "FOUNDATION": {
+     "IR_CANNOT_EXPRESS": 14
+    },
+    "FOUNDATION_INTRINSIC": {
+     "IR_CANNOT_EXPRESS": 14
+    },
+    "GOLD": 14,
+    "LEGACY": {
+     "L_OK": 14
+    },
+    "PARITY": {
+     "LEGACY_ONLY_OK": 14
+    }
+   },
+   "VALUE/less_than": {
+    "FOUNDATION": {
+     "F_PROPOSED_HOST_UNRESOLVED": 2,
+     "OK": 11
+    },
+    "FOUNDATION_INTRINSIC": {
+     "F_PROPOSED_HOST_UNRESOLVED": 2,
+     "OK": 11
+    },
+    "GOLD": 13,
+    "LEGACY": {
+     "L_OK": 13
+    },
+    "PARITY": {
+     "BOTH_OK": 11,
+     "LEGACY_ONLY_OK": 2
+    }
+   }
+  },
+  "non_search_or_non_execute": {
+   "COUNT/EXECUTE": {
+    "F:UNSUPPORTED|L:SEARCH": 4
+   },
+   "FOLLOW/EXECUTE": {
+    "F:UNSUPPORTED|L:SEARCH": 1
+   },
+   "FOLLOWUP_DELTA/EXECUTE": {
+    "F:NEEDS_CLARIFICATION|L:CLARIFY": 7,
+    "F:NEEDS_CLARIFICATION|L:SEARCH": 1,
+    "F:NO_ACTION|L:ACTOR_PROFILE": 1,
+    "F:NO_ACTION|L:CLARIFY": 33,
+    "F:NO_ACTION|L:SEARCH": 9,
+    "F:READY|L:CLARIFY": 3,
+    "F:READY|L:SEARCH": 2,
+    "F:UNSUPPORTED|L:CLARIFY": 6,
+    "F:UNSUPPORTED|L:SEARCH": 2
+   },
+   "GROUP_BY/EXECUTE": {
+    "F:NEEDS_CLARIFICATION|L:SEARCH": 1
+   },
+   "MULTI/EXECUTE": {
+    "F:READY|L:SEARCH": 1,
+    "F:UNSUPPORTED|L:ANALYTICS": 1
+   },
+   "PROFILE_ACTOR/EXECUTE": {
+    "F:NEEDS_CLARIFICATION|L:ACTOR_PROFILE": 1,
+    "F:NEEDS_CLARIFICATION|L:CLARIFY": 1,
+    "F:NO_ACTION|L:ACTOR_PROFILE": 1,
+    "F:NO_ACTION|L:CLARIFY": 2,
+    "F:NO_ACTION|L:SEARCH": 1,
+    "F:READY|L:CLARIFY": 1,
+    "F:UNSUPPORTED|L:ACTOR_PROFILE": 20,
+    "F:UNSUPPORTED|L:CLARIFY": 12,
+    "F:UNSUPPORTED|L:SEARCH": 2
+   },
+   "PROFILE_BUYER/EXECUTE": {
+    "F:NEEDS_CLARIFICATION|L:CLARIFY": 1,
+    "F:NEEDS_CLARIFICATION|L:ENTITY_PROFILE": 1,
+    "F:NO_ACTION|L:ENTITY_PROFILE": 2,
+    "F:NO_ACTION|L:SEARCH": 2,
+    "F:READY|L:ENTITY_PROFILE": 5,
+    "F:READY|L:SEARCH": 1
+   },
+   "PROTOCOL/CLARIFY": {
+    "F:NO_ACTION|L:CLARIFY": 1
+   },
+   "PROTOCOL/EXECUTE": {
+    "F:NO_ACTION|L:CLARIFY": 7,
+    "F:NO_ACTION|L:SEARCH": 12,
+    "F:READY|L:CLARIFY": 1
+   },
+   "RANK_SUPPLIERS/EXECUTE": {
+    "F:NEEDS_CLARIFICATION|L:SEARCH": 1,
+    "F:READY|L:SEARCH": 1,
+    "F:UNSUPPORTED|L:CLARIFY": 4,
+    "F:UNSUPPORTED|L:SEARCH": 10
+   },
+   "SEARCH/CLARIFY": {
+    "F:NEEDS_CLARIFICATION|L:SEARCH": 1,
+    "F:UNSUPPORTED|L:CLARIFY": 2
+   },
+   "SUM_VALUE/EXECUTE": {
+    "F:UNSUPPORTED|L:ANALYTICS": 1
+   }
+  },
+  "regressions_legacy_ok_foundation_not": [
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0001",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0002",
+    "key": "STATE"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0002",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0004",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0004",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0004",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0005",
+    "key": "STATE"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:UNSUPPORTED",
+    "gold_id": "R0006",
+    "key": "STATE"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:UNSUPPORTED",
+    "gold_id": "R0007",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0008",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0008",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0009",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0009",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0009",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0009",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0010",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0011",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0012",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0013",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0014",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0015",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0015",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0016",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0016",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0017",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0017",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0018",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0018",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0019",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0019",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0019",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "R0019",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0019",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0020",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0020",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0021",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0021",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0022",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0022",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0023",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0023",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0024",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0025",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0026",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0027",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0028",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0031",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0031",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:GEOGRAPHY",
+    "gold_id": "R0032",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:STATE",
+    "gold_id": "R0034",
+    "key": "STATE"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:GEOGRAPHY",
+    "gold_id": "R0035",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:GEOGRAPHY",
+    "gold_id": "R0036",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:GEOGRAPHY",
+    "gold_id": "R0037",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0038",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0038",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "SUBJECT",
+    "gold_id": "R0040",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0045",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0045",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0045",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0045",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0045",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0050",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0050",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0050",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:TOPIC",
+    "gold_id": "R0051",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0052",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0052",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0055",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0055",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0058",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0059",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0060",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0061",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0062",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0063",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0063",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0064",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0065",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0065",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0066",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0066",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0068",
+    "key": "STATE"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:STATE",
+    "gold_id": "R0069",
+    "key": "STATE"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0071",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0071",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0072",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0072",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0076",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0076",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0076",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0078",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0078",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0078",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0080",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0082",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0082",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0082",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0082",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0084",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0090",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0091",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0091",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0091",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "UNSPECIFIED_UNIVERSE",
+    "gold_id": "R0091",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0095",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0095",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0095",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "UNSPECIFIED_UNIVERSE",
+    "gold_id": "R0095",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0096",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0096",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0096",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0096",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0102",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0105",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0108",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0108",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "UNSPECIFIED_UNIVERSE",
+    "gold_id": "R0108",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0109",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0109",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0109",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0111",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0112",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0113",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0113",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0113",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0116",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "UNSUPPORTED_OPPORTUNITY_OVERRIDE",
+    "gold_id": "R0117",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0117",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0118",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0118",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0118",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0119",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0120",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0120",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0121",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0121",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0121",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0121",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0121",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0123",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0123",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:STATE",
+    "gold_id": "R0124",
+    "key": "STATE"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0126",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0126",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0127",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0127",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0128",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0128",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0130",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0130",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0131",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0132",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0133",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0133",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0134",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0134",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0135",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0136",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0137",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0138",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0138",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0139",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0139",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0140",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0141",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0142",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0143",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:VALUE_OPERATOR_UNGROUNDED",
+    "gold_id": "R0144",
+    "key": "VALUE/less_than"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0145",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0146",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0148",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0155",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0158",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0158",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0159",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0159",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0160",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0160",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0161",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0161",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0163",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0165",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0166",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0167",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0168",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0169",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0170",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0170",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0171",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0172",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0172",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0173",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0173",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:STATE",
+    "gold_id": "R0178",
+    "key": "STATE"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0182",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0182",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0183",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0185",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0185",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0185",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0186",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0186",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0186",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:STATE",
+    "gold_id": "R0190",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0191",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0191",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0191",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0194",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:CONTRACT_TYPE_OR_NATURE",
+    "gold_id": "R0196",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0196",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0196",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0196",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0196",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0203",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0204",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0204",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0204",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0204",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0204",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0206",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0206",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0207",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0207",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0210",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0217",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:VALUE_OPERATOR_UNGROUNDED",
+    "gold_id": "R0218",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0219",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0219",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0220",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0221",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0221",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0224",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0224",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:UNSUPPORTED",
+    "gold_id": "R0225",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0226",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0226",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0227",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0227",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0227",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0229",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0229",
+    "key": "STATE"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "UNSUPPORTED_OPPORTUNITY_OVERRIDE",
+    "gold_id": "R0230",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0230",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0232",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0237",
+    "key": "GEOGRAPHY/REGION"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0239",
+    "key": "GEOGRAPHY/REGION"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0244",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0254",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:GEOGRAPHY",
+    "gold_id": "R0255",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0258",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0259",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0260",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0261",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0269",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:TOPIC",
+    "gold_id": "R0272",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0275",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0275",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0275",
+    "key": "STATE"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "UNSPECIFIED_UNIVERSE",
+    "gold_id": "R0275",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0279",
+    "key": "VALUE/greater_or_equal"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0279",
+    "key": "VALUE/less_or_equal"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:MODALITY",
+    "gold_id": "R0280",
+    "key": "MODALITY"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0280",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0280",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0283",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0283",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0283",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0287",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0288",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0288",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0288",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "UNSPECIFIED_UNIVERSE",
+    "gold_id": "R0288",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+    "gold_id": "R0289",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0289",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0289",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "UNSPECIFIED_UNIVERSE",
+    "gold_id": "R0289",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0290",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0291",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0294",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "UNSUPPORTED_OPPORTUNITY_OVERRIDE",
+    "gold_id": "R0297",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0316",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TOPIC",
+    "gold_id": "R0317",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0317",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0317",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0318",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0324",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0324",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0324",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0327",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "VALUE_DIFFERS",
+    "gold_id": "R0328",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0328",
+    "key": "MODALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0328",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0328",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0328",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "VALUE_DIFFERS",
+    "gold_id": "R0329",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0329",
+    "key": "MODALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0329",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0329",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0330",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0331",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0332",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0333",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0335",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0339",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0340",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0340",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0340",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "UNSUPPORTED:UNACCREDITED_MODALITY_FAMILY",
+    "gold_id": "R0342",
+    "key": "MODALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0342",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0342",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "VALUE_DIFFERS",
+    "gold_id": "R0343",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0343",
+    "key": "MODALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0343",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0343",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0343",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "R0344",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0344",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0344",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0345",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0345",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0352",
+    "key": "GEOGRAPHY/REGION"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "UNSUPPORTED:UNACCREDITED_MODALITY_FAMILY",
+    "gold_id": "R0354",
+    "key": "MODALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0354",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0354",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0355",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0355",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:TOPIC_ONLY_REQUEST_UNIVERSE",
+    "gold_id": "R0357",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0357",
+    "key": "GEOGRAPHY/REGION"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0360",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0362",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0362",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0363",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0365",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0366",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0367",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:VALUE_OPERATOR_UNGROUNDED",
+    "gold_id": "R0368",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0369",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0369",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0369",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0372",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:GEOGRAPHY",
+    "gold_id": "R0373",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0373",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0374",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0376",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:UNSUPPORTED",
+    "gold_id": "R0378",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "R0380",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0380",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0381",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0382",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0384",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0385",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0388",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0390",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0391",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0392",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:VALUE_OPERATOR_UNGROUNDED",
+    "gold_id": "R0392",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0393",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0395",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0397",
+    "key": "OPERATION/PROFILE_BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0405",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0405",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0406",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0406",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0407",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0407",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0408",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0408",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0410",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0410",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0411",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0411",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0411",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0412",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0413",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0413",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0414",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0414",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "R0415",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0415",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0416",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0416",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0419",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0419",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0421",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0421",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0421",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0422",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0422",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0423",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0423",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0423",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0424",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0424",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0425",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0425",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0426",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0426",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0427",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0427",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0428",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0428",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0429",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0430",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0430",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0430",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0433",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0433",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0434",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0434",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0434",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0436",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0437",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0438",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0438",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0439",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0439",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0443",
+    "key": "OPERATION/PROFILE_BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0444",
+    "key": "ORDER/date_desc"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0444",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0445",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0445",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0446",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0446",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0447",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0447",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "R0449",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0449",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0451",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0451",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0451",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0452",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0452",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0454",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0454",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0455",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0455",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0456",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0456",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0457",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0457",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0460",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0460",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_SILENT",
+    "gold_id": "R0461",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0461",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "UNSUPPORTED:UNACCREDITED_MODALITY_FAMILY",
+    "gold_id": "R0462",
+    "key": "MODALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0462",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0462",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0462",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0463",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0465",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0465",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0466",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0466",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0468",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0468",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0468",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0469",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "R0470",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0470",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0471",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0471",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0473",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0473",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0473",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0474",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0474",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0474",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0475",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0475",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0476",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0478",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0479",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0481",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0481",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0485",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0485",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0486",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0486",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0487",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0487",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0488",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0488",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0489",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0489",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0491",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0492",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0494",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0500",
+    "key": "OPERATION/PROFILE_BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0501",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0501",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0501",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0502",
+    "key": "OPERATION/PROFILE_BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0503",
+    "key": "OPERATION/PROFILE_BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0507",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0507",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0507",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0507",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0508",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0509",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0512",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0513",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0514",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0514",
+    "key": "TIME/during_month"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:VALUE",
+    "gold_id": "R0516",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0517",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0519",
+    "key": "OPERATION/PROFILE_BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "UNSUPPORTED:MULTI_REQUEST",
+    "gold_id": "R0522",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "MULTI_REQUEST",
+    "gold_id": "R0522",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "R0523",
+    "key": "OPERATION/PROFILE_BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:STATE",
+    "gold_id": "R0526",
+    "key": "STATE"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "R0526",
+    "key": "GEOGRAPHY/REGION"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "UNSPECIFIED_UNIVERSE",
+    "gold_id": "R0526",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0528",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0528",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "UNSPECIFIED_UNIVERSE",
+    "gold_id": "R0528",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0530",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:VALUE_OPERATOR_UNGROUNDED",
+    "gold_id": "R0530",
+    "key": "VALUE/less_than"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "UNSUPPORTED:UNACCREDITED_MODALITY_FAMILY",
+    "gold_id": "R0535",
+    "key": "MODALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0535",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0535",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0538",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0538",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0538",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0540",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0540",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "R0544",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:TIME",
+    "gold_id": "R0546",
+    "key": "TIME/between_dates"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0546",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:TOPIC",
+    "gold_id": "R0555",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0555",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0557",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0557",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0557",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "ABSENT",
+    "gold_id": "R0558",
+    "key": "CONTRACT_TYPE_OR_NATURE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0558",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "R0558",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "R0565",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0565",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0565",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0567",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0567",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0567",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "R0568",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0568",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0568",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:STATE",
+    "gold_id": "R0570",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0573",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0573",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0574",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0574",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_NOT_PROPOSED",
+    "detail": "PROPOSED_AS:UNSUPPORTED",
+    "gold_id": "R0575",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:VALUE_OPERATOR_UNGROUNDED",
+    "gold_id": "R0578",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0579",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "R0580",
+    "key": "ORDER/value_desc"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0580",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0580",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0580",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0581",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0581",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0581",
+    "key": "VALUE/greater_than"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0581",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "R0581",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "S005",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "S006",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "S007",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "S008",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "S009",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:BUYER",
+    "gold_id": "S011",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "S012",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S013",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "S013",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S013",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S014",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S015",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S015",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S015",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S016",
+    "key": "STATE"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S016",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S016",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S016",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "S017",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S017",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S017",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S018",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
+    "detail": "BUYER_SOURCE_PROJECTION_REQUIRED",
+    "gold_id": "S018",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S018",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S018",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S019",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S019",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S019",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S020",
+    "key": "TOPIC"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S020",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S022",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S022",
+    "key": "GEOGRAPHY/DEPARTMENT"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S022",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "NEEDS_CLARIFICATION:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY",
+    "gold_id": "S023",
+    "key": "GEOGRAPHY/MUNICIPALITY"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "S024",
+    "key": "OPERATION/PROFILE_ACTOR"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "S025",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S025",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:UNSUPPORTED",
+    "gold_id": "S026",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S026",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "S027",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S027",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "S028",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S028",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "S029",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S029",
+    "key": "TIME/during_year"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S029",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "F_PROXY:BUYER",
+    "gold_id": "S030",
+    "key": "ACTOR"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S030",
+    "key": "BUYER"
+   },
+   {
+    "culprit": "GATE_EXCLUDED",
+    "detail": "",
+    "gold_id": "S030",
+    "key": "UNIVERSE_VIEW"
+   },
+   {
+    "culprit": "IR_CANNOT_EXPRESS",
+    "detail": "OPERATION_OUTSIDE_IR",
+    "gold_id": "S031",
+    "key": "OPERATION/PROFILE_BUYER"
+   },
+   {
+    "culprit": "F_PROPOSED_HOST_UNRESOLVED",
+    "detail": "UNSUPPORTED_OPERATION",
+    "gold_id": "S034",
+    "key": "OPERATION/SUM_VALUE"
+   }
+  ],
+  "spurious": {
+   "foundation": {
+    "BUYER": 1,
+    "CONTRACT_TYPE_OR_NATURE": 1,
+    "GEOGRAPHY": 1,
+    "STATE": 1,
+    "TIME": 7,
+    "TOPIC": 2,
+    "UNSUPPORTED": 32
+   },
+   "legacy": {
+    "ACTOR": 4,
+    "BUYER": 1,
+    "CONTRACT_TYPE_OR_NATURE": 2,
+    "GEOGRAPHY": 3,
+    "MODALITY": 12,
+    "STATE": 34,
+    "TIME": 2,
+    "TOPIC": 23,
+    "VALUE": 1
+   }
+  }
+ },
+ "meta": {
+  "captures": 620,
+  "gold": 620,
+  "with_gold": true
+ },
+ "stability": {
+  "canonical_changed": [
+   "R0201",
+   "R0317",
+   "R0007"
+  ],
+  "compared": 40,
+  "latency_ms_p50": {
+   "first": 1686.4,
+   "second": 1746.7
+  },
+  "n_canonical_changed": 3,
+  "n_outcome_changed": 1,
+  "n_status_changed": 0,
+  "outcome_changed_ids": [
+   "R0201"
+  ],
+  "raw_identical": 23,
+  "sample": {
+   "REAL": 30,
+   "SYNTHETIC": 10
+  }
+ }
+}

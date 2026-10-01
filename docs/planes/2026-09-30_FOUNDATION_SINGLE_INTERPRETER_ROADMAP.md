@@ -140,6 +140,9 @@ queda), proveedores 2 %, perfil de entidad 2 %, conteos <1 %.
 
 ### M2 — Conversation IR (el frente duro; METIS)
 
+- **Postergado desde M1 (ADR-103 enmienda 3):** botones de Product View `[Elegir período]` y
+  `[Mayor valor]` (delta de IR sobre la vista anunciada). M1 sólo entrega los botones de vista.
+
 - `AcceptedInterpretation anterior + delta semántico → AcceptedInterpretation nueva`.
   «y en 2025?» es `REFINE · REPLACE TIME 2026→2025`, no una búsqueda.
 - Referentes en estado: resultado, perfil, lista pendiente (habilita «sus proveedores», «ver más»,
@@ -178,7 +181,9 @@ nodeid, semgrep delta con `--base`, candidate freeze y ZEUS fresco (implementado
 |---|---|---|
 | Paso 0 publicación en vivo | Esperando ZEUS | `fix/foundation-v3-live-publication-r1` @ `8e0b9ca3` |
 | M0 | Candidato congelado, global pareado limpio; **pendiente ZEUS fresco** | `mission/foundation-entry-admission-m0` · código `e69f0c1f` · cierre documental: este commit (ver `git log`) · evidencia `docs/audits/foundation_entry_admission_m0/CANDIDATE.md` |
-| M1–M4 | No iniciados | — |
+| M1 Fase A | **Cerrada** (Gold 999 sellado, autoridades, brechas, fronteras, failover spec); plan de olas en `docs/audits/m1_search_foundation/PHASE_A_CLOSE.md` | `mission/m1-search-foundation-phase-a` |
+| M1-H0 | Fail-closed BUYER multi-dueño + TIME, en curso | `fix/m1-h0-dogfood-fail-closed` |
+| M2–M4 | No iniciados | — |
 
 Deudas encontradas en el camino (fuera de M0):
 

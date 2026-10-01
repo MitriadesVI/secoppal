@@ -1,0 +1,24 @@
+{
+  "schema_version": "m1-search-gold/1.4",
+  "files": {
+    "adversarial.jsonl": {
+      "records": 92,
+      "sha256": "c987e7714a450297fc54b3ce4d220f9feb131ea9a64e46a934eb14b69608734a"
+    },
+    "minimal_pair.jsonl": {
+      "records": 176,
+      "sha256": "98676a85a6d08cdd67955d7dcb15d495b1d8fd414536082382337d669dc4d44c"
+    },
+    "neighbor.jsonl": {
+      "records": 111,
+      "sha256": "58ea568df5a1acbe4b0b21e59988ffe18a311dfefa5ef72a4e26f99932dc6626"
+    }
+  },
+  "real_private": {
+    "records": 620,
+    "double_labeled": 365,
+    "sha256": "aef2e2e43c0a9c40d79b51fed50150dfd53a03963dab1d162e86c176f963fe9a",
+    "location": "~/Documents/tools/secoppal-diagnostics/m1_search_gold/sealed_v1/gold_v1.jsonl"
+  },
+  "total_records": 999
+}

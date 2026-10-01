@@ -1,0 +1,136 @@
+{
+  "compared": 365,
+  "only_in_A": 255,
+  "only_in_B": 0,
+  "field_agreement": {
+    "ambiguity": {
+      "agree": 351,
+      "total": 365,
+      "rate": 0.9616
+    },
+    "aspect": {
+      "agree": 365,
+      "total": 365,
+      "rate": 1.0
+    },
+    "conditions_exact": {
+      "agree": 175,
+      "total": 201,
+      "rate": 0.8706
+    },
+    "dimensions_polarity": {
+      "agree": 183,
+      "total": 201,
+      "rate": 0.9104
+    },
+    "expected_disposition": {
+      "agree": 362,
+      "total": 365,
+      "rate": 0.9918
+    },
+    "operation": {
+      "agree": 360,
+      "total": 365,
+      "rate": 0.9863
+    },
+    "product_view": {
+      "agree": 360,
+      "total": 365,
+      "rate": 0.9863
+    },
+    "turn_context": {
+      "agree": 345,
+      "total": 365,
+      "rate": 0.9452
+    },
+    "universes": {
+      "agree": 342,
+      "total": 365,
+      "rate": 0.937
+    }
+  },
+  "operation_kappa": 0.9788,
+  "condition_agreement_by_dimension": {
+    "ACTOR": {
+      "tp": 44,
+      "fn": 2,
+      "fp": 2,
+      "f1": 0.9565
+    },
+    "BUYER": {
+      "tp": 67,
+      "fn": 0,
+      "fp": 1,
+      "f1": 0.9926
+    },
+    "CONTRACT_TYPE_OR_NATURE": {
+      "tp": 7,
+      "fn": 6,
+      "fp": 1,
+      "f1": 0.6667
+    },
+    "GEOGRAPHY": {
+      "tp": 61,
+      "fn": 1,
+      "fp": 0,
+      "f1": 0.9919
+    },
+    "MODALITY": {
+      "tp": 8,
+      "fn": 0,
+      "fp": 1,
+      "f1": 0.9412
+    },
+    "ORDER": {
+      "tp": 9,
+      "fn": 1,
+      "fp": 0,
+      "f1": 0.9474
+    },
+    "STATE": {
+      "tp": 38,
+      "fn": 7,
+      "fp": 6,
+      "f1": 0.8539
+    },
+    "TIME": {
+      "tp": 55,
+      "fn": 0,
+      "fp": 5,
+      "f1": 0.9565
+    },
+    "TOPIC": {
+      "tp": 84,
+      "fn": 2,
+      "fp": 0,
+      "f1": 0.9882
+    },
+    "UNSUPPORTED": {
+      "tp": 1,
+      "fn": 6,
+      "fp": 7,
+      "f1": 0.1333
+    },
+    "VALUE": {
+      "tp": 31,
+      "fn": 1,
+      "fp": 0,
+      "f1": 0.9841
+    }
+  },
+  "disagreements": 74,
+  "disagreements_by_field": {
+    "conditions_exact": 26,
+    "dimensions_polarity": 18,
+    "turn_context": 20,
+    "expected_disposition": 3,
+    "ambiguity": 14,
+    "universes": 23,
+    "operation": 5,
+    "product_view": 5
+  },
+  "disagreements_by_slice": {
+    "REAL": 70,
+    "SYNTHETIC": 4
+  }
+}
