@@ -135,3 +135,42 @@ Los dos jsonl de ruido (`docs/audits/contract_universe_v1_1_*`) no cambiaron.
 * El oráculo de E-VALUE parte ZEUS7 es una tabla escrita a mano; 193 diferencias de parse sin frase de dinero reconocible no tienen
   veredicto (no entran al corpus, pero sí al gate de paridad, que las compara byte a byte).
 * `entity_resolver.py` (H0) sigue difiriendo de `main` en el cierre legacy: es aditivo e inerte (pin), pero no es byte-idéntico.
+
+## 6. Microfix de tests (cierre de los P2 de ZEUS8)
+
+Sólo `tests/` y este doc; `app/` intacto (`git status --short app` vacío).
+
+1. `tests/test_foundation_silent_paths.py`: se restauran las 44 tuplas (frase, familia) de `foundation_value_direction._MARKERS` de
+   `main` (4ec99bc1) como lista LITERAL (`MAIN_4EC99BC1_MARKERS`, 9 GTE + 7 LTE + 15 GT + 11 LT + 2 EQ). El test recorre ambas:
+   las 44 de main (misma aserción que main) y `money_comparators.HEADS`.
+2. `tests/test_m1_wave1_parity_pins.py`: `FORBIDDEN_EXACT`/`FOUNDATION_MODE_MODULES`/`*_QUOTE_ROUTE` se sustituyen por
+   `WAVE1_MODULES`, conjunto congelado y literal (29 módulos) generado con `git diff --name-only 4ec99bc1 708ab0d5 -- app` (30 archivos,
+   menos `app.core.entity_resolver`). Añadir un módulo nuevo a wave1 exige actualizarlo. Incluye `foundation_time_coverage`,
+   `foundation_messages`, `foundation_buyer_choices`, `foundation_geo_level`.
+3. El escáner resuelve `importlib.import_module('.time_grammar', 'app.core')` (nombre relativo + paquete literal posicional o
+   `package=`); relativo sin paquete literal queda como import dinámico no resuelto (falla el pin).
+4. El pin de `alias_owners` detecta atributo, `getattr(x, 'alias_owners')`/cualquier cadena literal, nombre e import, en todo el cierre
+   legacy excepto `entity_resolver.py`.
+
+Verificación (entorno `TZ=America/Bogota PYTHONHASHSEED=0 SECOPPAL_FOUNDATION_MODE=legacy BURR_TELEMETRY_ENABLED=false`):
+
+* `pytest tests/test_foundation_silent_paths.py tests/test_m1_wave1_parity_pins.py tests/test_m1_wave1_legacy_mode_runs_no_foundation.py`:
+  `97 passed in 7.53s` (los tres archivos; no es la suite global).
+* `ruff check` sobre los dos tests: `All checks passed!`.
+* Mutantes sobre una copia scratch (el árbol real no se tocó), uno a uno, restaurando tras cada uno:
+
+| Mutante | Resultado |
+|---|---|
+| o igual: `family = GTE if family == GT else LTE` -> `family = family` (`money_comparators.py`) | KILLED: `test_every_comparator_of_main_is_ready_only_in_its_own_direction` |
+| `from app.core.foundation_time_coverage import uncited_time_qualifier` en `query_router.py` | KILLED: `test_the_legacy_closure_holds_no_quote_route_module`, `test_no_edge_reaches_the_foundation_modules_...` |
+| `importlib.import_module('.time_grammar', 'app.core')` en un handler | KILLED: mismos dos |
+| `getattr(r, 'alias_owners')('x')` en `query_router.py` | KILLED: `test_the_only_legacy_reachable_divergence_from_main_is_inert` |
+| ZEUS8 a: un byte en `money_polarity.py` | KILLED |
+| ZEUS8 b: un byte en `temporal_semantics.py` | KILLED |
+| ZEUS8 c1/c2/c3: `time_grammar` vía `query_router`, `money_comparators` vía `money_resolution`, `time_authority` vía `entity_resolver` | KILLED (3/3) |
+| ZEUS8 d: `importlib.import_module(f"app.core.{n}")` en un handler | KILLED |
+| ZEUS8 e: import de `foundation_runtime` a nivel de módulo en `orchestrator` | KILLED |
+| ZEUS8 f: `r.alias_owners('x')` en `query_router` | KILLED |
+| extra g/i/j/k (`foundation_messages`, `foundation_buyer_choices`, runtime en legacy, admission en orchestrator) | KILLED |
+
+  `survivors: 0` (17 mutantes). Se corrió sólo el trío de tests, no la suite.

@@ -5,10 +5,8 @@ Decision (paridad completa): the legacy path reads time and money exactly as ``m
 
 * ``app/core/temporal_semantics.py`` and ``app/core/money_polarity.py`` are the full-text scanners legacy
   consumes; they stay BYTE-IDENTICAL to ``main``.
-* The rewritten grammars live in modules only the quote route / Foundation import: TIME
-  (``time_grammar`` and its exclusive dependencies), VALUE (``money_comparators``, ``money_suffix_*``,
-  ``value_authority``), D-GEO (``geo_*``) and C1.1 (``foundation_authority_*``,
-  ``foundation_evidence_window``, ``host_authorities``).
+* The rewritten grammars live in modules only the quote route / Foundation import. ``WAVE1_MODULES`` is the
+  FROZEN literal list of every ``app/`` module wave1 added or changed relative to main (see the comment there).
 * The no-import pin is TRANSITIVE: it computes the import closure (AST: static, relative, lazy imports inside
   functions, ``from pkg import submodule``, exact dotted string literals and ``importlib``/``__import__`` calls,
   with wildcard edges for f-strings) from the explicit legacy ENTRYPOINTS and fails if the closure holds any
@@ -51,23 +49,50 @@ ENTRYPOINTS = (
 # frontera de modo: foundation_v3; en legacy run_foundation_search devuelve None
 # (foundation_runtime.py: ``if ...secoppal_foundation_mode != "foundation_v3": return None``).
 MODE_FRONTIER = ("app.core.orchestrator", "app.core.foundation_runtime")
-FOUNDATION_MODE_MODULES = frozenset({
+
+# FROZEN, literal. Generated from the real diff, not from a hand-kept taxonomy:
+#   git diff --name-only 4ec99bc1 708ab0d5 -- app      (modified + added modules, 30 files)
+# minus ``app.core.entity_resolver`` (M1-H0: the one divergence legacy legitimately reaches; its pin is
+# ``test_the_only_legacy_reachable_divergence_from_main_is_inert``). Adding a new ``app/`` module to wave1 (or
+# modifying one that legacy would not otherwise read) REQUIRES updating this list: the legacy closure, cutting
+# only the MODE_FRONTIER edge, must contain none of them.
+WAVE1_MODULES = frozenset({
+    "app.core.foundation_admission",
+    "app.core.foundation_authority_contract",
+    "app.core.foundation_authority_registry",
+    "app.core.foundation_authority_values",
+    "app.core.foundation_buyer_choices",
+    "app.core.foundation_evidence_window",
+    "app.core.foundation_geo_level",
+    "app.core.foundation_messages",
+    "app.core.foundation_runtime",
+    "app.core.foundation_time_coverage",
+    "app.core.foundation_value_direction",
+    "app.core.geo_authority",
+    "app.core.geo_regions",
+    "app.core.geo_window",
+    "app.core.host_authorities",
+    "app.core.money_comparators",
+    "app.core.money_suffix_event",
+    "app.core.money_suffix_place",
+    "app.core.non_canonical_year",
+    "app.core.normative_citation",
+    "app.core.temporal_bounds",
+    "app.core.temporal_noun_anchor",
+    "app.core.temporal_window_anchor",
+    "app.core.time_authority",
+    "app.core.time_grammar",
+    "app.core.time_relative",
+    "app.core.time_window",
+    "app.core.value_authority",
+    "app.data.geo_secop_variants",
+})
+# Submodules a future ``host_authorities`` package may grow.
+FORBIDDEN_PREFIXES = ("app.core.host_authorities.",)
+# The Foundation chain the frontier edge leads to (used only by the non-vacuity pins).
+FOUNDATION_CHAIN = frozenset({
     "app.core.foundation_runtime", "app.core.foundation_admission", "app.core.foundation_value_direction",
 })
-
-TIME_QUOTE_ROUTE = (
-    "time_grammar", "time_authority", "time_relative", "time_window", "temporal_window_anchor",
-    "temporal_noun_anchor", "non_canonical_year", "normative_citation", "temporal_bounds",
-)
-VALUE_QUOTE_ROUTE = ("money_comparators", "money_suffix_event", "money_suffix_place", "value_authority")
-GEO_QUOTE_ROUTE = ("geo_authority", "geo_window", "geo_regions")
-FORBIDDEN_EXACT = frozenset(
-    {f"app.core.{name}" for name in (*TIME_QUOTE_ROUTE, *VALUE_QUOTE_ROUTE, *GEO_QUOTE_ROUTE)}
-    | {"app.data.geo_secop_variants", "app.core.host_authorities"}
-)
-FORBIDDEN_PREFIXES = (
-    "app.core.foundation_authority_", "app.core.foundation_evidence_window", "app.core.host_authorities.",
-)
 
 
 def _sha(relative: str) -> str:
@@ -123,6 +148,19 @@ def _constant_prefix(node: ast.AST) -> str | None:
     if isinstance(node, ast.BinOp) and isinstance(node.op, (ast.Add, ast.Mod)):
         return _constant_prefix(node.left)
     return None
+
+
+def _package_argument(node: ast.Call) -> str | None:
+    """The literal ``package`` of ``importlib.import_module(name, package)`` (positional or keyword)."""
+    arg = node.args[1] if len(node.args) > 1 else next((k.value for k in node.keywords if k.arg == "package"), None)
+    return arg.value if isinstance(arg, ast.Constant) and isinstance(arg.value, str) else None
+
+
+def _resolve_relative(name: str, package: str) -> str:
+    level = len(name) - len(name.lstrip("."))
+    anchor = package.split(".")
+    anchor = anchor[: len(anchor) - (level - 1)]
+    return ".".join(part for part in (*anchor, name.lstrip(".")) if part)
 
 
 def _dynamic_import_call(node: ast.Call) -> bool:
@@ -185,6 +223,14 @@ def module_edges(source: str, module: str, index: dict[str, Path], *, is_package
                 arg = node.args[0]
                 prefix = _constant_prefix(arg)
                 literal = isinstance(arg, ast.Constant) and isinstance(arg.value, str)
+                if prefix is not None and prefix.startswith("."):
+                    # relative name (``import_module('.time_grammar', 'app.core')``): resolve it against the package.
+                    package_name = _package_argument(node)
+                    if package_name is None:
+                        unresolved.add(module)
+                        self.generic_visit(node)
+                        return
+                    prefix = _resolve_relative(prefix, package_name)
                 if literal:
                     add(prefix)
                 elif prefix and "." in prefix:
@@ -239,7 +285,7 @@ def closure(graph, entrypoints=ENTRYPOINTS, cut=(MODE_FRONTIER,)):
 
 
 def is_forbidden(name: str) -> bool:
-    return name in FORBIDDEN_EXACT or name.startswith(FORBIDDEN_PREFIXES)
+    return name in WAVE1_MODULES or name.startswith(FORBIDDEN_PREFIXES)
 
 
 def chain(parent, name: str) -> str:
@@ -266,8 +312,6 @@ def violations(overrides: dict[str, str] | None = None) -> list[str]:
     index, graph, unresolved = build_graph(overrides)
     parent = closure(graph)
     out = [f"{chain(parent, name)}" for name in sorted(parent) if is_forbidden(name)]
-    out += [f"{chain(parent, name)}  [Foundation-mode module outside the frontier]"
-            for name in sorted(parent) if name in FOUNDATION_MODE_MODULES]
     out += [f"unresolvable dynamic import in {name}" for name in sorted(unresolved & set(parent))]
     orchestrator = MODE_FRONTIER[0]
     source = (overrides or {}).get(orchestrator) or index[orchestrator].read_text(encoding="utf-8")
@@ -283,21 +327,56 @@ def test_the_legacy_closure_holds_no_quote_route_module():
 def test_no_edge_reaches_the_foundation_modules_except_the_declared_frontier():
     index, graph, _ = build_graph()
     parent = closure(graph)
-    assert not FOUNDATION_MODE_MODULES & set(parent), {n: chain(parent, n) for n in FOUNDATION_MODE_MODULES & set(parent)}
+    assert not WAVE1_MODULES & set(parent), {n: chain(parent, n) for n in WAVE1_MODULES & set(parent)}
     edges = {(name, target) for name, targets in graph.items() if name in parent
-             for target in FOUNDATION_MODE_MODULES & targets}
+             for target in WAVE1_MODULES & targets}
     assert edges == {MODE_FRONTIER}, f"legacy modules import the Foundation-mode modules: {sorted(edges)}"
+
+
+ALIAS_OWNERS_DEFINER = "app.core.entity_resolver"
+
+
+def alias_owners_uses(source: str) -> list[str]:
+    """Every way a module can reach ``alias_owners``: attribute, ``getattr``/dict key/any literal string, name, import."""
+    found = []
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, ast.Attribute) and node.attr == "alias_owners":
+            found.append(f"attribute @{node.lineno}")
+        elif isinstance(node, ast.Constant) and node.value == "alias_owners":
+            found.append(f"string literal @{node.lineno}")
+        elif isinstance(node, ast.Name) and node.id == "alias_owners":
+            found.append(f"name @{node.lineno}")
+        elif isinstance(node, ast.alias) and node.name.rsplit(".", 1)[-1] == "alias_owners":
+            found.append("import")
+    return found
 
 
 def test_the_only_legacy_reachable_divergence_from_main_is_inert():
     """``entity_resolver`` (M1-H0) is the one module of the legacy closure that differs from main: it only ADDS
-    ``EntityResolver.alias_owners`` (+9 lines), which only the Foundation-mode modules call. No legacy module may."""
+    ``EntityResolver.alias_owners`` (+9 lines), which only the Foundation-mode modules call. No legacy module may
+    reach it by attribute, ``getattr`` or a literal ``'alias_owners'`` (``entity_resolver`` itself defines it)."""
     index, graph, _ = build_graph()
     callers = []
     for name in closure(graph):
-        tree = ast.parse(index[name].read_text(encoding="utf-8"))
-        callers += [name for node in ast.walk(tree) if isinstance(node, ast.Attribute) and node.attr == "alias_owners"]
-    assert callers == [], f"legacy modules call EntityResolver.alias_owners (main does not have it): {callers}"
+        if name == ALIAS_OWNERS_DEFINER:
+            continue
+        callers += [f"{name}: {use}" for use in alias_owners_uses(index[name].read_text(encoding="utf-8"))]
+    assert callers == [], f"legacy modules reach EntityResolver.alias_owners (main does not have it): {callers}"
+
+
+@pytest.mark.parametrize("source", [
+    "def f(r):\n    return r.alias_owners('x')",
+    "def f(r):\n    return getattr(r, 'alias_owners')('x')",
+    "NAMES = {'alias_owners': 1}",
+    "from app.core.entity_resolver import alias_owners",
+    "def f(r, name='alias_owners'):\n    return getattr(r, name)",
+])
+def test_the_alias_owners_pin_is_not_vacuous(source):
+    assert alias_owners_uses(source), source
+
+
+def test_the_alias_owners_pin_ignores_unrelated_code():
+    assert alias_owners_uses("def f(r):\n    # alias_owners in a comment\n    return r.alias_owner") == []
 
 
 def test_the_mode_frontier_is_a_lazy_function_level_import():
@@ -323,7 +402,7 @@ def test_without_the_frontier_the_scanner_reaches_the_foundation_chain_and_the_q
     parent = closure(graph, cut=())
     reached = {name for name in parent if is_forbidden(name)}
     assert {"app.core.money_comparators", "app.core.money_suffix_place", "app.core.geo_authority"} <= reached
-    assert FOUNDATION_MODE_MODULES <= set(parent)
+    assert FOUNDATION_CHAIN <= set(parent)
     assert chain(parent, "app.core.money_comparators").endswith("app.core.orchestrator")
 
 
@@ -387,6 +466,10 @@ def test_a_removed_frontier_import_is_reported_as_stale():
     "from . import time_window",
     "X = 'app.core.money_comparators'",
     "import importlib\nimportlib.import_module(f'app.core.{x}')",
+    "import importlib\nimportlib.import_module('.time_grammar', 'app.core')",
+    "import importlib\nimportlib.import_module('.time_grammar', package='app.core')",
+    "import importlib\nimportlib.import_module('..core.time_grammar', 'app.core')",
+    "import importlib\nimportlib.import_module(f'.{x}', 'app.core')",
 ])
 def test_the_edge_scanner_is_not_vacuous(source):
     index = module_index()
@@ -399,6 +482,7 @@ def test_the_edge_scanner_is_not_vacuous(source):
     "from app.core.accreditation.authorities import time_authority",
     "from app.core import time_authority_thing",
     "'a docstring that mentions app.core.time_grammar in passing'",
+    "import importlib\nimportlib.import_module('.accreditation', 'app.core')",
 ])
 def test_the_edge_scanner_ignores_other_modules(source):
     index = module_index()
@@ -407,10 +491,34 @@ def test_the_edge_scanner_ignores_other_modules(source):
     assert not dynamic
 
 
-def test_the_quote_route_modules_exist_and_the_legacy_only_ones_do_not():
+def test_the_legacy_only_modules_are_gone():
     index = module_index()
-    for name in TIME_QUOTE_ROUTE:
-        assert f"app.core.{name}" in index, name
     for gone in ("period_consistency", "period_free_text", "pagination_blocked", "temporal_period_question"):
         assert f"app.core.{gone}" not in index, gone
     assert "app.core.analytics.contract_activity.currentness" not in index
+
+
+def test_a_relative_dynamic_import_without_a_literal_package_is_unresolved():
+    index = module_index()
+    for source in ("import importlib\nimportlib.import_module('.time_grammar')",
+                   "import importlib\nimportlib.import_module('.time_grammar', __package__)"):
+        _, dynamic = module_edges(source, "app.core.query_router", index)
+        assert dynamic, source
+
+
+def test_the_frozen_list_names_real_modules_and_excludes_the_alias_owners_definer():
+    """A typo or a rename would silently weaken the pin."""
+    index = module_index()
+    assert sorted(WAVE1_MODULES - set(index)) == []
+    assert len(WAVE1_MODULES) == 29
+    assert ALIAS_OWNERS_DEFINER not in WAVE1_MODULES
+
+
+@pytest.mark.parametrize("extra", [
+    "from app.core.foundation_time_coverage import uncited_time_qualifier",
+    "from app.core.foundation_messages import user_message",
+    "from app.core.foundation_buyer_choices import buyer_choices",
+    "def f():\n    import importlib\n    return importlib.import_module('.time_grammar', 'app.core')",
+])
+def test_mutation_f_any_wave1_module_reached_from_the_legacy_closure_is_caught(extra):
+    assert violations(_extend("app.core.query_router", extra)), extra
