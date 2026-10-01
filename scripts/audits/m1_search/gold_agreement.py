@@ -1,6 +1,8 @@
 """Inter-labeler agreement for the M1 SEARCH Gold (contract §8, Phase A gate 2).
 
-Usage: python scripts/audits/m1_search/gold_agreement.py LABELS_A_DIR LABELS_B_DIR OUT_DIR
+Usage: python scripts/audits/m1_search/gold_agreement.py LABELS_A_DIR LABELS_B_DIR OUT_DIR [--normalize]
+--normalize applies the mechanical contract v1.3 rules (gold_adjudicate.normalize) to both sides
+and compares UNSUPPORTED by span only (C8), universes only inside SEARCH (C7).
 Each dir holds *.jsonl Gold files (validated by gold_schema.py). Only gold_ids present in both
 are compared. Writes OUT_DIR/agreement.json (aggregates, no text) and OUT_DIR/disagreements.jsonl
 (both labels per disagreeing case; contains text, so OUT_DIR must live outside git for REAL).
@@ -40,6 +42,9 @@ def _universes(record: dict) -> tuple:
     return tuple(sorted((r.get("universe"), r.get("view")) for r in _search_requests(record)))
 
 
+NORMALIZE = False
+
+
 def _conditions(record: dict) -> Counter:
     """Multiset of (dimension, operator, polarity, folded quote) over all requests, deduplicated
     per request so a condition repeated in a dual SHARES_SCOPE pair counts once."""
@@ -47,8 +52,8 @@ def _conditions(record: dict) -> Counter:
     for request in _search_requests(record):
         local = set()
         for cond in request.get("conditions", []):
-            local.add((cond.get("dimension"), cond.get("operator"), cond.get("polarity"),
-                       _fold(cond.get("quote"))))
+            operator = "*" if NORMALIZE and cond.get("dimension") == "UNSUPPORTED" else cond.get("operator")
+            local.add((cond.get("dimension"), operator, cond.get("polarity"), _fold(cond.get("quote"))))
         seen.update(local)
     return seen
 
@@ -70,6 +75,10 @@ def _kappa(pairs: list[tuple[str, str]]) -> float | None:
 
 def main(dir_a: str, dir_b: str, out_dir: str) -> int:
     a, b = _load(Path(dir_a)), _load(Path(dir_b))
+    if NORMALIZE:
+        from gold_adjudicate import normalize
+        a = {k: normalize(v)[0] for k, v in a.items()}
+        b = {k: normalize(v)[0] for k, v in b.items()}
     common = sorted(set(a) & set(b))
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -84,7 +93,9 @@ def main(dir_a: str, dir_b: str, out_dir: str) -> int:
             "operation": (ra.get("operation"), rb.get("operation")),
             "aspect": (ra.get("aspect"), rb.get("aspect")),
             "turn_context": (ra.get("turn_context"), rb.get("turn_context")),
-            "universes": (_universes(ra), _universes(rb)),
+            "universes": ((_universes(ra), _universes(rb)) if not NORMALIZE
+                          or {ra.get("operation"), rb.get("operation")} <= {"SEARCH", "MULTI"}
+                          else (None, None)),
             "product_view": (ra.get("product_view"), rb.get("product_view")),
             "expected_disposition": (ra.get("expected_disposition"), rb.get("expected_disposition")),
             "ambiguity": (ra.get("ambiguity"), rb.get("ambiguity")),
@@ -136,4 +147,6 @@ def main(dir_a: str, dir_b: str, out_dir: str) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main(*sys.argv[1:4]))
+    NORMALIZE = "--normalize" in sys.argv
+    sys.path.insert(0, str(Path(__file__).parent))
+    sys.exit(main(*[arg for arg in sys.argv[1:] if arg != "--normalize"][:3]))

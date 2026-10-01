@@ -1,0 +1,411 @@
+{
+ "distribution": {
+  "admission": {
+   "NEEDS_CLARIFICATION|TOPIC_ONLY_REQUEST_UNIVERSE": 18,
+   "NEEDS_CLARIFICATION|TOPIC_OVERLAPS_REQUEST_UNIVERSE": 19,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:BUYER": 28,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:CONTRACT_TYPE_OR_NATURE": 4,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:GEOGRAPHY": 30,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:MODALITY": 2,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:STATE": 16,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:TIME": 6,
+   "NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:VALUE": 3,
+   "NEEDS_CLARIFICATION|VALUE_OPERATOR_BOUNDARY_MISMATCH": 2,
+   "NEEDS_CLARIFICATION|VALUE_OPERATOR_EVIDENCE_MISMATCH": 2,
+   "NEEDS_CLARIFICATION|VALUE_OPERATOR_UNGROUNDED": 29,
+   "NO_ACTION|NO_REQUEST": 73,
+   "READY|NONE": 217,
+   "UNSUPPORTED|MULTI_REQUEST": 1,
+   "UNSUPPORTED|UNACCREDITED_MODALITY_FAMILY": 6,
+   "UNSUPPORTED|UNSUPPORTED_CONDITION": 159,
+   "UNSUPPORTED|UNSUPPORTED_OPERATION": 5
+  },
+  "condition_funnel_by_dimension": {
+   "BUYER": {
+    "gate_admitted": 107,
+    "host_ready": 148,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:BUYER": 37,
+    "host_unresolved:UNSUPPORTED_OPERATION": 4,
+    "projection_unsupported:BUYER_SOURCE_PROJECTION_REQUIRED": 54,
+    "proposed": 189
+   },
+   "CONTRACT_TYPE_OR_NATURE": {
+    "gate_admitted": 0,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:CONTRACT_TYPE_OR_NATURE": 5,
+    "proposed": 5
+   },
+   "GEOGRAPHY": {
+    "gate_admitted": 114,
+    "host_ready": 123,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:GEOGRAPHY": 39,
+    "host_unresolved:UNSUPPORTED_OPERATION": 1,
+    "proposed": 163
+   },
+   "MODALITY": {
+    "gate_admitted": 1,
+    "host_unresolved:UNACCREDITED_MODALITY_FAMILY": 6,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:MODALITY": 3,
+    "proposed": 9
+   },
+   "STATE": {
+    "gate_admitted": 42,
+    "host_ready": 37,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:STATE": 18,
+    "host_unresolved:UNSUPPORTED_OPERATION": 1,
+    "proposed": 56
+   },
+   "TIME": {
+    "gate_admitted": 124,
+    "host_ready": 183,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:TIME": 9,
+    "host_unresolved:UNSUPPORTED_OPERATION": 5,
+    "projection_unsupported:UNSUPPORTED_OPPORTUNITY_OVERRIDE": 3,
+    "proposed": 197
+   },
+   "TOPIC": {
+    "gate_admitted": 164,
+    "host_ready": 220,
+    "host_unresolved:MULTI_REQUEST": 1,
+    "host_unresolved:TOPIC_ONLY_REQUEST_UNIVERSE": 19,
+    "host_unresolved:TOPIC_OVERLAPS_REQUEST_UNIVERSE": 22,
+    "host_unresolved:UNSUPPORTED_OPERATION": 1,
+    "proposed": 263
+   },
+   "UNSUPPORTED": {
+    "gate_admitted": 34,
+    "host_unresolved:UNSUPPORTED_CONDITION": 175,
+    "proposed": 175
+   },
+   "VALUE": {
+    "gate_admitted": 88,
+    "host_ready": 71,
+    "host_unresolved:UNRESOLVED_HOST_DIMENSION:VALUE": 3,
+    "host_unresolved:UNSUPPORTED_OPERATION": 3,
+    "host_unresolved:VALUE_OPERATOR_BOUNDARY_MISMATCH": 2,
+    "host_unresolved:VALUE_OPERATOR_EVIDENCE_MISMATCH": 2,
+    "host_unresolved:VALUE_OPERATOR_UNGROUNDED": 38,
+    "projection_unsupported:UNSUPPORTED_CONDITION": 1,
+    "proposed": 119
+   }
+  },
+  "foundation_dims": {
+   "BUYER/is/POSITIVE": 189,
+   "CONTRACT_TYPE_OR_NATURE/is/POSITIVE": 5,
+   "GEOGRAPHY/is/POSITIVE": 163,
+   "MODALITY/family/POSITIVE": 9,
+   "STATE/family/POSITIVE": 42,
+   "STATE/is/POSITIVE": 14,
+   "TIME/during_year/POSITIVE": 197,
+   "TOPIC/contains/POSITIVE": 260,
+   "TOPIC/whole_token_folded/POSITIVE": 3,
+   "UNSUPPORTED": 175,
+   "VALUE/greater_than/NEGATIVE": 1,
+   "VALUE/greater_than/POSITIVE": 98,
+   "VALUE/less_than/POSITIVE": 20
+  },
+  "foundation_logic": {
+   "multi_request": 2,
+   "request_with_OR_NOT": 6
+  },
+  "foundation_no_request_vs_legacy": {
+   "legacy_handled_as:ACTOR_PROFILE": 2,
+   "legacy_handled_as:CLARIFY": 43,
+   "legacy_handled_as:ENTITY_PROFILE": 2,
+   "legacy_handled_as:SEARCH": 26
+  },
+  "foundation_ops": {
+   "COUNT": 5,
+   "SEARCH": 542,
+   "SUM_VALUE": 2
+  },
+  "foundation_vs_legacy": {
+   "ACTOR": {
+    "legacy_only": 110,
+    "neither": 437
+   },
+   "BUYER": {
+    "both": 165,
+    "foundation_only": 21,
+    "legacy_only": 8
+   },
+   "CONTRACT_TYPE_OR_NATURE": {
+    "both": 4,
+    "foundation_only": 1,
+    "legacy_only": 8
+   },
+   "GEOGRAPHY": {
+    "both": 151,
+    "foundation_only": 11,
+    "legacy_only": 2
+   },
+   "MODALITY": {
+    "both": 8,
+    "foundation_only": 1,
+    "legacy_only": 15
+   },
+   "ORDER": {
+    "legacy_only": 30,
+    "neither": 517
+   },
+   "STATE": {
+    "both": 50,
+    "foundation_only": 4,
+    "legacy_only": 42
+   },
+   "TIME": {
+    "both": 186,
+    "foundation_only": 4,
+    "legacy_only": 5
+   },
+   "TOPIC": {
+    "both": 245,
+    "foundation_only": 10,
+    "legacy_only": 39
+   },
+   "UNIVERSE": {
+    "agree": 496,
+    "disagree": 51
+   },
+   "UNSUPPORTED": {
+    "foundation_only": 159
+   },
+   "VALUE": {
+    "both": 99,
+    "foundation_only": 12
+   },
+   "VIEW_OPPORTUNITY": {
+    "agree": 477,
+    "foundation_only": 27,
+    "legacy_only": 43
+   }
+  },
+  "gate": {
+   "ADMITTED": 270,
+   "INELIGIBLE_LEXICAL": 280,
+   "VETOED_BY_OWNER": 70,
+   "eligible_but_vetoed:ACTOR": 68,
+   "eligible_but_vetoed:ANALYTICS": 2,
+   "owner_any:ACTOR": 114,
+   "owner_any:ANALYTICS": 2,
+   "owner_any:CONTRACT_ACTIVITY": 3,
+   "owner_any:ENTITY_PROFILE": 12
+  },
+  "h7": {
+   "authority:HOST_CLOSED_POLICY": 54,
+   "authority:PRODUCER": 495,
+   "producer_kind:opportunities->opportunities": 64,
+   "producer_kind:records->opportunities": 5,
+   "producer_kind:records->records": 480,
+   "rule:O3": 20,
+   "rule:O3-INTENT": 14,
+   "rule:O6A": 5,
+   "rule:O6B": 6,
+   "rule:O7": 9
+  },
+  "host_final": {
+   "final:NEEDS_CLARIFICATION|TOPIC_ONLY_REQUEST_UNIVERSE": 18,
+   "final:NEEDS_CLARIFICATION|TOPIC_OVERLAPS_REQUEST_UNIVERSE": 19,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:BUYER": 28,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:CONTRACT_TYPE_OR_NATURE": 4,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:GEOGRAPHY": 30,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:MODALITY": 2,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:STATE": 16,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:TIME": 6,
+   "final:NEEDS_CLARIFICATION|UNRESOLVED_HOST_DIMENSION:VALUE": 3,
+   "final:NEEDS_CLARIFICATION|VALUE_OPERATOR_BOUNDARY_MISMATCH": 2,
+   "final:NEEDS_CLARIFICATION|VALUE_OPERATOR_EVIDENCE_MISMATCH": 2,
+   "final:NEEDS_CLARIFICATION|VALUE_OPERATOR_UNGROUNDED": 29,
+   "final:NO_ACTION|NO_REQUEST": 73,
+   "final:READY|NONE": 160,
+   "final:UNSUPPORTED|BUYER_SOURCE_PROJECTION_REQUIRED": 41,
+   "final:UNSUPPORTED|CONFLICTING_PROJECTION_KEY": 4,
+   "final:UNSUPPORTED|MULTI_REQUEST": 1,
+   "final:UNSUPPORTED|NONCONJUNCTIVE_EXPRESSION": 4,
+   "final:UNSUPPORTED|SOQL_PROJECTION_BLOCKED": 4,
+   "final:UNSUPPORTED|UNACCREDITED_MODALITY_FAMILY": 6,
+   "final:UNSUPPORTED|UNSUPPORTED_CONDITION": 160,
+   "final:UNSUPPORTED|UNSUPPORTED_OPERATION": 5,
+   "final:UNSUPPORTED|UNSUPPORTED_OPPORTUNITY_OVERRIDE": 3
+  },
+  "legacy_condition_ops": {
+   "ACTOR/is": 114,
+   "BUYER/is": 179,
+   "CONTRACT_TYPE_OR_NATURE/is": 12,
+   "GEOGRAPHY/DEPARTMENT": 135,
+   "GEOGRAPHY/MUNICIPALITY": 54,
+   "GEOGRAPHY/REGION": 9,
+   "MODALITY/family": 23,
+   "ORDER/date_desc": 2,
+   "ORDER/value_desc": 31,
+   "STATE/family": 91,
+   "STATE/is": 1,
+   "TIME/between_dates": 20,
+   "TIME/during_month": 23,
+   "TIME/during_year": 165,
+   "TOPIC/contains": 303,
+   "VALUE/greater_or_equal": 90,
+   "VALUE/less_or_equal": 32
+  },
+  "legacy_dims": {
+   "ACTOR/POSITIVE": 114,
+   "BUYER/POSITIVE": 179,
+   "CONTRACT_TYPE_OR_NATURE/POSITIVE": 12,
+   "GEOGRAPHY/POSITIVE": 198,
+   "MODALITY/POSITIVE": 23,
+   "ORDER/POSITIVE": 33,
+   "STATE/POSITIVE": 92,
+   "TIME/POSITIVE": 208,
+   "TOPIC/NEGATIVE": 1,
+   "TOPIC/POSITIVE": 302,
+   "VALUE/POSITIVE": 122
+  },
+  "legacy_handled_as": {
+   "ACTOR_PROFILE": 46,
+   "ANALYTICS": 2,
+   "CLARIFY": 181,
+   "ENTITY_PROFILE": 10,
+   "SEARCH": 381
+  },
+  "legacy_routes": {
+   "actor_profile": 46,
+   "analytics_aggregate_sum": 1,
+   "analytics_temporal": 1,
+   "entity_profile_overview": 9,
+   "entity_profile_scope_clarification": 1,
+   "heuristic_only": 550,
+   "heuristic_plus_llm": 12
+  },
+  "n": 620,
+  "producer": {
+   "PROPOSAL": 620
+  },
+  "producer_latency_ms": {
+   "final_attempt_max": 3009.2,
+   "final_attempt_p50": 1626.4,
+   "final_attempt_p90": 1951.5,
+   "with_retry_p50": 1626.4,
+   "with_retry_p90": 1951.5
+  },
+  "projection": {
+   "NOT_REACHED|NONE": 403,
+   "READY|NONE": 160,
+   "UNSUPPORTED|BUYER_SOURCE_PROJECTION_REQUIRED": 41,
+   "UNSUPPORTED|CONFLICTING_PROJECTION_KEY": 4,
+   "UNSUPPORTED|NONCONJUNCTIVE_EXPRESSION": 4,
+   "UNSUPPORTED|SOQL_PROJECTION_BLOCKED": 4,
+   "UNSUPPORTED|UNSUPPORTED_CONDITION": 1,
+   "UNSUPPORTED|UNSUPPORTED_OPPORTUNITY_OVERRIDE": 3
+  },
+  "ready_but_legacy_saw_dimension_foundation_lacks": {
+   "ACTOR|not_admitted": 3,
+   "CONTRACT_TYPE_OR_NATURE|admitted": 4,
+   "CONTRACT_TYPE_OR_NATURE|not_admitted": 1,
+   "MODALITY|admitted": 6,
+   "MODALITY|not_admitted": 3,
+   "STATE|admitted": 13,
+   "STATE|not_admitted": 8,
+   "TIME_NARROWED_TO_YEAR|admitted": 7,
+   "TOPIC|not_admitted": 2
+  },
+  "retried_calls": 0,
+  "stage_by_gate": {
+   "ADMITTED|F_READY_ADMITTED": 117,
+   "ADMITTED|HOST_NEEDS_CLARIFICATION": 76,
+   "ADMITTED|HOST_UNSUPPORTED": 33,
+   "ADMITTED|PROJECTION_UNSUPPORTED": 44,
+   "NOT_ADMITTED|GATE_EXCLUDED_F_READY": 43,
+   "NOT_ADMITTED|HOST_NEEDS_CLARIFICATION": 83,
+   "NOT_ADMITTED|HOST_NO_ACTION": 73,
+   "NOT_ADMITTED|HOST_UNSUPPORTED": 138,
+   "NOT_ADMITTED|PROJECTION_UNSUPPORTED": 13
+  },
+  "stage_by_slice": {
+   "REAL": {
+    "F_READY_ADMITTED": 110,
+    "GATE_EXCLUDED_F_READY": 37,
+    "HOST_NEEDS_CLARIFICATION": 151,
+    "HOST_NO_ACTION": 72,
+    "HOST_UNSUPPORTED": 166,
+    "PROJECTION_UNSUPPORTED": 49
+   },
+   "SYNTHETIC": {
+    "F_READY_ADMITTED": 7,
+    "GATE_EXCLUDED_F_READY": 6,
+    "HOST_NEEDS_CLARIFICATION": 8,
+    "HOST_NO_ACTION": 1,
+    "HOST_UNSUPPORTED": 5,
+    "PROJECTION_UNSUPPORTED": 8
+   }
+  },
+  "stage_without_gold": {
+   "F_READY_ADMITTED": 117,
+   "GATE_EXCLUDED_F_READY": 43,
+   "HOST_NEEDS_CLARIFICATION": 159,
+   "HOST_NO_ACTION": 73,
+   "HOST_UNSUPPORTED": 171,
+   "PROJECTION_UNSUPPORTED": 57
+  },
+  "time_cross_legacy_vs_foundation": {
+   "legacy:between_dates | foundation:during_year": 12,
+   "legacy:between_dates | foundation:during_year/+UNSUPPORTED": 1,
+   "legacy:between_dates | foundation:none/+UNSUPPORTED": 2,
+   "legacy:during_month | foundation:during_year": 13,
+   "legacy:during_month | foundation:during_year/+UNSUPPORTED": 6,
+   "legacy:during_month | foundation:none/+UNSUPPORTED": 1,
+   "legacy:during_year | foundation:during_year": 129,
+   "legacy:during_year | foundation:during_year/+UNSUPPORTED": 25,
+   "legacy:during_year | foundation:none/+UNSUPPORTED": 2,
+   "legacy:none | foundation:during_year": 2,
+   "legacy:none | foundation:during_year/+UNSUPPORTED": 2,
+   "legacy:none | foundation:none": 232,
+   "legacy:none | foundation:none/+UNSUPPORTED": 120
+  },
+  "unsupported_conditions_by_class": {
+   "ACTOR_LIKE": 116,
+   "ORDER_LIKE": 11,
+   "OTHER": 38,
+   "TIME_LIKE": 10
+  },
+  "unsupported_labels_ge5": {
+   "identificador de proveedor": 5,
+   "mes": 5,
+   "nombre de persona": 6,
+   "proveedor": 41,
+   "proveedor nombrado": 5
+  },
+  "value_operator_rejections_by_class": {
+   "BETWEEN_RANGE": 12,
+   "COMPARATIVE_LEXICON_GAP": 8,
+   "INCLUSIVE_BOUND": 8,
+   "ORDER_LANGUAGE": 11,
+   "OTHER": 3
+  }
+ },
+ "meta": {
+  "captures": 620,
+  "with_gold": false
+ },
+ "stability": {
+  "canonical_changed": [
+   "R0201",
+   "R0317",
+   "R0007"
+  ],
+  "compared": 40,
+  "latency_ms_p50": {
+   "first": 1686.4,
+   "second": 1746.7
+  },
+  "n_canonical_changed": 3,
+  "n_outcome_changed": 1,
+  "n_status_changed": 0,
+  "outcome_changed_ids": [
+   "R0201"
+  ],
+  "raw_identical": 23,
+  "sample": {
+   "REAL": 30,
+   "SYNTHETIC": 10
+  }
+ }
+}
