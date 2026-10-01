@@ -268,3 +268,16 @@ abiertos incluidos. La vista por defecto siempre se anuncia con botones.
 | D8 | «excepto los de X y los de Y» = `NOT(OR(X,Y))` (E2: exclusión de un grupo compuesto). |
 | D9 | En MULTI cada job lleva sus propias requests; los jobs no-SEARCH siguen C7. Una pregunta anafórica con operación clara («y sus proveedores?») es esa operación con `NEEDS_HISTORY` (C2). |
 | D10 | «analiza <tema> en <lugar>» (sin entidad) = `GROUP_BY·OTHER:MARKET_ANALYSIS`. «qué ha contratado <actor>» = SEARCH·CONTRACTS con ACTOR (B2). Predicción = `OUT_OF_DOMAIN`/`DECLINE`. |
+
+## 15. Enmienda v1.5 (2026-09-30) — cardinalidad de superlativos (alinea el texto con el Gold sellado)
+
+La §4 decía «`limit_n` opcional si hay cifra»; los dos etiquetadores, de forma independiente,
+etiquetaron además el superlativo singular con `limit_n: 1` (N012, R0507). El Gold manda:
+
+| Forma | Etiqueta |
+|---|---|
+| «el/la <sustantivo> más …», «el de mayor valor» (singular) | `ORDER` + `limit_n: 1` |
+| «los más caros», «las más recientes» (plural sin cifra) | `ORDER` sin `limit_n` |
+| «los 10 más caros» (cifra explícita) | `ORDER` + `limit_n: N` |
+
+En la IR v2 (C0) `limit_n` se representa como la dimensión `CARDINALITY`, resuelta por el host.

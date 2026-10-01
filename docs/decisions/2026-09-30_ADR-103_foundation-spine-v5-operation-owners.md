@@ -38,8 +38,7 @@ y que la puerta léxica es la única barrera que impide a SEARCH secuestrar capa
 ## Decisiones de producto (P1–P9 del diseño)
 
 Tomadas según la recomendación de METIS: P1 mensaje explícito con guía para operaciones sin dueño;
-P2 MULTI con SEARCH → «por pasos» con un botón por job; P3 superlativo singular → lista ordenada
-anunciada; P4 activación por etapas con autorización expresa en cada una; P5 sí a perfiles
+P2 MULTI con SEARCH → «por pasos» con un botón por job; P3 (enmendada, ver abajo) superlativo singular → ORDER + CARDINALITY 1; P4 activación por etapas con autorización expresa en cada una; P5 sí a perfiles
 cerrados; P6 D1; P7 en M1 sólo botones de vista (período y orden en M2), opciones numeradas en
 texto; P8 tope de top-N = 100 anunciado; P9 SEARCH por persona natural con la política de Actor
 Profile (ADR-060).
@@ -57,3 +56,18 @@ Profile (ADR-060).
 
 `foundation_v3` (v4.2 bajo el host v2) o `legacy` (paridad con `main`). Cada paso C1.x es un commit
 revertible; C1.1 no cambia el runtime.
+
+## Enmienda 1 (2026-09-30) — P3 vetada y corregida
+
+La adopción inicial de P3 («superlativo singular → lista ordenada, sin límite») contradecía el Gold
+sellado: N012 («el contrato más grande de la Alcaldía de Cali», doble etiqueta sin desacuerdo) y
+R0507 (consulta REAL, «dame el contrato … de mayor cuantía») llevan `ORDER value_desc` con
+cardinalidad 1. Veto del asesor aceptado; el Gold no se modifica.
+
+Regla vigente:
+- Superlativo **singular** («el/la <sustantivo> más …», «el de mayor valor») → `ORDER` +
+  `CARDINALITY 1`.
+- Superlativo **plural sin cifra** («los más caros») → lista ordenada, sin `CARDINALITY`.
+- **Cifra explícita** («los 10 más caros») → `CARDINALITY N` (tope P8 = 100, anunciado).
+La cardinalidad la decide el host a partir de la cita (número gramatical o cifra); el LLM no
+entrega el valor (invariante 3).
