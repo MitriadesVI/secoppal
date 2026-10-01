@@ -13,17 +13,19 @@ from hypothesis import HealthCheck, given, settings, strategies as st
 
 from app.core import foundation_messages
 from app.core.foundation_authority_contract import (
-    AUTHORITY_DIMENSION_NAMES, AUTHORITY_REASONS, MAX_TOP_N, STATE_CLASSES, VALUE_ALIASES,
-    VALUE_TYPES, WINDOW_TOKENS, ActorValue, AuthorityContext, AuthorityReceipt, AuthorityVerdict,
-    BuyerValue, CardinalityValue, Comparator, ContractTypeValue, DimensionAuthority,
-    DimensionEvidence, EvidenceWindow, GeoValue, ModalityValue, MoneyValue, OrderDirection,
-    OrderKey, OrderValue, StateValue, TimeValue, TopicValue, decode_value,
+    AUTHORITY_DIMENSION_NAMES, AUTHORITY_REASONS, MAX_EVIDENCE_SEGMENTS, MAX_GAP_TOKENS, MAX_TOP_N,
+    REFERENCE_TZ, STATE_CLASSES, VALUE_ALIASES, VALUE_TYPES, WINDOW_TOKENS, ActorValue,
+    AuthorityContext, AuthorityReceipt, AuthorityVerdict, BuyerKind, BuyerValue, CardinalityBasis,
+    CardinalityValue, Comparator, ContractTypeValue, DimensionAuthority, DimensionEvidence,
+    EvidenceWindow, GeoValue, ModalityValue, MoneyValue, OrderDirection, OrderKey, OrderValue,
+    StateValue, TimeValue, TopicValue, decode_value,
 )
 from app.core.foundation_authority_registry import (
     REGISTRY, AuthorityDeps, AuthorityEntry, Maturity,
 )
+from app.core.foundation_authority_contract import _fold
 from app.core.foundation_evidence_window import (
-    EvidenceWindowError, build_window, window_tokens,
+    WINDOW_ERROR_CODES, EvidenceWindowError, build_window, window_tokens,
 )
 from app.core.foundation_geo_level import GeoLevel
 from app.core.interpretation_contract import (
@@ -40,7 +42,7 @@ NEW_RUNTIME_MODULES = ("foundation_authority_contract", "foundation_authority_va
                        "foundation_geo_level", "host_authorities")
 
 
-# ---- the window: at most K tokens, only the cited text, never the raw turn -------------------
+# ---- the window: segments, gaps shown whole, at most K tokens outside, never the raw turn ------
 _WORD = st.text(alphabet="abcdefghijklmnopqrstuvwxyzáéíóúñÁÉÑ0123456789", min_size=1, max_size=9)
 _SEP = st.sampled_from([" ", "  ", ", ", ". ", " - ", "\n", "\t", " (", ") "])
 
@@ -57,12 +59,16 @@ def turns(draw, minimum=0, maximum=14):
     return left + cited + right, len(left), len(left) + len(cited)
 
 
+def one(raw, start, end):
+    return build_window(raw, [RawSpan(start, end, raw[start:end])])
+
+
 @FAST
 @given(turns())
 def test_window_never_exceeds_k_tokens_on_either_side(case):
     raw, start, end = case
-    window = build_window(raw, [RawSpan(start, end, raw[start:end])], "TIME")
-    assert WINDOW_TOKENS == 4
+    window = one(raw, start, end)
+    assert WINDOW_TOKENS == 4 and MAX_GAP_TOKENS == 8 and MAX_EVIDENCE_SEGMENTS == 4
     assert len(window.left) <= 4 and len(window.right) <= 4
 
 
@@ -70,10 +76,11 @@ def test_window_never_exceeds_k_tokens_on_either_side(case):
 @given(turns())
 def test_window_is_exactly_the_cite_plus_the_k_nearest_tokens(case):
     raw, start, end = case
-    window = build_window(raw, [RawSpan(start, end, raw[start:end])], "TIME")
+    window = one(raw, start, end)
     before = re.findall(r"[a-z0-9]+", normalize_text(raw[:start]))
     after = re.findall(r"[a-z0-9]+", normalize_text(raw[end:]))
     assert window.left == tuple(before[-4:]) and window.right == tuple(after[:4])
+    assert window.segments == (unicodedata.normalize("NFC", raw[start:end]),) and window.gaps == ()
     assert window.quote == unicodedata.normalize("NFC", raw[start:end])
     assert window.spans == (RawSpan(start, end, raw[start:end]),)
 
@@ -88,10 +95,10 @@ def test_window_contains_no_character_outside_the_cite_and_k_tokens(case, which)
     far_right = " " + " ".join(["relleno"] * 5) + " " + canary
     raw = (far_left if which in (0, 2) else "") + raw + (far_right if which in (1, 2) else "")
     offset = len(far_left) if which in (0, 2) else 0
-    window = build_window(raw, [RawSpan(start + offset, end + offset, raw[start + offset:end + offset])],
-                          "TIME")
+    window = one(raw, start + offset, end + offset)
     assert canary not in repr(window)
-    assert {field.name for field in dataclasses.fields(window)} == {"spans", "quote", "left", "right"}
+    assert {field.name for field in dataclasses.fields(window)} == {
+        "spans", "segments", "gaps", "left", "right"}
 
 
 @FAST
@@ -101,7 +108,11 @@ def test_window_tokens_are_a_subset_of_the_folded_neighbour_text(raw, data):
     end = data.draw(st.integers(start + 1, len(raw)))
     if not raw[start:end].strip():
         return
-    window = build_window(raw, [RawSpan(start, end, raw[start:end])], "TOPIC")
+    try:
+        window = one(raw, start, end)
+    except EvidenceWindowError as error:  # the only refusal a single cite can get
+        assert error.reason == "SPAN_INSIDE_WORD"
+        return
     assert window.left == window_tokens(raw[:start])[-4:]
     assert window.right == window_tokens(raw[end:])[:4]
     for token in (*window.left, *window.right):
@@ -109,66 +120,183 @@ def test_window_tokens_are_a_subset_of_the_folded_neighbour_text(raw, data):
         assert token in normalize_text(raw) or token in normalize_text(raw[:start] + raw[end:])
 
 
+@FAST
+@given(st.text(max_size=80))
+def test_the_contract_fold_is_the_runtime_normalize_text(text):
+    """The contract imports no runtime, so its `quote` fold is pinned to `normalize_text` here."""
+    assert _fold(text) == normalize_text(text)
+
+
 def test_window_tokenizer_matches_the_m1_h0_folding():
     assert window_tokens("Contratos de AGOSTO de 2026, en Cáli ²") == (
         "contratos", "de", "agosto", "de", "2026", "en", "cali", "2")
 
 
-def test_window_cuts_at_the_span_boundary_even_inside_a_word():
-    raw = "vendo sobras ya"
-    start = raw.index("obras")
-    window = build_window(raw, [RawSpan(start, start + 5, "obras")], "TOPIC")
-    assert window.left == ("vendo", "s") and window.right == ("ya",)
+def test_window_refuses_a_cite_that_starts_or_ends_inside_a_word():
+    """No authority can tell «s obras» from «sobras»: refused, never a fragment token."""
+    for raw, needle in (("vendo sobras ya", "obras"), ("vendo obrasx ya", "obras"),
+                        ("vendo sobrasx ya", "obras"), ("vendo ñobras ya", "obras"),
+                        ("vendo 2025x ya", "2025"), ("vendo obras ya", "bras"), ("vendo obras ya", "obra")):
+        start = raw.index(needle)
+        with pytest.raises(EvidenceWindowError) as error:
+            build_window(raw, [RawSpan(start, start + len(needle), needle)])
+        assert error.value.reason == "SPAN_INSIDE_WORD", (raw, needle)
+    for raw, needle in (("obras ya", "obras"), ("ya obras", "obras"), ("ya, obras.", "obras"),
+                        ("ya (obras)", "obras"), ("ya $5.000 mas", "5.000"), ("ya\nobras\tya", "obras")):
+        start = raw.index(needle)
+        assert build_window(raw, [RawSpan(start, start + len(needle), needle)]).segments == (needle,)
+    raw = "vendo sobras ya"  # one bad cite among good ones refuses the whole window
+    with pytest.raises(EvidenceWindowError, match="SPAN_INSIDE_WORD"):
+        build_window(raw, [RawSpan(0, 5, "vendo"), RawSpan(7, 12, "obras")])
 
 
 def test_window_accepts_one_phrase_cited_in_contiguous_pieces_and_a_duplicate_citation():
     raw = "contratos de primera infancia en Cali"
     spans = [RawSpan(13, 20, "primera"), RawSpan(21, 29, "infancia")]
-    window = build_window(raw, spans, "TOPIC")
+    window = build_window(raw, spans)
+    assert window.segments == ("primera infancia",) and window.gaps == ()
     assert window.quote == "primera infancia" and window.left == ("contratos", "de")
     assert window.right == ("en", "cali")
-    assert build_window(raw, [spans[0], spans[0]], "TOPIC").quote == "primera"
+    assert build_window(raw, [spans[0], spans[0]]).segments == ("primera",)
+    overlapping = build_window(raw, [RawSpan(13, 29, "primera infancia"), RawSpan(21, 29, "infancia")])
+    assert overlapping.segments == ("primera infancia",) and overlapping.gaps == ()
+    contained = build_window(raw, [RawSpan(13, 32, "primera infancia en"), RawSpan(21, 29, "infancia")])
+    assert contained.segments == ("primera infancia en",) and contained.right == ("cali",)
+
+
+def test_s3_two_cites_of_one_state_condition_build_a_window_with_the_gap_in_view():
+    """«publicados o abiertos» (ADR-100): the bare «o» between the cites is the evidence of the funnel."""
+    raw = "procesos publicados o abiertos en Cali"
+    window = build_window(raw, [RawSpan(9, 19, "publicados"), RawSpan(22, 30, "abiertos")])
+    assert window.segments == ("publicados", "abiertos") and window.gaps == (("o",),)
+    assert window.left == ("procesos",) and window.right == ("en", "cali")
+    assert window.quote is None  # two different phrases: a single-phrase dimension reads nothing
+    assert window.stripped().gaps == (("o",),) and window.truncated(0, 1).gaps == (("o",),)
+    for other, gap in (("procesos publicados y abiertos", ("y",)), ("procesos publicados, abiertos", ()),
+                       ("procesos publicados o sea abiertos", ("o", "sea"))):
+        a = other.index("publicados")
+        b = other.index("abiertos")
+        built = build_window(other, [RawSpan(a, a + 10, "publicados"), RawSpan(b, b + 8, "abiertos")])
+        assert built.gaps == (gap,) and built.quote is None
+
+
+def test_g1_a_phrase_cited_twice_builds_a_window_whose_gap_holds_the_middle_qualifier():
+    """G1 accepts «obras ... obras»; the qualifier between the occurrences is in the gap, in view."""
+    raw = "obras en Cali y obras en Bogota"
+    window = build_window(raw, [RawSpan(0, 5, "obras"), RawSpan(16, 21, "obras")])
+    assert window.segments == ("obras", "obras") and window.gaps == (("en", "cali", "y"),)
+    assert window.quote == "obras" and window.left == () and window.right == ("en", "bogota")
+    again = build_window("Obras de obras", [RawSpan(0, 5, "Obras"), RawSpan(9, 14, "obras")])
+    assert again.quote == "Obras" and again.gaps == (("de",),)  # same folded phrase: the first spelling
+
+
+def test_window_gap_is_shown_whole_up_to_two_k_tokens_and_never_elided():
+    nine = " ".join(f"p{n}" for n in range(9))
+    eight = " ".join(f"p{n}" for n in range(8))
+    ok = build_window(f"aaa {eight} bbb", [RawSpan(0, 3, "aaa"), RawSpan(4 + len(eight) + 1, 8 + len(eight), "bbb")])
+    assert ok.gaps == (tuple(f"p{n}" for n in range(8)),) and len(ok.gaps[0]) == 2 * WINDOW_TOKENS
+    with pytest.raises(EvidenceWindowError) as error:
+        build_window(f"aaa {nine} bbb", [RawSpan(0, 3, "aaa"), RawSpan(4 + len(nine) + 1, 8 + len(nine), "bbb")])
+    assert error.value.reason == "EVIDENCE_GAP_TOO_WIDE"
+
+
+def test_window_segments_are_capped_and_touching_cites_are_one_segment():
+    raw = "a1 b2 c3 d4 e5 f6 g7 h8 i9"
+    cite = {w: RawSpan(raw.index(w), raw.index(w) + 2, w) for w in raw.split()}
+    four = build_window(raw, [cite[w] for w in ("a1", "c3", "e5", "g7")])
+    assert len(four.segments) == MAX_EVIDENCE_SEGMENTS == 4
+    assert four.gaps == (("b2",), ("d4",), ("f6",)) and four.left == () and four.right == ("h8", "i9")
+    with pytest.raises(EvidenceWindowError) as error:
+        build_window(raw, [cite[w] for w in ("a1", "c3", "e5", "g7", "i9")])
+    assert error.value.reason == "TOO_MANY_EVIDENCE_SEGMENTS"
+    joined = build_window(raw, [cite[w] for w in ("a1", "b2", "e5", "f6", "i9")])  # touching: 3 segments
+    assert joined.segments == ("a1 b2", "e5 f6", "i9") and joined.gaps == (("c3", "d4"), ("g7", "h8"))
 
 
 @pytest.mark.parametrize("raw, spans, reason", [
-    ("obras de obras", [RawSpan(0, 5, "obras"), RawSpan(9, 14, "obras")], "DISJOINT_EVIDENCE"),
-    ("aseo y vigilancia", [RawSpan(0, 4, "aseo"), RawSpan(7, 17, "vigilancia")],
-     "MULTI_EVIDENCE_TOPIC_UNSUPPORTED"),
     ("obras", [], "NO_MATERIAL_EVIDENCE"),
+    ("obras", ["obras"], "NO_MATERIAL_EVIDENCE"),
     ("obras", [RawSpan(0, 5, "otras")], "UNBOUND_RAW_SPAN"),
     ("obras", [RawSpan(0, 9, "obras")], "UNBOUND_RAW_SPAN"),
+    ("sobras", [RawSpan(1, 6, "obras")], "SPAN_INSIDE_WORD"),
+    (None, [RawSpan(0, 1, "a")], "INVALID_RAW_TEXT"),
 ])
-def test_window_builder_refuses_what_it_cannot_show_in_full(raw, spans, reason):
+def test_window_builder_refuses_with_a_closed_code(raw, spans, reason):
     with pytest.raises(EvidenceWindowError) as error:
-        build_window(raw, spans, "TOPIC")
+        build_window(raw, spans)
     assert error.value.reason == reason and str(error.value) == reason
+    assert reason in WINDOW_ERROR_CODES
+
+
+def test_window_error_codes_are_closed_and_none_comes_from_the_old_material_phrase():
+    assert WINDOW_ERROR_CODES == {"INVALID_RAW_TEXT", "NO_MATERIAL_EVIDENCE", "UNBOUND_RAW_SPAN",
+                                  "SPAN_INSIDE_WORD", "EVIDENCE_GAP_TOO_WIDE", "TOO_MANY_EVIDENCE_SEGMENTS"}
+    with pytest.raises(ValueError):
+        EvidenceWindowError("DISJOINT_EVIDENCE")
+    source = (ROOT / "app/core/foundation_evidence_window.py").read_text()
+    assert "material_phrase" not in source and "DISJOINT_EVIDENCE" not in source
+
+
+def test_build_window_takes_no_dimension():
+    with pytest.raises(TypeError):
+        build_window("obras", [RawSpan(0, 5, "obras")], "TOPIC")
 
 
 def test_window_errors_never_echo_the_raw_turn():
     raw = "texto-secreto-unico y otra cosa"
     with pytest.raises(EvidenceWindowError) as error:
-        build_window(raw, [RawSpan(0, 5, "otros")], "TOPIC")
+        build_window(raw, [RawSpan(0, 5, "otros")])
     assert "secreto" not in str(error.value) and "secreto" not in repr(error.value.args)
 
 
 def test_window_builder_refuses_a_non_text_turn():
     with pytest.raises(EvidenceWindowError):
-        build_window(None, [RawSpan(0, 1, "a")], "TOPIC")
+        build_window(None, [RawSpan(0, 1, "a")])
 
 
-@pytest.mark.parametrize("left, right, quote", [
-    (("a",) * 5, (), "x"), ((), ("a",) * 5, "x"), (("Mayus",), (), "x"), (("con espacio",), (), "x"),
-    (("ñ",), (), "x"), (("",), (), "x"), ([], (), "x"), ((), (), " "), ((), (), "é"),
+_SPAN = (RawSpan(0, 1, "x"),)
+_EIGHT = tuple(f"t{n}" for n in range(8))
+
+
+@pytest.mark.parametrize("args", [
+    (_SPAN, ("x",), (), ("a",) * 5, ()), (_SPAN, ("x",), (), (), ("a",) * 5),
+    (_SPAN, ("x",), (), ("Mayus",), ()), (_SPAN, ("x",), (), ("con espacio",), ()),
+    (_SPAN, ("x",), (), ("ñ",), ()), (_SPAN, ("x",), (), ("",), ()), (_SPAN, ("x",), (), [], ()),
+    (_SPAN, (" ",), (), (), ()), (_SPAN, ("e\u0301",), (), (), ()),  # NFD, not NFC
+    (_SPAN, (), (), (), ()),
+    (_SPAN, ["x"], (), (), ()), (_SPAN, ("x",) * 5, ((),) * 4, (), ()),
+    (_SPAN, ("x", "y"), (), (), ()), (_SPAN, ("x",), ((),), (), ()),
+    (_SPAN, ("x", "y"), (("a",) * 9,), (), ()), (_SPAN, ("x", "y"), (("A",),), (), ()),
+    (_SPAN, ("x", "y"), ([],), (), ()), (_SPAN, ("x", "y"), [()], (), ()),
+    ((), ("x",), (), (), ()), (list(_SPAN), ("x",), (), (), ()),
 ])
-def test_window_validates_its_own_shape(left, right, quote):
+def test_window_validates_its_own_shape(args):
     with pytest.raises(ContractError):
-        EvidenceWindow((RawSpan(0, 1, "x"),), quote, left, right)
+        EvidenceWindow(*args)
 
 
-def test_window_truncation_only_removes_context():
+def test_window_accepts_the_declared_bounds():
+    EvidenceWindow(_SPAN, ("x", "y"), (_EIGHT,), (), ())
+    EvidenceWindow(_SPAN, ("x", "y"), ((),), ("a",) * 4, ("b",) * 4)
+    EvidenceWindow(_SPAN, ("x",) * 4, (_EIGHT,) * 3, (), ())
+
+
+def test_window_quote_is_the_one_phrase_every_segment_spells_else_none():
+    def window(*segments):
+        return EvidenceWindow(_SPAN, segments, ((),) * (len(segments) - 1), (), ())
+
+    assert window("obras").quote == "obras"
+    assert window("obras", "obras").quote == "obras"
+    assert window("Obras", "OBRAS", "óbras").quote == "Obras"  # folded equal: the first spelling
+    assert window("obras", "vias").quote is None
+    assert window("obras", "obras", "vias").quote is None
+    assert window("obras", "vias", "obras").quote is None
+
+
+def test_window_truncation_only_removes_context_and_keeps_the_gaps():
     raw = "uno dos tres cuatro 2026 cinco seis"
     start = raw.index("2026")
-    window = build_window(raw, [RawSpan(start, start + 4, "2026")], "TIME")
+    window = one(raw, start, start + 4)
     assert window.left == ("uno", "dos", "tres", "cuatro") and window.right == ("cinco", "seis")
     assert window.truncated(1, 1).left == ("cuatro",) and window.truncated(1, 1).right == ("cinco",)
     assert window.stripped().left == () and window.stripped().right == ()
@@ -177,6 +305,11 @@ def test_window_truncation_only_removes_context():
         window.truncated(len(window.left) + 1, 0)
     with pytest.raises(ContractError):
         window.truncated(-1, 0)
+    text = "ya procesos publicados o abiertos en Cali hoy"
+    a, b = text.index("publicados"), text.index("abiertos")
+    s3 = build_window(text, [RawSpan(a, a + 10, "publicados"), RawSpan(b, b + 8, "abiertos")])
+    for cut in (s3.stripped(), s3.truncated(1, 2), s3.truncated(0, 0)):
+        assert cut.segments == s3.segments and cut.gaps == s3.gaps == (("o",),) and cut.spans == s3.spans
 
 
 def test_only_the_window_module_and_the_contract_construct_an_evidence_window():
@@ -213,7 +346,8 @@ def geo_values(draw):
     digits = {GeoLevel.DEPARTMENT: 2, GeoLevel.MUNICIPALITY: 5}.get(level)
     code = draw(st.one_of(st.none(), st.from_regex(rf"\d{{{digits}}}", fullmatch=True))) if digits else None
     members = tuple(draw(_UNIQUE)) if level is GeoLevel.REGION else ()
-    return GeoValue(level, draw(_TEXT), code, members)
+    department = draw(_TEXT) if level is GeoLevel.MUNICIPALITY else None
+    return GeoValue(level, draw(_TEXT), department, code, members, draw(st.booleans()))
 
 
 @st.composite
@@ -222,14 +356,32 @@ def time_values(draw):
     start, end = min(a, b), max(a, b) + timedelta(days=1)
     bounds = draw(st.sampled_from(["both", "start", "end"]))
     return TimeValue(start if bounds != "end" else None, end if bounds != "start" else None,
-                     draw(st.from_regex(r"[a-z][a-z0-9_]{0,12}", fullmatch=True)))
+                     draw(st.from_regex(r"[a-z][a-z0-9_]{0,12}", fullmatch=True)), draw(st.booleans()))
 
 
 @st.composite
 def state_values(draw):
-    datasets = draw(st.dictionaries(_TEXT, st.lists(_TEXT, min_size=1, max_size=3, unique=True).map(tuple),
-                                    max_size=3))
-    return StateValue.of(draw(st.sampled_from(STATE_CLASSES)), datasets)
+    columns = st.dictionaries(_TEXT, st.lists(_TEXT, min_size=1, max_size=3, unique=True).map(tuple),
+                              max_size=3)
+    literals = draw(st.dictionaries(_TEXT, columns, max_size=3))
+    return StateValue.of(draw(st.sampled_from(STATE_CLASSES)), literals, draw(st.booleans()))
+
+
+@st.composite
+def buyer_values(draw):
+    if draw(st.booleans()):
+        name = draw(_TEXT)
+        return BuyerValue(name, BuyerKind.UNIT, (name,), None, draw(st.booleans()))
+    members = tuple(sorted(draw(st.lists(_TEXT, min_size=2, max_size=4, unique=True))))
+    name = draw(_TEXT.filter(lambda text: text not in members))
+    return BuyerValue(name, BuyerKind.GROUP, members, draw(_POLICY), draw(st.booleans()))
+
+
+@st.composite
+def cardinality_values(draw):
+    if draw(st.booleans()):
+        return CardinalityValue(1, CardinalityBasis.SINGULAR)
+    return CardinalityValue(draw(st.integers(1, MAX_TOP_N)), CardinalityBasis.FIGURE)
 
 
 @st.composite
@@ -240,19 +392,20 @@ def modality_values(draw):
 
 
 VALUE_STRATEGIES = {
-    TopicValue: st.builds(TopicValue, _TEXT, st.booleans()),
-    BuyerValue: st.builds(BuyerValue, _TEXT, _TEXT.map(lambda s: frozenset({s}))),
+    TopicValue: st.builds(TopicValue, _TEXT, st.booleans(), st.booleans()),
+    BuyerValue: buyer_values(),
     ActorValue: st.builds(ActorValue, st.from_regex(r"[A-Z0-9]{1,20}", fullmatch=True),
                           st.from_regex(r"[A-Z][A-Z0-9_]{0,15}", fullmatch=True)
-                          .filter(lambda s: s != "UNKNOWN"), _TEXT),
+                          .filter(lambda s: s != "UNKNOWN"), _TEXT, st.booleans()),
     GeoValue: geo_values(),
     TimeValue: time_values(),
     MoneyValue: st.builds(MoneyValue, st.integers(0, 10 ** 15), st.sampled_from(list(Comparator))),
     StateValue: state_values(),
     ModalityValue: modality_values(),
-    ContractTypeValue: st.builds(lambda ids: ContractTypeValue(tuple(ids)), _UNIQUE),
+    ContractTypeValue: st.builds(lambda ids, excluded: ContractTypeValue(tuple(ids), excluded), _UNIQUE,
+                                 st.booleans()),
     OrderValue: st.builds(OrderValue, st.sampled_from(list(OrderKey)), st.sampled_from(list(OrderDirection))),
-    CardinalityValue: st.builds(CardinalityValue, st.integers(1, MAX_TOP_N)),
+    CardinalityValue: cardinality_values(),
 }
 
 
@@ -315,12 +468,14 @@ def test_decode_never_raises_anything_but_the_contract_error(junk, tag):
 
 
 def test_decode_rejects_unknown_version_tag_extra_missing_reordered_and_noncanonical():
-    good = TopicValue("obras", True).encode()
-    assert good == ("topic@1", "phrase_folded=obras", "token_mode=1")
+    good = TopicValue("obras", True, False).encode()
+    assert good == ("topic@1", "phrase_folded=obras", "token_mode=1", "excluded=0")
     for bad in (("topic@2", *good[1:]), ("topic@0", *good[1:]), ("nope@1", *good[1:]), good[:-1],
-                (*good, "extra=1"), (good[0], good[2], good[1]), (good[0], good[1], "token_mode=2"),
-                ("topic@1", "phrase_folded=%6Fbras", "token_mode=1"), ("topic@1", "phrase_folded=obras", "token_mode=01"),
-                ("topic@1", "phrase_folded=obras", "token_mode"), (), ("",), "topic@1"):
+                (*good, "extra=1"), (good[0], good[2], good[1], good[3]), (good[0], good[1], "token_mode=2", good[3]),
+                (good[0], good[1], good[2], "excluded=2"), (good[0], good[1], good[2], "excluded=true"),
+                ("topic@1", "phrase_folded=%6Fbras", "token_mode=1", "excluded=0"),
+                ("topic@1", "phrase_folded=obras", "token_mode=01", "excluded=0"),
+                ("topic@1", "phrase_folded=obras", "token_mode", "excluded=0"), (), ("",), "topic@1"):
         with pytest.raises(ContractError):
             decode_value(bad)
     with pytest.raises(ContractError):
@@ -331,34 +486,139 @@ def test_decode_rejects_unknown_version_tag_extra_missing_reordered_and_noncanon
         TopicValue.decode(("money@1", "amount_cop=5", "comparator=>"))
 
 
+_MUNICIPALITY = dict(level=GeoLevel.MUNICIPALITY, canonical="CALI", department="VALLE DEL CAUCA",
+                     divipola="76001", members=(), excluded=False)
+
+
+def geo(**overrides):
+    return GeoValue(**{**_MUNICIPALITY, **overrides})
+
+
+def buyer_group(**overrides):
+    base = dict(canonical="SENA", kind=BuyerKind.GROUP, members=("SENA CAUCA", "SENA VALLE"),
+                membership="sena@1", excluded=False)
+    return BuyerValue(**{**base, **overrides})
+
+
 @pytest.mark.parametrize("build", [
-    lambda: TopicValue("  ", False), lambda: TopicValue("x", 1), lambda: TopicValue("\ud800", False),
-    lambda: BuyerValue("x", frozenset()), lambda: BuyerValue("x", frozenset({"a", "b"})),
-    lambda: BuyerValue("x", ["a"]), lambda: ActorValue("12-3", "NIT", "x"),
-    lambda: ActorValue("123", "UNKNOWN", "x"), lambda: ActorValue("123", "nit", "x"),
-    lambda: GeoValue(GeoLevel.UNKNOWN, "x"), lambda: GeoValue(GeoLevel.DEPARTMENT, "x", "123"),
-    lambda: GeoValue(GeoLevel.MUNICIPALITY, "x", "05"), lambda: GeoValue(GeoLevel.REGION, "x"),
-    lambda: GeoValue(GeoLevel.DEPARTMENT, "x", None, ("a",)), lambda: GeoValue(GeoLevel.REGION, "x", "05", ("a",)),
-    lambda: TimeValue(None, None, "year"), lambda: TimeValue(date(2025, 1, 1), date(2025, 1, 1), "year"),
-    lambda: TimeValue(datetime(2025, 1, 1), None, "year"), lambda: TimeValue(date(2025, 1, 1), None, "Year"),
+    lambda: TopicValue("  ", False, False), lambda: TopicValue("x", 1, False), lambda: TopicValue("\ud800", False, False),
+    lambda: TopicValue("x", False, 0), lambda: TopicValue("x", False, None),
+    lambda: BuyerValue("x", BuyerKind.UNIT, (), None, False),
+    lambda: BuyerValue("x", BuyerKind.UNIT, ("a", "b"), None, False),
+    lambda: BuyerValue("x", BuyerKind.UNIT, ("a",), None, False),  # a unit is exactly (canonical,)
+    lambda: BuyerValue("x", BuyerKind.UNIT, ("x",), "g@1", False),
+    lambda: BuyerValue("x", "unit", ("x",), None, False), lambda: BuyerValue("x", BuyerKind.UNIT, ["x"], None, False),
+    lambda: BuyerValue("x", BuyerKind.UNIT, ("x",), None, 1),
+    lambda: buyer_group(members=("SENA CAUCA",)),  # a one-member group is a unit
+    lambda: buyer_group(members=()), lambda: buyer_group(members=("SENA VALLE", "SENA CAUCA")),
+    lambda: buyer_group(members=("SENA CAUCA", "SENA CAUCA")), lambda: buyer_group(canonical="SENA CAUCA"),
+    lambda: buyer_group(membership=None), lambda: buyer_group(membership="no version"),
+    lambda: buyer_group(membership="Sena@1"),
+    lambda: ActorValue("12-3", "NIT", "x", False),
+    lambda: ActorValue("123", "UNKNOWN", "x", False), lambda: ActorValue("123", "nit", "x", False),
+    lambda: ActorValue("123", "NIT", "x", None),
+    lambda: GeoValue(GeoLevel.UNKNOWN, "x", None, None, (), False),
+    lambda: geo(department=None),  # a municipality needs its department
+    lambda: geo(department=" "), lambda: geo(department=5),
+    lambda: GeoValue(GeoLevel.DEPARTMENT, "x", "dept", "76", (), False),  # a department has none
+    lambda: GeoValue(GeoLevel.REGION, "x", "dept", None, ("a",), False),
+    lambda: GeoValue(GeoLevel.DEPARTMENT, "x", None, "123", (), False),
+    lambda: geo(divipola="05"), lambda: GeoValue(GeoLevel.REGION, "x", None, None, (), False),
+    lambda: GeoValue(GeoLevel.DEPARTMENT, "x", None, None, ("a",), False),
+    lambda: GeoValue(GeoLevel.REGION, "x", None, "05", ("a",), False), lambda: geo(excluded="no"),
+    lambda: TimeValue(None, None, "year", False), lambda: TimeValue(date(2025, 1, 1), date(2025, 1, 1), "year", False),
+    lambda: TimeValue(datetime(2025, 1, 1), None, "year", False), lambda: TimeValue(date(2025, 1, 1), None, "Year", False),
+    lambda: TimeValue(date(2025, 1, 1), None, "year", 1),
     lambda: MoneyValue(-1, Comparator.GT), lambda: MoneyValue(True, Comparator.GT), lambda: MoneyValue(1.5, Comparator.GT),
-    lambda: MoneyValue(1, ">"), lambda: StateValue("unknown_state"), lambda: StateValue("open", (("b", ("x",)), ("a", ("y",)))),
-    lambda: StateValue("open", (("a", ()),)), lambda: StateValue("open", (("a", ("x",)), ("a", ("y",)))),
+    lambda: MoneyValue(1, ">"), lambda: StateValue("unknown_state", (), False),
+    lambda: StateValue("open", (("b", "c", ("x",)), ("a", "c", ("y",))), False),
+    lambda: StateValue("open", (("a", "c", ("x",)), ("a", "b", ("y",))), False),  # sorted by (dataset, column)
+    lambda: StateValue("open", (("a", "c", ()),), False), lambda: StateValue("open", (("a", "c", ("x", "x")),), False),
+    lambda: StateValue("open", (("a", "c", ("x",)), ("a", "c", ("y",))), False),
+    lambda: StateValue("open", (("a", ("x",)),), False),  # the column is mandatory: a pair is not a literal
+    lambda: StateValue("open", (("a", "", ("x",)),), False), lambda: StateValue("open", (("a", "c", ["x"]),), False),
+    lambda: StateValue("open", [("a", "c", ("x",))], False), lambda: StateValue("open", (), 1),
+    lambda: StateValue(["open"], (), False),
     lambda: ModalityValue((), None, False), lambda: ModalityValue(("a",), "no version", False),
-    lambda: ModalityValue(("a",), None, 1), lambda: ContractTypeValue(()), lambda: ContractTypeValue(("a", "a")),
-    lambda: OrderValue("value", OrderDirection.ASC), lambda: CardinalityValue(0),
-    lambda: CardinalityValue(MAX_TOP_N + 1), lambda: CardinalityValue(True),
+    lambda: ModalityValue(("a",), None, 1), lambda: ContractTypeValue((), False),
+    lambda: ContractTypeValue(("a", "a"), False), lambda: ContractTypeValue(("a",), None),
+    lambda: OrderValue("value", OrderDirection.ASC), lambda: CardinalityValue(0, CardinalityBasis.FIGURE),
+    lambda: CardinalityValue(MAX_TOP_N + 1, CardinalityBasis.FIGURE), lambda: CardinalityValue(True, CardinalityBasis.FIGURE),
+    lambda: CardinalityValue(2, CardinalityBasis.SINGULAR),  # a singular is one
+    lambda: CardinalityValue(MAX_TOP_N, CardinalityBasis.SINGULAR), lambda: CardinalityValue(5, "figure"),
 ])
 def test_values_refuse_to_exist_when_invalid(build):
     with pytest.raises(ContractError):
         build()
 
 
-def test_state_value_helpers_and_the_top_n_cap_of_p8():
-    value = StateValue.of("open", {"b": ("x",), "a": ("y", "z")})
-    assert value.by_dataset == (("a", ("y", "z")), ("b", ("x",)))
-    assert value.literals("a") == ("y", "z") and value.literals("c") is None
-    assert MAX_TOP_N == 100 and len(STATE_CLASSES) == 11
+def test_the_seven_dimension_values_that_project_a_membership_or_interval_carry_excluded():
+    """V5a: `excluded` is the LAST field and the last encoded item of every one of them (and MODALITY)."""
+    for kind in (TopicValue, BuyerValue, ActorValue, GeoValue, TimeValue, StateValue, ContractTypeValue,
+                 ModalityValue):
+        names = [field.name for field in dataclasses.fields(kind)]
+        assert names[-1] == "excluded", kind
+    for kind in (MoneyValue, OrderValue, CardinalityValue):
+        assert "excluded" not in {field.name for field in dataclasses.fields(kind)}, kind
+    samples = [TopicValue("obras", False, True), buyer_group(excluded=True), ActorValue("123", "NIT", "X", True),
+               geo(excluded=True), TimeValue(date(2025, 1, 1), None, "year", True),
+               StateValue.of("open", {"d": {"c": ("a",)}}, True), ContractTypeValue(("a",), True),
+               ModalityValue(("a",), None, True)]
+    for value in samples:
+        assert value.encode()[-1] == "excluded=1" and decode_value(value.encode()) == value
+        flipped = dataclasses.replace(value, excluded=False)
+        assert flipped != value and flipped.encode()[-1] == "excluded=0"
+
+
+def test_buyer_value_is_a_unit_or_a_declared_versioned_group_never_an_owner_set():
+    unit = BuyerValue("SENA CAUCA", BuyerKind.UNIT, ("SENA CAUCA",), None, False)
+    group = buyer_group()
+    assert unit.encode() == ("buyer@1", "canonical=SENA%20CAUCA", "kind=unit", "members=SENA%20CAUCA",
+                             "membership=!", "excluded=0")
+    assert group.encode()[2:5] == ("kind=group", "members=SENA%20CAUCA,SENA%20VALLE", "membership=sena%401")
+    assert decode_value(group.encode()) == group and decode_value(unit.encode()) == unit
+    assert "owners" not in {field.name for field in dataclasses.fields(BuyerValue)}
+    assert [kind.value for kind in BuyerKind] == ["unit", "group"]
+
+
+def test_geo_value_carries_the_department_of_a_municipality_only():
+    assert geo().encode()[:4] == ("geo@1", "level=MUNICIPALITY", "canonical=CALI",
+                                  "department=VALLE%20DEL%20CAUCA")
+    GeoValue(GeoLevel.DEPARTMENT, "VALLE", None, "76", (), False)
+    GeoValue(GeoLevel.REGION, "PACIFICO", None, None, ("CAUCA", "VALLE"), False)
+    assert decode_value(geo().encode()) == geo()
+    with pytest.raises(ContractError, match="INVALID_GEO_DEPARTMENT"):
+        geo(department=None)
+    with pytest.raises(ContractError, match="INVALID_GEO_DEPARTMENT"):
+        GeoValue(GeoLevel.DEPARTMENT, "VALLE", "VALLE", "76", (), False)
+
+
+def test_state_value_literals_are_dataset_column_values_triples_and_the_classes_cover_the_families():
+    value = StateValue.of("open", {"b": {"y": ("2",), "x": ("1",)}, "a": {"c": ("p", "q")}})
+    assert value.literals == (("a", "c", ("p", "q")), ("b", "x", ("1",)), ("b", "y", ("2",)))
+    assert value.literals_for("b") == (("x", ("1",)), ("y", ("2",)))
+    assert value.literals_for("a") == (("c", ("p", "q")),) and value.literals_for("z") is None
+    assert value.excluded is False and "by_dataset" not in {f.name for f in dataclasses.fields(StateValue)}
+    assert {"suspended", "ceded"} <= set(STATE_CLASSES) and len(STATE_CLASSES) == 13
+    for name in STATE_CLASSES:
+        assert StateValue.of(name, {"d": {"c": ("v",)}}).canonical_class == name
+    assert decode_value(value.encode()) == value
+    with pytest.raises(ContractError):
+        StateValue.decode(("state@1", "canonical_class=open", "literals=a:c", "excluded=0"))
+    with pytest.raises(ContractError):
+        StateValue.decode(("state@1", "canonical_class=open", "literals=a:c:x:y", "excluded=0"))
+
+
+def test_cardinality_value_records_its_basis_and_a_singular_is_one():
+    assert CardinalityValue(1, CardinalityBasis.SINGULAR).encode() == ("cardinality@1", "n=1", "basis=singular")
+    assert CardinalityValue(5, CardinalityBasis.FIGURE).encode()[-1] == "basis=figure"
+    for kind in (CardinalityBasis.SINGULAR, CardinalityBasis.FIGURE):
+        assert decode_value(CardinalityValue(1, kind).encode()) == CardinalityValue(1, kind)
+    with pytest.raises(ContractError):
+        CardinalityValue.decode(("cardinality@1", "n=2", "basis=singular"))
+    with pytest.raises(ContractError):
+        CardinalityValue.decode(("cardinality@1", "n=2", "basis=other"))
+    assert MAX_TOP_N == 100
 
 
 # ---- verdict, receipt, context, evidence -------------------------------------------------------
@@ -366,7 +626,7 @@ RESOLVED = ResolutionDecision.RESOLVED
 
 
 def verdict(**overrides):
-    base = dict(decision=RESOLVED, authority="time@2", value=TimeValue(date(2025, 1, 1), None, "year"))
+    base = dict(decision=RESOLVED, authority="time@2", value=TimeValue(date(2025, 1, 1), None, "year", False))
     return AuthorityVerdict(**{**base, **overrides})
 
 
@@ -386,7 +646,7 @@ def test_a_resolved_verdict_needs_an_accepted_value_and_only_then():
 
 
 @pytest.mark.parametrize("reason", [None, "", "MY_OWN_REASON", "UNCITED_QUALIFIER", "UNCITED_QUALIFIER:NOPE",
-                                    "LEVEL_MISMATCH:TIME", "GENERIC_IDENTITY:TIME", "uncited_qualifier:TIME",
+                                    "LEVEL_MISMATCH:TIME", "GENERIC_IDENTITY:TIME", "GENERIC_IDENTITY:TOPIC", "uncited_qualifier:TIME",
                                     "UNCITED_QUALIFIER:UNSUPPORTED", "UNCITED_QUALIFIER:RETRIEVAL_INTENT"])
 def test_a_verdict_reason_outside_the_closed_set_is_refused(reason):
     with pytest.raises(ContractError, match="REASON_OUTSIDE_CLOSED_SET"):
@@ -399,7 +659,8 @@ def test_the_closed_reason_set_holds_the_documented_codes_and_the_existing_value
                      "OPERATOR_EVIDENCE_MISMATCH", "NEGATION_UNSUPPORTED", "AUTHORITY_UNAVAILABLE",
                      "RESIDUE_UNREAD"):
             assert f"{code}:{dimension}" in AUTHORITY_REASONS
-    assert {"LEVEL_MISMATCH:GEOGRAPHY", "GENERIC_IDENTITY:BUYER", "GENERIC_IDENTITY:ACTOR"} <= AUTHORITY_REASONS
+    assert {"LEVEL_MISMATCH:GEOGRAPHY", "GENERIC_IDENTITY:BUYER", "GENERIC_IDENTITY:ACTOR",
+            "GENERIC_IDENTITY:GEOGRAPHY"} <= AUTHORITY_REASONS  # «Colombia» is not a filter (D-GEO)
     existing = {code for code in foundation_messages.KNOWN_CODES if code.startswith("VALUE_")}
     assert existing == set(VALUE_ALIASES) and existing <= AUTHORITY_REASONS
     assert AUTHORITY_DIMENSION_NAMES >= {dimension.value for dimension in SemanticDimension
@@ -436,19 +697,59 @@ def test_receipt_carries_identifiers_and_digests_never_free_text():
             AuthorityReceipt(**bad)
 
 
-def test_context_requires_an_injected_timezone_aware_instant():
-    AuthorityContext(datetime(2026, 9, 30, tzinfo=timezone.utc), frozenset())
+def test_a_verdict_detail_is_a_diagnostic_of_a_non_resolved_verdict_only():
+    for decision in (ResolutionDecision.CLARIFY, ResolutionDecision.BLOCK):
+        kept = verdict(decision=decision, value=None, reason="UNCITED_QUALIFIER:TIME",
+                       detail="TIME_YEAR_NOT_STATED")
+        assert kept.detail == "TIME_YEAR_NOT_STATED" and kept.decision is decision
+    assert verdict().detail is None
+    assert verdict(decision=ResolutionDecision.CLARIFY, value=None, reason="UNCITED_QUALIFIER:TIME").detail is None
+    with pytest.raises(ContractError, match="RESOLVED_WITH_DETAIL"):
+        verdict(detail="TIME_YEAR_NOT_STATED")
+    for bad in ("", "lower", "1ABC", "A B", "A-B", "A" * 65, "É", 5, ["A"]):
+        with pytest.raises(ContractError):
+            verdict(decision=ResolutionDecision.CLARIFY, value=None, reason="UNCITED_QUALIFIER:TIME", detail=bad)
+    verdict(decision=ResolutionDecision.CLARIFY, value=None, reason="UNCITED_QUALIFIER:TIME", detail="A" * 64)
+    # the detail rides outside the decision: the host resolution is the same with or without it
+    plain = verdict(decision=ResolutionDecision.CLARIFY, value=None, reason="UNCITED_QUALIFIER:TIME")
+    fine = dataclasses.replace(plain, detail="TIME_YEAR_NOT_STATED")
+    assert fine.to_resolution("c1") == plain.to_resolution("c1")
+
+
+def test_context_requires_an_injected_timezone_aware_instant_and_at_least_one_dataset():
+    AuthorityContext(datetime(2026, 9, 30, tzinfo=timezone.utc), frozenset({"a"}))
     for instant in (datetime(2026, 9, 30), date(2026, 9, 30), "2026-09-30", None):
         with pytest.raises(ContractError):
-            AuthorityContext(instant, frozenset())
+            AuthorityContext(instant, frozenset({"a"}))
     with pytest.raises(ContractError):
         AuthorityContext(datetime(2026, 9, 30, tzinfo=timezone.utc), {"a"})
     with pytest.raises(ContractError):
         AuthorityContext(datetime(2026, 9, 30, tzinfo=timezone.utc), frozenset({""}))
 
 
+def test_context_datasets_are_never_empty_because_state_and_modality_literals_are_per_dataset():
+    with pytest.raises(ContractError, match="EMPTY_CONTEXT_DATASETS"):
+        AuthorityContext(datetime(2026, 9, 30, tzinfo=timezone.utc), frozenset())
+
+
+def test_local_date_is_the_colombian_date_of_the_instant():
+    """V2/INV-C1.1-TZ: «este año» on the night of 31 December is the same for every authority."""
+    assert REFERENCE_TZ == timezone(timedelta(hours=-5))
+
+    def local(instant):
+        return AuthorityContext(instant, frozenset({"a"})).local_date()
+
+    assert local(datetime(2027, 1, 1, 3, 0, tzinfo=timezone.utc)) == date(2026, 12, 31)  # 22:00 in Bogota
+    assert local(datetime(2027, 1, 1, 5, 0, tzinfo=timezone.utc)) == date(2027, 1, 1)  # 00:00 in Bogota
+    assert local(datetime(2027, 1, 1, 4, 59, tzinfo=timezone.utc)) == date(2026, 12, 31)
+    assert local(datetime(2026, 12, 31, 23, 0, tzinfo=timezone(timedelta(hours=-5)))) == date(2026, 12, 31)
+    assert local(datetime(2027, 1, 1, 9, 0, tzinfo=timezone(timedelta(hours=9)))) == date(2026, 12, 31)
+    assert local(datetime(2026, 9, 30, 12, 0, tzinfo=timezone.utc)) == date(2026, 9, 30)
+    assert type(local(datetime(2026, 9, 30, 12, 0, tzinfo=timezone.utc))) is date
+
+
 def test_evidence_level_is_required_exactly_for_geography_and_dimensions_without_authority_are_refused():
-    window = build_window("en Cali", [RawSpan(3, 7, "Cali")], "GEOGRAPHY")
+    window = build_window("en Cali", [RawSpan(3, 7, "Cali")])
     DimensionEvidence("c1", SemanticDimension.GEOGRAPHY, "is", Polarity.POSITIVE, GeoLevel.MUNICIPALITY, window)
     with pytest.raises(ContractError):
         DimensionEvidence("c1", SemanticDimension.GEOGRAPHY, "is", Polarity.POSITIVE, None, window)

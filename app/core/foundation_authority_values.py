@@ -11,6 +11,10 @@ strings; every item after the tag carries its field name, which also makes the i
 non-canonical spelling are ``ContractError``; ``decode(encode(v)) == v`` and
 ``encode(decode(items)) == items`` hold for everything accepted.
 
+Every value whose projection is a membership or an interval carries ``excluded`` (last field,
+encoded ``0``/``1``): the NEGATIVE the authority honoured (INV-C1.1-EXCL).  MONEY absorbs its
+negation in the comparator; ORDER and CARDINALITY admit none.
+
 Free text never travels in a value except where the dimension *is* a name (topic phrase, display).
 """
 
@@ -28,11 +32,12 @@ from app.core.interpretation_contract import ContractError
 
 MAX_TOP_N = 100  # P8 (ADR-103): «los 500 más caros» exceeds it and is clarified, never clamped
 STATE_CLASSES = ("open", "published", "closed", "awarded", "terminated", "in_execution",
-                 "cancelled", "draft", "in_evaluation", "signed", "liquidated")
+                 "cancelled", "draft", "in_evaluation", "signed", "liquidated", "suspended", "ceded")
 
 _NONE = "!"  # `quote` escapes "!", so a bare "!" can never be a spelled value
 _LABEL = re.compile(r"[a-z][a-z0-9_]{0,31}\Z")
 _POLICY = re.compile(r"[a-z][a-z0-9_-]*@[0-9][0-9A-Za-z.]*\Z")
+_MEMBERSHIP = _POLICY  # "<group_id>@<version>" (ADR-074 §4)
 _DOCUMENT_KIND = re.compile(r"[A-Z][A-Z0-9_]{0,15}\Z")
 _DOCUMENT = re.compile(r"[A-Z0-9]{1,20}\Z")
 _DIVIPOLA = {GeoLevel.DEPARTMENT: re.compile(r"\d{2}\Z"), GeoLevel.MUNICIPALITY: re.compile(r"\d{5}\Z")}
@@ -60,6 +65,11 @@ def _texts(values, label: str, *, empty: bool = False) -> None:
 
 def _enum(value, kind: type, label: str) -> None:
     if type(value) is not kind:
+        raise ContractError(f"INVALID_{label}")
+
+
+def _flag(value, label: str) -> None:
+    if type(value) is not bool:
         raise ContractError(f"INVALID_{label}")
 
 
@@ -96,6 +106,16 @@ def _enc_list(values) -> str:
 
 def _dec_list(text: str) -> tuple[str, ...]:
     return tuple(_dec(item) for item in text.split(",")) if text else ()
+
+
+def _enc_flag(value: bool) -> str:
+    return "1" if value else "0"
+
+
+def _dec_flag(text: str) -> bool:
+    if text not in ("0", "1"):
+        raise ContractError("INVALID_VALUE_FIELDS")
+    return text == "1"
 
 
 def _enc_date(value: date | None) -> str:
@@ -150,44 +170,76 @@ class TopicValue(_Codec):
     TAG = "topic@1"
     phrase_folded: str
     token_mode: bool
+    excluded: bool
 
     def __post_init__(self) -> None:
         _text(self.phrase_folded, "TOPIC_PHRASE")
         if type(self.token_mode) is not bool:
             raise ContractError("INVALID_TOPIC_TOKEN_MODE")
+        _flag(self.excluded, "TOPIC_EXCLUDED")
 
     def encode(self) -> tuple[str, ...]:
         return _line(self.TAG, phrase_folded=_enc(self.phrase_folded),
-                     token_mode="1" if self.token_mode else "0")
+                     token_mode=_enc_flag(self.token_mode), excluded=_enc_flag(self.excluded))
 
     @classmethod
     def _decode(cls, items):
-        raw = _fields(items, cls.TAG, ("phrase_folded", "token_mode"))
-        if raw["token_mode"] not in ("0", "1"):
-            raise ContractError("INVALID_VALUE_FIELDS")
-        return _canonical(cls(_dec(raw["phrase_folded"]), raw["token_mode"] == "1"), items)
+        raw = _fields(items, cls.TAG, ("phrase_folded", "token_mode", "excluded"))
+        return _canonical(cls(_dec(raw["phrase_folded"]), _dec_flag(raw["token_mode"]),
+                              _dec_flag(raw["excluded"])), items)
+
+
+class BuyerKind(str, Enum):
+    UNIT = "unit"
+    GROUP = "group"
 
 
 @dataclass(frozen=True, slots=True)
 class BuyerValue(_Codec):
+    """A BuyerUnit or a declared, versioned BuyerGroup (ADR-074 §4); never derived from NIT/territory.
+
+    UNIT:  ``members == (canonical,)`` and no membership.
+    GROUP: two or more sorted, distinct members (``canonical`` is the group's name, not a member) and
+           ``membership = "<group_id>@<version>"``.  The projection must cover EVERY member or BLOCK.
+    An alias with several owners is the authority's AMBIGUOUS_HOST_DIMENSION, never a value.
+    """
+
     TAG = "buyer@1"
     canonical: str
-    owners: frozenset[str]
+    kind: BuyerKind
+    members: tuple[str, ...]
+    membership: str | None
+    excluded: bool
 
     def __post_init__(self) -> None:
         _text(self.canonical, "BUYER_CANONICAL")
-        if type(self.owners) is not frozenset or len(self.owners) != 1:
-            raise ContractError("BUYER_OWNER_NOT_UNIQUE")  # several owners is CLARIFY, never a value
-        for owner in self.owners:
-            _text(owner, "BUYER_OWNER")
+        _enum(self.kind, BuyerKind, "BUYER_KIND")
+        _texts(self.members, "BUYER_MEMBERS")
+        _flag(self.excluded, "BUYER_EXCLUDED")
+        if self.kind is BuyerKind.UNIT:
+            if self.members != (self.canonical,):
+                raise ContractError("INVALID_BUYER_MEMBERS")
+            if self.membership is not None:
+                raise ContractError("INVALID_BUYER_MEMBERSHIP")
+            return
+        if len(self.members) < 2:
+            raise ContractError("BUYER_GROUP_TOO_SMALL")  # one member is a unit, not a group
+        if list(self.members) != sorted(self.members):
+            raise ContractError("UNSORTED_BUYER_MEMBERS")
+        if self.canonical in self.members:
+            raise ContractError("INVALID_BUYER_MEMBERS")
+        _match(_MEMBERSHIP, self.membership, "BUYER_MEMBERSHIP")
 
     def encode(self) -> tuple[str, ...]:
-        return _line(self.TAG, canonical=_enc(self.canonical), owners=_enc_list(sorted(self.owners)))
+        return _line(self.TAG, canonical=_enc(self.canonical), kind=self.kind.value,
+                     members=_enc_list(self.members), membership=_enc_opt(self.membership),
+                     excluded=_enc_flag(self.excluded))
 
     @classmethod
     def _decode(cls, items):
-        raw = _fields(items, cls.TAG, ("canonical", "owners"))
-        return _canonical(cls(_dec(raw["canonical"]), frozenset(_dec_list(raw["owners"]))), items)
+        raw = _fields(items, cls.TAG, ("canonical", "kind", "members", "membership", "excluded"))
+        return _canonical(cls(_dec(raw["canonical"]), BuyerKind(raw["kind"]), _dec_list(raw["members"]),
+                              _dec_opt(raw["membership"]), _dec_flag(raw["excluded"])), items)
 
 
 @dataclass(frozen=True, slots=True)
@@ -196,6 +248,7 @@ class ActorValue(_Codec):
     document: str
     document_kind: str
     display: str
+    excluded: bool
 
     def __post_init__(self) -> None:
         _match(_DOCUMENT, self.document, "ACTOR_DOCUMENT")
@@ -203,30 +256,40 @@ class ActorValue(_Codec):
         if self.document_kind == "UNKNOWN":
             raise ContractError("INVALID_ACTOR_DOCUMENT_KIND")  # an unknown kind is not an identity
         _text(self.display, "ACTOR_DISPLAY")
+        _flag(self.excluded, "ACTOR_EXCLUDED")
 
     def encode(self) -> tuple[str, ...]:
         return _line(self.TAG, document=self.document, document_kind=self.document_kind,
-                     display=_enc(self.display))
+                     display=_enc(self.display), excluded=_enc_flag(self.excluded))
 
     @classmethod
     def _decode(cls, items):
-        raw = _fields(items, cls.TAG, ("document", "document_kind", "display"))
-        return _canonical(cls(raw["document"], raw["document_kind"], _dec(raw["display"])), items)
+        raw = _fields(items, cls.TAG, ("document", "document_kind", "display", "excluded"))
+        return _canonical(cls(raw["document"], raw["document_kind"], _dec(raw["display"]),
+                              _dec_flag(raw["excluded"])), items)
 
 
 @dataclass(frozen=True, slots=True)
 class GeoValue(_Codec):
+    """``department`` names the department of a MUNICIPALITY (its SoQL needs both); ``members`` is REGION's."""
+
     TAG = "geo@1"
     level: GeoLevel
     canonical: str
-    divipola: str | None = None
-    members: tuple[str, ...] = ()
+    department: str | None
+    divipola: str | None
+    members: tuple[str, ...]
+    excluded: bool
 
     def __post_init__(self) -> None:
         _enum(self.level, GeoLevel, "GEO_LEVEL")
         if self.level is GeoLevel.UNKNOWN:
             raise ContractError("INVALID_GEO_LEVEL")  # a resolved place has a level
         _text(self.canonical, "GEO_CANONICAL")
+        if (self.department is not None) != (self.level is GeoLevel.MUNICIPALITY):
+            raise ContractError("INVALID_GEO_DEPARTMENT")  # a department exactly for a municipality
+        if self.department is not None:
+            _text(self.department, "GEO_DEPARTMENT")
         if self.divipola is not None:  # 2 digits for a department, 5 for a municipality, none for a region
             pattern = _DIVIPOLA.get(self.level)
             if type(self.divipola) is not str or pattern is None or not pattern.fullmatch(self.divipola):
@@ -234,16 +297,20 @@ class GeoValue(_Codec):
         _texts(self.members, "GEO_MEMBERS", empty=True)
         if bool(self.members) != (self.level is GeoLevel.REGION):
             raise ContractError("INVALID_GEO_MEMBERS")  # members exactly when the level is a region
+        _flag(self.excluded, "GEO_EXCLUDED")
 
     def encode(self) -> tuple[str, ...]:
         return _line(self.TAG, level=self.level.value, canonical=_enc(self.canonical),
-                     divipola=_enc_opt(self.divipola), members=_enc_list(self.members))
+                     department=_enc_opt(self.department), divipola=_enc_opt(self.divipola),
+                     members=_enc_list(self.members), excluded=_enc_flag(self.excluded))
 
     @classmethod
     def _decode(cls, items):
-        raw = _fields(items, cls.TAG, ("level", "canonical", "divipola", "members"))
-        return _canonical(cls(GeoLevel(raw["level"]), _dec(raw["canonical"]),
-                              _dec_opt(raw["divipola"]), _dec_list(raw["members"])), items)
+        raw = _fields(items, cls.TAG,
+                      ("level", "canonical", "department", "divipola", "members", "excluded"))
+        return _canonical(cls(GeoLevel(raw["level"]), _dec(raw["canonical"]), _dec_opt(raw["department"]),
+                              _dec_opt(raw["divipola"]), _dec_list(raw["members"]),
+                              _dec_flag(raw["excluded"])), items)
 
 
 @dataclass(frozen=True, slots=True)
@@ -253,7 +320,8 @@ class TimeValue(_Codec):
     TAG = "time@1"
     start: date | None
     end_exclusive: date | None
-    precision: str  # open label of the stated granularity (year, month, day, ...)
+    precision: str  # open label for the echo and the receipt; the projection never reads it
+    excluded: bool
 
     def __post_init__(self) -> None:
         for bound in (self.start, self.end_exclusive):
@@ -265,16 +333,17 @@ class TimeValue(_Codec):
                 and self.start >= self.end_exclusive):
             raise ContractError("EMPTY_TIME_INTERVAL")
         _match(_LABEL, self.precision, "TIME_PRECISION")
+        _flag(self.excluded, "TIME_EXCLUDED")
 
     def encode(self) -> tuple[str, ...]:
         return _line(self.TAG, start=_enc_date(self.start), end_exclusive=_enc_date(self.end_exclusive),
-                     precision=self.precision)
+                     precision=self.precision, excluded=_enc_flag(self.excluded))
 
     @classmethod
     def _decode(cls, items):
-        raw = _fields(items, cls.TAG, ("start", "end_exclusive", "precision"))
+        raw = _fields(items, cls.TAG, ("start", "end_exclusive", "precision", "excluded"))
         return _canonical(cls(_dec_date(raw["start"]), _dec_date(raw["end_exclusive"]),
-                              raw["precision"]), items)
+                              raw["precision"], _dec_flag(raw["excluded"])), items)
 
 
 class Comparator(str, Enum):
@@ -307,48 +376,64 @@ class MoneyValue(_Codec):
 
 @dataclass(frozen=True, slots=True)
 class StateValue(_Codec):
-    """``by_dataset`` is stored as sorted ``((dataset, literals), ...)``: a dict is mutable/unhashable."""
+    """``literals`` are ``(dataset, column, values)`` triples sorted and unique by ``(dataset, column)``.
+
+    Semantics: AND between the columns of one dataset, OR within ``values`` (the process funnel filters
+    ``estado_del_procedimiento`` AND ``estado_de_apertura_del_proceso``).  A tuple, not a dict: a dict
+    is mutable and unhashable.
+    """
 
     TAG = "state@1"
     canonical_class: str
-    by_dataset: tuple[tuple[str, tuple[str, ...]], ...] = ()
+    literals: tuple[tuple[str, str, tuple[str, ...]], ...]
+    excluded: bool
 
     def __post_init__(self) -> None:
-        if self.canonical_class not in STATE_CLASSES or type(self.canonical_class) is not str:
+        if type(self.canonical_class) is not str or self.canonical_class not in STATE_CLASSES:
             raise ContractError("INVALID_STATE_CLASS")
-        if type(self.by_dataset) is not tuple:
-            raise ContractError("INVALID_STATE_BY_DATASET")
-        names = []
-        for entry in self.by_dataset:
-            if type(entry) is not tuple or len(entry) != 2:
-                raise ContractError("INVALID_STATE_BY_DATASET")
+        if type(self.literals) is not tuple:
+            raise ContractError("INVALID_STATE_LITERALS")
+        keys = []
+        for entry in self.literals:
+            if type(entry) is not tuple or len(entry) != 3:
+                raise ContractError("INVALID_STATE_LITERALS")
             _text(entry[0], "STATE_DATASET")
-            _texts(entry[1], "STATE_LITERALS")
-            names.append(entry[0])
-        if names != sorted(set(names)):
-            raise ContractError("UNSORTED_STATE_BY_DATASET")  # sorted and unique: one spelling per value
+            _text(entry[1], "STATE_COLUMN")
+            _texts(entry[2], "STATE_LITERALS")
+            keys.append((entry[0], entry[1]))
+        if keys != sorted(set(keys)):
+            raise ContractError("UNSORTED_STATE_LITERALS")  # sorted and unique: one spelling per value
+        _flag(self.excluded, "STATE_EXCLUDED")
 
     @classmethod
-    def of(cls, canonical_class: str, by_dataset: Mapping[str, tuple[str, ...]]) -> StateValue:
-        return cls(canonical_class, tuple(sorted((k, tuple(v)) for k, v in by_dataset.items())))
+    def of(cls, canonical_class: str, literals: Mapping[str, Mapping[str, tuple[str, ...]]],
+           excluded: bool = False) -> StateValue:
+        return cls(canonical_class,
+                   tuple(sorted((dataset, column, tuple(values))
+                                for dataset, columns in literals.items()
+                                for column, values in columns.items())),
+                   excluded)
 
-    def literals(self, dataset: str) -> tuple[str, ...] | None:
-        return next((lits for name, lits in self.by_dataset if name == dataset), None)
+    def literals_for(self, dataset: str) -> tuple[tuple[str, tuple[str, ...]], ...] | None:
+        found = tuple((column, values) for name, column, values in self.literals if name == dataset)
+        return found or None
 
     def encode(self) -> tuple[str, ...]:
-        mapped = ";".join(f"{_enc(name)}:{_enc_list(lits)}" for name, lits in self.by_dataset)
-        return _line(self.TAG, canonical_class=self.canonical_class, by_dataset=mapped)
+        mapped = ";".join(f"{_enc(name)}:{_enc(column)}:{_enc_list(values)}"
+                          for name, column, values in self.literals)
+        return _line(self.TAG, canonical_class=self.canonical_class, literals=mapped,
+                     excluded=_enc_flag(self.excluded))
 
     @classmethod
     def _decode(cls, items):
-        raw = _fields(items, cls.TAG, ("canonical_class", "by_dataset"))
-        pairs = []
-        for chunk in (raw["by_dataset"].split(";") if raw["by_dataset"] else ()):
-            name, sep, lits = chunk.partition(":")
-            if sep != ":":
+        raw = _fields(items, cls.TAG, ("canonical_class", "literals", "excluded"))
+        triples = []
+        for chunk in (raw["literals"].split(";") if raw["literals"] else ()):
+            parts = chunk.split(":")
+            if len(parts) != 3:
                 raise ContractError("INVALID_VALUE_FIELDS")
-            pairs.append((_dec(name), _dec_list(lits)))
-        return _canonical(cls(raw["canonical_class"], tuple(pairs)), items)
+            triples.append((_dec(parts[0]), _dec(parts[1]), _dec_list(parts[2])))
+        return _canonical(cls(raw["canonical_class"], tuple(triples), _dec_flag(raw["excluded"])), items)
 
 
 @dataclass(frozen=True, slots=True)
@@ -366,20 +451,17 @@ class ModalityValue(_Codec):
             _match(_POLICY, self.family_policy, "MODALITY_FAMILY_POLICY")
         if not self.procedure_ids and self.family_policy is None:
             raise ContractError("EMPTY_MODALITY_VALUE")
-        if type(self.excluded) is not bool:
-            raise ContractError("INVALID_MODALITY_EXCLUDED")
+        _flag(self.excluded, "MODALITY_EXCLUDED")
 
     def encode(self) -> tuple[str, ...]:
         return _line(self.TAG, procedure_ids=_enc_list(self.procedure_ids),
-                     family_policy=_enc_opt(self.family_policy), excluded="1" if self.excluded else "0")
+                     family_policy=_enc_opt(self.family_policy), excluded=_enc_flag(self.excluded))
 
     @classmethod
     def _decode(cls, items):
         raw = _fields(items, cls.TAG, ("procedure_ids", "family_policy", "excluded"))
-        if raw["excluded"] not in ("0", "1"):
-            raise ContractError("INVALID_VALUE_FIELDS")
         return _canonical(cls(_dec_list(raw["procedure_ids"]), _dec_opt(raw["family_policy"]),
-                              raw["excluded"] == "1"), items)
+                              _dec_flag(raw["excluded"])), items)
 
 
 @dataclass(frozen=True, slots=True)
@@ -388,17 +470,19 @@ class ContractTypeValue(_Codec):
 
     TAG = "contract_type@1"
     type_ids: tuple[str, ...]
+    excluded: bool
 
     def __post_init__(self) -> None:
         _texts(self.type_ids, "CONTRACT_TYPE_IDS")
+        _flag(self.excluded, "CONTRACT_TYPE_EXCLUDED")
 
     def encode(self) -> tuple[str, ...]:
-        return _line(self.TAG, type_ids=_enc_list(self.type_ids))
+        return _line(self.TAG, type_ids=_enc_list(self.type_ids), excluded=_enc_flag(self.excluded))
 
     @classmethod
     def _decode(cls, items):
-        raw = _fields(items, cls.TAG, ("type_ids",))
-        return _canonical(cls(_dec_list(raw["type_ids"])), items)
+        raw = _fields(items, cls.TAG, ("type_ids", "excluded"))
+        return _canonical(cls(_dec_list(raw["type_ids"]), _dec_flag(raw["excluded"])), items)
 
 
 class OrderKey(str, Enum):
@@ -430,23 +514,32 @@ class OrderValue(_Codec):
         return _canonical(cls(OrderKey(raw["key"]), OrderDirection(raw["direction"])), items)
 
 
+class CardinalityBasis(str, Enum):
+    FIGURE = "figure"  # the user wrote a number: P8 announces the cap
+    SINGULAR = "singular"  # «el contrato de mayor valor»: always exactly one
+
+
 @dataclass(frozen=True, slots=True)
 class CardinalityValue(_Codec):
     TAG = "cardinality@1"
     n: int
+    basis: CardinalityBasis
 
     def __post_init__(self) -> None:
         _int(self.n, "CARDINALITY_N", 1, MAX_TOP_N)
+        _enum(self.basis, CardinalityBasis, "CARDINALITY_BASIS")
+        if self.basis is CardinalityBasis.SINGULAR and self.n != 1:
+            raise ContractError("INVALID_CARDINALITY_SINGULAR")  # a singular is one, never «2»
 
     def encode(self) -> tuple[str, ...]:
-        return _line(self.TAG, n=str(self.n))
+        return _line(self.TAG, n=str(self.n), basis=self.basis.value)
 
     @classmethod
     def _decode(cls, items):
-        raw = _fields(items, cls.TAG, ("n",))
+        raw = _fields(items, cls.TAG, ("n", "basis"))
         if not raw["n"].isascii() or not raw["n"].isdigit():
             raise ContractError("INVALID_VALUE_FIELDS")
-        return _canonical(cls(int(raw["n"])), items)
+        return _canonical(cls(int(raw["n"]), CardinalityBasis(raw["basis"])), items)
 
 
 ExecutableValue = (TopicValue | BuyerValue | ActorValue | GeoValue | TimeValue | MoneyValue
