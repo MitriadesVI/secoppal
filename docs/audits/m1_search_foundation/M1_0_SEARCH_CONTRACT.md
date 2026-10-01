@@ -231,3 +231,25 @@ se indica.
 | B4 | «licitaciones/procesos celebrados/adjudicados» → universo del sustantivo (`PROCESSES`), `STATE is awarded` (adjudicado) o `signed` (celebrado). Nunca cambia el universo. |
 | B5 | Monto sin comparador («de 300 millones») → condición `UNSUPPORTED` con `operator: value_without_comparator` y `expected_disposition: CLARIFY` (`disposition_reason: VALUE_WITHOUT_COMPARATOR`). |
 | B6 | Municipio como sujeto que contrata («Montería contrató…», «lo que ha contratado Soledad») → `BUYER is` (extiende A4). |
+
+## 13. Enmienda v1.3 (2026-09-30, adjudicación M1-B: 74 desacuerdos sobre 365)
+
+Reglas que resuelven las clases de desacuerdo entre los etiquetadores A (opus) y B (sonnet).
+Se aplican de forma mecánica a todo el Gold, no sólo a la muestra doble. Log:
+`docs/audits/m1_search_foundation/M1_B_ADJUDICATION.md`.
+
+| Id | Regla |
+|---|---|
+| C1 | La `quote` de ACTOR es el identificador (nombre, razón social, NIT/CC) **sin** el marcador de rol («proveedor», «contratista», «del proveedor»). |
+| C2 | `FOLLOWUP_DELTA` siempre lleva `turn_context: FOLLOWUP_FRAGMENT`. `PROTOCOL` siempre `SELF_CONTAINED` (la capa 1 resuelve su estado). `NEEDS_HISTORY` se reserva para una operación identificable cuyo referente es anafórico («sus mayores proveedores», «sus contratos recientes»): se etiqueta la operación, no FOLLOWUP_DELTA. |
+| C3 | Deícticos «ahora», «hoy», «en este momento», «actualmente» **no** son TIME. Junto a un estado u oportunidad no añaden condición. Solos con procesos («qué selecciones abreviadas hay en este momento») son `STATE family open` citando el deíctico. |
+| C4 | `STATE is` para estados SECOP exactos (borrador, en evaluación, adjudicado, celebrado, terminado, liquidado, cerrado, publicado). `STATE family` sólo para la familia abierta (abierto, vigente, disponible, activo, en curso, convocado, en concurso). «firmados» junto a contratos sigue Y1 (sin condición). |
+| C5 | «convenio(s)» como sustantivo de universo: `CONTRACTS` **más** `CONTRACT_TYPE_OR_NATURE is` citando «convenios» (COMPOSITE, ADR-061). Quitarlo ensancharía a todos los contratos. |
+| C6 | Un sustantivo de universo/modalidad explícito («selecciones abreviadas», «licitaciones») prevalece sobre un verbo de contratar (B2 aplica sólo sin sustantivo). |
+| C7 | En operaciones no-SEARCH las requests sólo transportan condiciones: `universe: UNSPECIFIED`, `view: RECORDS`, `universe_quote: null`; una request sin condiciones se omite. El universo no se compara fuera de SEARCH. |
+| C8 | UNSUPPORTED se compara por dimensión y span, no por la etiqueta libre. «mayor cuantía» como superlativo de valor es `ORDER value_desc`, no MODALITY. Jerga monetaria («barras», «palos») es VALUE. |
+
+Decisión de producto P1 (cola §5/A6): **no** se añade regla BUYER→CONTRACTS. Un comprador existe en
+procesos y en contratos, y «oportunidades de la Alcaldía de X» es una pregunta comercial legítima.
+PV1 con el año en curso se mantiene: «procesos de X en 2026» son todos los procesos de 2026,
+abiertos incluidos. La vista por defecto siempre se anuncia con botones.
