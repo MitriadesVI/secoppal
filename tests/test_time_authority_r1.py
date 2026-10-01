@@ -161,6 +161,12 @@ def test_leap_day_without_year_walks_back_to_the_last_leap_year(today, expected)
     assert value_of("29 de febrero", "between_dates", today).start == expected
 
 
+def test_leap_day_start_of_a_range_until_here_also_walks_back():
+    found = value_of("desde 29 de febrero hasta hoy", "between_dates", date(2027, 3, 1))
+    assert found == TimeValue(
+        date(2024, 2, 29), date(2027, 3, 2), "bounded", year_inferred=True)
+
+
 def test_a_day_that_never_exists_is_asked_whatever_the_clock():
     for today in CLOCKS:
         for quote in ("31 de abril", "30 de febrero", "31 de noviembre"):
@@ -277,6 +283,8 @@ def test_legacy_resolver_still_uses_the_clock_year_when_the_year_is_not_stated(t
     assert found.fecha_desde == f"{today.year}-03-01" and found.clock == "inferred_year"
     ranged = resolve_temporal_scope("de enero a junio", today=today)
     assert ranged.error_code == "missing_range_year"
+    day_ranged = resolve_temporal_scope("del 1 de marzo al 15 de abril", today=today)
+    assert day_ranged.error_code == "missing_range_year"
     day = resolve_temporal_scope("del 5 al 20 de octubre", today=today)
     assert day.fecha_desde == f"{today.year}-10-05"
     assert resolve_temporal_scope("marzo", today=today, implicit_year=2019).fecha_desde == (

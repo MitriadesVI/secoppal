@@ -215,8 +215,9 @@ class _Read:
     anchors: tuple[date, ...] = ()  # inicio de la última unidad nombrada de esas partes
 
 
-def _needs_year(found: TemporalResolution) -> bool:
-    return found.clock == "inferred_year" or found.error_code == "missing_range_year"
+def _range_needs_year(found: TemporalResolution) -> bool:
+    """Rango sin año: la legada no lo resuelve sin ``implicit_year`` (lo declara error)."""
+    return found.error_code == "missing_range_year"
 
 
 def _anchors(*parts: TemporalResolution) -> tuple[date, ...]:
@@ -237,10 +238,10 @@ def _read_until_now(text: str, operator: str, clock: date, year: int | None) -> 
     if split is None or not text[:split.start()].strip():
         return None
     head = _read_quote(text[:split.start()], operator, clock, year)
-    if head.inferred and year is None:
-        return head
+    if head.resolution.detail == TIME_INVALID_DATE:
+        return head  # «desde 29 de febrero hasta hoy»: el año se busca en el bucle
     value = head.resolution.value
-    if value is None or value.precision != "open_from" or value.end_exclusive is not None:
+    if value is None or value.precision != "open_from":
         return None
     closed = replace(value, end_exclusive=clock + timedelta(days=1), precision="bounded")
     return _Read(replace(head.resolution, value=closed), head.inferred, head.anchors)
@@ -259,7 +260,7 @@ def _read_quote(text: str, operator: str, clock: date, year: int | None) -> _Rea
         relative := resolve_relative(text, clock)
     ) is not None:
         found = relative
-    if year is None and _needs_year(found):
+    if year is None and _range_needs_year(found):
         return _Read(_refuse("CLARIFY", TIME_YEAR_NOT_STATED), inferred=True)
     if failure := _legacy_failure(found):
         return _Read(failure)
@@ -276,8 +277,6 @@ def _read_quote(text: str, operator: str, clock: date, year: int | None) -> _Rea
     rest = resolve_temporal_scope(remainder, today=clock, implicit_year=year)
     parts = (found,)
     if rest.matched:
-        if year is None and _needs_year(rest):
-            return _Read(_refuse("CLARIFY", TIME_YEAR_NOT_STATED), inferred=True)
         if rest.error_code:
             return _Read(_refuse("CLARIFY", TIME_MULTIPLE_TEMPORAL_FACTS))
         # Un año explícito en una cota y ninguno en la otra: no se adivina cuál manda.
@@ -316,10 +315,10 @@ def _resolve_quote(text: str, operator: str, clock: date) -> TimeResolution:
         read = _read_quote(text, operator, clock, year)
         result = read.resolution
         if result.decision != "RESOLVED":
-            if result.detail != TIME_INVALID_DATE:
-                return result  # inicio tras el fin, operador, calificador...: se pregunta
-            failure = failure or result  # 29 de febrero en un año no bisiesto: se busca atrás
-            continue
+            if result.detail == TIME_INVALID_DATE:
+                failure = failure or result  # 29 de febrero en un año no bisiesto: se busca atrás
+                continue
+            return result  # inicio tras el fin, operador, calificador...: se pregunta
         if all(anchor <= clock for anchor in read.anchors) and result.value is not None:
             return replace(result, value=replace(result.value, year_inferred=True))
     return failure or first.resolution
