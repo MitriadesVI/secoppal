@@ -200,6 +200,8 @@ def validate(record: dict) -> list[str]:
         # Non-SEARCH operations may still carry conditions (e.g. RANK_SUPPLIERS of a buyer).
         universes |= _check_requests(record.get("requests"), text, gid, errors)
     pv = record.get("product_view")
+    if op not in {"SEARCH", "MULTI"}:
+        universes = set()  # contract v1.2 B1: product_view only exists for SEARCH requests
     if "UNSPECIFIED" in universes:
         if pv not in PRODUCT_VIEWS:
             errors.append(f"{gid}: PRODUCT_VIEW_REQUIRED")

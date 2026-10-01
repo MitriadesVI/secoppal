@@ -220,3 +220,14 @@ se indica.
 | A4 | «(del) municipio de X», «distrito de X» como dueño de los registros → `BUYER is`. «en el municipio de X» → `GEOGRAPHY is` con `level MUNICIPALITY`. Mismo patrón que «gobernación de» vs «departamento de». |
 | A5 | Valores canónicos de `STATE` añadidos: `draft` (borrador), `in_evaluation` (en evaluación), `signed` (celebrado/firmado como estado), `liquidated` (liquidado). PV2 cuenta `liquidated` y `signed` como terminales. |
 | A6 | Cola de producto, no reetiquetar: PV1 con el año en curso y la falta de regla BUYER→CONTRACTS quedan para adjudicación M1-B. Lo que depende del turno anterior es M2 (`NEEDS_HISTORY`), no Product View. |
+
+## 12. Enmienda v1.2 (2026-09-30, tras shard B del Gold)
+
+| Id | Regla |
+|---|---|
+| B1 | `product_view` existe **sólo** para requests SEARCH (o jobs SEARCH de un MULTI) con `UNSPECIFIED`. En operaciones no-SEARCH es `null`; sus `requests` son opcionales y sólo transportan condiciones (BUYER, TIME…). Normalización mecánica aplicada a las etiquetas ya hechas. |
+| B2 | Un verbo de contratar con el comprador/actor como sujeto («qué ha contratado X», «contratos celebrados por X», «X contrató») nombra el universo `CONTRACTS`; `universe_quote` = el verbo/participio. |
+| B3 | «analiza (los contratos de) X» sin aspecto concreto → `PROFILE_BUYER` o `PROFILE_ACTOR` según X. No hay operación ANALYZE abierta. |
+| B4 | «licitaciones/procesos celebrados/adjudicados» → universo del sustantivo (`PROCESSES`), `STATE is awarded` (adjudicado) o `signed` (celebrado). Nunca cambia el universo. |
+| B5 | Monto sin comparador («de 300 millones») → condición `UNSUPPORTED` con `operator: value_without_comparator` y `expected_disposition: CLARIFY` (`disposition_reason: VALUE_WITHOUT_COMPARATOR`). |
+| B6 | Municipio como sujeto que contrata («Montería contrató…», «lo que ha contratado Soledad») → `BUYER is` (extiende A4). |
