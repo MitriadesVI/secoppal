@@ -1,0 +1,35 @@
+S	busca licitaciones de alcaldía de barranquilla en 2024
+S	busca las licitaciones de la alcaldía de barranquilla en 2024
+S	licitaciones de alcaldía de barranquilla en 2024
+S	busca contratos de alcaldía de barranquilla en 2024
+S	busca procesos de alcaldía de barranquilla en 2024
+S	busca procesos de la gobernación del atlántico en 2025
+S	busca contratos de la gobernación de antioquia
+S	busca licitaciones de gobernación de bolívar
+S	busca contratos del sena en 2025
+S	busca contratos del ministerio de educación
+S	busca contratos de la universidad del atlántico
+S	busca contratos de la ese hospital niño jesús
+S	busca procesos del idu en 2026
+S	Busco contratos de aseo en Cali
+S	Busco licitaciones de la alcaldía de Soledad
+S	En qué procesos de mantenimiento vial me puedo presentar en Bolívar?
+S	Hay convocatorias abiertas de alimentación escolar en Córdoba?
+S	dame los contratos de interventoría de la gobernación de Sucre en 2025
+S	cuáles contratos de aseo celebró la alcaldía de Montería en 2024
+S	me interesan procesos de dotación hospitalaria en Santander
+S	quisiera ver licitaciones de vías terciarias en Nariño
+S	necesito ver contratos de primera infancia del ICBF en Atlántico
+S	busca contratos de consorcio en 2025 en Bolívar
+S	busca contratos de fundaciones en Barranquilla
+A	busca proveedor FUNDACARIBE
+A	contratos del proveedor FUNDACARIBE
+A	contratos del contratista con NIT 900373913
+A	necesito los contratos de CONSORCIO VIAL DEL NORTE
+A	contratos de O'Brien & Asociados S.A.S
+A	busca contratos de Inversiones Pérez SAS en 2025
+A	busca contratos de la Fundación Mis Mejores Años con la alcaldía de barranquilla
+EP	analiza la alcaldía de Barranquilla
+SUP	quiénes son los principales proveedores de la Alcaldía de Galapa
+AN	cuántos contratos celebró la Alcaldía de Soledad en 2026
+AN	contratos de aseo cuál es el valor total por año

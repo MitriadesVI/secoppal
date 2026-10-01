@@ -14,6 +14,7 @@ from app.core.foundation_admission import admit_proposal
 from app.core.foundation_messages import user_message
 from app.core.foundation_presentation import export_fields, group_cards, response_text
 from app.core.foundation_route_owner import FOUNDATION_TURN_MARK
+from app.core.foundation_shadow_hook import record_legacy_shadow
 from app.core.foundation_guard import ExecutionGuard, FoundationGuardError, execution_guard
 from app.core.foundation_projection import ProjectionError, project_accepted
 from app.core.foundation_token_plan import select_members
@@ -21,23 +22,31 @@ from app.core.foundation_universe_policy import apply_universe_policy
 from app.core.interpretation_contract import AcceptanceStatus, InterpretationAcceptance
 from app.core.socrata_transport import Soda3OrderingSpecifier
 from app.core.source_call_receipts import last_call_id, source_call_scope, source_calls_snapshot
+from app.core.turn_ledger import AdmissionCode, declined_by, record_admission, record_production
 from app.core.workflow.results import empty_result
 from app.utils.money import normalize_text
 
 
-def eligible_first_search(workflow, ctx, seed) -> bool:
-    """Fix route eligibility before producing or observing a candidate answer."""
+def first_search_ineligibility(workflow, ctx, seed) -> AdmissionCode | None:
+    """Why a turn is not an eligible first search; None when it is. Same gate, with its reason."""
     if (seed is not None or ctx.actor_candidate_selection is not None
             or ctx.profile_action_selection is not None):
-        return False
+        return AdmissionCode.INELIGIBLE_SEED_OR_SELECTION
     if ctx.chat_id and workflow.conv_store.get_history(ctx.chat_id, last_n=1):
-        return False
+        return AdmissionCode.INELIGIBLE_HISTORY
     raw = normalize_text(ctx.user_query)
     nouns = r"(?:procesos?|contratos?|oportunidades?|licitacion(?:es)?)"
     if re.match(r"cuenta\b", raw) and re.search(r"\bsuma\b", raw) and re.search(rf"\b{nouns}\b", raw):
-        return True  # Admit the compound request so its unsupported capacity blocks before calls.
-    return bool(re.match(rf"(?:busca(?:r)?|muestra(?:me)?|quiero|necesito|que|algun[oa]?|{nouns})\b", raw)
-                and re.search(rf"\b{nouns}\b", raw))
+        return None  # Admit the compound request so its unsupported capacity blocks before calls.
+    if (re.match(rf"(?:busca(?:r)?|muestra(?:me)?|quiero|necesito|que|algun[oa]?|{nouns})\b", raw)
+            and re.search(rf"\b{nouns}\b", raw)):
+        return None
+    return AdmissionCode.INELIGIBLE_LEXICAL
+
+
+def eligible_first_search(workflow, ctx, seed) -> bool:
+    """Fix route eligibility before producing or observing a candidate answer."""
+    return first_search_ineligibility(workflow, ctx, seed) is None
 
 
 def host_universe(proposal):
@@ -226,6 +235,7 @@ def _record(workflow, ctx, result: dict) -> dict:
 
 
 def _continuation_clarification(workflow, ctx) -> dict:
+    record_admission(AdmissionCode.CONTINUATION_BLOCKED, ctx.user_query)
     result = empty_result(
         response=user_message("NEEDS_CLARIFICATION", "FOUNDATION_CONTINUATION_UNSUPPORTED").text,
         route_reason="foundation_continuation_unsupported", needs_clarification=True, total_count=None)
@@ -245,10 +255,15 @@ def run_foundation_search(workflow, ctx, seed, *, observation=None, binding=None
 
     if seed is None and ctx.actor_candidate_selection is None and continues_foundation_turn(workflow, ctx):
         return _continuation_clarification(workflow, ctx)
-    if not eligible_first_search(workflow, ctx, seed):
+    ineligible = first_search_ineligibility(workflow, ctx, seed)
+    if ineligible is not None:
+        record_admission(ineligible, ctx.user_query)
         return None
-    if decline_reason(workflow, ctx, observation=observation, binding=binding) is not None:
+    owner = decline_reason(workflow, ctx, observation=observation, binding=binding)
+    if owner is not None:
+        record_admission(declined_by(owner), ctx.user_query)
         return None
+    record_admission(AdmissionCode.ADMITTED, ctx.user_query)
     started = time.perf_counter()
     producer = getattr(workflow, "foundation_producer", None)
     if producer is None:
@@ -265,6 +280,7 @@ def run_foundation_search(workflow, ctx, seed, *, observation=None, binding=None
                       foundation_plan_decision="PROVIDER_ERROR", foundation_internal_reason=accepted.reason)
         result["foundation_telemetry"] = {**_telemetry(producer, accepted, None, result), **result["foundation_fallback"],
                                           "foundation_latency_ms": round((time.perf_counter() - started) * 1000, 1)}
+        record_production(result["foundation_telemetry"], result, ctx.user_query)
         return _record(workflow, ctx, result)
     universe = None
     if not isinstance(accepted, InterpretationAcceptance):
@@ -280,4 +296,6 @@ def run_foundation_search(workflow, ctx, seed, *, observation=None, binding=None
     result.setdefault("foundation_internal_reason", accepted.reason or None)
     result["foundation_telemetry"] = _telemetry(producer, accepted, universe, result)
     result["foundation_telemetry"]["foundation_latency_ms"] = round((time.perf_counter() - started) * 1000, 1)
+    record_production(result["foundation_telemetry"], result, ctx.user_query)
+    record_legacy_shadow(workflow, ctx, accepted)
     return _record(workflow, ctx, result)
