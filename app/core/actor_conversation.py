@@ -260,10 +260,31 @@ _SEARCH_BARE_RE = re.compile(
     r"(?P<actor>.+)$",
     re.IGNORECASE,
 )
+# Nouns that name WHAT is searched (the universe or a procurement modality), singular
+# and plural, already normalized.  A mention that starts with one of them, after an
+# optional article, asks for records ("licitaciones de la alcaldia de soledad"); it is
+# never the name of an actor.  One entry may be a phrase: it matches word by word.
 _NON_ACTOR_SEARCH_LEADS = frozenset({
-    "compra", "compras", "contratacion", "contrato", "contratos",
-    "licitacion", "oportunidad", "oportunidades", "proceso", "procesos",
+    "compra", "compras", "contratacion", "contrataciones",
+    "contrato", "contratos", "proceso", "procesos",
+    "licitacion", "licitaciones", "convocatoria", "convocatorias",
+    "oportunidad", "oportunidades",
+    "seleccion abreviada", "selecciones abreviadas",
+    "minima cuantia", "concurso de meritos", "concursos de meritos",
 })
+_SEARCH_LEAD_ARTICLES = frozenset({"el", "la", "los", "las", "un", "una", "unos", "unas"})
+_NON_ACTOR_LEAD_MAX_WORDS = max(len(lead.split()) for lead in _NON_ACTOR_SEARCH_LEADS)
+
+
+def _leads_with_universe_noun(actor: str) -> bool:
+    """True when ``actor`` (normalized) opens with a universe noun, article optional."""
+    words = actor.split()
+    if words and words[0] in _SEARCH_LEAD_ARTICLES:
+        words = words[1:]
+    return any(
+        " ".join(words[:size]) in _NON_ACTOR_SEARCH_LEADS
+        for size in range(1, _NON_ACTOR_LEAD_MAX_WORDS + 1)
+    )
 _BARE_CONTRACTS_RE = re.compile(
     r"\bcontratos?\s+(?:de|del)\s+(?P<actor>.+)$",
     re.IGNORECASE,
@@ -352,7 +373,7 @@ def interpret_actor_conversation(query: str) -> ActorConversationInstruction:
     replacement = _REPLACE_RE.fullmatch(normalized)
     if replacement is not None:
         actor = _strip_supported_actor_tail(replacement.group("actor"))
-        if actor.split(maxsplit=1)[0] in _NON_ACTOR_SEARCH_LEADS:
+        if _leads_with_universe_noun(actor):
             # ``cambia a procesos/contratos`` is a dataset mutation, not an
             # actor called PROCESOS.  The generic follow-up policy owns it.
             return ActorConversationInstruction(framing_spans=framing)
@@ -390,7 +411,7 @@ def interpret_actor_conversation(query: str) -> ActorConversationInstruction:
     bare_search = _SEARCH_BARE_RE.fullmatch(normalized)
     if bare_search is not None and not _ACTOR_ROLE_RE.search(normalized):
         actor = _strip_supported_actor_tail(bare_search.group("actor"))
-        if actor.split(maxsplit=1)[0] in _NON_ACTOR_SEARCH_LEADS:
+        if _leads_with_universe_noun(actor):
             return ActorConversationInstruction(framing_spans=framing)
         evidence = actor_likeness(actor)
         if evidence != "topic":

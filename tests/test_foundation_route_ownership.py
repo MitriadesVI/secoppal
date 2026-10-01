@@ -147,10 +147,6 @@ OWNER_CASES = [
                  id="contract-activity-count"),
     pytest.param("busca proveedor FUNDACARIBE", None, "ACTOR", id="actor-profile-name"),
     pytest.param("contratos del proveedor FUNDACARIBE", None, "ACTOR", id="actor-profile-contracts-noun"),
-    # The legacy parse reads this buyer phrasing as an unresolved contractor name; the
-    # actor owner keeps it and Foundation declines (coverage debt, FOUNDATION_ENTRY_ADMISSION_V1).
-    pytest.param("busca licitaciones de alcaldía de barranquilla en 2024", None, "ACTOR",
-                 id="legacy-actor-parse-keeps-the-turn"),
     pytest.param("revisa Radar PAE Caribe", None, "RADAR", id="radar-run"),
     pytest.param("mis radares", None, "RADAR", id="radar-list"),
     pytest.param("busca contratos de aseo y exporta los resultados a excel",
@@ -181,6 +177,18 @@ def test_existing_owners_keep_their_turn_with_foundation_on(make_flow, text, alp
     assert "foundation_mode" not in result_on and "foundation_telemetry" not in result_on
     assert observable(result_on) == observable(result_off)
     assert Counter(on.source.calls) == Counter(off.source.calls)
+
+
+def test_a_universe_noun_search_of_a_buyer_is_no_longer_an_actor_turn(make_flow):
+    # Debt closed by FOUNDATION_ENTRY_ADMISSION M0/L2: legacy used to read the buyer phrasing as a
+    # contractor name («licitaciones» was not in the actor lexicon), so ACTOR kept the turn and
+    # Foundation declined. A universe noun heads a search for records: ACTOR no longer owns it.
+    text = "busca licitaciones de alcaldía de barranquilla en 2024"
+    on = make_flow("foundation_v3")
+    result = run(on, text, chat_id="bq")
+    assert result.get("_continuation_owner") != "ACTOR"
+    assert on.foundation_producer.call_count == 1  # the gate admitted it; no owner declined
+    assert on.foundation_producer.call_args.args[0] == text
 
 
 def test_pagination_keeps_its_owner_with_foundation_on(make_flow):
