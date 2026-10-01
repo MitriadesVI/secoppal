@@ -23,6 +23,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from app.core import money_suffix_event
 from app.utils.money import normalize_text
 
 GT, GTE, LT, LTE, EQ, BETWEEN = "GT", "GTE", "LT", "LTE", "EQ", "BETWEEN"
@@ -134,11 +135,14 @@ def _literal(phrase: str) -> str:
     return r"\s+".join(re.escape(word) for word in phrase.split(" "))
 
 
-# Qué puede seguir a un sufijo adjetival: fin de texto, puntuación o un conector.
+# Qué puede seguir a un sufijo adjetival: fin de texto, puntuación (o un emoji), un conector o un
+# participio/verbo del informe («o mayores firmados en 2025», ``money_suffix_event``).
 _ADJECTIVE_TAIL = (
-    r"(?=\s*$|\s*[,.;:!?)\]]|\s+(?:"
+    r"(?=\s*$|\s*[,.;:!?)\]\U0001F300-\U0001FAFF\u2600-\u27BF]|\s+(?:"
     + "|".join(_accent_tolerant(c) for c in SUFFIX_CONNECTORS)
-    + r")(?!\w))"
+    + r")(?!\w)|"
+    + money_suffix_event.LOOKAHEAD
+    + ")"
 )
 _ADJECTIVE_PHRASES = frozenset(p for p, _ in _ADJECTIVE_SUFFIXES)
 

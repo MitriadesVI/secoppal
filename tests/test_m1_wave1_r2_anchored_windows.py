@@ -184,7 +184,10 @@ def test_the_error_names_both_readings_and_carries_no_dates():
     assert found.precision == "invalid"
     assert "los últimos 3 meses" in found.clarification
     assert "de 2025" in found.clarification
-    assert "desde hoy" in found.clarification and "completo" in found.clarification
+    # R3: the question names both periods and asks for the period written out. No numbered
+    # options and no «completo»: those words come back as the topic of the next search.
+    assert "desde hoy" in found.clarification
+    assert "(1)" not in found.clarification and "completo" not in found.clarification
     # The span covers the window and the anchor, so a consumer that masks it consumed both.
     text = "contratos de la Alcaldía de Galapa en los últimos 3 meses de 2025"
     assert text[slice(*found.span)] == found.phrase
@@ -197,7 +200,7 @@ def test_with_two_windows_the_first_one_is_named():
     assert found.error_code == CODE
     assert found.phrase.startswith("la última semana")
     assert found.span[0] == text.index("la última semana")
-    assert found.clarification.count("«la última semana»") == 2
+    assert found.clarification.count("«la última semana»") == 1
 
 
 def test_the_dormant_time_authority_names_the_error_as_two_temporal_facts_not_a_bad_count():
@@ -338,7 +341,7 @@ def test_the_conflict_reports_window_anchor_and_the_span_that_covers_both():
     assert found.span == (0, 24)
     question = twa.clarification(found)
     # each reading is named where it is offered, and the two are named together up front
-    assert question.count("«ultimos 3 meses»") == 2 and question.count("«del 2025»") == 2
+    assert question.count("«ultimos 3 meses»") == 1 and question.count("«del 2025»") == 1
 
 
 # ── the consumers: the error reaches each one as a clarification ────────────────────────
@@ -500,7 +503,7 @@ def test_the_workflow_asks_with_zero_source_calls_and_never_drops_the_date(workf
     assert result["needs_clarification"] is True, query
     assert workflow.calls == [], (query, workflow.calls)
     response = result["response"]
-    assert "¿Cuál quieres?" in response and "contados hacia atrás desde hoy" in response, response
+    assert "desde hoy" in response and "(1)" not in response, response
     params = result.get("resolved_params") or {}
     assert not params.get("fecha_desde") and not params.get("fecha_hasta")
 
@@ -525,9 +528,10 @@ def test_a_followup_with_an_anchored_window_asks_and_keeps_the_confirmed_scope(w
     assert len(workflow.calls) == before, "the follow-up must not reach the source"
     kept = second["resolved_params"]
     assert (kept.get("fecha_desde"), kept.get("fecha_hasta")) == ("2024-01-01", "2024-12-31")
-    third = workflow.run_query("y en los últimos 3 meses", chat_id="r2-fu", today=TODAY)
+    # R3: the question stays open; an explicit period answers it (a window would not).
+    third = workflow.run_query("octubre a diciembre de 2025", chat_id="r2-fu", today=TODAY)
     assert third["needs_clarification"] is False
-    assert third["resolved_params"]["fecha_desde"] == "2026-07-01"
+    assert third["resolved_params"]["fecha_desde"] == "2025-10-01"
     assert len(workflow.calls) > before
 
 

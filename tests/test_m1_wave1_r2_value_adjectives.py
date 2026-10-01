@@ -35,7 +35,7 @@ BOUND = {GTE: MoneyRelation.LOWER_BOUND, LTE: MoneyRelation.UPPER_BOUND}
 # Nouns an adjective can modify, money nouns included: «mayor valor» is a noun phrase too.
 NOUNS = [
     "plazo", "cuantía", "cuantia", "valor", "monto", "tamaño", "duración", "riesgo", "experiencia",
-    "impacto", "presupuesto", "calidad", "firmados", "contratos", "vigencia", "importe", "cifra",
+    "impacto", "presupuesto", "calidad", "contratos", "vigencia", "importe", "cifra",
 ]
 PUNCTUATION = [".", ",", ";", ":", "?", "!", ")", " .", " ,"]
 
@@ -158,11 +158,11 @@ def test_the_inclusive_suffixes_of_r1_are_kept(text, family):
     assert _families(text) == (family,), text
 
 
-def test_a_participle_after_the_suffix_is_asked_not_guessed():
-    """Declared limit of the closed rule: «o mayor firmados …» is not read (fail-closed)."""
+def test_a_participle_after_the_suffix_is_a_bound_since_r3():
+    """R2 asked «o mayor firmados …»; R3 reads the participle as a report (test_m1_wave1_r3_*)."""
     text = f"{HEAD} o mayor firmados en 2025"
-    assert _relation(text) is MoneyRelation.UNKNOWN
-    assert _families(text) == ()
+    assert _relation(text) is MoneyRelation.LOWER_BOUND
+    assert _families(text) == (GTE,)
 
 
 def test_the_connectors_are_a_closed_list_of_words_that_cannot_start_a_noun_phrase():

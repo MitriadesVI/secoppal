@@ -72,14 +72,25 @@ def find_anchored_window(
     )
 
 
+# Periods the person can write back. The question offers ONLY phrases the temporal authority
+# already resolves, never numbered options or a «completo»: any other word of the reply
+# («2», «la opción 2», «2025 completo») would be read as the topic of a search.
+EXAMPLES = ("octubre a diciembre de 2025", "desde julio de 2026")
+
+
+def rewrite_hint() -> str:
+    """Ask for the period written out; the examples are phrases the authority resolves."""
+    first, second = EXAMPLES
+    return (
+        f"Escríbeme el periodo con fechas explícitas, por ejemplo «{first}» o «{second}»."
+    )
+
+
 def clarification(found: AnchoredWindow) -> str:
-    """Spanish question naming both readings; it never picks one."""
+    """Spanish question naming both periods; it never picks one and offers no numbered options."""
     window = " ".join(found.window.split())
     anchor = " ".join(found.anchor.split())
     return (
-        f"Mencionas «{window}» y también «{anchor}». ¿Cuál quieres? "
-        f"(1) «{window}», contados hacia atrás desde hoy; "
-        f"(2) el periodo «{anchor}» completo. "
-        "Si querías la ventana dentro de ese periodo, dime las fechas exactas "
-        "(por ejemplo, del 2025-10-01 al 2025-12-31)."
+        f"Mencionas «{window}» y también «{anchor}». No sé si la ventana se cuenta hacia atrás "
+        f"desde hoy o dentro de ese periodo, y no voy a elegir por ti. {rewrite_hint()}"
     )

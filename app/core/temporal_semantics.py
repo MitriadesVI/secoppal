@@ -7,7 +7,7 @@ from dataclasses import dataclass, replace
 from datetime import date as Date, timedelta
 from typing import Any
 
-from app.core import temporal_window_anchor
+from app.core import normative_citation, temporal_window_anchor
 from app.core.temporal_bounds import apply_bound, find_bound, open_suffix_end
 
 
@@ -287,6 +287,23 @@ _WINDOW_PATTERNS = tuple(pattern for pattern, kind in _RELATIVE_PATTERNS if kind
 _NOT_AN_ANCHOR = (_HOY,)
 
 
+def window_patterns() -> tuple[re.Pattern[str], ...]:
+    """Every relative window the repo knows: this lexicon plus ``time_relative``'s.
+
+    ``time_relative`` («el último mes», «los dos últimos meses», «hace dos semanas»)
+    imports this module, so it is read lazily; its lexicon is never copied here.
+    """
+    from app.core import time_relative
+
+    return _WINDOW_PATTERNS + time_relative.WINDOW_PATTERNS
+
+
+def relative_window_in(text: str) -> str | None:
+    """The first relative window phrase of ``text`` (any lexicon), or ``None``."""
+    hits = [hit for pattern in window_patterns() for hit in pattern.finditer(text)]
+    return min(hits, key=lambda hit: hit.start()).group(0) if hits else None
+
+
 def _overlaps_protected(match: re.Match[str], spans: tuple[tuple[int, int], ...]) -> bool:
     start, end = match.span()
     return any(
@@ -548,14 +565,17 @@ def _anchored_window(
     implicit_year: int | None,
 ) -> TemporalResolution | None:
     """Error resolution when a relative window sits next to another period, else ``None``."""
+    # «decreto 1082 de 2015»: the year names a norm, it is not the period of the window.
+    cited = protected_spans + normative_citation.spans(text)
+
     def rest(masked: str) -> tuple[bool, tuple[int, int] | None]:
         other = _resolve_base(
-            masked, today=today, protected_spans=protected_spans, implicit_year=implicit_year,
+            masked, today=today, protected_spans=cited, implicit_year=implicit_year,
         )
         return other.matched, other.span
 
     found = temporal_window_anchor.find_anchored_window(
-        text, _WINDOW_PATTERNS, _NOT_AN_ANCHOR, rest,
+        text, window_patterns(), _NOT_AN_ANCHOR, rest,
     )
     if found is None:
         return None
