@@ -79,7 +79,8 @@ núcleo, y su contrato es «evidencia estructurada X → resolución Y».
 ## Gate de cutover M1-I (añadidos a la lista del plan)
 
 - Regresiones exclusivas Foundation vs legacy contra Gold = 0 por clase SEARCH (columna
-  `L-only-OK` de A3 a cero o a diferencia deliberada firmada).
+  `L-only-OK` de A3 a cero, sin dispensas; una diferencia deliberada corrige el Gold por
+  adjudicación). Gate completo: ADR-103 enmienda 2.
 - Secuestro de vecinos con la puerta **retirada** = 0 sobre NEIGHBOR (hoy 25/58 en simulación).
 - Ensanches silenciosos = 0 (TIME, BUYER, VALUE): todo lo no hospedable aclara.
 - v5 ≥ v4.2 en el held-out DA-6 y estabilidad ≥ 95 % en 2 pasadas.

@@ -140,6 +140,9 @@ queda), proveedores 2 %, perfil de entidad 2 %, conteos <1 %.
 
 ### M2 — Conversation IR (el frente duro; METIS)
 
+- **Postergado desde M1 (ADR-103 enmienda 3):** botones de Product View `[Elegir período]` y
+  `[Mayor valor]` (delta de IR sobre la vista anunciada). M1 sólo entrega los botones de vista.
+
 - `AcceptedInterpretation anterior + delta semántico → AcceptedInterpretation nueva`.
   «y en 2025?» es `REFINE · REPLACE TIME 2026→2025`, no una búsqueda.
 - Referentes en estado: resultado, perfil, lista pendiente (habilita «sus proveedores», «ver más»,

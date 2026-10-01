@@ -339,11 +339,14 @@ cambian en C1.
 
 1. La tabla §5.3.2 cubre las 12 operaciones; el test con IR oráculo sobre NEIGHBOR-TEST da la
    disposición esperada en el 100 %.
-2. Con el productor v5 y la puerta retirada (simulada): **0** secuestros en NEIGHBOR-TEST y falsas
-   declinaciones de SEARCH ≤ 2 % en REAL-TEST.
+2. Con el productor v5 y la puerta retirada (simulada): **0** secuestros en NEIGHBOR y **0** SEARCH
+   Gold que legacy acierta enviado a otra operación (ADR-103 enmienda 2: el gate CUTOVER es de
+   tolerancia cero; el 2 % sólo vale para ACTIVATE_V5).
 3. Conformidad (INV-C0-6) = 0 violaciones en la sonda NEIGHBOR + REAL con los vetos previos retirados.
-4. Cada clase con `L-only-OK > 0` en A3 (ACTOR, TIME mes/rango, VALUE inclusivos, ORDER, GEO
-   municipio/región, STATE, MODALITY) está ACTIVE en el registro, o firmada como diferencia deliberada.
+4. Cada clase SEARCH con `L-only-OK = 0` exclusivo (ACTOR, TIME mes/rango, VALUE inclusivos, ORDER,
+   GEO municipio/región, STATE, MODALITY…), sin dispensas: una diferencia deliberada se resuelve
+   corrigiendo el Gold por adjudicación y nueva versión sellada (ADR-103 enmienda 2). Además, 0
+   ensanches silenciosos, 0 inversiones de universo en casos CLEAR y 0 inversiones de polaridad.
 5. Historia liberada: los 64 `FOLLOWUP_DELTA` REAL entregados a legacy sin degradación frente a hoy.
 6. G integrado (failover según A5/D1): sin puerta, todo primer turno depende del proveedor.
 7. Latencia medida: todo primer turno no protocolario paga la llamada al LLM (p90 ≈ 2 s con v4.2).
@@ -401,7 +404,8 @@ rechazo) contra los 999 registros antes de congelar.
 5. **DA-6**: custodio independiente, comparación v5+host contra v4.2+host con su métrica
    (equivalencia de obligaciones). Sin acceso del implementador.
 
-Criterios numéricos de **ACTIVATE_V5** (con la puerta todavía puesta):
+Criterios numéricos de **ACTIVATE_V5** (con la puerta todavía puesta; dogfood experimental; los gates
+de CUTOVER son otros, de tolerancia cero, ver §5.3.6 y ADR-103 enmienda 2):
 
 | Métrica (TEST, peor de 2 pasadas) | Umbral |
 |---|---|
