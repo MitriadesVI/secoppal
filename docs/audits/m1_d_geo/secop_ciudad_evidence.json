@@ -1,0 +1,9679 @@
+{
+ "captured_at": "2026-09-30",
+ "datasets": {
+  "p6dx-8zbt": [
+   "ciudad_entidad",
+   "departamento_entidad"
+  ],
+  "jbjy-vk9h": [
+   "ciudad",
+   "departamento"
+  ]
+ },
+ "rows_with_defined_city": 11814664,
+ "rows_matched_by_official_divipola": 7558321,
+ "rows_matched_by_geo_authority": 11814664,
+ "pairs": [
+  {
+   "ciudad": "Abejorral",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1793,
+    "jbjy-vk9h": 1182
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Abrego",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 3564,
+    "jbjy-vk9h": 3085
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Acacías",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 13174,
+    "jbjy-vk9h": 10541
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Acandí",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 5,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Acevedo",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 1246,
+    "jbjy-vk9h": 968
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Achí",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 417
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Agrado",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 1491,
+    "jbjy-vk9h": 739
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Agua De Dios",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2283,
+    "jbjy-vk9h": 1109
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aguachica",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 4277,
+    "jbjy-vk9h": 1936
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aguada",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 441,
+    "jbjy-vk9h": 393
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aguadas",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 800,
+    "jbjy-vk9h": 31
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aguazul",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 7404,
+    "jbjy-vk9h": 5833
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Agustín Codazzi",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 3492,
+    "jbjy-vk9h": 908
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aipe",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 2611,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Albania",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 658,
+    "jbjy-vk9h": 543
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Albania",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 1390,
+    "jbjy-vk9h": 65
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Albania",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 237,
+    "jbjy-vk9h": 20
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Albán",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 911,
+    "jbjy-vk9h": 700
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Albán",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1894,
+    "jbjy-vk9h": 377
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Alcalá",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 504,
+    "jbjy-vk9h": 407
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aldana",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 2015,
+    "jbjy-vk9h": 1140
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Alejandría",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1291,
+    "jbjy-vk9h": 783
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Algarrobo",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 4079,
+    "jbjy-vk9h": 353
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Algeciras",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 3285,
+    "jbjy-vk9h": 377
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Almaguer",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 158,
+    "jbjy-vk9h": 24
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Almeida",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 98,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Alpujarra",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 442,
+    "jbjy-vk9h": 24
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Altamira",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 1140,
+    "jbjy-vk9h": 785
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Alto Baudo",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Altos Del Rosario",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 211
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Alvarado",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 584,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Amagá",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2375,
+    "jbjy-vk9h": 1777
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Amalfi",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1118,
+    "jbjy-vk9h": 969
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ambalema",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 691,
+    "jbjy-vk9h": 65
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Anapoima",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 235,
+    "jbjy-vk9h": 151
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ancuyá",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 935,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Andalucía",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 4127,
+    "jbjy-vk9h": 1877
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Andes",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 5401,
+    "jbjy-vk9h": 2717
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Angelópolis",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 484,
+    "jbjy-vk9h": 385
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Angostura",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 21,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Anolaima",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1181,
+    "jbjy-vk9h": 869
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Anorí",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1137,
+    "jbjy-vk9h": 26
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Anserma",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 4217,
+    "jbjy-vk9h": 1480
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ansermanuevo",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1052,
+    "jbjy-vk9h": 409
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Anza",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 461,
+    "jbjy-vk9h": 419
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Anzoátegui",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 26
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Apartadó",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 13117,
+    "jbjy-vk9h": 10828
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Apulo",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 710,
+    "jbjy-vk9h": 629
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Apía",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 1202,
+    "jbjy-vk9h": 424
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aquitania",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1850,
+    "jbjy-vk9h": 819
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aracataca",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 4040,
+    "jbjy-vk9h": 740
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aranzazu",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 1655,
+    "jbjy-vk9h": 90
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Aratoca",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 1527,
+    "jbjy-vk9h": 338
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arauca",
+   "departamento": "Arauca",
+   "rows": {
+    "p6dx-8zbt": 21084,
+    "jbjy-vk9h": 15419
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arauquita",
+   "departamento": "Arauca",
+   "rows": {
+    "p6dx-8zbt": 442,
+    "jbjy-vk9h": 39
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arbeláez",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 92,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arboleda",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1645,
+    "jbjy-vk9h": 267
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arboledas",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 129
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arboletes",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1620,
+    "jbjy-vk9h": 264
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arcabuco",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 428,
+    "jbjy-vk9h": 83
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arenal",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 196
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Argelia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 149,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Argelia",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 133,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Argelia",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 133,
+    "jbjy-vk9h": 15
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ariguaní",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 4207,
+    "jbjy-vk9h": 27
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arjona",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1782,
+    "jbjy-vk9h": 734
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Armenia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 4,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Armenia",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 116360,
+    "jbjy-vk9h": 91811
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Armero",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1391,
+    "jbjy-vk9h": 954
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Arroyohondo",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1040,
+    "jbjy-vk9h": 875
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Astrea",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 1573,
+    "jbjy-vk9h": 907
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ataco",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 495,
+    "jbjy-vk9h": 117
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ayapel",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 3194,
+    "jbjy-vk9h": 329
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bahía Solano",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 94,
+    "jbjy-vk9h": 94
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Balboa",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 122,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Balboa",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 647,
+    "jbjy-vk9h": 211
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Baranoa",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 4811,
+    "jbjy-vk9h": 759
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Baraya",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 1654,
+    "jbjy-vk9h": 710
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Barbacoas",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3133,
+    "jbjy-vk9h": 30
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Barbosa",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3728,
+    "jbjy-vk9h": 3307
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Barbosa",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 1079,
+    "jbjy-vk9h": 659
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Barichara",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 1663,
+    "jbjy-vk9h": 517
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Barranca De Upía",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 117,
+    "jbjy-vk9h": 89
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Barrancabermeja",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 16700,
+    "jbjy-vk9h": 10543
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Barrancas",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 4113,
+    "jbjy-vk9h": 36
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Barranco De Loba",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1751,
+    "jbjy-vk9h": 193
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Barranquilla",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 99359,
+    "jbjy-vk9h": 140079
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Becerril",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 1858,
+    "jbjy-vk9h": 865
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Belalcázar",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 472,
+    "jbjy-vk9h": 542
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bello",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 30336,
+    "jbjy-vk9h": 17941
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Belmira",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 513,
+    "jbjy-vk9h": 447
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Beltrán",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 106,
+    "jbjy-vk9h": 119
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Belén",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 955,
+    "jbjy-vk9h": 531
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Belén",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1112,
+    "jbjy-vk9h": 293
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Belén De Bajirá",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 2,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Belén De Los Andaquies",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 3811,
+    "jbjy-vk9h": 557
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Belén De Umbría",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 1515,
+    "jbjy-vk9h": 609
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Berbeo",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 669,
+    "jbjy-vk9h": 445
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Betania",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 515,
+    "jbjy-vk9h": 370
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Betulia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1621,
+    "jbjy-vk9h": 870
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Betulia",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 148,
+    "jbjy-vk9h": 17
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Betéitiva",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 770,
+    "jbjy-vk9h": 425
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bituima",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 72,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Boavita",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 882,
+    "jbjy-vk9h": 682
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bochalema",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 133,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bogotá",
+   "departamento": "Distrito Capital de Bogotá",
+   "rows": {
+    "p6dx-8zbt": 1584137,
+    "jbjy-vk9h": 1213872
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Bojacá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1345,
+    "jbjy-vk9h": 908
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bojaya",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 21
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bolívar",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 654,
+    "jbjy-vk9h": 317
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bolívar",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 422,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bolívar",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1114,
+    "jbjy-vk9h": 61
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bosconia",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 2837,
+    "jbjy-vk9h": 1383
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Boyacá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1084,
+    "jbjy-vk9h": 903
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Briceño",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1749,
+    "jbjy-vk9h": 422
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Briceño",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 871,
+    "jbjy-vk9h": 466
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bucaramanga",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 173883,
+    "jbjy-vk9h": 132622
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bucarasica",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 88,
+    "jbjy-vk9h": 17
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Buenaventura",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 12715,
+    "jbjy-vk9h": 8033
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Buenavista",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 557,
+    "jbjy-vk9h": 61
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Buenavista",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 1604,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Buenavista",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 744,
+    "jbjy-vk9h": 597
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Buenavista",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 99,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Buenos Aires",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 1573,
+    "jbjy-vk9h": 1293
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Buesaco",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3351,
+    "jbjy-vk9h": 197
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Bugalagrande",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1381,
+    "jbjy-vk9h": 951
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Buriticá",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 829,
+    "jbjy-vk9h": 655
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Busbanzá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 51
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cabrera",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 49
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cabrera",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 168,
+    "jbjy-vk9h": 52
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cabuyaro",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 16,
+    "jbjy-vk9h": 15
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cachipay",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 49,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cachirá",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 159,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caicedo",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 88,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caicedonia",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 4201,
+    "jbjy-vk9h": 2053
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caimito",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 91,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cajamarca",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 102,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cajibío",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 490,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cajicá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 10004,
+    "jbjy-vk9h": 7518
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Calamar",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 2320,
+    "jbjy-vk9h": 2213
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Calarca",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 7773,
+    "jbjy-vk9h": 6345
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caldas",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 12688,
+    "jbjy-vk9h": 6683
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caldas",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 605,
+    "jbjy-vk9h": 408
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caldono",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 180,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cali",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 433422,
+    "jbjy-vk9h": 417567
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "California",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 48
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Calima",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1613,
+    "jbjy-vk9h": 1127
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caloto",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 1788,
+    "jbjy-vk9h": 42
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Campamento",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 56,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Campo De La Cruz",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 255,
+    "jbjy-vk9h": 31
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Campoalegre",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 7057,
+    "jbjy-vk9h": 2436
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Campohermoso",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 462,
+    "jbjy-vk9h": 46
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Canalete",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 622
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Candelaria",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 1388,
+    "jbjy-vk9h": 241
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Candelaria",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 15457,
+    "jbjy-vk9h": 14182
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cantagallo",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 833,
+    "jbjy-vk9h": 776
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caparrapí",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 799,
+    "jbjy-vk9h": 494
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Capitanejo",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 277
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caqueza",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 5645,
+    "jbjy-vk9h": 5312
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caracolí",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 824,
+    "jbjy-vk9h": 378
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caramanta",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1088,
+    "jbjy-vk9h": 323
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Carcasí",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 129,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Carepa",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3208,
+    "jbjy-vk9h": 1953
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Carmen De Apicalá",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1342,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Carmen De Carupa",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 42
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Carmen Del Darien",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 86
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Carolina",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2249,
+    "jbjy-vk9h": 1853
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cartagena",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 152032,
+    "jbjy-vk9h": 106538
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Cartagena Del Chairá",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 836,
+    "jbjy-vk9h": 58
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cartago",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 7641,
+    "jbjy-vk9h": 4793
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caruru",
+   "departamento": "Vaupés",
+   "rows": {
+    "p6dx-8zbt": 1,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Casabianca",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 51,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Castilla La Nueva",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 1469,
+    "jbjy-vk9h": 1370
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Caucasia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 8241,
+    "jbjy-vk9h": 5183
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cañasgordas",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1002,
+    "jbjy-vk9h": 32
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cepitá",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 416,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cereté",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 2471,
+    "jbjy-vk9h": 243
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cerinza",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 823,
+    "jbjy-vk9h": 362
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cerrito",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 253,
+    "jbjy-vk9h": 36
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cerro San Antonio",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 935
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Chachagüí",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 2446,
+    "jbjy-vk9h": 35
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chaguaní",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 57,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chalán",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 124,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chameza",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chaparral",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 3398,
+    "jbjy-vk9h": 630
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Charalá",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 1324,
+    "jbjy-vk9h": 475
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Charta",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 354,
+    "jbjy-vk9h": 256
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chibolo",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 229
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Chigorodó",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 4410,
+    "jbjy-vk9h": 2203
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chima",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 95,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chimichagua",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 2927,
+    "jbjy-vk9h": 43
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chimá",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 631,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chinavita",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 172,
+    "jbjy-vk9h": 43
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chinchiná",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 9326,
+    "jbjy-vk9h": 4427
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chinácota",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 5413,
+    "jbjy-vk9h": 5066
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chinú",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 1686,
+    "jbjy-vk9h": 81
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chipaque",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 26
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chipatá",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 481,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chiquinquirá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 5791,
+    "jbjy-vk9h": 3349
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chiriguaná",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 3987,
+    "jbjy-vk9h": 35
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chiscas",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 198,
+    "jbjy-vk9h": 41
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chita",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 939,
+    "jbjy-vk9h": 700
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chitagá",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 142
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chitaraque",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 800,
+    "jbjy-vk9h": 542
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chivatá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 515,
+    "jbjy-vk9h": 107
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chivor",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 58,
+    "jbjy-vk9h": 20
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Choachí",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 335,
+    "jbjy-vk9h": 186
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chocontá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1222,
+    "jbjy-vk9h": 983
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chía",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 14894,
+    "jbjy-vk9h": 12925
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Chíquiza",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 298,
+    "jbjy-vk9h": 18
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cicuco",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 105
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cimitarra",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 3792,
+    "jbjy-vk9h": 1417
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Circasia",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 4348,
+    "jbjy-vk9h": 3806
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cisneros",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1632,
+    "jbjy-vk9h": 1237
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ciudad Bolívar",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 568,
+    "jbjy-vk9h": 100
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ciénaga",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 21789,
+    "jbjy-vk9h": 8098
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ciénaga De Oro",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 1392,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ciénega",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 437,
+    "jbjy-vk9h": 49
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Clemencia",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1582,
+    "jbjy-vk9h": 1458
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cocorná",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 122,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Coello",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 520,
+    "jbjy-vk9h": 43
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cogua",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2093,
+    "jbjy-vk9h": 1337
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Colombia",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 182,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Coloso",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 963,
+    "jbjy-vk9h": 668
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Colón",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1795,
+    "jbjy-vk9h": 15
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Colón",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 9949,
+    "jbjy-vk9h": 23
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Concepción",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 113,
+    "jbjy-vk9h": 18
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Concepción",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 128,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Concordia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 360,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Concordia",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 1489,
+    "jbjy-vk9h": 332
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Condoto",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 218,
+    "jbjy-vk9h": 196
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Confines",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 791,
+    "jbjy-vk9h": 261
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Consaca",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1957,
+    "jbjy-vk9h": 908
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Contadero",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1560,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Contratación",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 937,
+    "jbjy-vk9h": 415
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Convención",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 316,
+    "jbjy-vk9h": 26
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Copacabana",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 5633,
+    "jbjy-vk9h": 4314
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Coper",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1043,
+    "jbjy-vk9h": 546
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Corinto",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 627,
+    "jbjy-vk9h": 14
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Coromoro",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 128
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Corozal",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 3533,
+    "jbjy-vk9h": 1629
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Corrales",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1192,
+    "jbjy-vk9h": 629
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cota",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 12591,
+    "jbjy-vk9h": 9662
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cotorra",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 2002,
+    "jbjy-vk9h": 12
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Covarachía",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 627,
+    "jbjy-vk9h": 458
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Coveñas",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 1267,
+    "jbjy-vk9h": 781
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Coyaima",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 307,
+    "jbjy-vk9h": 186
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cravo Norte",
+   "departamento": "Arauca",
+   "rows": {
+    "p6dx-8zbt": 1224,
+    "jbjy-vk9h": 956
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cuaspud",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1614,
+    "jbjy-vk9h": 40
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Cubarral",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 682,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cubará",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1861,
+    "jbjy-vk9h": 48
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cucaita",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1134,
+    "jbjy-vk9h": 500
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cucunubá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1772,
+    "jbjy-vk9h": 1014
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cucutilla",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 128
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cumaral",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 3535,
+    "jbjy-vk9h": 3153
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cumbal",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3601,
+    "jbjy-vk9h": 27
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cumbitara",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1989,
+    "jbjy-vk9h": 572
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cunday",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 471,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Curillo",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 1238,
+    "jbjy-vk9h": 586
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Curití",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 1981,
+    "jbjy-vk9h": 781
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Curumaní",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 4073,
+    "jbjy-vk9h": 27
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cuítiva",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 411,
+    "jbjy-vk9h": 52
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cáceres",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 264,
+    "jbjy-vk9h": 20
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cácota",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 68
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cértegui",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 86,
+    "jbjy-vk9h": 82
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cómbita",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1309,
+    "jbjy-vk9h": 698
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Córdoba",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 162,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Córdoba",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 116,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Córdoba",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 1378,
+    "jbjy-vk9h": 764
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Cúcuta",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 120116,
+    "jbjy-vk9h": 96585
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Dabeiba",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1388,
+    "jbjy-vk9h": 1049
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Dagua",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 4080,
+    "jbjy-vk9h": 3478
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Dibulla",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 2891,
+    "jbjy-vk9h": 958
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Distracción",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 983,
+    "jbjy-vk9h": 21
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Distrito Capital",
+   "departamento": "Distrito Capital de Bogotá",
+   "rows": {
+    "p6dx-8zbt": 2189,
+    "jbjy-vk9h": 1892
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Dolores",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 34,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Don Matías",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2590,
+    "jbjy-vk9h": 1801
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Dosquebradas",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 15633,
+    "jbjy-vk9h": 14880
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Duitama",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 11336,
+    "jbjy-vk9h": 6645
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Durania",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 586,
+    "jbjy-vk9h": 465
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ebéjico",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1308,
+    "jbjy-vk9h": 561
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Bagre",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 5233,
+    "jbjy-vk9h": 4455
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Banco",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 15902,
+    "jbjy-vk9h": 3670
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Cairo",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 158
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Calvario",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Cantón Del San Pablo",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Carmen",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 238,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Carmen De Atrato",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 353,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Carmen De Bolívar",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 2748,
+    "jbjy-vk9h": 1131
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Carmen De Chucurí",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 255
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Carmen De Viboral",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 4338,
+    "jbjy-vk9h": 2483
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Castillo",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 21
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Cerrito",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 7422,
+    "jbjy-vk9h": 7088
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Charco",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1732,
+    "jbjy-vk9h": 27
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Cocuy",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1324,
+    "jbjy-vk9h": 514
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Colegio",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 5014,
+    "jbjy-vk9h": 4342
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Copey",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 2304,
+    "jbjy-vk9h": 54
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Doncello",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 4770,
+    "jbjy-vk9h": 33
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Dorado",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 659,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Dovio",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 422,
+    "jbjy-vk9h": 329
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Espino",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 83,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Guacamayo",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 449,
+    "jbjy-vk9h": 382
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Guamo",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 109
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Litoral Del San Juan",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Molino",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 293,
+    "jbjy-vk9h": 12
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Paso",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 3248,
+    "jbjy-vk9h": 1303
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Paujil",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 979,
+    "jbjy-vk9h": 400
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Peñol",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1485,
+    "jbjy-vk9h": 14
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Peñón",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1042,
+    "jbjy-vk9h": 18
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Peñón",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 56,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Peñón",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 488,
+    "jbjy-vk9h": 35
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Piñon",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 858,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Playón",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 1103,
+    "jbjy-vk9h": 752
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Retorno",
+   "departamento": "Guaviare",
+   "rows": {
+    "p6dx-8zbt": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Retén",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 149,
+    "jbjy-vk9h": 19
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Roble",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 203,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Rosal",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1137,
+    "jbjy-vk9h": 806
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Rosario",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 930,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Santuario",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 7852,
+    "jbjy-vk9h": 7254
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Tablón De Gómez",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 2246,
+    "jbjy-vk9h": 12
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Tambo",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 1788,
+    "jbjy-vk9h": 28
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Tambo",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1563,
+    "jbjy-vk9h": 65
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Tarra",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 310,
+    "jbjy-vk9h": 37
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Zulia",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 2606,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "El Águila",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 821,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Elías",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 755,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Encino",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 106,
+    "jbjy-vk9h": 32
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Enciso",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 174
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Entrerrios",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1314,
+    "jbjy-vk9h": 1092
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Envigado",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 36653,
+    "jbjy-vk9h": 25900
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Espinal",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 12681,
+    "jbjy-vk9h": 10222
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Facatativá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 18787,
+    "jbjy-vk9h": 9803
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Falan",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 89,
+    "jbjy-vk9h": 46
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Filadelfia",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 1214,
+    "jbjy-vk9h": 417
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Filandia",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 2187,
+    "jbjy-vk9h": 1698
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Firavitoba",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 887,
+    "jbjy-vk9h": 540
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Flandes",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 2919,
+    "jbjy-vk9h": 2332
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Florencia",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 26023,
+    "jbjy-vk9h": 12476
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Florencia",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 904,
+    "jbjy-vk9h": 763
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Floresta",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 745,
+    "jbjy-vk9h": 185
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Florida",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 5097,
+    "jbjy-vk9h": 4868
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Floridablanca",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 28221,
+    "jbjy-vk9h": 24438
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Florián",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 618,
+    "jbjy-vk9h": 80
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fomeque",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 4861,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fonseca",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 7544,
+    "jbjy-vk9h": 1136
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fortul",
+   "departamento": "Arauca",
+   "rows": {
+    "p6dx-8zbt": 656,
+    "jbjy-vk9h": 358
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fosca",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 187,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Francisco Pizarro",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 133,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fredonia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 821,
+    "jbjy-vk9h": 587
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fresno",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 116,
+    "jbjy-vk9h": 24
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Frontino",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 911,
+    "jbjy-vk9h": 560
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fuente De Oro",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 1163,
+    "jbjy-vk9h": 1146
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fundación",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 22090,
+    "jbjy-vk9h": 11524
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Funes",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1633,
+    "jbjy-vk9h": 1106
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Funza",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 14275,
+    "jbjy-vk9h": 12818
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fusagasugá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 29930,
+    "jbjy-vk9h": 13367
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Fúquene",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 419,
+    "jbjy-vk9h": 362
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gachala",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2781,
+    "jbjy-vk9h": 2813
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gachancipá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1543,
+    "jbjy-vk9h": 926
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gachantivá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 813,
+    "jbjy-vk9h": 421
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gachetá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 3009,
+    "jbjy-vk9h": 1132
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Galapa",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 7901,
+    "jbjy-vk9h": 4324
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Galeras",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 436,
+    "jbjy-vk9h": 45
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Galán",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 570,
+    "jbjy-vk9h": 25
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gama",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 767,
+    "jbjy-vk9h": 696
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gamarra",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 1042,
+    "jbjy-vk9h": 261
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gambita",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 171,
+    "jbjy-vk9h": 25
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gameza",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 403,
+    "jbjy-vk9h": 120
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Garagoa",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 979,
+    "jbjy-vk9h": 870
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Garzón",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 9950,
+    "jbjy-vk9h": 3755
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gigante",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 2047,
+    "jbjy-vk9h": 669
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ginebra",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 993,
+    "jbjy-vk9h": 840
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Giraldo",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 602,
+    "jbjy-vk9h": 425
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Girardot",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 14917,
+    "jbjy-vk9h": 12841
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Girardota",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 6171,
+    "jbjy-vk9h": 5112
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Girón",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 10104,
+    "jbjy-vk9h": 9173
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "González",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 498,
+    "jbjy-vk9h": 440
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gramalote",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 948,
+    "jbjy-vk9h": 33
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Granada",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1672,
+    "jbjy-vk9h": 1309
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Granada",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 102,
+    "jbjy-vk9h": 39
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Granada",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 1468,
+    "jbjy-vk9h": 157
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guaca",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 341,
+    "jbjy-vk9h": 331
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guacamayas",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 62
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guacarí",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 3676,
+    "jbjy-vk9h": 2398
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guachené",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 190,
+    "jbjy-vk9h": 36
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guachetá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2704,
+    "jbjy-vk9h": 609
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guachucal",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 2021,
+    "jbjy-vk9h": 15
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guadalajara De Buga",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 16350,
+    "jbjy-vk9h": 15433
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guadalupe",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guadalupe",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 1331,
+    "jbjy-vk9h": 47
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guadalupe",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 367,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guaduas",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 4885,
+    "jbjy-vk9h": 2856
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guaitarilla",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1945,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gualmatán",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1320,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guamal",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 4714,
+    "jbjy-vk9h": 491
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guamal",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 2396,
+    "jbjy-vk9h": 2068
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guamo",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 2837,
+    "jbjy-vk9h": 1416
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guapi",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 1026,
+    "jbjy-vk9h": 31
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guapotá",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 864,
+    "jbjy-vk9h": 380
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guaranda",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 1231,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guarne",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 7416,
+    "jbjy-vk9h": 5865
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guasca",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1025,
+    "jbjy-vk9h": 594
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guatape",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3607,
+    "jbjy-vk9h": 3419
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guataquí",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 126,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guatavita",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 3058,
+    "jbjy-vk9h": 19
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guateque",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 3502,
+    "jbjy-vk9h": 1117
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guavatá",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 570,
+    "jbjy-vk9h": 81
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guayabal De Siquima",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 96,
+    "jbjy-vk9h": 18
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guayabetal",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 78
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guayatá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 69,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gutiérrez",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 46,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Guática",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 109
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Génova",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 83,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Gómez Plata",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3786,
+    "jbjy-vk9h": 1757
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Güepsa",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 573,
+    "jbjy-vk9h": 25
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Güicán",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 22,
+    "jbjy-vk9h": 23
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Hacarí",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 1004,
+    "jbjy-vk9h": 778
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Hatillo De Loba",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 189,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Hato",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 70,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Hato Corozal",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 485,
+    "jbjy-vk9h": 317
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Hatonuevo",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 1130,
+    "jbjy-vk9h": 714
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Heliconia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1050,
+    "jbjy-vk9h": 466
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Herrán",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 282
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Herveo",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1011,
+    "jbjy-vk9h": 977
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Hispania",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1260,
+    "jbjy-vk9h": 933
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Hobo",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 15,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Honda",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 7085,
+    "jbjy-vk9h": 5550
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ibagué",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 88893,
+    "jbjy-vk9h": 83469
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Icononzo",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 968,
+    "jbjy-vk9h": 24
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Iles",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1847,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Imués",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1078,
+    "jbjy-vk9h": 17
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Inzá",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 204,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Inírida",
+   "departamento": "Guainía",
+   "rows": {
+    "p6dx-8zbt": 6183,
+    "jbjy-vk9h": 3450
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ipiales",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 13990,
+    "jbjy-vk9h": 5737
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Iquira",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 1325,
+    "jbjy-vk9h": 279
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Isnos",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 3295,
+    "jbjy-vk9h": 1682
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Istmina",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 349,
+    "jbjy-vk9h": 335
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Itagui",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 14727,
+    "jbjy-vk9h": 7510
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ituango",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1026,
+    "jbjy-vk9h": 195
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Iza",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 611,
+    "jbjy-vk9h": 505
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Jambaló",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 270
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Jamundí",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 12488,
+    "jbjy-vk9h": 10912
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Jardín",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2160,
+    "jbjy-vk9h": 1569
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Jenesano",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 594,
+    "jbjy-vk9h": 51
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Jericó",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 851,
+    "jbjy-vk9h": 127
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Jericó",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 64
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Jerusalén",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 79,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Jesús María",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 150,
+    "jbjy-vk9h": 26
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Jordán",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 69,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Juan De Acosta",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 2882,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Junín",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 111
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Juradó",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 6,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Apartada",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 2686,
+    "jbjy-vk9h": 495
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Argentina",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 2590,
+    "jbjy-vk9h": 439
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Belleza",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 786,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Calera",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 4082,
+    "jbjy-vk9h": 3426
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Capilla",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 385
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Ceja",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 8418,
+    "jbjy-vk9h": 6037
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Celia",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 967,
+    "jbjy-vk9h": 324
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Cruz",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 2309,
+    "jbjy-vk9h": 65
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Cumbre",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 583,
+    "jbjy-vk9h": 1256
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Dorada",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 15233,
+    "jbjy-vk9h": 8137
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Esperanza",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 229,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Estrella",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 15303,
+    "jbjy-vk9h": 11653
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Florida",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1538,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Gloria",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 1494,
+    "jbjy-vk9h": 88
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Jagua De Ibirico",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 4080,
+    "jbjy-vk9h": 3350
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Jagua Del Pilar",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 107,
+    "jbjy-vk9h": 39
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Llanada",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1407,
+    "jbjy-vk9h": 1146
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Macarena",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Merced",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 845,
+    "jbjy-vk9h": 309
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Mesa",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2520,
+    "jbjy-vk9h": 1456
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Montañita",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 1457,
+    "jbjy-vk9h": 760
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Palma",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 152,
+    "jbjy-vk9h": 14
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Paz",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 4928,
+    "jbjy-vk9h": 4395
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Paz",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 702,
+    "jbjy-vk9h": 129
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Peña",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 125,
+    "jbjy-vk9h": 22
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Pintada",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1214,
+    "jbjy-vk9h": 1029
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Plata",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 8742,
+    "jbjy-vk9h": 3876
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Playa",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 215,
+    "jbjy-vk9h": 81
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Salina",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 823,
+    "jbjy-vk9h": 693
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Sierra",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 126
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Tebaida",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 5275,
+    "jbjy-vk9h": 4660
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Tola",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 346,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Unión",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 749,
+    "jbjy-vk9h": 556
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Unión",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3680,
+    "jbjy-vk9h": 56
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Unión",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 153,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Unión",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 3533,
+    "jbjy-vk9h": 2228
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Uvita",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1228,
+    "jbjy-vk9h": 713
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Vega",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 235,
+    "jbjy-vk9h": 19
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Vega",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 5226,
+    "jbjy-vk9h": 1374
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Victoria",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 27
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Victoria",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 638,
+    "jbjy-vk9h": 425
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "La Virginia",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 3849,
+    "jbjy-vk9h": 2445
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Labateca",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 102,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Labranzagrande",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 640,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Landázuri",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 234
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Lebríja",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 2978,
+    "jbjy-vk9h": 1177
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Leguízamo",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 4408,
+    "jbjy-vk9h": 542
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Leiva",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1478,
+    "jbjy-vk9h": 29
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Lejanías",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 243,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Lenguazaque",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 856,
+    "jbjy-vk9h": 710
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Leticia",
+   "departamento": "Amazonas",
+   "rows": {
+    "p6dx-8zbt": 26209,
+    "jbjy-vk9h": 16841
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Liborina",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 109,
+    "jbjy-vk9h": 27
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Linares",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1766,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Lloró",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 104
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Lorica",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 6212,
+    "jbjy-vk9h": 15
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Los Andes",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 2284,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Los Córdobas",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 302
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Los Palmitos",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 725,
+    "jbjy-vk9h": 17
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Los Patios",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 10976,
+    "jbjy-vk9h": 10240
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Los Santos",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 460
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Lourdes",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 61
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Luruaco",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 1927,
+    "jbjy-vk9h": 1067
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Lérida",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 2403,
+    "jbjy-vk9h": 1301
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Líbano",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 8256,
+    "jbjy-vk9h": 2771
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "López",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 13,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Macanal",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1058,
+    "jbjy-vk9h": 535
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Macaravita",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 418,
+    "jbjy-vk9h": 21
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Maceo",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1550,
+    "jbjy-vk9h": 791
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Macheta",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 643,
+    "jbjy-vk9h": 567
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Madrid",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 9518,
+    "jbjy-vk9h": 7537
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Magangué",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 7274,
+    "jbjy-vk9h": 5012
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Magüi",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1537,
+    "jbjy-vk9h": 95
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mahates",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 416,
+    "jbjy-vk9h": 36
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Maicao",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 10600,
+    "jbjy-vk9h": 2338
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Majagual",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 2264,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Malambo",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 7385,
+    "jbjy-vk9h": 2291
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mallama",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 38,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Manatí",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 1872,
+    "jbjy-vk9h": 1071
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Manaure",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 239,
+    "jbjy-vk9h": 24
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Manaure",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 2206,
+    "jbjy-vk9h": 92
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Manizales",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 80459,
+    "jbjy-vk9h": 42784
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Manta",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 807,
+    "jbjy-vk9h": 483
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Manzanares",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 3009,
+    "jbjy-vk9h": 1596
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Maní",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 1112,
+    "jbjy-vk9h": 767
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mapiripán",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 19
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Margarita",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 45
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Marinilla",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 7069,
+    "jbjy-vk9h": 4650
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Maripí",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1315,
+    "jbjy-vk9h": 634
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mariquita",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 2990,
+    "jbjy-vk9h": 1136
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Marmato",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 1136,
+    "jbjy-vk9h": 547
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Marquetalia",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 1802,
+    "jbjy-vk9h": 443
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Marsella",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 1356,
+    "jbjy-vk9h": 445
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Marulanda",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 100,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "María La Baja",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1722,
+    "jbjy-vk9h": 985
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Matanza",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 880,
+    "jbjy-vk9h": 526
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Medellín",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 443276,
+    "jbjy-vk9h": 284946
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Medina",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2632,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Medio Atrato",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 14,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Melgar",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 11246,
+    "jbjy-vk9h": 10763
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mercaderes",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 136,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mesetas",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 616,
+    "jbjy-vk9h": 437
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Milán",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 335,
+    "jbjy-vk9h": 77
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Miraflores",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 2823,
+    "jbjy-vk9h": 1289
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Miraflores",
+   "departamento": "Guaviare",
+   "rows": {
+    "p6dx-8zbt": 709,
+    "jbjy-vk9h": 539
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Miranda",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 405,
+    "jbjy-vk9h": 41
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mistrató",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 771
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mitú",
+   "departamento": "Vaupés",
+   "rows": {
+    "p6dx-8zbt": 7575,
+    "jbjy-vk9h": 894
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mocoa",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 39185,
+    "jbjy-vk9h": 19595
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mogotes",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 1688,
+    "jbjy-vk9h": 631
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Molagavita",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 607,
+    "jbjy-vk9h": 15
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Momil",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 1400,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mompós",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 888,
+    "jbjy-vk9h": 538
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Mongua",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 388,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Monguí",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 616,
+    "jbjy-vk9h": 255
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Moniquirá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 4806,
+    "jbjy-vk9h": 2752
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Montebello",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 355,
+    "jbjy-vk9h": 331
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Montecristo",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 105,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Montelíbano",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 2465,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Montenegro",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 4810,
+    "jbjy-vk9h": 4284
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Monterrey",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 1215,
+    "jbjy-vk9h": 885
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Montería",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 40340,
+    "jbjy-vk9h": 26688
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Morales",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 238,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Morales",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 1497,
+    "jbjy-vk9h": 1036
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Morelia",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 178,
+    "jbjy-vk9h": 24
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Morroa",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 80
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mosquera",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 67541,
+    "jbjy-vk9h": 12285
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mosquera",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 639,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Motavita",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1042,
+    "jbjy-vk9h": 504
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Moñitos",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 583,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Murillo",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 708,
+    "jbjy-vk9h": 122
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Murindó",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 651,
+    "jbjy-vk9h": 216
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mutatá",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1846,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Mutiscua",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 49
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Muzo",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 613,
+    "jbjy-vk9h": 219
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Málaga",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 4180,
+    "jbjy-vk9h": 3109
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nariño",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 466,
+    "jbjy-vk9h": 14
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nariño",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 98,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nariño",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3011,
+    "jbjy-vk9h": 129
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Natagaima",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 337,
+    "jbjy-vk9h": 161
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nechí",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 375,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Necoclí",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3862,
+    "jbjy-vk9h": 510
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Neira",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 2544,
+    "jbjy-vk9h": 412
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Neiva",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 77574,
+    "jbjy-vk9h": 47869
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nemocón",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2846,
+    "jbjy-vk9h": 824
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nilo",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 5756,
+    "jbjy-vk9h": 3450
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nimaima",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 838,
+    "jbjy-vk9h": 198
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nobsa",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 2036,
+    "jbjy-vk9h": 1101
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nocaima",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1165,
+    "jbjy-vk9h": 702
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Norcasia",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 2126,
+    "jbjy-vk9h": 1323
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Norosí",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 81,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nueva Granada",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 206
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nuevo Colón",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1307,
+    "jbjy-vk9h": 815
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nunchía",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 176,
+    "jbjy-vk9h": 14
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nuquí",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 21
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Nátaga",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 309,
+    "jbjy-vk9h": 243
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Obando",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1177,
+    "jbjy-vk9h": 544
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ocamonte",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 438,
+    "jbjy-vk9h": 17
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ocaña",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 10324,
+    "jbjy-vk9h": 8767
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Oiba",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 823,
+    "jbjy-vk9h": 477
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Oicatá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 578,
+    "jbjy-vk9h": 267
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Olaya",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 193,
+    "jbjy-vk9h": 284
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Olaya Herrera",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3189,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Onzaga",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 309,
+    "jbjy-vk9h": 34
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Oporapa",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 200,
+    "jbjy-vk9h": 89
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Orito",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 6345,
+    "jbjy-vk9h": 195
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Orocué",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 152
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ortega",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1327,
+    "jbjy-vk9h": 557
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ospina",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1459,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Otanche",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 149
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ovejas",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 1360,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pachavita",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 532,
+    "jbjy-vk9h": 56
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pacho",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1987,
+    "jbjy-vk9h": 1182
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Padilla",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 128
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Paez",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 1214,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Paicol",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 2279,
+    "jbjy-vk9h": 662
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pailitas",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 1834,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Paime",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 102,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Paipa",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 2157,
+    "jbjy-vk9h": 775
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Palermo",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 3672,
+    "jbjy-vk9h": 673
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Palestina",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 698,
+    "jbjy-vk9h": 474
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Palestina",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 2298,
+    "jbjy-vk9h": 2183
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Palmar",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 379,
+    "jbjy-vk9h": 317
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Palmar De Varela",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 666,
+    "jbjy-vk9h": 456
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Palmas Del Socorro",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 696,
+    "jbjy-vk9h": 332
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Palmira",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 27492,
+    "jbjy-vk9h": 18879
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Palmito",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 411,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Palocabildo",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pamplona",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 27718,
+    "jbjy-vk9h": 4211
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pamplonita",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 929,
+    "jbjy-vk9h": 752
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pandi",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 74,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Panqueba",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 78,
+    "jbjy-vk9h": 19
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Paratebueno",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1178,
+    "jbjy-vk9h": 908
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pasca",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 164,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pasto",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 90434,
+    "jbjy-vk9h": 63050
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Patía",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 6212,
+    "jbjy-vk9h": 1478
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pauna",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1238,
+    "jbjy-vk9h": 622
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Paya",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 896,
+    "jbjy-vk9h": 733
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Paz De Ariporo",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 849,
+    "jbjy-vk9h": 300
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Paz De Río",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 766,
+    "jbjy-vk9h": 564
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pedraza",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 27,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pelaya",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 1253,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pensilvania",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 4598,
+    "jbjy-vk9h": 2462
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Peque",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1017,
+    "jbjy-vk9h": 687
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pereira",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 134634,
+    "jbjy-vk9h": 96523
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pesca",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1041,
+    "jbjy-vk9h": 794
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Peñol",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 4814,
+    "jbjy-vk9h": 4569
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Piamonte",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 79,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Piedecuesta",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 16100,
+    "jbjy-vk9h": 14602
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Piedras",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 687,
+    "jbjy-vk9h": 40
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Piendamó",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 3883,
+    "jbjy-vk9h": 2957
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Pijao",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 1608,
+    "jbjy-vk9h": 628
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pijiño Del Carmen",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 1806
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pinchote",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 688,
+    "jbjy-vk9h": 487
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pinillos",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 2228,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Piojó",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 407,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pisba",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1302,
+    "jbjy-vk9h": 812
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pital",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 749,
+    "jbjy-vk9h": 527
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pitalito",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 10531,
+    "jbjy-vk9h": 8547
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pivijay",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 9944,
+    "jbjy-vk9h": 700
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Planadas",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 2615,
+    "jbjy-vk9h": 30
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Planeta Rica",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 2831
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Plato",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 12681,
+    "jbjy-vk9h": 5236
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Policarpa",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 2375,
+    "jbjy-vk9h": 22
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Polonuevo",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 1850,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ponedera",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 3535,
+    "jbjy-vk9h": 28
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Popayán",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 94210,
+    "jbjy-vk9h": 78216
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pore",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 385,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Potosí",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 2803,
+    "jbjy-vk9h": 2640
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pradera",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 5602,
+    "jbjy-vk9h": 3533
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Prado",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1243,
+    "jbjy-vk9h": 154
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Providencia",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1496,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Providencia",
+   "departamento": "San Andrés, Providencia y Santa Catalina",
+   "rows": {
+    "p6dx-8zbt": 711,
+    "jbjy-vk9h": 212
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pueblo Bello",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 2166,
+    "jbjy-vk9h": 50
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pueblo Nuevo",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 1605,
+    "jbjy-vk9h": 20
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pueblo Rico",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 1381,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pueblorrico",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 573,
+    "jbjy-vk9h": 593
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puebloviejo",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 3520,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puente Nacional",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 802,
+    "jbjy-vk9h": 233
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerres",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1963,
+    "jbjy-vk9h": 1514
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Asís",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 12454,
+    "jbjy-vk9h": 6586
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Berrío",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2160,
+    "jbjy-vk9h": 2076
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Boyacá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 8102,
+    "jbjy-vk9h": 4885
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Caicedo",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 2181,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Carreño",
+   "departamento": "Vichada",
+   "rows": {
+    "p6dx-8zbt": 12158,
+    "jbjy-vk9h": 15375
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Colombia",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 7494,
+    "jbjy-vk9h": 7531
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Concordia",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 69
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Escondido",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 1995,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Gaitán",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 5928,
+    "jbjy-vk9h": 3441
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Guzmán",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 4164,
+    "jbjy-vk9h": 52
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Libertador",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 1220,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Lleras",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 40
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto López",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 3552,
+    "jbjy-vk9h": 2489
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Nare",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2400,
+    "jbjy-vk9h": 836
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Parra",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 774,
+    "jbjy-vk9h": 72
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Rico",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 1574,
+    "jbjy-vk9h": 814
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Rico",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 1130,
+    "jbjy-vk9h": 110
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Rondón",
+   "departamento": "Arauca",
+   "rows": {
+    "p6dx-8zbt": 318,
+    "jbjy-vk9h": 221
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Salgar",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 4827,
+    "jbjy-vk9h": 1993
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Santander",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 658,
+    "jbjy-vk9h": 462
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Tejada",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 2173,
+    "jbjy-vk9h": 259
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Triunfo",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2963,
+    "jbjy-vk9h": 2405
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puerto Wilches",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 922,
+    "jbjy-vk9h": 26
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pulí",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 94,
+    "jbjy-vk9h": 106
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Pupiales",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3196,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Puracé",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 278,
+    "jbjy-vk9h": 15
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Purificación",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 4404,
+    "jbjy-vk9h": 52
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Purísima",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 1311,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Pácora",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 854,
+    "jbjy-vk9h": 293
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Páez",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 330,
+    "jbjy-vk9h": 66
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Páramo",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 377,
+    "jbjy-vk9h": 53
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Quebradanegra",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 150,
+    "jbjy-vk9h": 21
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Quetame",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 57,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Quibdó",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 21100,
+    "jbjy-vk9h": 15031
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Quimbaya",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 3821,
+    "jbjy-vk9h": 3643
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Quinchía",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 505,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Quipile",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 99
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Quípama",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 811,
+    "jbjy-vk9h": 76
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ragonvalia",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 116,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ramiriquí",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1486,
+    "jbjy-vk9h": 919
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Recetor",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 36,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Regidor",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 121
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Remedios",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 5726,
+    "jbjy-vk9h": 359
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Remolino",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 2613,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Repelón",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 658,
+    "jbjy-vk9h": 125
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Restrepo",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 2246,
+    "jbjy-vk9h": 1879
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Restrepo",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1284,
+    "jbjy-vk9h": 521
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Retiro",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 6227,
+    "jbjy-vk9h": 6133
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ricaurte",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 4795,
+    "jbjy-vk9h": 3976
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ricaurte",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 539,
+    "jbjy-vk9h": 66
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Rioblanco",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1918,
+    "jbjy-vk9h": 1327
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Riofrío",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 363
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Riohacha",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 21478,
+    "jbjy-vk9h": 21092
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Rionegro",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 29981,
+    "jbjy-vk9h": 13338
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Rionegro",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 3018,
+    "jbjy-vk9h": 1155
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Riosucio",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 3690,
+    "jbjy-vk9h": 2537
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Riosucio",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 14,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Risaralda",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 3939,
+    "jbjy-vk9h": 3619
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Rivera",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 3074,
+    "jbjy-vk9h": 1466
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Roberto Payán",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1806,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Roldanillo",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 2770,
+    "jbjy-vk9h": 2131
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Roncesvalles",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 69,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Rondón",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 331,
+    "jbjy-vk9h": 42
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Rosas",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 192,
+    "jbjy-vk9h": 23
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Rovira",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1954,
+    "jbjy-vk9h": 114
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ráquira",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 808,
+    "jbjy-vk9h": 268
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Río De Oro",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 1132,
+    "jbjy-vk9h": 52
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Río Quito",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 17,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Río Viejo",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 662,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sabana De Torres",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 3051,
+    "jbjy-vk9h": 14
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sabanagrande",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 608,
+    "jbjy-vk9h": 700
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sabanalarga",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 96,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sabanalarga",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 3073,
+    "jbjy-vk9h": 3145
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sabanalarga",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 1070,
+    "jbjy-vk9h": 712
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sabanas De San Angel",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 2944,
+    "jbjy-vk9h": 897
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sabaneta",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 21508,
+    "jbjy-vk9h": 19155
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Saboyá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1027,
+    "jbjy-vk9h": 75
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sahagún",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 3301,
+    "jbjy-vk9h": 412
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Saladoblanco",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 1046,
+    "jbjy-vk9h": 842
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Salamina",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 683,
+    "jbjy-vk9h": 165
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Salamina",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 683,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Salazar",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 235
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Saldaña",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1378,
+    "jbjy-vk9h": 1362
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Salento",
+   "departamento": "Quindío",
+   "rows": {
+    "p6dx-8zbt": 1905,
+    "jbjy-vk9h": 1589
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Salgar",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 872,
+    "jbjy-vk9h": 469
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Samacá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 2913,
+    "jbjy-vk9h": 1709
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Samaniego",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3953,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Samaná",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 794,
+    "jbjy-vk9h": 18
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sampués",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 2500,
+    "jbjy-vk9h": 2185
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Agustín",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 3547,
+    "jbjy-vk9h": 1913
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Alberto",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 2428,
+    "jbjy-vk9h": 24
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Andrés",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 302,
+    "jbjy-vk9h": 236
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "San Andrés",
+   "departamento": "San Andrés, Providencia y Santa Catalina",
+   "rows": {
+    "p6dx-8zbt": 38861,
+    "jbjy-vk9h": 37982
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "San Andrés",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 508,
+    "jbjy-vk9h": 245
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Andrés Sotavento",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 3004,
+    "jbjy-vk9h": 24
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "San Antero",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 404
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Antonio",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 71,
+    "jbjy-vk9h": 36
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Antonio Del Tequendama",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2120,
+    "jbjy-vk9h": 1299
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Benito",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 578,
+    "jbjy-vk9h": 199
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Benito Abad",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 197,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Bernardo",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 48,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Bernardo",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1171
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Bernardo Del Viento",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 2057
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Calixto",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 123,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Carlos",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3846,
+    "jbjy-vk9h": 2532
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Carlos",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 541,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Carlos De Guaroa",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 751,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Cayetano",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 71
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Cayetano",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 95,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Cristóbal",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 58,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Diego",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 2499,
+    "jbjy-vk9h": 42
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Eduardo",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 703,
+    "jbjy-vk9h": 403
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Estanislao",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1650,
+    "jbjy-vk9h": 36
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Fernando",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1039
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Francisco",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1588,
+    "jbjy-vk9h": 1549
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Francisco",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2375,
+    "jbjy-vk9h": 661
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Francisco",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 162,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Gil",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 19984,
+    "jbjy-vk9h": 16323
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Jacinto",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 2139,
+    "jbjy-vk9h": 865
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Jacinto Del Cauca",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 128
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Jerónimo",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2611,
+    "jbjy-vk9h": 1624
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Joaquín",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 90,
+    "jbjy-vk9h": 24
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San José",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 394,
+    "jbjy-vk9h": 365
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San José De La Montaña",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 87,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San José De Miranda",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 625,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San José De Pare",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 289,
+    "jbjy-vk9h": 52
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San José Del Fragua",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 510,
+    "jbjy-vk9h": 31
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San José Del Guaviare",
+   "departamento": "Guaviare",
+   "rows": {
+    "p6dx-8zbt": 7570,
+    "jbjy-vk9h": 3719
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San José Del Palmar",
+   "departamento": "Chocó",
+   "rows": {
+    "p6dx-8zbt": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San José de Uré",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 227
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Juan De Arama",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 32,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Juan De Betulia",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 772,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Juan De Río Seco",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 91
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "San Juan De Urabá",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1121,
+    "jbjy-vk9h": 236
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Juan Del Cesar",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 3454,
+    "jbjy-vk9h": 30
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Juan Nepomuceno",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 7214,
+    "jbjy-vk9h": 1251
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Lorenzo",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 2209,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Luis",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3761,
+    "jbjy-vk9h": 1404
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Luis",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 1766,
+    "jbjy-vk9h": 202
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Luis De Gaceno",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 657,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Luis De Palenque",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 152,
+    "jbjy-vk9h": 89
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Marcos",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 4258,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Martín",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 2402,
+    "jbjy-vk9h": 1332
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Martín",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 2258,
+    "jbjy-vk9h": 1776
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Martín De Loba",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1773,
+    "jbjy-vk9h": 148
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Mateo",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 535,
+    "jbjy-vk9h": 373
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Miguel",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 1803,
+    "jbjy-vk9h": 1370
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Miguel",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 394,
+    "jbjy-vk9h": 19
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Miguel De Sema",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 621,
+    "jbjy-vk9h": 100
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Onofre",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 2308,
+    "jbjy-vk9h": 1148
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Pablo",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 616,
+    "jbjy-vk9h": 262
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Pablo",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 48,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Pablo De Borbur",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1129,
+    "jbjy-vk9h": 616
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Pedro",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 926,
+    "jbjy-vk9h": 779
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "San Pedro",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 267,
+    "jbjy-vk9h": 20
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Pedro",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1426,
+    "jbjy-vk9h": 413
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Pedro De Cartago",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1279
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Pedro De Uraba",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1601,
+    "jbjy-vk9h": 1350
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Pelayo",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 442,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Rafael",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2076,
+    "jbjy-vk9h": 1627
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Roque",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 762,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Sebastián",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 127,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Sebastián De Buenavista",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 4233,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Vicente",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1356,
+    "jbjy-vk9h": 876
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "San Vicente De Chucurí",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 2673,
+    "jbjy-vk9h": 719
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Vicente Del Caguán",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 5399,
+    "jbjy-vk9h": 1747
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "San Zenón",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 1429
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sandoná",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3520
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Ana",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 2836,
+    "jbjy-vk9h": 53
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Bárbara",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1009,
+    "jbjy-vk9h": 792
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Bárbara",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1327,
+    "jbjy-vk9h": 279
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Bárbara",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 428,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Bárbara De Pinto",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 2101,
+    "jbjy-vk9h": 57
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Catalina",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1003,
+    "jbjy-vk9h": 589
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Helena Del Opón",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 500,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Isabel",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 31,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Lucía",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 1262,
+    "jbjy-vk9h": 502
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Marta",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 109984,
+    "jbjy-vk9h": 85573
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa María",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 685,
+    "jbjy-vk9h": 469
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa María",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 125,
+    "jbjy-vk9h": 18
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Rosa",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1450,
+    "jbjy-vk9h": 1130
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Rosa",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 54
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Rosa De Cabal",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 7443,
+    "jbjy-vk9h": 5243
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Rosa De Osos",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3979,
+    "jbjy-vk9h": 2844
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Rosa De Viterbo",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 567,
+    "jbjy-vk9h": 300
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Rosa Del Sur",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 3578,
+    "jbjy-vk9h": 803
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Rosalía",
+   "departamento": "Vichada",
+   "rows": {
+    "p6dx-8zbt": 26,
+    "jbjy-vk9h": 26
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santa Sofía",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 279,
+    "jbjy-vk9h": 27
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santacruz",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1687,
+    "jbjy-vk9h": 17
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santafé De Antioquia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 4808,
+    "jbjy-vk9h": 2367
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Santana",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1538,
+    "jbjy-vk9h": 676
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santander De Quilichao",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 9330,
+    "jbjy-vk9h": 2509
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santiago",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 85
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santiago",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 17
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santiago De Tolú",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 569,
+    "jbjy-vk9h": 39
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santo Domingo",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 393,
+    "jbjy-vk9h": 104
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santo Tomás",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 1601,
+    "jbjy-vk9h": 462
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Santuario",
+   "departamento": "Risaralda",
+   "rows": {
+    "p6dx-8zbt": 904,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sapuyes",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 935,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Saravena",
+   "departamento": "Arauca",
+   "rows": {
+    "p6dx-8zbt": 1803,
+    "jbjy-vk9h": 973
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sardinata",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 387
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sasaima",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2598,
+    "jbjy-vk9h": 774
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sativanorte",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 598,
+    "jbjy-vk9h": 428
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sativasur",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 366,
+    "jbjy-vk9h": 285
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Segovia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 5604,
+    "jbjy-vk9h": 1350
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sesquilé",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1464,
+    "jbjy-vk9h": 936
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sevilla",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 3178,
+    "jbjy-vk9h": 2523
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Siachoque",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 565,
+    "jbjy-vk9h": 61
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sibaté",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 4813,
+    "jbjy-vk9h": 4491
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sibundoy",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 266,
+    "jbjy-vk9h": 12
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Silos",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 670,
+    "jbjy-vk9h": 512
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Silvania",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 3945,
+    "jbjy-vk9h": 472
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Silvia",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 310,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Simacota",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 1386,
+    "jbjy-vk9h": 771
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Simijaca",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1111,
+    "jbjy-vk9h": 869
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Simití",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 2415,
+    "jbjy-vk9h": 2365
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sincelejo",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 48133,
+    "jbjy-vk9h": 39245
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sincé",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 1492,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Sitionuevo",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 5146,
+    "jbjy-vk9h": 2496
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Soacha",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 39137,
+    "jbjy-vk9h": 40746
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Soatá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 2327,
+    "jbjy-vk9h": 821
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Socha",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 567,
+    "jbjy-vk9h": 399
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Socorro",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 3541,
+    "jbjy-vk9h": 1782
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Socotá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1359,
+    "jbjy-vk9h": 856
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sogamoso",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 16260,
+    "jbjy-vk9h": 13113
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Solano",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 2221,
+    "jbjy-vk9h": 1338
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Soledad",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 47588,
+    "jbjy-vk9h": 25079
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Solita",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 109
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Somondoco",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1035,
+    "jbjy-vk9h": 461
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sonson",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3020,
+    "jbjy-vk9h": 2109
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sopetrán",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 951,
+    "jbjy-vk9h": 28
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Soplaviento",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 32
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sopó",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 11426,
+    "jbjy-vk9h": 3612
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sora",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 964,
+    "jbjy-vk9h": 499
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Soracá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 462,
+    "jbjy-vk9h": 42
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sotaquirá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1314,
+    "jbjy-vk9h": 649
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sotara",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 145
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Suaita",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 1486,
+    "jbjy-vk9h": 258
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Suan",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 535,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Suaza",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 213,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Subachoque",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1392,
+    "jbjy-vk9h": 888
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sucre",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 981,
+    "jbjy-vk9h": 794
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sucre",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 732,
+    "jbjy-vk9h": 571
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sucre",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 202,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Suesca",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2235,
+    "jbjy-vk9h": 434
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Supatá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 97,
+    "jbjy-vk9h": 106
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Supía",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 1717,
+    "jbjy-vk9h": 592
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Suratá",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 791,
+    "jbjy-vk9h": 629
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Susa",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 36,
+    "jbjy-vk9h": 25
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Susacón",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 821,
+    "jbjy-vk9h": 346
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sutamarchán",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 949,
+    "jbjy-vk9h": 427
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sutatausa",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 494,
+    "jbjy-vk9h": 409
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sutatenza",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 122,
+    "jbjy-vk9h": 34
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Suárez",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 258,
+    "jbjy-vk9h": 16
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Suárez",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 842,
+    "jbjy-vk9h": 847
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sácama",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 450,
+    "jbjy-vk9h": 428
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Sáchica",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 835,
+    "jbjy-vk9h": 479
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tabio",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 5179,
+    "jbjy-vk9h": 2913
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Talaigua Nuevo",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 74
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tamalameque",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 357
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tame",
+   "departamento": "Arauca",
+   "rows": {
+    "p6dx-8zbt": 14161,
+    "jbjy-vk9h": 1684
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Taminango",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 109,
+    "jbjy-vk9h": 12
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tangua",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1343,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tarazá",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1882,
+    "jbjy-vk9h": 486
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tarqui",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 226,
+    "jbjy-vk9h": 17
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tarso",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 870,
+    "jbjy-vk9h": 357
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tasco",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 677,
+    "jbjy-vk9h": 485
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tauramena",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 4501,
+    "jbjy-vk9h": 2101
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tausa",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1834,
+    "jbjy-vk9h": 709
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tello",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 922,
+    "jbjy-vk9h": 13
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tena",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 326,
+    "jbjy-vk9h": 78
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tenerife",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 280
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tenjo",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 6333,
+    "jbjy-vk9h": 3146
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tenza",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 24,
+    "jbjy-vk9h": 23
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Teorama",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 830,
+    "jbjy-vk9h": 581
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Teruel",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 607,
+    "jbjy-vk9h": 295
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tesalia",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 1727,
+    "jbjy-vk9h": 4
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tibacuy",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 70,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tibaná",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 399,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tibasosa",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 2739,
+    "jbjy-vk9h": 1629
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tibirita",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 122,
+    "jbjy-vk9h": 218
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tibú",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 5188,
+    "jbjy-vk9h": 4496
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tierralta",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 5490,
+    "jbjy-vk9h": 163
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Timaná",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 942,
+    "jbjy-vk9h": 658
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Timbiquí",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 611,
+    "jbjy-vk9h": 14
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Timbío",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 2535,
+    "jbjy-vk9h": 1524
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tinjacá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 819,
+    "jbjy-vk9h": 416
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tipacoque",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 608,
+    "jbjy-vk9h": 55
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tiquisio",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 504,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Titiribí",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1157,
+    "jbjy-vk9h": 845
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Toca",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 761,
+    "jbjy-vk9h": 91
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tocaima",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 250,
+    "jbjy-vk9h": 53
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tocancipá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 6703,
+    "jbjy-vk9h": 5363
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Togüí",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 577,
+    "jbjy-vk9h": 74
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Toledo",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 44,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Toledo",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 288,
+    "jbjy-vk9h": 6
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tolú Viejo",
+   "departamento": "Sucre",
+   "rows": {
+    "p6dx-8zbt": 1608,
+    "jbjy-vk9h": 560
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Tona",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 197,
+    "jbjy-vk9h": 20
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Topaipí",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 29
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Toribio",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 1204,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Toro",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1628,
+    "jbjy-vk9h": 469
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tota",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1177,
+    "jbjy-vk9h": 559
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Totoró",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 340
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Trinidad",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 479,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Trujillo",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 2114,
+    "jbjy-vk9h": 8
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tubará",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 186
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tuchín",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 148,
+    "jbjy-vk9h": 39
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tuluá",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 15107,
+    "jbjy-vk9h": 13432
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tumaco",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 3593,
+    "jbjy-vk9h": 2778
+   },
+   "official_name_matches": false
+  },
+  {
+   "ciudad": "Tunja",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 98369,
+    "jbjy-vk9h": 65620
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tununguá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 415
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Turbaco",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 33153,
+    "jbjy-vk9h": 31839
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Turbaná",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 1857,
+    "jbjy-vk9h": 1706
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Turbo",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 6225,
+    "jbjy-vk9h": 2051
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Turmequé",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 472,
+    "jbjy-vk9h": 185
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tuta",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 1772,
+    "jbjy-vk9h": 1230
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tutazá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 486,
+    "jbjy-vk9h": 81
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Támara",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 148,
+    "jbjy-vk9h": 3
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Támesis",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 2515,
+    "jbjy-vk9h": 1456
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Tópaga",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 478,
+    "jbjy-vk9h": 149
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Túquerres",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 724,
+    "jbjy-vk9h": 49
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ubalá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 155,
+    "jbjy-vk9h": 83
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ubaque",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 87,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ulloa",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 452
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Umbita",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 340,
+    "jbjy-vk9h": 40
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Une",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 923,
+    "jbjy-vk9h": 74
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Uramita",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1290,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Uribe",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Uribia",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 3798,
+    "jbjy-vk9h": 1555
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Urrao",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1719,
+    "jbjy-vk9h": 1224
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Urumita",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 1563,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Usiacurí",
+   "departamento": "Atlántico",
+   "rows": {
+    "p6dx-8zbt": 676
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Valdivia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1017,
+    "jbjy-vk9h": 936
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Valencia",
+   "departamento": "Córdoba",
+   "rows": {
+    "p6dx-8zbt": 913,
+    "jbjy-vk9h": 610
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Valle De San José",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 517,
+    "jbjy-vk9h": 259
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Valle De San Juan",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 595,
+    "jbjy-vk9h": 618
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Valle Del Guamuez",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 6779,
+    "jbjy-vk9h": 1269
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Valledupar",
+   "departamento": "Cesar",
+   "rows": {
+    "p6dx-8zbt": 49611,
+    "jbjy-vk9h": 37140
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Valparaíso",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 430,
+    "jbjy-vk9h": 200
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Valparaíso",
+   "departamento": "Caquetá",
+   "rows": {
+    "p6dx-8zbt": 996,
+    "jbjy-vk9h": 667
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Vegachí",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1126,
+    "jbjy-vk9h": 649
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Venadillo",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 718,
+    "jbjy-vk9h": 66
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Venecia",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 3605,
+    "jbjy-vk9h": 1715
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Venecia",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 132,
+    "jbjy-vk9h": 38
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Ventaquemada",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 705,
+    "jbjy-vk9h": 12
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Versalles",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 232,
+    "jbjy-vk9h": 175
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Vetas",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 384,
+    "jbjy-vk9h": 15
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Vianí",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 68,
+    "jbjy-vk9h": 5
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Victoria",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 2483,
+    "jbjy-vk9h": 1858
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Vigía Del Fuerte",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 241,
+    "jbjy-vk9h": 7
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Vijes",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 582,
+    "jbjy-vk9h": 409
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villa Caro",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 369,
+    "jbjy-vk9h": 289
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villa De Leyva",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 2694,
+    "jbjy-vk9h": 1769
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villa De San Diego De Ubate",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 9312,
+    "jbjy-vk9h": 3543
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villa Del Rosario",
+   "departamento": "Norte de Santander",
+   "rows": {
+    "p6dx-8zbt": 10545,
+    "jbjy-vk9h": 6497
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villa Rica",
+   "departamento": "Cauca",
+   "rows": {
+    "p6dx-8zbt": 88
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villagarzón",
+   "departamento": "Putumayo",
+   "rows": {
+    "p6dx-8zbt": 5149,
+    "jbjy-vk9h": 1952
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villagómez",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 293,
+    "jbjy-vk9h": 196
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villahermosa",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 79,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villamaría",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 9972,
+    "jbjy-vk9h": 7266
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villanueva",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 152
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villanueva",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 2535,
+    "jbjy-vk9h": 1685
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villanueva",
+   "departamento": "La Guajira",
+   "rows": {
+    "p6dx-8zbt": 248
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villanueva",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 155,
+    "jbjy-vk9h": 20
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villapinzón",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 2179,
+    "jbjy-vk9h": 1474
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villarrica",
+   "departamento": "Tolima",
+   "rows": {
+    "p6dx-8zbt": 594,
+    "jbjy-vk9h": 560
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villavicencio",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 127380,
+    "jbjy-vk9h": 100879
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villavieja",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 657,
+    "jbjy-vk9h": 9
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Villeta",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 4253,
+    "jbjy-vk9h": 5640
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Viotá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 1874,
+    "jbjy-vk9h": 462
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Viracachá",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 380,
+    "jbjy-vk9h": 30
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Vistahermosa",
+   "departamento": "Meta",
+   "rows": {
+    "p6dx-8zbt": 209
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Viterbo",
+   "departamento": "Caldas",
+   "rows": {
+    "p6dx-8zbt": 1125,
+    "jbjy-vk9h": 83
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Vélez",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 3675,
+    "jbjy-vk9h": 3227
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yacopí",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 207,
+    "jbjy-vk9h": 11
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yacuanquer",
+   "departamento": "Nariño",
+   "rows": {
+    "p6dx-8zbt": 1861,
+    "jbjy-vk9h": 67
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yaguará",
+   "departamento": "Huila",
+   "rows": {
+    "p6dx-8zbt": 515,
+    "jbjy-vk9h": 453
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yalí",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 886,
+    "jbjy-vk9h": 2
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yarumal",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 13865,
+    "jbjy-vk9h": 2754
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yolombó",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 13160,
+    "jbjy-vk9h": 988
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yondó",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 1917,
+    "jbjy-vk9h": 1690
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yopal",
+   "departamento": "Casanare",
+   "rows": {
+    "p6dx-8zbt": 84731,
+    "jbjy-vk9h": 68980
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yotoco",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1232,
+    "jbjy-vk9h": 1163
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Yumbo",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 9745,
+    "jbjy-vk9h": 7488
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Zambrano",
+   "departamento": "Bolívar",
+   "rows": {
+    "p6dx-8zbt": 674,
+    "jbjy-vk9h": 10
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Zapatoca",
+   "departamento": "Santander",
+   "rows": {
+    "p6dx-8zbt": 725,
+    "jbjy-vk9h": 1
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Zapayán",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 68
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Zaragoza",
+   "departamento": "Antioquia",
+   "rows": {
+    "p6dx-8zbt": 729,
+    "jbjy-vk9h": 569
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Zarzal",
+   "departamento": "Valle del Cauca",
+   "rows": {
+    "p6dx-8zbt": 1267,
+    "jbjy-vk9h": 919
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Zetaquira",
+   "departamento": "Boyacá",
+   "rows": {
+    "p6dx-8zbt": 595,
+    "jbjy-vk9h": 507
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Zipacón",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 151,
+    "jbjy-vk9h": 23
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Zipaquirá",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 10583,
+    "jbjy-vk9h": 7933
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Zona Bananera",
+   "departamento": "Magdalena",
+   "rows": {
+    "p6dx-8zbt": 8620,
+    "jbjy-vk9h": 1322
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "subachoque",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 205
+   },
+   "official_name_matches": true
+  },
+  {
+   "ciudad": "Útica",
+   "departamento": "Cundinamarca",
+   "rows": {
+    "p6dx-8zbt": 70
+   },
+   "official_name_matches": true
+  }
+ ]
+}
