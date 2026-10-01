@@ -119,7 +119,7 @@ Auditoría HCA (`run_conversation_holistic_audit.py`, 6 corpus, `PYTHONHASHSEED=
 normalizado): `conversation_holistic_v1` 171/195, `time_v2_focal` 31/32, `negation_focal_v1` 22/24,
 `control_language_v1` 41/42, `actor_hygiene_v1` 35/36, `hca_final_p1_fixes` 40/40 en base **y** rama;
 **0 verdicts distintos y 0 de 442 turnos distintos** (params, SoQL, respuesta). Sin la semilla fija la
-comparación mostraba 38 diferencias que eran ruido (orden de sinónimos de tema y tokens aleatorios).
+comparación mostraba 47 turnos distintos que eran ruido (orden de sinónimos de tema y tokens aleatorios).
 
 **c) Cambios de comportamiento legado (todos correcciones; ejercitados en `QueryRouter.parse`,
 reloj 2026-08-25):**
