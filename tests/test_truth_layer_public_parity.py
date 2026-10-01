@@ -255,17 +255,7 @@ CONTROL_LANGUAGE_REPINNED_SHA256 = {
     # Frame B.1 F6 (ff2a5844): consume the admitted buffer and its params.
     # test_truth_layer_frame_guard_controls reuses legacy order/universe
     # controls with Frame ON; test_pagination_buffer covers legacy OFF.
-    #
-    # M1 wave 1 R4 re-pins it (declared in R5, ZEUS4 gate): one early return at the top of
-    # ``handle_pagination`` — a «ver más» after a turn that a TEMPORAL error left unexecuted
-    # (period question, invalid date) is refused (``route_reason="pagination_blocked_turn"``, 0
-    # SECOP calls, the refusal is not persisted) instead of re-executing the blocked scope without its
-    # period. The decision lives in ``app/core/pagination_blocked.py`` (reads the persisted marker of
-    # ``temporal_period_question``; R5 narrowed it to the marker only, so a non-temporal clarification
-    # paginates as in the base). No cursor, buffer, fingerprint, ranking or ordering logic changed: bounded by
-    # tests/test_m1_wave1_r4_pagination_blocked.py (refusal, executed search still pages, the cases
-    # that must NOT be refused) and by this module's oracles, which stay byte-identical.
-    "app/core/workflow/handlers/pagination.py": "3fc9512d1b8cb248efe21857d2ef298e42d07b54e3cbe0a1f4a9641e9517de72",
+    "app/core/workflow/handlers/pagination.py": "09767248a26190bd26f367d98ad397b0b7adf6670c10968168f536ac88e4b74c",
 }
 
 # Still byte-frozen: M2/SEARCH-SH1 touch neither ranking nor the surrounding

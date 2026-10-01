@@ -13,7 +13,7 @@ from datetime import date
 import pytest
 
 from app.core import non_canonical_year as ncy
-from app.core.temporal_semantics import resolve_temporal_scope
+from app.core.time_grammar import resolve_temporal_scope
 
 TODAY = date(2026, 10, 1)
 QUANTITIES = [

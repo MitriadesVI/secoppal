@@ -29,7 +29,6 @@ from app.core.entity_profile.scope import resolve_profile_scope
 from app.core.estado_families import detect_estado_family
 from app.core.material_residual import MaterialEvidence
 from app.core.semantic_turn_evidence import SemanticTurnEvidence, raw_fingerprint
-from app.core.period_consistency import period_conflict, period_of
 from app.core.query_text_consumption import mask_consumed_spans
 from app.core.modality_dataset_projection import project_modality_filter
 from app.core.modality_filter import ModalityFilter
@@ -44,7 +43,6 @@ from .models import (
     MoneyConstraint,
     Operation,
 )
-from .currentness import currentness_hoy, governs_reported_state
 from .filters import accredit_filters
 
 if TYPE_CHECKING:
@@ -176,12 +174,7 @@ def admit_contract_activity(
         return _clarify("UNSUPPORTED_MATERIAL_FILTER")
 
     if binding is None:
-        grouped = operation is Operation.BY_REPORTED_STATE
-        period, period_error = _period(
-            text, params, today,
-            reported_state=governs_reported_state(content, grouped_by_state=grouped),
-            grouped_by_state=grouped,
-        )
+        period, period_error = _period(text)
         if period_error:
             return _clarify(period_error)
         money, money_error = _money(text)
@@ -273,44 +266,7 @@ def _without_controls(text: str, controls: tuple[AnalyticControlSpan, ...]) -> s
     return mask_consumed_spans(text, ((control.start, control.end) for control in controls))
 
 
-def _period(
-    text: str, params: dict, today: Date | None, *,
-    reported_state: bool = False, grouped_by_state: bool = False,
-) -> tuple[tuple[str, str] | None, str | None]:
-    """The year/month this module reads, accepted only if it IS the resolved period.
-
-    The year is read here with a private regex; the temporal authority resolves
-    far more («antes de 2024», «últimos 3 años», «primer trimestre de 2025»).
-    A period the authority resolved and this reader did not read exactly, or that
-    the parse carries differently, is asked: never executed as another year and
-    never executed without its date (ZEUS P1-1).
-
-    With ``reported_state`` a bare «hoy» in a currentness position (see
-    ``currentness``) is the currentness of the state, not a signature day (R2
-    P2-1): it is set aside here, together with the one-day period the parse
-    derived from it, and nothing else.
-    """
-    period, error = _written_period(text)
-    if error:
-        return None, error
-    represented = period or (None, None)
-    if params.get("_temporal_error"):
-        return None, "SIGNATURE_PERIOD_UNRESOLVED"
-    authority_text, parsed = text, period_of(params)
-    current = (
-        currentness_hoy(text, today, grouped_by_state=grouped_by_state) if reported_state else None
-    )
-    if current is not None:
-        authority_text = mask_consumed_spans(text, (current[0],))
-        parsed = (None, None) if parsed == current[1] else parsed
-    if conflict := period_conflict(_MONEY.sub(" ", authority_text), represented, today=today):
-        return None, f"SIGNATURE_{conflict}"
-    if any(parsed) and parsed != represented:
-        return None, "SIGNATURE_PERIOD_AUTHORITY_CONFLICT"
-    return period, None
-
-
-def _written_period(text: str) -> tuple[tuple[str, str] | None, str | None]:
+def _period(text: str) -> tuple[tuple[str, str] | None, str | None]:
     period_text = _MONEY.sub(" ", text)
     if _PARTIAL_OR_DAY_TIME.search(period_text):
         return None, "UNSUPPORTED_OR_PARTIAL_SIGNATURE_PERIOD"

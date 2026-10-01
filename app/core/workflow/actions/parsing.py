@@ -57,7 +57,6 @@ from app.core.object_negation_policy import (
     OBJECT_NEGATION_CONTRADICTION_QUESTION,
     object_negation_overlap,
 )
-from app.core import temporal_period_question
 from app.core.query_frame import frame_from_params, params_from_frame
 from app.core.query_router import QueryRouter
 from app.core.workflow.helpers import _with_timing
@@ -381,11 +380,7 @@ def apply_context(state: State) -> State:
     if not state.get("followup"):
         return _with_timing(state, "apply_context_ms", start)
 
-    # La marca de «pregunta de periodo abierta» nunca entra al merge: se toma aquí y sólo se
-    # vuelve a escribir si este turno tampoco la responde.
-    context_params, open_question = temporal_period_question.take(
-        state.get("context_params", {})
-    )
+    context_params = state.get("context_params", {})
     parsed_params = state.get("parsed_params", {})
     user_query = state.get("user_query", "")
     interpretation = state.get("modality_interpretation")
@@ -459,10 +454,6 @@ def apply_context(state: State) -> State:
         # Una mutación temporal inválida es transaccional: no mezcla un extremo
         # nuevo con el scope confirmado ni reemplaza el frame conversacional.
         previous_params = dict(context_params)
-        if open_question is not None:
-            temporal_period_question.reopen(
-                previous_params, open_question.code, open_question.question,
-            )
         clarification = str(parsed_params.get("_temporal_clarification") or (
             "No pude resolver esa referencia temporal con seguridad. "
             "¿Qué intervalo querías usar?"
@@ -772,16 +763,6 @@ def apply_context(state: State) -> State:
             list(context_params.get("objeto_exclude") or [])
         )
 
-    if (period_block := temporal_period_question.block_for(
-        text=user_query, intent=intent, parsed=parsed_params,
-        previous=context_params, pending=open_question,
-    )) is not None:
-        return _block_open_period(state, start, context_params, period_block)
-    # A turn that answered the open period question executes the period it wrote.
-    merged = temporal_period_question.settle(
-        merged, parsed_params, pending=open_question, intent=intent,
-    )
-
     if object_negation_overlap(merged):
         # The contradictory delta never becomes conversational state.  Preserve
         # the previous frame and clarify before planning or SECOP execution.
@@ -856,40 +837,6 @@ def apply_context(state: State) -> State:
 
     merged = modality_wiring.write_final_filter(merged, decision.final_filter)
     return _finish_apply_context(state, start, merged, intent, mutation_trace)
-
-
-def _block_open_period(state, start, context_params, block) -> State:
-    """Ask the open period question again; the confirmed frame stays as it was."""
-    previous_params = dict(context_params)
-    temporal_period_question.reopen(previous_params, block.code, block.question)
-    blocked_plan = asdict(QueryPlan(
-        should_execute=False,
-        params=previous_params,
-        risk_flags=[f"TEMPORAL_{block.code.upper()}"],
-        clarification_question=block.shown,
-        reason="invalid_temporal_scope",
-    ))
-    return _with_timing(
-        state,
-        "apply_context_ms",
-        start,
-        parsed_params=previous_params,
-        resolved_params=previous_params,
-        needs_llm=False,
-        needs_clarification=True,
-        clarification_reason=block.shown,
-        intent_type="invalid_temporal_scope",
-        followup_intent_type="invalid_temporal_scope",
-        followup_mutation={
-            "intent": "invalid_temporal_scope",
-            "requested_fields": ["fecha_desde", "fecha_hasta"],
-            "accepted_fields": [],
-            "transition_cleared_fields": [],
-            "rejected_fields": ["temporal_scope"],
-            "rejection_reasons": {"temporal_scope": block.code},
-        },
-        query_plan=blocked_plan,
-    )
 
 
 def _finish_apply_context(state, start, merged, intent, mutation_trace) -> State:

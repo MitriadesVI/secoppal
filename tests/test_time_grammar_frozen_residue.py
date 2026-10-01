@@ -21,7 +21,7 @@ from datetime import date
 
 import pytest
 
-from app.core.temporal_semantics import resolve_temporal_scope
+from app.core.time_grammar import resolve_temporal_scope
 
 TODAY = date(2026, 10, 1)
 OWNER = "E-TIME (Foundation v5 time authority ACTIVE)"

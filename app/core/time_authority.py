@@ -52,7 +52,7 @@ from dataclasses import dataclass, replace
 from datetime import date, datetime, timedelta
 from typing import Literal
 
-from app.core.temporal_semantics import TemporalResolution, resolve_temporal_scope
+from app.core.time_grammar import TemporalResolution, resolve_temporal_scope
 from app.core.time_relative import resolve_relative
 from app.core.time_window import (
     WINDOW_TOKENS,

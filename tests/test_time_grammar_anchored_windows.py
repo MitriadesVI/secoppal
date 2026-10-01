@@ -1,4 +1,10 @@
-"""M1 wave 1 R2 (ZEUS P1-A): a relative window next to another period is asked, never resolved.
+"""M1 wave 1 R2 (ZEUS P1-A), grammar half: a relative window next to another period is asked, never resolved.
+
+Paridad temporal con ``main``: SOLO queda lo que prueba la gramática de la ruta de cita
+(``time_grammar``) sin pasar por ``QueryRouter``/consumidores legados. Los casos de consumidor
+(parse, Contract Activity, SUPPLIERS, perfiles, workflow) pasaron al corpus de regresión
+``docs/audits/m1_wave1/E_TIME_REGRESSION_CASES.jsonl``.
+
 
 «los últimos 3 meses de 2025» used to resolve as 2026-07-01..2026-10-01 (the window
 counted from the clock, with the year silently dropped): a period DISJOINT from the one
@@ -8,37 +14,21 @@ never interprets the anchored window (that would be a new capability) and no con
 ever runs without the date.
 
 The oracle is written from the Spanish meaning with the civil date fixed at 2026-10-01.
-The lexicon is ENUMERATED from ``temporal_semantics`` (its relative patterns, its
+The lexicon is ENUMERATED from ``time_grammar`` (its relative patterns, its
 months, its counts) instead of listing examples: a new relative pattern without a
 decision here fails ``test_every_relative_kind_has_a_decision``.
 """
 from __future__ import annotations
 
-import copy
 import itertools
 import re
 from datetime import date
-from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
-from app.config import Settings, get_settings
-from app.core import temporal_semantics as ts
 from app.core import temporal_window_anchor as twa
-from app.core.analytics.contract_activity.admission import admit_contract_activity
-from app.core.analytics.contract_activity.filters import accredit_filters
-from app.core.analytics.contract_activity.models import AdmissionStatus, Operation
-from app.core.capability_binding.supplier_contract import Outcome, decide
-from app.core.entity_profile.frame_turn import TurnKind, run_profile_turn
-from app.core.entity_profile.profile_state import ProfileConversationState
-from app.core.entity_profile.turn import classify_entity_profile_turn
-from app.core.entity_resolver import EntityResolver
-from app.core.orchestrator import SecopalWorkflow
-from app.core.period_consistency import TEMPORAL_UNRESOLVED, period_conflict
-from app.core.query_router import QueryRouter
-from app.core.soql_builder import SoQLBuilder
-from app.core.temporal_semantics import resolve_temporal_scope
+from app.core import time_grammar as ts
+from app.core.time_grammar import resolve_temporal_scope
 
 TODAY = date(2026, 10, 1)
 CODE = twa.ERROR_CODE
@@ -345,242 +335,3 @@ def test_the_conflict_reports_window_anchor_and_the_span_that_covers_both():
     # each reading is named where it is offered, and the two are named together up front
     assert question.count("«ultimos 3 meses»") == 1 and question.count("«del 2025»") == 1
 
-
-# ── the consumers: the error reaches each one as a clarification ────────────────────────
-
-ANCHORED_FORMS = [
-    "en los últimos 3 meses de 2025",
-    "en la última semana de marzo de 2025",
-    "en los últimos 6 meses del 2024",
-    "de 2025, los últimos 3 meses",
-    "en los últimos 3 meses del año pasado",
-    "en la última semana del mes pasado",
-    "en los últimos 10 días de marzo",
-    "en los últimos 2 años antes de 2025",
-    "en los últimos 3 meses del primer semestre de 2025",
-]
-ANCHORED_IDS = [f"anchored{i}" for i in range(len(ANCHORED_FORMS))]
-
-
-@pytest.fixture(scope="module")
-def router() -> QueryRouter:
-    return QueryRouter(EntityResolver(Path("app/data/aliases_db.json")))
-
-
-def _parse(router: QueryRouter, text: str):
-    return router.parse(text, today=TODAY)
-
-
-@pytest.mark.parametrize("form", ANCHORED_FORMS, ids=ANCHORED_IDS)
-@pytest.mark.parametrize("template", [
-    "contratos de {b} {t}", "procesos de la Gobernación del Atlántico {t}", "proveedores de {b} {t}",
-])
-def test_search_parse_carries_the_error_and_no_date(router, form, template):
-    params = _parse(router, template.format(b=BUYER, t=form)).params
-    assert params.get("_temporal_error") == CODE
-    assert params.get("_temporal_clarification")
-    assert not params.get("fecha_desde") and not params.get("fecha_hasta")
-
-
-@pytest.mark.parametrize("form", ANCHORED_FORMS, ids=ANCHORED_IDS)
-def test_contract_activity_legacy_reader_asks(router, form):
-    raw = f"¿Cuántos contratos firmó {BUYER} {form}?"
-    parsed = _parse(router, raw)
-    admission = admit_contract_activity(
-        raw, dict(parsed.params), today=TODAY, semantic_evidence=parsed.semantic_evidence.to_state(),
-    )
-    assert admission.status is AdmissionStatus.CLARIFY, raw
-    assert admission.reason.startswith("SIGNATURE_PERIOD") or admission.reason.startswith("UNSUPPORTED"), raw
-
-
-@pytest.mark.parametrize("form", ANCHORED_FORMS, ids=ANCHORED_IDS)
-@pytest.mark.parametrize("operation", [Operation.TOTAL, Operation.BY_REPORTED_STATE])
-def test_contract_activity_authority_filters_ask_even_if_the_parse_dropped_the_error(router, form, operation):
-    raw = f"¿Cuántos contratos firmó {BUYER} {form}?"
-    params = {k: v for k, v in _parse(router, raw).params.items() if not k.startswith("_temporal")}
-    filters = accredit_filters(raw, params, operation, today=TODAY)
-    assert filters.reason == "SIGNATURE_PERIOD_UNRESOLVED", raw
-    assert filters.date_from is None and filters.date_to is None
-
-
-@pytest.mark.parametrize("form", ANCHORED_FORMS, ids=ANCHORED_IDS)
-@pytest.mark.parametrize("template", ["proveedores de {b} {t}", "5 proveedores de {b} {t}"])
-def test_suppliers_a2_asks_and_never_executes(router, form, template):
-    query = template.format(b=BUYER, t=form)
-    decision = decide(query, dict(_parse(router, query).params), today=TODAY)
-    assert decision.outcome is Outcome.CLARIFY, (query, decision.outcome)
-    assert decision.admitted_params is None or not (
-        decision.admitted_params.get("fecha_desde") or decision.admitted_params.get("fecha_hasta")
-    )
-
-
-@pytest.mark.parametrize("form", ANCHORED_FORMS, ids=ANCHORED_IDS)
-def test_suppliers_a2_asks_even_if_the_parse_dropped_the_error(router, form):
-    query = f"proveedores de {BUYER} {form}"
-    params = {k: v for k, v in _parse(router, query).params.items() if not k.startswith("_temporal")}
-    params.pop("fecha_desde", None), params.pop("fecha_hasta", None)
-    assert decide(query, params, today=TODAY).outcome is Outcome.CLARIFY, query
-
-
-@pytest.mark.parametrize("form", ANCHORED_FORMS, ids=ANCHORED_IDS)
-def test_period_consistency_reports_the_authority_error(form):
-    assert period_conflict(f"contratos de {BUYER} {form}", (None, None), today=TODAY) == TEMPORAL_UNRESOLVED
-
-
-@pytest.mark.parametrize("form", ANCHORED_FORMS, ids=ANCHORED_IDS)
-def test_the_legacy_entity_profile_turn_asks_instead_of_running_without_a_date(router, form):
-    query = f"perfil de {BUYER} {form}"
-    turn = classify_entity_profile_turn(query, _parse(router, query).params)
-    assert turn.detected
-    assert turn.clarification
-    assert turn.scope is None and turn.plan is None
-
-
-def test_the_legacy_entity_profile_turn_asks_for_any_error_of_the_authority_not_only_this_one(router):
-    query = f"perfil de {BUYER} del 31 de febrero de 2025"
-    params = _parse(router, query).params
-    assert params.get("_temporal_error") == "invalid_date"
-    turn = classify_entity_profile_turn(query, params)
-    assert turn.clarification and turn.plan is None
-
-
-def test_the_legacy_entity_profile_turn_with_a_window_alone_still_runs(router):
-    query = f"perfil de {BUYER} en los últimos 3 meses"
-    turn = classify_entity_profile_turn(query, _parse(router, query).params)
-    assert turn.clarification is None
-    assert (turn.scope.time_from, turn.scope.time_to) == ("2026-07-01", "2026-10-01")
-
-
-@pytest.mark.parametrize("form", ANCHORED_FORMS[:4], ids=ANCHORED_IDS[:4])
-def test_the_frame_profile_turn_asks_and_makes_no_source_call(router, form):
-    query = f"perfil de {BUYER} {form}"
-    client = MagicMock()
-    outcome = run_profile_turn(
-        user_query=query, params=_parse(router, query).params,
-        state=ProfileConversationState(), turn_id="r2", soql_builder=SoQLBuilder(),
-        secop_client=client, today=TODAY,
-    )
-    assert outcome.kind is TurnKind.CLARIFICATION
-    assert outcome.response and "2025" in outcome.response or "pasado" in outcome.response
-    assert client.mock_calls == []
-
-
-# ── end to end through the workflow: zero source calls, the question, the previous scope kept ──
-
-@pytest.fixture
-def workflow(tmp_path, monkeypatch):
-    monkeypatch.setenv("SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED", "false")
-    get_settings.cache_clear()
-    flow = SecopalWorkflow(Settings(
-        _env_file=None, deepseek_api_key=None, secoppal_natural_alpha_mode="off",
-        secop_feedback_path=tmp_path / "feedback.jsonl",
-        secop_feedback_db_path=tmp_path / "feedback.db",
-        secop_feedback_sqlite_enabled=False,
-    ))
-    calls: list[str] = []
-    row = {
-        "id_contrato": "X", "nombre_entidad": "ALCALDIA MUNICIPAL DE GALAPA",
-        "objeto_del_contrato": "Aseo", "valor_del_contrato": "1000000", "fecha_de_firma": "2025-11-01",
-    }
-    monkeypatch.setattr(flow.secop_client, "query", lambda dataset, soql, **kw: (calls.append(soql), [dict(row)])[1])
-    monkeypatch.setattr(flow.secop_client, "count", lambda *a, **k: (calls.append("count"), 1)[1])
-    monkeypatch.setattr(flow.secop_client, "aggregate", lambda *a, **k: (calls.append("aggregate"), [])[1])
-    monkeypatch.setattr(flow.narrator, "narrate_with_grounding", lambda **kwargs: None)
-    flow.calls = calls
-    yield flow
-    get_settings.cache_clear()
-
-
-@pytest.mark.parametrize("query", [
-    "contratos de la Alcaldía de Galapa en los últimos 3 meses de 2025",
-    "contratos de la Alcaldía de Galapa en la última semana de marzo de 2025",
-    "contratos de aseo en Barranquilla en los últimos 6 meses del 2024",
-    "procesos de la Gobernación del Atlántico en los últimos 3 meses de 2025",
-    "perfil de la Alcaldía de Galapa en los últimos 3 meses de 2025",
-    "proveedores de la Alcaldía de Galapa en los últimos 3 meses de 2025",
-    "¿Cuántos contratos firmó la Alcaldía de Galapa en los últimos 3 meses de 2025?",
-])
-def test_the_workflow_asks_with_zero_source_calls_and_never_drops_the_date(workflow, query):
-    result = workflow.run_query(query, chat_id="r2-ask", today=TODAY)
-    assert result["needs_clarification"] is True, query
-    assert workflow.calls == [], (query, workflow.calls)
-    response = result["response"]
-    assert "desde hoy" in response and "(1)" not in response, response
-    params = result.get("resolved_params") or {}
-    assert not params.get("fecha_desde") and not params.get("fecha_hasta")
-
-
-def test_the_workflow_still_runs_a_window_alone_with_its_dates(workflow):
-    result = workflow.run_query(
-        "contratos de la Alcaldía de Galapa en los últimos 3 meses", chat_id="r2-ok", today=TODAY,
-    )
-    assert result["needs_clarification"] is False
-    assert (result["resolved_params"]["fecha_desde"], result["resolved_params"]["fecha_hasta"]) == (
-        "2026-07-01", "2026-10-01",
-    )
-    assert len(workflow.calls) >= 1
-
-
-def test_a_followup_with_an_anchored_window_asks_and_keeps_the_confirmed_scope(workflow):
-    first = workflow.run_query("contratos de la Alcaldía de Galapa en 2024", chat_id="r2-fu", today=TODAY)
-    assert first["needs_clarification"] is False
-    before = len(workflow.calls)
-    second = workflow.run_query("y en los últimos 3 meses de 2025", chat_id="r2-fu", today=TODAY)
-    assert second["needs_clarification"] is True
-    assert len(workflow.calls) == before, "the follow-up must not reach the source"
-    kept = second["resolved_params"]
-    assert (kept.get("fecha_desde"), kept.get("fecha_hasta")) == ("2024-01-01", "2024-12-31")
-    # R3: the question stays open; an explicit period answers it (a window would not).
-    third = workflow.run_query("octubre a diciembre de 2025", chat_id="r2-fu", today=TODAY)
-    assert third["needs_clarification"] is False
-    assert third["resolved_params"]["fecha_desde"] == "2025-10-01"
-    assert len(workflow.calls) > before
-
-
-@pytest.mark.parametrize("frame", ["true", "false"])
-def test_the_profile_workflow_asks_with_or_without_the_frame(tmp_path, monkeypatch, frame):
-    monkeypatch.setenv("SECOPPAL_ENTITY_PROFILE_FRAME_ENABLED", frame)
-    get_settings.cache_clear()
-    try:
-        flow = SecopalWorkflow(Settings(
-            _env_file=None, deepseek_api_key=None, secoppal_natural_alpha_mode="off",
-            secop_feedback_path=tmp_path / "feedback.jsonl",
-            secop_feedback_db_path=tmp_path / "feedback.db", secop_feedback_sqlite_enabled=False,
-        ))
-        calls: list[str] = []
-        monkeypatch.setattr(flow.secop_client, "query", lambda *a, **k: (calls.append("q"), [])[1])
-        monkeypatch.setattr(flow.secop_client, "count", lambda *a, **k: (calls.append("c"), 0)[1])
-        monkeypatch.setattr(flow.secop_client, "aggregate", lambda *a, **k: (calls.append("a"), [])[1])
-        result = flow.run_query(
-            "perfil de la Alcaldía de Galapa en los últimos 3 meses de 2025", chat_id="r2-fr", today=TODAY,
-        )
-    finally:
-        get_settings.cache_clear()
-    assert result["needs_clarification"] is True
-    assert calls == []
-
-
-# ── mutant M16: the A2 period guard reads the turn WITHOUT the buyer's own surface ────────
-
-@pytest.mark.parametrize("dated_name", ["7 de Agosto", "20 de Julio", "2025"])
-def test_a_buyer_name_that_carries_a_date_is_not_a_period_of_the_turn(router, dated_name):
-    """«Hospital 7 de Agosto», «Colegio 20 de Julio»: the name is not the period asked.
-
-    The router reads that date out of the name before it resolves the buyer (a known
-    upstream limit), so the buyer arrives here the way a carried-over scope delivers it:
-    its surface is in ``buyer_mention`` and the turn has no period of its own.
-    """
-    base = f"proveedores de {BUYER}"
-    params = copy.deepcopy(_parse(router, base).params)
-    params["entidad_resolution"]["metadata"]["buyer_mention"] = f"{BUYER} {dated_name}"
-    assert not params.get("fecha_desde") and not params.get("fecha_hasta")
-    decision = decide(f"{base} {dated_name}", params, today=TODAY)
-    assert decision.outcome is Outcome.EXECUTE, (dated_name, decision.reason)
-    assert not (decision.admitted_params.get("fecha_desde") or decision.admitted_params.get("fecha_hasta"))
-
-
-def test_the_same_date_outside_the_buyer_name_is_still_a_period_the_guard_asks_about(router):
-    base = f"proveedores de {BUYER}"
-    params = copy.deepcopy(_parse(router, base).params)
-    decision = decide(f"{base} 7 de Agosto", params, today=TODAY)
-    assert decision.outcome is Outcome.CLARIFY

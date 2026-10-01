@@ -21,9 +21,9 @@ import pytest
 
 from app.core import non_canonical_year as ncy
 from app.core import temporal_noun_anchor as tna
-from app.core import temporal_semantics as ts
+from app.core import time_grammar as ts
 from app.core import temporal_window_anchor as twa
-from app.core.temporal_semantics import resolve_temporal_scope
+from app.core.time_grammar import resolve_temporal_scope
 
 TODAY = date(2026, 10, 1)
 CODE = twa.ERROR_CODE

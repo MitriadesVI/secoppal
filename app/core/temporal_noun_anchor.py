@@ -1,6 +1,6 @@
 """A temporal noun or a non-canonical year next to a relative window is an anchor too (one responsibility).
 
-``temporal_semantics`` only counts as «another period» what its own lexicon resolves. «los últimos
+``time_grammar`` only counts as «another period» what its own lexicon resolves. «los últimos
 3 meses de la vigencia anterior», «… del gobierno anterior», «… de dos mil veinticinco», «… de
 2.025», «… de 25» name a period it cannot place, so the window used to be counted from today and
 executed silently, disjoint from what was asked (the base found no period at all: the history
@@ -27,7 +27,7 @@ Nothing else is temporal: «de la Alcaldía», «de la Gobernación», «de aseo
 Galapa» keep the window.
 
 The noun phrase may stand before or after the window; the two-digit year («de 25») only right after it
-(elsewhere it is a quantity). Pure: no I/O, no clock; ``temporal_semantics`` hands in its own
+(elsewhere it is a quantity). Pure: no I/O, no clock; ``time_grammar`` hands in its own
 window patterns.
 """
 from __future__ import annotations

@@ -33,7 +33,6 @@ from __future__ import annotations
 import time
 from typing import TYPE_CHECKING
 
-from app.core import pagination_blocked
 from app.core.conversation_store import is_pagination_phrase, normalize_pagination_text
 from app.core.direct_responses import pagination_no_history_response
 from app.core.pagination_buffer import (
@@ -154,17 +153,6 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
         return None
 
     history = [] if ctx.tabular_referent else deps.conv_store.get_history(ctx.chat_id, last_n=1)
-    if history and not ctx.tabular_referent and pagination_blocked.is_blocked(history[-1]):
-        # The last turn asked a question instead of executing: there is no page to continue.
-        # Not persisted as a turn, so the blocked frame (and its open question) stays the last.
-        result = empty_result(
-            response=pagination_blocked.MESSAGE, route_reason="pagination_blocked_turn",
-            needs_clarification=True, intent_type="pagination_more", followup=True,
-        )
-        result["trace_id"] = deps.feedback.log_trace(
-            ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
-        )
-        return result
     if ctx.tabular_referent or history:
         prev_params = (dict(ctx.tabular_referent.params) if ctx.tabular_referent
                        else dict(history[-1].parsed_params))

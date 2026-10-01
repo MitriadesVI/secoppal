@@ -52,7 +52,6 @@ from app.core.entity_profile.patch import (
     apply_patch,
 )
 from app.core.entity_profile.pending_resolution import PendingOutcome, resolve_pending
-from app.core.temporal_gate import temporal_plan_block
 from app.core.entity_profile.profile_state import (
     PendingIssue,
     PendingProfile,
@@ -178,12 +177,6 @@ def run_profile_turn(
         return None
 
     clean = consume_clear_period_terms(user_query, profile_query_params(params))
-    if (block := temporal_plan_block(clean, [])) is not None:
-        # Periodo no resoluble (autoridad temporal): se pregunta, no se ejecuta sin fecha.
-        return ProfileTurnOutcome(
-            TurnKind.CLARIFICATION, block["clarification_question"], state,
-            "entity_profile_invalid_temporal_scope", issues=tuple(block["risk_flags"]),
-        )
     resolution = resolve_profile_scope(clean)
     buyer = buyer_scope_from(resolution)
 

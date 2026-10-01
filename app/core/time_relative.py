@@ -19,7 +19,7 @@ from __future__ import annotations
 import re
 from datetime import date as Date, timedelta
 
-from app.core.temporal_semantics import (
+from app.core.time_grammar import (
     _COUNT,
     _UNSUPPORTED_TIME_QUESTION,
     TemporalResolution,

@@ -1,7 +1,7 @@
 """A relative window next to another period is never resolved: it is asked (one responsibility).
 
 «los últimos 3 meses de 2025» names two periods: a window counted back from
-today, and a year. ``temporal_semantics`` resolves ONE period per text; picking
+today, and a year. ``time_grammar`` resolves ONE period per text; picking
 either silently executes something the person did not ask for (the window alone
 is disjoint from 2025; the year alone drops the window). Resolving the window
 INSIDE the anchor («octubre a diciembre de 2025») would be a new capability, so
@@ -12,9 +12,9 @@ The rule is deliberately about the whole turn, not about adjacency: any
 adjacency test («de», «del», a comma…) is a finite vocabulary that «contratos de
 2025 de aseo en los últimos 3 meses» walks around. «Another period» is whatever
 the authority itself recognises once the window is blanked out, so the lexicon
-is never copied here (it cannot drift from ``temporal_semantics``).
+is never copied here (it cannot drift from ``time_grammar``).
 
-Pure: no I/O, no clock, no import of ``temporal_semantics`` (the authority hands
+Pure: no I/O, no clock, no import of ``time_grammar`` (the authority hands
 in its own patterns and its own resolver).
 """
 from __future__ import annotations
