@@ -238,8 +238,6 @@ def _read_until_now(text: str, operator: str, clock: date, year: int | None) -> 
     if split is None or not text[:split.start()].strip():
         return None
     head = _read_quote(text[:split.start()], operator, clock, year)
-    if head.resolution.detail == TIME_INVALID_DATE:
-        return head  # «desde 29 de febrero hasta hoy»: el año se busca en el bucle
     value = head.resolution.value
     if value is None or value.precision != "open_from":
         return None

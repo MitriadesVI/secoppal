@@ -161,6 +161,14 @@ def test_leap_day_without_year_walks_back_to_the_last_leap_year(today, expected)
     assert value_of("29 de febrero", "between_dates", today).start == expected
 
 
+@pytest.mark.parametrize("quote", ["2025 hasta acá", "marzo de 2025 hasta aquí", "mayo hasta acá",
+                                   "el 15 de marzo de 2025 hasta acá", "este mes hasta acá"])
+def test_until_here_only_closes_an_open_from_bound(quote):
+    # Un periodo cerrado + «hasta hoy» son dos hechos temporales: se pregunta, no se estira.
+    result = run(quote, "between_dates", TODAY)
+    assert result.decision == "CLARIFY" and result.value is None
+
+
 def test_leap_day_start_of_a_range_until_here_also_walks_back():
     found = value_of("desde 29 de febrero hasta hoy", "between_dates", date(2027, 3, 1))
     assert found == TimeValue(
