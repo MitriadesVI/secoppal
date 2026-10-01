@@ -96,8 +96,10 @@ _SYMBOLS = {">=": GTE, "<=": LTE, "≥": GTE, "≤": LTE, ">": GT, "<": LT}
 # Sufijos tras la cifra: «300 millones o más». Inclusivos.
 _SUFFIXES = (
     *((p, GTE) for p in ("o mas", "y mas", "o mayores", "y mayores", "o superiores", "y superiores",
+                         "o mayor", "y mayor", "o superior", "y superior",
                          "en adelante", "para arriba", "para mas")),
     *((p, LTE) for p in ("o menos", "y menos", "o menores", "y menores", "o inferiores", "y inferiores",
+                         "o menor", "y menor", "o inferior", "y inferior",
                          "para abajo", "para menos")),
 )
 
@@ -122,11 +124,24 @@ def _literal(phrase: str) -> str:
     return r"\s+".join(re.escape(word) for word in phrase.split(" "))
 
 
+# «>» y «<» sueltos son comparadores; dentro de una flecha («->», «<-», «=>», «<->») no:
+# una flecha no dice «mayor que». Sólo los símbolos de un carácter necesitan el contexto.
+_SYMBOL_RE = {
+    ">=": re.escape(">="), "<=": re.escape("<="), "≥": "≥", "≤": "≤",
+    ">": r"(?<![-=<>])>(?![>=-])",
+    "<": r"(?<![<>=-])<(?![<>=-])",
+}
+
+
+def _symbol_alternation(symbols) -> str:
+    return "|".join(_SYMBOL_RE[s] for s in sorted(symbols, key=lambda s: -len(s)))
+
+
 def _head_pattern(families: set[str]) -> str:
     """Cabezas de frase (sin enlace) de las familias dadas, para ``money_polarity``."""
     words = _alternation(h.phrase for h in HEADS if h.family in families)
-    symbols = sorted((re.escape(s) for s, f in _SYMBOLS.items() if f in families), key=lambda s: -len(s))
-    return f"(?:{words}|{'|'.join(symbols)})"
+    symbols = _symbol_alternation(s for s, f in _SYMBOLS.items() if f in families)
+    return f"(?:{words}|{symbols})"
 
 
 UP_PATTERN = _head_pattern({GT, GTE})
@@ -140,7 +155,7 @@ SUFFIX_DOWN_PATTERN = _alternation(p for p, f in _SUFFIXES if f == LTE)
 # Words that may sit between «no» and the comparator: «no SEA mayor», «no DEBEN superar».
 NEGATION_FILLER = r"(?:sea|sean|es|son|este|esten|deba|deban|debe|deben|pueda|puedan|puede|pueden|vaya|vayan)\s+(?:a\s+)?"
 _WORD_HEAD = "|".join(_literal(h.phrase) for h in sorted(HEADS, key=lambda h: (-len(h.phrase), h.phrase)))
-_SYMBOL_HEAD = "|".join(re.escape(s) for s in sorted(_SYMBOLS, key=lambda s: -len(s)))
+_SYMBOL_HEAD = _symbol_alternation(_SYMBOLS)
 _READING_RE = re.compile(
     rf"(?P<sym>{_SYMBOL_HEAD})"
     rf"|(?<![a-z0-9])(?P<neg>(?:que\s+)?no\s+(?:{NEGATION_FILLER})?)?(?P<head>{_WORD_HEAD})"
@@ -184,6 +199,25 @@ class ComparatorScan:
         return re.sub(r"\s+", " ", "".join(chars)).strip()
 
 
+_AMOUNT_NEXT = re.compile(r"\s*[\d$]")
+_O_Y_BEFORE = re.compile(r"(?<![a-z0-9])(?:o|y)\s+$")
+
+
+def _is_suffix_not_head(folded: str, match: re.Match[str], head: _Head) -> bool:
+    """«más»/«menos» que en realidad son el sufijo inclusivo «… o más», «… o menos».
+
+    «más a la fecha» no es un comparador («más» sólo enlaza con «de/que»), y
+    «300 millones o más de valor» tampoco: el comparador de monto necesita una
+    cifra detrás, y «o más de 500 millones» tras otro límite sí la tiene.
+    """
+    if head.phrase not in ("mas", "menos") or not match.group("link"):
+        return False
+    if re.match(r"\s+a(?![a-z0-9])", match.group("link")):
+        return True
+    before = folded[:match.start("head")]
+    return bool(_O_Y_BEFORE.search(before)) and not _AMOUNT_NEXT.match(folded, match.end())
+
+
 def read_comparators(text: str) -> ComparatorScan:
     """Cada comparador que nombra ``text``, con su negación ya aplicada."""
     folded = f" {normalize_text(text)} "
@@ -196,6 +230,8 @@ def read_comparators(text: str) -> ComparatorScan:
         head = _BY_PHRASE[re.sub(r"\s+", " ", match.group("head"))]
         if head.needs_link and not match.group("link") and not match.group("eq"):
             continue  # «más» o «mayor» sin enlace no es un comparador de monto
+        if _is_suffix_not_head(folded, match, head):
+            continue  # «300 millones o más a la fecha»: «o más» es el sufijo, no «más a»
         family = head.family
         if match.group("eq"):
             if not head.o_igual:
@@ -210,6 +246,10 @@ def read_comparators(text: str) -> ComparatorScan:
         masked[reading.start:reading.end] = " " * (reading.end - reading.start)
     leftover = "".join(masked)
     for match in _SUFFIX_RE.finditer(leftover):
+        if re.sub(r"\s+", " ", match.group()) == "o menos" and re.search(
+            r"(?<![a-z0-9])mas\s+$", leftover[:match.start()],
+        ):
+            continue  # «más o menos 300 millones» es aproximación, no «300 millones o menos»
         readings.append(ComparatorReading(_SUFFIX_FAMILY[re.sub(r"\s+", " ", match.group())],
                                           match.group(), False, match.start(), match.end()))
         masked[match.start():match.end()] = " " * (match.end() - match.start())

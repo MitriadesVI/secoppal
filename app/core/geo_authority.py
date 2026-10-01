@@ -337,9 +337,9 @@ def _unknown(name, dept, munis, regions, hint) -> GeoResolution:
 
 
 # --------------------------------------------------------------------------- #
-# Destination contract (C0 §5.5): GeoValue + host reasons. The core adapter
-# (host_authorities, C1.1) calls `to_geo_value` / `host_reason`; nothing here
-# imports the core contract.
+# Destination contract (C0 §5.5): GeoValue + host reasons. The C1.1 core
+# adapter calls `to_geo_value` / `host_reason`; nothing here imports the core
+# contract.
 # --------------------------------------------------------------------------- #
 @dataclass(frozen=True)
 class GeoValue:

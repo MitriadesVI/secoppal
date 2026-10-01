@@ -29,6 +29,7 @@ from app.core.entity_profile.scope import resolve_profile_scope
 from app.core.estado_families import detect_estado_family
 from app.core.material_residual import MaterialEvidence
 from app.core.semantic_turn_evidence import SemanticTurnEvidence, raw_fingerprint
+from app.core.period_consistency import period_conflict, period_of
 from app.core.query_text_consumption import mask_consumed_spans
 from app.core.modality_dataset_projection import project_modality_filter
 from app.core.modality_filter import ModalityFilter
@@ -174,7 +175,7 @@ def admit_contract_activity(
         return _clarify("UNSUPPORTED_MATERIAL_FILTER")
 
     if binding is None:
-        period, period_error = _period(text)
+        period, period_error = _period(text, params, today)
         if period_error:
             return _clarify(period_error)
         money, money_error = _money(text)
@@ -266,7 +267,31 @@ def _without_controls(text: str, controls: tuple[AnalyticControlSpan, ...]) -> s
     return mask_consumed_spans(text, ((control.start, control.end) for control in controls))
 
 
-def _period(text: str) -> tuple[tuple[str, str] | None, str | None]:
+def _period(
+    text: str, params: dict, today: Date | None,
+) -> tuple[tuple[str, str] | None, str | None]:
+    """The year/month this module reads, accepted only if it IS the resolved period.
+
+    The year is read here with a private regex; the temporal authority resolves
+    far more («antes de 2024», «últimos 3 años», «primer trimestre de 2025»).
+    A period the authority resolved and this reader did not read exactly, or that
+    the parse carries differently, is asked: never executed as another year and
+    never executed without its date (ZEUS P1-1).
+    """
+    period, error = _written_period(text)
+    if error:
+        return None, error
+    represented = period or (None, None)
+    if params.get("_temporal_error"):
+        return None, "SIGNATURE_PERIOD_UNRESOLVED"
+    if conflict := period_conflict(_MONEY.sub(" ", text), represented, today=today):
+        return None, f"SIGNATURE_{conflict}"
+    if any(period_of(params)) and period_of(params) != represented:
+        return None, "SIGNATURE_PERIOD_AUTHORITY_CONFLICT"
+    return period, None
+
+
+def _written_period(text: str) -> tuple[tuple[str, str] | None, str | None]:
     period_text = _MONEY.sub(" ", text)
     if _PARTIAL_OR_DAY_TIME.search(period_text):
         return None, "UNSUPPORTED_OR_PARTIAL_SIGNATURE_PERIOD"

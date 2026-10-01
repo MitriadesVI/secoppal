@@ -27,6 +27,7 @@ from app.core.capability_binding.supplier_request_types import SupplierRequestEv
 from app.core.control_language import interpret_control_language
 from app.core.entity_profile.turn import profile_query_params
 from app.core.municipal_territory import get_municipal_territories
+from app.core.period_consistency import period_conflict, period_of
 from app.core.query_text_consumption import mask_consumed_spans
 from app.core.source_occurrence import source_request_occurrences
 from app.core.temporal_semantics import civil_today, resolve_temporal_scope
@@ -42,6 +43,10 @@ class Accounting:
     unaccredited: tuple[str, ...]
     territory_names: tuple[str, ...]
     ordering_accounted: bool
+    # Set when the period the turn carries (``fecha_desde``/``fecha_hasta``) is
+    # not the one the temporal authority resolves in the text: executing it would
+    # answer another period, so SUPPLIERS asks instead (ZEUS P1-1).
+    period_conflict: str | None = None
 
 
 def _words(text: str) -> frozenset[str]:
@@ -155,4 +160,5 @@ def account(
         unaccredited=tuple(dict.fromkeys(unaccredited)),
         territory_names=tuple(free[a:b] for a, b in territory),
         ordering_accounted=ordering_accounted,
+        period_conflict=period_conflict(free, period_of(params), today=civil_today(today)),
     )

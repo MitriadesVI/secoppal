@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass
+from datetime import date as Date
 from enum import Enum
 
 from app.core.capability_binding.dogfood_telemetry import note
@@ -166,6 +167,7 @@ def decide(
     *,
     polarity_veto: PolarityVeto | None = None,
     record: dict | None = None,
+    today: Date | None = None,
 ) -> Decision:
     """``polarity_veto`` is consulted last and can only withhold EXECUTE.
 
@@ -242,7 +244,7 @@ def decide(
             f"en silencio. ¿Te sirven los {DEFAULT_SUPPLIER_LIMIT} principales?"
         ), (requested,), record)
 
-    accounting = account(user_query, params, supplier_evidence=evidence)
+    accounting = account(user_query, params, supplier_evidence=evidence, today=today)
     # A structured dimension the capability cannot apply is named first: its own
     # numbers ("más de 500 millones") are that dimension's, not free residue.
     unsupported = _unsupported(params, accounting.ordering_accounted)
@@ -261,6 +263,14 @@ def decide(
             "proveedores responde hoy por entidad compradora y periodo; si es un tema del "
             "objeto contractual, todavía no puedo filtrarlo en esta vista."
         ), accounting.unaccredited, record)
+
+    if accounting.period_conflict:
+        return _clarify("PERIOD_NOT_REPRESENTED", (
+            "Reconocí un periodo en tu pregunta, pero no puedo aplicarlo a la vista de "
+            "proveedores exactamente como lo pediste. No voy a cambiarlo ni a quitarlo en "
+            "silencio. Indica un año, mes o rango explícito (por ejemplo «en 2025» o "
+            "«entre enero y marzo de 2025»)."
+        ), (accounting.period_conflict,), record)
 
     if not _has_buyer_mention(params):
         if accounting.territory_names:
