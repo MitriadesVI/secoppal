@@ -1,5 +1,5 @@
 {
-  "schema_version": "m1-search-gold/1.6",
+  "schema_version": "m1-search-gold/1.7",
   "files": {
     "adversarial.jsonl": {
       "records": 92,
@@ -11,7 +11,7 @@
     },
     "neighbor.jsonl": {
       "records": 111,
-      "sha256": "fc861e46df950afac9f79c22099fcd15da56a4b014657592f835929d629300a6"
+      "sha256": "50299b1ad885e3776a628b3a0097699d064bbc22821e52e3c157a8a1bd8ceb6f"
     }
   },
   "real_private": {
@@ -23,6 +23,7 @@
   "total_records": 999,
   "history": [
     "1.4 (2026-09-30) first seal",
-    "1.6 (2026-10-01) ACTOR document marker inside quote (contract §16)"
+    "1.6 (2026-10-01) ACTOR document marker inside quote (contract §16)",
+    "1.7 (2026-10-01) P-ACT-2: PROCESSES+ACTOR executes on CONTRACTS with notice (host_universe_redirect, request level); only N073 changed; 620 REAL records unchanged (sha256 identical)"
   ]
 }

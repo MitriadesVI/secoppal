@@ -1,6 +1,7 @@
 """Validator for the M1 SEARCH Gold v1 (docs/audits/m1_search_foundation/M1_0_SEARCH_CONTRACT.md §8).
 
 Usage: python scripts/audits/m1_search/gold_schema.py FILE.jsonl [FILE.jsonl ...]
+       python scripts/audits/m1_search/gold_schema.py --selftest     # negative cases of the v1.7 redirect field
 Exit 0 when every record is valid; otherwise prints one line per error and exits 1.
 Stdlib only, so it runs from any worktree without the app.
 """
@@ -11,6 +12,20 @@ import hashlib
 import json
 import re
 import sys
+
+SCHEMA_VERSION = "m1-search-gold/1.7"
+# Contract v1.7 (P-ACT-2): a PROCESSES request with an ACTOR condition (either polarity) is executed by the
+# HOST on CONTRACTS and announced. Request level, because a MULTI record can carry other requests that do
+# not qualify. The field is absent (or null) everywhere else.
+REDIRECT_FIELD = "host_universe_redirect"
+ACTOR_PROCESSES_REDIRECT = {"executed_universe": "CONTRACTS", "notice": "ACTOR_PROCESSES_TO_CONTRACTS"}
+
+
+def needs_redirect(request: dict) -> bool:
+    """True when contract v1.7 P-ACT-2 applies: cited universe PROCESSES + any ACTOR condition."""
+    return request.get("universe") == "PROCESSES" and any(
+        isinstance(c, dict) and c.get("dimension") == "ACTOR" for c in request.get("conditions") or [])
+
 
 SLICES = {"REAL", "SYNTHETIC", "ADVERSARIAL", "MINIMAL_PAIR", "NEIGHBOR"}
 TURN_CONTEXTS = {"SELF_CONTAINED", "FOLLOWUP_FRAGMENT", "NEEDS_HISTORY"}
@@ -157,6 +172,14 @@ def _check_requests(requests, text, where, errors) -> set[str]:
                     errors.append(f"{where}/{rid}: LOGIC_ATOMS_MISMATCH {logic!r}")
         elif logic not in (None, ""):
             errors.append(f"{where}/{rid}: LOGIC_WITHOUT_CONDITIONS")
+        redirect = request.get(REDIRECT_FIELD)
+        if needs_redirect(request):
+            if REDIRECT_FIELD not in request or redirect is None:
+                errors.append(f"{where}/{rid}: REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES")
+            elif redirect != ACTOR_PROCESSES_REDIRECT:
+                errors.append(f"{where}/{rid}: BAD_REDIRECT {redirect!r}")
+        elif redirect is not None:
+            errors.append(f"{where}/{rid}: REDIRECT_ONLY_FOR_ACTOR_ON_PROCESSES")
     return universes
 
 
@@ -247,5 +270,62 @@ def main(paths: list[str]) -> int:
     return 1 if all_errors else 0
 
 
+def selftest() -> int:
+    """Positive and negative cases of the v1.7 `host_universe_redirect` rule (P-ACT-2)."""
+    import copy
+
+    def cond(cid, dim, polarity="POSITIVE"):
+        return {"id": cid, "dimension": dim, "operator": "is", "polarity": polarity, "quote": "X SAS",
+                "value_hint": "X SAS", "level": None}
+
+    def record(universe, dim, view="RECORDS", polarity="POSITIVE", redirect="ABSENT", jobs=False):
+        request = {"request_id": "q1", "universe": universe, "view": view,
+                   "universe_quote": None if universe == "UNSPECIFIED" else "procesos",
+                   "conditions": [cond("c1", dim, polarity)], "logic": "c1"}
+        if redirect != "ABSENT":
+            request[REDIRECT_FIELD] = copy.deepcopy(redirect)
+        text = "procesos de X SAS"
+        base = {"gold_id": "T", "slice": "SYNTHETIC", "text": text,
+                "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "turn_context": "SELF_CONTAINED",
+                "aspect": None, "expected_disposition": "EXECUTE", "ambiguity": "CLEAR", "labeler": "t",
+                "product_view": "CONTRACTS" if universe == "UNSPECIFIED" else None}
+        if jobs:
+            return {**base, "operation": "MULTI", "requests": [], "jobs": [
+                {"operation": "SEARCH", "requests": [request]}, {"operation": "FOLLOW", "requests": []}]}
+        return {**base, "operation": "SEARCH", "requests": [request]}
+
+    ok = ACTOR_PROCESSES_REDIRECT
+    cases = [  # (label, record, expected error code or None)
+        ("valid: PROCESSES+ACTOR with redirect", record("PROCESSES", "ACTOR", redirect=ok), None),
+        ("valid: PROCESSES+ACTOR NEGATIVE with redirect", record("PROCESSES", "ACTOR", polarity="NEGATIVE", redirect=ok), None),
+        ("valid: OPPORTUNITIES+ACTOR with redirect", record("PROCESSES", "ACTOR", view="OPPORTUNITIES", redirect=ok), None),
+        ("valid: BUYER over PROCESSES has no field", record("PROCESSES", "BUYER"), None),
+        ("valid: null on a non-qualifying request", record("CONTRACTS", "ACTOR", redirect=None), None),
+        ("NEG1 missing: PROCESSES+ACTOR", record("PROCESSES", "ACTOR"), "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"),
+        ("NEG1 missing: explicit null", record("PROCESSES", "ACTOR", redirect=None), "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"),
+        ("NEG1 missing: NEGATIVE actor", record("PROCESSES", "ACTOR", polarity="NEGATIVE"), "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"),
+        ("NEG1 missing: OPPORTUNITIES view", record("PROCESSES", "ACTOR", view="OPPORTUNITIES"), "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"),
+        ("NEG1 missing: inside a MULTI job", record("PROCESSES", "ACTOR", jobs=True), "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"),
+        ("NEG2 surplus: BUYER over PROCESSES", record("PROCESSES", "BUYER", redirect=ok), "REDIRECT_ONLY_FOR_ACTOR_ON_PROCESSES"),
+        ("NEG2 surplus: ACTOR over CONTRACTS", record("CONTRACTS", "ACTOR", redirect=ok), "REDIRECT_ONLY_FOR_ACTOR_ON_PROCESSES"),
+        ("NEG2 surplus: ACTOR UNSPECIFIED", record("UNSPECIFIED", "ACTOR", redirect=ok), "REDIRECT_ONLY_FOR_ACTOR_ON_PROCESSES"),
+        ("NEG3 malformed: wrong universe", record("PROCESSES", "ACTOR", redirect={**ok, "executed_universe": "PROCESSES"}), "BAD_REDIRECT"),
+        ("NEG3 malformed: wrong notice", record("PROCESSES", "ACTOR", redirect={**ok, "notice": "OTHER"}), "BAD_REDIRECT"),
+        ("NEG3 malformed: missing key", record("PROCESSES", "ACTOR", redirect={"executed_universe": "CONTRACTS"}), "BAD_REDIRECT"),
+        ("NEG3 malformed: extra key", record("PROCESSES", "ACTOR", redirect={**ok, "why": "x"}), "BAD_REDIRECT"),
+        ("NEG3 malformed: string instead of object", record("PROCESSES", "ACTOR", redirect="CONTRACTS"), "BAD_REDIRECT"),
+    ]
+    failures = 0
+    for label, rec, code in cases:
+        errors = validate(rec)
+        good = (not errors) if code is None else (len(errors) == 1 and code in errors[0])
+        failures += not good
+        print(("ok   " if good else "FAIL ") + label + ("" if good else f" -> {errors}"))
+    print(f"selftest: {len(cases) - failures}/{len(cases)} passed", file=sys.stderr)
+    return 1 if failures else 0
+
+
 if __name__ == "__main__":
+    if sys.argv[1:] == ["--selftest"]:
+        sys.exit(selftest())
     sys.exit(main(sys.argv[1:]))

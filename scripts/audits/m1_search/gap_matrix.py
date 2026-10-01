@@ -18,6 +18,12 @@ Foundation categories per Gold condition (first stage that diverges, product ord
   HOST_RESOLVED_PROJECTION_UNSUPPORTED | GATE_EXCLUDED (intrinsically OK but the gate kept it out) | OK
 Legacy: L_OK | L_MISSING | L_WRONG (plus L_SPURIOUS for conditions the Gold does not have).
 Parity = exclusive regressions: legacy L_OK and Foundation (as the product runs it) not OK.
+
+Contract v1.7 (P-ACT-2): a Gold request with `host_universe_redirect` (PROCESSES + ACTOR) expects the host to
+EXECUTE ON CONTRACTS and ANNOUNCE it. Both arms are scored on the UNIVERSE_VIEW row with the same rule:
+executing on processes is a universe failure, blocking/clarifying where the Gold says EXECUTE is a failure,
+and a silent switch to contracts (no notice) is a failure. Foundation must still *propose* the cited
+universe (PROCESSES): the redirect is the host's job, never a rewrite of the IR.
 """
 
 from __future__ import annotations
@@ -45,6 +51,7 @@ IR_OPERATIONS = {"SEARCH", "COUNT", "SUM_VALUE"}      # the prompt's operation v
 HOST_RUNS_OPERATIONS = {"SEARCH"}                      # admit_proposal: UNSUPPORTED_OPERATION otherwise
 STOP = frozenset("de del la las los el en y o u a al un una que con por para sobre sin se es son me mi".split())
 GATE_NOUNS = frozenset({"contratos", "procesos"})
+REDIRECT_FIELD = "host_universe_redirect"  # contract v1.7 (gold_schema.REDIRECT_FIELD)
 PV_TO_LEGACY = {"CURRENT_OPPORTUNITIES": ("PROCESSES", "OPPORTUNITIES"), "HISTORICAL_PROCESSES": ("PROCESSES", "RECORDS"),
                 "CONTRACTS": ("CONTRACTS", "RECORDS")}
 LEGACY_HANDLES = {"SEARCH": {"SEARCH"}, "PROFILE_ACTOR": {"ACTOR_PROFILE"}, "PROFILE_BUYER": {"ENTITY_PROFILE"},
@@ -308,6 +315,7 @@ def _universe_rows(req: dict, f_req: dict | None, fnd: dict, admitted: bool, leg
     rows = []
     gold_view = req.get("view")
     unspecified = req["universe"] == "UNSPECIFIED"
+    redirect = req.get(REDIRECT_FIELD)
     if unspecified:
         intrinsic, why = "IR_CANNOT_EXPRESS", "UNSPECIFIED_UNIVERSE"
     elif fnd["producer_status"] != "PROPOSAL" or f_req is None:
@@ -319,11 +327,15 @@ def _universe_rows(req: dict, f_req: dict | None, fnd: dict, admitted: bool, leg
     elif fnd.get("admission", {}).get("reason", "") in {"UNSUPPORTED_UNIVERSE", "UNSUPPORTED_OPERATION", "MULTI_REQUEST",
                                                           "UNSUPPORTED_SOURCE", "UNGROUNDED_REQUEST_UNIVERSE"}:
         intrinsic, why = "F_PROPOSED_HOST_UNRESOLVED", fnd["admission"]["reason"]
+    elif redirect:
+        intrinsic, why = _foundation_redirect(redirect, f_req, fnd)
     else:
         intrinsic, why = "OK", ""
     product = "GATE_EXCLUDED" if intrinsic == "OK" and not admitted else intrinsic
     lcat, ldetail = "L_MISSING", "LEGACY_ERROR"
-    if leg:
+    if leg and redirect:
+        lcat, ldetail = _legacy_redirect(redirect, leg)
+    elif leg:
         if unspecified:
             want = PV_TO_LEGACY.get(product_view or "", None)
         else:
@@ -334,6 +346,36 @@ def _universe_rows(req: dict, f_req: dict | None, fnd: dict, admitted: bool, leg
     rows.append({"key": "UNIVERSE_VIEW", "dimension": "UNIVERSE_VIEW", "foundation_intrinsic": intrinsic,
                  "foundation": product, "f_detail": why, "legacy": lcat, "l_detail": ldetail, "polarity": None})
     return rows
+
+
+def _foundation_redirect(redirect: dict, f_req: dict, fnd: dict) -> tuple[str, str]:
+    """v1.7: Foundation proposed the cited universe faithfully; did the HOST execute on the redirect universe
+    and announce it? Evidence: `host_universe_redirect` on the captured request (written by the capture of the
+    host policy). Absent evidence is never read as success."""
+    got = f_req.get(REDIRECT_FIELD)
+    if got == redirect:
+        return "OK", ""
+    status = fnd.get("final_status")
+    if got:
+        return "F_PROPOSED_HOST_UNRESOLVED", "REDIRECT_MISMATCH"
+    if status == "READY":
+        return "F_PROPOSED_HOST_UNRESOLVED", "UNIVERSE_NOT_REDIRECTED"   # ran on the proposed PROCESSES
+    return "F_PROPOSED_HOST_UNRESOLVED", f"BLOCKED_WHERE_GOLD_EXECUTES:{status}"
+
+
+def _legacy_redirect(redirect: dict, leg: dict) -> tuple[str, str]:
+    """v1.7 for legacy: same rule as `_foundation_redirect`. Only the redirect universe may be executed
+    (a PROCESSES+CONTRACTS scope still executes on processes), and the switch must be announced
+    (`dims.universe_notices`, which legacy never emits: a silent switch is a failure for both arms)."""
+    if leg.get("needs_clarification") or leg.get("handled_as") == "CLARIFY":
+        return "L_WRONG", "BLOCKED_WHERE_GOLD_EXECUTES"
+    if list(leg["universe"]) != [redirect["executed_universe"]]:
+        return "L_WRONG", "UNIVERSE"
+    if leg["view"] != "RECORDS":
+        return "L_WRONG", "VIEW"
+    if redirect["notice"] not in (leg.get("universe_notices") or []):
+        return "L_WRONG", "NOTICE_MISSING"
+    return "L_OK", ""
 
 
 def _logic_rows(req: dict, f_req: dict | None, fnd: dict, admitted: bool, leg: dict | None) -> list[dict]:
@@ -727,11 +769,14 @@ def _fixture() -> tuple[list[dict], dict]:
         return {"id": cid, "dimension": dim, "operator": op, "polarity": pol, "quote": quote,
                 "value_hint": hint or quote, "level": level}
 
-    def gold(gid, conds, universe="CONTRACTS", view="RECORDS", logic=None, operation="SEARCH", extra=None):
+    def gold(gid, conds, universe="CONTRACTS", view="RECORDS", logic=None, operation="SEARCH", extra=None,
+             redirect=None):
+        request = {"request_id": "q1", "universe": universe, "view": view, "universe_quote": "contratos",
+                   "conditions": conds, "logic": logic or f"AND({','.join(c['id'] for c in conds)})"}
+        if redirect:
+            request[REDIRECT_FIELD] = redirect
         return {"gold_id": gid, "slice": "SYNTHETIC", "operation": operation, "expected_disposition": "EXECUTE",
-                "ambiguity": "CLEAR", "requests": [{"request_id": "q1", "universe": universe, "view": view,
-                "universe_quote": "contratos", "conditions": conds, "logic": logic or f"AND({','.join(c['id'] for c in conds)})"}],
-                **(extra or {})}
+                "ambiguity": "CLEAR", "requests": [request], **(extra or {})}
 
     def fcond(cid, dim, op, quote, host="READY", reason="", proj=None, pol="POSITIVE", label=None):
         return {"id": cid, "request_ids": ["r1"], "dimension": dim, "operator": op, "polarity": pol, "role": "FILTER",
@@ -740,19 +785,22 @@ def _fixture() -> tuple[list[dict], dict]:
 
     def cap(gid, conds, admitted=True, status="PROPOSAL", subject="contracts", expr="AND(c1)", kind="records",
             final="READY", legacy_conds=None, handled="SEARCH", universe=("CONTRACTS",), view="RECORDS", op="SEARCH",
-            level=None):
+            level=None, f_redirect=None, notices=None):
         return {"gold_id": gid, "slice": "SYNTHETIC", "gate": {"admitted": admitted},
                 "legacy": {"dims": {"conditions": legacy_conds or [], "universe": list(universe), "view": view,
-                                    "handled_as": handled, "route_reason": "heuristic_only", "owner": "TABULAR"}},
+                                    "handled_as": handled, "route_reason": "heuristic_only", "owner": "TABULAR",
+                                    "universe_notices": notices or []}},
                 "foundation": {"producer_status": status, "final_status": final, "conditions": conds,
                                "requests": [{"request_id": "r1", "operation": op, "subject": subject, "expr": expr,
-                                             "effective_kind": kind}],
+                                             "effective_kind": kind,
+                                             **({REDIRECT_FIELD: f_redirect} if f_redirect else {})}],
                                "admission": {"status": "READY", "reason": ""}, "projection_status": "READY",
                                "projection_request_level": level, "projection_reason": ""}}
 
     def lcond(dim, op, value, pol="POSITIVE", **extra):
         return {"dimension": dim, "operator": op, "polarity": pol, "value": value, "key": "k", **extra}
 
+    REDIRECT_OK = {"executed_universe": "CONTRACTS", "notice": "ACTOR_PROCESSES_TO_CONTRACTS"}
     golds = [
         gold("T01", [cond("c1", "TOPIC", "contains", "aseo")]),
         gold("T02", [cond("c1", "GEOGRAPHY", "is", "Cali", level="MUNICIPALITY")]),
@@ -770,6 +818,13 @@ def _fixture() -> tuple[list[dict], dict]:
              extra={"product_view": "CURRENT_OPPORTUNITIES"}),
         gold("T13", [cond("c1", "TOPIC", "contains", "aseo")], universe="PROCESSES", view="OPPORTUNITIES"),
         gold("T14", [], operation="COUNT", extra={"aspect": "TOTAL"}),
+        # contract v1.7 (P-ACT-2): PROCESSES + ACTOR must be executed on CONTRACTS and announced
+        gold("T15", [cond("c1", "ACTOR", "is", "CONSORCIO X")], universe="PROCESSES", redirect=REDIRECT_OK),
+        gold("T16", [cond("c1", "ACTOR", "is", "CONSORCIO X")], universe="PROCESSES", redirect=REDIRECT_OK),
+        gold("T17", [cond("c1", "ACTOR", "is", "CONSORCIO X")], universe="PROCESSES", redirect=REDIRECT_OK),
+        gold("T18", [cond("c1", "ACTOR", "is", "CONSORCIO X", pol="NEGATIVE")], universe="PROCESSES",
+             view="OPPORTUNITIES", redirect=REDIRECT_OK),
+        gold("T19", [cond("c1", "BUYER", "is", "Gobernación del Huila")], universe="PROCESSES"),  # BUYER: untouched
     ]
     caps = {c["gold_id"]: c for c in [
         cap("T01", [fcond("c1", "TOPIC", "contains", "aseo")], legacy_conds=[lcond("TOPIC", "contains", "aseo")]),
@@ -798,6 +853,25 @@ def _fixture() -> tuple[list[dict], dict]:
         cap("T13", [fcond("c1", "TOPIC", "contains", "aseo")], subject="processes", kind="records",
             universe=("PROCESSES",), view="OPPORTUNITIES", legacy_conds=[lcond("TOPIC", "contains", "aseo")]),
         cap("T14", [], op="SEARCH", legacy_conds=[], handled="SEARCH"),
+        # T15: faithful PROCESSES proposal + host redirect announced (both arms OK)
+        cap("T15", [fcond("c1", "UNSUPPORTED", "is", "CONSORCIO X", "UNSUPPORTED", "UNSUPPORTED_CONDITION", label="proveedor")],
+            subject="processes", f_redirect=REDIRECT_OK, universe=("CONTRACTS",), notices=[REDIRECT_OK["notice"]],
+            legacy_conds=[lcond("ACTOR", "is", "consorcio x")]),
+        # T16: both arms execute on processes: universe failure
+        cap("T16", [fcond("c1", "UNSUPPORTED", "is", "CONSORCIO X", "UNSUPPORTED", "UNSUPPORTED_CONDITION", label="proveedor")],
+            subject="processes", universe=("PROCESSES",), legacy_conds=[lcond("ACTOR", "is", "consorcio x")]),
+        # T17: Foundation blocks where the Gold executes; legacy switches to contracts in silence
+        cap("T17", [fcond("c1", "UNSUPPORTED", "is", "CONSORCIO X", "UNSUPPORTED", "UNSUPPORTED_CONDITION", label="proveedor")],
+            subject="processes", final="NEEDS_CLARIFICATION", universe=("CONTRACTS",),
+            legacy_conds=[lcond("ACTOR", "is", "consorcio x")]),
+        # T18: Foundation redirect evidence disagrees with the Gold; legacy keeps the processes scope
+        cap("T18", [fcond("c1", "UNSUPPORTED", "is", "CONSORCIO X", "UNSUPPORTED", "UNSUPPORTED_CONDITION", label="proveedor",
+                          pol="NEGATIVE")],
+            subject="processes", kind="opportunities", f_redirect={"executed_universe": "PROCESSES", "notice": "NONE"},
+            universe=("PROCESSES", "CONTRACTS"), view="OPPORTUNITIES",
+            legacy_conds=[lcond("ACTOR", "is", "consorcio x", "NEGATIVE")]),
+        cap("T19", [fcond("c1", "BUYER", "is", "Gobernación del Huila")], subject="processes", universe=("PROCESSES",),
+            legacy_conds=[lcond("BUYER", "is", "GOBERNACION DEL HUILA")]),
     ]}
     return golds, caps
 
@@ -814,6 +888,16 @@ def selftest() -> int:
         "T11": ("LOGIC_OR_NOT", "HOST_RESOLVED_PROJECTION_UNSUPPORTED", "L_WRONG"),
         "T12": ("UNIVERSE_VIEW", "IR_CANNOT_EXPRESS", "L_OK"), "T13": ("UNIVERSE_VIEW", "F_NOT_PROPOSED", "L_OK"),
         "T14": ("OPERATION/COUNT", "F_NOT_PROPOSED", "L_WRONG"),
+        "T15": ("UNIVERSE_VIEW", "OK", "L_OK"),
+        "T16": ("UNIVERSE_VIEW", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
+        "T17": ("UNIVERSE_VIEW", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
+        "T18": ("UNIVERSE_VIEW", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
+        "T19": ("UNIVERSE_VIEW", "OK", "L_OK"),   # BUYER over processes is not redirected
+    }
+    details = {  # gold_id -> (Foundation detail, legacy detail) of the UNIVERSE_VIEW row
+        "T15": ("", ""), "T16": ("UNIVERSE_NOT_REDIRECTED", "UNIVERSE"),
+        "T17": ("BLOCKED_WHERE_GOLD_EXECUTES:NEEDS_CLARIFICATION", "NOTICE_MISSING"),
+        "T18": ("REDIRECT_MISMATCH", "UNIVERSE"), "T19": ("", ""),
     }
     failures = []
     for gold in golds:
@@ -822,6 +906,9 @@ def selftest() -> int:
         rows = [operation_row(gold, cap)] if gold["operation"] != "SEARCH" else ev["rows"]
         key, f_cat, l_cat = expect[gold["gold_id"]]
         hit = [r for r in rows if r["key"] == key]
+        want_detail = details.get(gold["gold_id"])
+        if hit and want_detail and (hit[0]["f_detail"], hit[0]["l_detail"]) != want_detail:
+            failures.append((gold["gold_id"], "DETAIL", want_detail, (hit[0]["f_detail"], hit[0]["l_detail"])))
         if not hit or hit[0]["foundation"] != f_cat or hit[0]["legacy"] != l_cat:
             failures.append((gold["gold_id"], key, f_cat, l_cat, [(r["key"], r["foundation"], r["legacy"]) for r in rows]))
     result = aggregate_gold(golds, caps)

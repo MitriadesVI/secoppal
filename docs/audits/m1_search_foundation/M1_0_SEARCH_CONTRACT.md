@@ -292,6 +292,58 @@ Aplicado de forma mecánica al Gold (7 citas: N063, N064, X083, P114, R0019, R04
 sello `m1-search-gold/1.6`. El significado no cambia; cambia el inicio del span.
 
 Decisiones ACTOR asociadas (D_ACTOR_DESIGN.md): P-ACT-1 sí (sin coincidencia exacta se ofrecen
-candidatos, como legacy); P-ACT-2 **no se bloquea** «procesos de un proveedor» (Gold N073 = EXECUTE):
+candidatos, como legacy); ~~P-ACT-2 **no se bloquea** «procesos de un proveedor» (Gold N073 = EXECUTE):
 se proyecta sobre procesos con proveedor adjudicado registrado, anunciando cobertura parcial y con
-botón [Ver contratos].
+botón [Ver contratos].~~ **[SUPERSEDED por la §17, v1.7: «procesos de un proveedor» se ejecuta sobre
+CONTRATOS con aviso; no se proyecta sobre procesos.]**
+
+## 17. Enmienda v1.7 (2026-10-01) — ACTOR sobre PROCESOS se ejecuta en CONTRATOS
+
+Origen: decisión de producto del usuario (P-ACT-2, 2026-10-01). **A un proveedor o contratista se le
+buscan CONTRATOS, no procesos.** El dataset de procesos (`p6dx-8zbt`) casi nunca identifica al proveedor
+(95,3 % «No Definido», sin tipo documental, así que INV-ID-TYPE de ADR-060 no se puede aplicar); el de
+contratos sí (NIT/cédula + tipo). «A qué procesos se presentó X» exige un dataset de ofertas o
+proponentes que M1 no tiene: queda fuera de M1. Esta enmienda sustituye el párrafo P-ACT-2 de la §16
+(marcado como superseded arriba; la §16 sigue vigente en todo lo demás).
+
+**Regla.** Un request SEARCH cuyo universo **citado** es `PROCESSES` (con cualquier `view`, incluida
+`OPPORTUNITIES`) y que lleva una condición de dimensión `ACTOR` (`POSITIVE` o `NEGATIVE`) se **ejecuta
+sobre CONTRATOS** y el host **lo anuncia**. La decide una política determinista del host, nunca el LLM.
+
+| Pieza | Valor |
+|---|---|
+| Foundation | Sigue transcribiendo lo que dice el texto: `universe: PROCESSES`, `universe_quote: "procesos"`. La IR propuesta no se reescribe. |
+| Universo ejecutado | `CONTRACTS` (`view: RECORDS`), con `ACTOR` proyectado como en cualquier petición de contratos (D_ACTOR_DESIGN §5.4). |
+| Aviso | Obligatorio, código cerrado `ACTOR_PROCESSES_TO_CONTRACTS`. Un cambio de universo sin aviso es un fallo (INV-NO-SILENT-SEMANTIC-FALLBACK). |
+| `expected_disposition` | Sigue `EXECUTE`. |
+| `product_view` | No cambia: sigue existiendo sólo para `UNSPECIFIED`. |
+
+**Gold (`m1-search-gold/1.7`).** Campo nuevo **a nivel de request** `host_universe_redirect`: el objeto
+`{"executed_universe": "CONTRACTS", "notice": "ACTOR_PROCESSES_TO_CONTRACTS"}` exactamente, y sólo en
+requests `PROCESSES` + `ACTOR`. Se eligió el nivel de request (no el de registro) porque el universo y
+las condiciones viven ahí y un MULTI puede mezclar requests que califican con otros que no. El
+validador (`gold_schema.py`) da ERROR si un request que califica no lo lleva (ni `null`), si aparece en
+uno que no califica o si el objeto no es exactamente ese. Fuera de los requests que califican la clave
+está ausente (o `null`).
+
+**Alcance medido.** Un caso: **N073** («procesos del proveedor CONSORCIO PAE ORIENTE»), cuyo
+`contract_gap` de la v1.6 se retira. Cero casos entre los 620 REAL (el sello REAL no cambia de hash).
+Total 999.
+
+**No cambia.** BUYER sobre procesos («procesos de la Gobernación…»): se ejecuta sobre procesos sin
+aviso. P-ACT-1 y su non-goal (los candidatos fuzzy de ACTOR son M2). Un request `UNSPECIFIED` con ACTOR
+sigue el orden PV1–PV6 de la §5.
+
+**Evaluación simétrica.** `gap_matrix.py` puntúa la fila `UNIVERSE_VIEW` con la misma regla para los dos
+brazos: el esperado es CONTRATOS + aviso; ejecutar sobre procesos es fallo de universo; bloquear o
+aclarar donde el Gold dice `EXECUTE` es fallo; y cambiar a contratos sin aviso es fallo. Foundation debe
+además **proponer** el universo citado (PROCESSES).
+
+**Dueño de la política:** la política de vista del host (`product_view_policy.py`, carril F), no la
+autoridad ACTOR (D_ACTOR_DESIGN, «Enmienda P-ACT-2»).
+
+**Pendiente de decisión (no adjudicado aquí).** P034 («pavimentación en el Huila adjudicada a
+Constructora Andina SAS»): el universo no se cita (`UNSPECIFIED`) y el Gold fija
+`product_view: HISTORICAL_PROCESSES` (PV2 gana a PV3) con un ACTOR positivo, es decir, ejecuta sobre
+procesos. La regla de esta enmienda no lo cubre; si el criterio de producto es el mismo, habría que
+reordenar PV2/PV3 o extender la regla y readjudicar P034.
