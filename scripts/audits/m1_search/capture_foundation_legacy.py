@@ -151,14 +151,19 @@ def build_flow(run: Path, tag: str, *, with_key: bool, foundation: bool):
         secoppal_natural_alpha_mode="off", secoppal_a2_suppliers_binding_enabled=True,
         secoppal_contract_activity_binding_enabled=True, secoppal_natural_follow_binding_enabled=True,
         secoppal_foundation_mode="foundation_v3" if foundation else "legacy",
-        secop_feedback_path=run / f"{tag}_traces.jsonl", secop_feedback_db_path=run / f"{tag}_feedback.db",
         secop_actor_alias_index_path=ACTOR_INDEX,
     )
     if with_key:
-        settings = Settings(_env_file=str(ENV_FILE), **common)  # normal load of .env; paths redirected
+        settings = Settings(
+            _env_file=str(ENV_FILE), secop_feedback_path=run / f"{tag}_traces.jsonl",
+            secop_feedback_db_path=run / f"{tag}_feedback.db", **common,
+        )  # normal load of .env; paths redirected
         assert settings.deepseek_api_key, "DEEPSEEK_API_KEY missing"
     else:
-        settings = Settings(_env_file=None, deepseek_api_key=None, **common)
+        settings = Settings(
+            _env_file=None, deepseek_api_key=None, secop_feedback_path=run / f"{tag}_traces.jsonl",
+            secop_feedback_db_path=run / f"{tag}_feedback.db", **common,
+        )
     flow = SecopalWorkflow(settings)
     flow.conv_store = ConversationStore(run / f"conversations_{tag}")
     return flow
