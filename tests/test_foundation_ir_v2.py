@@ -9,6 +9,7 @@ INV-C0-2 is pinned two ways: the invented regression corpus has a fixture produc
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -20,12 +21,14 @@ from app.core.foundation_admission import admit_proposal
 from app.core.foundation_geo_level import GeoLevel
 from app.core.foundation_lift_v1 import lift_v1
 from app.core.foundation_operations import Aspect, Operation, Subject
+from app.core import foundation_operator_table as table
 from app.core.foundation_operator_table import OPERATORS, operator_allowed
 from app.core.foundation_producers import decode_proposal
+from app.core.foundation_projection import project_accepted
 from app.core.interpretation_contract import (
-    SCHEMA_VERSION, AcceptanceStatus, ConditionExpression, ConditionRole, ContractError,
+    SCHEMA_VERSION, AcceptanceStatus, ConditionExpression, ConditionRole, ContractError, HostResolution,
     InterpretationAcceptance, InterpretationProposal, LogicOperator, Polarity, ProposedCondition,
-    ProposedJob, ProposedRequest, RawSpan,
+    ProposedJob, ProposedRelation, ProposedRequest, RawSpan, RelationKind, ResolutionDecision,
 )
 from app.core.legacy_shadow import DIMENSION_ORDER
 from app.core.semantic_dimensions import SemanticDimension as D
@@ -34,6 +37,7 @@ from tests.foundation_ir_parity import dump_outcome
 from tests.test_foundation_product_gates import CORPUS, _proposal
 
 RESOLVER = EntityResolver("app/data/aliases_db.json")
+NOW = datetime.fromisoformat("2026-09-26T12:00:00-05:00")
 RAW = "contratos de aseo en Cali con valor mayor a 50 millones, los 5 mas grandes del 2025"
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -120,6 +124,12 @@ def test_unsupported_keeps_a_free_operator_and_its_label():
     free = ProposedCondition("c1", ("r1",), D.UNSUPPORTED, "unsupported_range", Polarity.POSITIVE, "aseo",
                              (S("aseo"),), unsupported_label="range")
     assert free.operator == "unsupported_range" and operator_allowed(D.UNSUPPORTED, "anything")
+
+
+def test_a_dimension_missing_from_the_table_admits_no_operator(monkeypatch):
+    monkeypatch.setattr(table, "OPERATORS", {D.TOPIC: frozenset({"contains"})})
+    assert table.operator_allowed(D.TOPIC, "contains") and not table.operator_allowed(D.TOPIC, "is")
+    assert not table.operator_allowed(D.BUYER, "is") and table.operator_allowed(D.UNSUPPORTED, "is")
 
 
 def test_order_and_cardinality_are_dimensions_the_shadow_knows():
@@ -240,6 +250,38 @@ def test_the_host_does_not_execute_an_unspecified_request_yet():
     item = proposal((request(subject=Subject.UNSPECIFIED),))
     accepted = admit_proposal(item, RAW, entity_resolver=RESOLVER)
     assert (accepted.status, accepted.reason) == (AcceptanceStatus.UNSUPPORTED, "UNSUPPORTED_UNIVERSE")
+
+
+def two_requests_sharing_a_scope(second_operation):
+    first, second = request("r1"), request("r2")
+    second = ProposedRequest("r2", "r1", Subject.CONTRACTS, second.evidence, universe_claim="contratos",
+                             universe_evidence=S("contratos"))
+    first = ProposedRequest("r1", "r1", Subject.CONTRACTS, first.evidence, universe_claim="contratos",
+                            universe_evidence=S("contratos"))
+    jobs = (ProposedJob("job-search", Operation.SEARCH, ("r1",)),
+            ProposedJob("job-other", second_operation, ("r2",), (S("contratos"),),
+                        Aspect.TOTAL if second_operation is Operation.COUNT else None))
+    return proposal((first, second), jobs=jobs, relations=(ProposedRelation(RelationKind.SHARES_SCOPE, ("r1", "r2")),))
+
+
+def test_a_search_sharing_its_scope_with_a_count_is_a_multi_request_for_the_host():
+    item = two_requests_sharing_a_scope(Operation.COUNT)
+    accepted = admit_proposal(item, RAW, entity_resolver=RESOLVER)
+    assert (accepted.status, accepted.reason) == (AcceptanceStatus.UNSUPPORTED, "MULTI_REQUEST")
+
+
+def test_the_projection_never_compiles_a_request_whose_job_is_not_a_search():
+    resolution = lambda rid: HostResolution(rid, ResolutionDecision.RESOLVED, "host-universe", ("jbjy-vk9h",))  # noqa: E731
+    count = proposal((request(),), jobs=(ProposedJob("job-count", Operation.COUNT, ("r1",), (S("contratos"),),
+                                                     Aspect.TOTAL),))
+    outcome = project_accepted(InterpretationAcceptance(count, AcceptanceStatus.READY, (resolution("r1"),)),
+                               reference_instant=NOW)
+    assert (outcome.status, outcome.reason) == (AcceptanceStatus.UNSUPPORTED, "UNSUPPORTED_OPERATION")
+    pair = two_requests_sharing_a_scope(Operation.COUNT)
+    outcome = project_accepted(InterpretationAcceptance(pair, AcceptanceStatus.READY,
+                                                        (resolution("r1"), resolution("r2"))),
+                               reference_instant=NOW)
+    assert (outcome.status, outcome.reason) == (AcceptanceStatus.UNSUPPORTED, "MULTI_REQUEST")
 
 
 # ── ORDER and CARDINALITY ───────────────────────────────────────────────────────────────────────────
@@ -472,6 +514,14 @@ def test_the_stored_record_lift_and_the_wire_decoder_say_the_same_thing():
     assert load_proposal(record) == item
     assert load_proposal(lift_v1(record)) == item
     assert lift_v1(record)["schema_version"] == 2 and record["schema_version"] == 1  # the input is never mutated
+
+
+def test_lift_v1_only_reads_a_version_one_record():
+    item = decode(v1_payload(RAW, [("r1", "r1", "SEARCH", "contracts", None)]))
+    record = downgrade(item, {"r1": "SEARCH"})
+    for version in (2, 0, None, True, "1"):
+        assert codes(lambda: lift_v1({**record, "schema_version": version})) == "UNSUPPORTED_SCHEMA_VERSION"
+    assert codes(lambda: lift_v1("record")) == "INVALID_STORED_RECORD"
 
 
 # ── load_acceptance: stored records, v1 or v2, never guessed ────────────────────────────────────────
