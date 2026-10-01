@@ -42,7 +42,7 @@ MUTANTS = [
   ["tests/test_foundation_silent_paths.py::test_two_states_in_one_condition_are_asked_never_collapsed",
    "tests/test_foundation_silent_paths.py::test_every_two_state_composition_of_the_lexicon_is_asked_or_is_the_funnel",
    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[ST-001]"]),
- ("M08_value_operator_inverted_accepted", [("app/core/foundation_value_direction.py", "    if operator not in _COMPATIBLE:\n        return None", "    if True:\n        return None")],
+ ("M08_value_operator_inverted_accepted", [("app/core/foundation_value_direction.py", "    if expected is None:\n        return None", "    if True:\n        return None")],
   ["tests/test_foundation_silent_paths.py::test_the_value_operator_follows_its_own_comparator",
    "tests/test_foundation_product_gates.py::test_regression_corpus_through_the_real_route[VA-001]"]),
  ("M09_raw_code_reaches_user", [(R, "        result.update(state=outcome.status.value.lower(), response=message.text,",

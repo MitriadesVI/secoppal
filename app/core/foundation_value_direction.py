@@ -1,38 +1,28 @@
-"""Does a VALUE operator follow its own evidence? (ADR-102 §10.4)
+"""Does a VALUE operator follow its own evidence? (ADR-102 §10.4, M1-D)
 
 The producer proposes the operator and cites the comparative phrase with its
 amount (prompt rule V1). The host used to accept any operator, so «más de 300
 millones» proposed as less_than inverted the request silently. This is not a
-money parser: it only reads the closed family of the cited comparator and checks
-it against the operator already proposed. The projection executes two exclusive
-bounds (greater_than → ">", less_than → "<"); anything else is asked.
+money parser: it reads the comparator the citation names (lexicon in
+``money_comparators``, shared with ``money_polarity``) and checks it against the
+operator already proposed, for all four VALUE operators. Negation is read
+(«que no superen» = LTE, «no menos de» = GTE) and the inclusive bound is part of
+the comparison: GT is not GTE, so «al menos» never passes as ``greater_than``.
 """
 
 from __future__ import annotations
 
-import re
+from app.core.money_comparators import (
+    BETWEEN, EQ, GT, GTE, LT, LTE, OPERATOR_FAMILY, read_comparators,
+)
 
-from app.utils.money import normalize_text
+__all__ = [
+    "BETWEEN", "EQ", "GT", "GTE", "LT", "LTE", "directions", "operator_reason",
+    "VALUE_OPERATOR_EVIDENCE_MISMATCH", "VALUE_OPERATOR_BOUNDARY_MISMATCH",
+    "VALUE_OPERATOR_UNGROUNDED", "VALUE_OPERATOR_AMBIGUOUS",
+]
 
-GT, GTE, LT, LTE, EQ, BETWEEN = "GT", "GTE", "LT", "LTE", "EQ", "BETWEEN"
-# Longest phrases first: «no más de» must not be read as «más de».
-_MARKERS = sorted((
-    *((phrase, GTE) for phrase in ("no menos de", "no menos que", "mayor o igual", "igual o mayor",
-                                   "al menos", "como minimo", "por lo menos", "desde",
-                                   "a partir de")),
-    *((phrase, LTE) for phrase in ("no mas de", "no mas que", "menor o igual", "igual o menor",
-                                   "a lo sumo", "como maximo", "hasta")),
-    *((phrase, GT) for phrase in ("mas de", "mas que", "mayor de", "mayor que", "mayor a", "mayores de",
-                                  "mayores que", "mayores a", "superior a", "superiores a",
-                                  "por encima de", "supere", "superen", "exceda", "excedan")),
-    *((phrase, LT) for phrase in ("menos de", "menos que", "menor de", "menor que", "menor a", "menores de",
-                                  "menores que", "menores a", "inferior a", "inferiores a",
-                                  "por debajo de")),
-    *((phrase, EQ) for phrase in ("exactamente", "igual a")),
-), key=lambda item: -len(item[0]))
-_BETWEEN = re.compile(r"\bentre\b.+\by\b")
-_COMPATIBLE = {"greater_than": GT, "less_than": LT}
-_OPPOSITE = {"greater_than": {LT, LTE}, "less_than": {GT, GTE}}
+_OPPOSITE = {GT: {LT, LTE}, GTE: {LT, LTE}, LT: {GT, GTE}, LTE: {GT, GTE}}
 
 VALUE_OPERATOR_EVIDENCE_MISMATCH = "VALUE_OPERATOR_EVIDENCE_MISMATCH"
 VALUE_OPERATOR_BOUNDARY_MISMATCH = "VALUE_OPERATOR_BOUNDARY_MISMATCH"
@@ -40,32 +30,32 @@ VALUE_OPERATOR_UNGROUNDED = "VALUE_OPERATOR_UNGROUNDED"
 VALUE_OPERATOR_AMBIGUOUS = "VALUE_OPERATOR_AMBIGUOUS"
 
 
-def directions(text: str) -> tuple[str, ...]:
-    """Every comparator family the cited text names, longest phrase first."""
-    folded = f" {normalize_text(text)} "
-    if _BETWEEN.search(folded):
-        return (BETWEEN,)
-    found = []
-    for phrase, family in _MARKERS:
-        pattern = re.compile(rf"(?<!\w){re.escape(phrase)}(?!\w)")
-        if pattern.search(folded):
-            found.append(family)
-            folded = pattern.sub(" ", folded)
-    return tuple(dict.fromkeys(found))
+def directions(text: str) -> tuple[str | None, ...]:
+    """Every comparator family the cited text names, in order of appearance.
+
+    ``None`` marks a negated lexically-inclusive phrase («no al menos»): it is
+    named but cannot be read, so callers must ask rather than guess.
+    """
+    scan = read_comparators(text)
+    return (BETWEEN,) if scan.between else scan.families
 
 
 def operator_reason(operator: str, text: str) -> str | None:
     """None when the operator is exactly what the cited comparator says."""
-    if operator not in _COMPATIBLE:
-        return None  # the projection admits no other VALUE operator; it stays UNSUPPORTED there
-    named = directions(text)
+    expected = OPERATOR_FAMILY.get(operator)
+    if expected is None:
+        return None  # not a VALUE comparison operator; it stays UNSUPPORTED upstream
+    scan = read_comparators(text)
+    if scan.between:
+        return VALUE_OPERATOR_EVIDENCE_MISMATCH
+    named = scan.families
     if not named:
         return VALUE_OPERATOR_UNGROUNDED
-    if len(named) > 1:
-        return VALUE_OPERATOR_AMBIGUOUS
+    if len(named) > 1 or None in named or scan.unread_negation:
+        return VALUE_OPERATOR_AMBIGUOUS  # two bounds, an unreadable negation, or a negation left unread
     (family,) = named
-    if family == _COMPATIBLE[operator]:
+    if family == expected:
         return None
-    if family in _OPPOSITE[operator] or family in (EQ, BETWEEN):
+    if family in _OPPOSITE[expected] or family == EQ:
         return VALUE_OPERATOR_EVIDENCE_MISMATCH
     return VALUE_OPERATOR_BOUNDARY_MISMATCH
