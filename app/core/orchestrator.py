@@ -33,6 +33,7 @@ from app.core.workflow.handlers.natural_alpha import (
 )
 from app.core.natural_alpha.budget import legacy_budget
 from app.core.natural_alpha.turn_receipt import abort_turn, finalize_turn, turn_scope
+from app.core.turn_ledger import turn_ledger_scope
 from app.core.workflow.handlers.pagination import handle_pagination
 from app.core.workflow.handlers.radar import handle_radar_command
 from app.core.workflow.handlers.refinement import handle_refinement
@@ -239,8 +240,9 @@ class SecopalWorkflow:
             today=today,
             run_started_at=time.perf_counter(),
         )
-        # One coverage receipt spans the whole turn, including coordinate_turn.
-        with turn_scope(self.settings, self.feedback, ctx) as receipt:
+        # One coverage receipt and one observational ledger span the whole turn,
+        # including coordinate_turn and the legacy log_trace that precedes _dispatch's tail.
+        with turn_ledger_scope(), turn_scope(self.settings, self.feedback, ctx) as receipt:
             try:
                 result = self._run_turn(ctx, seed_resolved_params)
             except BaseException:
