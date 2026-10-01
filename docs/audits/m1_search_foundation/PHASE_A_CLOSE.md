@@ -85,3 +85,17 @@ núcleo, y su contrato es «evidencia estructurada X → resolución Y».
 - Ensanches silenciosos = 0 (TIME, BUYER, VALUE): todo lo no hospedable aclara.
 - v5 ≥ v4.2 en el held-out DA-6 y estabilidad ≥ 95 % en 2 pasadas.
 - Suite global pareada, semgrep delta con `--base`, freeze y ZEUS fresco (opus, que no implementó).
+
+## Política de verificación global (2026-09-30)
+
+Los carriles cierran con ruff, focales, Hypothesis, mutantes, semgrep delta con `--base` y tests
+legacy específicos; **no** con suite global. La global pareada (por nodeid, red bloqueada,
+`PYTHONHASHSEED=0`, Hypothesis seed 19) se corre sólo sobre el candidato que de verdad se integra:
+
+| Candidato | ¿Global? |
+|---|---|
+| H0 (va directo a `main`, cambia dogfood) | sí |
+| Autoridades D-* aisladas | no |
+| Composición `main+H0+C1.1` + D-TIME + D-MONEY + D-GEO (una rama de integración, commits separados para bisecar) | sí, una |
+| Candidato C1/E (spine v5 + autoridades + PV + failover) | sí |
+| CUTOVER (borra puerta y SEARCH legacy) | sí |
