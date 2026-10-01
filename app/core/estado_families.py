@@ -328,6 +328,14 @@ PROCESS_EXACT_STATE: dict[str, str] = {
     if _names_literal(alias, literal) and literal not in _FAMILY_VOCABULARY_LITERALS
 }
 
+# M1-D-STATE/MOD (A2 STATE-017). «adjudicado» no NOMBRA el literal, pero el léxico lo declara
+# sinónimo exacto de él (``ESTADO_PROCEDIMIENTO_SYNONYMS``): «procesos adjudicados» pide
+# ``Seleccionado``, no la familia de evaluación (Evaluación + Aprobado + En aprobación). El literal
+# sale del léxico, no se repite aquí. Las flexiones se leen por lema, como las demás.
+_EXACT_PROCESS_SYNONYMS = ("adjudicado",)
+PROCESS_EXACT_STATE.update({alias: ESTADO_PROCEDIMIENTO_SYNONYMS[alias]
+                            for alias in _EXACT_PROCESS_SYNONYMS})
+
 
 def _inflection_lemmas(token: str) -> tuple[str, ...]:
     """El token y su forma masculina singular: cancelad{a,os,as} -> cancelado."""
@@ -343,7 +351,7 @@ def _inflection_lemmas(token: str) -> tuple[str, ...]:
 
 def process_state_literal(token: str) -> str | None:
     """El literal de ``procesos`` que ``token`` nombra, o None."""
-    for lemma in _inflection_lemmas(token.lower().strip()):
+    for lemma in _inflection_lemmas(_fold(token).strip()):
         literal = PROCESS_EXACT_STATE.get(lemma)
         if literal is not None:
             return literal
@@ -402,7 +410,8 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
     Returns:
         dict with 'family', 'filters' (field→list[value]), 'consumed_span', or None.
     """
-    token_lower = natural_token.lower().strip()
+    # Los catálogos se declaran plegados (sin tilde): «en ejecución» es «en ejecucion» (A2 STATE-015/016).
+    token_lower = _fold(natural_token).strip()
 
     # Precedencia léxica: si el token NOMBRA un estado del dataset, ese estado
     # es la respuesta — la familia no lo ensancha.
@@ -539,7 +548,7 @@ def read_process_state_mentions(text: str) -> tuple[ProcessStateMention, ...]:
         if any(a < end and start < b for a, b in taken):
             return
         surface = text[start:end]
-        literal, field, family = _process_reading(surface.lower())
+        literal, field, family = _process_reading(_fold(surface).strip())
         if literal is None and family is None:
             return
         taken.append((start, end))
