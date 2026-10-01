@@ -425,6 +425,12 @@ Ningún umbral se baja para que v5 pase. Un fallo es un NO_GO con informe.
 
 ### 5.5 Interfaz de autoridades
 
+> **Enmendada por la revisión METIS de C1.1** (`C1_1_METIS_REVIEW.md`, veredicto FREEZE_WITH_CHANGES,
+> lista cerrada W1–W2, V2, V3, R1, V5a–e, K1–K5). Donde este apartado y la revisión difieran, manda la
+> revisión: ventana con segmentos y huecos (≤8 tokens, INV-C0-7b), `datasets` nunca vacío y
+> `local_date()` Colombia, `detail` en el veredicto, `excluded` en los valores, `BuyerValue` unidad|grupo
+> (ADR-074), `GeoValue.department`, `StateValue` por dataset/columna, `CardinalityValue.basis`.
+
 #### 5.5.1 Contrato (`foundation_authority_contract.py`, núcleo, congelado en C1.1)
 
 ```text
