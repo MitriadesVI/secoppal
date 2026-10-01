@@ -85,11 +85,11 @@ def test_repeating_the_whole_query_with_an_explicit_period_executes_it(workflow,
     assert "MUNICIPIO DE GALAPA" in sql and "%aseo%" in sql, "buyer and topic of the frame are kept"
 
 
-@pytest.mark.parametrize("prefix", ["", "nueva búsqueda: ", "olvida eso, "])
-def test_a_new_complete_search_with_buyer_topic_and_period_executes(workflow, prefix):
+def test_a_new_complete_search_the_engine_reads_as_new_executes(workflow):
+    """R5: only a search the follow-up engine classes as ``new_search`` runs as another search."""
     _ask(workflow, BLOCKED, "c3")
     result = workflow.run_query(
-        f"{prefix}contratos de aseo de la Alcaldía de Soledad en 2024", chat_id="c3", today=TODAY,
+        "busca contratos de aseo de la Alcaldía de Soledad en 2024", chat_id="c3", today=TODAY,
     )
     assert result["needs_clarification"] is False, result["response"]
     params = result["resolved_params"]
@@ -97,6 +97,17 @@ def test_a_new_complete_search_with_buyer_topic_and_period_executes(workflow, pr
     sql = _sql(workflow)
     assert "MUNICIPIO DE SOLEDAD" in sql and "GALAPA" not in sql
     assert tpq.MARKER not in params
+
+
+@pytest.mark.parametrize("prefix", ["", "nueva búsqueda: ", "olvida eso, "])
+def test_another_buyer_that_the_engine_does_not_read_as_new_asks_with_the_way_out(workflow, prefix):
+    """R5 (ZEUS4 P2): another buyer with an explicit period is not an answer to the period question."""
+    _ask(workflow, BLOCKED, "c4")
+    result = workflow.run_query(
+        f"{prefix}contratos de aseo de la Alcaldía de Soledad en 2024", chat_id="c4", today=TODAY,
+    )
+    assert result["needs_clarification"] is True and workflow.calls == []
+    assert "«busca …»" in result["response"] and "/reset" in result["response"]
 
 
 def test_the_answer_period_replaces_the_period_the_frame_already_had(workflow):
@@ -170,11 +181,14 @@ def test_a_subset_of_the_frame_topic_is_an_answer_and_a_superset_is_not():
     assert _block({**PERIOD, "objeto": ["aseo", "vigilancia"]}, previous) is PENDING
 
 
-def test_a_topic_the_frame_does_not_have_needs_the_buyer():
+def test_a_topic_the_frame_does_not_have_asks_and_with_a_buyer_it_names_the_way_out():
+    """R5: a new topic with its own buyer is ANOTHER search, not an answer; only a ``new_search`` runs."""
     previous = {"objeto": ["aseo"]}
-    assert _block({**PERIOD, "objeto": ["completo"]}, previous) is PENDING
-    assert _block({**PERIOD, "objeto": ["vigilancia"], "entidad_resolved": "MUNICIPIO DE SOLEDAD"}, previous) is None
-    assert _block({**PERIOD, "objeto": ["vigilancia"], "entidad": "Municipio de soledad"}, previous) is None
+    assert _block({**PERIOD, "objeto": ["completo"]}, previous) is PENDING, "a stray word: the plain question"
+    for buyer in ({"entidad_resolved": "MUNICIPIO DE SOLEDAD"}, {"entidad": "Municipio de soledad"}):
+        asked = _block({**PERIOD, "objeto": ["vigilancia"], **buyer}, previous)
+        assert asked == PENDING._replace(changed_frame=True), buyer
+        assert _block({**PERIOD, "objeto": ["vigilancia"], **buyer}, previous, intent="new_search") is None
 
 
 def test_the_topic_is_read_from_every_topic_key_and_nested_values():

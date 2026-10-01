@@ -9,6 +9,12 @@ stay the last turn).
 
 Declared improvement over the base: the invalid-date case («31 de febrero de 2025» -> «ver más»)
 executed the buyer without a date in the base too.
+
+R5: the rule is scoped to what wave 1 created. The persisted signal is the marker of
+``temporal_period_question``, which the temporal gate leaves in EVERY turn a temporal error blocked
+(the window question AND the invalid date). A clarification of another route (P15, ambiguous actor…)
+carries no marker and paginates as in the base/R3 (declared debt
+PAGINATION_AFTER_NON_TEMPORAL_CLARIFICATION, owner M2/pagination).
 """
 from __future__ import annotations
 
@@ -21,7 +27,6 @@ from app.config import Settings, get_settings
 from app.core import pagination_blocked as pb
 from app.core import temporal_period_question as tpq
 from app.core.orchestrator import SecopalWorkflow
-from app.core.outcome import Outcome
 
 TODAY = date(2026, 10, 1)
 PHRASES = ["ver más", "más resultados", "siguiente página", "muéstrame más", "muestrame mas"]
@@ -127,14 +132,78 @@ class FakeTurn:
     outcome: str = ""
 
 
-def test_a_turn_is_blocked_by_the_marker_or_by_its_clarification_outcome():
+def test_a_turn_is_blocked_only_by_the_temporal_marker():
     assert pb.is_blocked(FakeTurn({tpq.MARKER: {"code": "x"}}))
-    assert pb.is_blocked(FakeTurn({"objeto": ["aseo"]}, outcome=Outcome.CLARIFICATION))
-    assert not pb.is_blocked(FakeTurn({"objeto": ["aseo"]}, outcome=Outcome.SUCCESS))
-    assert not pb.is_blocked(FakeTurn({"objeto": ["aseo"]}, outcome=Outcome.EMPTY))
-    assert not pb.is_blocked(FakeTurn({}, outcome=""))
+    assert pb.is_blocked(FakeTurn({tpq.MARKER: {"code": "invalid_date", "question": ""}}))
+    for outcome in ("clarification", "success", "empty", ""):
+        assert not pb.is_blocked(FakeTurn({"objeto": ["aseo"]}, outcome=outcome)), outcome
 
 
 def test_an_unrecognisable_turn_is_not_blocked():
     assert not pb.is_blocked(None)
     assert not pb.is_blocked(object())
+
+
+# ── R5: scoped to the temporal blocks wave 1 created ──────────────────────────────────────
+
+NON_TEMPORAL_CLARIFICATION = "procesos abiertos en Barranquilla"  # P15: broad opportunity asks
+
+
+def test_the_invalid_date_turn_carries_the_marker_and_the_anchor_turn_too(workflow):
+    for chat, query in (("m1", INVALID), ("m2", ANCHORED)):
+        workflow.run_query(query, chat_id=chat, today=TODAY)
+        last = workflow.conv_store.get_history(chat, last_n=1)[-1]
+        assert pb.is_blocked(last), query
+
+
+def test_an_invalid_date_answer_is_an_ordinary_follow_up(workflow):
+    """The marker of a non-OPEN code only records «not executed»: it opens no question."""
+    workflow.run_query(INVALID, chat_id="m3", today=TODAY)
+    done = workflow.run_query("mejor el 28 de febrero de 2025", chat_id="m3", today=TODAY)
+    assert done["needs_clarification"] is False
+    assert tpq.MARKER not in done["resolved_params"]
+    assert not pb.is_blocked(workflow.conv_store.get_history("m3", last_n=1)[-1])
+
+
+def test_a_non_temporal_clarification_paginates_as_in_the_base(workflow):
+    first = workflow.run_query(NON_TEMPORAL_CLARIFICATION, chat_id="n1", today=TODAY)
+    assert first["needs_clarification"] is True
+    assert not pb.is_blocked(workflow.conv_store.get_history("n1", last_n=1)[-1])
+    more = workflow.run_query("muéstrame más", chat_id="n1", today=TODAY)
+    assert more.get("route_reason") == "pagination_more"
+    assert more["response"] != pb.MESSAGE
+
+
+def test_a_reformulation_with_an_explicit_period_executes_and_then_pages(workflow):
+    workflow.run_query(ANCHORED, chat_id="n2", today=TODAY)
+    refused = workflow.run_query("ver más", chat_id="n2", today=TODAY)
+    assert refused["response"] == pb.MESSAGE
+    done = workflow.run_query(
+        "contratos de la Alcaldía de Galapa de octubre a diciembre de 2025", chat_id="n2", today=TODAY,
+    )
+    assert done["needs_clarification"] is False and workflow.calls
+    assert not pb.is_blocked(workflow.conv_store.get_history("n2", last_n=1)[-1])
+    workflow.calls.clear()
+    more = workflow.run_query("ver más", chat_id="n2", today=TODAY)
+    assert more.get("route_reason") != "pagination_blocked_turn" and more["rows"]
+
+
+def test_the_invalid_date_refusal_runs_nothing(workflow):
+    workflow.run_query(INVALID, chat_id="n4", today=TODAY)
+    workflow.calls.clear()
+    assert workflow.run_query("ver más", chat_id="n4", today=TODAY)["response"] == pb.MESSAGE
+    assert workflow.calls == []
+
+
+def test_the_gate_marks_a_turn_blocked_by_a_temporal_invalid_signal_too():
+    """The second door of the temporal gate (a typed ``temporal_invalid`` signal) marks the frame as well."""
+    from types import SimpleNamespace
+
+    from app.core.temporal_gate import temporal_plan_block
+
+    params = {"objeto": ["aseo"]}
+    signal = SimpleNamespace(kind="temporal_invalid", payload={"code": "reverse_range", "question": "¿qué rango?"})
+    block = temporal_plan_block(params, [signal])
+    assert block is not None and block["should_execute"] is False
+    assert pb.is_blocked(FakeTurn(params)), "pagination must refuse this frame"
+    assert tpq.take(params)[1] is None, "and it opens no period question"

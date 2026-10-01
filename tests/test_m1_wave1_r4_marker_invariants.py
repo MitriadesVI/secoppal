@@ -122,8 +122,8 @@ def test_an_explicit_reset_clears_it(workflow):
 
 @pytest.mark.parametrize("search", [
     "procesos de la Gobernación del Atlántico en 2025",
-    "contratos de aseo de la Alcaldía de Soledad en 2024",
-    "nueva búsqueda: contratos de obra de la Alcaldía de Galapa en 2023",
+    "busca contratos de aseo de la Alcaldía de Soledad en 2024",
+    "busca contratos de obra de la Alcaldía de Galapa en 2023",
 ])
 def test_a_complete_new_search_clears_it(workflow, search):
     workflow.run_query(BLOCKED, chat_id="m6", today=TODAY)

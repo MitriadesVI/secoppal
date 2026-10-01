@@ -229,12 +229,17 @@ def test_a_new_search_with_a_period_answers_even_with_a_topic():
     assert _block("aseo en Medellín en 2025", {**PERIOD, "objeto": ["aseo"]}, intent="new_search") is None
 
 
-def test_only_open_codes_leave_a_marker():
+def test_every_temporal_block_leaves_a_marker_but_only_open_codes_keep_a_question_open():
+    """R5: pagination needs to know a turn was blocked by ANY temporal error («31 de febrero»); only the
+    window questions are an open question the next turn must answer (``take`` yields a pending block)."""
     params: dict = {}
     tpq.reopen(params, "invalid_date", "q")
-    assert params == {}
+    assert params == {tpq.MARKER: {"code": "invalid_date", "question": "q"}}
+    clean, pending = tpq.take(params)
+    assert clean == {} and pending is None, "invalid_date opens no question"
     tpq.reopen(params, twa.ERROR_CODE, "q")
     assert params[tpq.MARKER] == {"code": twa.ERROR_CODE, "question": "q"}
+    assert tpq.take(params)[1] == tpq.Block(twa.ERROR_CODE, "q")
 
 
 def test_take_strips_the_marker_and_ignores_a_malformed_one():
@@ -245,11 +250,12 @@ def test_take_strips_the_marker_and_ignores_a_malformed_one():
         assert clean == {"a": 1} and pending is None
 
 
-def test_the_gate_leaves_the_marker_only_for_the_window_questions():
+def test_the_gate_marks_every_blocked_turn_and_only_the_window_questions_stay_open():
     params = {"_temporal_error": twa.ERROR_CODE, "_temporal_clarification": "pregunta"}
     block = temporal_gate.temporal_plan_block(params, [])
     assert block["should_execute"] is False
     assert params == {tpq.MARKER: {"code": twa.ERROR_CODE, "question": "pregunta"}}
     other = {"_temporal_error": "invalid_date", "_temporal_clarification": "otra"}
     assert temporal_gate.temporal_plan_block(other, []) is not None
-    assert other == {}, "a different error leaves nothing behind"
+    assert other == {tpq.MARKER: {"code": "invalid_date", "question": "otra"}}
+    assert tpq.take(other)[1] is None, "a different error marks the turn as not executed, opens nothing"

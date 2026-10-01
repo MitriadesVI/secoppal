@@ -84,6 +84,7 @@ from app.core.negation_binding import (
 )
 from app.core.negation_policy import apply_negation_policy
 from app.core.modality_parser_integration import resolve_parser_modality
+from app.core.period_free_text import aligned_pattern, without_period
 from app.core.query_text_consumption import (
     compact_whitespace,
     mask_consumed_spans,
@@ -649,14 +650,16 @@ class QueryRouter:
         # buyer governed by negation remains a typed NegationRequest and cannot
         # become positive actor/entity evidence.
         if actor_profile_enabled():
-            actor_conversation = interpret_actor_conversation(positive_text)
+            # A period is not part of any actor or buyer mention (``period_free_text``).
+            actor_text = without_period(positive_text, temporal_resolution.span)
+            actor_conversation = interpret_actor_conversation(actor_text)
             actor_conversation, actor_relation_spans = (
                 self._seed_actor_conversation(actor_conversation, params)
             )
         for relation_span in actor_relation_spans:
             scrubbed = replace_regex(
                 scrubbed,
-                re.escape(relation_span),
+                aligned_pattern(relation_span),
                 " ",
                 count=1,
                 flags=re.IGNORECASE,
