@@ -1,0 +1,1605 @@
+{
+ "FI-001": {
+  "admission": {
+   "policies": [],
+   "reason": "",
+   "resolutions": [
+    [
+     "r1",
+     "RESOLVED",
+     "host-universe",
+     [
+      "jbjy-vk9h"
+     ]
+    ],
+    [
+     "c0",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "primera infancia"
+     ]
+    ],
+    [
+     "c1",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+     ]
+    ]
+   ],
+   "status": "READY"
+  },
+  "final_reason": "",
+  "final_status": "READY",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "projection": {
+   "dispositions": [
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c1",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "is",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c1",
+     "FILTER"
+    ],
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c1",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "is",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c1",
+     "FILTER"
+    ]
+   ],
+   "manifest": [
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA'",
+       [
+        "c1"
+       ],
+       []
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "query",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    },
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA'",
+       [
+        "c1"
+       ],
+       []
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "count",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))"
+    }
+   ],
+   "reason": "",
+   "status": "READY"
+  },
+  "stage": "host"
+ },
+ "FI-002": {
+  "admission": {
+   "policies": [],
+   "reason": "",
+   "resolutions": [
+    [
+     "r1",
+     "RESOLVED",
+     "host-universe",
+     [
+      "jbjy-vk9h"
+     ]
+    ],
+    [
+     "c0",
+     "RESOLVED",
+     "host-dimension:universe-span-omitted",
+     [
+      "primera infancia"
+     ]
+    ],
+    [
+     "c1",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+     ]
+    ]
+   ],
+   "status": "READY"
+  },
+  "final_reason": "",
+  "final_status": "READY",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "projection": {
+   "dispositions": [
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c1",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "is",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c1",
+     "FILTER"
+    ],
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c1",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "is",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c1",
+     "FILTER"
+    ]
+   ],
+   "manifest": [
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA'",
+       [
+        "c1"
+       ],
+       []
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "query",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    },
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA'",
+       [
+        "c1"
+       ],
+       []
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "count",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND nombre_entidad = 'DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))"
+    }
+   ],
+   "reason": "",
+   "status": "READY"
+  },
+  "stage": "host"
+ },
+ "FI-003": {
+  "admission": {
+   "policies": [],
+   "reason": "TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+   "resolutions": [],
+   "status": "NEEDS_CLARIFICATION"
+  },
+  "final_reason": "TOPIC_OVERLAPS_REQUEST_UNIVERSE",
+  "final_status": "NEEDS_CLARIFICATION",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "stage": "host"
+ },
+ "NC-001": {
+  "admission": {
+   "policies": [],
+   "reason": "",
+   "resolutions": [
+    [
+     "r1",
+     "RESOLVED",
+     "host-universe",
+     [
+      "jbjy-vk9h"
+     ]
+    ],
+    [
+     "c0",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "sistema de gestion de contratos laborales"
+     ]
+    ]
+   ],
+   "status": "READY"
+  },
+  "final_reason": "",
+  "final_status": "READY",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "projection": {
+   "dispositions": [
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ]
+   ],
+   "manifest": [
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%sistema de gestion de contratos laborales%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%sistema de gestion de contratos laborales%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "query",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%sistema de gestion de contratos laborales%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%sistema de gestion de contratos laborales%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    },
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%sistema de gestion de contratos laborales%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%sistema de gestion de contratos laborales%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "count",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%sistema de gestion de contratos laborales%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%sistema de gestion de contratos laborales%')))"
+    }
+   ],
+   "reason": "",
+   "status": "READY"
+  },
+  "stage": "host"
+ },
+ "NC-002": {
+  "admission": {
+   "policies": [],
+   "reason": "",
+   "resolutions": [
+    [
+     "r1",
+     "RESOLVED",
+     "host-universe",
+     [
+      "p6dx-8zbt"
+     ]
+    ],
+    [
+     "r2",
+     "RESOLVED",
+     "host-universe",
+     [
+      "jbjy-vk9h"
+     ]
+    ],
+    [
+     "c0",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "primera infancia"
+     ]
+    ],
+    [
+     "c1",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "primera infancia"
+     ]
+    ]
+   ],
+   "status": "READY"
+  },
+  "final_reason": "",
+  "final_status": "READY",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "procesos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "processes"
+    },
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r2",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "projection": {
+   "dispositions": [
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c1",
+     [
+      "r2"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c1",
+     "FILTER"
+    ],
+    [
+     "c1",
+     [
+      "r2"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c1",
+     "FILTER"
+    ]
+   ],
+   "manifest": [
+    {
+     "clauses": [
+      [
+       "(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "p6dx-8zbt",
+     "local_filter": null,
+     "operation": "query",
+     "policies": [],
+     "request_id": "r1",
+     "scope_id": "s1",
+     "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"
+    },
+    {
+     "clauses": [
+      [
+       "(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "p6dx-8zbt",
+     "local_filter": null,
+     "operation": "count",
+     "policies": [],
+     "request_id": "r1",
+     "scope_id": "s1",
+     "soql": "SELECT count(*) WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')))"
+    },
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c1"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "query",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r2",
+     "scope_id": "s1",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    },
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c1"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "count",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r2",
+     "scope_id": "s1",
+     "soql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))"
+    }
+   ],
+   "reason": "",
+   "status": "READY"
+  },
+  "stage": "host"
+ },
+ "NC-003": {
+  "admission": {
+   "policies": [],
+   "reason": "",
+   "resolutions": [
+    [
+     "r1",
+     "RESOLVED",
+     "host-universe",
+     [
+      "jbjy-vk9h"
+     ]
+    ],
+    [
+     "c0",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "administracion de contratos"
+     ]
+    ]
+   ],
+   "status": "READY"
+  },
+  "final_reason": "",
+  "final_status": "READY",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "projection": {
+   "dispositions": [
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ]
+   ],
+   "manifest": [
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%administracion de contratos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%administracion de contratos%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "query",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%administracion de contratos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%administracion de contratos%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    },
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%administracion de contratos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%administracion de contratos%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "count",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%administracion de contratos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%administracion de contratos%')))"
+    }
+   ],
+   "reason": "",
+   "status": "READY"
+  },
+  "stage": "host"
+ },
+ "NC-004": {
+  "admission": {
+   "policies": [],
+   "reason": "",
+   "resolutions": [
+    [
+     "r1",
+     "RESOLVED",
+     "host-universe",
+     [
+      "jbjy-vk9h"
+     ]
+    ],
+    [
+     "c0",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "primera infancia"
+     ]
+    ]
+   ],
+   "status": "READY"
+  },
+  "final_reason": "",
+  "final_status": "READY",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "projection": {
+   "dispositions": [
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ]
+   ],
+   "manifest": [
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "query",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%'))) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    },
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "count",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))"
+    }
+   ],
+   "reason": "",
+   "status": "READY"
+  },
+  "stage": "host"
+ },
+ "NC-005": {
+  "admission": {
+   "policies": [],
+   "reason": "",
+   "resolutions": [
+    [
+     "r1",
+     "RESOLVED",
+     "host-universe",
+     [
+      "jbjy-vk9h"
+     ]
+    ]
+   ],
+   "status": "READY"
+  },
+  "final_reason": "SOQL_PROJECTION_BLOCKED:SoQL build refused: no WHERE predicate (scope/topic/estado/modalidad/contract_type). Pass allow_global=True only if a global query is intentional.",
+  "final_status": "UNSUPPORTED",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "primera infancia",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "projection": {
+   "error": "SOQL_PROJECTION_BLOCKED:SoQL build refused: no WHERE predicate (scope/topic/estado/modalidad/contract_type). Pass allow_global=True only if a global query is intentional."
+  },
+  "stage": "host"
+ },
+ "NC-006": {
+  "admission": {
+   "policies": [],
+   "reason": "UNRESOLVED_HOST_DIMENSION:BUYER",
+   "resolutions": [],
+   "status": "NEEDS_CLARIFICATION"
+  },
+  "final_reason": "UNRESOLVED_HOST_DIMENSION:BUYER",
+  "final_status": "NEEDS_CLARIFICATION",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "stage": "host"
+ },
+ "OP-001": {
+  "admission": {
+   "policies": [
+    [
+     "O1B",
+     "1",
+     [
+      "opportunity-r1"
+     ],
+     "EQUIVALENT"
+    ]
+   ],
+   "reason": "",
+   "resolutions": [
+    [
+     "r1",
+     "RESOLVED",
+     "host-universe",
+     [
+      "p6dx-8zbt"
+     ]
+    ],
+    [
+     "c0",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "primera infancia"
+     ]
+    ]
+   ],
+   "status": "READY"
+  },
+  "final_reason": "",
+  "final_status": "READY",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "HOST_CLOSED_POLICY",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "opportunities",
+     "evidence_quote": "oportunidades",
+     "policy_version": "1",
+     "producer_kind": "opportunities",
+     "request_id": "r1",
+     "rules": [
+      "O3"
+     ],
+     "subject": "processes"
+    }
+   ]
+  },
+  "projection": {
+   "dispositions": [
+    [
+     "opportunity-r1",
+     [
+      "r1"
+     ],
+     "TRANSFORMED",
+     "EQUIVALENT",
+     "is",
+     "POSITIVE",
+     "INCLUDE_AND_WARN",
+     "O1B@1",
+     "REQUESTED_UNIVERSE"
+    ],
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "opportunity-r1",
+     [
+      "r1"
+     ],
+     "TRANSFORMED",
+     "EQUIVALENT",
+     "is",
+     "POSITIVE",
+     "INCLUDE_AND_WARN",
+     "O1B@1",
+     "REQUESTED_UNIVERSE"
+    ],
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ]
+   ],
+   "manifest": [
+    {
+     "clauses": [
+      [
+       "(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ],
+      [
+       "estado_del_procedimiento IN ('Publicado', 'Abierto')",
+       [
+        "opportunity-r1"
+       ],
+       [
+        "O1B@1"
+       ]
+      ],
+      [
+       "estado_de_apertura_del_proceso = 'Abierto'",
+       [
+        "opportunity-r1"
+       ],
+       [
+        "O1B@1"
+       ]
+      ],
+      [
+       "case(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= '2026-07-02T00:00:00.000', true, fecha_de_recepcion_de >= '2026-09-30T00:00:00.000')",
+       [
+        "opportunity-r1"
+       ],
+       [
+        "O1B@1"
+       ]
+      ]
+     ],
+     "dataset": "p6dx-8zbt",
+     "local_filter": null,
+     "operation": "query",
+     "policies": [
+      [
+       "O1B@1",
+       "EQUIVALENT"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, justificaci_n_modalidad_de, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, fecha_de_publicacion_del, fecha_de_recepcion_de WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%'))) AND estado_del_procedimiento IN ('Publicado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' AND case(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= '2026-07-02T00:00:00.000', true, fecha_de_recepcion_de >= '2026-09-30T00:00:00.000') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50"
+    },
+    {
+     "clauses": [
+      [
+       "(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ],
+      [
+       "estado_del_procedimiento IN ('Publicado', 'Abierto')",
+       [
+        "opportunity-r1"
+       ],
+       [
+        "O1B@1"
+       ]
+      ],
+      [
+       "estado_de_apertura_del_proceso = 'Abierto'",
+       [
+        "opportunity-r1"
+       ],
+       [
+        "O1B@1"
+       ]
+      ],
+      [
+       "case(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= '2026-07-02T00:00:00.000', true, fecha_de_recepcion_de >= '2026-09-30T00:00:00.000')",
+       [
+        "opportunity-r1"
+       ],
+       [
+        "O1B@1"
+       ]
+      ]
+     ],
+     "dataset": "p6dx-8zbt",
+     "local_filter": null,
+     "operation": "count",
+     "policies": [
+      [
+       "O1B@1",
+       "EQUIVALENT"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT count(*) WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%primera infancia%'))) AND estado_del_procedimiento IN ('Publicado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' AND case(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= '2026-07-02T00:00:00.000', true, fecha_de_recepcion_de >= '2026-09-30T00:00:00.000')"
+    }
+   ],
+   "reason": "",
+   "status": "READY"
+  },
+  "stage": "host"
+ },
+ "ST-001": {
+  "admission": {
+   "policies": [],
+   "reason": "STATE_COMPOSITION_UNSUPPORTED",
+   "resolutions": [],
+   "status": "NEEDS_CLARIFICATION"
+  },
+  "final_reason": "STATE_COMPOSITION_UNSUPPORTED",
+  "final_status": "NEEDS_CLARIFICATION",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "procesos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "processes"
+    }
+   ]
+  },
+  "stage": "host"
+ },
+ "TO-001": {
+  "admission": {
+   "policies": [],
+   "reason": "MULTI_EVIDENCE_TOPIC_UNSUPPORTED",
+   "resolutions": [],
+   "status": "NEEDS_CLARIFICATION"
+  },
+  "final_reason": "MULTI_EVIDENCE_TOPIC_UNSUPPORTED",
+  "final_status": "NEEDS_CLARIFICATION",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "stage": "host"
+ },
+ "VA-001": {
+  "admission": {
+   "policies": [],
+   "reason": "VALUE_OPERATOR_EVIDENCE_MISMATCH",
+   "resolutions": [],
+   "status": "NEEDS_CLARIFICATION"
+  },
+  "final_reason": "VALUE_OPERATOR_EVIDENCE_MISMATCH",
+  "final_status": "NEEDS_CLARIFICATION",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "stage": "host"
+ },
+ "VA-002": {
+  "admission": {
+   "policies": [],
+   "reason": "",
+   "resolutions": [
+    [
+     "r1",
+     "RESOLVED",
+     "host-universe",
+     [
+      "jbjy-vk9h"
+     ]
+    ],
+    [
+     "c0",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "primera infancia"
+     ]
+    ],
+    [
+     "c1",
+     "RESOLVED",
+     "host-dimension",
+     [
+      "300000000"
+     ]
+    ]
+   ],
+   "status": "READY"
+  },
+  "final_reason": "",
+  "final_status": "READY",
+  "h7": {
+   "conflict": null,
+   "decisions": [
+    {
+     "authority": "PRODUCER",
+     "disagrees_with_producer": false,
+     "effect": "EQUIVALENT",
+     "effective_kind": "records",
+     "evidence_quote": "contratos",
+     "policy_version": "1",
+     "producer_kind": "records",
+     "request_id": "r1",
+     "rules": [],
+     "subject": "contracts"
+    }
+   ]
+  },
+  "projection": {
+   "dispositions": [
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c1",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "greater_than",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c1",
+     "FILTER"
+    ],
+    [
+     "c0",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "contains",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c0",
+     "FILTER"
+    ],
+    [
+     "c1",
+     [
+      "r1"
+     ],
+     "CONSUMED",
+     "EQUIVALENT",
+     "greater_than",
+     "POSITIVE",
+     "EXCLUDE_AND_WARN",
+     "condition:c1",
+     "FILTER"
+    ]
+   ],
+   "manifest": [
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ],
+      [
+       "valor_del_contrato > 300000000",
+       [
+        "c1"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "query",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, justificacion_modalidad_de, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%'))) AND valor_del_contrato > 300000000 ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    },
+    {
+     "clauses": [
+      [
+       "(upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO'))",
+       [],
+       [
+        "contract-universe@contract-universe-1.1"
+       ]
+      ],
+      [
+       "(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%')))",
+       [
+        "c0"
+       ],
+       []
+      ],
+      [
+       "valor_del_contrato > 300000000",
+       [
+        "c1"
+       ],
+       []
+      ]
+     ],
+     "dataset": "jbjy-vk9h",
+     "local_filter": null,
+     "operation": "count",
+     "policies": [
+      [
+       "contract-universe@contract-universe-1.1",
+       "NARROWING"
+      ]
+     ],
+     "request_id": "r1",
+     "scope_id": "r1",
+     "soql": "SELECT count(*) WHERE (upper(unaccent(trim(estado_contrato))) = 'APROBADO' AND date_extract_y(fecha_de_firma) IS NOT NULL OR upper(unaccent(trim(estado_contrato))) IN ('EN EJECUCION', 'CERRADO', 'MODIFICADO', 'TERMINADO', 'CEDIDO', 'SUSPENDIDO', 'PRORROGADO')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%primera infancia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%primera infancia%'))) AND valor_del_contrato > 300000000"
+    }
+   ],
+   "reason": "",
+   "status": "READY"
+  },
+  "stage": "host"
+ }
+}

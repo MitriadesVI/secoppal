@@ -18,6 +18,7 @@ import re
 from dataclasses import dataclass, replace
 
 from app.core.foundation_admission import state_value
+from app.core.foundation_operations import Subject
 from app.core.intent_vocabulary import BIDDER_PARTICIPATION_VERBS
 from app.core.interpretation_contract import (
     ConditionExpression, ConditionRole, Effect, InterpretationProposal, LogicOperator, Polarity,
@@ -87,7 +88,7 @@ def _rules(proposal, request, conditions) -> tuple[tuple[str, str], ...]:
                         for c in others for span in c.evidence)}
     fired = []
     # Opportunities exist only among processes (O4): on contracts these words decide nothing.
-    if request.subject == "processes":
+    if request.subject is Subject.PROCESSES:
         if heads & OPPORTUNITY_HEADS:
             fired.append(("O3", OPPORTUNITIES))
         if heads & PARTICIPATION_VERBS:
@@ -103,7 +104,7 @@ def _rules(proposal, request, conditions) -> tuple[tuple[str, str], ...]:
         stated = any(c.dimension is SemanticDimension.STATE and state_value(c) is not None for c in others)
         if dual:
             fired.append(("O6C", RECORDS))
-        elif request.subject == "processes":
+        elif request.subject is Subject.PROCESSES:
             fired.append(("O6B", RECORDS) if timed or stated else ("O6A", OPPORTUNITIES))
     return tuple(sorted(fired, key=lambda item: RULE_ORDER.index(item[0])))
 
@@ -145,8 +146,8 @@ def apply_universe_policy(proposal: InterpretationProposal) -> UniversePolicyOut
         mine = [c for c in proposal.conditions if request.request_id in c.request_ids]
         universe = next((c for c in mine if c.role is ConditionRole.REQUESTED_UNIVERSE), None)
         producer_kind = OPPORTUNITIES if universe is not None else RECORDS
-        if request.universe_evidence is None:  # Admission rejects it; nothing to decide on.
-            decisions.append(RequestUniverseDecision(request.request_id, request.subject, producer_kind,
+        if request.universe_evidence is None:  # UNSPECIFIED: the user named no universe, H7 has nothing to decide on.
+            decisions.append(RequestUniverseDecision(request.request_id, request.subject.value, producer_kind,
                                                      producer_kind, PRODUCER, (), "", Effect.EQUIVALENT))
             continue
         fired = _rules(proposal, request, mine)
@@ -157,7 +158,7 @@ def apply_universe_policy(proposal: InterpretationProposal) -> UniversePolicyOut
                                          conflict=f"HOST_UNIVERSE_RULE_CONFLICT:{request.request_id}:{names}")
         effective = kinds.pop() if kinds else producer_kind
         decisions.append(RequestUniverseDecision(
-            request.request_id, request.subject, producer_kind, effective,
+            request.request_id, request.subject.value, producer_kind, effective,
             HOST_CLOSED_POLICY if fired else PRODUCER, tuple(rule for rule, _ in fired),
             request.universe_evidence.quote, _effect(producer_kind, effective)))
         if effective == producer_kind:
