@@ -2,7 +2,7 @@
   "schema_version": "m1-search-gold/1.3",
   "records": 620,
   "double_labeled": 365,
-  "sha256": "641574c8a89aef408260d652a9935fb364fd3913968955451e36b7fa2a806d26",
+  "sha256": "aef2e2e43c0a9c40d79b51fed50150dfd53a03963dab1d162e86c176f963fe9a",
   "decisions": {
     "R0069": {
       "source": "B",
@@ -175,11 +175,17 @@
     "R0520": [
       "C7"
     ],
+    "R0522": [
+      "C7"
+    ],
     "R0524": [
       "DECISION:§3"
     ],
     "R0525": [
       "DECISION:B3"
+    ],
+    "R0534": [
+      "C7"
     ],
     "R0536": [
       "C2"

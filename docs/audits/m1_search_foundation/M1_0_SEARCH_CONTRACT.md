@@ -253,3 +253,18 @@ Decisión de producto P1 (cola §5/A6): **no** se añade regla BUYER→CONTRACTS
 procesos y en contratos, y «oportunidades de la Alcaldía de X» es una pregunta comercial legítima.
 PV1 con el año en curso se mantiene: «procesos de X en 2026» son todos los procesos de 2026,
 abiertos incluidos. La vista por defecto siempre se anuncia con botones.
+
+## 14. Enmienda v1.4 (2026-09-30, adjudicación de los slices sintéticos: 35 desacuerdos sobre 379)
+
+| Id | Regla |
+|---|---|
+| D1 | «cuántos … por X» = `GROUP_BY·BY_X`. `COUNT` sólo lleva `TOTAL`. |
+| D2 | **Corrige A2**: «obra(s)» nunca es CONTRACT_TYPE (convención K1 del prompt medido): siempre `TOPIC whole_token_folded`. Se retira «obra» de la lista A2. |
+| D3 | `CONTRACT_TYPE_OR_NATURE` usa siempre `is` en el Gold (incluidos «convenios de asociación» y tipos largos); `family` queda reservado. |
+| D4 | Las reglas de Product View (§5) sólo miran condiciones **POSITIVE**: un estado terminal negado («que no esté cerrado») no activa PV2. |
+| D5 | Referencias normativas («ley 80 de 1993», «decreto 1082») son `UNSUPPORTED`, no TOPIC (U1). |
+| D6 | Un participio que ancla una fecha («publicados hace dos semanas», «firmados en marzo») no es STATE: la fecha va a TIME (extiende Y1). |
+| D7 | «de <lugar>» sin cabeza institucional = GEOGRAPHY (lectura dominante) con `AMBIGUOUS` y `EXECUTE`; `CLARIFY` sólo si el nombre tiene un homónimo no geográfico dominante (Santander/banco). |
+| D8 | «excepto los de X y los de Y» = `NOT(OR(X,Y))` (E2: exclusión de un grupo compuesto). |
+| D9 | En MULTI cada job lleva sus propias requests; los jobs no-SEARCH siguen C7. Una pregunta anafórica con operación clara («y sus proveedores?») es esa operación con `NEEDS_HISTORY` (C2). |
+| D10 | «analiza <tema> en <lugar>» (sin entidad) = `GROUP_BY·OTHER:MARKET_ANALYSIS`. «qué ha contratado <actor>» = SEARCH·CONTRACTS con ACTOR (B2). Predicción = `OUT_OF_DOMAIN`/`DECLINE`. |

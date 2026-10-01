@@ -1,0 +1,144 @@
+{
+  "compared": 379,
+  "only_in_A": 0,
+  "only_in_B": 0,
+  "field_agreement": {
+    "ambiguity": {
+      "agree": 371,
+      "total": 379,
+      "rate": 0.9789
+    },
+    "aspect": {
+      "agree": 377,
+      "total": 379,
+      "rate": 0.9947
+    },
+    "conditions_exact": {
+      "agree": 285,
+      "total": 302,
+      "rate": 0.9437
+    },
+    "dimensions_polarity": {
+      "agree": 294,
+      "total": 302,
+      "rate": 0.9735
+    },
+    "expected_disposition": {
+      "agree": 375,
+      "total": 379,
+      "rate": 0.9894
+    },
+    "operation": {
+      "agree": 373,
+      "total": 379,
+      "rate": 0.9842
+    },
+    "product_view": {
+      "agree": 378,
+      "total": 379,
+      "rate": 0.9974
+    },
+    "turn_context": {
+      "agree": 378,
+      "total": 379,
+      "rate": 0.9974
+    },
+    "universes": {
+      "agree": 375,
+      "total": 379,
+      "rate": 0.9894
+    }
+  },
+  "operation_kappa": 0.9585,
+  "condition_agreement_by_dimension": {
+    "ACTOR": {
+      "tp": 24,
+      "fn": 0,
+      "fp": 0,
+      "f1": 1.0
+    },
+    "BUYER": {
+      "tp": 71,
+      "fn": 0,
+      "fp": 1,
+      "f1": 0.993
+    },
+    "CONTRACT_TYPE_OR_NATURE": {
+      "tp": 13,
+      "fn": 3,
+      "fp": 3,
+      "f1": 0.8125
+    },
+    "GEOGRAPHY": {
+      "tp": 93,
+      "fn": 1,
+      "fp": 1,
+      "f1": 0.9894
+    },
+    "MODALITY": {
+      "tp": 29,
+      "fn": 0,
+      "fp": 0,
+      "f1": 1.0
+    },
+    "ORDER": {
+      "tp": 23,
+      "fn": 2,
+      "fp": 2,
+      "f1": 0.92
+    },
+    "SOURCE": {
+      "tp": 1,
+      "fn": 0,
+      "fp": 0,
+      "f1": 1.0
+    },
+    "STATE": {
+      "tp": 37,
+      "fn": 3,
+      "fp": 2,
+      "f1": 0.9367
+    },
+    "TIME": {
+      "tp": 60,
+      "fn": 0,
+      "fp": 0,
+      "f1": 1.0
+    },
+    "TOPIC": {
+      "tp": 209,
+      "fn": 4,
+      "fp": 2,
+      "f1": 0.9858
+    },
+    "UNSUPPORTED": {
+      "tp": 1,
+      "fn": 2,
+      "fp": 5,
+      "f1": 0.2222
+    },
+    "VALUE": {
+      "tp": 33,
+      "fn": 1,
+      "fp": 1,
+      "f1": 0.9706
+    }
+  },
+  "disagreements": 35,
+  "disagreements_by_field": {
+    "operation": 6,
+    "turn_context": 1,
+    "conditions_exact": 17,
+    "ambiguity": 8,
+    "dimensions_polarity": 8,
+    "aspect": 2,
+    "expected_disposition": 4,
+    "universes": 4,
+    "product_view": 1
+  },
+  "disagreements_by_slice": {
+    "NEIGHBOR": 14,
+    "MINIMAL_PAIR": 4,
+    "ADVERSARIAL": 17
+  }
+}

@@ -44,6 +44,15 @@ def normalize(record: dict) -> tuple[dict, list[str]]:
                 if new != cond.get("quote"):
                     cond["quote"] = new
                     applied.append("C1")
+    for request in _requests(out):
+        for cond in request.get("conditions", []):
+            if cond.get("dimension") == "CONTRACT_TYPE_OR_NATURE":
+                if (cond.get("quote") or "").strip().lower() in {"obra", "obras"}:
+                    cond.update(dimension="TOPIC", operator="whole_token_folded")  # v1.4 D2 (K1)
+                    applied.append("D2")
+                elif cond.get("operator") != "is":
+                    cond["operator"] = "is"  # v1.4 D3
+                    applied.append("D3")
     op = out.get("operation")
     if op == "FOLLOWUP_DELTA" and out.get("turn_context") != "FOLLOWUP_FRAGMENT":
         out["turn_context"] = "FOLLOWUP_FRAGMENT"
@@ -51,6 +60,13 @@ def normalize(record: dict) -> tuple[dict, list[str]]:
     if op == "PROTOCOL" and out.get("turn_context") != "SELF_CONTAINED":
         out["turn_context"] = "SELF_CONTAINED"
         applied.append("C2")
+    for job in out.get("jobs") or []:  # contract v1.4 D9: non-SEARCH jobs follow C7
+        if job.get("operation") != "SEARCH":
+            for request in job.get("requests") or []:
+                if (request.get("universe"), request.get("view"), request.get("universe_quote")) != (
+                        "UNSPECIFIED", "RECORDS", None):
+                    request.update(universe="UNSPECIFIED", view="RECORDS", universe_quote=None)
+                    applied.append("C7")
     if op not in {"SEARCH", "MULTI"} and out.get("requests"):
         kept = []
         for request in out["requests"]:
@@ -110,6 +126,26 @@ DECISIONS = {
 }
 
 
+# Synthetic slices (NEIGHBOR, MINIMAL_PAIR, ADVERSARIAL): A = author (sonnet), B = opus-B.
+SYNTH_FROM_B = {"N013", "N019", "N033", "N051", "N053", "N062", "N083", "N098", "N099", "N102",
+                "X021", "X035", "X037", "X038", "X041", "X049", "X051", "X057", "X072", "X079",
+                "X082", "X091"}
+SYNTH_CLEAR = {"N026", "N065", "P084", "X000", "X040"}
+
+
+def adjudicate_synthetic(a: dict[str, dict], b: dict[str, dict]) -> list[dict]:
+    rows = []
+    for gid in sorted(a):
+        source = "B" if gid in SYNTH_FROM_B else "A"
+        record, _ = normalize(b[gid] if source == "B" else a[gid])
+        if gid in SYNTH_CLEAR:
+            _set_clear(record)
+        record["labeler"] = f"adjudicated:{source}"
+        record["double_labeled"] = gid in b
+        rows.append(record)
+    return rows
+
+
 def _load(directory: Path) -> dict[str, dict]:
     records = {}
     for path in sorted(directory.glob("*.jsonl")):
@@ -154,5 +190,20 @@ def main(dir_a: str, dir_b: str, out_dir: str) -> int:
     return 0
 
 
+def main_synthetic(dir_a: str, dir_b: str, out_dir: str) -> int:
+    rows = adjudicate_synthetic(_load(Path(dir_a)), _load(Path(dir_b)))
+    out = Path(out_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    for slice_name, file_name in (("NEIGHBOR", "neighbor"), ("MINIMAL_PAIR", "minimal_pair"),
+                                  ("ADVERSARIAL", "adversarial")):
+        part = [r for r in rows if r["slice"] == slice_name]
+        (out / f"{file_name}.jsonl").write_text(
+            "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in part), encoding="utf-8")
+    print(json.dumps({"records": len(rows), "from_B": len(SYNTH_FROM_B), "cleared": len(SYNTH_CLEAR)}))
+    return 0
+
+
 if __name__ == "__main__":
+    if sys.argv[1] == "--synthetic":
+        sys.exit(main_synthetic(*sys.argv[2:5]))
     sys.exit(main(*sys.argv[1:4]))
