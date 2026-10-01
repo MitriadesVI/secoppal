@@ -14,6 +14,7 @@ from app.core.foundation_admission import admit_proposal
 from app.core.foundation_messages import user_message
 from app.core.foundation_presentation import export_fields, group_cards, response_text
 from app.core.foundation_route_owner import FOUNDATION_TURN_MARK
+from app.core.foundation_shadow_hook import record_legacy_shadow
 from app.core.foundation_guard import ExecutionGuard, FoundationGuardError, execution_guard
 from app.core.foundation_projection import ProjectionError, project_accepted
 from app.core.foundation_token_plan import select_members
@@ -296,4 +297,5 @@ def run_foundation_search(workflow, ctx, seed, *, observation=None, binding=None
     result["foundation_telemetry"] = _telemetry(producer, accepted, universe, result)
     result["foundation_telemetry"]["foundation_latency_ms"] = round((time.perf_counter() - started) * 1000, 1)
     record_production(result["foundation_telemetry"], result, ctx.user_query)
+    record_legacy_shadow(workflow, ctx, accepted)
     return _record(workflow, ctx, result)

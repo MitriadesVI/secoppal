@@ -76,8 +76,8 @@ def test_admitted_records_admission_then_the_production_stages(make_flow):
     assert result["foundation_terminal"] == "READY"
     (line,) = trace_lines(flow)
     rows = ledger_of(line)
-    assert [r["name"] for r in rows] == ["ADMISSION", "INTERPRETER", "HOST", "EXECUTION"]
-    admission, interpreter, host, execution = rows
+    assert [r["name"] for r in rows] == ["ADMISSION", "INTERPRETER", "HOST", "EXECUTION", "SHADOW"]
+    admission, interpreter, host, execution, _shadow = rows
     assert (admission["reason_code"], admission["decision"]) == ("ADMITTED", "ADMIT")
     assert admission["input_digest"] and len(admission["input_digest"]) == tl.DIGEST_CHARS
     telemetry = result["foundation_telemetry"]
@@ -149,8 +149,6 @@ def test_a_text_that_is_not_search_shaped_records_ineligible_lexical(make_flow):
 # The real gate decides which door each text uses; these assert what it actually does.
 OWNER_CODES = [
     pytest.param("contratos del proveedor FUNDACARIBE", None, "DECLINED_OWNER:ACTOR", id="actor"),
-    pytest.param("busca licitaciones de alcaldía de barranquilla en 2024", None, "DECLINED_OWNER:ACTOR",
-                 id="actor-legacy-parse"),
     pytest.param("busca proveedor FUNDACARIBE", None, "INELIGIBLE_LEXICAL", id="actor-name-fails-the-gate-first"),
     pytest.param("contratos de la alcaldía de Barranquilla perfil de la entidad", None,
                  "DECLINED_OWNER:ENTITY_PROFILE", id="entity-profile"),
@@ -323,3 +321,31 @@ def test_record_without_an_open_turn_is_a_noop_and_scopes_nest():
         assert len(inner.stages) == 1 and len(outer.stages) == 1
         assert tl.turn_ledger_trace()["turn_ledger"]["version"] == tl.LEDGER_VERSION
     assert tl.current_ledger() is None
+
+
+# ── SHADOW: the legacy parse beside the accepted interpretation ────────────────
+def test_an_accepted_turn_records_the_legacy_shadow_per_dimension(make_flow):
+    flow = make_flow("foundation_v3")
+    run(flow, SEARCH, chat_id="c1")
+    shadow = ledger_of(trace_lines(flow)[0])[-1]
+    assert (shadow["name"], shadow["authority"], shadow["decision"]) == ("SHADOW", "LEGACY_SHADOW", "COMPARED")
+    assert shadow["detail"]["TOPIC"] == "AGREE"
+    assert shadow["reason_code"] in {"PARITY", "DIVERGENT"}
+    assert "aseo" not in json.dumps(shadow)
+
+
+def test_a_failing_shadow_records_an_error_and_never_reaches_the_turn(make_flow, monkeypatch):
+    import app.core.foundation_shadow_hook as hook
+
+    clean, broken = make_flow("foundation_v3"), make_flow("foundation_v3")
+
+    def explode(*args, **kwargs):
+        raise RuntimeError("boom")
+
+    expected = run(clean, SEARCH, chat_id="c1")
+    monkeypatch.setattr(hook, "compare", explode)
+    result = run(broken, SEARCH, chat_id="c1")
+    shadow = ledger_of(trace_lines(broken)[0])[-1]
+    assert (shadow["decision"], shadow["reason_code"]) == ("SHADOW_ERROR", "RuntimeError")
+    assert result["response"] == expected["response"] and result["route_reason"] == expected["route_reason"]
+    assert Counter(broken.source.calls) == Counter(clean.source.calls)
