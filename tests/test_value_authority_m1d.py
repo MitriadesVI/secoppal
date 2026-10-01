@@ -376,6 +376,7 @@ def test_the_context_never_corrects_the_operator_it_cannot_create_a_resolved():
     (("no", "hay", "contratos", "de"), ()),                 # a «no» that is not just before the quote
     (("contratos", "de", "aseo", "de"), ("en", "bogota")),
     (("no", "x", "y", "z", "w"), ()),                       # only the nearest WINDOW_TOKENS count
+    (("no", "que", "sea", "es", "a"), ()),                  # a «no» beyond the window never counts
 ])
 def test_legitimate_context_does_not_withdraw(left, right):
     result = resolve_value_condition("más de 100 millones", "greater_than", "POSITIVE", left, right)
