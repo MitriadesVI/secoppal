@@ -1,0 +1,1322 @@
+{
+ "params_by_query": {
+  "busca contratos de aseo": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "busca contratos de papelería para alcaldía de Soacha": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "entidad": "Municipio de soacha",
+   "entidad_resolution": {
+    "confidence": "high",
+    "kind": "buyer_entity",
+    "like_value": null,
+    "metadata": {
+     "resolution_method": "exact",
+     "rewritten_from": "alcaldia de soacha"
+    },
+    "method": "rewrite_alcald[ií]a",
+    "value": "MUNICIPIO DE SOACHA"
+   },
+   "entidad_resolved": "MUNICIPIO DE SOACHA",
+   "objeto": [
+    "papeleria"
+   ]
+  },
+  "contratación directa en Boyacá": {
+   "dataset": "procesos",
+   "dataset_explicit": false,
+   "departamento_resolved": "Boyacá",
+   "modalidad_include_procedure_ids": [
+    "contratacion_directa",
+    "contratacion_directa_con_ofertas"
+   ],
+   "municipal_territory": {
+    "candidates": [
+     {
+      "department": "BOYACÁ",
+      "department_value": "Boyacá",
+      "divipola": "15104",
+      "municipality": "BOYACÁ"
+     }
+    ],
+    "clarification_question": "¿En qué departamento está el municipio de boyaca? Opciones: Boyacá. Si te refieres al departamento de Boyacá, indícalo.",
+    "mention": "boyaca",
+    "status": "ambiguous",
+    "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03"
+   }
+  },
+  "contratos adjudicados a mujeres en Nariño": {
+   "actor_conversation_construction": "strong_actor_syntax",
+   "actor_conversation_operation": "SET_ACTOR",
+   "actor_resolution": "name_unresolved",
+   "actor_scope": {
+    "observed_name": "mujeres",
+    "reason_codes": [
+     "ACTOR_VERB_MARKER",
+     "ACTOR_NAME_NEEDS_RESOLUTION"
+    ],
+    "requires_resolution": true,
+    "resolution_method": "name_unresolved",
+    "role": "contractor"
+   },
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento_resolved": "Nariño",
+   "municipal_territory": {
+    "candidates": [
+     {
+      "department": "ANTIOQUIA",
+      "department_value": "Antioquia",
+      "divipola": "05483",
+      "municipality": "NARIÑO"
+     },
+     {
+      "department": "CUNDINAMARCA",
+      "department_value": "Cundinamarca",
+      "divipola": "25483",
+      "municipality": "NARIÑO"
+     },
+     {
+      "department": "NARIÑO",
+      "department_value": "Nariño",
+      "divipola": "52480",
+      "municipality": "NARIÑO"
+     }
+    ],
+    "clarification_question": "¿En qué departamento está el municipio de narino? Opciones: Antioquia, Cundinamarca, Nariño. Si te refieres al departamento de Nariño, indícalo.",
+    "mention": "narino",
+    "status": "ambiguous",
+    "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03"
+   }
+  },
+  "contratos celebrados el año pasado de aseo": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2025-01-01",
+   "fecha_hasta": "2025-12-31",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de 2023": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2023-01-01",
+   "fecha_hasta": "2023-12-31"
+  },
+  "contratos de Constructora ABC S.A.S.": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "constructora"
+   ]
+  },
+  "contratos de alimentación en marzo de 2024": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2024-03-01",
+   "fecha_hasta": "2024-03-31",
+   "objeto": [
+    "alimentacion"
+   ]
+  },
+  "contratos de arrendamiento en Bogotá": {
+   "contract_type_include": [
+    "arrendamiento"
+   ],
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento": "en bogota",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Distrito Capital de Bogotá"
+   },
+   "departamento_resolved": "Distrito Capital de Bogotá"
+  },
+  "contratos de aseo celebrados este año": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2026-01-01",
+   "fecha_hasta": "2026-12-31",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo de 2024 de mínima cuantía": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2024-01-01",
+   "fecha_hasta": "2024-12-31",
+   "modalidad_include_procedure_ids": [
+    "minima_cuantia"
+   ],
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo del 2024 por más de 50 millones del Ministerio de Defensa": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "entidad": "ministerio de defensa",
+   "entidad_resolution": {
+    "confidence": "high",
+    "kind": "buyer_entity",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "MINISTERIO DE DEFENSA NACIONAL"
+   },
+   "entidad_resolved": "MINISTERIO DE DEFENSA NACIONAL",
+   "fecha_desde": "2024-01-01",
+   "fecha_hasta": "2024-12-31",
+   "objeto": [
+    "aseo"
+   ],
+   "valor_min": 50000000
+  },
+  "contratos de aseo del Departamento de Cundinamarca": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento": "cundinamarca",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "territorial_pattern",
+    "value": "Cundinamarca"
+   },
+   "departamento_resolved": "Cundinamarca",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo del Municipio de Soacha": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "entidad": "Municipio de soacha",
+   "entidad_resolution": {
+    "confidence": "high",
+    "kind": "buyer_entity",
+    "like_value": null,
+    "metadata": {
+     "resolution_method": "exact",
+     "rewritten_from": "municipio de soacha"
+    },
+    "method": "rewrite_municipio",
+    "value": "MUNICIPIO DE SOACHA"
+   },
+   "entidad_resolved": "MUNICIPIO DE SOACHA",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo desde 2021": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2021-01-01",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo en 2024 ordenados del más reciente": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2024-01-01",
+   "fecha_hasta": "2024-12-31",
+   "objeto": [
+    "aseo"
+   ],
+   "ordering_signal": "fecha_desc"
+  },
+  "contratos de aseo en Antioquia en 2024": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento": "en antioquia",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Antioquia"
+   },
+   "departamento_resolved": "Antioquia",
+   "fecha_desde": "2024-01-01",
+   "fecha_hasta": "2024-12-31",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo en Bogotá": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento": "en bogota",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Distrito Capital de Bogotá"
+   },
+   "departamento_resolved": "Distrito Capital de Bogotá",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo en Bogotá D.C.": {
+   "ciudad": "Bogotá, D.C.",
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento_resolved": "Distrito Capital de Bogotá",
+   "municipal_territory": {
+    "candidates": [
+     {
+      "department": "BOGOTÁ, D.C.",
+      "department_value": "Distrito Capital de Bogotá",
+      "divipola": "11001",
+      "municipality": "BOGOTÁ, D.C."
+     }
+    ],
+    "department": "BOGOTÁ, D.C.",
+    "department_value": "Distrito Capital de Bogotá",
+    "divipola": "11001",
+    "mention": "bogota d.c",
+    "municipality": "BOGOTÁ, D.C.",
+    "status": "resolved",
+    "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03"
+   },
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo en Cundinamarca y Antioquia": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento": "en cundinamarca",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Cundinamarca"
+   },
+   "departamento_resolved": "Cundinamarca",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo en Medellín, Antioquia": {
+   "ciudad": "Medellín",
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento_resolved": "Antioquia",
+   "municipal_territory": {
+    "candidates": [
+     {
+      "department": "ANTIOQUIA",
+      "department_value": "Antioquia",
+      "divipola": "05001",
+      "municipality": "MEDELLÍN"
+     }
+    ],
+    "department": "ANTIOQUIA",
+    "department_value": "Antioquia",
+    "divipola": "05001",
+    "mention": "medellin",
+    "municipality": "MEDELLÍN",
+    "status": "resolved",
+    "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03"
+   },
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo en el 2024 y 2025": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2024-01-01",
+   "fecha_hasta": "2025-12-31",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo en la región Caribe": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamentos_in": [
+    "Atlántico",
+    "Bolívar",
+    "Cesar",
+    "Córdoba",
+    "La Guajira",
+    "Magdalena",
+    "Sucre"
+   ],
+   "objeto": [
+    "aseo"
+   ],
+   "region": "Caribe",
+   "region_resolution": {
+    "kind": "territorial_region",
+    "matched_alias": "region caribe",
+    "method": "scan_exact",
+    "value": "Caribe"
+   }
+  },
+  "contratos de aseo en los últimos 3 meses": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo entre enero y marzo de 2024": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2024-01-01",
+   "fecha_hasta": "2024-03-31",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo más caros en Medellín": {
+   "ciudad": "Medellín",
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento_resolved": "Antioquia",
+   "municipal_territory": {
+    "candidates": [
+     {
+      "department": "ANTIOQUIA",
+      "department_value": "Antioquia",
+      "divipola": "05001",
+      "municipality": "MEDELLÍN"
+     }
+    ],
+    "department": "ANTIOQUIA",
+    "department_value": "Antioquia",
+    "divipola": "05001",
+    "mention": "medellin",
+    "municipality": "MEDELLÍN",
+    "status": "resolved",
+    "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03"
+   },
+   "objeto": [
+    "aseo"
+   ],
+   "ordering_signal": "valor_desc"
+  },
+  "contratos de aseo no terminados": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo o cafetería en Soacha": {
+   "ciudad": "Soacha",
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento_resolved": "Cundinamarca",
+   "municipal_territory": {
+    "candidates": [
+     {
+      "department": "CUNDINAMARCA",
+      "department_value": "Cundinamarca",
+      "divipola": "25754",
+      "municipality": "SOACHA"
+     }
+    ],
+    "department": "CUNDINAMARCA",
+    "department_value": "Cundinamarca",
+    "divipola": "25754",
+    "mention": "soacha",
+    "municipality": "SOACHA",
+    "status": "resolved",
+    "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03"
+   },
+   "objeto": [
+    [
+     "aseo",
+     "cafeteria"
+    ]
+   ]
+  },
+  "contratos de aseo o vigilancia": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    [
+     "aseo",
+     "vigilancia"
+    ]
+   ]
+  },
+  "contratos de aseo ordenados por valor": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ],
+   "ordering_signal": "valor_desc"
+  },
+  "contratos de aseo por entre 10 y 20 millones": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ],
+   "valor_max": 20000000,
+   "valor_min": 10000000
+  },
+  "contratos de aseo que no sean de 2024": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo que no sean de la Gobernación de Antioquia": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo que no sean de prestación de servicios": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ],
+   "objeto_exclude": [
+    "prestacion",
+    "servicios"
+   ]
+  },
+  "contratos de aseo que no sean en Bogotá": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos de aseo que no valgan más de 100 millones": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "money_clarification": "No pude interpretar la relación monetaria bajo esa negación. ¿Quieres un mínimo, un máximo, un rango o un valor aproximado?",
+   "objeto": [
+    "aseo"
+   ],
+   "objeto_exclude": [
+    "valgan"
+   ]
+  },
+  "contratos de aseo recientes": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ],
+   "ordering_signal": "fecha_desc"
+  },
+  "contratos de aseo sin contar Antioquia": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento": "antioquia",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Antioquia"
+   },
+   "departamento_resolved": "Antioquia",
+   "objeto": [
+    "aseo"
+   ],
+   "objeto_exclude": [
+    "contar"
+   ]
+  },
+  "contratos de aseo y cafetería": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo",
+    "cafeteria"
+   ]
+  },
+  "contratos de consultoría de interventoría": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "consultoria",
+    "interventoria"
+   ]
+  },
+  "contratos de gestión documental": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "gestion",
+    "documental"
+   ]
+  },
+  "contratos de la Gobernación de Antioquia": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "entidad": "Departamento de antioquia",
+   "entidad_resolution": {
+    "confidence": "high",
+    "kind": "buyer_entity",
+    "like_value": null,
+    "metadata": {
+     "canonical_department": "Antioquia",
+     "resolution_method": "exact",
+     "rewritten_from": "gobernacion de antioquia",
+     "root_evidence": "unique_alias_owner",
+     "supporting_alias": "departamento de antioquia",
+     "target": "antioquia"
+    },
+    "method": "rewrite_gobernaci[oó]n",
+    "value": "DEPARTAMENTO DE ANTIOQUIA//"
+   },
+   "entidad_resolved": "DEPARTAMENTO DE ANTIOQUIA//"
+  },
+  "contratos de mantenimiento de vías terciarias": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "mantenimiento",
+    "vias",
+    "terciarias"
+   ]
+  },
+  "contratos de mantenimiento vial en Bolívar": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento_resolved": "Bolívar",
+   "municipal_territory": {
+    "candidates": [
+     {
+      "department": "CAUCA",
+      "department_value": "Cauca",
+      "divipola": "19100",
+      "municipality": "BOLÍVAR"
+     },
+     {
+      "department": "SANTANDER",
+      "department_value": "Santander",
+      "divipola": "68101",
+      "municipality": "BOLÍVAR"
+     },
+     {
+      "department": "VALLE DEL CAUCA",
+      "department_value": "Valle del Cauca",
+      "divipola": "76100",
+      "municipality": "BOLÍVAR"
+     }
+    ],
+    "clarification_question": "¿En qué departamento está el municipio de bolivar? Opciones: Cauca, Santander, Valle del Cauca. Si te refieres al departamento de Bolívar, indícalo.",
+    "mention": "bolivar",
+    "status": "ambiguous",
+    "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03"
+   },
+   "objeto": [
+    "mantenimiento",
+    "vial"
+   ]
+  },
+  "contratos de menos de 100 millones de pesos": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "valor_max": 100000000
+  },
+  "contratos de más de 500 millones": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "valor_min": 500000000
+  },
+  "contratos de obra en Cali en 2022": {
+   "_temporal_replace_scope": true,
+   "ciudad": "Cali",
+   "contract_type_include": [
+    "obra"
+   ],
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2022-01-01",
+   "fecha_hasta": "2022-12-31"
+  },
+  "contratos de obra pública en municipio de Soledad": {
+   "ciudad": "Soledad",
+   "contract_type_include": [
+    "obra"
+   ],
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento_resolved": "Atlántico",
+   "municipal_territory": {
+    "candidates": [
+     {
+      "department": "ATLÁNTICO",
+      "department_value": "Atlántico",
+      "divipola": "08758",
+      "municipality": "SOLEDAD"
+     }
+    ],
+    "department": "ATLÁNTICO",
+    "department_value": "Atlántico",
+    "divipola": "08758",
+    "mention": "soledad",
+    "municipality": "SOLEDAD",
+    "status": "resolved",
+    "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03"
+   }
+  },
+  "contratos de prestación de servicios": {
+   "contract_type_include": [
+    "prestacion_servicios"
+   ],
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true
+  },
+  "contratos de primera infancia": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "primera",
+    "infancia"
+   ]
+  },
+  "contratos de sistemas de información geográfica": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "tecnologia",
+    "informacion",
+    "geografica"
+   ]
+  },
+  "contratos de suministro de combustible": {
+   "contract_type_include": [
+    "suministro"
+   ],
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "combustible"
+   ]
+  },
+  "contratos del 2024 de aseo con valor mayor a 1.500 millones": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2024-01-01",
+   "fecha_hasta": "2024-12-31",
+   "objeto": [
+    "aseo"
+   ],
+   "valor_min": 1500000000
+  },
+  "contratos del INVIAS sobre puentes": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "entidad": "invias",
+   "entidad_resolution": {
+    "confidence": "high",
+    "kind": "buyer_entity",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "INVIAS"
+   },
+   "entidad_resolved": "INVIAS",
+   "objeto": [
+    "puentes"
+   ]
+  },
+  "contratos del Ministerio de Educación en 2023": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "entidad": "ministerio de educacion",
+   "entidad_resolution": {
+    "confidence": "high",
+    "kind": "buyer_entity",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "MINISTERIO DE EDUCACION NACIONAL (MEN)"
+   },
+   "entidad_resolved": "MINISTERIO DE EDUCACION NACIONAL (MEN)",
+   "fecha_desde": "2023-01-01",
+   "fecha_hasta": "2023-12-31"
+  },
+  "contratos del contratista Ingenieros Asociados SAS": {
+   "actor_conversation_construction": "strong_actor_syntax",
+   "actor_conversation_operation": "SET_ACTOR",
+   "actor_resolution": "name_unresolved",
+   "actor_scope": {
+    "observed_name": "ingenieros asociados sas",
+    "reason_codes": [
+     "ACTOR_ROLE_MARKER",
+     "ACTOR_NAME_NEEDS_RESOLUTION"
+    ],
+    "requires_resolution": true,
+    "resolution_method": "name_unresolved",
+    "role": "contractor"
+   },
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true
+  },
+  "contratos del contratista NIT 900123456": {
+   "actor_resolution": "explicit_document",
+   "actor_scope": {
+    "base_number": "900123456",
+    "check_digit": null,
+    "document_type": "NIT",
+    "identity_confidence": "declared",
+    "identity_reason_codes": [
+     "IDENTITY_CHECK_DIGIT_NOT_SEPARATED",
+     "IDENTITY_TYPE_DECLARED"
+    ],
+    "raw_value": "900123456",
+    "requires_resolution": false,
+    "resolution_method": "explicit_document",
+    "role": "contractor"
+   },
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "contratista": [
+    "900123456"
+   ],
+   "dataset": "contratos",
+   "dataset_explicit": true
+  },
+  "contratos en ejecución de aseo": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "estado": "En ejecución",
+   "estado_contrato": [
+    "En ejecución",
+    "Modificado",
+    "Prorrogado"
+   ],
+   "estado_family": "contrato_activo",
+   "estado_field": "estado_contrato",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "contratos entre 100 y 500 millones": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "valor_max": 500000000,
+   "valor_min": 100000000
+  },
+  "contratos entre 2020 y 2023": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2020-01-01",
+   "fecha_hasta": "2023-12-31"
+  },
+  "contratos excepto de obra civil": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto_exclude": [
+    "obra",
+    "civil"
+   ]
+  },
+  "contratos más antiguos de aseo": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ],
+   "ordering_signal": "fecha_asc"
+  },
+  "contratos que no sean de aseo": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto_exclude": [
+    "aseo"
+   ]
+  },
+  "convocatorias de mantenimiento vial": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "estado": "Publicado",
+   "estado_del_procedimiento": [
+    "Publicado",
+    "Borrador",
+    "En aprobación",
+    "Aprobado",
+    "Abierto"
+   ],
+   "estado_family": "oferta_abierta",
+   "estado_field": "estado_del_procedimiento",
+   "intent_type": "opportunity_search",
+   "objeto": [
+    "mantenimiento",
+    "vial"
+   ]
+  },
+  "cuántos contratos de aseo hay en Antioquia": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "departamento": "en antioquia",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Antioquia"
+   },
+   "departamento_resolved": "Antioquia",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "dame los contratos de aseo del contratista con NIT 900373913": {
+   "actor_resolution": "explicit_document",
+   "actor_scope": {
+    "base_number": "900373913",
+    "check_digit": null,
+    "document_type": "NIT",
+    "identity_confidence": "declared",
+    "identity_reason_codes": [
+     "IDENTITY_CHECK_DIGIT_NOT_SEPARATED",
+     "IDENTITY_TYPE_DECLARED"
+    ],
+    "raw_value": "900373913",
+    "requires_resolution": false,
+    "resolution_method": "explicit_document",
+    "role": "contractor"
+   },
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "contratista": [
+    "900373913"
+   ],
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "los 10 contratos más costosos de 2024": {
+   "_temporal_replace_scope": true,
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "fecha_desde": "2024-01-01",
+   "fecha_hasta": "2024-12-31",
+   "objeto": [
+    "contratos"
+   ],
+   "ordering_signal": "valor_desc"
+  },
+  "oportunidades abiertas de tecnología en Valle del Cauca": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "departamento": "en valle del cauca",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Valle del Cauca"
+   },
+   "departamento_resolved": "Valle del Cauca",
+   "estado": "Publicado",
+   "estado_del_procedimiento": [
+    "Publicado",
+    "Borrador",
+    "En aprobación",
+    "Aprobado",
+    "Abierto"
+   ],
+   "estado_family": "oferta_abierta",
+   "estado_field": "estado_del_procedimiento",
+   "intent_type": "opportunity_search",
+   "objeto": [
+    "tecnologia"
+   ]
+  },
+  "oportunidades de software": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "estado_del_procedimiento": [
+    "Publicado",
+    "Borrador",
+    "Abierto"
+   ],
+   "estado_family": "oferta_abierta",
+   "intent_type": "opportunity_search",
+   "objeto": [
+    "software"
+   ]
+  },
+  "procesos abiertos de construcción": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "estado": "Publicado",
+   "estado_del_procedimiento": [
+    "Publicado",
+    "Borrador",
+    "En aprobación",
+    "Aprobado",
+    "Abierto"
+   ],
+   "estado_family": "oferta_abierta",
+   "estado_field": "estado_del_procedimiento",
+   "intent_type": "opportunity_search",
+   "objeto": [
+    "construccion"
+   ]
+  },
+  "procesos cerrados de aseo": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "estado": "Cerrado",
+   "estado_de_apertura_del_proceso": [
+    "Cerrado"
+   ],
+   "estado_field": "estado_de_apertura_del_proceso",
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "procesos de alimentación escolar en Córdoba": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "departamento_resolved": "Córdoba",
+   "municipal_territory": {
+    "candidates": [
+     {
+      "department": "BOLÍVAR",
+      "department_value": "Bolívar",
+      "divipola": "13212",
+      "municipality": "CÓRDOBA"
+     },
+     {
+      "department": "NARIÑO",
+      "department_value": "Nariño",
+      "divipola": "52215",
+      "municipality": "CÓRDOBA"
+     },
+     {
+      "department": "QUINDÍO",
+      "department_value": "Quindío",
+      "divipola": "63212",
+      "municipality": "CÓRDOBA"
+     }
+    ],
+    "clarification_question": "¿En qué departamento está el municipio de cordoba? Opciones: Bolívar, Nariño, Quindío. Si te refieres al departamento de Córdoba, indícalo.",
+    "mention": "cordoba",
+    "status": "ambiguous",
+    "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03"
+   },
+   "objeto": [
+    "alimentacion_escolar"
+   ]
+  },
+  "procesos de aseo y los más baratos": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ],
+   "ordering_signal": "valor_asc"
+  },
+  "procesos de hospital en Tolima por más de 1000 millones": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "entidad": "Hospital en tolima",
+   "entidad_resolution": {
+    "confidence": "high",
+    "kind": "buyer_entity",
+    "like_value": null,
+    "metadata": {
+     "resolution_method": "fuzzy(86)",
+     "rewritten_from": "hospital en tolima"
+    },
+    "method": "rewrite_(?:el",
+    "value": "HOSPITAL FEDERICO LLERAS ACOSTA DE IBAGUE TOLIMA - EMPRESA SOCIAL DEL ESTADO"
+   },
+   "entidad_resolved": "HOSPITAL FEDERICO LLERAS ACOSTA DE IBAGUE TOLIMA - EMPRESA SOCIAL DEL ESTADO",
+   "valor_min": 1000000000
+  },
+  "procesos de licitación pública de obra": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "modalidad_include_procedure_ids": [
+    "licitacion_publica",
+    "licitacion_publica_obra"
+   ],
+   "objeto": [
+    "obra"
+   ]
+  },
+  "procesos de mínima cuantía en Santander": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "departamento": "en santander",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Santander"
+   },
+   "departamento_resolved": "Santander",
+   "modalidad_include_procedure_ids": [
+    "minima_cuantia"
+   ]
+  },
+  "procesos de selección abreviada de aseo": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "modalidad_include_procedure_ids": [
+    "seleccion_abreviada_menor_cuantia",
+    "seleccion_abreviada_menor_cuantia_sin_manifestacion",
+    "seleccion_abreviada_subasta_inversa"
+   ],
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "procesos de vigilancia en Cundinamarca": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "departamento": "en cundinamarca",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Cundinamarca"
+   },
+   "departamento_resolved": "Cundinamarca",
+   "objeto": [
+    "vigilancia"
+   ]
+  },
+  "procesos en curso de aseo": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "objeto": [
+    "aseo"
+   ]
+  },
+  "procesos publicados en el último mes": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "estado": "Publicado",
+   "estado_del_procedimiento": [
+    "Publicado"
+   ],
+   "estado_family": "oferta_abierta",
+   "estado_field": "estado_del_procedimiento",
+   "intent_type": "opportunity_search"
+  },
+  "procesos que no sean de licitación pública": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "modalidad_exclude_procedure_ids": [
+    "licitacion_publica",
+    "licitacion_publica_obra"
+   ]
+  },
+  "procesos sin vigilancia en Bogotá": {
+   "dataset": "procesos",
+   "dataset_explicit": true,
+   "departamento": "en bogota",
+   "departamento_resolution": {
+    "confidence": "high",
+    "kind": "territorial_department",
+    "like_value": null,
+    "metadata": {},
+    "method": "scan_exact",
+    "value": "Distrito Capital de Bogotá"
+   },
+   "departamento_resolved": "Distrito Capital de Bogotá",
+   "objeto_exclude": [
+    "vigilancia"
+   ]
+  },
+  "procesos terminados de dotación": {
+   "contract_universe": "celebrated",
+   "contract_universe_version": "contract-universe-1.1",
+   "dataset": "contratos",
+   "dataset_explicit": true,
+   "estado": "terminado",
+   "estado_contrato": [
+    "terminado"
+   ],
+   "estado_family": "contrato_terminado",
+   "estado_field": "estado_contrato",
+   "objeto": [
+    "dotacion"
+   ]
+  }
+ },
+ "today": "2026-09-30"
+}
