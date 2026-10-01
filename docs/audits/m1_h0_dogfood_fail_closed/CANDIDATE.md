@@ -83,13 +83,13 @@ Rama `fix/m1-h0-dogfood-fail-closed`, base `4ec99bc1`, R0 en `fb34c4aa`. Una sol
 
 ## P1-A TIME: un token numérico u ordinal ya no corta el recorrido
 `app/core/foundation_time_coverage.py`:
-- Pegamento en ambas direcciones: ordinales y cuantificadores (`ORDINALS`: primer(o/a/os/as)… cuarto, último, un, dos…doce) y números de 1-3 dígitos («15 de marzo», «primeros 100 días»). Cubre «2025 segundo semestre», «2025, segundo semestre», «2025 primer trimestre», «los dos primeros trimestres de 2025».
+- Pegamento en ambas direcciones (CORRECCIÓN R2: no es «ambos órdenes sin excepciones»; ver «Límites congelados de TIME» en R2): ordinales y cuantificadores (`ORDINALS`: primer(o/a/os/as)… cuarto, último, un, dos…doce) y números de 1-3 dígitos («15 de marzo», «primeros 100 días»). Cubre «2025 segundo semestre», «2025, segundo semestre», «2025 primer trimestre», «los dos primeros trimestres de 2025».
 - Plurales de periodo (semestres, trimestres, meses, semanas, días…), `dia/dias`, `fin`, `cierre` («fin de año 2025», «cierre de 2025»).
 - Cotas posteriores: `antes, despues, ahora, actualidad, presente, aca` («2025 o antes», «hasta ahora», «a la actualidad», «al presente», «para acá», «al día de hoy»); cotas previas `pre`, `post`.
 - Fechas numéricas leídas de los caracteres crudos pegados al año: `15/03/2025`, `2025-03`, `2025/03`, `12/2025`, `2025-1`, `2025-I`; y cuartos compactos (`Q1`, `T1`, `H1`, `1T`, `2S`).
 - Docstring: ahora declara que es una GUARDA DE FRONTERA con garantía limitada (no un parser temporal) y corrige la afirmación falsa sobre «Primero de Mayo en 2025».
 
-Pruebas (`tests/test_foundation_h0_r1_time_property.py`): léxicos independientes comparados por IGUALDAD con el módulo (quitar una sola palabra falla), comportamiento por palabra (cada mes/periodo/cota sola, cada palabra de pegamento), periodo ANTES y DESPUÉS del año por propiedad (35 ordinales x 7 periodos x 6 formas; 7 números x 4 periodos x 4 formas), Hypothesis en ambos órdenes, y negativos (años con importes/cifras/no-años siguen ejecutando).
+Pruebas (`tests/test_foundation_h0_r1_time_property.py`): léxicos independientes comparados por IGUALDAD con el módulo (quitar una sola palabra falla), comportamiento por palabra (cada mes/periodo/cota sola, cada palabra de pegamento), periodo ANTES y DESPUÉS del año por propiedad (35 ordinales x 7 periodos x 6 formas; 7 números x 4 periodos x 4 formas), Hypothesis en ambos órdenes (sólo para las formas del léxico escrito, no para toda forma natural; ver R2), y negativos (años con importes/cifras/no-años siguen ejecutando).
 
 Mutantes: los 3 supervivientes de ZEUS (quitar previa/previos/posteriores/anteriores, quitar `anos`, quitar `e`/`u`) mueren; 14 mutantes TIME nuevos (ordinales, números, fecha antes/después, cuartos, plurales, antes/ahora/actualidad, fin/cierre, dia/dias, pre/post, paseo posterior, ventana 3, romano) y 6 de R0 repetidos: todos muertos (23/23 TIME).
 
@@ -117,3 +117,45 @@ Pruebas (`tests/test_foundation_h0_r1_buyer_choices.py`, 144): orden/tope/«y N 
 - Replay 620 capturas (sólo gold_id): 0 cambios de estado frente a `fb34c4aa`.
 - `ruff check` sobre los 6 archivos tocados/nuevos: `All checks passed!`
 - `olympus-semgrep-delta --config .semgrep/secoppal-laws.yml --base 4ec99bc1` (10 archivos): TOTAL=0 BASELINE=0 NEW_DELTA=0 FIXED=0.
+
+---
+
+# R2 — micro-ronda tras ZEUS R1 (GO_WITH_FIXES): sólo opciones de comprador
+
+Rama `fix/m1-h0-dogfood-fail-closed`, base `4ec99bc1`, R1 en `c25f98ee`. Una sola ronda. Sin merge ni push.
+
+## P1: una lista parcial ya no se presenta como la elección completa
+Causa (ZEUS): `shown` era el subconjunto tecleable y podía excluir justo la entidad nombrada («IDRD» ofrecía la Secretaría de Cultura; «ICBF Bogotá» ofrecía la Sede Nacional y Cundinamarca) y el mensaje lo llamaba «Opciones».
+`app/core/foundation_buyer_choices.py` ahora contabiliza cada dueño exactamente una vez: ofrecido (`shown`, máx. 6), sobre el tope (`hidden`, conteo real) o `unavailable` (el host no lo toma por nombre: nombre compartido o sin nombre físico en la fuente). Regla de redacción (`foundation_messages.py`), la opción más honesta:
+1. Todos ofrecibles: «Opciones: …» + «y N más» (N real) + botones (`choices`). Hoy: `sdh`, `la sdh`.
+2. Algún dueño no ofrecible: el texto dice «Algunas de las entidades que usan ese nombre: …», «Esta lista es parcial: hay K más que no puedo consultar por nombre todavía (nombres, hasta 4)», y NO lleva botones. Un botón sobre una lista parcial sería presentarla como la elección completa.
+3. Un dueño distintivo no ofrecible («icbf bogota» -> ICBF REGIONAL BOGOTA; «idrd» -> IDRD): el texto dice que lo más probable es que se refiera a él y que todavía no se puede consultar por nombre; no ofrece hermanos ni botones.
+4. Ningún dueño ofrecible (117 de 137 aliases, p. ej. SENA/INVIAS): texto genérico de R1, sin opciones.
+Dueño distintivo = aquel cuyo nombre contiene todas las palabras citadas y que es una minoría (<= la mitad de los dueños): «ICBF Bogotá» -> 1/12, «IDRD» -> 1/2; «ICBF» (11/12) no promueve a nadie. Si es ofrecible va primero (incluso pasado el tope y la regla de sede); si no, regla 3. Heurística de palabras, límite declarado: una cita que no repite palabras del nombre oficial («instituto distrital de recreación y deporte» -> IDRD) cae en la regla 2, que igualmente nombra a IDRD como no consultable y no ofrece botones.
+Resultado sobre los 137 aliases multi-dueño (136 los pregunta el guard): 117 sin ofrecibles, 16 parciales, 2 con dueño distintivo no consultable (icbf bogota, idrd), 2 completos.
+
+## P1 negación
+Con polaridad NEGATIVE en el BUYER («que no sean del ICBF») no se ofrece ninguna opción ni se nombra ningún dueño (elegir uno reduciría la exclusión a una sola entidad): «Pides excluir «X», un nombre que corresponde a más de una entidad compradora… ¿Puedes decir de qué entidad concreta se trata, o buscar sin esa exclusión?». La traza (`AMBIGUOUS_HOST_DIMENSION:BUYER`) no cambia.
+
+## P2
+- Mutantes del delta R1: añadidos tests que matan los 6 supervivientes de ZEUS (mensaje sin `shown`, sin comprobar la dimensión, `owners<2`->`<1`, `_SMALL_NUMBER` 1-4/`\d+`, `_DATE_BEFORE` `\d{2}`, `typable` sin value/exact con resolvers falsos) y los de R2 (nuevo código). **61/61 muertos** (cubre los 26 de ZEUS, los de TIME de R1 y los nuevos de BUYER/mensaje/runtime de R2; ninguno quedó sin aplicar). Antes del test nuevo sobrevivían 3 de R2 (dataset por request, material_phrase, «y N más» en lista completa): ya muertos.
+- `material_phrase`: `buyer_choices` lee la frase con `material_phrase(condition.evidence, raw, "BUYER")`, la misma autoridad del host, no con `" ".join(quotes)`. Para ello `user_message(..., raw=)` recibe el texto crudo (`foundation_runtime` pasa `ctx.user_query`, el mismo que usó la admisión); sin `raw` no hay opciones (texto genérico).
+
+## Límites congelados de TIME (NO reparados; regla de hardening acotado)
+La guarda TIME es de frontera con garantía limitada; su autoridad completa es de D-TIME. Siguen READY (no regresión, fail-open frente a base):
+- «2025 2do semestre», «2025 1er semestre», «del 2025 3er trimestre» (ordinal abreviado con sufijo);
+- «semestre II de 2025», «2025 II semestre», «2025 I» (romanos);
+- «2025 2ª mitad» frente a «la 2ª mitad de 2025» (asimetría de orden), «2025 durante el segundo semestre».
+Por tanto la frase de R1 «ambos órdenes» valía para las formas del léxico escrito, NO para toda forma natural. Sobre-aclaraciones por duraciones («2025 de 6 meses», «2025 a 12 meses», «hasta 300 2025»): fail-closed, no se reparan. Los límites 1-5 de R1 siguen vigentes.
+
+## Archivos R2
+`app/core/foundation_buyer_choices.py`, `app/core/foundation_messages.py`, `app/core/foundation_runtime.py` (+1 kwarg), `tests/test_foundation_h0_r1_buyer_choices.py` (ajustado al nuevo contrato: ICBF es parcial y sin botones), `tests/test_foundation_h0_r2_buyer_options.py` (nuevo, 164+1 skip), `tests/test_foundation_h0_r2_time_boundaries.py` (nuevo, 42), este informe. No se tocó streamlit_app.py ni manifests.
+
+## Gates R2 (corrí estos, no la suite global)
+- `pytest tests/test_foundation_*.py tests/test_procurement_foundation_frozen_delivery.py tests/test_entity_resolver*.py`: **3298 passed, 1 skipped** (el skip es el alias multi-dueño que el guard no pregunta).
+- Guardas de bytes/SHA y vecinos (`test_natural_alpha_evaluation`, `test_text_lineage*`, `test_truth_layer_public_parity`, `test_procurement_layers_sources`, `test_gazetteer_source_binding_audit_regressions`, `test_qualified_buyer_fail_closed`, `test_module_size_limits`, `test_query_router`, `test_residual_verifier_contract`, `test_legacy_shadow`): **456 passed**.
+- Paridad legacy: 11.665 claves + 620 textos + `alias_index`: `59957bfb884c51d27c1e9b0e40a43bca904e3132758f5c9f11c7f6d8db6d8ea2`, idéntico a base, R0 y R1.
+- Replay 620 capturas por gold_id (host sólo admisión, sin red) contra `c25f98ee`: 620/620 idénticas, 195 READY antes y después, **0 READY->CLARIFY nuevos** (R2 sólo cambia el texto de la aclaración, no la decisión del host).
+- `ruff check` sobre los archivos tocados: `All checks passed!`
+- `olympus-semgrep-delta --config .semgrep/secoppal-laws.yml --base 4ec99bc1` (12 archivos): TOTAL=0 BASELINE=0 NEW_DELTA=0 FIXED=0.
+- Rondas de reparación usadas: 1 (esta). Sin ZEUS fresco: decisión del orquestador.

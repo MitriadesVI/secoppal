@@ -2,7 +2,8 @@
 
 ZEUS: «ICBF» asked for «el nombre completo», and «Instituto Colombiano de Bienestar Familiar» was the same
 question again (a loop).  The message now lists the owners of the alias (headquarters first, at most 6, «y N más»),
-and an owner is only offered when the host itself accepts its official name as one entity.
+and an owner is only offered when the host itself accepts its official name as one entity.  (R2 changed how a
+list that leaves an owner out is worded: see test_foundation_h0_r2_buyer_options.py.)
 """
 
 from __future__ import annotations
@@ -25,6 +26,19 @@ def _proposal_for(alias):
     return accepted.proposal
 
 
+def _raw(alias):
+    return f"{alias} contratos"  # what tests.test_foundation_h0_buyer_ambiguity.admit builds
+
+
+def _choices(alias):
+    return buyer_choices(_proposal_for(alias), RESOLVER, _raw(alias))
+
+
+def _message(alias):
+    return user_message("NEEDS_CLARIFICATION", AMBIGUOUS_BUYER, _proposal_for(alias), entity_resolver=RESOLVER,
+                        raw=_raw(alias))
+
+
 def _owner_resolution(accepted):
     return [r.resolved_ids for r in accepted.resolutions if r.target_id == "c0"]
 
@@ -32,14 +46,16 @@ def _owner_resolution(accepted):
 # ── the candidates are the owners, ordered, capped, and each one is typable ──────────────────────────
 
 def test_icbf_names_the_national_seat_first_and_counts_the_rest():
-    found = buyer_choices(_proposal_for("ICBF"), RESOLVER)
+    found = _choices("ICBF")
     assert found.shown[0] == "ICBF SEDE NACIONAL"
     assert len(found.shown) == MAX_SHOWN == 6
-    assert found.hidden == len(RESOLVER.alias_owners("icbf")) - MAX_SHOWN == 6
+    offerable = len(RESOLVER.alias_owners("icbf")) - len(found.unavailable)
+    assert found.hidden == offerable - MAX_SHOWN == 5
     assert list(found.shown[1:]) == sorted(found.shown[1:], key=str.casefold)
-    message = user_message("NEEDS_CLARIFICATION", AMBIGUOUS_BUYER, _proposal_for("ICBF"), entity_resolver=RESOLVER)
-    assert "«ICBF SEDE NACIONAL»" in message.text and "y 6 más" in message.text
-    assert message.choices == found.shown and AMBIGUOUS_BUYER not in message.text
+    message = _message("ICBF")
+    assert "«ICBF SEDE NACIONAL»" in message.text and "y 5 más que sí puedo consultar" in message.text and AMBIGUOUS_BUYER not in message.text
+    # R2: ICBF REGIONAL BOGOTA cannot be taken by name, so the list is declared partial and carries no buttons.
+    assert "parcial" in message.text and message.choices == ()
 
 
 def test_an_official_name_that_is_itself_shared_or_unprojectable_is_never_offered():
@@ -52,21 +68,22 @@ def test_an_official_name_that_is_itself_shared_or_unprojectable_is_never_offere
     # «ICBF REGIONAL BOGOTA» is an exact single owner for the host but has no source name: the projection
     # would answer UNSUPPORTED, so it is not READY and is counted in «y N más», never offered.
     assert typable(RESOLVER, "ICBF REGIONAL BOGOTA") and not typable(RESOLVER, "ICBF REGIONAL BOGOTA", (contracts,))
-    found = buyer_choices(_proposal_for("ICBF"), RESOLVER)
-    assert "ICBF REGIONAL BOGOTA" not in found.shown
+    found = _choices("ICBF")
+    assert "ICBF REGIONAL BOGOTA" not in found.shown and found.unavailable == ("ICBF REGIONAL BOGOTA",)
 
 
 def test_sena_has_no_verifiable_candidate_and_says_so_instead_of_looping():
-    found = buyer_choices(_proposal_for("SENA"), RESOLVER)
-    assert found.shown == () and found.hidden == len(RESOLVER.alias_owners("sena"))
-    message = user_message("NEEDS_CLARIFICATION", AMBIGUOUS_BUYER, _proposal_for("SENA"), entity_resolver=RESOLVER)
-    assert message.choices == ()
+    found = _choices("SENA")
+    assert found.shown == () and found.hidden == 0 and len(found.unavailable) == len(RESOLVER.alias_owners("sena"))
+    message = _message("SENA")
+    assert message.choices == () and "Opciones" not in message.text and "Algunas de las entidades" not in message.text
     assert "nombre completo" not in message.text and "Soledad" not in message.text  # the two loops of R0
 
 
 def test_a_resolver_less_or_proposal_less_call_falls_back_to_the_generic_text_without_options():
-    for proposal, resolver in ((None, RESOLVER), (_proposal_for("ICBF"), None)):
-        message = user_message("NEEDS_CLARIFICATION", AMBIGUOUS_BUYER, proposal, entity_resolver=resolver)
+    for proposal, resolver, raw in ((None, RESOLVER, _raw("ICBF")), (_proposal_for("ICBF"), None, _raw("ICBF")),
+                                    (_proposal_for("ICBF"), RESOLVER, None)):
+        message = user_message("NEEDS_CLARIFICATION", AMBIGUOUS_BUYER, proposal, entity_resolver=resolver, raw=raw)
         assert message.choices == () and "más de una entidad" in message.text
         assert "Soledad" not in message.text  # the old example that did not resolve the case
 
@@ -79,10 +96,12 @@ def test_every_offered_candidate_of_every_multi_owner_alias_resolves_to_exactly_
     accepted = admit(alias)
     if accepted.status is not AcceptanceStatus.NEEDS_CLARIFICATION:
         pytest.skip("not asked by the host (already stopped by another guard)")
-    found = buyer_choices(accepted.proposal, RESOLVER)
+    found = buyer_choices(accepted.proposal, RESOLVER, _raw(alias))
     owners = RESOLVER.alias_owners(alias)
     assert found is not None and len(found.shown) <= MAX_SHOWN
-    assert found.hidden == len(owners) - len(found.shown) >= 0 and set(found.shown) <= owners
+    # Every owner is accounted for exactly once: offered, over the cap, or declared unavailable.
+    assert found.hidden >= 0 and len(found.shown) + found.hidden + len(found.unavailable) == len(owners)
+    assert set(found.shown) <= owners and set(found.unavailable) <= owners and not set(found.shown) & set(found.unavailable)
     for name in found.shown:
         assert project_buyer_names(name, SoQLBuilder.CONTRATOS_DATASET)  # the projection will not refuse it
         typed = admit(name)
@@ -91,13 +110,14 @@ def test_every_offered_candidate_of_every_multi_owner_alias_resolves_to_exactly_
     # Nothing verifiable is hidden by the cap: no candidate is offered only when no owner is typable.
     typable_owners = [n for n in owners if typable(RESOLVER, n, (SoQLBuilder.CONTRATOS_DATASET,))]
     assert (not found.shown) == (not typable_owners)
+    assert set(found.unavailable) == set(owners) - set(typable_owners)
 
 
 def test_the_aliases_without_a_verifiable_owner_are_the_declared_source_binding_debt():
     from app.core.soql_builder import SoQLBuilder
 
     silent = [a for a in MULTI if admit(a).status is AcceptanceStatus.NEEDS_CLARIFICATION
-              and not buyer_choices(_proposal_for(a), RESOLVER).shown]
+              and not _choices(a).shown]
     # Declared (CANDIDATE.md R1), not hidden: the source has no physical name for any owner, so even the
     # unambiguous official name would be UNSUPPORTED in the Foundation (BUYER_SOURCE_PROJECTION_REQUIRED).
     assert 100 <= len(silent) <= 125 and {"sena", "invias", "ids"} <= set(silent)
@@ -145,10 +165,12 @@ def test_end_to_end_icbf_the_shown_candidates_typed_by_the_user_are_ready_with_t
     assert first.result["foundation_terminal"] == "NEEDS_CLARIFICATION"
     assert first.result["foundation_internal_reason"] == AMBIGUOUS_BUYER
     assert harness.transport.snapshot() == []  # asking costs no source call
-    shown = first.result["foundation_choices"]
+    # R2: ICBF is a partial list (ICBF REGIONAL BOGOTA cannot be taken by name): named in the text, no buttons.
+    assert first.result["foundation_choices"] == []
+    shown = list(_choices("ICBF").shown)
     assert shown[0] == "ICBF SEDE NACIONAL" and len(shown) == 6
     assert all(f"«{name}»" in first.result["response"] for name in shown)
-    assert "y 6 más" in first.result["response"]
+    assert "y 5 más que sí puedo consultar" in first.result["response"] and "«ICBF REGIONAL BOGOTA»" in first.result["response"]
 
     for at, chosen in enumerate(shown):
         # A new conversation: the Foundation is first-turn only (INELIGIBLE_HISTORY), so READY is judged here.
