@@ -247,6 +247,13 @@ def test_region_departments_are_official_secop_values_and_framing_is_accepted():
     assert region_lookup('Amazonas') == () and region_lookup('') == ()
 
 
+def test_public_region_function_accepts_frames_and_exposes_the_receipt():
+    for frame in ('región del Caribe', 'la región Andina', 'zona andina', 'costa atlántica', 'región amazónica'):
+        (match,) = region_lookup(frame)
+        assert match.departments == tuple(ZONES_BY_NAME[match.region]) and match.alias
+    assert [m.region for m in region_lookup('la costa')] == ['Caribe', 'Pacifica']
+
+
 def test_no_municipality_or_department_name_is_a_region():
     assert not [k for k in set(MUNI_KEYS) | set(DEPT_KEYS) if region_lookup(k)]
 
@@ -273,6 +280,9 @@ def test_level_conflicts_never_resolve():
             assert got.department is None
     assert resolve_geography('municipio de Antioquia', 'DEPARTMENT', POS).reason == 'GEO_LEVEL_CONFLICT'
     assert resolve_geography('departamento de Antioquia', 'MUNICIPALITY', POS).reason == 'GEO_LEVEL_CONFLICT'
+    clash = resolve_geography('Antioquia', 'DEPARTMENT', POS, department_hint='Huila')
+    assert (clash.decision, clash.reason) == ('CLARIFY', 'GEO_DEPARTMENT_HINT_CONFLICT')
+    assert resolve_geography('Antioquia', 'DEPARTMENT', POS, department_hint='Antioquia').decision == 'RESOLVED'
 
 
 @pytest.mark.parametrize('country', sorted(variants.COUNTRY_KEYS))
@@ -451,9 +461,10 @@ def test_window_can_only_retire_authority():
     # the capital district is both levels: either frame is true
     assert resolve_geography('Bogotá', 'UNKNOWN', POS, left=toks('en el municipio de')).decision == 'RESOLVED'
     assert resolve_geography('Bogotá', 'UNKNOWN', POS, left=toks('en el departamento de')).decision == 'RESOLVED'
-    # the window is clipped to four folded tokens
-    long_left = toks('alcaldia de uno dos tres cuatro')
-    assert resolve_geography('Cali', 'UNKNOWN', POS, left=long_left).decision == 'RESOLVED'
+    # the window is clipped to four folded tokens: a department five tokens away is invisible
+    far = toks('en de del departamento antioquia')
+    assert resolve_geography('Cali', 'UNKNOWN', POS, right=far).decision == 'RESOLVED'
+    assert resolve_geography('Cali', 'UNKNOWN', POS, right=toks('en de del antioquia')).decision == 'CLARIFY'
 
 
 def test_window_never_changes_a_verdict_that_context_cannot_contradict():
