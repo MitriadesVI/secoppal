@@ -292,6 +292,18 @@ def test_decode_is_strict_on_every_single_edit_of_a_valid_encoding(kind, data):
     assert decoded.encode() == mutated  # accepted only if it is already the canonical spelling
 
 
+@pytest.mark.parametrize("kind", VALUE_TYPES, ids=lambda kind: kind.__name__)
+@FAST
+@given(data=st.data())
+def test_a_right_shaped_payload_under_another_tag_or_version_is_refused_as_such(kind, data):
+    items = data.draw(VALUE_STRATEGIES[kind]).encode()
+    for tag in ("other@1", kind.TAG.replace("@1", "@2"), kind.TAG.replace("@1", "@0")):
+        with pytest.raises(ContractError, match="UNSUPPORTED_VALUE_TAG"):
+            kind.decode((tag, *items[1:]))
+        with pytest.raises(ContractError, match="UNSUPPORTED_VALUE_TAG"):
+            decode_value((tag, *items[1:]))
+
+
 @FAST
 @given(st.tuples(st.text(max_size=12), st.text(max_size=12)), st.sampled_from(["", "topic@1", "money@1"]))
 def test_decode_never_raises_anything_but_the_contract_error(junk, tag):

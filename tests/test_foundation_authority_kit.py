@@ -18,7 +18,7 @@ from app.core.foundation_geo_level import GeoLevel
 from app.core.interpretation_contract import Effect, Polarity, ResolutionDecision
 from app.core.semantic_dimensions import SemanticDimension
 from tests.foundation_authority_kit import (
-    ConformanceFailure, assert_conforms, case, default_context,
+    ConformanceFailure, PurityViolation, assert_conforms, case, default_context, pure_environment,
 )
 
 TIME = SemanticDimension.TIME
@@ -165,6 +165,11 @@ class ReadsTheClockViaModule(ToyYear):
         return super().resolve(evidence, ctx)
 
 
+class ReadsTheDateViaModule(ToyYear):
+    def resolve(self, evidence, ctx):
+        return self._v(RESOLVED, value=TimeValue(dt.date.today(), None, "year"))
+
+
 class SwallowsTheClock(ToyYear):
     def resolve(self, evidence, ctx):
         try:
@@ -207,6 +212,21 @@ class NonDeterministic(ToyYear):
     def resolve(self, evidence, ctx):
         year = 2000 + next(self.ticks)
         return self._v(RESOLVED, value=TimeValue(date(year, 1, 1), None, "year"))
+
+
+class ValueThatDoesNotRoundTrip(ToyYear):
+    """The value is a member of the union but its state cannot be decoded back (INV-C0-9)."""
+
+    def resolve(self, evidence, ctx):
+        if (refused := self._scope(evidence)) is not None:
+            return refused
+        if evidence.polarity is Polarity.NEGATIVE:  # only the positive path is broken
+            return self._v(CLARIFY, reason="NEGATION_UNSUPPORTED:TIME")
+        broken = object.__new__(TimeValue)
+        for name, value in (("start", date(2025, 6, 1)), ("end_exclusive", date(2025, 1, 1)),
+                            ("precision", "year")):
+            object.__setattr__(broken, name, value)
+        return raw_verdict(decision=RESOLVED, value=broken)
 
 
 class Raises(ToyYear):
@@ -306,6 +326,8 @@ REJECTED = [
     (ChainBreaker, YEAR_CASES, "INV-C0-7"),
     (ReadsTheClock, YEAR_CASES, "INV-C0-8"),
     (ReadsTheClockViaModule, YEAR_CASES, "INV-C0-8"),
+    (ReadsTheDateViaModule, YEAR_CASES, "INV-C0-8"),
+    (ValueThatDoesNotRoundTrip, YEAR_CASES, "INV-C0-9"),
     (SwallowsTheClock, YEAR_CASES, "INV-C0-8"),
     (OpensASocket, YEAR_CASES, "INV-C0-8"),
     (ConnectsASocket, YEAR_CASES, "INV-C0-8"),
@@ -385,3 +407,32 @@ def test_the_sandbox_is_restored_after_every_run_even_a_failing_one():
 def test_default_context_is_an_injected_timezone_aware_instant():
     ctx = default_context()
     assert ctx.reference_instant.tzinfo is not None and ctx.datasets == frozenset({"dataset-a"})
+
+
+def test_the_sandbox_guards_every_entry_point_and_records_the_touch_even_when_swallowed():
+    entry_points = [
+        ("socket.create_connection", lambda: socket.create_connection(("127.0.0.1", 9), timeout=0.01)),
+        ("socket.getaddrinfo", lambda: socket.getaddrinfo("localhost", 80)),
+        ("socket.gethostbyname", lambda: socket.gethostbyname("localhost")),
+        ("socket.gethostbyname_ex", lambda: socket.gethostbyname_ex("localhost")),
+        ("socket.connect", lambda: socket.socket().connect(("127.0.0.1", 9))),
+        ("socket.connect_ex", lambda: socket.socket().connect_ex(("127.0.0.1", 9))),
+        ("date.today", lambda: date.today()),
+        ("date.today", lambda: dt.date.today()),
+        ("datetime.now", lambda: datetime.now()),
+        ("datetime.now", lambda: dt.datetime.now()),
+        ("datetime.utcnow", lambda: datetime.utcnow()),
+        ("datetime.today", lambda: datetime.today()),
+        ("get_settings", lambda: get_settings()),
+    ]
+    for name, call in entry_points:
+        with pure_environment(ToyYear()) as touched:
+            with pytest.raises(PurityViolation):
+                call()
+        assert touched == [name], (name, touched)
+    with pure_environment(ToyYear()) as touched:  # pure constructors keep working inside the sandbox
+        assert date(2025, 1, 1) + (date(2025, 1, 2) - date(2025, 1, 1)) == date(2025, 1, 2)
+        assert datetime(2025, 1, 1, tzinfo=timezone.utc).year == 2025
+        assert isinstance(date(2025, 1, 1), date) and date.fromisoformat("2025-01-01").year == 2025
+        assert dt.datetime.fromisoformat("2025-01-01T00:00:00+00:00").tzinfo is not None
+    assert touched == []
