@@ -16,7 +16,7 @@ Orquestador (HERA): Opus. Nada de esta fase toca `app/`.
 
 Contrato vigente: `M1_0_SEARCH_CONTRACT.md` v1.4 (§1–§10 + enmiendas §11–§14). Product views del
 Gold verificadas al 100 % contra la función PV1–PV6. **[v1.8: el Gold sellado vigente tiene 1005 registros (+6 pares
-ACTOR × STATE) y P034 deja de seguir PV2 por decisión de producto; ver contrato §18.]**
+ACTOR × STATE) y P034 deja de seguir PV2 por decisión de producto; ver contrato §18.]** **[v1.9: 1014 registros (+9 pares de estado por dataset de existencia; P181 readjudicado); ver contrato §19.]**
 
 ## Lo que dice la evidencia
 

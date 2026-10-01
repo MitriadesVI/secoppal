@@ -32,6 +32,18 @@ Contract v1.8 (ACTOR x STATE, universe NOT cited). Both arms, same rule, evidenc
     not in the IR) unless the capture carries host evidence for the request.
   * PRE_AWARD (`expected_disposition CLARIFY` + `ACTOR_STATE_INCOMPATIBLE`, ACTOR_STATE_POLICY row): executing the
     request in ANY universe is a failure; clarifying/blocking is OK. A process that is not awarded has no awardee.
+
+Contract v1.9 (state by dataset of existence; a process state is NEVER translated into a contract state). Same
+rule for both arms, same evidence:
+  * PROCESS_ONLY_PRE_AWARD / PROCESS_ONLY_NO_AWARDEE (also with PROCESSES cited, also `draft` there): the Gold says
+    CLARIFY, scored by the ACTOR_STATE_POLICY row exactly as above (a deserted/revoked process has no awardee).
+  * CONTRACT_STATE (ACTOR + a state that exists in contracts, universe not cited): the Gold EXECUTES on CONTRACTS
+    with no approximation. ACTOR_CONTRACT_STATE_POLICY row: clarifying/blocking, executing on processes or
+    declaring an approximation are failures.
+  * PROCESSES cited + ACTOR + awarded: the v1.7 redirect carries `effect: APPROXIMATION` (UNIVERSE_VIEW row, same
+    `_foundation_redirect` / `_legacy_redirect` rule as v1.8).
+  * ACTOR + TIME without STATE (`host_notice`, ACTOR_TIME_POLICY row): CONTRACTS, TIME on the signature date and the
+    closed notice; executing on processes (TIME beats ACTOR), blocking, or no notice are failures.
 """
 
 from __future__ import annotations
@@ -46,6 +58,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from gold_schema import (CONTRACT_STATE, NOTICE_FIELD, PREAWARD_REASON, REDIRECT_FIELD,  # noqa: E402
+                         actor_state_policy, actor_time_applies)  # single source of the v1.7-v1.9 host policy (stdlib only)
+
 F_CATEGORIES = ("OK", "F_NOT_PROPOSED", "F_PROPOSED_HOST_UNRESOLVED", "HOST_RESOLVED_PROJECTION_UNSUPPORTED",
                 "IR_CANNOT_EXPRESS", "GATE_EXCLUDED")
 L_CATEGORIES = ("L_OK", "L_MISSING", "L_WRONG")
@@ -59,8 +74,6 @@ IR_OPERATIONS = {"SEARCH", "COUNT", "SUM_VALUE"}      # the prompt's operation v
 HOST_RUNS_OPERATIONS = {"SEARCH"}                      # admit_proposal: UNSUPPORTED_OPERATION otherwise
 STOP = frozenset("de del la las los el en y o u a al un una que con por para sobre sin se es son me mi".split())
 GATE_NOUNS = frozenset({"contratos", "procesos"})
-REDIRECT_FIELD = "host_universe_redirect"  # contract v1.7 (gold_schema.REDIRECT_FIELD)
-PREAWARD_REASON = "ACTOR_STATE_INCOMPATIBLE"  # contract v1.8 (gold_schema.PREAWARD_REASON)
 PV_TO_LEGACY = {"CURRENT_OPPORTUNITIES": ("PROCESSES", "OPPORTUNITIES"), "HISTORICAL_PROCESSES": ("PROCESSES", "RECORDS"),
                 "CONTRACTS": ("CONTRACTS", "RECORDS")}
 LEGACY_HANDLES = {"SEARCH": {"SEARCH"}, "PROFILE_ACTOR": {"ACTOR_PROFILE"}, "PROFILE_BUYER": {"ENTITY_PROFILE"},
@@ -314,6 +327,8 @@ def evaluate(gold: dict, cap: dict) -> dict:
                          "polarity": g.get("polarity")})
         rows.extend(_universe_rows(req, f_req, fnd, admitted, leg, gold.get("product_view")))
         rows.extend(_preaward_rows(gold, req, f_req, fnd, admitted, leg))
+        rows.extend(_contract_state_rows(gold, req, f_req, fnd, admitted, leg))
+        rows.extend(_actor_time_rows(req, f_req, fnd, admitted, leg))
         rows.extend(_logic_rows(req, f_req, fnd, admitted, leg))
         if leg:
             out["spurious_l"].extend(_legacy_extras(req, leg, gold))
@@ -411,6 +426,76 @@ def _preaward_rows(gold: dict, req: dict, f_req: dict | None, fnd: dict, admitte
         clarified = bool(leg.get("needs_clarification")) or leg.get("handled_as") == "CLARIFY"
         lcat, ldetail = ("L_OK", "") if clarified else ("L_WRONG", "EXECUTED_ACTOR_PREAWARD")
     return [{"key": "ACTOR_STATE_POLICY", "dimension": "POLICY", "foundation_intrinsic": intrinsic,
+             "foundation": product, "f_detail": why, "legacy": lcat, "l_detail": ldetail, "polarity": None}]
+
+
+def _blocked(fnd: dict, leg: dict | None) -> tuple[bool, bool]:
+    """(Foundation did not execute, legacy did not execute): `final_status != READY` / clarification evidence."""
+    legacy = bool(leg) and (bool(leg.get("needs_clarification")) or leg.get("handled_as") == "CLARIFY")
+    return fnd.get("final_status") != "READY", legacy
+
+
+def _contract_state_rows(gold: dict, req: dict, f_req: dict | None, fnd: dict, admitted: bool, leg: dict | None) -> list[dict]:
+    """v1.9 CONTRACT_STATE (ACTOR + a state that exists in contracts, universe not cited): the Gold EXECUTES on
+    CONTRACTS with no approximation. Failures, same for both arms: asking/blocking where the Gold executes, executing
+    on processes (the process state is not the contract state), and declaring an approximation that is not one."""
+    if gold.get("expected_disposition") != "EXECUTE" or actor_state_policy(req) != CONTRACT_STATE \
+            or req.get("universe") != "UNSPECIFIED":
+        return []
+    f_blocked, l_blocked = _blocked(fnd, leg)
+    if fnd["producer_status"] != "PROPOSAL" or f_req is None:
+        intrinsic, why = "F_NOT_PROPOSED", f"PRODUCER:{fnd['producer_status']}" if f_req is None else "ABSENT"
+    elif f_blocked:
+        intrinsic, why = "F_PROPOSED_HOST_UNRESOLVED", f"CLARIFIED_CONTRACT_STATE:{fnd.get('final_status')}"
+    elif f_req.get("subject") == "processes":
+        intrinsic, why = "F_PROPOSED_HOST_UNRESOLVED", "STATE_TRANSLATED_TO_PROCESSES"
+    else:
+        intrinsic, why = "OK", ""
+    product = "GATE_EXCLUDED" if intrinsic == "OK" and not admitted else intrinsic
+    lcat, ldetail = "L_MISSING", "LEGACY_ERROR"
+    if leg:
+        if l_blocked:
+            lcat, ldetail = "L_WRONG", "CLARIFIED_CONTRACT_STATE"
+        elif "CONTRACTS" not in leg["universe"]:
+            lcat, ldetail = "L_WRONG", "STATE_TRANSLATED_TO_PROCESSES"
+        elif "APPROXIMATION" in (leg.get("universe_effects") or []):
+            lcat, ldetail = "L_WRONG", "APPROXIMATION_ON_CONTRACT_STATE"
+        else:
+            lcat, ldetail = "L_OK", ""
+    return [{"key": "ACTOR_CONTRACT_STATE_POLICY", "dimension": "POLICY", "foundation_intrinsic": intrinsic,
+             "foundation": product, "f_detail": why, "legacy": lcat, "l_detail": ldetail, "polarity": None}]
+
+
+def _actor_time_rows(req: dict, f_req: dict | None, fnd: dict, admitted: bool, leg: dict | None) -> list[dict]:
+    """v1.9 ACTOR + TIME without STATE (`host_notice`): CONTRACTS, TIME on the signature date, announced. Failures,
+    same for both arms: executing on processes (TIME beats ACTOR), blocking, or no notice. Foundation cannot express
+    the notice (UNSPECIFIED is not in the IR) unless the capture carries host evidence for the request."""
+    notice = req.get(NOTICE_FIELD)
+    if not notice or not actor_time_applies(req):
+        return []
+    f_blocked, l_blocked = _blocked(fnd, leg)
+    if fnd["producer_status"] != "PROPOSAL" or f_req is None:
+        intrinsic, why = "F_NOT_PROPOSED", f"PRODUCER:{fnd['producer_status']}" if f_req is None else "ABSENT"
+    elif NOTICE_FIELD in f_req:
+        intrinsic, why = ("OK", "") if f_req[NOTICE_FIELD] == notice else ("F_PROPOSED_HOST_UNRESOLVED", "NOTICE_MISMATCH")
+    elif f_blocked:
+        intrinsic, why = "F_PROPOSED_HOST_UNRESOLVED", f"BLOCKED_WHERE_GOLD_EXECUTES:{fnd.get('final_status')}"
+    elif f_req.get("subject") == "processes":
+        intrinsic, why = "F_PROPOSED_HOST_UNRESOLVED", "TIME_BEATS_ACTOR"
+    else:
+        intrinsic, why = "IR_CANNOT_EXPRESS", "HOST_NOTICE"
+    product = "GATE_EXCLUDED" if intrinsic == "OK" and not admitted else intrinsic
+    lcat, ldetail = "L_MISSING", "LEGACY_ERROR"
+    if leg:
+        if l_blocked:
+            lcat, ldetail = "L_WRONG", "BLOCKED_WHERE_GOLD_EXECUTES"
+        elif "CONTRACTS" not in leg["universe"]:
+            lcat, ldetail = "L_WRONG", "TIME_BEATS_ACTOR"
+        elif notice not in (leg.get("universe_notices") or []):
+            lcat, ldetail = "L_WRONG", "NOTICE_MISSING"
+        else:
+            lcat, ldetail = "L_OK", ""
+    return [{"key": "ACTOR_TIME_POLICY", "dimension": "POLICY", "foundation_intrinsic": intrinsic,
              "foundation": product, "f_detail": why, "legacy": lcat, "l_detail": ldetail, "polarity": None}]
 
 
@@ -807,11 +892,13 @@ def _fixture() -> tuple[list[dict], dict]:
                 "value_hint": hint or quote, "level": level}
 
     def gold(gid, conds, universe="CONTRACTS", view="RECORDS", logic=None, operation="SEARCH", extra=None,
-             redirect=None):
+             redirect=None, notice=None):
         request = {"request_id": "q1", "universe": universe, "view": view, "universe_quote": "contratos",
                    "conditions": conds, "logic": logic or f"AND({','.join(c['id'] for c in conds)})"}
         if redirect:
             request[REDIRECT_FIELD] = redirect
+        if notice:
+            request[NOTICE_FIELD] = notice
         return {"gold_id": gid, "slice": "SYNTHETIC", "operation": operation, "expected_disposition": "EXECUTE",
                 "ambiguity": "CLEAR", "requests": [request], **(extra or {})}
 
@@ -822,7 +909,7 @@ def _fixture() -> tuple[list[dict], dict]:
 
     def cap(gid, conds, admitted=True, status="PROPOSAL", subject="contracts", expr="AND(c1)", kind="records",
             final="READY", legacy_conds=None, handled="SEARCH", universe=("CONTRACTS",), view="RECORDS", op="SEARCH",
-            level=None, f_redirect=None, notices=None, effects=None, needs_clar=False):
+            level=None, f_redirect=None, notices=None, effects=None, needs_clar=False, f_notice=None):
         return {"gold_id": gid, "slice": "SYNTHETIC", "gate": {"admitted": admitted},
                 "legacy": {"dims": {"conditions": legacy_conds or [], "universe": list(universe), "view": view,
                                     "handled_as": handled, "route_reason": "heuristic_only", "owner": "TABULAR",
@@ -831,7 +918,8 @@ def _fixture() -> tuple[list[dict], dict]:
                 "foundation": {"producer_status": status, "final_status": final, "conditions": conds,
                                "requests": [{"request_id": "r1", "operation": op, "subject": subject, "expr": expr,
                                              "effective_kind": kind,
-                                             **({REDIRECT_FIELD: f_redirect} if f_redirect else {})}],
+                                             **({REDIRECT_FIELD: f_redirect} if f_redirect else {}),
+                                             **({NOTICE_FIELD: f_notice} if f_notice else {})}],
                                "admission": {"status": "READY", "reason": ""}, "projection_status": "READY",
                                "projection_request_level": level, "projection_reason": ""}}
 
@@ -842,6 +930,10 @@ def _fixture() -> tuple[list[dict], dict]:
     AWARD = {"executed_universe": "CONTRACTS", "notice": "ACTOR_AWARDED_TO_CONTRACTS", "effect": "APPROXIMATION"}
     PRE = {"expected_disposition": "CLARIFY", "disposition_reason": PREAWARD_REASON}
     actor_state = lambda hint: [cond("c1", "ACTOR", "is", "CONSORCIO X"), cond("c2", "STATE", "is", "x", hint=hint)]
+    PAW = {"executed_universe": "CONTRACTS", "notice": "ACTOR_PROCESSES_TO_CONTRACTS", "effect": "APPROXIMATION"}
+    TN = "ACTOR_TIME_ON_SIGNATURE_DATE"
+    actor_time = [cond("c1", "ACTOR", "is", "CONSORCIO X"), cond("c2", "TIME", "during_year", "2024")]
+    PV_C = {"product_view": "CONTRACTS"}
     golds = [
         gold("T01", [cond("c1", "TOPIC", "contains", "aseo")]),
         gold("T02", [cond("c1", "GEOGRAPHY", "is", "Cali", level="MUNICIPALITY")]),
@@ -872,6 +964,18 @@ def _fixture() -> tuple[list[dict], dict]:
         *[gold(gid, actor_state("published"), universe="UNSPECIFIED", extra={"product_view": "CONTRACTS", **PRE})
           for gid in ("T25", "T26", "T27")],
         gold("T28", actor_state("awarded"), universe="CONTRACTS"),                 # explicit universe: no policy
+        # contract v1.9: PROCESSES cited + ACTOR + awarded -> v1.7 notice + APPROXIMATION
+        gold("T29", actor_state("awarded"), universe="PROCESSES", redirect=PAW),
+        gold("T30", actor_state("awarded"), universe="PROCESSES", redirect=PAW),
+        # contract v1.9: a state that EXISTS in contracts executes on CONTRACTS, no approximation
+        *[gold(gid, actor_state("terminated"), universe="UNSPECIFIED", extra=PV_C)
+          for gid in ("T31", "T32", "T33", "T34")],
+        # contract v1.9: ACTOR + TIME, no STATE: CONTRACTS + signature-date notice (TIME does not beat ACTOR)
+        *[gold(gid, actor_time, universe="UNSPECIFIED", notice=TN, extra=PV_C) for gid in ("T35", "T36", "T37", "T38")],
+        # contract v1.9: process state is not translated (PROCESSES cited + draft) / no awardee (desierto)
+        gold("T39", actor_state("draft"), universe="PROCESSES", extra=PRE),
+        gold("T40", actor_state("draft"), universe="PROCESSES", extra=PRE),
+        gold("T41", actor_state("other:desierto"), universe="UNSPECIFIED", extra={**PV_C, **PRE}),
     ]
     caps = {c["gold_id"]: c for c in [
         cap("T01", [fcond("c1", "TOPIC", "contains", "aseo")], legacy_conds=[lcond("TOPIC", "contains", "aseo")]),
@@ -938,6 +1042,33 @@ def _fixture() -> tuple[list[dict], dict]:
         # T27: pre-award clarified by both arms
         cap("T27", [], final="NEEDS_CLARIFICATION", handled="CLARIFY", universe=("CONTRACTS",), needs_clar=True),
         cap("T28", [], universe=("CONTRACTS",)),
+        # T29: PROCESSES+ACTOR+awarded: v1.7 notice AND the declared approximation (both arms OK)
+        cap("T29", [], subject="processes", f_redirect=PAW, universe=("CONTRACTS",), notices=[PAW["notice"]],
+            effects=["APPROXIMATION"]),
+        # T30: v1.7 object without the approximation effect (PROCESSES_AWARDED_WITHOUT_APPROXIMATION): both fail
+        cap("T30", [], subject="processes", f_redirect=REDIRECT_OK, universe=("CONTRACTS",), notices=[PAW["notice"]]),
+        # T31: contract state executed on contracts (both arms OK)
+        cap("T31", [], universe=("CONTRACTS",)),
+        # T32: CONTRACT_STATE_CLARIFIED: both arms ask where the Gold executes
+        cap("T32", [], final="NEEDS_CLARIFICATION", handled="CLARIFY", universe=("CONTRACTS",), needs_clar=True),
+        # T33: STATE_UNIVERSE_TRANSLATION: both arms run it on processes
+        cap("T33", [], subject="processes", universe=("PROCESSES",)),
+        # T34: the contract state is executed but declared as an approximation (legacy only; Foundation OK)
+        cap("T34", [], universe=("CONTRACTS",), effects=["APPROXIMATION"]),
+        # T35: contracts + the signature-date notice (both arms OK; Foundation carries host evidence)
+        cap("T35", [], f_notice=TN, universe=("CONTRACTS",), notices=[TN]),
+        # T36: TIME_BEATS_ACTOR: both arms execute the supplier on processes
+        cap("T36", [], subject="processes", universe=("PROCESSES",)),
+        # T37: contracts but silent about the TIME semantics (legacy fails; the IR cannot express it)
+        cap("T37", [], universe=("CONTRACTS",)),
+        # T38: blocked where the Gold executes
+        cap("T38", [], final="NEEDS_CLARIFICATION", handled="CLARIFY", universe=("CONTRACTS",), needs_clar=True),
+        # T39: processes in draft executed on contracts (a translated state): failure in both arms
+        cap("T39", [], universe=("CONTRACTS",)),
+        # T40: asked by both arms
+        cap("T40", [], final="NEEDS_CLARIFICATION", handled="CLARIFY", universe=("PROCESSES",), needs_clar=True),
+        # T41: ACTOR + desierto executed on contracts: failure in both arms
+        cap("T41", [], universe=("CONTRACTS",)),
     ]}
     return golds, caps
 
@@ -968,6 +1099,19 @@ def selftest() -> int:
         "T26": ("ACTOR_STATE_POLICY", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
         "T27": ("ACTOR_STATE_POLICY", "OK", "L_OK"),
         "T28": ("UNIVERSE_VIEW", "OK", "L_OK"),   # explicit CONTRACTS: no policy, no notice, no approximation
+        "T29": ("UNIVERSE_VIEW", "OK", "L_OK"),
+        "T30": ("UNIVERSE_VIEW", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
+        "T31": ("ACTOR_CONTRACT_STATE_POLICY", "OK", "L_OK"),
+        "T32": ("ACTOR_CONTRACT_STATE_POLICY", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
+        "T33": ("ACTOR_CONTRACT_STATE_POLICY", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
+        "T34": ("ACTOR_CONTRACT_STATE_POLICY", "OK", "L_WRONG"),
+        "T35": ("ACTOR_TIME_POLICY", "OK", "L_OK"),
+        "T36": ("ACTOR_TIME_POLICY", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
+        "T37": ("ACTOR_TIME_POLICY", "IR_CANNOT_EXPRESS", "L_WRONG"),
+        "T38": ("ACTOR_TIME_POLICY", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
+        "T39": ("ACTOR_STATE_POLICY", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
+        "T40": ("ACTOR_STATE_POLICY", "OK", "L_OK"),
+        "T41": ("ACTOR_STATE_POLICY", "F_PROPOSED_HOST_UNRESOLVED", "L_WRONG"),
     }
     details = {  # gold_id -> (Foundation detail, legacy detail) of the UNIVERSE_VIEW row
         "T15": ("", ""), "T16": ("UNIVERSE_NOT_REDIRECTED", "UNIVERSE"),
@@ -977,6 +1121,13 @@ def selftest() -> int:
         "T23": ("UNSPECIFIED_UNIVERSE", "NOTICE_MISSING"), "T24": ("UNSPECIFIED_UNIVERSE", "BLOCKED_WHERE_GOLD_EXECUTES"),
         "T25": ("EXECUTED_ACTOR_PREAWARD", "EXECUTED_ACTOR_PREAWARD"),
         "T26": ("EXECUTED_ACTOR_PREAWARD", "EXECUTED_ACTOR_PREAWARD"), "T27": ("", ""), "T28": ("", ""),
+        "T29": ("", ""), "T30": ("REDIRECT_MISMATCH", "EFFECT_MISSING"),
+        "T31": ("", ""), "T32": ("CLARIFIED_CONTRACT_STATE:NEEDS_CLARIFICATION", "CLARIFIED_CONTRACT_STATE"),
+        "T33": ("STATE_TRANSLATED_TO_PROCESSES", "STATE_TRANSLATED_TO_PROCESSES"), "T34": ("", "APPROXIMATION_ON_CONTRACT_STATE"),
+        "T35": ("", ""), "T36": ("TIME_BEATS_ACTOR", "TIME_BEATS_ACTOR"), "T37": ("HOST_NOTICE", "NOTICE_MISSING"),
+        "T38": ("BLOCKED_WHERE_GOLD_EXECUTES:NEEDS_CLARIFICATION", "BLOCKED_WHERE_GOLD_EXECUTES"),
+        "T39": ("EXECUTED_ACTOR_PREAWARD", "EXECUTED_ACTOR_PREAWARD"), "T40": ("", ""),
+        "T41": ("EXECUTED_ACTOR_PREAWARD", "EXECUTED_ACTOR_PREAWARD"),
     }
     failures = []
     for gold in golds:
@@ -994,8 +1145,10 @@ def selftest() -> int:
     assert result["entry_level"].get("EVALUATED", 0) >= 10
     assert any(r["gold_id"] == "T09" and r["culprit"] == "GATE_EXCLUDED" for r in result["regressions_legacy_ok_foundation_not"])
     assert distribution(list(caps.values()))["n"] == len(caps)
-    policy = result["matrix"].get("ACTOR_STATE_POLICY")   # v1.8: CLARIFY records keep ONLY the policy row
-    assert policy and policy["GOLD"] == 3 and policy["FOUNDATION"].get("OK") == 1 and policy["LEGACY"].get("L_OK") == 1, policy
+    policy = result["matrix"].get("ACTOR_STATE_POLICY")   # v1.8/v1.9: CLARIFY records keep ONLY the policy row
+    assert policy and policy["GOLD"] == 6 and policy["FOUNDATION"].get("OK") == 2 and policy["LEGACY"].get("L_OK") == 2, policy
+    for key, gold_n in (("ACTOR_CONTRACT_STATE_POLICY", 4), ("ACTOR_TIME_POLICY", 4)):   # v1.9 rows exist per request
+        assert result["matrix"][key]["GOLD"] == gold_n, (key, result["matrix"][key])
     if failures:
         for failure in failures:
             print("SELFTEST FAIL", failure)

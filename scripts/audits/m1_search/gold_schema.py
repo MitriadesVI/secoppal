@@ -1,7 +1,7 @@
 """Validator for the M1 SEARCH Gold v1 (docs/audits/m1_search_foundation/M1_0_SEARCH_CONTRACT.md §8).
 
 Usage: python scripts/audits/m1_search/gold_schema.py FILE.jsonl [FILE.jsonl ...]
-       python scripts/audits/m1_search/gold_schema.py --selftest     # cases of the v1.7/v1.8 host-policy rules
+       python scripts/audits/m1_search/gold_schema.py --selftest     # cases of the v1.7/v1.8/v1.9 host-policy rules + lexicon drift
 Exit 0 when every record is valid; otherwise prints one line per error and exits 1.
 Stdlib only, so it runs from any worktree without the app.
 """
@@ -13,26 +13,113 @@ import json
 import re
 import sys
 
-SCHEMA_VERSION = "m1-search-gold/1.8"
+SCHEMA_VERSION = "m1-search-gold/1.9"
 # Contract v1.7 (P-ACT-2): a PROCESSES request with an ACTOR condition (either polarity) is executed by the
 # HOST on CONTRACTS and announced. Request level, because a MULTI record can carry other requests that do
 # not qualify. The field is absent (or null) everywhere else.
 REDIRECT_FIELD = "host_universe_redirect"
 ACTOR_PROCESSES_REDIRECT = {"executed_universe": "CONTRACTS", "notice": "ACTOR_PROCESSES_TO_CONTRACTS"}
 # Contract v1.8 (ACTOR x STATE, universe NOT cited): ACTOR + an awarded state executes on CONTRACTS as an
-# ANNOUNCED APPROXIMATION ("adjudicada" is not "contrato firmado"); ACTOR + a pre-award state is never executed
-# (CLARIFY / ACTOR_STATE_INCOMPATIBLE, no redirect). Any other state is PENDING adjudication: no rule exists, so
-# the validator refuses to let a record carry one silently.
+# ANNOUNCED APPROXIMATION ("adjudicada" is not "contrato firmado").
 ACTOR_AWARDED_REDIRECT = {"executed_universe": "CONTRACTS", "notice": "ACTOR_AWARDED_TO_CONTRACTS",
                           "effect": "APPROXIMATION"}
+# Contract v1.9: PROCESSES cited + ACTOR + awarded keeps the v1.7 notice (the universe WAS cited and changed) and
+# gains the declared approximation effect. Without a STATE the v1.7 object above stays byte-identical (N073).
+ACTOR_PROCESSES_AWARDED_REDIRECT = {**ACTOR_PROCESSES_REDIRECT, "effect": "APPROXIMATION"}
 PREAWARD_REASON = "ACTOR_STATE_INCOMPATIBLE"
-AWARDED_HINTS = frozenset({"awarded"})
-PRE_AWARD_HINTS = frozenset({"open", "published", "in_evaluation", "draft"})
+# Contract v1.9: UNSPECIFIED + positive ACTOR + TIME and no STATE executes on CONTRACTS (ACTOR beats PV1) and the
+# host announces that TIME is applied to the SIGNATURE date. Request-level closed notice (not a universe redirect:
+# the universe is not changed, so `product_view` already carries CONTRACTS).
+NOTICE_FIELD = "host_notice"
+ACTOR_TIME_NOTICE = "ACTOR_TIME_ON_SIGNATURE_DATE"
+
+# ---- Contract v1.9: a state is classified by the DATASET WHERE IT EXISTS, never by the host family. The process
+# lifecycle is another universe: a process state is NEVER translated into a contract state, and a state that exists
+# in contracts is applied as a contract state. Derived from app/data/estados.py (VALID_ESTADOS_PROCEDIMIENTO,
+# VALID_ESTADOS_APERTURA, VALID_ESTADOS_CONTRATO) and app/core/estado_families.py (PROCESS_ONLY_OUTCOME_TOKENS);
+# `--selftest` fails if the lexicon drifts from this table.
+PROCESS_ONLY_PRE_AWARD = "PROCESS_ONLY_PRE_AWARD"      # exists only in processes, before the award: no awardee yet
+PROCESS_ONLY_NO_AWARDEE = "PROCESS_ONLY_NO_AWARDEE"    # process outcome that never has an awardee (desierto, revocado)
+AWARDED = "AWARDED"                                    # process state "Seleccionado" (colloquial "adjudicado")
+CONTRACT_STATE = "CONTRACT_STATE"                      # exists as a state of CONTRACTS
+PENDING = "PENDING"                                    # no rule adjudicated: the validator refuses to label it
+STATE_CLASSES = (PROCESS_ONLY_PRE_AWARD, PROCESS_ONLY_NO_AWARDEE, AWARDED, CONTRACT_STATE, PENDING)
+
+# hint -> (literal in estado_de_apertura/estado_del_procedimiento, literal in estado_contrato, phase in the PROCESS
+# lifecycle, decision). Phase is only meaningful for a process literal: "pre_award" | "awarded" | "no_awardee" | None.
+# decision = PENDING marks a user decision (2026-10-01) that overrides the existence rule.
+# Literals marked "~" are not Socrata literals: the contract lexicon maps them by synonym or by definition
+# ("liquidado" -> Cerrado; "celebrado"/"firmado" is the contract universe itself, `contract_universe` in the host).
+_STATE_LEXICON = {
+    "open":                  ("Abierto", None, "pre_award", None),
+    "published":             ("Publicado", None, "pre_award", None),
+    "in_evaluation":         ("Evaluación", None, "pre_award", None),
+    "awarded":               ("Seleccionado", None, "awarded", None),
+    "draft":                 ("Borrador", "Borrador", "pre_award", None),
+    "cancelled":             ("Cancelado", "Cancelado", None, None),
+    "terminated":            (None, "terminado", None, None),
+    "in_execution":          (None, "En ejecución", None, None),
+    "liquidated":            (None, "~Cerrado", None, None),
+    "signed":                (None, "~contract_universe", None, None),
+    "closed":                ("Cerrado", "Cerrado", None, PENDING),               # double reading (apertura / contrato)
+    "other:seleccionado":    ("Seleccionado", None, None, PENDING),               # ambiguous with awarded (host: Sprint 5)
+    "other:desierto":        ("~desierto", None, "no_awardee", None),
+    "other:revocado":        ("~revocado", None, "no_awardee", None),
+    "other:aprobado":        ("Aprobado", "Aprobado", None, None),
+    "other:en_aprobacion":   ("En aprobación", "En aprobación", None, None),
+    "other:suspendido":      ("Suspendido", "Suspendido", None, None),
+    "other:cedido":          (None, "cedido", None, None),
+    "other:prorrogado":      (None, "Prorrogado", None, None),
+    "other:modificado":      (None, "Modificado", None, None),
+    "other:enviado_proveedor": (None, "enviado Proveedor", None, None),
+}
+# Spelling variants already present in the sealed Gold; same state, same class. Anything else under `other:` is PENDING.
+STATE_ALIASES = {"other:celebrado": "signed", "other:liquidado": "liquidated", "other:borrador": "draft",
+                 "other:en_evaluacion": "in_evaluation"}
+_PHASE_CLASS = {"pre_award": PROCESS_ONLY_PRE_AWARD, "awarded": AWARDED, "no_awardee": PROCESS_ONLY_NO_AWARDEE}
+
+
+def _fold_hint(hint: str) -> str:
+    import unicodedata
+    text = unicodedata.normalize("NFKD", str(hint or "")).encode("ascii", "ignore").decode().lower().strip()
+    return re.sub(r"\s+", "_", text)
+
+
+def _canonical_hint(hint) -> str | None:
+    folded = _fold_hint(hint)
+    if folded in _STATE_LEXICON:
+        return folded
+    return STATE_ALIASES.get(folded)
+
+
+def state_class(hint, universe: str = "UNSPECIFIED") -> str:
+    """Class of ONE state value for a request whose universe is `universe` (UNSPECIFIED or PROCESSES).
+
+    UNSPECIFIED: existence decides. A state that exists in contracts is CONTRACT_STATE (also `draft`, `cancelled`,
+      `aprobado`, `suspendido`); a process-only state keeps its process phase (pre-award / awarded / no awardee).
+    PROCESSES (universe cited): the state is read in the PROCESS lifecycle and is never translated to a contract
+      state: only an explicit process phase classifies it; every other state is PENDING.
+    Unknown hints and the user-decided ambiguous ones (`closed`, `other:seleccionado`) are PENDING."""
+    canon = _canonical_hint(hint)
+    if canon is None:
+        return PENDING
+    process_literal, contract_literal, phase, decision = _STATE_LEXICON[canon]
+    if decision:
+        return decision
+    if universe == "PROCESSES":
+        return _PHASE_CLASS.get(phase, PENDING) if process_literal else PENDING
+    if contract_literal:
+        return CONTRACT_STATE
+    return _PHASE_CLASS.get(phase, PENDING)
 
 
 def has_actor(request: dict, polarity: str | None = None) -> bool:
     return any(isinstance(c, dict) and c.get("dimension") == "ACTOR" and polarity in (None, c.get("polarity"))
                for c in request.get("conditions") or [])
+
+
+def _conditions(request: dict, dimension: str) -> list[dict]:
+    return [c for c in request.get("conditions") or [] if isinstance(c, dict) and c.get("dimension") == dimension]
 
 
 def needs_redirect(request: dict) -> bool:
@@ -41,37 +128,50 @@ def needs_redirect(request: dict) -> bool:
 
 
 def actor_state_policy(request: dict) -> str | None:
-    """Contract v1.8 classification of an UNSPECIFIED request with a POSITIVE ACTOR and a STATE condition.
+    """Contract v1.9 class of a request with an ACTOR and a STATE (universe UNSPECIFIED or PROCESSES).
 
-    "AWARDED"   every STATE is positive and canonical `awarded`      -> CONTRACTS + notice + APPROXIMATION
-    "PRE_AWARD" every STATE is positive and in PRE_AWARD_HINTS       -> CLARIFY (ACTOR_STATE_INCOMPATIBLE)
-    "PENDING"   any other STATE (terminal, contract-lifecycle, other:*, negated, mixed): no rule adjudicated
-    None        no ACTOR, no STATE, or the universe is cited (v1.7 / explicit universe decide)."""
-    if request.get("universe") != "UNSPECIFIED" or not has_actor(request, "POSITIVE"):
+    One of STATE_CLASSES, or None when there is no ACTOR, no STATE, or the universe is CONTRACTS (explicit universe).
+    - every STATE positive and of the same class                     -> that class
+    - any negated STATE or ACTOR, mixed classes, unknown/ambiguous   -> PENDING (no rule: never labeled silently)
+    - UNSPECIFIED + AWARDED/CONTRACT_STATE + TIME                    -> PENDING (the date semantics is not adjudicated)
+    Pre-award and no-awardee states are clarified even with TIME (nothing is executed)."""
+    universe = request.get("universe")
+    if universe not in {"UNSPECIFIED", "PROCESSES"} or not has_actor(request):
         return None
-    states = [c for c in request.get("conditions") or [] if isinstance(c, dict) and c.get("dimension") == "STATE"]
+    states = _conditions(request, "STATE")
     if not states:
         return None
-    if all(c.get("polarity") == "POSITIVE" for c in states):
-        hints = {c.get("value_hint") for c in states}
-        if hints <= AWARDED_HINTS:
-            return "AWARDED"
-        if hints <= PRE_AWARD_HINTS:
-            return "PRE_AWARD"
-    return "PENDING"
+    if not has_actor(request, "POSITIVE") or has_actor(request, "NEGATIVE") \
+            or any(c.get("polarity") != "POSITIVE" for c in states):
+        return PENDING
+    classes = {state_class(c.get("value_hint"), universe) for c in states}
+    if len(classes) != 1:
+        return PENDING
+    klass = classes.pop()
+    if universe == "UNSPECIFIED" and klass in {AWARDED, CONTRACT_STATE} and _conditions(request, "TIME"):
+        return PENDING
+    return klass
+
+
+def actor_time_applies(request: dict) -> bool:
+    """Contract v1.9: UNSPECIFIED + positive ACTOR + TIME and no STATE -> CONTRACTS, TIME on the signature date."""
+    return (request.get("universe") == "UNSPECIFIED" and has_actor(request, "POSITIVE")
+            and not _conditions(request, "STATE") and bool(_conditions(request, "TIME")))
 
 
 def required_redirect(request: dict) -> dict | None:
     """The exact `host_universe_redirect` object this request must carry (None: it must carry none)."""
-    if needs_redirect(request):
-        return ACTOR_PROCESSES_REDIRECT
-    if actor_state_policy(request) == "AWARDED":
-        return ACTOR_AWARDED_REDIRECT
-    return None
+    policy = actor_state_policy(request)
+    if request.get("universe") == "PROCESSES":
+        if policy == AWARDED:
+            return ACTOR_PROCESSES_AWARDED_REDIRECT
+        return ACTOR_PROCESSES_REDIRECT if needs_redirect(request) and policy is None else None
+    return ACTOR_AWARDED_REDIRECT if policy == AWARDED else None
 
 
-def _has_state(request: dict) -> bool:
-    return any(isinstance(c, dict) and c.get("dimension") == "STATE" for c in request.get("conditions") or [])
+def clarifies(policy: str | None) -> bool:
+    """Classes whose request is never executed: a process that has not been awarded (or never will be) has no awardee."""
+    return policy in {PROCESS_ONLY_PRE_AWARD, PROCESS_ONLY_NO_AWARDEE}
 
 
 SLICES = {"REAL", "SYNTHETIC", "ADVERSARIAL", "MINIMAL_PAIR", "NEIGHBOR"}
@@ -219,24 +319,24 @@ def _check_requests(requests, text, where, errors, search=True) -> set[str]:
                     errors.append(f"{where}/{rid}: LOGIC_ATOMS_MISMATCH {logic!r}")
         elif logic not in (None, ""):
             errors.append(f"{where}/{rid}: LOGIC_WITHOUT_CONDITIONS")
-        errors.extend(f"{where}/{rid}: {e}" for e in _redirect_errors(request, search))
+        errors.extend(f"{where}/{rid}: {e}" for e in _redirect_errors(request, search) + _notice_errors(request, search))
     return universes
 
 
 def _redirect_errors(request: dict, search: bool = True) -> list[str]:
-    """Contract v1.7/v1.8 host-policy field of one request: required, forbidden or malformed (one error max).
-    `search=False` (non-SEARCH operations, normalized to UNSPECIFIED by C7) skips the v1.8 ACTOR x STATE policy."""
+    """Contract v1.7/v1.9 host-policy fields of one request: required, forbidden or malformed (one error max).
+    `search=False` (non-SEARCH operations, normalized to UNSPECIFIED by C7) skips the ACTOR x STATE policy."""
     present = request.get(REDIRECT_FIELD) is not None
     got = request.get(REDIRECT_FIELD)
     policy = actor_state_policy(request) if search else None
-    if policy == "PENDING" or (needs_redirect(request) and _has_state(request)):
+    if policy == PENDING or (not search and needs_redirect(request) and _conditions(request, "STATE")):
         return ["ACTOR_STATE_PENDING_ADJUDICATION"]
-    if policy == "PRE_AWARD":
+    if clarifies(policy):
         return ["REDIRECT_FORBIDDEN_FOR_ACTOR_PREAWARD"] if present else []
     expected = required_redirect(request) if search else (ACTOR_PROCESSES_REDIRECT if needs_redirect(request) else None)
     if expected is None:
         return ["REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"] if present else []
-    awarded = expected is ACTOR_AWARDED_REDIRECT
+    awarded = expected in (ACTOR_AWARDED_REDIRECT, ACTOR_PROCESSES_AWARDED_REDIRECT)
     if not present:
         return ["REDIRECT_REQUIRED_FOR_ACTOR_AWARDED" if awarded else "REDIRECT_REQUIRED_FOR_ACTOR_ON_PROCESSES"]
     if got == expected:
@@ -249,6 +349,16 @@ def _redirect_errors(request: dict, search: bool = True) -> list[str]:
     return [f"BAD_REDIRECT {got!r}"]
 
 
+def _notice_errors(request: dict, search: bool = True) -> list[str]:
+    """Contract v1.9 TIME notice: required exactly on UNSPECIFIED + positive ACTOR + TIME without STATE."""
+    got = request.get(NOTICE_FIELD)
+    if search and actor_time_applies(request):
+        if got is None:
+            return ["NOTICE_REQUIRED_FOR_ACTOR_TIME"]
+        return [] if got == ACTOR_TIME_NOTICE else [f"BAD_NOTICE {got!r}"]
+    return ["NOTICE_ONLY_FOR_ACTOR_TIME"] if got is not None else []
+
+
 def _search_requests(record: dict) -> list[dict]:
     if record.get("operation") == "SEARCH":
         return list(record.get("requests") or [])
@@ -256,15 +366,27 @@ def _search_requests(record: dict) -> list[dict]:
 
 
 def _policy_record_errors(record: dict, gid: str) -> list[str]:
-    """v1.8 record-level coherence (single-request SEARCH records): view and disposition follow the policy."""
+    """v1.8/v1.9 record-level coherence (SEARCH records): view and disposition follow the policy."""
     errors: list[str] = []
-    policies = {actor_state_policy(q) for q in _search_requests(record)}
-    if "AWARDED" in policies:
-        if record.get("product_view") != "CONTRACTS":
+    requests = _search_requests(record)
+    unspecified = [q for q in requests if q.get("universe") == "UNSPECIFIED"]
+    policies = {actor_state_policy(q) for q in requests}
+    if AWARDED in policies:
+        if any(actor_state_policy(q) == AWARDED for q in unspecified) and record.get("product_view") != "CONTRACTS":
             errors.append(f"{gid}: AWARDED_PRODUCT_VIEW_MUST_BE_CONTRACTS")
         if record.get("expected_disposition") != "EXECUTE":
             errors.append(f"{gid}: AWARDED_MUST_EXECUTE")
-    if "PRE_AWARD" in policies:
+    if CONTRACT_STATE in policies:
+        if record.get("product_view") != "CONTRACTS":
+            errors.append(f"{gid}: CONTRACT_STATE_PRODUCT_VIEW_MUST_BE_CONTRACTS")
+        if record.get("expected_disposition") != "EXECUTE":
+            errors.append(f"{gid}: CONTRACT_STATE_MUST_EXECUTE")
+    if any(actor_time_applies(q) for q in requests):
+        if record.get("product_view") != "CONTRACTS":
+            errors.append(f"{gid}: ACTOR_TIME_PRODUCT_VIEW_MUST_BE_CONTRACTS")
+        if record.get("expected_disposition") != "EXECUTE":
+            errors.append(f"{gid}: ACTOR_TIME_MUST_EXECUTE")
+    if any(clarifies(p) for p in policies):
         if (record.get("expected_disposition"), record.get("disposition_reason")) != ("CLARIFY", PREAWARD_REASON):
             errors.append(f"{gid}: PREAWARD_MUST_CLARIFY_{PREAWARD_REASON}")
     elif record.get("disposition_reason") == PREAWARD_REASON:
@@ -360,8 +482,52 @@ def main(paths: list[str]) -> int:
     return 1 if all_errors else 0
 
 
+def lexicon_drift() -> list[str]:
+    """Problems between `_STATE_LEXICON` and the real lexicon (app/data/estados.py, app/core/estado_families.py).
+    Empty list = the table still says what the host lexicon says; `None`-free so a missing file is reported."""
+    import importlib.util
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[3]
+    estados = root / "app" / "data" / "estados.py"
+    families = root / "app" / "core" / "estado_families.py"
+    if not estados.exists() or not families.exists():
+        return ["LEXICON_SOURCE_MISSING"]
+    spec = importlib.util.spec_from_file_location("_estados_lexicon", estados)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    proc_real = set(mod.VALID_ESTADOS_PROCEDIMIENTO) | set(mod.VALID_ESTADOS_APERTURA)
+    contract_real = set(mod.VALID_ESTADOS_CONTRATO)
+    problems: list[str] = []
+    claimed_proc, claimed_contract = set(), set()
+    for hint, (proc, contract, phase, decision) in _STATE_LEXICON.items():
+        if not STATE_HINT.match(hint):
+            problems.append(f"HINT_NOT_CANONICAL {hint}")
+        if proc and not proc.startswith("~"):
+            claimed_proc.add(proc)
+            if proc not in proc_real:
+                problems.append(f"PROCESS_LITERAL_NOT_IN_LEXICON {hint} {proc}")
+        if contract and not contract.startswith("~"):
+            claimed_contract.add(contract)
+            if contract not in contract_real:
+                problems.append(f"CONTRACT_LITERAL_NOT_IN_LEXICON {hint} {contract}")
+        if proc and contract is None and not proc.startswith("~") and proc in contract_real:
+            problems.append(f"PROCESS_ONLY_BUT_EXISTS_IN_CONTRACTS {hint} {proc}")
+        if phase and not proc:
+            problems.append(f"PHASE_WITHOUT_PROCESS_LITERAL {hint}")
+    problems += [f"PROCESS_LITERAL_UNCOVERED {x}" for x in sorted(proc_real - claimed_proc)]
+    problems += [f"CONTRACT_LITERAL_UNCOVERED {x}" for x in sorted(contract_real - claimed_contract)]
+    if mod.ESTADO_CONTRATO_SYNONYMS.get("liquidado") != "Cerrado":
+        problems.append("LIQUIDATED_NO_LONGER_MAPS_TO_CERRADO")
+    source = families.read_text(encoding="utf-8")
+    outcomes = re.search(r"PROCESS_ONLY_OUTCOME_TOKENS[^=]*=\s*\((.*?)\)", source, re.S)
+    for word in ("desierto", "revocado"):
+        if not outcomes or f'"{word}"' not in outcomes.group(1):
+            problems.append(f"PROCESS_ONLY_OUTCOME_MISSING {word}")
+    return problems
+
+
 def selftest() -> int:
-    """Positive and negative cases of the v1.7 (P-ACT-2) and v1.8 (ACTOR x STATE) host-policy rules."""
+    """Positive and negative cases of the v1.7 (P-ACT-2), v1.8 and v1.9 (state by dataset of existence) host-policy rules."""
     import copy
 
     def cond(cid, dim, polarity="POSITIVE", hint="X SAS", op="is"):
@@ -369,15 +535,22 @@ def selftest() -> int:
                 "value_hint": hint, "level": None}
 
     def record(universe, dim, view="RECORDS", polarity="POSITIVE", redirect="ABSENT", jobs=False, state=None,
-               state_polarity="POSITIVE", pv="DEFAULT", disposition="EXECUTE", reason=None, actor_polarity=None):
+               state_polarity="POSITIVE", pv="DEFAULT", disposition="EXECUTE", reason=None, actor_polarity=None,
+               time=None, notice="ABSENT", states=None, second_actor=None):
         conds = [cond("c1", dim, actor_polarity or polarity)]
-        if state:
-            conds.append(cond("c2", "STATE", state_polarity, hint=state))
+        if second_actor:  # a second ACTOR condition with the given polarity (mixed polarities)
+            conds.append(cond("c2", "ACTOR", second_actor, hint="Y SAS"))
+        for hint in ([state] if state else []) + list(states or []):
+            conds.append(cond(f"c{len(conds) + 1}", "STATE", state_polarity, hint=hint))
+        if time:
+            conds.append(cond(f"c{len(conds) + 1}", "TIME", time, hint="2024", op="during_year"))
         request = {"request_id": "q1", "universe": universe, "view": view,
                    "universe_quote": None if universe == "UNSPECIFIED" else "procesos",
-                   "conditions": conds, "logic": "c1" if len(conds) == 1 else "AND(c1,c2)"}
+                   "conditions": conds, "logic": "c1" if len(conds) == 1 else "AND(" + ",".join(c["id"] for c in conds) + ")"}
         if redirect != "ABSENT":
             request[REDIRECT_FIELD] = copy.deepcopy(redirect)
+        if notice != "ABSENT":
+            request[NOTICE_FIELD] = notice
         text = "procesos de X SAS"
         base = {"gold_id": "T", "slice": "SYNTHETIC", "text": text,
                 "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "turn_context": "SELF_CONTAINED",
@@ -391,8 +564,11 @@ def selftest() -> int:
 
     ok = ACTOR_PROCESSES_REDIRECT
     aw = ACTOR_AWARDED_REDIRECT
+    paw = ACTOR_PROCESSES_AWARDED_REDIRECT
     clarify = {"disposition": "CLARIFY", "reason": PREAWARD_REASON}
-    cases = [  # (label, record, expected error code or None)
+    tn = ACTOR_TIME_NOTICE
+    PENDING_CODE = "ACTOR_STATE_PENDING_ADJUDICATION"
+    cases = [  # (label, record, expected error code(s) or None). A tuple = every code, and no other error.
         ("valid: PROCESSES+ACTOR with redirect", record("PROCESSES", "ACTOR", redirect=ok), None),
         ("valid: PROCESSES+ACTOR NEGATIVE with redirect", record("PROCESSES", "ACTOR", polarity="NEGATIVE", redirect=ok), None),
         ("valid: OPPORTUNITIES+ACTOR with redirect", record("PROCESSES", "ACTOR", view="OPPORTUNITIES", redirect=ok), None),
@@ -411,12 +587,11 @@ def selftest() -> int:
         ("NEG3 malformed: missing key", record("PROCESSES", "ACTOR", redirect={"executed_universe": "CONTRACTS"}), "BAD_REDIRECT"),
         ("NEG3 malformed: extra key", record("PROCESSES", "ACTOR", redirect={**ok, "why": "x"}), "BAD_REDIRECT"),
         ("NEG3 malformed: string instead of object", record("PROCESSES", "ACTOR", redirect="CONTRACTS"), "BAD_REDIRECT"),
-        # ---- v1.8: ACTOR x STATE, universe not cited
+        # ---- v1.8: ACTOR x STATE, universe not cited (awarded / pre-award)
         ("v1.8 valid: ACTOR+awarded -> CONTRACTS, notice+APPROXIMATION", record("UNSPECIFIED", "ACTOR", state="awarded", redirect=aw), None),
         ("v1.8 valid: ACTOR+published asks, no redirect", record("UNSPECIFIED", "ACTOR", state="published", **clarify), None),
         ("v1.8 valid: ACTOR+open asks", record("UNSPECIFIED", "ACTOR", state="open", **clarify), None),
         ("v1.8 valid: ACTOR+in_evaluation asks", record("UNSPECIFIED", "ACTOR", state="in_evaluation", **clarify), None),
-        ("v1.8 valid: ACTOR+draft asks", record("UNSPECIFIED", "ACTOR", state="draft", **clarify), None),
         ("v1.8 valid: ACTOR alone (PV3) executes, no redirect", record("UNSPECIFIED", "ACTOR"), None),
         ("v1.8 valid: awarded without ACTOR keeps PV2", record("UNSPECIFIED", "BUYER", state="awarded", pv="HISTORICAL_PROCESSES"), None),
         ("v1.8 valid: explicit CONTRACTS ACTOR+awarded has no redirect", record("CONTRACTS", "ACTOR", state="awarded"), None),
@@ -436,18 +611,99 @@ def selftest() -> int:
         ("v1.8 NEG reason used without a pre-award state", record("UNSPECIFIED", "ACTOR", **clarify), f"REASON_{PREAWARD_REASON}_WITHOUT_PREAWARD"),
         ("v1.8 NEG redirect on explicit CONTRACTS ACTOR+awarded", record("CONTRACTS", "ACTOR", state="awarded", redirect=aw), "REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"),
         ("v1.8 NEG redirect on ACTOR alone", record("UNSPECIFIED", "ACTOR", redirect=aw), "REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"),
-        ("v1.8 NEG pending state (terminated) is not labeled silently", record("UNSPECIFIED", "ACTOR", state="terminated"), "ACTOR_STATE_PENDING_ADJUDICATION"),
-        ("v1.8 NEG pending state (other:seleccionado)", record("UNSPECIFIED", "ACTOR", state="other:seleccionado"), "ACTOR_STATE_PENDING_ADJUDICATION"),
-        ("v1.8 NEG negated state with ACTOR", record("UNSPECIFIED", "ACTOR", state="awarded", state_polarity="NEGATIVE"), "ACTOR_STATE_PENDING_ADJUDICATION"),
-        ("v1.8 NEG explicit PROCESSES+ACTOR+STATE is pending", record("PROCESSES", "ACTOR", state="published", redirect=ok), "ACTOR_STATE_PENDING_ADJUDICATION"),
+        # ---- v1.9: states by dataset of existence
+        ("v1.9 valid: ACTOR+draft is a CONTRACT state: executes on CONTRACTS, no redirect (P181)", record("UNSPECIFIED", "ACTOR", state="draft"), None),
+        ("v1.9 valid: ACTOR+cancelled executes as a contract state", record("UNSPECIFIED", "ACTOR", state="cancelled"), None),
+        ("v1.9 valid: ACTOR+terminated executes as a contract state", record("UNSPECIFIED", "ACTOR", state="terminated"), None),
+        ("v1.9 valid: ACTOR+in_execution executes as a contract state", record("UNSPECIFIED", "ACTOR", state="in_execution"), None),
+        ("v1.9 valid: ACTOR+liquidated executes as a contract state", record("UNSPECIFIED", "ACTOR", state="liquidated"), None),
+        ("v1.9 valid: ACTOR+signed executes as a contract state", record("UNSPECIFIED", "ACTOR", state="signed"), None),
+        ("v1.9 valid: ACTOR+other:aprobado / suspendido / cedido execute", record("UNSPECIFIED", "ACTOR", states=["other:aprobado", "other:suspendido", "other:cedido"]), None),
+        ("v1.9 valid: spelling variant other:borrador is draft", record("UNSPECIFIED", "ACTOR", state="other:borrador"), None),
+        ("v1.9 valid: ACTOR+desierto asks (no awardee)", record("UNSPECIFIED", "ACTOR", state="other:desierto", **clarify), None),
+        ("v1.9 valid: ACTOR+revocado asks (no awardee)", record("UNSPECIFIED", "ACTOR", state="other:revocado", **clarify), None),
+        ("v1.9 valid: ACTOR+published+TIME asks (nothing executes, no notice)", record("UNSPECIFIED", "ACTOR", state="published", time="POSITIVE", **clarify), None),
+        ("v1.9 valid: PROCESSES+ACTOR+draft asks, no redirect, no translation", record("PROCESSES", "ACTOR", state="draft", pv=None, **clarify), None),
+        ("v1.9 valid: PROCESSES+ACTOR+published asks", record("PROCESSES", "ACTOR", state="published", pv=None, **clarify), None),
+        ("v1.9 valid: PROCESSES+ACTOR+desierto asks", record("PROCESSES", "ACTOR", state="other:desierto", pv=None, **clarify), None),
+        ("v1.9 valid: PROCESSES+ACTOR+awarded -> v1.7 notice + APPROXIMATION", record("PROCESSES", "ACTOR", state="awarded", redirect=paw), None),
+        ("v1.9 valid: PROCESSES+ACTOR (no state) keeps the v1.7 object byte-identical", record("PROCESSES", "ACTOR", redirect=ok), None),
+        ("v1.9 valid: ACTOR+TIME -> CONTRACTS + TIME on the signature date notice", record("UNSPECIFIED", "ACTOR", time="POSITIVE", notice=tn), None),
+        ("v1.9 NEG STATE_UNIVERSE_TRANSLATION: processes in draft executed on CONTRACTS", record("PROCESSES", "ACTOR", state="draft", pv=None), "PREAWARD_MUST_CLARIFY"),
+        ("v1.9 NEG STATE_UNIVERSE_TRANSLATION: ... with the v1.7 redirect", record("PROCESSES", "ACTOR", state="draft", pv=None, redirect=ok, **clarify), "REDIRECT_FORBIDDEN_FOR_ACTOR_PREAWARD"),
+        ("v1.9 NEG PROCESSES+ACTOR+published executed", record("PROCESSES", "ACTOR", state="published", pv=None), "PREAWARD_MUST_CLARIFY"),
+        ("v1.9 NEG CONTRACT_STATE_CLARIFIED: cancelled clarified instead of executed", record("UNSPECIFIED", "ACTOR", state="cancelled", **clarify), ("CONTRACT_STATE_MUST_EXECUTE", f"REASON_{PREAWARD_REASON}_WITHOUT_PREAWARD")),
+        ("v1.9 NEG CONTRACT_STATE_CLARIFIED: terminated clarified with another reason", record("UNSPECIFIED", "ACTOR", state="terminated", disposition="CLARIFY", reason="OTHER"), "CONTRACT_STATE_MUST_EXECUTE"),
+        ("v1.9 NEG draft still asking (v1.8 shape, P181 before)", record("UNSPECIFIED", "ACTOR", state="draft", **clarify), ("CONTRACT_STATE_MUST_EXECUTE", f"REASON_{PREAWARD_REASON}_WITHOUT_PREAWARD")),
+        ("v1.9 NEG contract state sent to processes (product_view)", record("UNSPECIFIED", "ACTOR", state="terminated", pv="HISTORICAL_PROCESSES"), "CONTRACT_STATE_PRODUCT_VIEW_MUST_BE_CONTRACTS"),
+        ("v1.9 NEG contract state with an approximation redirect", record("UNSPECIFIED", "ACTOR", state="draft", redirect=aw), "REDIRECT_ONLY_FOR_QUALIFYING_REQUEST"),
+        ("v1.9 NEG DESERTED_EXECUTES: ACTOR+desierto executed", record("UNSPECIFIED", "ACTOR", state="other:desierto"), "PREAWARD_MUST_CLARIFY"),
+        ("v1.9 NEG PROCESSES_AWARDED_WITHOUT_APPROXIMATION (v1.7 object only)", record("PROCESSES", "ACTOR", state="awarded", redirect=ok), "REDIRECT_EFFECT_REQUIRED"),
+        ("v1.9 NEG PROCESSES+ACTOR+awarded without any redirect", record("PROCESSES", "ACTOR", state="awarded"), "REDIRECT_REQUIRED_FOR_ACTOR_AWARDED"),
+        ("v1.9 NEG PROCESSES+ACTOR+awarded with the UNSPECIFIED notice", record("PROCESSES", "ACTOR", state="awarded", redirect=aw), "BAD_REDIRECT"),
+        ("v1.9 NEG PROCESSES+ACTOR+awarded missing notice", record("PROCESSES", "ACTOR", state="awarded", redirect={"executed_universe": "CONTRACTS", "effect": "APPROXIMATION"}), "REDIRECT_NOTICE_REQUIRED"),
+        ("v1.9 NEG TIME_BEATS_ACTOR: ACTOR+year on processes (PV1 shape)", record("UNSPECIFIED", "ACTOR", time="POSITIVE", notice=tn, pv="HISTORICAL_PROCESSES"), "ACTOR_TIME_PRODUCT_VIEW_MUST_BE_CONTRACTS"),
+        ("v1.9 NEG ACTOR+TIME without the signature-date notice", record("UNSPECIFIED", "ACTOR", time="POSITIVE"), "NOTICE_REQUIRED_FOR_ACTOR_TIME"),
+        ("v1.9 NEG ACTOR+TIME with another notice", record("UNSPECIFIED", "ACTOR", time="POSITIVE", notice="OTHER"), "BAD_NOTICE"),
+        ("v1.9 NEG ACTOR+TIME not executed", record("UNSPECIFIED", "ACTOR", time="POSITIVE", notice=tn, disposition="CLARIFY", reason="X"), "ACTOR_TIME_MUST_EXECUTE"),
+        ("v1.9 NEG time notice on ACTOR alone", record("UNSPECIFIED", "ACTOR", notice=tn), "NOTICE_ONLY_FOR_ACTOR_TIME"),
+        ("v1.9 NEG time notice on explicit CONTRACTS", record("CONTRACTS", "ACTOR", time="POSITIVE", notice=tn), "NOTICE_ONLY_FOR_ACTOR_TIME"),
+        ("v1.9 NEG time notice on PROCESSES+ACTOR (v1.7 owns it)", record("PROCESSES", "ACTOR", time="POSITIVE", notice=tn, redirect=ok), "NOTICE_ONLY_FOR_ACTOR_TIME"),
+        # ---- pending: no rule adjudicated, the validator refuses to label it
+        ("pending: closed (double reading apertura/contrato)", record("UNSPECIFIED", "ACTOR", state="closed"), PENDING_CODE),
+        ("pending: other:seleccionado", record("UNSPECIFIED", "ACTOR", state="other:seleccionado"), PENDING_CODE),
+        ("pending: unknown other:* state", record("UNSPECIFIED", "ACTOR", state="other:en_curso"), PENDING_CODE),
+        ("pending: negated state with ACTOR", record("UNSPECIFIED", "ACTOR", state="awarded", state_polarity="NEGATIVE"), PENDING_CODE),
+        ("pending: positive and NEGATIVE ACTOR + STATE (mixed polarities)", record("UNSPECIFIED", "ACTOR", state="terminated", second_actor="NEGATIVE"), PENDING_CODE),
+        ("pending: NEGATIVE ACTOR + STATE", record("UNSPECIFIED", "ACTOR", state="terminated", actor_polarity="NEGATIVE"), PENDING_CODE),
+        ("pending: mixed awarded + published", record("UNSPECIFIED", "ACTOR", states=["awarded", "published"]), PENDING_CODE),
+        ("pending: mixed contract state + pre-award", record("UNSPECIFIED", "ACTOR", states=["terminated", "open"]), PENDING_CODE),
+        ("pending: awarded + TIME (date semantics not adjudicated)", record("UNSPECIFIED", "ACTOR", state="awarded", time="POSITIVE"), PENDING_CODE),
+        ("pending: contract state + TIME", record("UNSPECIFIED", "ACTOR", state="terminated", time="POSITIVE"), PENDING_CODE),
+        ("pending: PROCESSES+ACTOR+cancelled (process state, not pre-award)", record("PROCESSES", "ACTOR", state="cancelled", redirect=ok), PENDING_CODE),
+        ("pending: PROCESSES+ACTOR+terminated (contract-only state)", record("PROCESSES", "ACTOR", state="terminated", redirect=ok), PENDING_CODE),
+        ("pending: PROCESSES+ACTOR+closed", record("PROCESSES", "ACTOR", state="closed", redirect=ok), PENDING_CODE),
+        ("pending: PROCESSES+NEGATIVE ACTOR+published", record("PROCESSES", "ACTOR", state="published", actor_polarity="NEGATIVE", redirect=ok), PENDING_CODE),
     ]
     failures = 0
     for label, rec, code in cases:
         errors = validate(rec)
-        good = (not errors) if code is None else (len(errors) == 1 and code in errors[0])
+        if code is None:
+            good = not errors
+        else:
+            codes = (code,) if isinstance(code, str) else code
+            good = len(errors) == len(codes) and all(any(c in e for e in errors) for c in codes)
         failures += not good
         print(("ok   " if good else "FAIL ") + label + ("" if good else f" -> {errors}"))
-    print(f"selftest: {len(cases) - failures}/{len(cases)} passed", file=sys.stderr)
+    table = [  # (hint, universe, class): the classification by dataset of existence (contract v1.9)
+        ("open", "UNSPECIFIED", PROCESS_ONLY_PRE_AWARD), ("published", "UNSPECIFIED", PROCESS_ONLY_PRE_AWARD),
+        ("in_evaluation", "UNSPECIFIED", PROCESS_ONLY_PRE_AWARD), ("other:desierto", "UNSPECIFIED", PROCESS_ONLY_NO_AWARDEE),
+        ("other:revocado", "UNSPECIFIED", PROCESS_ONLY_NO_AWARDEE), ("awarded", "UNSPECIFIED", AWARDED),
+        ("draft", "UNSPECIFIED", CONTRACT_STATE), ("cancelled", "UNSPECIFIED", CONTRACT_STATE),
+        ("terminated", "UNSPECIFIED", CONTRACT_STATE), ("in_execution", "UNSPECIFIED", CONTRACT_STATE),
+        ("liquidated", "UNSPECIFIED", CONTRACT_STATE), ("signed", "UNSPECIFIED", CONTRACT_STATE),
+        ("other:Aprobado", "UNSPECIFIED", CONTRACT_STATE), ("other:en aprobación", "UNSPECIFIED", CONTRACT_STATE),
+        ("other:suspendido", "UNSPECIFIED", CONTRACT_STATE), ("other:prorrogado", "UNSPECIFIED", CONTRACT_STATE),
+        ("other:modificado", "UNSPECIFIED", CONTRACT_STATE), ("other:enviado proveedor", "UNSPECIFIED", CONTRACT_STATE),
+        ("other:celebrado", "UNSPECIFIED", CONTRACT_STATE), ("other:liquidado", "UNSPECIFIED", CONTRACT_STATE),
+        ("other:en_evaluacion", "UNSPECIFIED", PROCESS_ONLY_PRE_AWARD), ("closed", "UNSPECIFIED", PENDING),
+        ("other:seleccionado", "UNSPECIFIED", PENDING), ("other:en_curso", "UNSPECIFIED", PENDING), ("", "UNSPECIFIED", PENDING),
+        ("draft", "PROCESSES", PROCESS_ONLY_PRE_AWARD), ("open", "PROCESSES", PROCESS_ONLY_PRE_AWARD),
+        ("awarded", "PROCESSES", AWARDED), ("other:desierto", "PROCESSES", PROCESS_ONLY_NO_AWARDEE),
+        ("cancelled", "PROCESSES", PENDING), ("terminated", "PROCESSES", PENDING), ("in_execution", "PROCESSES", PENDING),
+        ("other:aprobado", "PROCESSES", PENDING), ("closed", "PROCESSES", PENDING),
+    ]
+    for hint, universe, expected in table:
+        got = state_class(hint, universe)
+        good = got == expected
+        failures += not good
+        print(("ok   " if good else "FAIL ") + f"class {universe}:{hint!r} = {expected}" + ("" if good else f" -> {got}"))
+    drift = lexicon_drift()
+    failures += bool(drift)
+    print(("ok   " if not drift else "FAIL ") + "lexicon table matches app/data/estados.py + estado_families.py"
+          + ("" if not drift else f" -> {drift}"))
+    total = len(cases) + len(table) + 1
+    print(f"selftest: {total - failures}/{total} passed", file=sys.stderr)
     return 1 if failures else 0
 
 
