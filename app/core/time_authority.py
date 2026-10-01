@@ -1,8 +1,9 @@
 """Autoridad pura del valor ejecutable de una condición TIME (M1-D-TIME).
 
 El intérprete propone ``{TIME, operator, polarity, quote}`` citando el span; esta
-función decide el valor. Lee **sólo** ``quote``: ningún texto fuera de la cita, y
-el reloj entra siempre como ``today`` explícito (sin ``date.today()``).
+función decide el valor. El valor sale **sólo** de ``quote``; la ventana (tokens
+vecinos) únicamente puede retirar autoridad. El reloj entra siempre como ``today``
+explícito (sin ``date.today()``) y nunca se recibe texto crudo.
 
 Reglas, todas fail-closed (CLARIFY pregunta, BLOCK no se ejecuta como TIME):
 
