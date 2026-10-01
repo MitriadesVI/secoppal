@@ -96,7 +96,8 @@ def execute_accepted(workflow, ctx, accepted: InterpretationAcceptance, *, refer
     if universe_policy is not None:
         result["foundation_universe"] = universe_policy.to_dict()
     if outcome.status is not AcceptanceStatus.READY:
-        message = user_message(outcome.status.value, outcome.reason, accepted.proposal)
+        message = user_message(outcome.status.value, outcome.reason, accepted.proposal,
+                               entity_resolver=workflow.entity_resolver)
         result.update(state=outcome.status.value.lower(), response=message.text,
                       foundation_internal_reason=outcome.reason or None,
                       foundation_choices=list(message.choices), total_quality="not_applicable")

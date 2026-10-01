@@ -69,8 +69,51 @@ El "antes" reproduce 620/620 las admisiones guardadas en `host.jsonl` (217 READY
 ## Riesgos y fuera de alcance
 1. **Coste de recall en BUYER:** siglas de uso masivo (ICBF 12 dueños, SENA, INVIAS) siempre piden aclaración; decisión de producto (p. ej. grupo canónico nacional) pendiente. 9/217 READY del gold.
 2. **Legacy sigue con el defecto**: `resolve_entidad("invias")` devuelve `ANI`, `resolve_entidad("icbf")` `ICBF REGIONAL TOLIMA`, `resolve_entidad("sena")` una regional; `scan_entity` (la ruta principal) sí elige otro dueño. No se cambió (fuera de alcance, paridad demostrada).
-3. Falsos positivos conservadores de TIME: un mes usado como nombre propio («Primero de Mayo en 2025»), siglas coincidentes con abreviaturas (SEP, MAR) cuando preceden al año. Piden aclaración, nunca ejecutan mal.
-4. Falsos negativos TIME: calificadores fuera de léxico o a más de 4 tokens de pegamento (p. ej. «navidad de 2024», «Q1 2025»).
+3. Falsos positivos conservadores de TIME: un mes usado como nombre propio sin «en» delante del año («Avenida Primero de Mayo 2025»), siglas coincidentes con abreviaturas (SEP, MAR) cuando preceden al año. Piden aclaración, nunca ejecutan mal. CORRECCIÓN R1: la versión R0 de este informe y el docstring afirmaban que «Primero de Mayo en 2025» pregunta; es falso (da READY porque «en» no es pegamento previo al año). Ver R1.
+4. Falsos negativos TIME: calificadores fuera de léxico o a más de 4 tokens de pegamento (p. ej. «navidad de 2024»). («Q1 2025» quedó cubierto en R1.)
 5. El host sólo mira el texto crudo alrededor de la cita (no hizo falta releer fuera de la ventana ni cambiar arquitectura).
 6. Mensaje TIME cambiado (público); cualquier otro TIME no resuelto lo comparte.
 7. Sin ZEUS fresco ni congelación del candidato: decisión del orquestador.
+
+---
+
+# R1 — reparación tras ZEUS (GO_WITH_FIXES)
+
+Rama `fix/m1-h0-dogfood-fail-closed`, base `4ec99bc1`, R0 en `fb34c4aa`. Una sola ronda de reparación. Sin merge ni push.
+
+## P1-A TIME: un token numérico u ordinal ya no corta el recorrido
+`app/core/foundation_time_coverage.py`:
+- Pegamento en ambas direcciones: ordinales y cuantificadores (`ORDINALS`: primer(o/a/os/as)… cuarto, último, un, dos…doce) y números de 1-3 dígitos («15 de marzo», «primeros 100 días»). Cubre «2025 segundo semestre», «2025, segundo semestre», «2025 primer trimestre», «los dos primeros trimestres de 2025».
+- Plurales de periodo (semestres, trimestres, meses, semanas, días…), `dia/dias`, `fin`, `cierre` («fin de año 2025», «cierre de 2025»).
+- Cotas posteriores: `antes, despues, ahora, actualidad, presente, aca` («2025 o antes», «hasta ahora», «a la actualidad», «al presente», «para acá», «al día de hoy»); cotas previas `pre`, `post`.
+- Fechas numéricas leídas de los caracteres crudos pegados al año: `15/03/2025`, `2025-03`, `2025/03`, `12/2025`, `2025-1`, `2025-I`; y cuartos compactos (`Q1`, `T1`, `H1`, `1T`, `2S`).
+- Docstring: ahora declara que es una GUARDA DE FRONTERA con garantía limitada (no un parser temporal) y corrige la afirmación falsa sobre «Primero de Mayo en 2025».
+
+Pruebas (`tests/test_foundation_h0_r1_time_property.py`): léxicos independientes comparados por IGUALDAD con el módulo (quitar una sola palabra falla), comportamiento por palabra (cada mes/periodo/cota sola, cada palabra de pegamento), periodo ANTES y DESPUÉS del año por propiedad (35 ordinales x 7 periodos x 6 formas; 7 números x 4 periodos x 4 formas), Hypothesis en ambos órdenes, y negativos (años con importes/cifras/no-años siguen ejecutando).
+
+Mutantes: los 3 supervivientes de ZEUS (quitar previa/previos/posteriores/anteriores, quitar `anos`, quitar `e`/`u`) mueren; 14 mutantes TIME nuevos (ordinales, números, fecha antes/después, cuartos, plurales, antes/ahora/actualidad, fin/cierre, dia/dias, pre/post, paseo posterior, ventana 3, romano) y 6 de R0 repetidos: todos muertos (23/23 TIME).
+
+## P1-B BUYER: la aclaración nombra candidatas y no es un bucle
+Nuevo módulo `app/core/foundation_buyer_choices.py` (una responsabilidad); `foundation_messages.user_message(..., entity_resolver=None)` lo usa para `AMBIGUOUS_HOST_DIMENSION:BUYER`; `foundation_runtime.py` pasa `workflow.entity_resolver` (1 línea). El código de razón no cambia.
+- Candidatas = dueños del alias (`alias_owners`), con sede «nacional/central» primero, resto ordenado, máx. 6 y «y N más». `choices` lleva las mismas.
+- Sólo se ofrece un nombre si el host lo acepta de verdad: el nombre oficial lo reclama exactamente esa entidad, `resolve_entidad` lo da `exact` y la fuente tiene nombre físico para cada dataset del request (si no, la proyección responde `UNSUPPORTED BUYER_SOURCE_PROJECTION_REQUIRED`).
+- Resultado con el resolver real: «ICBF» → «ICBF SEDE NACIONAL; ICBF REGIONAL ANTIOQUIA, ATLANTICO, CAUCA, CUNDINAMARCA, GUAJIRA y 6 más». «ICBF REGIONAL BOGOTA» NO se ofrece (exacta y de un solo dueño, pero sin nombre físico en la fuente: UNSUPPORTED). Cada candidata mostrada de los 137 aliases multi-dueño pasa admisión READY y tiene nombre físico en contratos (`project_buyer_names`); la proyección completa se ejercita de punta a punta con las 6 de ICBF.
+- **Límite declarado, no resuelto:** 117 de los 137 aliases multi-dueño (entre ellos `sena`, `invias`, `ids`, hospitales «san juan de dios/san rafael», `cenac`, `fondane`) no tienen ningún dueño verificable, porque la fuente no tiene nombre físico para ninguno (ni siquiera el nombre inequívoco sería ejecutable en el Foundation). Para esos el mensaje deja de pedir «el nombre completo» (era el bucle) y dice con honestidad que no hay nombre exacto que confirmar, sugiriendo otra entidad o el territorio. Es deuda de D-BUYER / vinculación de nombres de fuente, no de H0.
+- Nota de arquitectura (hecho verificado): el Foundation sólo reclama el PRIMER turno de una conversación (`INELIGIBLE_HISTORY`). La respuesta del usuario en la misma conversación la resuelve el legacy: probé que escribir cada candidata mostrada de ICBF en la misma conversación da `entidad_resolved` igual a esa candidata. El READY del Foundation se verifica en una conversación nueva.
+
+Pruebas (`tests/test_foundation_h0_r1_buyer_choices.py`, 144): orden/tope/«y N más» de ICBF, nombre compartido o sin proyección nunca ofrecido, SENA sin candidatas sin bucle, propiedad sobre los 137 aliases (cada candidata mostrada resuelve a exactamente ella y es READY; sin candidata sólo si ningún dueño es verificable), y punta a punta con harness: «contratos del ICBF en 2025» → aclaración con 6 candidatas y 0 llamadas a la fuente → «contratos de <candidata> en 2025» → READY con `nombre_entidad = '<candidata>'` (6/6), y misma conversación → legacy resuelve a la misma entidad. 9 mutantes BUYER (tope, sede primero, proyección, dueño único, conteo, texto «y N más», runtime sin resolver, orden, choices): 9/9 muertos (total 32/32 con los de TIME).
+
+## Límites / P2 aceptados (no se reparan en esta ronda)
+1. Sobre-aclaraciones fuera de las clases mes/rango (fail-closed, no ejecutan mal): «acta de inicio de 2025», «interventoría final 2025», «liquidación final del 2025», «Hospital 20 de Julio 2025», «Colegio 7 de Agosto 2025», «Batallón Mayo 2025», «SEP/MAR 2025», «dragado del mar 2025». Recuento sobre las sondas de falsos positivos de ZEUS (45 frases): 30 preguntan, idéntico a R0; R1 no añade falsos positivos en ellas. En las 620 capturas del gold: **0 READY->CLARIFY nuevos frente a `fb34c4aa`** (195 READY antes y después; sólo los 22 de R0, todos de clase mes/rango/multi-dueño).
+2. «INVIAS» pregunta porque ANI reclama ese alias en los datos (legacy: invias→ANI, preexistente). Deuda D-BUYER.
+3. Dos años sin cota («2023 y 2025», R0316) pasan de READY a CLARIFY: ampliación declarada fuera de la letra «mes, cota o rango».
+4. «Primero de Mayo en 2025» NO pregunta (corrección de la documentación de R0); «Avenida Primero de Mayo 2025» sí.
+5. La cobertura TIME es una guarda de frontera con garantía limitada: sigue sin ver calificadores fuera del léxico («Semana Santa», «navidad de 2025»), a más de 4 tokens, o separados del año por una palabra no-pegamento («agosto del ICBF en 2025»). La autoridad temporal completa la entrega la misión D-TIME.
+
+## Gates R1 (corrí estos, no la suite global)
+- `pytest tests/test_foundation_*.py tests/test_procurement_foundation_frozen_delivery.py tests/test_entity_resolver*.py -q`: **3092 passed** (incluye los 2 archivos nuevos).
+- Guardas de bytes/SHA y vecinos (`test_natural_alpha_evaluation`, `test_text_lineage*`, `test_truth_layer_public_parity`, `test_procurement_layers_sources`, `test_gazetteer_source_binding_audit_regressions`, `test_qualified_buyer_fail_closed`, `test_module_size_limits`, `test_query_router`, `test_residual_verifier_contract`, `test_legacy_shadow`): **456 passed**; ningún validador relajado.
+- Paridad legacy: mismo cálculo de hashes (11.665 claves + 620 textos + `alias_index`): `59957bfb884c51d27c1e9b0e40a43bca904e3132758f5c9f11c7f6d8db6d8ea2`, idéntico al de base y R0.
+- Replay 620 capturas (sólo gold_id): 0 cambios de estado frente a `fb34c4aa`.
+- `ruff check` sobre los 6 archivos tocados/nuevos: `All checks passed!`
+- `olympus-semgrep-delta --config .semgrep/secoppal-laws.yml --base 4ec99bc1` (10 archivos): TOTAL=0 BASELINE=0 NEW_DELTA=0 FIXED=0.

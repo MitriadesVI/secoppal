@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from app.core.foundation_buyer_choices import buyer_choices
 from app.core.semantic_dimensions import SemanticDimension
 
 
@@ -42,8 +43,8 @@ _DIMENSION = {
 _EXACT = {
     "AMBIGUOUS_HOST_DIMENSION:BUYER": FoundationUserMessage(
         "El nombre de la entidad que mencionas corresponde a más de una entidad compradora y no puedo "
-        "elegir una sin cambiar el significado. ¿Puedes escribir su nombre completo, por ejemplo "
-        "«Alcaldía de Soledad»?"),
+        "elegir una sin cambiar el significado, y no tengo un nombre exacto que pueda confirmar para "
+        "ofrecerte. ¿Puedes buscar por otra entidad o por el departamento o municipio?"),
     "HOST_UNIVERSE_RULE_CONFLICT": FoundationUserMessage(
         "Encontré dos señales incompatibles sobre si buscas oportunidades actuales o registros históricos. "
         "¿Quieres procesos abiertos para participar o resultados históricos?",
@@ -127,10 +128,27 @@ def _universe_quote(proposal) -> str:
     return next((r.universe_evidence.quote for r in requests if r.universe_evidence is not None), "")
 
 
-def user_message(terminal: str, reason: str | None, proposal=None) -> FoundationUserMessage:
+def _buyer_message(proposal, entity_resolver) -> FoundationUserMessage | None:
+    """Name the owners of an ambiguous buyer alias, so the answer is not the same question again."""
+    found = buyer_choices(proposal, entity_resolver)
+    if found is None or not found.shown:
+        return None
+    listed = "; ".join(f"«{name}»" for name in found.shown)
+    more = f" y {found.hidden} más" if found.hidden else ""
+    return FoundationUserMessage(
+        f"«{found.alias}» corresponde a más de una entidad compradora y no puedo elegir una sin cambiar el "
+        f"significado. Escribe el nombre exacto de la que buscas. Opciones: {listed}{more}. "
+        "Si no es ninguna de estas, escribe su nombre oficial completo.", found.shown)
+
+
+def user_message(terminal: str, reason: str | None, proposal=None, *, entity_resolver=None) -> FoundationUserMessage:
     """The deterministic text for one Foundation terminal; never the code itself."""
     code = reason or ""
     head = code.split(":", 1)[0]
+    if code == "AMBIGUOUS_HOST_DIMENSION:BUYER":
+        named = _buyer_message(proposal, entity_resolver)
+        if named is not None:
+            return named
     if code in _EXACT or head in _EXACT:
         return _EXACT.get(code) or _EXACT[head]
     if head == "UNRESOLVED_HOST_DIMENSION":
