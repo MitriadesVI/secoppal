@@ -485,6 +485,15 @@ class EntityResolver:
         logger.warning("Could not resolve departamento: '%s'", user_input)
         return ResolutionResult(value=None, method="unresolved", confidence="none")
 
+    def alias_owners(self, normalized: str) -> frozenset[str]:
+        """Official entities that claim this normalized alias (pure; empty when none).
+
+        ``alias_index`` keeps only the last writer, so ``method="exact"`` can
+        name one owner of an alias that several entities claim.  This exposes
+        the non-lossy ownership already collected while indexing.
+        """
+        return frozenset(self.owners_by_alias.get(normalized, ()))
+
     def resolve_entidad(self, user_input: str, departamento: str | None = None) -> ResolutionResult:
         normalized = normalize_text(user_input)
 

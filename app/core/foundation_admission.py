@@ -9,6 +9,7 @@ from app.core.contract_universe import POLICY_VERSION
 from app.core.entity_resolver import EntityResolver, department_mention_resolution
 from app.core.foundation_evidence import UNIVERSE_SPAN_OMITTED, material_phrase, topic_spans
 from app.core.foundation_state_composition import composition_reason
+from app.core.foundation_time_coverage import uncited_time_qualifier
 from app.core.foundation_value_direction import operator_reason
 from app.core.interpretation_contract import (
     AcceptanceStatus, ConditionRole, ContractError, Effect, HostPolicy, HostResolution,
@@ -20,6 +21,7 @@ from app.core.soql_builder import SoQLBuilder
 from app.utils.money import money_to_cop, normalize_text
 
 
+AMBIGUOUS_BUYER = "AMBIGUOUS_HOST_DIMENSION:BUYER"
 _PHRASE_DIMENSIONS = frozenset({SemanticDimension.TOPIC, SemanticDimension.BUYER, SemanticDimension.GEOGRAPHY})
 
 
@@ -104,11 +106,15 @@ def admit_proposal(proposal: InterpretationProposal, raw: str, *,
             value = geo.canonical if geo.kind == "department" else None
         elif dimension is SemanticDimension.BUYER:
             buyer = entity_resolver.resolve_entidad(text)
+            if buyer.method == "exact" and len(entity_resolver.alias_owners(folded)) > 1:
+                # M1-H0: «exact» names the last writer of an alias that several entities claim.
+                return _stop(proposal, AcceptanceStatus.NEEDS_CLARIFICATION, AMBIGUOUS_BUYER)
             value = buyer.value if (buyer.method in {"exact", "exact_official", "exact_normalized"}
                                    or buyer.method.startswith("strict_")) else None
         elif dimension is SemanticDimension.TIME and condition.operator == "during_year":
             years = re.findall(r"\b(?:19|20)\d{2}\b", folded)
-            value = years[0] if len(years) == 1 else None
+            # M1-H0: «agosto de 2026», «desde 2023»: the year alone would widen, narrow or invert the ask.
+            value = years[0] if len(years) == 1 and not uncited_time_qualifier(raw, condition.evidence) else None
         elif dimension is SemanticDimension.VALUE:
             misdirected = operator_reason(condition.operator, text)
             if misdirected is not None:  # the operator must say what its own evidence says

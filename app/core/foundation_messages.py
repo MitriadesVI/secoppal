@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from app.core.foundation_buyer_choices import MAX_SHOWN, buyer_choices
 from app.core.semantic_dimensions import SemanticDimension
 
 
@@ -29,7 +30,8 @@ _DIMENSION = {
     "BUYER": "No pude identificar con certeza la entidad compradora que mencionas. ¿Puedes escribir su "
              "nombre completo, por ejemplo «Alcaldía de Soledad»?",
     "GEOGRAPHY": "No pude identificar el departamento que mencionas. ¿Puedes escribir su nombre completo?",
-    "TIME": "No pude determinar el año que quieres consultar. ¿Puedes indicar un solo año, por ejemplo 2025?",
+    "TIME": "No pude determinar el periodo que quieres consultar: por ahora solo filtro por un año completo, "
+            "sin meses ni rangos. ¿Puedes indicar un solo año, por ejemplo 2025?",
     "VALUE": "No pude leer el monto que indicas. ¿Puedes escribirlo con cifras, por ejemplo «más de 300 "
              "millones»?",
     "MODALITY": "No pude identificar una sola modalidad de contratación. ¿Cuál quieres, por ejemplo "
@@ -39,6 +41,10 @@ _DIMENSION = {
 }
 
 _EXACT = {
+    "AMBIGUOUS_HOST_DIMENSION:BUYER": FoundationUserMessage(
+        "El nombre de la entidad que mencionas corresponde a más de una entidad compradora y no puedo "
+        "elegir una sin cambiar el significado, y no tengo un nombre exacto que pueda confirmar para "
+        "ofrecerte. ¿Puedes buscar por otra entidad o por el departamento o municipio?"),
     "HOST_UNIVERSE_RULE_CONFLICT": FoundationUserMessage(
         "Encontré dos señales incompatibles sobre si buscas oportunidades actuales o registros históricos. "
         "¿Quieres procesos abiertos para participar o resultados históricos?",
@@ -122,10 +128,51 @@ def _universe_quote(proposal) -> str:
     return next((r.universe_evidence.quote for r in requests if r.universe_evidence is not None), "")
 
 
-def user_message(terminal: str, reason: str | None, proposal=None) -> FoundationUserMessage:
+def _names(names: tuple[str, ...], cap: int = MAX_SHOWN) -> str:
+    listed = "; ".join(f"«{name}»" for name in names[:cap])
+    return f"{listed} y {len(names) - cap} más" if len(names) > cap else listed
+
+
+def _buyer_message(proposal, entity_resolver, raw) -> FoundationUserMessage | None:
+    """Name the owners of an ambiguous buyer alias without ever passing a partial list off as the whole choice."""
+    found = buyer_choices(proposal, entity_resolver, raw)
+    if found is None:
+        return None
+    if found.negated:  # choosing one owner would turn «not ICBF» into «not that one»
+        return FoundationUserMessage(
+            f"Pides excluir «{found.alias}», un nombre que corresponde a más de una entidad compradora, y no "
+            "puedo elegir cuál excluir sin cambiar el significado. ¿Puedes decir de qué entidad concreta se "
+            "trata, o buscar sin esa exclusión?")
+    if not found.shown:
+        return None
+    lead = (f"«{found.alias}» corresponde a más de una entidad compradora y no puedo elegir una sin cambiar el "
+            "significado. ")
+    if found.named_unavailable:  # the entity the user most likely named cannot be taken by name: say so
+        return FoundationUserMessage(
+            lead + f"Lo más probable es que te refieras a {_names(found.named_unavailable)}, que todavía no "
+            "puedo consultar por nombre. ¿Puedes buscar por otra entidad o por el departamento o municipio?")
+    more = f" y {found.hidden} más" if found.hidden else ""
+    if found.complete:
+        return FoundationUserMessage(
+            lead + f"Escribe el nombre exacto de la que buscas. Opciones: {_names(found.shown)}{more}. "
+            "Si no es ninguna de estas, escribe su nombre oficial completo.", found.shown)
+    # Partial: no buttons, the text says which owners are missing.
+    more_ok = f" y {found.hidden} más que sí puedo consultar" if found.hidden else ""
+    return FoundationUserMessage(
+        lead + f"Algunas de las entidades que usan ese nombre: {_names(found.shown)}{more_ok}. Esta lista es "
+        f"parcial: hay {len(found.unavailable)} más que no puedo consultar por nombre todavía "
+        f"({_names(found.unavailable, 4)}). Si buscas una de las listadas, escribe su nombre oficial completo.")
+
+
+def user_message(terminal: str, reason: str | None, proposal=None, *, entity_resolver=None,
+                 raw: str | None = None) -> FoundationUserMessage:
     """The deterministic text for one Foundation terminal; never the code itself."""
     code = reason or ""
     head = code.split(":", 1)[0]
+    if code == "AMBIGUOUS_HOST_DIMENSION:BUYER":
+        named = _buyer_message(proposal, entity_resolver, raw)
+        if named is not None:
+            return named
     if code in _EXACT or head in _EXACT:
         return _EXACT.get(code) or _EXACT[head]
     if head == "UNRESOLVED_HOST_DIMENSION":
