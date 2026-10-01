@@ -356,12 +356,13 @@ def test_two_bounds_in_one_value_condition_are_asked(text):
 
 
 def test_every_comparator_of_the_closed_lexicon_is_ready_only_in_its_own_direction():
-    from app.core.foundation_value_direction import _MARKERS, GT, LT
+    from app.core.money_comparators import GT, HEADS, LT
 
-    for phrase, family in _MARKERS:
+    for head in HEADS:
+        phrase = f"{head.phrase} de" if head.needs_link else head.phrase
         for operator in ("greater_than", "less_than"):
             accepted = _value(phrase, operator)
-            ready = (operator, family) in {("greater_than", GT), ("less_than", LT)}
+            ready = (operator, head.family) in {("greater_than", GT), ("less_than", LT)}
             assert (accepted.status is AcceptanceStatus.READY) is ready, (phrase, operator, accepted.reason)
 
 

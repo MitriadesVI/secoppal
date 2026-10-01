@@ -10,6 +10,7 @@ import re
 from dataclasses import dataclass, replace
 from enum import Enum
 
+from app.core.money_comparators import DOWN_PATTERN, NEGATION_FILLER, SUFFIX_DOWN_PATTERN, SUFFIX_UP_PATTERN, UP_PATTERN
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.utils.money import MONETARY_UNIT_PATTERN
 
@@ -42,26 +43,18 @@ _AMOUNT = (
     r"(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?"
 )
 _AMOUNT_RE = re.compile(rf"(?<![\w.,]){_AMOUNT}", re.IGNORECASE)
-# Inflection is composed by family, rather than enumerating whole sentences.
-_UP = (
-    r"(?:m[aá]s|mayor(?:es)?|superior(?:es)?|super[ae]n?|exced[ae]n?|"
-    r"(?:rebas|sobrepas)[ae]n?|(?:por\s+)?encima|m[ií]nim[oa]|desde|"
-    r"al\s+menos|a\s+partir\s+de|>=?)"
-)
-_DOWN = (
-    r"(?:menos|menor(?:es)?|inferior(?:es)?|(?:por\s+)?debajo|"
-    r"m[aá]xim[oa]|hasta|a\s+lo\s+sumo|baj[ae]n?|<=?)"
-)
+# The comparator vocabulary has ONE owner (money_comparators); only the
+# grammar around it (negation, link, position) is local to this scanner.
+_UP = UP_PATTERN
+_DOWN = DOWN_PATTERN
 _LINK = r"(?:\s+o\s+igual(?:es)?)?(?:\s+(?:a|de|que))?(?:\s+(?:los?|las?|el))?\s*"
 _PREFIX_RE = re.compile(
-    rf"(?<!\w)(?:que\s+)?(?P<neg>no\s+)?(?:sean?\s+)?(?:por\s+)?"
+    rf"(?<!\w)(?:que\s+)?(?P<neg>no\s+(?:{NEGATION_FILLER})?)?(?:sean?\s+)?(?:por\s+)?"
     rf"(?:(?P<up>{_UP})|(?P<down>{_DOWN})){_LINK}$", re.IGNORECASE,
 )
 _APPROX_RE = re.compile(r"\b(?P<neg>no\s+)?por\s+$", re.IGNORECASE)
 _SUFFIX_RE = re.compile(
-    r"^\s+(?:(?P<up>en\s+adelante|(?:o|y)\s+(?:m[aá]s|mayores|superiores)|"
-    r"para\s+(?:arriba|m[aá]s))|(?P<down>(?:o|y)\s+(?:menos|menores)|"
-    r"para\s+(?:abajo|menos)))\b", re.IGNORECASE,
+    rf"^\s+(?:(?P<up>{SUFFIX_UP_PATTERN})|(?P<down>{SUFFIX_DOWN_PATTERN}))\b", re.IGNORECASE,
 )
 _RANGE_RE = re.compile(
     rf"\b(?P<neg>no\s+)?(?:entre|de|desde)\s+(?P<lo>{_AMOUNT})"
