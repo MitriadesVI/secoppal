@@ -38,6 +38,7 @@ from pathlib import Path
 from typing import Any
 
 from app.core.db import connect_sqlite
+from app.core.turn_ledger import turn_ledger_trace
 from app.core.capability_binding.dogfood_telemetry import a2_trace_metadata
 from app.core.entity_profile.execution_trace import profile_trace_metadata
 from app.core.natural_alpha.turn_receipt import claim_trace, confirm_sqlite
@@ -221,6 +222,7 @@ class FeedbackStore:
             **trace_metadata(workflow_result),
             **a2_trace_metadata(workflow_result),
             **profile_trace_metadata(workflow_result),
+            **turn_ledger_trace(),
             **(claim.metadata if claim is not None else {}),
             **actor_resolution_trace(
                 workflow_result.get("resolved_params") or workflow_result.get("parsed_params") or {}
