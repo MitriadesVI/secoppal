@@ -281,3 +281,17 @@ etiquetaron además el superlativo singular con `limit_n: 1` (N012, R0507). El G
 | «los 10 más caros» (cifra explícita) | `ORDER` + `limit_n: N` |
 
 En la IR v2 (C0) `limit_n` se representa como la dimensión `CARDINALITY`, resuelta por el host.
+
+## 16. Enmienda v1.6 (2026-10-01) — marcador de documento dentro de la cita ACTOR
+
+Origen: diseño D-ACTOR (METIS): la autoridad decide NIT vs cédula con la cita, y el contexto sólo
+puede retirar autoridad, así que el marcador de documento debe estar dentro de la cita.
+C1 queda así: los marcadores de **rol** («proveedor», «contratista», «empresa») quedan fuera; los de
+**documento** («NIT», «cédula», «C.C.») quedan dentro («NIT 900.000.001-1», «cédula 1000000001»).
+Aplicado de forma mecánica al Gold (7 citas: N063, N064, X083, P114, R0019, R0424, S026) con nuevo
+sello `m1-search-gold/1.6`. El significado no cambia; cambia el inicio del span.
+
+Decisiones ACTOR asociadas (D_ACTOR_DESIGN.md): P-ACT-1 sí (sin coincidencia exacta se ofrecen
+candidatos, como legacy); P-ACT-2 **no se bloquea** «procesos de un proveedor» (Gold N073 = EXECUTE):
+se proyecta sobre procesos con proveedor adjudicado registrado, anunciando cobertura parcial y con
+botón [Ver contratos].

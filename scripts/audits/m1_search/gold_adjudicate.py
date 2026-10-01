@@ -16,10 +16,13 @@ import re
 import sys
 from pathlib import Path
 
-GOLD_SCHEMA_VERSION = "m1-search-gold/1.3"
+GOLD_SCHEMA_VERSION = "m1-search-gold/1.6"
 _ROLE_MARKER = re.compile(
-    r"^(?:(?:del|de la|de los|al|el|la|los)\s+)?(?:proveedor(?:es)?|contratista(?:s)?|empresa|nit|c\.?c\.?|"
-    r"c[eé]dula)\s*(?:n[oº°.]*\s*)?[:\-]?\s+", re.IGNORECASE)
+    r"^(?:(?:del|de la|de los|al|el|la|los)\s+)?(?:proveedor(?:es)?|contratista(?:s)?|empresa)\s*[:\-]?\s+",
+    re.IGNORECASE)
+# v1.6: document-type markers belong INSIDE an ACTOR quote (the authority decides NIT vs CC from it).
+_DOC_MARKER_BEFORE = re.compile(r"(?:\b(?:nit|c[eé]dula(?:\s+de\s+ciudadan[ií]a)?|c\.?\s?c\.?)\s*(?:n[oº°.]*\s*)?[:\-]?\s*)$",
+                                re.IGNORECASE)
 
 
 def _strip_marker(quote: str) -> str:
@@ -37,6 +40,7 @@ def normalize(record: dict) -> tuple[dict, list[str]]:
     """Mechanical contract v1.3 rules; returns (record, applied rule ids)."""
     out = copy.deepcopy(record)
     applied: list[str] = []
+    text = out.get("text") or ""
     for request in _requests(out):
         for cond in request.get("conditions", []):
             if cond.get("dimension") == "ACTOR":
@@ -44,6 +48,12 @@ def normalize(record: dict) -> tuple[dict, list[str]]:
                 if new != cond.get("quote"):
                     cond["quote"] = new
                     applied.append("C1")
+                at = text.find(new) if new else -1
+                if at > 0 and re.search(r"\d{5,}", new):
+                    marker = _DOC_MARKER_BEFORE.search(text[:at])
+                    if marker and marker.group(0).strip():
+                        cond["quote"] = text[marker.start():at] + new
+                        applied.append("C1-DOC")
     for request in _requests(out):
         for cond in request.get("conditions", []):
             if cond.get("dimension") == "CONTRACT_TYPE_OR_NATURE":
