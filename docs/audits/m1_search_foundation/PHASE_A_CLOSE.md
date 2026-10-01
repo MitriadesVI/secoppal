@@ -19,7 +19,9 @@ Gold verificadas al 100 % contra la función PV1–PV6.
 
 ## Lo que dice la evidencia
 
-SEARCH REAL (449 consultas): legacy acierta 238 (53 %), Foundation 101 (22 %).
+SEARCH REAL (449 consultas): legacy acierta 194 (43 %), Foundation 101 (22 %). *(Corregido el
+2026-10-01: la primera cifra, 238/53 %, daba por buena a legacy en ACTOR con sólo detectar un actor;
+con evaluación simétrica legacy acierta 24/79 condiciones ACTOR, no 68 — sobre todo ofrece candidatos.)*
 Foundation **no pierde por entender mal**: el productor da 0 errores en 620 llamadas (p90 2 s), y
 de sus fallos 192 son `IR_CANNOT_EXPRESS` (ACTOR 79, universo omitido 50, mes/rango 31,
 inclusivos 26, orden 23). Le siguen la proyección de compradores (51

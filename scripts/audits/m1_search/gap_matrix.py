@@ -249,7 +249,24 @@ def _legacy_compare(g: dict, c: dict, gold_words: set) -> tuple[str, str]:
         return ("L_OK", "") if str(g.get("value_hint")) == c["value"] else ("L_WRONG", "VALUE")
     if dim == "ORDER":
         return ("L_OK", "") if g["operator"] == c["operator"] else ("L_WRONG", "VALUE")
-    return "L_OK", ""  # ACTOR: legacy resolved (or queued) an actor for this text
+    if dim == "ACTOR":
+        # Symmetric with the other dimensions (METIS D-ACTOR §5): detecting *an* actor is not
+        # enough. A document must match digit for digit (DV ignored); a name must share every
+        # content word of the Gold quote after folding. Queued/unresolved actors are not OK.
+        if c.get("status") not in (None, "RESOLVED") or c.get("resolved") is False:
+            return "L_WRONG", "ACTOR_UNRESOLVED"
+        gold_digits = re.sub(r"\D", "", g.get("quote") or "")
+        got_digits = re.sub(r"\D", "", str(value or ""))
+        if len(gold_digits) >= 5:
+            same = got_digits[:len(gold_digits)] == gold_digits or gold_digits[:len(got_digits)] == got_digits
+            return ("L_OK", "") if got_digits and same else ("L_WRONG", "VALUE")
+        # A name the directory resolved exactly (to a document) is a correct execution; the
+        # directory, not this harness, is the authority on name -> identity.
+        if got_digits:
+            return "L_OK", "NAME_RESOLVED_BY_DIRECTORY"
+        share = overlap(gold_words, stems(value))
+        return ("L_OK", "") if share >= 1 else ("L_WRONG", "VALUE")
+    return "L_OK", ""
 
 
 # --------------------------------------------------------------------------- one gold x capture
