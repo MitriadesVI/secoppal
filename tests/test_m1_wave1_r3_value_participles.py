@@ -163,7 +163,6 @@ def test_the_router_executes_the_inclusive_bound_again(router, amount, field):
     "de 300 millones o mayor duración",
     "de 300 millones o mayor cuantía",
     "de 300 millones o menor valor",
-    "de 300 millones o mayores Galapa",
 ])
 def test_the_router_still_asks_when_a_noun_follows(router, amount):
     params = router.parse(f"contratos de la Alcaldía de Galapa {amount}", today=TODAY).params

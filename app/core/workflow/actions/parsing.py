@@ -777,6 +777,10 @@ def apply_context(state: State) -> State:
         previous=context_params, pending=open_question,
     )) is not None:
         return _block_open_period(state, start, context_params, period_block)
+    # A turn that answered the open period question executes the period it wrote.
+    merged = temporal_period_question.settle(
+        merged, parsed_params, pending=open_question, intent=intent,
+    )
 
     if object_negation_overlap(merged):
         # The contradictory delta never becomes conversational state.  Preserve

@@ -13,8 +13,15 @@ A blocked turn is persisted with the scope it understood (so a reply can complet
 without a date. Left alone, the reply («sí», «2», «la primera», «2025 completo») is read as
 a new follow-up: a search without a period, or with a word of the reply as the topic. So the
 blocked turn leaves a marker and the next turn is an ANSWER only when it names an explicit
-(non-relative) period and does not bring a new topic along; any other reply asks again, with
-the way out written in the question.
+(non-relative) period and brings no stray topic along (a topic is fine when the frame already has
+it, or when the turn names the buyer too: a whole new search); any other reply asks again, with the
+way out written in the question. An answer executes the period it wrote (``answered``).
+
+The marker (``MARKER``) is an EPHEMERAL CONTROL SEAM, not a semantic dimension: it travels in the
+``resolved_params`` of the blocked turn because the repo has no pending-clarification slot apart from the
+frame itself (``actor_pending`` travels the same way), and a new persistence slot is not a minimal hook.
+Seam to retire with the Conversation IR (M2). Invariants (``test_m1_wave1_r4_marker_invariants``): it never
+reaches the SoQL, never changes a filter, never survives an answer, a reset or a complete new search.
 
 Pure: no I/O, no clock. The lexicon of windows is ``temporal_semantics``'s (both lexicons).
 """
@@ -63,13 +70,67 @@ def _has_period(params: dict[str, Any]) -> bool:
     return bool(params.get("fecha_desde") or params.get("fecha_hasta"))
 
 
-def _is_answer(text: str, parsed: dict[str, Any], intent: str) -> bool:
-    """An explicit period, not a window, and no new topic unless it is a whole new search."""
+def _terms(value: Any) -> set[str]:
+    """Every string inside ``value`` (lists, tuples, sets, nested), lower-cased."""
+    if isinstance(value, str):
+        return {value.casefold().strip()} - {""}
+    if isinstance(value, (list, tuple, set, frozenset)):
+        return {term for item in value for term in _terms(item)}
+    return set()
+
+
+def _topic(params: dict[str, Any]) -> set[str]:
+    return {term for key in _TOPIC_KEYS for term in _terms(params.get(key))}
+
+
+def _is_answer(text: str, parsed: dict[str, Any], intent: str, previous: dict[str, Any]) -> bool:
+    """An explicit period (never a window) that brings no stray topic.
+
+    The way out written in the question promises that a whole search is accepted, so a turn with a
+    topic is an answer when the topic is the one the frame already had («contratos de aseo de la
+    Alcaldía de Galapa de octubre a diciembre de 2025» after the same query with a window) or when
+    it also names the buyer (entity + topic + period: a new search). A topic that is neither
+    («2025 completo», «los de aseo de octubre a diciembre de 2025»: a word of a reply cannot be told
+    from a topic) asks again.
+    """
     if parsed.get("_temporal_error") or not _has_period(parsed) or relative_window_in(text):
         return False
     if intent == "new_search":
         return True
-    return not any(parsed.get(key) for key in _TOPIC_KEYS)
+    topic = _topic(parsed)
+    if not topic or topic <= _topic(previous):
+        return True
+    return bool(parsed.get("entidad_resolved") or parsed.get("entidad"))
+
+
+def answered(merged: dict[str, Any], parsed: dict[str, Any]) -> dict[str, Any]:
+    """``merged`` carrying exactly the period the answer wrote.
+
+    The follow-up merge of a turn that names a topic keeps the period of the previous frame even
+    when the turn writes another explicit one (a pre-existing behaviour of ``contextual_requery``:
+    «… de abril a septiembre de 2026» after «… en 2025» executed 2025). An answer to a period
+    question exists to set the period, so it replaces the pair atomically, like any new temporal
+    scope: an open end is information, never an invitation to inherit the old one.
+    """
+    result = dict(merged)
+    for key in ("fecha_desde", "fecha_hasta"):
+        if parsed.get(key):
+            result[key] = parsed[key]
+        else:
+            result.pop(key, None)
+    return result
+
+
+def settle(
+    merged: dict[str, Any], parsed: dict[str, Any], *, pending: Block | None, intent: str,
+) -> dict[str, Any]:
+    """``merged`` after a turn that passed ``block_for``: an answer sets the period it wrote.
+
+    Without an open question, or when the person left it with an explicit reset, nothing changes.
+    """
+    if pending is None or intent == "reset_context":
+        return merged
+    return answered(merged, parsed)
 
 
 def _followup_question(window: str, previous: dict[str, Any]) -> str:
@@ -99,7 +160,7 @@ def block_for(
     """
     if pending is not None:
         # An explicit reset is the person leaving the question: nothing is executed by it.
-        if intent == "reset_context" or _is_answer(text, parsed, intent):
+        if intent == "reset_context" or _is_answer(text, parsed, intent, previous):
             return None
         return pending
     if intent in _NO_FOLLOWUP or not _has_period(previous):

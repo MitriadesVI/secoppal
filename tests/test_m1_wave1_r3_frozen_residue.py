@@ -10,20 +10,17 @@ Each test asserts the CORRECT behaviour (the temporal authority asks, or resolve
 the person meant) and is ``xfail(strict=True)``: when E-TIME fixes a family the test XPASSes,
 strict turns that into a failure, and the entry must be deleted.
 
-Every query below already failed in the base ``4ec99bc1`` (verified): silently with NO period
-(vigencia/administración anterior, year in words, «2.025», «25», the lone «el último mes»), or
-silently with the wrong one (the whole anchor, or 2015 for a decree). R1 turned the first group
-into a window counted from today; none of them asks, and none is a regression of this wave.
+Every xfail below already failed in the base ``4ec99bc1`` (verified): silently with NO period
+(the lone «el último mes»), or silently with the wrong one (the whole anchor, or 2015 for a decree).
+R4 closed the first group of R3 (window + «vigencia/administración anterior», year in words,
+«2.025», «25») with ``temporal_noun_anchor``: those five are ordinary tests below. Eight xfail remain (two new in R4: a temporal noun phrase with no window).
 """
 from __future__ import annotations
 
 from datetime import date
-from pathlib import Path
 
 import pytest
 
-from app.core.entity_resolver import EntityResolver
-from app.core.query_router import QueryRouter
 from app.core.temporal_semantics import resolve_temporal_scope
 
 TODAY = date(2026, 10, 1)
@@ -44,33 +41,44 @@ def _frozen(reason: str):
     return pytest.mark.xfail(strict=True, reason=f"{reason} Owner: {OWNER}.")
 
 
-# ── window + an anchor the lexicon does not know: the window wins from the clock, silently ──
+# ── window + an anchor the lexicon does not know: CLOSED in R4 (``temporal_noun_anchor``) ────
+# These five were frozen in R3 as xfail; R4 declares the finite vocabulary (temporal nouns, years
+# in words / with a separator / in two digits) and they are now ordinary tests. The property
+# lives in ``test_m1_wave1_r4_noun_anchor``.
 
-@_frozen("«vigencia anterior» is not in the lexicon: the window is counted from today and the "
-         "anchor is ignored (base: no period at all).")
 def test_window_of_the_previous_vigencia_asks():
     assert _asks(f"contratos de {B} en los últimos 3 meses de la vigencia anterior")
 
 
-@_frozen("A year written in words is not read: the window runs from today, disjoint from the year asked.")
 def test_window_of_a_year_written_in_words_asks():
     assert _asks(f"contratos de {B} en los últimos tres meses de dos mil veinticinco")
 
 
-@_frozen("«2.025» (thousands separator) is not read as a year: the window runs from today.")
 def test_window_of_a_year_with_a_thousands_separator_asks():
     assert _asks(f"contratos de {B} en los últimos 3 meses de 2.025")
 
 
-@_frozen("A two-digit year («25») is not read: the window runs from today.")
 def test_window_of_a_two_digit_year_asks():
     assert _asks(f"contratos de {B} en los últimos 3 meses de 25")
 
 
-@_frozen("«administración anterior» names a period of office the lexicon cannot place: the window "
-         "runs from today.")
 def test_window_of_the_previous_administration_asks():
     assert _asks(f"contratos de {B} en los últimos 3 meses de la administración anterior")
+
+
+# ── a temporal noun phrase with NO window is a period the authority drops (R4: open residue) ──
+
+@_frozen("«antes de la pandemia» names a period the authority cannot place and no window is involved "
+         "(R4 only asks when a relative window shares the turn): the search runs with no period, "
+         "exactly as in the base.")
+def test_a_period_noun_phrase_without_a_window_asks():
+    assert _asks(f"contratos de {B} antes de la pandemia")
+
+
+@_frozen("«de la vigencia anterior» alone is dropped (no period) as in the base; R4 asks only next to "
+         "a relative window.")
+def test_the_previous_vigencia_alone_asks():
+    assert _asks(f"contratos de {B} de la vigencia anterior")
 
 
 # ── a partial period of an anchor is resolved as the whole anchor ─────────────────────────────
@@ -114,16 +122,3 @@ def test_a_lone_window_of_time_relative_is_not_dropped():
 def test_a_norm_citation_alone_is_not_a_period():
     found = _resolve("contratos por decreto 1082 de 2015")
     assert found.fecha_desde != "2015-01-01"
-
-
-# ── VALUE: a proper noun after the plural adjective suffix (a wave-1 regression vs the base) ───
-
-@_frozen("«300 millones o mayores Galapa»: the base read the bound (valor_min) and the buyer; since R2 "
-         "the suffix is a bound only before a closed class (end, punctuation, connector, participle "
-         "or verb), and a proper noun is indistinguishable from a noun («o mayores plazos») without "
-         "a lexicon of nouns. This is the ONLY VALUE query of the zeus2 probes that executed in the "
-         "base and asks now (declared).")
-def test_a_proper_noun_after_the_plural_suffix_keeps_the_bound():
-    router = QueryRouter(EntityResolver(Path("app/data/aliases_db.json")))
-    params = router.parse("contratos de la Alcaldía de Galapa de 300 millones o mayores Galapa", today=TODAY).params
-    assert params.get("valor_min") == 300_000_000

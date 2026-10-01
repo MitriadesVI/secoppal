@@ -10,7 +10,16 @@ import re
 from dataclasses import dataclass, replace
 from enum import Enum
 
-from app.core.money_comparators import DOWN_PATTERN, NEGATION_FILLER, SUFFIX_DOWN_PATTERN, SUFFIX_UP_PATTERN, UP_PATTERN
+from app.core import money_suffix_place
+from app.core.money_comparators import (
+    BARE_ADJECTIVE_DOWN_PATTERN,
+    BARE_ADJECTIVE_UP_PATTERN,
+    DOWN_PATTERN,
+    NEGATION_FILLER,
+    SUFFIX_DOWN_PATTERN,
+    SUFFIX_UP_PATTERN,
+    UP_PATTERN,
+)
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.utils.money import MONETARY_UNIT_PATTERN
 
@@ -61,6 +70,11 @@ _APPROX_RE = re.compile(
 _SUFFIX_RE = re.compile(
     rf"^\s+(?:(?P<up>{SUFFIX_UP_PATTERN})|(?P<down>{SUFFIX_DOWN_PATTERN}))\b", re.IGNORECASE,
 )
+# The adjective suffix with nothing checked after it: valid only when a place or a buyer follows it
+# («300 millones o mayores Galapa», ``money_suffix_place``).
+_BARE_SUFFIX_RE = re.compile(
+    rf"^\s+(?:(?P<up>{BARE_ADJECTIVE_UP_PATTERN})|(?P<down>{BARE_ADJECTIVE_DOWN_PATTERN}))\b", re.IGNORECASE,
+)
 _RANGE_RE = re.compile(
     rf"\b(?P<neg>no\s+)?(?:entre|de|desde)\s+(?P<lo>{_AMOUNT})"
     rf"(?:\s*[-–—]\s*|\s+(?:y|a|hasta)\s+)(?P<hi>{_AMOUNT})", re.IGNORECASE,
@@ -91,6 +105,10 @@ def _single(text: str, match: re.Match[str]) -> MoneyPolarityDecision:
     amount = text[start:end]
     prefix = _PREFIX_RE.search(text[:start])
     suffix = _SUFFIX_RE.search(text[end:])
+    if suffix is None:
+        bare = _BARE_SUFFIX_RE.search(text[end:])
+        if bare and money_suffix_place.names_a_place(text[end + bare.end():]):
+            suffix = bare
     if suffix and re.match(rf"{_LINK}{_AMOUNT}", text[end + suffix.end():], re.IGNORECASE):
         suffix = None  # "X y menos de Y" belongs to the next operand.
     relation = MoneyRelation.UNKNOWN

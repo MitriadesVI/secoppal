@@ -23,7 +23,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-from app.core import money_suffix_event
+from app.core import money_suffix_event, money_suffix_place
 from app.utils.money import normalize_text
 
 GT, GTE, LT, LTE, EQ, BETWEEN = "GT", "GTE", "LT", "LTE", "EQ", "BETWEEN"
@@ -177,6 +177,10 @@ UP_PATTERN = _head_pattern({GT, GTE})
 DOWN_PATTERN = _head_pattern({LT, LTE})
 SUFFIX_UP_PATTERN = _suffix_alternation(GTE)
 SUFFIX_DOWN_PATTERN = _suffix_alternation(LTE)
+# The adjective suffixes WITHOUT the tail: a scanner that already has the text after the suffix asks
+# ``money_suffix_place.names_a_place`` about it (a place or a buyer is a boundary too).
+BARE_ADJECTIVE_UP_PATTERN = f"(?:{_alternation(p for p, f in _ADJECTIVE_SUFFIXES if f == GTE)})"
+BARE_ADJECTIVE_DOWN_PATTERN = f"(?:{_alternation(p for p, f in _ADJECTIVE_SUFFIXES if f == LTE)})"
 
 
 # ── lectura sobre texto plegado ──────────────────────────────────────────
@@ -281,8 +285,9 @@ def read_comparators(text: str) -> ComparatorScan:
         masked[reading.start:reading.end] = " " * (reading.end - reading.start)
     leftover = "".join(masked)
     for match in _SUFFIX_RE.finditer(leftover):
-        if re.sub(r"\s+", " ", match.group()) in _ADJECTIVE_PHRASES and not _ADJECTIVE_TAIL_RE.match(
-            folded, match.end(),
+        if re.sub(r"\s+", " ", match.group()) in _ADJECTIVE_PHRASES and not (
+            _ADJECTIVE_TAIL_RE.match(folded, match.end())
+            or money_suffix_place.names_a_place(folded[match.end():])
         ):
             continue  # «300 millones y mayor plazo»: el adjetivo modifica un sustantivo, no es cota
         if re.sub(r"\s+", " ", match.group()) == "o menos" and re.search(

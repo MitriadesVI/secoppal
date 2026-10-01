@@ -211,10 +211,11 @@ def _block(text, parsed, intent="change_year", pending=PENDING, previous=None):
     return tpq.block_for(text=text, intent=intent, parsed=parsed, previous=previous or {}, pending=pending)
 
 
-def test_an_answer_is_an_explicit_period_without_a_window_or_a_new_topic():
+def test_an_answer_is_an_explicit_period_without_a_window_and_without_a_stray_topic():
     assert _block("octubre a diciembre de 2025", PERIOD) is None
     assert _block("x", {}) is PENDING
     assert _block("los últimos 3 meses", {"fecha_desde": "2026-07-01", "fecha_hasta": "2026-10-01"}) is PENDING
+    # R4: a topic the frame does not have, with no buyer, is a word of a reply, not a search.
     assert _block("2025 completo", {**PERIOD, "objeto": ["completo"]}, intent="contextual_requery") is PENDING
     assert _block("aseo en 2025", {**PERIOD, "objeto_or": ["aseo"]}, intent="contextual_requery") is PENDING
     assert _block("x", {**PERIOD, "_temporal_error": "invalid_date"}) is PENDING

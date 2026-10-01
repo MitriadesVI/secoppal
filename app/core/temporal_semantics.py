@@ -7,7 +7,7 @@ from dataclasses import dataclass, replace
 from datetime import date as Date, timedelta
 from typing import Any
 
-from app.core import normative_citation, temporal_window_anchor
+from app.core import normative_citation, temporal_noun_anchor, temporal_window_anchor
 from app.core.temporal_bounds import apply_bound, find_bound, open_suffix_end
 
 
@@ -576,7 +576,7 @@ def _anchored_window(
 
     found = temporal_window_anchor.find_anchored_window(
         text, window_patterns(), _NOT_AN_ANCHOR, rest,
-    )
+    ) or temporal_noun_anchor.find(text, window_patterns(), cited)
     if found is None:
         return None
     return TemporalResolution(
