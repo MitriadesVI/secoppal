@@ -14,7 +14,12 @@ from hypothesis import HealthCheck, given, settings, strategies as st
 
 from app.core import temporal_semantics
 from app.core.temporal_semantics import resolve_temporal_scope
-from app.core.time_authority import AUTHORITY, TimeResolution, resolve_time_condition
+from app.core.time_authority import (
+    AUTHORITY,
+    TimeResolution,
+    TimeValue,
+    resolve_time_condition,
+)
 
 TODAY = date(2026, 8, 25)
 POS = "POSITIVE"
@@ -38,21 +43,44 @@ def month_bounds(year: int, month: int) -> tuple[date, date]:
     return start, nxt
 
 
-def run(quote: str, operator: str, today: date = TODAY, polarity: str = POS) -> TimeResolution:
-    return resolve_time_condition(quote, operator, polarity, today=today)
+# Razón cerrada de C0 que corresponde a cada motivo fino; escrita aparte del módulo a propósito.
+CLOSED_REASON = {
+    "TIME_NEGATION_UNSUPPORTED": "NEGATION_UNSUPPORTED:TIME",
+    "TIME_OPERATOR_EVIDENCE_MISMATCH": "OPERATOR_EVIDENCE_MISMATCH:TIME",
+    "TIME_UNCITED_QUALIFIER": "UNCITED_QUALIFIER:TIME",
+}
+
+
+def run(
+    quote: str,
+    operator: str,
+    today: date = TODAY,
+    polarity: str = POS,
+    left: tuple[str, ...] = (),
+    right: tuple[str, ...] = (),
+) -> TimeResolution:
+    return resolve_time_condition(quote, left, right, operator, polarity, today=today)
 
 
 def resolved(quote: str, operator: str, today: date = TODAY) -> tuple[date | None, date | None]:
     result = run(quote, operator, today)
     assert result.decision == "RESOLVED", (quote, operator, result)
     assert result.authority == AUTHORITY == "time-authority@1"
+    assert result.reason is None and result.detail is None
+    assert isinstance(result.value, TimeValue)
+    assert result.value.start is not None or result.value.end_exclusive is not None
     return result.fecha_desde, result.fecha_hasta_exclusive
 
 
-def refused(quote: str, operator: str, decision: str, reason: str, today: date = TODAY) -> None:
-    result = run(quote, operator, today)
-    assert (result.decision, result.reason) == (decision, reason), (quote, operator, result)
+def assert_refusal(result: TimeResolution, decision: str, detail: str) -> None:
+    assert (result.decision, result.detail) == (decision, detail), result
+    assert result.reason == CLOSED_REASON.get(detail, "UNRESOLVED_HOST_DIMENSION:TIME")
+    assert result.value is None
     assert result.fecha_desde is None and result.fecha_hasta_exclusive is None
+
+
+def refused(quote: str, operator: str, decision: str, detail: str, today: date = TODAY) -> None:
+    assert_refusal(run(quote, operator, today), decision, detail)
 
 
 # --------------------------------------------------------------------------- meses
@@ -185,9 +213,10 @@ def test_composite_opposite_bounds_resolve_in_either_order():
 def test_two_temporal_facts_that_do_not_form_bounds_are_never_silently_dropped(quote):
     result = run(quote, "between_dates")
     assert result.decision == "CLARIFY"
-    assert result.reason in {
+    assert result.detail in {
         "TIME_MULTIPLE_TEMPORAL_FACTS", "TIME_REVERSE_RANGE", "TIME_RANGE_OR_LIST_AMBIGUOUS",
     }
+    assert result.reason == "UNRESOLVED_HOST_DIMENSION:TIME" and result.value is None
 
 
 # ------------------------------------------------------------------- rangos y trimestres
@@ -316,17 +345,18 @@ def test_relative_period_moves_with_the_clock_and_explicit_does_not():
 @pytest.mark.parametrize("quote", ["hace 0 años", "hace 31 años", "últimos 0 meses",
                                    "últimos 121 meses", "los últimos 31 años", "hace 121 meses"])
 def test_out_of_range_counts_are_asked(quote):
-    result = run(quote, "relative_period")
-    assert (result.decision, result.reason) == ("CLARIFY", "TIME_COUNT_OUT_OF_RANGE")
+    assert_refusal(run(quote, "relative_period"), "CLARIFY", "TIME_COUNT_OUT_OF_RANGE")
 
 
 def test_clock_is_mandatory_and_never_read_from_the_machine(monkeypatch):
     parameter = inspect.signature(resolve_time_condition).parameters["today"]
     assert parameter.kind is inspect.Parameter.KEYWORD_ONLY and parameter.default is parameter.empty
     with pytest.raises(TypeError):
-        resolve_time_condition("este mes", "relative_period", POS)  # type: ignore[call-arg]
+        resolve_time_condition("este mes", (), (), "relative_period", POS)  # type: ignore[call-arg]
     with pytest.raises(TypeError):
-        resolve_time_condition("este mes", "relative_period", POS, today="2026-08-25")  # type: ignore[arg-type]
+        resolve_time_condition(
+            "este mes", (), (), "relative_period", POS, today="2026-08-25",  # type: ignore[arg-type]
+        )
 
     class NoToday(date):
         @classmethod
@@ -344,21 +374,18 @@ def test_clock_is_mandatory_and_never_read_from_the_machine(monkeypatch):
 @pytest.mark.parametrize("operator", ["during_year", "during_month", "between_dates",
                                       "relative_period"])
 def test_negative_polarity_is_blocked_for_every_operator(quote, operator):
-    result = run(quote, operator, polarity="NEGATIVE")
-    assert (result.decision, result.reason) == ("BLOCK", "TIME_NEGATION_UNSUPPORTED")
-    assert result.fecha_desde is None and result.fecha_hasta_exclusive is None
+    assert_refusal(run(quote, operator, polarity="NEGATIVE"), "BLOCK", "TIME_NEGATION_UNSUPPORTED")
 
 
 @pytest.mark.parametrize("polarity", ["", "positive", "neutral", None])
 def test_unknown_polarity_is_blocked_not_assumed_positive(polarity):
     result = run("2025", "during_year", polarity=polarity)  # type: ignore[arg-type]
-    assert (result.decision, result.reason) == ("BLOCK", "TIME_POLARITY_INVALID")
+    assert_refusal(result, "BLOCK", "TIME_POLARITY_INVALID")
 
 
 @pytest.mark.parametrize("operator", ["", "during_day", "DURING_YEAR", "equals", "greater_than"])
 def test_unknown_operator_is_blocked(operator):
-    refused_result = run("2025", operator)
-    assert (refused_result.decision, refused_result.reason) == ("BLOCK", "TIME_OPERATOR_UNKNOWN")
+    assert_refusal(run("2025", operator), "BLOCK", "TIME_OPERATOR_UNKNOWN")
 
 
 # Cita representativa de cada forma y los operadores que le corresponden.
@@ -421,14 +448,17 @@ def test_authority_reads_only_the_quote():
     assert run("2025", "during_year") == run("2025", "during_year")
     # Un año fuera de la cita no puede entrar: la cita es la única entrada textual.
     parameters = list(inspect.signature(resolve_time_condition).parameters)
-    assert parameters == ["quote", "operator", "polarity", "today"]
+    assert parameters == ["quote", "left", "right", "operator", "polarity", "today"]
 
 
 def test_time_resolution_is_frozen_and_carries_its_authority():
     result = run("en 2025", "during_year")
     assert isinstance(result, TimeResolution) and result.authority == "time-authority@1"
+    assert result.value == TimeValue(date(2025, 1, 1), date(2026, 1, 1), "year")
     with pytest.raises(AttributeError):
         result.decision = "BLOCK"  # type: ignore[misc]
+    with pytest.raises(AttributeError):
+        result.value.start = None  # type: ignore[misc,union-attr]
 
 
 # -------------------------------------------------------------------- Hypothesis
@@ -449,7 +479,7 @@ TOKENS = ["2025", "2024", "marzo", "de", "del", "antes", "después", "desde", "h
     today=st.dates(min_value=date(2000, 1, 1), max_value=date(2099, 12, 31)),
 )
 def test_property_total_function_with_consistent_output(words, operator, polarity, today):
-    result = resolve_time_condition(" ".join(words), operator, polarity, today=today)
+    result = resolve_time_condition(" ".join(words), (), (), operator, polarity, today=today)
     assert result.authority == "time-authority@1"
     if result.decision == "RESOLVED":
         assert polarity == "POSITIVE" and operator != "other"
@@ -458,10 +488,10 @@ def test_property_total_function_with_consistent_output(words, operator, polarit
         if result.fecha_desde and result.fecha_hasta_exclusive:
             assert result.fecha_desde < result.fecha_hasta_exclusive
     else:
-        assert result.reason and result.reason.startswith("TIME_")
-        assert result.fecha_desde is None and result.fecha_hasta_exclusive is None
+        assert result.detail and result.detail.startswith("TIME_") and result.value is None
+        assert result.reason == CLOSED_REASON.get(result.detail, "UNRESOLVED_HOST_DIMENSION:TIME")
     if polarity == "NEGATIVE":
-        assert (result.decision, result.reason) == ("BLOCK", "TIME_NEGATION_UNSUPPORTED")
+        assert (result.decision, result.detail) == ("BLOCK", "TIME_NEGATION_UNSUPPORTED")
 
 
 @settings(max_examples=300, deadline=None)
@@ -490,3 +520,161 @@ def test_property_after_and_before_partition_the_year_line(year):
     assert before[0] is None and before[1] == same_year[1]
     from_year = resolved(f"desde {year}", "between_dates")
     assert from_year[0] == same_year[0]
+
+
+# --------------------------------------------------- ventana (M1-C0 §5.5): sólo retira
+
+
+UNCITED = "TIME_UNCITED_QUALIFIER"
+
+
+@pytest.mark.parametrize(
+    ("quote", "left", "right"),
+    [
+        ("2024", ("antes", "de"), ()),
+        ("2023", ("desde",), ()),
+        ("2023", ("a", "partir", "de"), ()),
+        ("2022", ("despues", "de"), ()),
+        ("2025", ("primer", "trimestre", "de"), ()),
+        ("2025", ("finales", "de"), ()),
+        ("2025", ("mediados", "de"), ()),
+        ("2025", ("entre", "2022", "y"), ()),
+        ("2025", ("agosto", "de"), ()),
+        ("2025", (), ("en", "adelante")),
+        ("2023", (), ("y", "posteriores")),
+        ("2025", (), ("hasta", "hoy")),
+        ("2025", (), ("segundo", "semestre")),
+        ("2025", (), ("y", "2026")),
+        ("marzo de 2025", (), ("y", "abril")),
+        ("marzo de 2025", ("antes", "de"), ()),
+        ("2025", ("ultimos", "meses", "de"), ()),
+        ("2025", (), ("100", "dias")),  # un número pequeño es pegamento, no detiene la caminata
+        ("2025", ("marzo", "15", "de"), ()),
+    ],
+)
+def test_context_that_qualifies_the_quote_withdraws_the_authority(quote, left, right):
+    # El prompt v4.2 citaba sólo el año: «antes de 2024» llegaba como «2024».
+    operator = "during_month" if quote.startswith("marzo") else "during_year"
+    assert run(quote, operator).decision == "RESOLVED"
+    assert_refusal(run(quote, operator, left=left, right=right), "CLARIFY", UNCITED)
+
+
+@pytest.mark.parametrize(
+    ("quote", "left", "right"),
+    [
+        ("2025", ("contratos", "de"), ()),
+        ("2025", ("hasta", "500", "millones", "en"), ()),  # cota de dinero, no de fecha
+        ("2025", ("aseo", "en"), ("por", "mas", "de")),
+        ("marzo de 2025", ("contratos", "firmados", "en"), ("de", "aseo")),
+        ("2025", (), ("con", "mas", "de", "500")),
+        ("2025", ("contratos", "mas", "caros", "de"), ()),
+        ("2025", (), ()),
+    ],
+)
+def test_unrelated_context_does_not_withdraw_authority(quote, left, right):
+    assert run(quote, "during_month" if "marzo" in quote else "during_year", left=left,
+               right=right).decision == "RESOLVED"
+
+
+@settings(max_examples=500, deadline=None)
+@given(
+    quote=st.sampled_from(["2025", "marzo de 2025", "antes de 2024", "este mes", "marzo",
+                           "desde 2023", "basura", "primer trimestre de 2025", "hoy"]),
+    operator=st.sampled_from(["during_year", "during_month", "between_dates", "relative_period"]),
+    left=st.lists(st.sampled_from(TOKENS + ["contratos", "en", "500", "millones", "aseo"]),
+                  max_size=4),
+    right=st.lists(st.sampled_from(TOKENS + ["contratos", "en", "500", "millones", "aseo"]),
+                   max_size=4),
+)
+def test_property_context_is_monotone_it_only_withdraws(quote, operator, left, right):
+    alone = run(quote, operator)
+    with_context = run(quote, operator, left=tuple(left), right=tuple(right))
+    if alone.decision == "RESOLVED":
+        assert with_context == alone or (
+            with_context.decision == "CLARIFY" and with_context.detail == UNCITED
+        )
+    else:
+        assert with_context == alone  # el contexto jamás convierte un rechazo en valor
+
+
+@pytest.mark.parametrize("window", [("a", "b", "c", "d", "e"), "antes de", ["x", 3]])
+def test_a_malformed_window_is_a_contract_violation_not_a_silent_pass(window):
+    with pytest.raises(ValueError):
+        resolve_time_condition("2025", window, (), "during_year", POS, today=TODAY)  # type: ignore[arg-type]
+    with pytest.raises(ValueError):
+        resolve_time_condition("2025", (), window, "during_year", POS, today=TODAY)  # type: ignore[arg-type]
+
+
+def test_context_is_not_consulted_for_a_refusal_or_a_negation():
+    assert run("2025", "during_year", polarity="NEGATIVE", left=("antes", "de")).detail == (
+        "TIME_NEGATION_UNSUPPORTED")
+    assert run("blah", "during_year", left=("antes",)).detail == "TIME_NO_TEMPORAL_EVIDENCE"
+
+
+# ----------------------------------------------- lectura de la cita: lo que no se ejecuta
+
+
+@pytest.mark.parametrize("quote", ["15/03/2025", "2025-03", "2025/3", "15-03-2025", "15.03.2025",
+                                   "2025-I", "desde 15/03/2025"])
+def test_numeric_dates_are_asked_never_executed_as_the_bare_year(quote):
+    # El legado devuelve el año 2025 para todas: el día y el mes se pierden en silencio.
+    assert resolve_temporal_scope(quote, today=TODAY).fecha_desde is not None
+    refused(quote, "between_dates", "CLARIFY", "TIME_NUMERIC_DATE_UNSUPPORTED")
+    refused(quote, "during_year", "CLARIFY", "TIME_NUMERIC_DATE_UNSUPPORTED")
+
+
+@pytest.mark.parametrize("quote", ["finales de 2025", "mediados de 2025", "2025 primer trimestre",
+                                   "2025 semestre", "inicios de 2025", "Q1 2025",
+                                   "marzo de 2025 inclusive hasta"])
+def test_qualifier_words_left_inside_the_quote_are_asked(quote):
+    result = run(quote, "during_year")
+    assert result.decision == "CLARIFY" and result.detail in {
+        "TIME_UNPARSED_QUALIFIER", "TIME_OPERATOR_EVIDENCE_MISMATCH",
+        "TIME_MULTIPLE_TEMPORAL_FACTS"}
+
+
+@pytest.mark.parametrize("quote", ["finales de 2025", "mediados de 2025", "2025 primer trimestre",
+                                   "inicios de 2025", "Q1 2025"])
+def test_a_partial_year_is_never_the_whole_year(quote):
+    for operator in ("between_dates", "during_year"):
+        result = run(quote, operator)
+        assert result.decision == "CLARIFY"
+        assert result.detail in {"TIME_UNPARSED_QUALIFIER", "TIME_MULTIPLE_TEMPORAL_FACTS"}
+
+
+def test_lone_iso_date_is_that_day_not_an_open_bound():
+    assert resolved("2025-03-01", "between_dates") == (date(2025, 3, 1), date(2025, 3, 2))
+    assert resolved("2024-02-29", "between_dates") == (date(2024, 2, 29), date(2024, 3, 1))
+    refused("2025-03-01", "during_year", "CLARIFY", "TIME_OPERATOR_EVIDENCE_MISMATCH")
+    assert resolved("desde 2025-03-01", "between_dates") == (date(2025, 3, 1), None)
+
+
+@pytest.mark.parametrize(
+    "quote",
+    ["desde 2025-03-01 y hasta abril", "desde 2025-03-01 y hasta el 31 de febrero de 2026",
+     "hasta 2025-03-01 y desde el 31 de abril de 2020"],
+)
+def test_a_second_bound_with_an_invented_or_invalid_part_is_not_merged(quote):
+    # El año de «hasta abril» saldría del reloj; la fecha inexistente no se funde con nada.
+    refused(quote, "between_dates", "CLARIFY", "TIME_MULTIPLE_TEMPORAL_FACTS")
+
+
+@pytest.mark.parametrize("quote", ["después de 2020 y antes de marzo",
+                                   "después de 2020 y antes del 31 de febrero de 2024"])
+def test_a_second_bound_that_asks_never_resolves(quote):
+    assert run(quote, "between_dates").decision == "CLARIFY"
+
+
+@pytest.mark.parametrize(
+    ("quote", "expected"),
+    [
+        ("el mes de marzo de 2025", (date(2025, 3, 1), date(2025, 4, 1))),
+        ("mes de marzo del 2025", (date(2025, 3, 1), date(2025, 4, 1))),
+        ("el día 15 de marzo de 2025", (date(2025, 3, 15), date(2025, 3, 16))),
+        ("primer trimestre 2025", (date(2025, 1, 1), date(2025, 4, 1))),
+        ("primer trimestre, 2025", (date(2025, 1, 1), date(2025, 4, 1))),
+    ],
+)
+def test_harmless_wrappers_of_a_period_do_not_over_ask(quote, expected):
+    assert resolved(quote, "between_dates" if "trimestre" in quote or "día" in quote else
+                    "during_month") == expected

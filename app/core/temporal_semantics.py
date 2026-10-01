@@ -82,7 +82,7 @@ _ORDINALS = {
 _QUARTER = re.compile(
     rf"\b(?:el\s+|del\s+)?(primer[oa]?|segund[oa]|tercer[oa]?|cuart[oa]|[uú]ltim[oa]|[1-4]"
     rf"(?:\.?\s?(?:er|ro|do|to|º|°))?)\s+(trimestre|semestre)"
-    rf"(?:\s+(?:de|del)\s+({_YEAR_TOKEN}))?\b",
+    rf"(?:{_YEAR_JOIN}({_YEAR_TOKEN}))?\b",
     re.IGNORECASE,
 )
 
@@ -382,7 +382,7 @@ def _resolve_base(
         )
 
     exact_day_re = re.compile(
-        rf"\b(?:del?\s+|el\s+)?(\d{{1,2}})\s+(?:de\s+)?({_MONTH_TOKEN})"
+        rf"\b(?:(?:el\s+)?d[ií]a\s+|del?\s+|el\s+)?(\d{{1,2}})\s+(?:de\s+)?({_MONTH_TOKEN})"
         rf"(?:{_YEAR_JOIN}({_YEAR_TOKEN}))?\b",
         re.IGNORECASE,
     )
@@ -449,7 +449,7 @@ def _resolve_base(
         )
 
     month_re = re.compile(
-        rf"\b(?:del\s+mes\s+de\s+|(?:en|de|durante)\s+)?({_MONTH_TOKEN})"
+        rf"\b(?:(?:del\s+|el\s+)?mes\s+de\s+|(?:en|de|durante)\s+)?({_MONTH_TOKEN})"
         rf"(?:{_YEAR_JOIN}({_YEAR_TOKEN}))?\b",
         re.IGNORECASE,
     )

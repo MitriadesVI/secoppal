@@ -31,8 +31,6 @@ _TAIL = {
     )
     for kind, phrases in _PHRASES.items()
 }
-# Preposiciones que los patrones de período ya consumen dentro de su propio span.
-_LEAD = re.compile(r"(?:(?:de|del|el|al|a|la|los|las|en|durante)\s+)+", re.IGNORECASE)
 _TRAILING_FROM = re.compile(
     r"\s+(?:en\s+adelante|hacia\s+adelante|a\s+la\s+fecha|al\s+presente|a\s+hoy|"
     r"al\s+dia\s+de\s+hoy|hasta\s+(?:hoy|la\s+fecha|ahora|el\s+presente|la\s+actualidad))\b"
@@ -56,8 +54,7 @@ def find_bound(text: str, start: int, end: int) -> Bound | None:
     Primero el prefijo («después de», «a partir de»); si no hay, el sufijo
     («en adelante», «a la fecha»). El span devuelto cubre período y comparador.
     """
-    lead = _LEAD.match(text, start)
-    folded_left = _fold(text[: lead.end() if lead else start])
+    folded_left = _fold(text[:start])
     for kind, pattern in _TAIL.items():
         if found := pattern.search(folded_left):
             return Bound(kind, found.start(), end)
