@@ -109,6 +109,10 @@ Función pura, determinista, sobre la IR aceptada (nunca sobre texto crudo). Se 
 | PV5 | ORDER por valor sin TIME | `HISTORICAL_PROCESSES` |
 | PV6 | ninguna de las anteriores | `CURRENT_OPPORTUNITIES` |
 
+**[v1.8, §18]** Con `ACTOR` positivo y un `STATE` adjudicado o pre-adjudicación, la política ACTOR×STATE de la
+§18 **precede** a PV1–PV2 (P034 ya no es `HISTORICAL_PROCESSES`). **[v1.9, §19]** También preceden a PV1–PV2 el `ACTOR` positivo con un estado que existe en
+contratos (CONTRATOS, sin aproximación) y el `ACTOR` positivo con `TIME` y sin estado (CONTRATOS + aviso de fecha de firma).
+
 Ejemplos: «pavimentaciones en Córdoba» → PV6 `CURRENT_OPPORTUNITIES`; «pavimentaciones en
 Córdoba en 2024» → PV1; «pavimentaciones terminadas en Córdoba» → PV2.
 Toda vista por defecto se **anuncia** con eco y botones: `[Procesos históricos] [Contratos]
@@ -281,3 +285,300 @@ etiquetaron además el superlativo singular con `limit_n: 1` (N012, R0507). El G
 | «los 10 más caros» (cifra explícita) | `ORDER` + `limit_n: N` |
 
 En la IR v2 (C0) `limit_n` se representa como la dimensión `CARDINALITY`, resuelta por el host.
+
+## 16. Enmienda v1.6 (2026-10-01) — marcador de documento dentro de la cita ACTOR
+
+Origen: diseño D-ACTOR (METIS): la autoridad decide NIT vs cédula con la cita, y el contexto sólo
+puede retirar autoridad, así que el marcador de documento debe estar dentro de la cita.
+C1 queda así: los marcadores de **rol** («proveedor», «contratista», «empresa») quedan fuera; los de
+**documento** («NIT», «cédula», «C.C.») quedan dentro («NIT 900.000.001-1», «cédula 1000000001»).
+Aplicado de forma mecánica al Gold (7 citas: N063, N064, X083, P114, R0019, R0424, S026) con nuevo
+sello `m1-search-gold/1.6`. El significado no cambia; cambia el inicio del span.
+
+Decisiones ACTOR asociadas (D_ACTOR_DESIGN.md): P-ACT-1 sí (sin coincidencia exacta se ofrecen
+candidatos, como legacy); ~~P-ACT-2 **no se bloquea** «procesos de un proveedor» (Gold N073 = EXECUTE):
+se proyecta sobre procesos con proveedor adjudicado registrado, anunciando cobertura parcial y con
+botón [Ver contratos].~~ **[SUPERSEDED por la §17, v1.7: «procesos de un proveedor» se ejecuta sobre
+CONTRATOS con aviso; no se proyecta sobre procesos.]**
+
+## 17. Enmienda v1.7 (2026-10-01) — ACTOR sobre PROCESOS se ejecuta en CONTRATOS
+
+Origen: decisión de producto del usuario (P-ACT-2, 2026-10-01). **A un proveedor o contratista se le
+buscan CONTRATOS, no procesos.** El dataset de procesos (`p6dx-8zbt`) casi nunca identifica al proveedor
+(95,3 % «No Definido», sin tipo documental, así que INV-ID-TYPE de ADR-060 no se puede aplicar); el de
+contratos sí (NIT/cédula + tipo). «A qué procesos se presentó X» exige un dataset de ofertas o
+proponentes que M1 no tiene: queda fuera de M1. Esta enmienda sustituye el párrafo P-ACT-2 de la §16
+(marcado como superseded arriba; la §16 sigue vigente en todo lo demás).
+
+**Regla.** Un request SEARCH cuyo universo **citado** es `PROCESSES` (con cualquier `view`, incluida
+`OPPORTUNITIES`) y que lleva una condición de dimensión `ACTOR` (`POSITIVE` o `NEGATIVE`) se **ejecuta
+sobre CONTRATOS** y el host **lo anuncia**. La decide una política determinista del host, nunca el LLM.
+
+| Pieza | Valor |
+|---|---|
+| Foundation | Sigue transcribiendo lo que dice el texto: `universe: PROCESSES`, `universe_quote: "procesos"`. La IR propuesta no se reescribe. |
+| Universo ejecutado | `CONTRACTS` (`view: RECORDS`), con `ACTOR` proyectado como en cualquier petición de contratos (D_ACTOR_DESIGN §5.4). |
+| Aviso | Obligatorio, código cerrado `ACTOR_PROCESSES_TO_CONTRACTS`. Un cambio de universo sin aviso es un fallo (INV-NO-SILENT-SEMANTIC-FALLBACK). |
+| `expected_disposition` | Sigue `EXECUTE`. |
+| `product_view` | No cambia: sigue existiendo sólo para `UNSPECIFIED`. |
+
+**Gold (`m1-search-gold/1.7`).** Campo nuevo **a nivel de request** `host_universe_redirect`: el objeto
+`{"executed_universe": "CONTRACTS", "notice": "ACTOR_PROCESSES_TO_CONTRACTS"}` exactamente, y sólo en
+requests `PROCESSES` + `ACTOR`. Se eligió el nivel de request (no el de registro) porque el universo y
+las condiciones viven ahí y un MULTI puede mezclar requests que califican con otros que no. El
+validador (`gold_schema.py`) da ERROR si un request que califica no lo lleva (ni `null`), si aparece en
+uno que no califica o si el objeto no es exactamente ese. Fuera de los requests que califican la clave
+está ausente (o `null`).
+
+**Alcance medido.** Un caso: **N073** («procesos del proveedor CONSORCIO PAE ORIENTE»), cuyo
+`contract_gap` de la v1.6 se retira. Cero casos entre los 620 REAL (el sello REAL no cambia de hash).
+Total 999.
+
+**No cambia.** BUYER sobre procesos («procesos de la Gobernación…»): se ejecuta sobre procesos sin
+aviso. P-ACT-1 y su non-goal (los candidatos fuzzy de ACTOR son M2). Un request `UNSPECIFIED` con ACTOR
+sigue el orden PV1–PV6 de la §5.
+
+**Evaluación simétrica.** `gap_matrix.py` puntúa la fila `UNIVERSE_VIEW` con la misma regla para los dos
+brazos: el esperado es CONTRATOS + aviso; ejecutar sobre procesos es fallo de universo; bloquear o
+aclarar donde el Gold dice `EXECUTE` es fallo; y cambiar a contratos sin aviso es fallo. Foundation debe
+además **proponer** el universo citado (PROCESSES).
+
+**Dueño de la política:** la política de vista del host (`product_view_policy.py`, carril F), no la
+autoridad ACTOR (D_ACTOR_DESIGN, «Enmienda P-ACT-2»).
+
+~~**Pendiente de decisión (no adjudicado aquí).** P034 («pavimentación en el Huila adjudicada a
+Constructora Andina SAS»): el universo no se cita (`UNSPECIFIED`) y el Gold fija
+`product_view: HISTORICAL_PROCESSES` (PV2 gana a PV3) con un ACTOR positivo, es decir, ejecuta sobre
+procesos. La regla de esta enmienda no lo cubre; si el criterio de producto es el mismo, habría que
+reordenar PV2/PV3 o extender la regla y readjudicar P034.~~ **[Resuelto en la §18, v1.8.]**
+
+## 18. Enmienda v1.8 (2026-10-01) — ACTOR × STATE en universo no citado
+
+> **Parcialmente superseded por la §19 (v1.9).** Las filas afectadas están tachadas y marcadas; la §18 sigue vigente en todo lo demás (adjudicado sin universo, pre-adjudicación con `open`/`published`/`in_evaluation`, `closed` y `other:seleccionado` pendientes).
+
+Origen: decisión de producto del usuario (2026-10-01). Cierra el pendiente P034 de la §17. La §17 y la §16
+siguen vigentes en todo lo demás; la v1.7 no se toca salvo por esta adjudicación.
+
+**Decisión.** Cuando el universo **no se cita** y la petición lleva un `ACTOR` positivo y un `STATE`:
+
+1. **Adjudicada** → se ejecuta sobre **CONTRATOS** como **aproximación anunciada**: «adjudicada» **no** se
+   declara equivalente a «contrato firmado» (pueden existir adjudicaciones aún sin contrato). La condición
+   `STATE = awarded` **no se descarta en silencio ni se reescribe como estado de contrato**: queda en la IR y se
+   ejecuta como aproximada, con aviso obligatorio `ACTOR_AWARDED_TO_CONTRACTS` y `effect = APPROXIMATION`.
+2. **Pre-adjudicación** (`open`, `published`, `in_evaluation`, ~~`draft`~~ **[`draft` superseded por §19: existe en contratos]**) → **no se redirige a contratos ni se
+   ejecuta**: se aclara por incompatibilidad (un proceso que no se ha adjudicado no tiene adjudicatario).
+   `expected_disposition = CLARIFY`, `disposition_reason = ACTOR_STATE_INCOMPATIBLE`. Se eligió CLARIFY y no
+   DECLINE porque la petición está en dominio y es resoluble (quitar el estado da los contratos del actor;
+   quitar el actor da los procesos en ese estado); DECLINE queda para fuera de dominio y capacidades no
+   soportadas (X084, X087).
+3. Cualquier otro estado queda **pendiente de adjudicación** (abajo) **[parcialmente superseded por §19: los estados que existen en contratos y los resultados sólo de proceso ya tienen regla; sólo `closed`, `other:seleccionado`, negados, mezclados y desconocidos siguen pendientes]**: no hay regla; el validador impide
+   etiquetarlo en silencio.
+
+**Precedencia formal** (primera fila que casa gana; sólo requests SEARCH):
+
+| # | Request | Resultado |
+|---|---|---|
+| 1 | Universo citado `PROCESSES` + `ACTOR` | v1.7 (§17): se ejecuta en CONTRATOS, aviso `ACTOR_PROCESSES_TO_CONTRACTS`. ~~Con un `STATE` presente la fila es **pendiente** (ver lista)~~ **[superseded por §19: con `STATE`, adjudicado → v1.7 + `effect`; pre-adjudicación o sin adjudicatario → `CLARIFY`; el resto sigue pendiente]** |
+| 2 | Universo citado `CONTRACTS` | Sin política ACTOR×STATE: se ejecuta en contratos, sin redirect, sin aviso ni aproximación (control P180) |
+| 3 | `UNSPECIFIED` + `ACTOR` positivo + `STATE` positivo **pre-adjudicación** (~~`draft`~~: §19) | `CLARIFY / ACTOR_STATE_INCOMPATIBLE`; nunca se ejecuta, en ningún universo; sin `host_universe_redirect` |
+| 4 | `UNSPECIFIED` + `ACTOR` positivo + `STATE` positivo **adjudicado** | CONTRATOS, `host_universe_redirect = {CONTRACTS, ACTOR_AWARDED_TO_CONTRACTS, APPROXIMATION}`, `product_view: CONTRACTS`, `EXECUTE` |
+| 5 | `UNSPECIFIED` + `ACTOR` positivo sin `STATE` | PV3 → CONTRATOS, sin aviso de aproximación (P176) |
+| 6 | `UNSPECIFIED` + `ACTOR` positivo + otro `STATE` (o `STATE` negado o mezclado) | ~~**Pendiente**~~ **[superseded por §19 salvo `closed`, `other:seleccionado`, negado, mezclado, desconocido: un estado que existe en contratos se ejecuta como estado contractual]**; el Gold no puede llevar el caso pendiente hasta que se adjudique |
+| 7 | Todo lo demás | PV1–PV6 sin cambios (D4: sólo condiciones positivas) |
+
+Las filas 3 y 4 preceden a PV1 y PV2 (TIME o estado terminal ya no desvían a procesos un ACTOR adjudicado;
+una petición pre-adjudicación se aclara aunque lleve TIME).
+
+**Clasificación de estados de procesos** (léxico real: `app/data/estados.py` + `app/core/estado_families.py`;
+la clase se asigna por el `value_hint` canónico del Gold, no por la familia del host).
+
+| Clase | `value_hint` | Léxico (formas) | Literal / familia del host |
+|---|---|---|---|
+| AWARDED → aproximación | `awarded` | adjudicado/a/s | `ESTADO_PROCEDIMIENTO_SYNONYMS` → «Seleccionado» (coloquial) |
+| PRE_AWARD → aclarar | `open` (is o family) | abierto/a/s, vigente(s), activo/a/s, disponible(s), convocado/a/s, en convocatoria, en concurso, reciben ofertas | «Abierto» / familia `oferta_abierta` |
+| PRE_AWARD → aclarar | `published` | publicado/a/s | «Publicado» |
+| PRE_AWARD → aclarar | `in_evaluation` | evaluación, en evaluación, evaluando | «Evaluación» |
+| ~~PRE_AWARD → aclarar~~ **[superseded §19: CONTRACT_STATE]** | `draft` | borrador/es, en borrador | «Borrador» (familia `oferta_abierta`) |
+| OTROS: **pendiente** | `closed` | cerrado/a/s | doble lectura: apertura «Cerrado» (plazo vencido, con o sin adjudicación) y contrato «Cerrado» |
+| OTROS: **pendiente** | `other:seleccionado` | seleccionado/a/s | el host lo declara ambiguo (Sprint 5): `en_evaluacion` y `contrato_activo` a la vez |
+| ~~OTROS: **pendiente**~~ **[superseded §19: CONTRACT_STATE]** | `other:aprobado`, `other:en_aprobacion` | aprobado/a, en aprobación | fase del embudo pre-publicación en el host (hoy en `oferta_abierta` y `en_evaluacion`) pero palabra ambigua; sesgo probable: PRE_AWARD |
+| ~~OTROS: **pendiente**~~ **[superseded §19: CONTRACT_STATE]** | `cancelled` | cancelado/a/s | `no_procede`; «cancelado sin adjudicar» vs. cancelado después |
+| ~~OTROS: **pendiente**~~ **[superseded §19: CONTRACT_STATE]** | `other:suspendido` | suspendido/a/s | `no_procede` (proceso) / `contrato_suspendido` (contrato) |
+| ~~OTROS: **pendiente**~~ **[superseded §19: PROCESS_ONLY_NO_AWARDEE → CLARIFY]** | `other:desierto`, `other:revocado` | desierto/a/s, revocado | resultados sólo de proceso: no hay adjudicatario |
+| ~~OTROS: **pendiente**~~ **[superseded §19: CONTRACT_STATE]** | `terminated`, `in_execution`, `signed`, `liquidated`, `other:cedido`, `other:prorrogado`, `other:modificado` | terminado, finalizado, en ejecución, ejecutando, celebrado, firmado, liquidado, cedido, prorrogado, modificado | ciclo de vida de **contrato**; sesgo probable: CONTRATOS sin aproximación, sin decidir |
+| OTROS: **pendiente** | cualquier `other:*` o `STATE` negado o mezclado | «en curso» (contradicción: C4 lo lee como abierto; `ESTADO_CONTRATO_SYNONYMS` como «En ejecución»), etc. | — |
+
+**Pendientes de adjudicación (no son regla; los decide el orquestador).** Los estados «pendiente» de la tabla
+y además: ~~(a) `PROCESSES` citado + `ACTOR` + `STATE` (la v1.7 redirige a contratos y el estado no existe allí;
+sin `effect` ni aviso de aproximación: mismo riesgo que P034)~~ **[(a) resuelto en §19]**; (b) `ACTOR` negativo + `STATE` **[sigue pendiente]**; ~~(c) `ACTOR` + `TIME`
+sin estado (PV1 gana a PV3 y también ejecuta un proveedor sobre procesos; sin casos en el Gold)~~ **[(c) resuelto en §19]**; (d) divergencia
+previa de etiquetado: N070 («contratos adjudicados a X») omite el estado y R0067 («contratos adjudicados en
+Risaralda», REAL sellado) lo conserva como `awarded` sobre CONTRATOS; no se tocó ninguno.
+
+**Gold (`m1-search-gold/1.8`).** Se reutiliza el campo de request `host_universe_redirect` (mismo mecanismo
+de la §17: cambio de universo decidido por el host y anunciado) con una forma cerrada más, que añade la clave
+`effect`: `{"executed_universe": "CONTRACTS", "notice": "ACTOR_AWARDED_TO_CONTRACTS", "effect": "APPROXIMATION"}`.
+El objeto v1.7 no cambia (N073 conserva sus bytes). `product_view` es `CONTRACTS` (coherente con el universo
+ejecutado). `gold_schema.py` da error si: falta el redirect, el aviso o el `effect` en el caso adjudicado
+(códigos distintos); aparece un redirect en pre-adjudicación, en universo CONTRATOS explícito o en ACTOR solo;
+el adjudicado no es `EXECUTE` con `product_view CONTRACTS`; la pre-adjudicación no es
+`CLARIFY/ACTOR_STATE_INCOMPATIBLE`; el motivo se usa sin pre-adjudicación; o el request cae en «pendiente».
+`gold_adjudicate.normalize` aplica la regla de forma mecánica (P-ACT-3) y `--selftest` la prueba.
+
+**Pares mínimos** (MINIMAL_PAIR, gemelos por `notes`; sin campo `pair_id` en este shard; `labeler:
+adjudicated:orchestrator`). Matan `ACTOR_ALWAYS_WINS` (ACTOR + pre-adjudicación iría a contratos) y
+`STATE_ALWAYS_WINS` (ACTOR + adjudicada iría a procesos):
+
+| Registro | Texto | Resultado esperado |
+|---|---|---|
+| P176 | pavimentación en el Huila de Constructora Andina SAS | ACTOR solo: CONTRATOS (PV3), sin aviso |
+| P034 (readjudicado) | …adjudicada a Constructora Andina SAS | CONTRATOS + aviso + `APPROXIMATION` |
+| P177 / P178 / P179 / ~~P181~~ | …publicada / abierta / en evaluación / ~~en borrador~~ de Constructora Andina SAS | `CLARIFY / ACTOR_STATE_INCOMPATIBLE`, sin redirect (**P181 superseded por §19**: ejecuta en CONTRATOS con `STATE = draft`) |
+| P180 | contratos de pavimentación en el Huila adjudicados a Constructora Andina SAS | control: CONTRATOS explícito, sin redirect ni aproximación |
+
+**Alcance medido.** Un registro readjudicado (P034), seis añadidos (P176–P181); cero entre los 620 REAL
+(sha256 intacto). Total **1005** (999 + 6) **[v1.9: 1014, ver §19]**. Ningún REAL lleva `ACTOR` + `STATE` sin universo citado.
+
+**Evaluación simétrica** (`gap_matrix.py`, mismo criterio en los dos brazos): adjudicado ejecutado sobre
+procesos = fallo; sobre contratos sin aviso o sin la aproximación declarada (`universe_effects` en legacy,
+igualdad exacta del redirect en Foundation) = fallo; bloquear donde el Gold ejecuta = fallo.
+Pre-adjudicación ejecutada **en cualquier universo** = fallo (fila `ACTOR_STATE_POLICY`); aclarar = acierto.
+UNSPECIFIED sigue siendo `IR_CANNOT_EXPRESS` en Foundation salvo que la captura traiga evidencia del host. La
+matriz A3 se regeneró desde el REAL y es idéntica byte a byte (ningún REAL cambia).
+
+**Dependencia para el host (F / `ProductViewPolicy`) y C0 §5.6 (no se edita C0 aquí).** (1) `HostViewDecision`
+necesita una regla fuera de PV1–PV6 para ACTOR + adjudicada (`effect = APPROXIMATION`, `announced = True`,
+`trigger_condition_ids` = {ACTOR, STATE}) que **preceda** a PV1/PV2. (2) La entrada de la política debe
+distinguir awarded de pre-adjudicación a partir de `StateValue.canonical_class` (hoy PV2 sólo pregunta si es
+terminal): no sirve la familia del host (`NATURAL_TO_FAMILY` mapea «adjudicado/s» a `en_evaluacion`, sin la
+forma femenina «adjudicada»). (3) Pre-adjudicación + ACTOR necesita una salida `NEEDS_CLARIFICATION` con el
+detalle `ACTOR_STATE_INCOMPATIBLE` y nunca puede ser READY. (4) Las peticiones con sujeto explícito siguen sin
+decisión. Es un cambio de contrato de C0 §5.6 que decide METIS antes de que F escriba, junto con el de la §17.
+
+## 19. Enmienda v1.9 (2026-10-01) — estado por dataset de existencia
+
+Origen: decisión de producto del usuario (2026-10-01). Supersede las filas marcadas de la §18; la §17 y la §18
+siguen vigentes en todo lo demás.
+
+**Principio.** El estado de **PROCESOS** es otro universo y **nunca se traduce** a un estado de **CONTRATOS**; un
+estado que existe en contratos se aplica como estado contractual. La clase de un estado se decide por el
+**dataset donde existe** (léxico real), no por la familia del host ni por el universo del que parece venir la
+palabra. Ejemplo que lo motiva: «Borrador» existe en procesos **y** en contratos (`estados.py` l.52 y l.95; l.62-66 y
+l.108-111), así que «en borrador de X» sin universo es un estado contractual válido, y no equivale a contrato firmado.
+
+### 19.1 Clasificación por dataset de existencia
+
+Fuente: `app/data/estados.py` (`VALID_ESTADOS_APERTURA` l.60, `VALID_ESTADOS_PROCEDIMIENTO` l.62-66, `VALID_ESTADOS_CONTRATO`
+l.108-111, sinónimos l.17-105) y `app/core/estado_families.py` (`PROCESS_ONLY_OUTCOME_TOKENS` l.228). La tabla vive en
+`gold_schema.py` (`_STATE_LEXICON`) y su `--selftest` **falla si el léxico se mueve** (`lexicon_drift`: todo literal real debe
+estar cubierto y ninguno puede cambiar de dataset en silencio).
+
+| Clase | `value_hint` | Procesos (literal · línea) | Contratos (literal · línea) |
+|---|---|---|---|
+| `PROCESS_ONLY_PRE_AWARD` | `open` | Abierto · l.60 | no existe |
+| `PROCESS_ONLY_PRE_AWARD` | `published` | Publicado · l.62-66 | no existe |
+| `PROCESS_ONLY_PRE_AWARD` | `in_evaluation` | Evaluación · l.62-66 | no existe |
+| `PROCESS_ONLY_NO_AWARDEE` | `other:desierto`, `other:revocado` | resultado sólo de proceso (`PROCESS_ONLY_OUTCOME_TOKENS`, `estado_families.py` l.228) | no existe |
+| `AWARDED` | `awarded` | Seleccionado («adjudicado» es coloquial) · l.36-39 | no existe |
+| `CONTRACT_STATE` | `draft` | Borrador · l.52 | Borrador · l.95, l.108-111 |
+| `CONTRACT_STATE` | `cancelled` | Cancelado · l.49 | Cancelado · l.92 |
+| `CONTRACT_STATE` | `other:aprobado`, `other:en_aprobacion` | Aprobado l.53, En aprobación l.62-66 | Aprobado l.90, En aprobación l.108-111 |
+| `CONTRACT_STATE` | `other:suspendido` | Suspendido · l.56 | Suspendido · l.98 |
+| `CONTRACT_STATE` | `terminated` | no existe | terminado · l.83 |
+| `CONTRACT_STATE` | `in_execution` | no existe | En ejecución · l.72-75 |
+| `CONTRACT_STATE` | `other:cedido`, `other:prorrogado`, `other:modificado`, `other:enviado_proveedor` | no existe | cedido l.96, Prorrogado l.100, Modificado, enviado Proveedor |
+| `CONTRACT_STATE` | `liquidated` | no existe | **sin literal propio**: «liquidado» → Cerrado por sinónimo (l.103) |
+| `CONTRACT_STATE` | `signed` | no existe | **sin literal**: «firmado» no es un literal de Socrata; el universo contractual lo decide `contract_universe` (l.88-89) |
+| `PENDING` (decisión de producto) | `closed` | Cerrado · l.60 | Cerrado · l.108-111 (doble lectura: ambiguo) |
+| `PENDING` (decisión de producto) | `other:seleccionado` | Seleccionado · l.36 (ambiguo con adjudicado) | no existe |
+| `PENDING` | cualquier otro `other:*`, `STATE` negado o mezclado de clases | — | — |
+
+Las variantes de grafía ya presentes en el Gold se tratan como el valor canónico (`other:celebrado`=`signed`,
+`other:liquidado`=`liquidated`, `other:borrador`=`draft`, `other:en_evaluacion`=`in_evaluation`). Con `PROCESSES` citado el
+estado se lee en el ciclo de vida del **proceso** y sólo clasifica la fase de proceso explícita (`draft`, `open`,
+`published`, `in_evaluation` → pre-adjudicación; `awarded` → adjudicado; desierto/revocado → sin adjudicatario);
+todo lo demás (incluidos `cancelled`, `closed` y los estados sólo de contrato) queda **pendiente**: no se traduce.
+
+### 19.2 Decisión
+
+| Caso | Resultado |
+|---|---|
+| `ACTOR` + estado de **contratos** (`CONTRACT_STATE`), sin universo | CONTRATOS directo con ese estado contractual (`product_view: CONTRACTS`), `EXECUTE`, sin aproximación ni aclaración. P181 («en borrador de X») pasa de `CLARIFY` a `EXECUTE` |
+| `PROCESSES` citado + `ACTOR` + `draft` / `open` / `published` / `in_evaluation` | `CLARIFY / ACTOR_STATE_INCOMPATIBLE`, sin redirect: un proceso en ese estado no tiene adjudicatario y **no** se traduce a «contratos en borrador» (nuevo; v1.8 lo dejaba pendiente) |
+| `ACTOR` + `open` / `published` / `in_evaluation`, sin universo | `CLARIFY / ACTOR_STATE_INCOMPATIBLE` (v1.8 se mantiene) |
+| `ACTOR` + desierto / revocado (con o sin universo) | `CLARIFY / ACTOR_STATE_INCOMPATIBLE`: resultados sólo de proceso, sin adjudicatario |
+| `ACTOR` + adjudicado, sin universo (P034) | sin cambios (v1.8): CONTRATOS + aviso `ACTOR_AWARDED_TO_CONTRACTS` + `effect: APPROXIMATION` |
+| `PROCESSES` citado + `ACTOR` + adjudicado | CONTRATOS + aviso **`ACTOR_PROCESSES_TO_CONTRACTS`** + `effect: APPROXIMATION` (la redirección v1.7 gana la aproximación cuando hay `STATE awarded`; sin `STATE` el objeto v1.7 de N073 queda byte-idéntico) |
+| `ACTOR` + `TIME`, sin `STATE` y sin universo | CONTRATOS (el `ACTOR` gana a PV1); `TIME` se aplica a la **fecha de firma** y se anuncia con `host_notice = ACTOR_TIME_ON_SIGNATURE_DATE` |
+| `ACTOR` + `closed` / `other:seleccionado` | **pendiente** (ambiguos); el validador sigue marcándolos `ACTOR_STATE_PENDING_ADJUDICATION` |
+| `ACTOR` negativo + `STATE` | **pendiente** |
+
+**Decisiones de representación (no vienen de la decisión de producto; reversibles).**
+1. *Aviso de `PROCESSES` + awarded*: se conserva el código v1.7 (`ACTOR_PROCESSES_TO_CONTRACTS`, el universo **sí** se citó y cambió) y se
+   añade `effect`; el objeto es `{executed_universe: CONTRACTS, notice: ACTOR_PROCESSES_TO_CONTRACTS, effect: APPROXIMATION}`.
+2. *`ACTOR + TIME`*: campo nuevo **a nivel de request** `host_notice` (código cerrado), no `host_universe_redirect`, porque el universo no
+   cambia (no estaba citado) y `product_view: CONTRACTS` ya lo expresa; el `TIME` va a la fecha de firma porque el ACTOR sólo existe en
+   contratos. Obligatorio exactamente en `UNSPECIFIED` + `ACTOR` positivo + `TIME` sin `STATE`; prohibido en cualquier otro request.
+3. *`ACTOR` + `TIME` + estado ejecutable* (adjudicado o `CONTRACT_STATE`): **pendiente** (la semántica de la fecha con un estado no está
+   adjudicada; no se extiende el aviso en silencio). Con pre-adjudicación o sin adjudicatario se aclara aunque lleve `TIME`.
+4. *`ACTOR` + `TIME` con `PROCESSES` citado*: lo gobierna la v1.7 sin aviso de fecha (no cambia).
+
+**Gold (`m1-search-gold/1.9`).** `gold_schema.py`: `state_class()` (clasificación derivada del léxico, `lexicon_drift()`),
+`actor_state_policy()` devuelve una de `PROCESS_ONLY_PRE_AWARD`, `PROCESS_ONLY_NO_AWARDEE`, `AWARDED`, `CONTRACT_STATE`,
+`PENDING`; errores nuevos: `CONTRACT_STATE_MUST_EXECUTE`, `CONTRACT_STATE_PRODUCT_VIEW_MUST_BE_CONTRACTS`,
+`NOTICE_REQUIRED_FOR_ACTOR_TIME`, `BAD_NOTICE`, `NOTICE_ONLY_FOR_ACTOR_TIME`, `ACTOR_TIME_PRODUCT_VIEW_MUST_BE_CONTRACTS`,
+`ACTOR_TIME_MUST_EXECUTE` y, para `PROCESSES` + awarded, `REDIRECT_EFFECT_REQUIRED` / `REDIRECT_NOTICE_REQUIRED` /
+`REDIRECT_REQUIRED_FOR_ACTOR_AWARDED`. `gold_adjudicate.normalize` aplica la regla de forma mecánica y repara el `CLARIFY` heredado de
+la v1.8 sobre un estado contractual (P-ACT-3, P-ACT-4); sólo toca requests SEARCH y nunca etiqueta un caso pendiente.
+
+**Pares mínimos** (MINIMAL_PAIR, gemelos por `notes`, `labeler: adjudicated:orchestrator`; matan los mutantes nominales indicados además de
+`ACTOR_ALWAYS_WINS` y `STATE_ALWAYS_WINS`):
+
+| Registro | Texto | Resultado | Mutante que mata |
+|---|---|---|---|
+| P181 (readjudicado) | …en borrador de Constructora Andina SAS | CONTRATOS, `STATE = draft`, `EXECUTE` | `CONTRACT_STATE_CLARIFIED` |
+| P182 | procesos de pavimentación … en borrador de … | `CLARIFY / ACTOR_STATE_INCOMPATIBLE` | `STATE_UNIVERSE_TRANSLATION` |
+| P183 / P184 | …cancelada / terminada de … | CONTRATOS, estado contractual, `EXECUTE` | `CONTRACT_STATE_CLARIFIED` |
+| P185 | procesos de pavimentación … adjudicados a … | CONTRATOS + `ACTOR_PROCESSES_TO_CONTRACTS` + `APPROXIMATION` | `PROCESSES_AWARDED_WITHOUT_APPROXIMATION` |
+| P186 | …de Constructora Andina SAS en 2024 | CONTRATOS + `host_notice` | `TIME_BEATS_ACTOR` |
+| P187 / P188 | …desierta / revocada de … | `CLARIFY / ACTOR_STATE_INCOMPATIBLE` | `DESERTED_EXECUTES` |
+| P189 | procesos de pavimentación … publicados de … | `CLARIFY / ACTOR_STATE_INCOMPATIBLE` | `STATE_UNIVERSE_TRANSLATION` |
+| P190 | …en ejecución de … | CONTRATOS, `STATE = in_execution`, `EXECUTE` | `CONTRACT_STATE_CLARIFIED` |
+
+**Alcance medido.** Un registro readjudicado (P181), nueve añadidos (P182–P190) y cinco notas de gemelos actualizadas (P024, P028, P034,
+P176, P177; sin cambio de etiqueta). Cero entre los 620 REAL (sha256 intacto; el validador da 0 errores sobre ellos: ningún REAL lleva
+`ACTOR` + `STATE`/`TIME` sin universo citado). `adversarial.jsonl` y `neighbor.jsonl` byte-idénticos (N073 conserva su objeto v1.7).
+Total **1014** (1005 + 9).
+
+**Evaluación simétrica** (`gap_matrix.py`, mismo criterio en los dos brazos): pre-adjudicación o sin adjudicatario ejecutados en
+cualquier universo, también con `PROCESSES` citado = fallo (fila `ACTOR_STATE_POLICY`); `CONTRACT_STATE` aclarado/bloqueado, ejecutado sobre
+procesos o declarado como aproximación = fallo (fila `ACTOR_CONTRACT_STATE_POLICY`); `PROCESSES` + awarded sin el `effect` = fallo (fila
+`UNIVERSE_VIEW`, misma regla que la v1.8); `ACTOR` + `TIME` ejecutado sobre procesos, bloqueado o sin aviso = fallo (fila
+`ACTOR_TIME_POLICY`). Foundation puntúa `IR_CANNOT_EXPRESS` en el aviso salvo que la captura traiga evidencia del host. La matriz A3 se
+regeneró desde el REAL y es idéntica byte a byte (ningún REAL cambia).
+
+**Dependencia para el host (F / `ProductViewPolicy`) y C0 §5.6 (no se edita C0 aquí).** (1) La regla ACTOR×STATE del host debe clasificar
+por **dataset de existencia** (`StateValue.canonical_class` ampliado a las cinco clases), no por la familia del host ni por si el estado es
+terminal; y debe ejecutarse **antes** de PV1/PV2. (2) Con `PROCESSES` citado + `ACTOR` + estado: adjudicado conserva el aviso v1.7 y añade
+`effect = APPROXIMATION`; pre-adjudicación/sin adjudicatario → `NEEDS_CLARIFICATION` (`ACTOR_STATE_INCOMPATIBLE`), nunca READY, nunca
+traducción de estado. (3) `ACTOR` + `TIME` sin estado: CONTRATOS, `TIME` sobre la fecha de firma y aviso `ACTOR_TIME_ON_SIGNATURE_DATE`
+(entra en `HostViewDecision` como aviso, no como cambio de universo). (4) Un estado de contratos con `ACTOR` se proyecta sobre
+`estado_contrato` sin aviso de aproximación. Es un cambio de contrato de C0 §5.6 que decide METIS antes de que F escriba, junto con los de
+la §17 y la §18.
+
+**Pendiente tras la v1.9 (no es regla; lo decide el orquestador).** `closed` y `other:seleccionado` con `ACTOR`; `ACTOR` negativo +
+`STATE`; `ACTOR` + `TIME` + estado ejecutable; `PROCESSES` citado + `ACTOR` + estado que no es de fase de proceso (`cancelled`, `closed`,
+`terminated`, `in_execution`…); cualquier `other:*` fuera de la tabla.
+
+### 19.3 Hallazgos de léxico del host (deuda; no se corrigen aquí; dueño D-STATE/MOD)
+
+1. `NATURAL_TO_FAMILY` (`estado_families.py` l.174-175) mapea «adjudicado/s» → `en_evaluacion` y **no contiene «adjudicada»** (la forma
+   femenina sí está en `ESTADO_PROCEDIMIENTO_SYNONYMS`, `estados.py` l.38). Una consulta «licitación adjudicada» y una «adjudicado» no
+   comparten familia, y ninguna de las dos dice «Seleccionado».
+2. «En curso»: el contrato C4 (§13) lo lee como familia **abierta** de procesos; `ESTADO_CONTRATO_SYNONYMS` (`estados.py` l.75) como
+   «En ejecución» de contratos. Es la misma palabra en dos datasets; con la v1.9 se vuelve observable (`other:en_curso` queda pendiente).
+3. «Celebrado/firmado» y «liquidado» **no son literales** de ningún dataset (`estados.py` l.88-90 y l.103; docstring de `estado_families.py`):
+   la decisión de producto los incluye entre los estados contractuales y así se clasifican, pero el host debe resolverlos por
+   `contract_universe` y por «Cerrado» respectivamente, no filtrando un literal inexistente.
+4. PV2 (§5) sigue tratando `terminated`/`in_execution`/`liquidated`/`signed` **sin ACTOR** como `HISTORICAL_PROCESSES`, aunque sólo existen en
+   contratos. Es incoherente con el principio de la v1.9; no se toca (no hay ACTOR, fuera de esta decisión) y queda para F / METIS.

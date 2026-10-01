@@ -15,11 +15,14 @@ Orquestador (HERA): Opus. Nada de esta fase toca `app/`.
 | 6. Spec de failover | ✅ | `A5_PROVIDER_FAILOVER_SPEC.md` |
 
 Contrato vigente: `M1_0_SEARCH_CONTRACT.md` v1.4 (§1–§10 + enmiendas §11–§14). Product views del
-Gold verificadas al 100 % contra la función PV1–PV6.
+Gold verificadas al 100 % contra la función PV1–PV6. **[v1.8: el Gold sellado vigente tiene 1005 registros (+6 pares
+ACTOR × STATE) y P034 deja de seguir PV2 por decisión de producto; ver contrato §18.]** **[v1.9: 1014 registros (+9 pares de estado por dataset de existencia; P181 readjudicado); ver contrato §19.]**
 
 ## Lo que dice la evidencia
 
-SEARCH REAL (449 consultas): legacy acierta 238 (53 %), Foundation 101 (22 %).
+SEARCH REAL (449 consultas): legacy acierta 194 (43 %), Foundation 101 (22 %). *(Corregido el
+2026-10-01: la primera cifra, 238/53 %, daba por buena a legacy en ACTOR con sólo detectar un actor;
+con evaluación simétrica legacy acierta 24/79 condiciones ACTOR, no 68 — sobre todo ofrece candidatos.)*
 Foundation **no pierde por entender mal**: el productor da 0 errores en 620 llamadas (p90 2 s), y
 de sus fallos 192 son `IR_CANNOT_EXPRESS` (ACTOR 79, universo omitido 50, mes/rango 31,
 inclusivos 26, orden 23). Le siguen la proyección de compradores (51

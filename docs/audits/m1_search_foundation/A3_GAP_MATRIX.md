@@ -17,7 +17,7 @@ Entradas capturadas: 620. Sin texto de consultas; sólo gold_id y agregados.
 
 | fila | gold | L_OK | L_MISSING | L_WRONG | F:OK | F_NOT_PROPOSED | F_HOST_UNRESOLVED | HOST_PROJ_UNSUP | IR_CANNOT | GATE_EXCL | L-only-OK | F-only-OK |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| ACTOR | 79 | 68 | 11 | 0 | 0 | 0 | 0 | 0 | 79 | 0 | 68 | 0 |
+| ACTOR | 79 | 24 | 11 | 44 | 0 | 0 | 0 | 0 | 79 | 0 | 24 | 0 |
 | BUYER | 149 | 141 | 4 | 4 | 52 | 8 | 12 | 51 | 0 | 26 | 93 | 4 |
 | CONTRACT_TYPE_OR_NATURE | 15 | 10 | 5 | 0 | 0 | 14 | 1 | 0 | 0 | 0 | 10 | 0 |
 | GEOGRAPHY/DEPARTMENT | 116 | 114 | 2 | 0 | 80 | 0 | 2 | 0 | 0 | 34 | 35 | 1 |
@@ -50,4 +50,4 @@ Entradas capturadas: 620. Sin texto de consultas; sólo gold_id y agregados.
 | VALUE/less_or_equal | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 14 | 0 | 14 | 0 |
 | VALUE/less_than | 13 | 13 | 0 | 0 | 11 | 0 | 2 | 0 | 0 | 0 | 2 | 0 |
 
-Nivel entrada: {"AMBIGUOUS_SKIPPED": 8, "ENTRY_PARITY:BOTH_OK": 60, "ENTRY_PARITY:FOUNDATION_ONLY_OK": 41, "ENTRY_PARITY:LEGACY_ONLY_OK": 209, "ENTRY_PARITY:NEITHER_OK": 299, "EVALUATED": 609, "F:F_NOT_PROPOSED": 43, "F:F_PROPOSED_HOST_UNRESOLVED": 53, "F:GATE_EXCLUDED": 25, "F:HOST_RESOLVED_PROJECTION_UNSUPPORTED": 39, "F:IR_CANNOT_EXPRESS": 348, "F:OK": 101, "L:L_MISSING": 24, "L:L_OK": 269, "L:L_WRONG": 316}
+Nivel entrada: {"AMBIGUOUS_SKIPPED": 8, "ENTRY_PARITY:BOTH_OK": 60, "ENTRY_PARITY:FOUNDATION_ONLY_OK": 41, "ENTRY_PARITY:LEGACY_ONLY_OK": 165, "ENTRY_PARITY:NEITHER_OK": 343, "EVALUATED": 609, "F:F_NOT_PROPOSED": 43, "F:F_PROPOSED_HOST_UNRESOLVED": 53, "F:GATE_EXCLUDED": 25, "F:HOST_RESOLVED_PROJECTION_UNSUPPORTED": 39, "F:IR_CANNOT_EXPRESS": 348, "F:OK": 101, "L:L_MISSING": 24, "L:L_OK": 225, "L:L_WRONG": 360}

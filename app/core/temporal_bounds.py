@@ -5,7 +5,7 @@ la autoridad temporal resolvía el período («2022», «marzo») e ignoraba el
 comparador, así que el filtro ejecutado era el período citado en vez de la cota.
 Este módulo sólo lee la familia cerrada de comparadores adyacente al período y
 convierte [desde, hasta] en una cota abierta. No resuelve fechas: eso sigue en
-``temporal_semantics``. Puro y sin reloj.
+``time_grammar``. Puro y sin reloj.
 """
 from __future__ import annotations
 

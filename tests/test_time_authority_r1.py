@@ -15,7 +15,7 @@ from datetime import date, timedelta
 import pytest
 from hypothesis import HealthCheck, given, settings, strategies as st
 
-from app.core.temporal_semantics import resolve_temporal_scope
+from app.core.time_grammar import resolve_temporal_scope
 from app.core.time_authority import TimeResolution, TimeValue, resolve_time_condition
 
 POS = "POSITIVE"

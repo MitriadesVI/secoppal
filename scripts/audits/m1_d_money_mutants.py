@@ -10,8 +10,8 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SCRATCH = sys.argv[1]
-CMP, AUTH, DIR, POL = ("app/core/money_comparators.py", "app/core/value_authority.py",
-                       "app/core/foundation_value_direction.py", "app/core/money_polarity.py")
+CMP, AUTH, DIR = ("app/core/money_comparators.py", "app/core/value_authority.py",
+                  "app/core/foundation_value_direction.py")
 MUTANTS = [
  ("M01_negation_ignored", CMP, 'family = negate(family) if (head.negatable and not match.group("eq")) else None',
   "pass"),
@@ -28,7 +28,7 @@ MUTANTS = [
  ("M08_context_negation_ignored", AUTH,
   "if resolved.decision is ValueDecision.RESOLVED and _negation_just_before(left):", "if False:"),
  ("M09_unread_negation_ignored", DIR, " or scan.unread_negation", ""),
- ("M10_polarity_lexicon_drifts", POL, "_UP = UP_PATTERN", '_UP = r"(?:m[aá]s|mayor(?:es)?)"'),
+ # M10 (polarity lexicon drift) retired by the VALUE-parity round: money_polarity is byte-identical to main.
  ("M11_inclusive_flag_inverted", AUTH,
   "ValueResolution(ValueDecision.RESOLVED, bound_of(family), is_inclusive(family), amount, None)",
   "ValueResolution(ValueDecision.RESOLVED, bound_of(family), not is_inclusive(family), amount, None)"),

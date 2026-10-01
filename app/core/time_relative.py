@@ -19,7 +19,7 @@ from __future__ import annotations
 import re
 from datetime import date as Date, timedelta
 
-from app.core.temporal_semantics import (
+from app.core.time_grammar import (
     _COUNT,
     _UNSUPPORTED_TIME_QUESTION,
     TemporalResolution,
@@ -38,6 +38,18 @@ _NUMERO_ANTES = re.compile(
     re.IGNORECASE,
 )
 _HACE_SEMANAS = re.compile(rf"\bhace\s+({_COUNT})\s+semanas?\b", re.IGNORECASE)
+
+# Cada forma de este módulo declara qué es: una FRANJA calendario en curso o una VENTANA móvil
+# contada hacia atrás desde el reloj. Las ventanas son las que ``temporal_window_anchor`` pide
+# aclarar cuando comparten turno con otro periodo («los dos últimos meses de 2025»); salen de
+# aquí y no se copian. Una forma nueva obliga a clasificarla (``test_every_relative_form...``).
+_FORMS = (
+    (_FRANJA, "franja"),
+    (_ULTIMO_UNICO, "window"),
+    (_NUMERO_ANTES, "window"),
+    (_HACE_SEMANAS, "window"),
+)
+WINDOW_PATTERNS = tuple(pattern for pattern, kind in _FORMS if kind == "window")
 
 # unidad -> (máximo, precisión, código de error); mismos topes que la autoridad legada.
 _LIMITS = {

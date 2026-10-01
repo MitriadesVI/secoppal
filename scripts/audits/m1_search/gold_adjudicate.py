@@ -1,10 +1,15 @@
 """M1-B adjudication: labels A (+ labels B where adjudicated) → sealed Gold v1.
 
 Usage: python scripts/audits/m1_search/gold_adjudicate.py LABELS_A_DIR LABELS_B_DIR OUT_DIR
+       python scripts/audits/m1_search/gold_adjudicate.py --selftest   # the v1.7/v1.8/v1.9 host-policy rules of `normalize`
 Applies the mechanical rules of contract v1.3 (C1, C2, C7) to every record and the per-case
 decisions listed in DECISIONS below (log: docs/audits/m1_search_foundation/M1_B_ADJUDICATION.md).
 Writes OUT_DIR/gold_v1.jsonl (contains text; REAL lives outside git) and OUT_DIR/SEAL.json.
 The same `normalize` is importable so synthetic slices get identical treatment.
+
+Gold v1.8/v1.9 note: the MINIMAL_PAIR records P176-P181 (ACTOR x STATE) and P182+ (v1.9) were authored by the
+orchestrator directly in minimal_pair.jsonl and have no labels A/B; the sealed files are canonical, `--synthetic`
+does not regenerate them.
 """
 
 from __future__ import annotations
@@ -16,10 +21,18 @@ import re
 import sys
 from pathlib import Path
 
-GOLD_SCHEMA_VERSION = "m1-search-gold/1.3"
+from gold_schema import (ACTOR_AWARDED_REDIRECT, ACTOR_PROCESSES_AWARDED_REDIRECT, ACTOR_PROCESSES_REDIRECT,
+                         ACTOR_TIME_NOTICE, AWARDED, CONTRACT_STATE, NOTICE_FIELD, PREAWARD_REASON, REDIRECT_FIELD,
+                         SCHEMA_VERSION, actor_state_policy, actor_time_applies, clarifies, needs_redirect,
+                         required_redirect)
+
+GOLD_SCHEMA_VERSION = SCHEMA_VERSION  # single source: gold_schema.py (v1.9)
 _ROLE_MARKER = re.compile(
-    r"^(?:(?:del|de la|de los|al|el|la|los)\s+)?(?:proveedor(?:es)?|contratista(?:s)?|empresa|nit|c\.?c\.?|"
-    r"c[eé]dula)\s*(?:n[oº°.]*\s*)?[:\-]?\s+", re.IGNORECASE)
+    r"^(?:(?:del|de la|de los|al|el|la|los)\s+)?(?:proveedor(?:es)?|contratista(?:s)?|empresa)\s*[:\-]?\s+",
+    re.IGNORECASE)
+# v1.6: document-type markers belong INSIDE an ACTOR quote (the authority decides NIT vs CC from it).
+_DOC_MARKER_BEFORE = re.compile(r"(?:\b(?:nit|c[eé]dula(?:\s+de\s+ciudadan[ií]a)?|c\.?\s?c\.?)\s*(?:n[oº°.]*\s*)?[:\-]?\s*)$",
+                                re.IGNORECASE)
 
 
 def _strip_marker(quote: str) -> str:
@@ -33,10 +46,20 @@ def _requests(record: dict):
         yield from job.get("requests") or []
 
 
+def _search_requests(record: dict):
+    """Requests the host policy applies to: those of a SEARCH record or of a SEARCH job inside a MULTI."""
+    if record.get("operation") == "SEARCH":
+        yield from record.get("requests") or []
+    for job in record.get("jobs") or []:
+        if job.get("operation") == "SEARCH":
+            yield from job.get("requests") or []
+
+
 def normalize(record: dict) -> tuple[dict, list[str]]:
-    """Mechanical contract v1.3 rules; returns (record, applied rule ids)."""
+    """Mechanical contract rules (v1.3 C1/C2/C7, v1.7 P-ACT-2, v1.8/v1.9 P-ACT-3, v1.9 P-ACT-4); returns (record, applied rule ids)."""
     out = copy.deepcopy(record)
     applied: list[str] = []
+    text = out.get("text") or ""
     for request in _requests(out):
         for cond in request.get("conditions", []):
             if cond.get("dimension") == "ACTOR":
@@ -44,6 +67,12 @@ def normalize(record: dict) -> tuple[dict, list[str]]:
                 if new != cond.get("quote"):
                     cond["quote"] = new
                     applied.append("C1")
+                at = text.find(new) if new else -1
+                if at > 0 and re.search(r"\d{5,}", new):
+                    marker = _DOC_MARKER_BEFORE.search(text[:at])
+                    if marker and marker.group(0).strip():
+                        cond["quote"] = text[marker.start():at] + new
+                        applied.append("C1-DOC")
     for request in _requests(out):
         for cond in request.get("conditions", []):
             if cond.get("dimension") == "CONTRACT_TYPE_OR_NATURE":
@@ -82,6 +111,39 @@ def normalize(record: dict) -> tuple[dict, list[str]]:
     if op not in {"SEARCH", "MULTI"} and out.get("product_view") is not None:
         out["product_view"] = None
         applied.append("B1")
+    for request in _search_requests(out):  # v1.7 P-ACT-2 / v1.8-v1.9 P-ACT-3: only genuine SEARCH requests (after C7)
+        policy = actor_state_policy(request)
+        if policy == "PENDING":
+            continue  # no rule adjudicated: never invent a label
+        if clarifies(policy):
+            if request.pop(REDIRECT_FIELD, None) is not None:
+                applied.append("P-ACT-3")
+            continue
+        expected = required_redirect(request)
+        if expected is not None and request.get(REDIRECT_FIELD) != expected:
+            request[REDIRECT_FIELD] = dict(expected)
+            applied.append("P-ACT-2" if policy is None else "P-ACT-3")
+        if actor_time_applies(request) and request.get(NOTICE_FIELD) != ACTOR_TIME_NOTICE:
+            request[NOTICE_FIELD] = ACTOR_TIME_NOTICE  # v1.9 P-ACT-4
+            applied.append("P-ACT-4")
+    if op == "SEARCH":  # record level (single SEARCH): product_view and disposition follow the policy of its requests
+        requests = out.get("requests") or []
+        policies = {actor_state_policy(q) for q in requests}
+        unspecified = [q for q in requests if q.get("universe") == "UNSPECIFIED"]
+        wants_contracts = any(actor_state_policy(q) in {AWARDED, CONTRACT_STATE} or actor_time_applies(q)
+                              for q in unspecified)
+        if wants_contracts and out.get("product_view") != "CONTRACTS":
+            out["product_view"] = "CONTRACTS"
+            applied.append("P-ACT-3")
+        if any(clarifies(p) for p in policies):
+            if (out.get("expected_disposition"), out.get("disposition_reason")) != ("CLARIFY", PREAWARD_REASON):
+                out["expected_disposition"], out["disposition_reason"] = "CLARIFY", PREAWARD_REASON
+                applied.append("P-ACT-3")
+        elif (policies & {AWARDED, CONTRACT_STATE} or any(actor_time_applies(q) for q in requests)) \
+                and out.get("expected_disposition") != "EXECUTE" and out.get("disposition_reason") == PREAWARD_REASON:
+            # a v1.8 "asks" label on a state that EXISTS in contracts (v1.9): it executes; only that stale reason is cleared
+            out["expected_disposition"], out["disposition_reason"] = "EXECUTE", None
+            applied.append("P-ACT-3")
     return out, sorted(set(applied))
 
 
@@ -203,7 +265,90 @@ def main_synthetic(dir_a: str, dir_b: str, out_dir: str) -> int:
     return 0
 
 
+def selftest() -> int:
+    """`normalize` must REPAIR a record that violates the v1.7/v1.8/v1.9 host-policy rules (and leave a correct one alone)."""
+    def request(universe, *conds, redirect=None, notice=None):
+        built = [{"id": f"c{at + 1}", "dimension": dim, "operator": "is", "polarity": "POSITIVE", "quote": "q",
+                  "value_hint": hint, "level": None} for at, (dim, hint) in enumerate(conds)]
+        out = {"request_id": "q1", "universe": universe, "view": "RECORDS",
+               "universe_quote": None if universe == "UNSPECIFIED" else "u", "conditions": built,
+               "logic": "AND(" + ",".join(c["id"] for c in built) + ")"}
+        if redirect:
+            out[REDIRECT_FIELD] = redirect
+        if notice:
+            out[NOTICE_FIELD] = notice
+        return out
+
+    def record(req, pv="CONTRACTS", disposition="EXECUTE", reason=None, op="SEARCH"):
+        return {"gold_id": "T", "operation": op, "turn_context": "SELF_CONTAINED", "requests": [req],
+                "product_view": pv, "expected_disposition": disposition, "disposition_reason": reason}
+
+    actor, awarded, year = ("ACTOR", "X SAS"), ("STATE", "awarded"), ("TIME", "2024")
+    clarify = {"disposition": "CLARIFY", "reason": PREAWARD_REASON}
+    cases = [  # (label, input record, check on the normalized record)
+        ("awarded: redirect + CONTRACTS restored over PV2", record(request("UNSPECIFIED", actor, awarded), pv="HISTORICAL_PROCESSES"),
+         lambda r: r["requests"][0].get(REDIRECT_FIELD) == ACTOR_AWARDED_REDIRECT and r["product_view"] == "CONTRACTS"
+         and r["expected_disposition"] == "EXECUTE"),
+        ("pre-award: EXECUTE becomes CLARIFY/ACTOR_STATE_INCOMPATIBLE", record(request("UNSPECIFIED", actor, ("STATE", "published"))),
+         lambda r: (r["expected_disposition"], r["disposition_reason"]) == ("CLARIFY", PREAWARD_REASON)
+         and REDIRECT_FIELD not in r["requests"][0]),
+        ("pre-award: a redirect is removed", record(request("UNSPECIFIED", actor, ("STATE", "open"), redirect=ACTOR_AWARDED_REDIRECT),
+                                                    **clarify),
+         lambda r: REDIRECT_FIELD not in r["requests"][0]),
+        ("ACTOR alone: untouched (PV3, no redirect)", record(request("UNSPECIFIED", actor)),
+         lambda r: REDIRECT_FIELD not in r["requests"][0] and r["expected_disposition"] == "EXECUTE"),
+        ("explicit CONTRACTS ACTOR+awarded: untouched", record(request("CONTRACTS", actor, awarded), pv=None),
+         lambda r: REDIRECT_FIELD not in r["requests"][0] and r["product_view"] is None),
+        ("v1.7: PROCESSES+ACTOR gets the processes redirect", record(request("PROCESSES", actor), pv=None),
+         lambda r: r["requests"][0].get(REDIRECT_FIELD) == ACTOR_PROCESSES_REDIRECT),
+        # ---- v1.9
+        ("v1.9 contract state (terminated): CONTRACTS, EXECUTE, no redirect, never PV2", record(request("UNSPECIFIED", actor, ("STATE", "terminated")), pv="HISTORICAL_PROCESSES"),
+         lambda r: REDIRECT_FIELD not in r["requests"][0] and r["product_view"] == "CONTRACTS"
+         and r["expected_disposition"] == "EXECUTE"),
+        ("v1.9 draft: the v1.8 'asks' label is repaired to EXECUTE on CONTRACTS", record(request("UNSPECIFIED", actor, ("STATE", "draft")), **clarify),
+         lambda r: (r["expected_disposition"], r["disposition_reason"], r["product_view"]) == ("EXECUTE", None, "CONTRACTS")
+         and REDIRECT_FIELD not in r["requests"][0]),
+        ("v1.9 contract state: an unrelated CLARIFY reason is NOT cleared", record(request("UNSPECIFIED", actor, ("STATE", "cancelled")), disposition="CLARIFY", reason="OTHER"),
+         lambda r: (r["expected_disposition"], r["disposition_reason"]) == ("CLARIFY", "OTHER")),
+        ("v1.9 desierto: asks, no redirect", record(request("UNSPECIFIED", actor, ("STATE", "other:desierto"))),
+         lambda r: (r["expected_disposition"], r["disposition_reason"]) == ("CLARIFY", PREAWARD_REASON)
+         and REDIRECT_FIELD not in r["requests"][0]),
+        ("v1.9 PROCESSES+ACTOR+draft: asks and the v1.7 redirect is removed (never translated)", record(request("PROCESSES", actor, ("STATE", "draft"), redirect=ACTOR_PROCESSES_REDIRECT), pv=None),
+         lambda r: (r["expected_disposition"], r["disposition_reason"]) == ("CLARIFY", PREAWARD_REASON)
+         and REDIRECT_FIELD not in r["requests"][0] and r["product_view"] is None),
+        ("v1.9 PROCESSES+ACTOR+awarded: v1.7 notice gains the APPROXIMATION effect", record(request("PROCESSES", actor, awarded, redirect=ACTOR_PROCESSES_REDIRECT), pv=None),
+         lambda r: r["requests"][0].get(REDIRECT_FIELD) == ACTOR_PROCESSES_AWARDED_REDIRECT
+         and r["expected_disposition"] == "EXECUTE"),
+        ("v1.9 PROCESSES+ACTOR (no state): v1.7 object unchanged", record(request("PROCESSES", actor, redirect=ACTOR_PROCESSES_REDIRECT), pv=None),
+         lambda r: r["requests"][0].get(REDIRECT_FIELD) == ACTOR_PROCESSES_REDIRECT),
+        ("v1.9 ACTOR+TIME: signature-date notice + CONTRACTS over PV1", record(request("UNSPECIFIED", actor, year), pv="HISTORICAL_PROCESSES"),
+         lambda r: r["requests"][0].get(NOTICE_FIELD) == ACTOR_TIME_NOTICE and r["product_view"] == "CONTRACTS"
+         and REDIRECT_FIELD not in r["requests"][0]),
+        ("v1.9 ACTOR+TIME on a non-SEARCH operation: untouched", record(request("UNSPECIFIED", actor, year), pv=None, op="COUNT"),
+         lambda r: NOTICE_FIELD not in r["requests"][0]),
+        ("v1.9 pending (closed): never invented", record(request("UNSPECIFIED", actor, ("STATE", "closed")), pv="HISTORICAL_PROCESSES"),
+         lambda r: REDIRECT_FIELD not in r["requests"][0] and r["product_view"] == "HISTORICAL_PROCESSES"
+         and r["expected_disposition"] == "EXECUTE"),
+        ("v1.9 pending PROCESSES+ACTOR+cancelled: no v1.7 redirect invented", record(request("PROCESSES", actor, ("STATE", "cancelled")), pv=None),
+         lambda r: REDIRECT_FIELD not in r["requests"][0] and r["expected_disposition"] == "EXECUTE"),
+        ("v1.9 pending (awarded+TIME): never invented", record(request("UNSPECIFIED", actor, awarded, year), pv="HISTORICAL_PROCESSES"),
+         lambda r: REDIRECT_FIELD not in r["requests"][0] and NOTICE_FIELD not in r["requests"][0]
+         and r["product_view"] == "HISTORICAL_PROCESSES"),
+    ]
+    failures = 0
+    for label, rec, check in cases:
+        out, _ = normalize(rec)
+        again, _ = normalize(out)
+        good = bool(check(out)) and again == out  # repaired AND idempotent
+        failures += not good
+        print(("ok   " if good else "FAIL ") + label)
+    print(f"selftest: {len(cases) - failures}/{len(cases)} passed", file=sys.stderr)
+    return 1 if failures else 0
+
+
 if __name__ == "__main__":
+    if sys.argv[1] == "--selftest":
+        sys.exit(selftest())
     if sys.argv[1] == "--synthetic":
         sys.exit(main_synthetic(*sys.argv[2:5]))
     sys.exit(main(*sys.argv[1:4]))
