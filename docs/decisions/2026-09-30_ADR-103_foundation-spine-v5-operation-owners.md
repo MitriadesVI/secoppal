@@ -71,3 +71,30 @@ Regla vigente:
 - **Cifra explícita** («los 10 más caros») → `CARDINALITY N` (tope P8 = 100, anunciado).
 La cardinalidad la decide el host a partir de la cita (número gramatical o cifra); el LLM no
 entrega el valor (invariante 3).
+
+## Enmienda 2 (2026-09-30) — dos gates distintos: ACTIVATE_V5 y CUTOVER
+
+**ACTIVATE_V5** (dogfood experimental, la puerta sigue puesta, rollback inmediato) admite umbrales
+estadísticos: los del diseño §5.4.3 (exactitud de operación ≥ 95 %, SEARCH→no-SEARCH ≤ 2 %, etc.).
+
+**CUTOVER** (M1-I: se borran la puerta y el SEARCH legacy) es de tolerancia cero, sobre el Gold
+completo (REAL + sintéticos) y con ≥ 2 pasadas, peor caso:
+
+| Gate CUTOVER | Exigencia |
+|---|---|
+| Vecinos secuestrados por SEARCH (NEIGHBOR) | **0** |
+| `L-only-OK` exclusivo (legacy acierta, Foundation no) | **0 en cada clase SEARCH** — incluye un SEARCH Gold que v5 envía a PROFILE/COUNT/otra operación |
+| Ensanche silencioso (TIME, BUYER, VALUE, GEO, cualquier condición no ejecutada sin aviso) | **0** |
+| Inversión de universo en casos CLEAR (procesos↔contratos, registros↔oportunidades) | **0** |
+| Inversión de polaridad | **0** |
+| Violaciones de conformidad de operación (INV-C0-6) | **0** |
+
+No hay «diferencias firmadas» que eximan un `L-only-OK`: si el producto decide que lo correcto es
+otra cosa, se corrige el **Gold** mediante adjudicación y una nueva versión sellada (con log), nunca
+con una dispensa en el gate. Ningún umbral de CUTOVER se expresa en porcentaje.
+
+## Enmienda 3 (2026-09-30) — P7 es postergación, no descarte
+
+Los botones `[Elegir período]` y `[Mayor valor]` de la Product View están **postergados a M2**
+(necesitan delta de IR), no descartados. M1 entrega `[Procesos históricos]`, `[Contratos]` (y
+`[Oportunidades vigentes]` cuando la vista por defecto no lo es).
