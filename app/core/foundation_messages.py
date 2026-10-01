@@ -29,7 +29,8 @@ _DIMENSION = {
     "BUYER": "No pude identificar con certeza la entidad compradora que mencionas. ¿Puedes escribir su "
              "nombre completo, por ejemplo «Alcaldía de Soledad»?",
     "GEOGRAPHY": "No pude identificar el departamento que mencionas. ¿Puedes escribir su nombre completo?",
-    "TIME": "No pude determinar el año que quieres consultar. ¿Puedes indicar un solo año, por ejemplo 2025?",
+    "TIME": "No pude determinar el periodo que quieres consultar: por ahora solo filtro por un año completo, "
+            "sin meses ni rangos. ¿Puedes indicar un solo año, por ejemplo 2025?",
     "VALUE": "No pude leer el monto que indicas. ¿Puedes escribirlo con cifras, por ejemplo «más de 300 "
              "millones»?",
     "MODALITY": "No pude identificar una sola modalidad de contratación. ¿Cuál quieres, por ejemplo "
@@ -39,6 +40,10 @@ _DIMENSION = {
 }
 
 _EXACT = {
+    "AMBIGUOUS_HOST_DIMENSION:BUYER": FoundationUserMessage(
+        "El nombre de la entidad que mencionas corresponde a más de una entidad compradora y no puedo "
+        "elegir una sin cambiar el significado. ¿Puedes escribir su nombre completo, por ejemplo "
+        "«Alcaldía de Soledad»?"),
     "HOST_UNIVERSE_RULE_CONFLICT": FoundationUserMessage(
         "Encontré dos señales incompatibles sobre si buscas oportunidades actuales o registros históricos. "
         "¿Quieres procesos abiertos para participar o resultados históricos?",
