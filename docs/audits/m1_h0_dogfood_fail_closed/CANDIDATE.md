@@ -49,7 +49,7 @@ Tests nuevos: `tests/test_foundation_h0_buyer_ambiguity.py` (147) y `tests/test_
 - `olympus-state own claim` respondió CLAIMED (tardó más de 120 s; el hang conocido de la baseline de main). No se pudo liberar ownership de forma fiable al cierre: ver "Pendiente".
 
 ## Mutantes (ejecutados; cada uno aplicado al archivo, test corrido, archivo restaurado)
-Muertos (25/25): quitar el enganche BUYER; `alias_owners` vacío; umbral `>2`; quitar el enganche TIME; léxico previo vacío;
+Muertos (23/23): quitar el enganche BUYER; `alias_owners` vacío; umbral `>2`; quitar el enganche TIME; léxico previo vacío;
 léxico posterior vacío; sin meses (previo, posterior, ambos); sin cotas previas; sin cotas posteriores; sin periodos; sin
 `sept`; sin `hasta`; sin `partir`; sin `adelante`; sin `semestre`; ventana 3; ventana 6; ignorar otro año; sin pegamento;
 sin lado posterior; sin parada en palabra no-pegamento. Los mutantes de léxico también matan sin el test de contención de léxico
