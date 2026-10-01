@@ -12,8 +12,8 @@ import pytest
 
 from app.config import get_settings
 from app.core.foundation_authority_contract import (
-    AuthorityContext, AuthorityReceipt, AuthorityVerdict, Comparator, GeoValue, ModalityValue,
-    MoneyValue, StateValue, TimeValue, TopicValue,
+    AUTHORITY_DIMENSION_NAMES, VALUE_ALIASES, AuthorityContext, AuthorityReceipt, AuthorityVerdict,
+    Comparator, GeoValue, ModalityValue, MoneyValue, StateValue, TimeValue, TopicValue,
 )
 from app.core.foundation_geo_level import GeoLevel
 from app.core.interpretation_contract import Effect, Polarity, ResolutionDecision
@@ -586,6 +586,26 @@ def test_case_builds_a_window_from_several_cites_and_from_a_repeated_phrase():
     single = evidence_from_text("obras y obras", "obras", occurrence=1,
                                 dimension=SemanticDimension.TOPIC, operator="about")
     assert single.window.segments == ("obras",) and single.window.left == ("obras", "y")
+
+
+@pytest.mark.parametrize("dimension", [d for d in SemanticDimension if d.value in AUTHORITY_DIMENSION_NAMES],
+                         ids=lambda d: d.value)
+def test_the_value_aliases_are_accepted_by_the_kit_only_for_the_value_dimension(dimension):
+    from tests import foundation_authority_kit as kit
+
+    class Stub:
+        authority_id, version = "stub", "1"
+
+    evidence = evidence_from_text("obras", "obras", dimension=dimension, operator="is",
+                                  level=GeoLevel.DEPARTMENT if dimension is SemanticDimension.GEOGRAPHY else None)
+    for alias in sorted(VALUE_ALIASES):
+        verdict = AuthorityVerdict(CLARIFY, "stub@1", reason=alias)
+        if dimension is SemanticDimension.VALUE:
+            kit._check_shape(Stub(), verdict, evidence, default_context())
+        else:
+            with pytest.raises(ConformanceFailure) as failure:
+                kit._check_shape(Stub(), verdict, evidence, default_context())
+            assert failure.value.code == "REASON_DIMENSION_MISMATCH"
 
 
 def test_the_literal_inv_c0_7_check_misses_what_only_the_chain_catches():
