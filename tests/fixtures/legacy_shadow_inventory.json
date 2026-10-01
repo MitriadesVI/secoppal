@@ -430,10 +430,13 @@
    }
   },
   "contratos de aseo en los últimos 3 meses": {
+   "_temporal_replace_scope": true,
    "contract_universe": "celebrated",
    "contract_universe_version": "contract-universe-1.1",
    "dataset": "contratos",
    "dataset_explicit": true,
+   "fecha_desde": "2026-06-30",
+   "fecha_hasta": "2026-09-30",
    "objeto": [
     "aseo"
    ]
