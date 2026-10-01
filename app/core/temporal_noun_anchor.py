@@ -229,4 +229,5 @@ def find(
         window=first.group(0),
         anchor=text[anchor[0]:anchor[1]].strip(),
         span=(min(first.start(), anchor[0]), max(first.end(), anchor[1])),
+        mentions=tuple(sorted(set(window_spans) | {anchor})),
     )

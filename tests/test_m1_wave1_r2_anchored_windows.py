@@ -336,7 +336,9 @@ def test_no_window_means_no_conflict_whatever_the_rest_says():
 def test_the_conflict_reports_window_anchor_and_the_span_that_covers_both():
     text = "los ultimos 3 meses de aseo del 2025"
     found = twa.find_anchored_window(text, WINDOWS, IGNORED, _rest_reading("del 2025"))
-    assert found == twa.AnchoredWindow("ultimos 3 meses", "del 2025", (4, len(text)))
+    assert found == twa.AnchoredWindow("ultimos 3 meses", "del 2025", (4, len(text)), ((4, 19), (28, 36)))
+    # R6: ``mentions`` are the two periods alone; ``span`` also covers what lies between them («de aseo»).
+    assert [text[a:b] for a, b in found.mentions] == ["ultimos 3 meses", "del 2025"]
     found = twa.find_anchored_window("del 2025 ultimos 3 meses", WINDOWS, IGNORED, _rest_reading("del 2025"))
     assert found.span == (0, 24)
     question = twa.clarification(found)

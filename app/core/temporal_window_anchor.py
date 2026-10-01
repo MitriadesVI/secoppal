@@ -33,6 +33,10 @@ class AnchoredWindow:
     window: str
     anchor: str
     span: tuple[int, int]
+    # Each period the authority recognised, on its own: the windows and the other period. ``span``
+    # ENVELOPES them and everything written between them (a buyer, a topic), so a consumer that
+    # masks the envelope erases what is not a period.
+    mentions: tuple[tuple[int, int], ...] = ()
 
 
 def _blank(text: str, spans: Iterable[tuple[int, int]]) -> str:
@@ -69,6 +73,7 @@ def find_anchored_window(
         window=first.group(0),
         anchor=text[span[0]:span[1]].strip(),
         span=(min(first.start(), span[0]), max(first.end(), span[1])),
+        mentions=tuple(sorted({hit.span() for hit in windows} | {span})),
     )
 
 

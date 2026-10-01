@@ -29,6 +29,16 @@ class TemporalResolution:
     # Sólo con ``clock == "inferred_year"``: primer día de la última unidad nombrada
     # (día o mes) en el año asumido. La autoridad nueva lo compara con ``today``.
     anchor: str | None = None
+    # Sólo con una ventana junto a otro periodo: cada mención por separado. ``span`` envuelve ambas
+    # y todo lo que haya entre ellas; quien enmascara texto debe usar ``mentions``, no ``span``.
+    mention_spans: tuple[tuple[int, int], ...] = ()
+
+    @property
+    def mentions(self) -> tuple[tuple[int, int], ...]:
+        """Cada mención temporal reconocida (una sola salvo ventana + otro periodo)."""
+        if self.mention_spans:
+            return self.mention_spans
+        return (self.span,) if self.span is not None else ()
 
     @property
     def should_clarify(self) -> bool:
@@ -584,6 +594,7 @@ def _anchored_window(
         precision="invalid",
         error_code=temporal_window_anchor.ERROR_CODE,
         clarification=temporal_window_anchor.clarification(found),
+        mention_spans=found.mentions,
     )
 
 

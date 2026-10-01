@@ -84,7 +84,7 @@ from app.core.negation_binding import (
 )
 from app.core.negation_policy import apply_negation_policy
 from app.core.modality_parser_integration import resolve_parser_modality
-from app.core.period_free_text import aligned_pattern, without_period
+from app.core import period_free_text
 from app.core.query_text_consumption import (
     compact_whitespace,
     mask_consumed_spans,
@@ -637,29 +637,44 @@ class QueryRouter:
             today=clock,
             protected_spans=tuple(_protected_entity_year_spans(positive_text)),
         )
+        # Each mention on its own: the span of a window next to another period ENVELOPES what is written
+        # between them (a buyer), and masking it erased the buyer from the residual text.
+        period_spans = period_free_text.consumed(positive_text, temporal_resolution.mentions)
+        period_mentions = period_free_text.mention_texts(positive_text, period_spans)
         if temporal_resolution.span is not None:
             scrubbed = mask_consumed_spans(
                 scrubbed,
-                (temporal_resolution.span,),
+                period_spans,
                 lineage=lineage,
                 stage="temporal",
             )
-            consumed_spans.append(temporal_resolution.phrase)
+            consumed_spans.extend(
+                period_mentions if len(period_spans) > 1
+                else (temporal_resolution.phrase,)
+            )
 
         # AP3-F projects roles only from positive residual text.  A provider or
         # buyer governed by negation remains a typed NegationRequest and cannot
         # become positive actor/entity evidence.
         if actor_profile_enabled():
-            # A period is not part of any actor or buyer mention (``period_free_text``).
-            actor_text = without_period(positive_text, temporal_resolution.span)
-            actor_conversation = interpret_actor_conversation(actor_text)
+            actor_conversation = period_free_text.read_buyer(
+                positive_text,
+                period_spans,
+                period_mentions,
+                interpret_actor_conversation,
+                lambda mention: self._project_actor_relation_buyer(mention, {}),
+                self._claimed_by_declared_group,
+            )
             actor_conversation, actor_relation_spans = (
                 self._seed_actor_conversation(actor_conversation, params)
             )
         for relation_span in actor_relation_spans:
             scrubbed = replace_regex(
                 scrubbed,
-                aligned_pattern(relation_span),
+                period_free_text.aligned_pattern(
+                    period_free_text.without_mentions(relation_span, period_mentions)
+                    or relation_span
+                ),
                 " ",
                 count=1,
                 flags=re.IGNORECASE,
@@ -1801,6 +1816,15 @@ class QueryRouter:
             params["actor_conversation_construction"] = instruction.construction
 
         return instruction, relation_spans
+
+    def _claimed_by_declared_group(self, mention: str) -> bool:
+        """Does a declared buyer group (ICBF, Bogotá…) own this mention? It then keeps the group path."""
+        from app.core.buyer_groups import BuyerGroupError, consume_group_mention
+        try:
+            scope, _ = consume_group_mention(mention, self.entity_resolver)
+        except BuyerGroupError:
+            return True
+        return bool(scope.get("buyer_group"))
 
     def _project_actor_relation_buyer(
         self,

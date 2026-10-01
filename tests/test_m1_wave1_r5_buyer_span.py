@@ -8,8 +8,10 @@ años») could not be found again in the masked residual and the buyer's own wor
 The base already did this with an explicit year («… en 2025»); a real query in data/feedback.jsonl
 («que ha contratado funsocom con la alcaldia de barranquilla los ultimos dos años?») lost its buyer + NIT route.
 
-The grammar now reads the text WITHOUT the period (``period_free_text.without_period``) and the buyer's span
-is found again tolerant to punctuation (``aligned_pattern``).
+R5 masked the period in the grammar's INPUT (``without_period``); R6 retired that strategy (it changed the buyer
+of «Hospital 7 de Agosto» and of the declared group ICBF, see ``test_m1_wave1_r6_exact_buyer_wins``): the capture
+is resolved as written first and trimmed mention by mention only when it does not resolve. The buyer's span is
+still found again tolerant to punctuation (``aligned_pattern``).
 
 The property is enumerated, not sampled by hand: buyers x temporal forms x connectors x positions. For each,
 the topic carries no word of the buyer and the buyer is the one resolved WITHOUT the period.
@@ -25,7 +27,7 @@ from pathlib import Path
 import pytest
 
 from app.core.entity_resolver import EntityResolver
-from app.core.period_free_text import aligned_pattern, without_period
+from app.core.period_free_text import aligned_pattern
 from app.core.query_router import QueryRouter
 
 TODAY = date(2026, 10, 1)
@@ -128,7 +130,10 @@ def test_the_buyer_words_never_become_topic_and_the_buyer_is_the_one_without_the
         control_text = _query(position, connector, buyer, "", topic)
         if control_text not in controls:
             controls[control_text] = _buyer_of(_parse(router, control_text))
-        if not params.get("_temporal_error") and _buyer_of(params) != controls[control_text]:
+        # A declared group (ICBF…) read with the period first wins over the single entity the relation gives
+        # without it: the base does the same, pinned in ``test_m1_wave1_r6_exact_buyer_wins``.
+        if (not params.get("_temporal_error") and not params.get("buyer_group")
+                and _buyer_of(params) != controls[control_text]):
             failures.append(f"BUYER {_buyer_of(params)} != {controls[control_text]} <- {text!r}")
     assert not failures, f"{len(failures)} failures, first 12:\n" + "\n".join(failures[:12])
 
@@ -155,14 +160,17 @@ def test_the_buyer_is_resolved_as_without_the_period(router):
     with_window = _parse(router, "contratos de aseo con la alcaldia de barranquilla los ultimos dos años")
     without = _parse(router, "contratos de aseo con la alcaldia de barranquilla")
     assert with_window["entidad_resolved"] == without["entidad_resolved"]
-    assert with_window["entidad"] == without["entidad"], "the captured buyer does not include the period"
+    # R6: the capture that resolves as written stays as written (the exact buyer wins over the period).
+    assert with_window["entidad"].startswith(without["entidad"])
     assert (with_window["fecha_desde"], with_window["fecha_hasta"]) == ("2024-10-01", "2026-10-01")
 
 
-def test_a_period_that_opens_the_sentence_does_not_hide_a_buyer_that_resolves_by_relation(router):
-    """«en <ventana> contratos de … con el ICBF»: the leading «en» read as a territory switch."""
+def test_a_period_that_opens_the_sentence_keeps_the_declared_buyer_group(router):
+    """«en <ventana> contratos de … con el ICBF»: the buyer is the declared group ``icbf_national`` (33 entities,
+    ``tests/test_declared_buyer_groups.py``), as in the base. R5 pinned ICBF SEDE NACIONAL here: that was wrong."""
     params = _parse(router, "en los últimos 6 meses contratos de alimentación escolar con el ICBF")
-    assert params["entidad_resolved"] == "ICBF SEDE NACIONAL" and params["objeto"] == ["alimentacion_escolar"]
+    assert params["buyer_group"]["id"] == "icbf_national" and params["objeto"] == ["alimentacion_escolar"]
+    assert not params.get("entidad_resolved"), "a declared group is not a single entity"
 
 
 def test_punctuation_in_the_buyer_name_does_not_leave_its_words_as_topic(router):
@@ -170,27 +178,7 @@ def test_punctuation_in_the_buyer_name_does_not_leave_its_words_as_topic(router)
     assert params["objeto"] == ["vias"]
 
 
-# ── the two helpers ───────────────────────────────────────────────────────────────────────────────
-
-def test_without_period_masks_the_span_and_keeps_offsets():
-    text = "contratos con la alcaldia de x los ultimos dos anos"
-    start = text.index("los ultimos")
-    out = without_period(text, (start, len(text)))
-    assert len(out) == len(text) and out[:start] == text[:start] and out[start:].strip() == ""
-    assert without_period(text, None) is text
-
-
-def test_without_period_also_masks_the_leading_en_and_nothing_else():
-    text = "en los ultimos 6 meses contratos de aseo con el icbf"
-    start = text.index("los ultimos")
-    out = without_period(text, (start, start + len("los ultimos 6 meses")))
-    assert out.strip() == "contratos de aseo con el icbf"
-    mid = "contratos de aseo en los ultimos 6 meses"
-    mid_start = mid.index("los ultimos")
-    assert without_period(mid, (mid_start, len(mid))).startswith("contratos de aseo en "), "only a leading en"
-    durante = "durante los ultimos 6 meses contratos"
-    assert without_period(durante, (durante.index("los"), durante.index("contratos") - 1)).startswith("durante")
-
+# ── the helper ────────────────────────────────────────────────────────────────────────────────────
 
 def test_aligned_pattern_tolerates_separators_but_not_other_words():
     pattern = re.compile(aligned_pattern("con subred sur occidente ese en"), re.IGNORECASE)
