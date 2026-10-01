@@ -33,7 +33,8 @@ Los tests que prueban la autoridad por cita o la gramática directamente, sin `Q
 `tests/` y apuntan a `app/core/time_grammar.py`: `test_time_authority*.py`, `test_time_grammar_*.py`
 (ventanas ancladas, léxico de ventanas y citas normativas, ancla nominal, cantidad vs año, residuo
 congelado como xfail estricto, y el bloque D-TIME movido desde `test_time_semantics_v2.py`).
-Los tests de VALUE se quedan (`test_m1_wave1_r{1..4}_value_*.py`).
+Los tests de VALUE: su mitad de legacy pasó a `E_VALUE_REGRESSION_CASES.jsonl` (ver `README_E_VALUE_REGRESSION.md`); la mitad de
+autoridad por cita (`test_m1_wave1_r{1..4}_value_*.py`, `test_value_authority_m1d.py`) se queda.
 
 ## Distribución
 

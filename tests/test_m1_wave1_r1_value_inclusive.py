@@ -5,6 +5,10 @@
 is an arrow, not «>». ZEUS found the guard reading «o más a la fecha» as «más a»
 (GT) and the arrow as «>» (GT), so a GTE request passed as ``greater_than``.
 The oracle is written by hand from the Spanish meaning.
+
+M1 wave 1 VALUE PARITY: only the quote-route half lives here (``foundation_value_direction`` over
+``money_comparators``). The legacy scanner (``money_polarity``) is byte-identical to ``main``; the cases its
+retired «parse side» tests fixed are in ``docs/audits/m1_wave1/E_VALUE_REGRESSION_CASES.jsonl``.
 """
 from __future__ import annotations
 
@@ -19,7 +23,6 @@ from app.core.foundation_value_direction import (
     operator_reason,
 )
 from app.core.money_comparators import GT, GTE, LT, LTE
-from app.core.money_polarity import MoneyRelation, resolve_money_polarity
 
 OPERATORS = {"greater_than": GT, "greater_or_equal": GTE, "less_than": LT, "less_or_equal": LTE}
 BOUND = {GT: "min", GTE: "min", LT: "max", LTE: "max"}
@@ -106,23 +109,6 @@ def test_a_second_comparator_with_its_own_amount_is_still_a_second_bound():
     assert directions(quote) == (LT, GT)
     for operator in OPERATORS:
         assert operator_reason(operator, quote) == VALUE_OPERATOR_AMBIGUOUS
-
-
-@pytest.mark.parametrize("text,relation", [
-    ("contratos de 300 millones o más a la fecha", MoneyRelation.LOWER_BOUND),
-    ("contratos de 300 millones o superior", MoneyRelation.LOWER_BOUND),
-    ("contratos de 300 millones o menos de valor", MoneyRelation.UPPER_BOUND),
-    ("contratos de 300 millones o inferior", MoneyRelation.UPPER_BOUND),
-    ("contratos de 300 millones en adelante", MoneyRelation.LOWER_BOUND),
-])
-def test_the_parse_side_reads_the_same_inclusive_forms(text, relation):
-    (decision,) = resolve_money_polarity(text)
-    assert decision.relation is relation
-
-
-def test_the_parse_side_does_not_read_an_arrow_as_greater_than():
-    (decision,) = resolve_money_polarity("contratos -> 300 millones")
-    assert decision.relation is MoneyRelation.UNKNOWN
 
 
 @pytest.mark.parametrize("quote", ["más a 300 millones", "menos a 300 millones"])

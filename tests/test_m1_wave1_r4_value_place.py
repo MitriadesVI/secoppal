@@ -6,8 +6,13 @@ the inclusive bound in the base; wave 1 made it ask because a bare name cannot b
 buyer-mention catalogs. A continuation that STARTS with a name they recognise ends the bound
 (``money_suffix_place``), nothing is copied. A noun that is not a place still asks.
 
-Properties: adjective suffix x {recognised place or buyer, control noun}, on both consumers
-(``money_polarity`` and ``read_comparators``) and through the router. The polarity is never inverted.
+Properties: adjective suffix x {recognised place or buyer, control noun}, on ``read_comparators`` (the quote
+route). The polarity is never inverted.
+
+M1 wave 1 VALUE PARITY: the legacy consumers (``money_polarity`` and the router, byte-identical to ``main``)
+are not held to this grammar any more; their half of these properties is the E-VALUE contract
+(``docs/audits/m1_wave1/E_VALUE_REGRESSION_CASES.jsonl``). Kept here: the quote-route half, ``money_suffix_place``
+itself, and the cases ``main`` already executes.
 """
 from __future__ import annotations
 
@@ -76,24 +81,6 @@ def _variants(name: str):
 
 # ── the orchestrator's cases, through the router ─────────────────────────────────────────────
 
-@pytest.mark.parametrize("amount,field", [
-    ("de 300 millones o mayores Galapa", "valor_min"),
-    ("de 300 millones o mayores galapa", "valor_min"),
-    ("de 300 millones o superiores Barranquilla", "valor_min"),
-    ("de 300 millones o menores en Soledad", "valor_max"),
-    ("de 300 millones o menores Soledad", "valor_max"),
-    ("de 300 millones o inferiores Barranquilla", "valor_max"),
-    ("de 300 millones o mayores Alcaldía de Soledad", "valor_min"),
-    ("de 300 millones o mayores Atlántico", "valor_min"),
-])
-def test_the_router_executes_the_bound_when_a_place_follows(router, amount, field):
-    params = router.parse(f"contratos de la Alcaldía de Galapa {amount}", today=TODAY).params
-    assert params.get(field) == 300_000_000, amount
-    other = "valor_max" if field == "valor_min" else "valor_min"
-    assert other not in params, f"{amount}: the opposite polarity must never appear"
-    assert not params.get("money_clarification"), amount
-
-
 def test_a_proper_noun_after_the_plural_suffix_keeps_the_bound(router):
     """Was xfail(strict) in R3 (the only VALUE regression of wave 1 against the base)."""
     params = router.parse("contratos de la Alcaldía de Galapa de 300 millones o mayores Galapa", today=TODAY).params
@@ -111,21 +98,7 @@ def test_the_name_stays_for_the_buyer_and_geography_authorities(router):
     assert all("barranquilla" not in span.lower() for span in spans)
 
 
-@pytest.mark.parametrize("amount", [
-    "de 300 millones y mayor plazo",
-    "de 300 millones y menores plazos",
-    "de 300 millones o mayor duración",
-    "de 300 millones o mayor cuantía",
-    "de 300 millones o menor valor",
-    "de 300 millones o mayores plazos de ejecución",
-])
-def test_a_noun_after_the_suffix_still_asks(router, amount):
-    params = router.parse(f"contratos de la Alcaldía de Galapa {amount}", today=TODAY).params
-    assert params.get("money_clarification"), amount
-    assert "valor_min" not in params and "valor_max" not in params, amount
-
-
-# ── the property: suffix x place, on both consumers ──────────────────────────────────────────
+# ── the property: suffix x place, on the comparator reader ──────────────────────────────────────────
 
 @pytest.mark.parametrize("phrase,family", SUFFIXES)
 def test_a_municipality_department_or_buyer_after_the_suffix_is_the_bound(phrase, family):
@@ -133,9 +106,7 @@ def test_a_municipality_department_or_buyer_after_the_suffix_is_the_bound(phrase
         for variant in _variants(name):
             for tail in ("", " en 2025", " por favor"):
                 text = f"{HEAD} {phrase} {variant}{tail}"
-                assert _relation(text) is BOUND[family], text
                 assert _families(text) == (family,), text
-                assert _relation(text) is not OPPOSITE[family], text
 
 
 @pytest.mark.parametrize("phrase,family", SUFFIXES)
@@ -143,7 +114,6 @@ def test_a_control_noun_after_the_suffix_is_not_a_bound(phrase, family):
     for noun in NOUNS:
         for variant in _variants(noun):
             text = f"{HEAD} {phrase} {variant}"
-            assert _relation(text) is MoneyRelation.UNKNOWN, text
             assert _families(text) == (), text
 
 
@@ -152,15 +122,6 @@ def test_no_control_noun_is_recognised_as_a_place():
         for variant in _variants(noun):
             assert msp.names_a_place(variant) is False, variant
             assert msp.names_a_place(f"{variant} de ejecución") is False, variant
-
-
-def test_the_consumers_agree_on_every_place_and_noun():
-    for phrase, family in SUFFIXES:
-        for name in (*MUNICIPALITIES[:30], *DEPARTMENTS, *BUYER_MENTIONS, *NOUNS):
-            text = f"{HEAD} {phrase} {name}"
-            polarity_reads = _relation(text) is BOUND[family]
-            comparators_read = _families(text) == (family,)
-            assert polarity_reads == comparators_read, text
 
 
 def test_the_predicate_is_fail_closed():

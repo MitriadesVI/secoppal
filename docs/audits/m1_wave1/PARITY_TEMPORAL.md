@@ -1,5 +1,9 @@
 # M1 wave 1 — paridad temporal con `main` en el camino legacy
 
+> **Superado en VALUE por `PARITY_VALUE.md`:** las referencias de este documento a «VALUE congelado» (pin por hash,
+> sonda VALUE con 712 textos distintos y excepción de 53 compradores) quedan reemplazadas por la paridad completa de
+> VALUE: `money_polarity.py` vuelve a los bytes de `main` y la sonda da 0 diferencias.
+
 Rama `fix/m1-wave1-parity`, base `df36d686` (R6), `main` = `4ec99bc1`. Decisión del usuario (opción A):
 el camino legacy lee el tiempo exactamente como `main`. La gramática temporal reescrita de wave 1 (D-TIME + R1-R6)
 vive en un módulo que sólo importa la ruta de cita. Ningún arreglo temporal se rescata en legacy.

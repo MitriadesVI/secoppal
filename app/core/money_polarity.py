@@ -10,16 +10,6 @@ import re
 from dataclasses import dataclass, replace
 from enum import Enum
 
-from app.core import money_suffix_place
-from app.core.money_comparators import (
-    BARE_ADJECTIVE_DOWN_PATTERN,
-    BARE_ADJECTIVE_UP_PATTERN,
-    DOWN_PATTERN,
-    NEGATION_FILLER,
-    SUFFIX_DOWN_PATTERN,
-    SUFFIX_UP_PATTERN,
-    UP_PATTERN,
-)
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.utils.money import MONETARY_UNIT_PATTERN
 
@@ -52,28 +42,26 @@ _AMOUNT = (
     r"(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?"
 )
 _AMOUNT_RE = re.compile(rf"(?<![\w.,]){_AMOUNT}", re.IGNORECASE)
-# The comparator vocabulary has ONE owner (money_comparators); only the
-# grammar around it (negation, link, position) is local to this scanner.
-_UP = UP_PATTERN
-_DOWN = DOWN_PATTERN
+# Inflection is composed by family, rather than enumerating whole sentences.
+_UP = (
+    r"(?:m[aá]s|mayor(?:es)?|superior(?:es)?|super[ae]n?|exced[ae]n?|"
+    r"(?:rebas|sobrepas)[ae]n?|(?:por\s+)?encima|m[ií]nim[oa]|desde|"
+    r"al\s+menos|a\s+partir\s+de|>=?)"
+)
+_DOWN = (
+    r"(?:menos|menor(?:es)?|inferior(?:es)?|(?:por\s+)?debajo|"
+    r"m[aá]xim[oa]|hasta|a\s+lo\s+sumo|baj[ae]n?|<=?)"
+)
 _LINK = r"(?:\s+o\s+igual(?:es)?)?(?:\s+(?:a|de|que))?(?:\s+(?:los?|las?|el))?\s*"
 _PREFIX_RE = re.compile(
-    rf"(?<!\w)(?:que\s+)?(?P<neg>no\s+(?:{NEGATION_FILLER})?)?(?:sean?\s+)?(?:por\s+)?"
+    rf"(?<!\w)(?:que\s+)?(?P<neg>no\s+)?(?:sean?\s+)?(?:por\s+)?"
     rf"(?:(?P<up>{_UP})|(?P<down>{_DOWN})){_LINK}$", re.IGNORECASE,
 )
-# «por 300 millones» es la aproximación legada autorizada. «más o menos 300 millones»
-# aproxima, no acota: el «menos» de «más o menos» NO es el comparador «menos»
-# (alineado con ``read_comparators``, R2 P3), y no se inventa una banda: se aclara.
-_APPROX_RE = re.compile(
-    r"\b(?P<neg>no\s+)?(?:por|(?P<loose>m[aá]s\s+o\s+menos(?:\s+de)?))\s+$", re.IGNORECASE,
-)
+_APPROX_RE = re.compile(r"\b(?P<neg>no\s+)?por\s+$", re.IGNORECASE)
 _SUFFIX_RE = re.compile(
-    rf"^\s+(?:(?P<up>{SUFFIX_UP_PATTERN})|(?P<down>{SUFFIX_DOWN_PATTERN}))\b", re.IGNORECASE,
-)
-# The adjective suffix with nothing checked after it: valid only when a place or a buyer follows it
-# («300 millones o mayores Galapa», ``money_suffix_place``).
-_BARE_SUFFIX_RE = re.compile(
-    rf"^\s+(?:(?P<up>{BARE_ADJECTIVE_UP_PATTERN})|(?P<down>{BARE_ADJECTIVE_DOWN_PATTERN}))\b", re.IGNORECASE,
+    r"^\s+(?:(?P<up>en\s+adelante|(?:o|y)\s+(?:m[aá]s|mayores|superiores)|"
+    r"para\s+(?:arriba|m[aá]s))|(?P<down>(?:o|y)\s+(?:menos|menores)|"
+    r"para\s+(?:abajo|menos)))\b", re.IGNORECASE,
 )
 _RANGE_RE = re.compile(
     rf"\b(?P<neg>no\s+)?(?:entre|de|desde)\s+(?P<lo>{_AMOUNT})"
@@ -105,26 +93,18 @@ def _single(text: str, match: re.Match[str]) -> MoneyPolarityDecision:
     amount = text[start:end]
     prefix = _PREFIX_RE.search(text[:start])
     suffix = _SUFFIX_RE.search(text[end:])
-    if suffix is None:
-        bare = _BARE_SUFFIX_RE.search(text[end:])
-        if bare and money_suffix_place.names_a_place(text[end + bare.end():]):
-            suffix = bare
     if suffix and re.match(rf"{_LINK}{_AMOUNT}", text[end + suffix.end():], re.IGNORECASE):
         suffix = None  # "X y menos de Y" belongs to the next operand.
     relation = MoneyRelation.UNKNOWN
     comparator = None
     negated = False
-    approx = _APPROX_RE.search(text[:start])
-    loose = bool(approx and approx.group("loose"))
-    if prefix and not loose:
+    if prefix:
         relation = _direction(prefix)
         start = prefix.start()
         comparator = prefix.group().strip()
         negated = bool(prefix.group("neg"))
-    elif approx:
-        relation = (
-            MoneyRelation.UNKNOWN if approx.group("neg") or loose else MoneyRelation.APPROXIMATE
-        )
+    elif approx := _APPROX_RE.search(text[:start]):
+        relation = MoneyRelation.UNKNOWN if approx.group("neg") else MoneyRelation.APPROXIMATE
         start = approx.start()
         comparator = approx.group().strip()
         negated = bool(approx.group("neg"))
