@@ -14,8 +14,8 @@ reserved for an unavailable authority, which this one never is):
   state that exists in none of them is ``UNRESOLVED_HOST_DIMENSION:STATE`` (detail
   ``STATE_NOT_REPRESENTABLE`` / ``STATE_NOT_IN_DATASET``): «liquidados» has no SECOP literal and is
   asked, not approximated; «publicados» over contratos is not a contract state;
-* S3 (ADR-100): ``publicados`` + ``abiertos`` under a bare «o» (two cites with the gap ``("o",)``, or one
-  cite spelling it) is the open funnel, with the policy ``adr-100@1`` (HostPolicy ADR-100 v1).  Any
+* S3 (ADR-100): an open word («abiertos», «en convocatoria»…) and another open word or ``publicados``
+  under a bare «o» (two cites with the gap ``("o",)``, or one cite spelling it) is the open funnel, with the policy ``adr-100@1`` (HostPolicy ADR-100 v1).  Any
   other gap, a third cite or another pair is ``RESIDUE_UNREAD:STATE`` /
   ``STATE_COMPOSITION_UNSUPPORTED``.  The gap only decides between that value and a clarification
   (INV-C0-7b); the composition cannot be negated (``NEGATION_UNSUPPORTED:STATE``);
@@ -83,14 +83,10 @@ def _anchors_a_date(right: tuple[str, ...]) -> bool:
 
 
 def _is_funnel_pair(first: tuple[str, ...], second: tuple[str, ...]) -> bool:
-    """«publicados» and «abiertos», in either order: the only pair ADR-100 accredits."""
-    def is_published(words):
-        return len(words) == 1 and catalog.lookup(words) is catalog.PUBLISHED
-
-    def is_open(words):
-        return len(words) == 1 and "abierto" in catalog.lemmas(words[0]) and catalog.lookup(words) is catalog.OPEN
-
-    return (is_published(first) and is_open(second)) or (is_open(first) and is_published(second))
+    """ADR-100: one open word and another open word or the funnel's own literal «publicados», any order."""
+    one, other = catalog.lookup(first), catalog.lookup(second)
+    return (one is catalog.OPEN and (other is catalog.OPEN or other is catalog.PUBLISHED)) or (
+        one is catalog.PUBLISHED and other is catalog.OPEN)
 
 
 def _composition(window: EvidenceWindow) -> str:
@@ -104,8 +100,10 @@ def _composition(window: EvidenceWindow) -> str:
         if len(window.segments) > 1:
             return "none"
         tokens = window_tokens(window.segments[0])
-        if len(tokens) == 3 and tokens[1] == "o" and _is_funnel_pair(tokens[:1], tokens[2:]):
-            return "funnel"
+        if tokens.count("o") == 1 and 0 < tokens.index("o") < len(tokens) - 1:
+            at = tokens.index("o")
+            if _is_funnel_pair(tokens[:at], tokens[at + 1:]):
+                return "funnel"
         return "none"  # a different connector in one cite is residue of the single-phrase reading
     if (len(window.segments) == 2 and window.gaps == (("o",),)
             and _is_funnel_pair(*(window_tokens(segment) for segment in window.segments))):

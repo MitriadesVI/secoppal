@@ -14,6 +14,7 @@ from app.core.host_authorities.modality import ModalityAuthority
 from app.core.interpretation_contract import Polarity, ResolutionDecision
 from app.core.modality_lexicon import load_lexicon
 from app.core.modality_models import load_catalog
+from app.core.modality_resolution_models import MatchStrength
 from app.core.modality_resolver import resolve as resolve_modality
 from app.core.semantic_dimensions import SemanticDimension
 from tests.foundation_authority_kit import (
@@ -210,6 +211,30 @@ def test_a_modality_cited_again_is_one_modality_g1():
     verdict = run("contratación directa y de nuevo contratación directa",
                   ["contratación directa", ("contratación directa", 1)])
     assert verdict.decision is RESOLVED and verdict.value.family_policy == "modality-direct-family@1"
+
+
+def test_two_modalities_with_no_connector_are_a_composition_not_the_first_one():
+    quote = "licitación pública contratación directa"
+    assert reasons(run(f"procesos por {quote}", quote)) == ("RESIDUE_UNREAD:MODALITY",
+                                                           "MODALITY_COMPOSITION_UNSUPPORTED")
+
+
+@pytest.mark.parametrize("quote", ["licitación pública no", "mínima cuantía ni", "licitación pública sin"])
+def test_a_negation_the_resolver_did_not_bind_is_not_a_negative_cite(quote):
+    """The word is in the cite but excludes nothing: NEGATIVE cannot be honoured, it is not guessed."""
+    verdict = run(f"procesos por {quote}", quote, "family", NEG)
+    assert reasons(verdict) == ("RESIDUE_UNREAD:MODALITY", "MODALITY_NEGATION_NOT_BOUND")
+    assert run(f"procesos por {quote}", quote, "family", POS).reason == "OPERATOR_EVIDENCE_MISMATCH:MODALITY"
+
+
+@pytest.mark.parametrize("strength", [MatchStrength.CONTEXTUAL, MatchStrength.LEGACY_RAW])
+def test_only_exact_strengths_execute_a_weaker_match_is_asked(strength, monkeypatch):
+    """The catalog's weaker rules all end as resolver issues today; the gate protects the day one does not."""
+    real = resolve_modality("licitación pública", dataset=None)
+    weak = replace(real, includes=(replace(real.includes[0], strength=strength),))
+    monkeypatch.setattr(mod, "resolve_modality", lambda text, dataset=None: weak)
+    assert reasons(run("procesos por licitación pública", "licitación pública")) \
+        == ("UNRESOLVED_HOST_DIMENSION:MODALITY", "MODALITY_STRENGTH_NOT_EXECUTABLE")
 
 
 # ---- 4. modality-o6@1: «licitación(es)» colloquial never filters ----------------------------------------------

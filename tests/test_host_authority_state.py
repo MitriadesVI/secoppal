@@ -276,6 +276,39 @@ def test_s3_with_the_literal_operator_negated_or_over_contracts_is_not_executed(
         == ("UNRESOLVED_HOST_DIMENSION:STATE", "STATE_NOT_IN_DATASET")
 
 
+def _funnel_phrases():
+    return {"open": sorted(p for p, r in cat.LEXICON.items() if r is cat.OPEN), "published": [("publicado",)]}
+
+
+def test_s3_is_exactly_the_pairs_adr_100_accredits_enumerated_from_the_lexicon():
+    """Both orders, two cites under «o» and one cite: the open words with one another or with «publicados»."""
+    words = sorted(cat.LEXICON)
+    accepted = refused = 0
+    for first, second in product(words, words):
+        a, b = " ".join(first), " ".join(second)
+        left, right = cat.LEXICON[first], cat.LEXICON[second]
+        funnel = (left is cat.OPEN and right in (cat.OPEN, cat.PUBLISHED)) or (
+            left is cat.PUBLISHED and right is cat.OPEN)
+        raw = f"procesos {a} o {b} de aseo"
+        two = None
+        if a != b:
+            evidence = evidence_from_text(raw, [(a, 0), (b, 0)], dimension=STATE, operator="family")
+            if len(evidence.window.segments) == 2:  # a word inside the other one merges into one segment
+                two = AUTH.resolve(evidence, ctx(P))
+        one = run(raw, f"{a} o {b}", "family", POS, (P,))
+        for verdict in (one, two):
+            if verdict is None:
+                continue
+            if funnel:
+                assert verdict.decision is RESOLVED and verdict.policies == (FUNNEL_POLICY,), (a, b)
+                assert verdict.value.canonical_class == "open"
+                accepted += 1
+            else:
+                assert verdict.decision is not RESOLVED, (a, b)
+                refused += 1
+    assert accepted >= 4 * 6 and refused > accepted
+
+
 def test_a_phrase_cited_again_is_one_state_g1():
     verdict = run("abiertos de aseo y abiertos de obra", ["abiertos", ("abiertos", 1)], "family", POS, (P,))
     assert verdict.decision is RESOLVED and verdict.value.canonical_class == "open"
@@ -332,10 +365,34 @@ def test_a_state_word_plus_anything_else_is_residue_a2_state_036(needle):
 
 
 @pytest.mark.parametrize("needle", ["liquidados", "firmados", "celebrados", "aprobados", "finalizados",
-                                    "desiertos", "modificados", "en curso"])
+                                    "desiertos", "modificados", "prorrogados"])
 def test_a_state_secop_has_no_literal_for_is_asked_not_approximated(needle):
     verdict = run("contratos " + needle, needle, "is", POS, (P, C))
     assert reasons(verdict) == ("UNRESOLVED_HOST_DIMENSION:STATE", "STATE_NOT_REPRESENTABLE")
+
+
+@pytest.mark.parametrize("needle", ["hoy", "ahora", "actualmente", "en este momento", "en la actualidad"])
+def test_c3_a_deictic_alone_with_processes_is_the_open_family_and_never_a_date(needle):
+    verdict = run(f"que procesos hay {needle}", needle, "family", POS, (P,))
+    assert verdict.decision is RESOLVED and verdict.value.canonical_class == "open"
+    assert run(f"que contratos hay {needle}", needle, "family", POS, (C,)).detail == "STATE_NOT_IN_DATASET"
+
+
+def test_c3_a_deictic_after_an_open_word_adds_nothing_and_after_anything_else_is_residue():
+    for needle in ("abiertos hoy", "abiertas ahora", "vigentes actualmente", "abiertos en este momento"):
+        assert run(f"procesos {needle}", needle, "family", POS, (P,)).decision is RESOLVED, needle
+    for needle in ("terminados hoy", "publicados hoy", "cerrados ahora"):
+        operator = "is"
+        assert run(f"procesos {needle}", needle, operator, POS, (P, C)).decision is not RESOLVED, needle
+
+
+def test_c4_the_open_family_includes_en_curso_en_concurso_convocado_and_convocatoria():
+    for needle in ("en curso", "en concurso", "convocados", "convocatoria", "en convocatoria"):
+        assert run(f"procesos {needle}", needle, "family", POS, (P,)).value.canonical_class == "open", needle
+        assert run(f"procesos {needle}", needle, "is", POS, (P,)).reason == "OPERATOR_EVIDENCE_MISMATCH:STATE"
+    live = run("contratos en curso", "en curso", "family", POS, (C,)).value
+    assert dict((col, vals) for _n, col, vals in live.literals) == {
+        "estado_contrato": ("En ejecución", "Modificado", "Prorrogado")}
 
 
 def test_an_unknown_phrase_is_unresolved():
@@ -357,6 +414,8 @@ def test_property_a_junk_word_next_to_a_state_phrase_never_resolves(junk, before
     scaffold = cat.NEGATION_TOKENS | cat.COPULA_TOKENS
     if before and junk in scaffold:
         return  # «no», «que», «sea»… are the scaffold, legitimately read
+    if not before and (junk,) in cat.DEICTICS and reading in (cat.OPEN, cat.LIVE):
+        return  # «abiertos hoy»: the deictic adds nothing (C3)
     verdict = run(f"procesos {needle}", needle, reading.operator, POS, (P, C))
     assert verdict.decision is not RESOLVED, needle
 

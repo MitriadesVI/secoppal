@@ -79,3 +79,9 @@ def test_detect_family_scrubs_adjudicados_as_the_exact_state():
 def test_the_adjudicado_alias_is_derived_from_the_lexicon_not_hardcoded():
     """If the lexicon ever re-points «adjudicado», the resolver follows it (single source)."""
     assert ef.process_state_literal("adjudicados") == ESTADO_PROCEDIMIENTO_SYNONYMS["adjudicado"]
+
+
+def test_the_literal_lookup_folds_accents_too_for_direct_callers():
+    assert ef.process_state_literal("evaluación") == "Evaluación"
+    assert ef.process_state_literal("EVALUACIÓN") == "Evaluación"
+    assert ef.process_state_literal("En Aprobación") == ef.process_state_literal("en aprobacion")

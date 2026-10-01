@@ -69,9 +69,9 @@ PUBLISHED = _reading("published", "is", names_event=True, processes=_process("pu
 
 # folded, masculine-singular phrases (tokens); the inflection is read by ``lemmas`` below
 LEXICON: dict[tuple[str, ...], StateReading] = {
-    ("abierto",): OPEN, ("convocado",): OPEN, ("en", "convocatoria"): OPEN,
-    ("reciben", "ofertas"): OPEN, ("todavia", "reciben", "ofertas"): OPEN,
-    ("vigente",): LIVE, ("activo",): LIVE, ("disponible",): LIVE,
+    ("abierto",): OPEN, ("convocado",): OPEN, ("convocatoria",): OPEN, ("en", "convocatoria"): OPEN,
+    ("en", "concurso"): OPEN, ("reciben", "ofertas"): OPEN, ("todavia", "reciben", "ofertas"): OPEN,
+    ("vigente",): LIVE, ("activo",): LIVE, ("disponible",): LIVE, ("en", "curso"): LIVE,  # C4: open family
     ("publicado",): PUBLISHED,
     ("cerrado",): _reading("closed", "is", processes=_process("cerrado"), contracts=_contract("cerrado")),
     ("adjudicado",): _reading("awarded", "is", processes=_process("adjudicado")),
@@ -93,9 +93,13 @@ LEXICON: dict[tuple[str, ...], StateReading] = {
 # Words that name a state SECOP has no literal for: clarified with a closed reason, never approximated.
 KNOWN_UNREPRESENTABLE = frozenset({
     ("liquidado",), ("firmado",), ("celebrado",), ("aprobado",), ("en", "aprobacion"), ("desierto",),
-    ("revocado",), ("modificado",), ("prorrogado",), ("finalizado",), ("en", "curso"),
-    ("enviado", "proveedor"),
+    ("revocado",), ("modificado",), ("prorrogado",), ("finalizado",), ("enviado", "proveedor"),
 })
+
+# M1.0 C3: «ahora», «hoy», «en este momento»… are not TIME; alone with processes they cite STATE family
+# open, and after an open word («abiertos hoy») they add nothing.
+DEICTICS = frozenset({("hoy",), ("ahora",), ("ahorita",), ("actualmente",), ("en", "este", "momento"),
+                      ("en", "la", "actualidad")})
 
 NEGATION_TOKENS = frozenset({"no", "ni"})
 COPULA_TOKENS = frozenset({"que", "sea", "sean", "este", "esten", "esta", "estan", "es", "son"})
@@ -122,12 +126,22 @@ def _phrase_forms(phrase: tuple[str, ...]) -> list[tuple[str, ...]]:
 
 
 def lookup(phrase: tuple[str, ...]) -> StateReading | str | None:
-    """The reading of exactly ``phrase``; ``"unrepresentable"`` for a known word without a literal."""
+    """The reading of exactly ``phrase``; ``"unrepresentable"`` for a known word without a literal.
+
+    An open word followed by a deictic («abiertos hoy») reads as the open word.
+    """
+    if phrase in DEICTICS:
+        return OPEN
     for key in _phrase_forms(phrase):
         if key in LEXICON:
             return LEXICON[key]
     if any(key in KNOWN_UNREPRESENTABLE for key in _phrase_forms(phrase)):
         return "unrepresentable"
+    for deictic in DEICTICS:
+        if len(phrase) > len(deictic) and phrase[-len(deictic):] == deictic:
+            head = lookup(phrase[:-len(deictic)])
+            if head is OPEN or head is LIVE:
+                return head
     return None
 
 
