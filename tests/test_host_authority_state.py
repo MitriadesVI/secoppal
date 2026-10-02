@@ -1,6 +1,7 @@
 """STATE host authority (M1-D-STATE/MOD): the C1.1 kit, the exhaustive catalog property and the A2 probes."""
 from __future__ import annotations
 
+import json
 from dataclasses import replace
 from itertools import product
 
@@ -20,7 +21,7 @@ from app.data.estados import (
 from tests.foundation_authority_kit import (
     REFERENCE_INSTANT, ConformanceCase, assert_conforms, case, evidence_from_text,
 )
-from tests.m1_state_mod_gold import conditions, evidence_and_context, outcome
+from tests.m1_state_mod_gold import GOLD_DIR, SYNTHETIC_FILES, conditions, evidence_and_context, outcome
 
 P, C = "p6dx-8zbt", "jbjy-vk9h"
 AUTH = StateAuthority()
@@ -493,33 +494,82 @@ def test_the_value_is_a_pure_function_of_the_cited_segments():
 
 
 # ---- 9. Gold slice (synthetic) with the oracle IR -----------------------------------------------------
-GOLD_STATE_GAPS = {
-    ("P127", "c2"): "CLARIFY:NEGATION_UNSUPPORTED:STATE:STATE_NEGATION_MULTI_COLUMN",
-    ("P134", "c1"): "CLARIFY:UNRESOLVED_HOST_DIMENSION:STATE:STATE_NOT_REPRESENTABLE",
-    ("X016", "c3"): "CLARIFY:UNRESOLVED_HOST_DIMENSION:STATE:STATE_NOT_REPRESENTABLE",
-    ("N018", "c1"): "CLARIFY:OPERATOR_EVIDENCE_MISMATCH:STATE:STATE_OPERATOR_MISMATCH",
-    ("N090", "c1"): "CLARIFY:OPERATOR_EVIDENCE_MISMATCH:STATE:STATE_OPERATOR_MISMATCH",
-    ("X047", "c1"): "CLARIFY:UNRESOLVED_HOST_DIMENSION:STATE:STATE_NOT_IN_DATASET",
+# Oracle: Gold m1-search-gold/1.9 (contract §19.1).  The classification is by DATASET OF EXISTENCE: where the
+# state's literal really lives, never the host family nor the universe the word seems to come from.
+# ``other:*`` hints are the Gold's spelling of the states the contract has no canonical class for.
+_P, _C = (P,), (C,)
+_BOTH = (P, C)
+_EXISTS_IN = {
+    "open": _P, "published": _P, "in_evaluation": _P, "other:published_or_open": _P, "awarded": _P,
+    "other:desierto": _P, "other:revocado": _P,          # PROCESS_ONLY_NO_AWARDEE (estado_families l.228)
+    "draft": _BOTH, "cancelled": _BOTH, "other:aprobado": _BOTH, "other:en_aprobacion": _BOTH,
+    "other:suspendido": _BOTH, "closed": _BOTH,
+    "terminated": _C, "in_execution": _C, "signed": _C, "other:cedido": _C, "other:prorrogado": _C,
+    "other:modificado": _C, "other:enviado_proveedor": _C,
+    "liquidated": _C,                                    # no literal of its own: «Cerrado» by synonym
 }
 _GOLD_CLASS = {"open": "open", "published": "published", "closed": "closed", "awarded": "awarded",
                "terminated": "terminated", "in_execution": "in_execution", "cancelled": "cancelled",
+               "in_evaluation": "in_evaluation", "draft": "draft", "liquidated": "liquidated",
+               "other:desierto": "desierto", "other:revocado": "revocado",   # no authority class yet: gaps below
                "other:published_or_open": "open"}
+_NO_LITERAL = "CLARIFY:UNRESOLVED_HOST_DIMENSION:STATE:STATE_NOT_REPRESENTABLE"
+_NOT_IN_DATASET = "CLARIFY:UNRESOLVED_HOST_DIMENSION:STATE:STATE_NOT_IN_DATASET"
+# What the STATE authority declines to resolve.  ACTOR x STATE (clarify / approximation / contract state) is
+# HOST policy (F / ProductViewPolicy, contract §19.2), not an authority concern, so it is NOT listed here.
+GOLD_STATE_GAPS = {
+    ("P127", "c2"): "CLARIFY:NEGATION_UNSUPPORTED:STATE:STATE_NEGATION_MULTI_COLUMN",
+    # CONTRACT_STATE with no literal of its own (§19.1 / §19.3.3): the host must resolve it by contract_universe
+    ("P134", "c1"): _NO_LITERAL,
+    ("X016", "c3"): _NO_LITERAL,
+    # PROCESS_ONLY_NO_AWARDEE (§19.1): a process outcome the authority has no canonical class for
+    ("P187", "c3"): _NO_LITERAL,
+    ("P188", "c3"): _NO_LITERAL,
+    ("N018", "c1"): "CLARIFY:OPERATOR_EVIDENCE_MISMATCH:STATE:STATE_OPERATOR_MISMATCH",
+    ("N090", "c1"): "CLARIFY:OPERATOR_EVIDENCE_MISMATCH:STATE:STATE_OPERATOR_MISMATCH",
+    # the state does not exist in the dataset of the universe (awarded / open are PROCESSES-only states)
+    ("X047", "c1"): _NOT_IN_DATASET,
+    ("P180", "c3"): _NOT_IN_DATASET,
+}
+
+
+def _raw_state_condition_count() -> int:
+    """The Gold's own count, read straight from the sealed JSONL (not through the loader under test)."""
+    total = 0
+    for name in SYNTHETIC_FILES:
+        for line in (GOLD_DIR / name).read_text(encoding="utf-8").splitlines():
+            for request in json.loads(line)["requests"]:
+                total += sum(1 for c in request["conditions"] if c["dimension"] == "STATE")
+    return total
+
+
+def test_the_oracle_is_the_sealed_v1_9_gold_and_the_slice_count_is_derived_from_it():
+    seal = json.loads((GOLD_DIR / "GOLD_SEAL.json").read_text(encoding="utf-8"))
+    assert seal["schema_version"] == "m1-search-gold/1.9"
+    rows = list(conditions("STATE"))
+    assert len(rows) == _raw_state_condition_count() > 0
+    assert {c["value_hint"] for *_, c in rows} <= set(_EXISTS_IN), "a hint the v1.9 classification does not cover"
+    assert {c["value_hint"] for *_, c in rows} <= set(_GOLD_CLASS)
 
 
 def test_gold_state_slice_matches_the_oracle_except_the_declared_gaps():
     rows = list(conditions("STATE"))
-    assert len(rows) == 40
     gaps, resolved = {}, 0
     for gold_id, text, universe, condition in rows:
         evidence, context = evidence_and_context(text, universe, condition, STATE)
         verdict = AUTH.resolve(evidence, context)
+        hint = condition["value_hint"]
+        exists = bool(set(_EXISTS_IN[hint]) & set(context.datasets))
         if verdict.decision is RESOLVED:
             resolved += 1
-            assert verdict.value.canonical_class == _GOLD_CLASS[condition["value_hint"]], (gold_id, condition)
+            assert exists, (gold_id, "resolved a state that exists in no dataset of the universe", condition)
+            assert verdict.value.canonical_class == _GOLD_CLASS[hint], (gold_id, condition)
             assert verdict.value.excluded == (condition["polarity"] == "NEGATIVE"), gold_id
-            if condition["value_hint"] == "other:published_or_open":
+            if hint == "other:published_or_open":
                 assert verdict.policies == (FUNNEL_POLICY,)
         else:
             gaps[(gold_id, condition["id"])] = outcome(verdict)
+        if not exists:  # v1.9 principle: a process state is never read as a contract state (and vice versa)
+            assert outcome(verdict) == _NOT_IN_DATASET, (gold_id, condition)
     assert gaps == GOLD_STATE_GAPS
     assert resolved == len(rows) - len(GOLD_STATE_GAPS)
