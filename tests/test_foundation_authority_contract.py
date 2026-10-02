@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import dataclasses
 import re
+import tokenize
 import unicodedata
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -40,12 +41,17 @@ FAST = settings(max_examples=150, deadline=None,
 NEW_RUNTIME_MODULES = ("foundation_authority_contract", "foundation_authority_values",
                        "foundation_evidence_window", "foundation_authority_registry",
                        "host_authorities")
-# C1.2 integrates the geographic level into the IR v2 (it was created for that: C1.1 §3.2); D-GEO uses it too.
+# C1.2 integrates the geographic level into the IR v2 (it was created for that: C1.1 §3.2).
 # Nothing else may import it, so the authority contract still has no runtime caller.
 GEO_LEVEL_IMPORTERS = frozenset({"interpretation_contract", "foundation_lift_v1", "foundation_acceptance_loader",
-                                 "foundation_authority_contract", "foundation_authority_values", "geo_authority"})
-# Lane code written against the contract (D-GEO, merged into the wave-1 base); the Foundation runtime has no caller.
-AUTHORITY_LANE_FILES = frozenset({"app/core/geo_authority.py"})
+                                 "foundation_authority_contract", "foundation_authority_values"})
+
+
+def _code(path: Path) -> str:
+    """The module's text without its comments: a comment that names a module is not an import."""
+    with path.open("rb") as handle:
+        tokens = tokenize.tokenize(handle.readline)
+        return " ".join(token.string for token in tokens if token.type != tokenize.COMMENT)
 
 
 # ---- the window: segments, gaps shown whole, at most K tokens outside, never the raw turn ------
@@ -331,17 +337,17 @@ def test_c1_1_modules_are_not_imported_by_any_runtime_module():
     offenders = []
     for path in (ROOT / "app").rglob("*.py"):
         rel = path.relative_to(ROOT).as_posix()
-        if path.stem in NEW_RUNTIME_MODULES or "/host_authorities/" in rel or rel in AUTHORITY_LANE_FILES:
+        if path.stem in NEW_RUNTIME_MODULES or "/host_authorities/" in rel:
             continue
-        if pattern.search(path.read_text()):
+        if pattern.search(_code(path)):
             offenders.append(rel)
     assert offenders == []
     assert (ROOT / "app/core/host_authorities/__init__.py").read_text() == ""
 
 
-def test_only_the_ir_v2_and_the_geo_lane_import_the_geographic_level():
+def test_only_the_ir_v2_and_the_authority_contract_import_the_geographic_level():
     importers = {path.stem for path in (ROOT / "app").rglob("*.py")
-                 if path.stem != "foundation_geo_level" and re.search(r"\bfoundation_geo_level\b", path.read_text())}
+                 if path.stem != "foundation_geo_level" and re.search(r"\bfoundation_geo_level\b", _code(path))}
     assert importers <= GEO_LEVEL_IMPORTERS and {"interpretation_contract", "foundation_lift_v1"} <= importers
 
 
