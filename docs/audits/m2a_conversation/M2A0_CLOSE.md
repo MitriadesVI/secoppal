@@ -154,6 +154,16 @@ Gold sintético: EXECUTE 117, CLARIFY 12, NEW_SEARCH 16, REASK 4, INFORM 1.
 | P3-3 el sello no fijaba el candidato importado | el sello liga sus bytes y comprueba `IMPORT_MANIFEST.sha256` (`gates.import_manifest_ok`) |
 | P3-4 nota contradictoria en SF166 | la nota anterior queda marcada `[SUSTITUIDA por U1]` |
 
+## 7f. ZEUS R4 sobre `6c843a47` (GO): cierre de P2-A y P3
+
+| Hallazgo | Reparación |
+|---|---|
+| P2-A la partición sólo se comparaba consigo misma (sello pegajoso) | `tests/test_m2a_gold_seal.py::test_partition_is_frozen` fija el digest de la partición de `3aac2a20` (`04197bbd…`), independiente del sello |
+| P3-A la matriz conservaba la regla de referentes retirada | fila corregida |
+| P3-B el gate de la señal extensional no tenía casos | plan M2A-5: se mide sólo la señal sobre los 11 casos G-FU-14 de la frontera (extensional) y los de re-consulta de `M2A_GOLD` (intensional); la frontera no se absorbe |
+| P3-C `IMPORT_MANIFEST.sha256` no estaba fijado | en `interpreting_rules` del sello |
+| P3-D el filtro de aislamiento no distinguía G10 de G11 | filtra por el mensaje exclusivo de G11 |
+
 ## 8. Deuda no bloqueante registrada
 
 - P3 de C1.2: exención `data/conversations/` (`docs/audits/m1_c1/C1_2_FRONTIER_PIN_DEBT.md`; ADR-103 Enm. 5 punto 5).

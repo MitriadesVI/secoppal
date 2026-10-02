@@ -7,6 +7,7 @@ private GOLD_CANDIDATE directory the REAL digests are recomputed too.
 
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import os
@@ -39,6 +40,19 @@ def test_seal_totals_are_the_adjudicated_ones():
     dev = {i for s in seal["partition"]["DEV"].values() for i in s}
     test = {i for s in seal["partition"]["TEST"].values() for i in s}
     assert not dev & test and dev | test == gold
+
+
+# DEV/TEST partition frozen at seal 3aac2a20 (r2 kept it: 0 moves). Independent of the seal file: the seal is sticky and
+# would otherwise only compare the partition with itself. New ids may be added later; then update this pin ONLY after
+# checking that no existing id changed side (``m2a_gold_seal.py`` keeps sides), and declare it in the commit.
+PARTITION_SHA256 = "04197bbd7f0962e7eef5668ced884df071373f7ee4aea7c66935bfec7c754f8e"
+
+
+def test_partition_is_frozen():
+    seal = json.loads(SEAL.read_text(encoding="utf-8"))
+    part = {side: seal["partition"][side] for side in ("DEV", "TEST")}
+    digest = hashlib.sha256(json.dumps(part, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+    assert digest == PARTITION_SHA256
 
 
 def test_seal_recomputes_byte_for_byte():

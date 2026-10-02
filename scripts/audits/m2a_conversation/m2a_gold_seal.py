@@ -52,6 +52,7 @@ RULE_FILES = (
     f"{ADV}/02_gold_followups/kit_v2_2/SCHEMA_v2_1.md",
     f"{ADV}/02_gold_followups/kit_v2_2/CONTRACT_ADDENDUM_FOLLOWUPS_v2.md",
     "docs/audits/m2a_conversation/M2A0_H7B_REVIEW.md",
+    "docs/audits/m2a_conversation/IMPORT_MANIFEST.sha256",
     CHECKER,
 )
 ADJUDICATIONS = {

@@ -116,5 +116,5 @@ verificará.
 | Igualdad explícita «exactamente X» (A8.1) | sin operador EQ en VALUE | A8.1: válida | dependencia de D-MONEY (par `>=`/`<=` del mismo turno); fail-closed hasta entonces | §15.2, §19 |
 | Primer turno con valor ambiguo | M1: `CLARIFY` con su código | — | admisible ≠ ejecutable; M2a no cambia el primer turno | §7.2, INV-M2A-06 |
 | Preestados del Gold | — | SF063 con `asks = 3`; SF168 ancla SMMLV plurianual | U2 normaliza SF063; D1 declara SF168 estado persistido inválido; G11 exige preestados alcanzables | `gold/ADJUDICATION_2026-10-02.md` |
-| Referente extensional/intensional | C0 l.300 (ambigüedad heredada) | G-FU-14 | señal estructural diferida a M2A-5; hasta entonces todo referente es intensional | §7.1 fila 5, §19 |
+| Referente extensional/intensional | C0 l.300 (ambigüedad heredada) | G-FU-14 | señal estructural diferida a M2A-5 (gate de M2A-5 y precondición de activar M2A-6); sin regla provisional por defecto | §7.1 fila 5, §19 |
 | Top-N > 100 | C1.2 (`main`) ya topa y anuncia | A3 | sin conflicto (el mismatch que T3 vio en el worktree c12 ya está corregido en `main`) | §2 |

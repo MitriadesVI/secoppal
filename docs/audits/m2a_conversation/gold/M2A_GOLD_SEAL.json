@@ -93,6 +93,7 @@
   "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/ADJUDICATED_OVERRIDES.md": "a04b14dfee239801ca58c6e12f9cb877e30eaad3cdcb11a9284595fa2b8fc643",
   "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/CONTRACT_ADDENDUM_FOLLOWUPS_v2.md": "6635a69f40f6d7586c3b7260f88f6bf845272d78bcfdd5b9cc439931ac8b966d",
   "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/SCHEMA_v2_1.md": "0e96ada47d513a92e0b79d8111623b34bc36a4261a9b7d2262959a0a5086e72e",
+  "docs/audits/m2a_conversation/IMPORT_MANIFEST.sha256": "a6d11cca79ece570561c2381351028789097e58445ea1acfd351f87238c44351",
   "docs/audits/m2a_conversation/M2A0_H7B_REVIEW.md": "7f9e9f3e836e83de77ef31265ddbd2e26913f98288d7a2a531637c41de7fd381",
   "docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md": "160edec8efee339021060713e2b306af74c0591e5addd7968fd5f0323a164fa0",
   "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md": "2a582145c7b44e4c241900158608f72a729e009f885ec19994980ea57cc0dc49",
@@ -622,7 +623,7 @@
   }
  },
  "seal_schema": "m2a-gold-seal/1",
- "seal_sha256": "886edad0dad5b4b367b44d072a902b621751b4eb06ee72ebbb07f44069c8bd02",
+ "seal_sha256": "bb2e981229ec8263a961994388ee4bae5b84a15ac523d0f0435de7a328cd2216",
  "sealed_on": "2026-10-01",
  "slices": {
   "FOLLOWUP_FRONTIER": {

@@ -231,7 +231,7 @@ def main() -> int:
     for name, (gid, fn) in record_mutants(rows).items():
         out = run_on(scratch, name, fn(rows))
         killed = [v for v in out["violations"] if v.startswith(gid)]
-        isolated = bool(killed) and all("SMMLV executed over" in v for v in killed)
+        isolated = bool(killed) and all("D10 catalog" in v for v in killed)  # G11's message only (not G10)
         ok &= isolated
         print("KILLED" if isolated else "SURVIVED", name, gid, "(G11 only)" if isolated else killed[:2])
     frontier = chk.load(SRC / "FOLLOWUP_FRONTIER_synthetic.jsonl")
