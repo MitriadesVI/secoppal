@@ -549,6 +549,10 @@ DATA_ROOT = "app/data"
 ALLOWED_DIVERGENCE = {
     "app.core.semantic_dimensions": "additive, whitelist (pins 4 and 5)",
     "app.core.foundation_guard": "source-boundary leaf D13 (pin 6)",
+    # M2A-2 (user decision 2026-10-02, M2A_WAVE1_PREP §7): the manifest is NOT regenerated. The ONLY delta is one
+    # element in the path tuple of ``ConversationStore.clear()`` (it also deletes ``<chat>.accepted.jsonl``, by
+    # literal, under the same lock). Pinned by AST against main's source in tests/test_conversation_store_clear_delta.py.
+    "app.core.conversation_store": "M2A-2: clear() deletes the accepted-record store (AST delta pin)",
 }
 # The exact bytes of the source-boundary leaf (its public functions are main's, only the guard class moved out).
 # Fixed at the split of ``foundation_guard`` (commit 4a8d2594, C1_2_FRONTIER_SPEC v3 pin 6(b)). Any edit of
@@ -579,6 +583,7 @@ NON_DATA_LITERALS = {
     ("app.core.conversation_store", "history.jsonl"): RUNTIME_STATE,
     ("app.core.conversation_store", ".jsonl"): RUNTIME_STATE,
     ("app.core.conversation_store", ".envelopes.jsonl"): RUNTIME_STATE,
+    ("app.core.conversation_store", ".accepted.jsonl"): RUNTIME_STATE,
     ("app.core.conversation_store", "data/conversations"): "runtime conversation store; its tracked files are incidental",
     ("app.core.workflow.continuity_staging", "pagination.json"): RUNTIME_STATE,
     ("app.core.workflow.continuity_staging", "history.jsonl"): RUNTIME_STATE,
