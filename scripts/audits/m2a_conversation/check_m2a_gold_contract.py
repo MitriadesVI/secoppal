@@ -12,7 +12,10 @@ What it proves, per label (A and B) of every Gold record:
   G6  every CLARIFY with alternatives is a list of generic candidate patches;
   G7  rows/page need a result set: no protocol turn executes over a prior that never reached the source;
   G8  partition: GOLD ∩ FRONTIER = ∅, GOLD scopes ⊆ IN*, deferred ledger gaps never reach GOLD;
-  G9  structural coherence of each disposition (host floor, window, pending answers, F25, two candidates).
+  G9  structural coherence of each disposition (host floor, window, pending answers, F25, two candidates);
+  G10 no hybrid over a pending, unit inherited from exactly one unit, SMMLV executed over one year at most.
+Not checkable from Gold fields (needs the producer's evidence): the continuation guard of §7.2/§8.3 itself — a
+NEW_SEARCH relabel of a pending answer that keeps its conditions is representable; M2A-8 gates it.
 It proves the Gold is REPRESENTABLE by the contract; it does not DERIVE each disposition from §7.2/§8.3, which needs
 the producer's structural evidence (continuation, frame) and is a gate of M2A-8.
 
@@ -388,17 +391,17 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
 
     # G5b A9.1 structural: with an executed SEARCH anchor, NEW_SEARCH only if the turn brings a new TOPIC/ACTOR
     if pir is not None and prior["state"] in ("EXECUTED", "EXECUTED_EMPTY", "NOT_EXECUTED") and prior.get("owner") == "FOUNDATION_SEARCH":
-        anchor_pos = {(c["dimension"], c["value_hint"]) for c in pir["conditions"] if c["polarity"] == "POSITIVE"}
+        anchor_pos = {(c["dimension"], c["polarity"], c["value_hint"]) for c in pir["conditions"]}
         if tk == "NEW_SEARCH":
-            brings = {(c["dimension"], c["value_hint"]) for c in (res or {"conditions": []})["conditions"]
-                      if c["dimension"] in ("TOPIC", "ACTOR") and c["polarity"] == "POSITIVE"}
+            brings = {(c["dimension"], c["polarity"], c["value_hint"]) for c in (res or {"conditions": []})["conditions"]
+                      if c["dimension"] in ("TOPIC", "ACTOR")}
             if not (brings - anchor_pos):
                 r.bad(gid, lab, "NEW_SEARCH over an anchor without a new TOPIC/ACTOR (A9.1 says DELTA)")
             else:
                 r.note("A9_new_search_with_new_topic_or_actor", gid)
         elif tk == "DELTA":
-            new_content = [o for o in ops if o["op"] == "SET" and o["slot"] in ("TOPIC", "ACTOR") and o["polarity"] == "POSITIVE"
-                           and (o["slot"], o["value_hint"]) not in anchor_pos]
+            new_content = [o for o in ops if o["op"] == "SET" and o["slot"] in ("TOPIC", "ACTOR")
+                           and (o["slot"], o["polarity"], o["value_hint"]) not in anchor_pos]
             if not new_content:
                 r.note("A9.1_delta_conditions_or_modifiers_only", gid)
             elif any(o["op"] == "KEEP" or o["refers_to_result_set"] for o in ops):
@@ -438,6 +441,20 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
             r.bad(gid, lab, "CLEAR_ON_EMPTY_SLOT is not a lone CLEAR of an absent slot")
     if reason in ("BUYER_OR_PLACE_AFTER_ACTOR", "TERRITORY_VS_CARRIED_BUYER") and len(L.get("alternatives") or []) != 2:
         r.bad(gid, lab, f"{reason} without two candidate patches")
+
+    # G10 pending, inheritance and SMMLV invariants (INV-M2A-08/-23, F5/A1, A2)
+    if prior["state"] == "PENDING" and tk == "DELTA" and disp == "EXECUTE" and not ctrl:
+        r.bad(gid, lab, "delta executed over a pending without CANCEL_PENDING (hybrid)")
+    if pir is not None and any(o["inherited"].get("unit_source") == "PREVIOUS_ACCEPTED_VALUE" for o in ops):
+        units = {c["unit"] for c in pir["conditions"] if c["dimension"] == "VALUE"}
+        if len(units) != 1:
+            r.bad(gid, lab, f"unit inherited from {len(units)} active units (F5/A1 needs exactly one)")
+    if res is not None and disp in ("EXECUTE", "NEW_SEARCH") and any(c.get("unit") == "SMMLV" for c in res["conditions"]):
+        years = {y for c in res["conditions"] if c["dimension"] == "TIME" and c["polarity"] == "POSITIVE"
+                 for y in re.findall(r"(?<!\d)(?:19|20)\d\d(?!\d)", c["value_hint"] or "")}
+        if len(years) > 1:
+            r.bad(gid, lab, "SMMLV executed over several years (A2: SMMLV_YEAR_AMBIGUOUS)")
+        r.note("smmlv_executed_single_year", gid)
 
     # G7 result-set referent
     if L["m2a_scope"] == "IN_PROTOCOL" and prior["state"] in ("NOT_EXECUTED",) and disp == "EXECUTE" and L["input_kind"] != "EVENT":

@@ -112,4 +112,6 @@ verificará.
 | Regla de recibo del relativo | §4.3 no la lista | A5 exige aritmética de periodo | se añade `time.relative_to_previous` (aditiva, sin tipo nuevo) | Enm. 5 punto 3 |
 | Nombre de la op de universo | D7: «REPLACE de universo» | F1/Gold: `SET_UNIVERSE` | `REPLACE_UNIVERSE`, misma semántica | §2, §5.2 |
 | `CANCEL_PENDING` con búsqueda nueva | — | O12/O13 abierto (A: `[]`, B: `CANCEL_PENDING`) | explícito siempre (`control`), sin re-etiquetar | §17.2, Anexo B |
+| Igualdad explícita «exactamente X» (A8.1) | sin operador EQ en VALUE | A8.1: válida | dependencia de D-MONEY (par `>=`/`<=` del mismo turno); fail-closed hasta entonces | §15.2, §19 |
+| Primer turno con valor ambiguo | M1: `CLARIFY` con su código | — | admisible ≠ ejecutable; M2a no cambia el primer turno | §7.2, INV-M2A-06 |
 | Top-N > 100 | C1.2 (`main`) ya topa y anuncia | A3 | sin conflicto (el mismatch que T3 vio en el worktree c12 ya está corregido en `main`) | §2 |

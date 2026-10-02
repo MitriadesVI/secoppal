@@ -67,7 +67,7 @@
   "representability": {
    "checker": "scripts/audits/m2a_conversation/check_m2a_gold_contract.py",
    "report": "docs/audits/m2a_conversation/gold/REPRESENTABILITY_REPORT.json",
-   "report_sha256": "5b15afdb82e8a843fbd0d4630dd616a421df78e775fadd187b109ebe5559aaa4",
+   "report_sha256": "ff1a5c0618d73c3f874cf3cb9cab651b3b49b083d85590f434c37ec0fcb9f2d5",
    "violations": 0
   }
  },
@@ -80,8 +80,8 @@
   "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/CONTRACT_ADDENDUM_FOLLOWUPS_v2.md": "6635a69f40f6d7586c3b7260f88f6bf845272d78bcfdd5b9cc439931ac8b966d",
   "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/SCHEMA_v2_1.md": "0e96ada47d513a92e0b79d8111623b34bc36a4261a9b7d2262959a0a5086e72e",
   "docs/audits/m2a_conversation/M2A0_H7B_REVIEW.md": "7f9e9f3e836e83de77ef31265ddbd2e26913f98288d7a2a531637c41de7fd381",
-  "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md": "17c3c184e08fe780cd54360998f0f9b2f6c92e9c1a5715c2f9ab14ae6d2e430a",
-  "scripts/audits/m2a_conversation/check_m2a_gold_contract.py": "8b964f1a7ee377462e50a1b83a344755b4c5e2d14c368eeeba4f380b1243d936"
+  "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md": "c0c029f981bb9045ef30ea4557ca1b1628a448b100e509dacc1ff63603a3cac4",
+  "scripts/audits/m2a_conversation/check_m2a_gold_contract.py": "9c9b17263d7043a5a400f23f17367725bfbe70b8323efbb29276305aa6d8f4ce"
  },
  "partition": {
   "DEV": {
@@ -595,7 +595,7 @@
   }
  },
  "seal_schema": "m2a-gold-seal/1",
- "seal_sha256": "eb65ec8dbc9ca94166d526ac7eb03eb520ef02b52b47ca3b6acf9408f95aa4f5",
+ "seal_sha256": "c603abc49adc2261c8f03f5e66aa353ac2cabf9420fbc1c972308803cd38cb87",
  "sealed_on": "2026-10-01",
  "slices": {
   "FOLLOWUP_FRONTIER": {

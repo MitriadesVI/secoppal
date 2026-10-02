@@ -346,7 +346,7 @@ Códigos de rechazo (`DeltaRefusal`, cerrados): `DELTA_SLOT_CONFLICT`, `TARGET_N
 
 | # | `TurnScope` | Cuándo | Resolución |
 |---|---|---|---|
-| 1 | `OUT_NO_ANCHOR` | no hay ancla legible ni pendiente, y el turno no es una SEARCH admisible por sí sola | `CLARIFY NO_ANCHOR` (F28) o `ANCHOR_UNREADABLE` |
+| 1 | `OUT_NO_ANCHOR` | no hay ancla legible ni pendiente, y P no forma por sí sola una SEARCH (ver «Admisible sola», §7.2) | `CLARIFY NO_ANCHOR` (F28) o `ANCHOR_UNREADABLE` |
 | 2 | `OUT_ANCHOR_NOT_SEARCH` | el último turno es de un dueño legacy | `HANDOFF_LEGACY` (fuera de M2a) |
 | 3 | `IN_PROTOCOL` | evento, o paginación sobre un resultado Foundation | `PROTOCOL_PAGE` / `PROTOCOL_EVENT` / `PENDING_ANSWER` por evento |
 | 4 | `OUT_OPERATION_CHANGE` | la propuesta trae un job cuya operación no es SEARCH ni FOLLOWUP_DELTA | `INFORM OPERATION_CHANGE:<op>` |
@@ -363,14 +363,17 @@ Definiciones, todas sobre la **forma** de la interpretación, nunca sobre palabr
 
 - **P** = la propuesta del turno actual: sólo sus propios spans con dueño (los valores arrastrados no están en la
   propuesta; viven en el almacén). P es, por construcción, la lectura **sin historial** del turno.
-- **Admisible sola(P)** = la admisión del host acepta P como SEARCH READY **sin base** (universo explícito, o
-  `unspecified` + Product View).
+- **Admisible sola(P)** = P, **sin base**, forma una SEARCH del contrato M1 (A9): un job SEARCH con petición válida
+  (universo explícito, o `unspecified` + Product View) y al menos una condición propia. **No exige READY**: la admisión
+  puede quedar en `READY` (se ejecuta) o en `NEEDS_CLARIFICATION` por el valor de una dimensión (se pregunta, como en
+  M1). Admisible sola ≠ ejecutable.
 - **Continuación(P)** = P trae evidencia estructural de dependencia: job `FOLLOWUP_DELTA`, `referent_evidence`
   (incluye «los que…», «esos»), directiva `KEEP` o `CLEAR`, o condición que depende de un valor previo
   (`depends_on_prior_value`). Es evidencia que el productor emite como span con dueño; **el host no la detecta con
   léxico**.
-- **Nuevo(P, A)** = P trae un TOPIC positivo cuyo valor canónico no está entre los TOPIC positivos del ancla A, o un
-  ACTOR positivo cuya identidad no está en A, o un job de operación nueva (que el paso 4 de §7.1 ya envió a `INFORM`).
+- **Nuevo(P, A)** = P trae una condición TOPIC o ACTOR (de cualquier polaridad) cuyo par (polaridad, valor canónico)
+  no está en el ancla A, o un job de operación nueva (que el paso 4 de §7.1 ya envió a `INFORM`). Es la lista de A9.1
+  leída sin filtro de polaridad.
 - **Marco(P)** = P trae evidencia de universo con dueño, o evidencia de operación del job (verbo de petición citado),
   o **dos o más** condiciones propias.
 
@@ -381,14 +384,16 @@ después si un `DELTA` se confirma):
 |---|---|---|---|
 | a | Continuación(P) | `DELTA` | A9 («gana la marca») |
 | b | Nuevo(P, A) = ∅ — P sólo aporta condiciones o modificadores (TIME, VALUE, GEOGRAPHY, BUYER, STATE, MODALITY, CONTRACT_TYPE_OR_NATURE, ORDER, CARDINALITY, universo) | `DELTA`, **aunque Admisible sola(P)** | **A9.1** |
-| c | Nuevo(P, A) ≠ ∅ **y** Marco(P) **y** Admisible sola(P) | `NEW_SEARCH` + eco `CONTEXT_RESET` | A9 |
+| c | Nuevo(P, A) ≠ ∅ **y** Marco(P) **y** Admisible sola(P) | `NEW_SEARCH` + eco `CONTEXT_RESET`; si la admisión de P queda en `NEEDS_CLARIFICATION`, búsqueda nueva **que pregunta**: deja una `PendingClarification` con `frame` = lo resuelto de P y `base_trace_id = None`, y el ancla anterior se conserva hasta que la pendiente se resuelva o se cancele (§10.2) | A9 |
 | d | Nuevo(P, A) ≠ ∅ sin Marco(P) (una sola condición de contenido) | `DELTA` (el TOPIC sustituye, F3) | F22, A4 |
 
 Con una **pendiente** vigente rige §8 (A7): A9.1 no se aplica al marco pendiente; una P **sin Continuación(P)**,
-con Marco(P) y admisible sola, cancela la pendiente y es búsqueda nueva (`control = CANCEL_PENDING`). Con
+con Marco(P) y admisible sola, que no sea una respuesta compatible (§8.3 fila 3), cancela la pendiente y es búsqueda
+nueva (`control = CANCEL_PENDING`); si esa búsqueda nueva también pregunta, su pendiente sustituye a la cancelada. Con
 Continuación(P) nunca es búsqueda nueva: «gana la marca» (A9) también ante una pendiente.
 
-Sin ancla ni pendiente: P admisible sola ⇒ primer turno (SEARCH de M1); si no ⇒ `CLARIFY NO_ANCHOR`.
+Sin ancla ni pendiente: P admisible sola ⇒ primer turno, con la disposición que M1 le dé (`EXECUTE`, o `CLARIFY` con
+su código y su pendiente); si P no forma una SEARCH ⇒ `CLARIFY NO_ANCHOR`. M2a no cambia el primer turno (INV-M2A-06).
 
 Suelo del host (ADR-103 D7, se mantiene): con ancla o pendiente vigentes, una P sin ninguna condición propia nunca es
 búsqueda nueva. Toda búsqueda nueva con ancla vigente lleva el eco `CONTEXT_RESET` con la acción «aplicar a la búsqueda
@@ -440,7 +445,7 @@ LLM ni releer texto. Un turno que pregunta no consume el ancla (§10.2).
 |---|---|---|
 | 1 | Evento de opción (`pending_id`, `candidate_id`) | `PENDING_ANSWER`: `compose(frame, candidate.patch)`; sin LLM |
 | 2 | P trae directiva `CANCEL_PENDING` (rechazo citado, F23) | `control = CANCEL_PENDING`; el resto de P se resuelve como `NEW_SEARCH` si ¬Continuación(P) ∧ Marco(P) ∧ Admisible sola(P), si no como delta **sobre `frame`** (A7) |
-| 3 | ¬Continuación(P) ∧ Marco(P) ∧ Admisible sola(P) | `NEW_SEARCH`, `control = CANCEL_PENDING` (A7/A9; la marca de continuación gana, así que una respuesta con anáfora o conector nunca llega aquí) |
+| 3 | ¬Continuación(P) ∧ Marco(P) ∧ Admisible sola(P), **salvo** que todas las condiciones de P caigan en `answer_slots` (respuesta compatible, A7: pasa a la fila 4) | `NEW_SEARCH`, `control = CANCEL_PENDING` (A7/A9; la marca de continuación gana, así que una respuesta con anáfora o conector nunca llega aquí); si la nueva búsqueda pregunta, deja su propia pendiente |
 | 4 | Todas las condiciones de P caen en `answer_slots` y su valor selecciona **exactamente un** candidato (comparado por valor codificado), o no hay candidatos | `PENDING_ANSWER`: `compose(frame, patch)` |
 | 5 | P responde sobre `answer_slots` **y además** edita otra ranura (F25) | `REASK ANSWER_EDITS_OTHER_SLOT`, nombrando la salida; 0 llamadas |
 | 6 | P declara no elegir (condición `UNSUPPORTED` con etiqueta cerrada `no_selection`, F24) | `REASK OPTION_NOT_CHOSEN`; el producto no elige |
@@ -607,8 +612,10 @@ y se anuncia `VALUE_RANGE_REPLACED`.
 
 **Igualdad pedida explícitamente.** Si las dos cotas vienen del **mismo turno** (las dos operaciones están en el mismo
 parche o en la misma aceptación de primer turno), el intervalo es lo que el usuario pidió: un punto único inclusivo se
-ejecuta tal cual («exactamente 500 millones», «entre 500 y 500»). El criterio es el **origen** de las cotas, no una
-lista de palabras.
+ejecuta tal cual («entre 500 y 500»). El criterio es el **origen** de las cotas, no una lista de palabras. En `main`
+ningún operador VALUE admite igualdad (`money_comparators.py`: EQ sin operador; `Comparator` = `>`, `>=`, `<`, `<=`):
+leer «exactamente X» como el par `>= X` + `<= X` del mismo turno es trabajo de la autoridad VALUE (D-MONEY, E-VALUE;
+dependencia de §19, sin caso en el Gold); mientras no exista, esa forma cae en `CLARIFY` de la autoridad (fail-closed).
 
 Un intervalo vacío con las dos cotas del mismo turno («entre 500 y 100») no es un conflicto de follow-up: su lectura es
 de la autoridad VALUE (contrato M1 / E-VALUE, G-FU-18) y M2a no la altera ni la adjudica.
@@ -716,9 +723,9 @@ tabla (fail-closed, sin legacy y sin fuente salvo donde se dice).
 |---|---|---|---|---|---|
 | G-FU-04 | filas/página tras fallo de fuente | 4 | `INFORM`, 0 llamadas; el delta semántico sí se ejecuta | protocolo M2a (M2A-6) | código de razón propio al implementar paginación |
 | G-FU-05 | paginar ancla dual; página frente a top-N | 2 | `CLARIFY` | protocolo / M2b | regla y código de razón |
-| G-FU-06 | conversión SMMLV: eco, procedencia, años; **montos no comparables (millones frente a SMMLV)** | 3 | `CLARIFY` sin año único o con cotas no comparables (§15.2); M2a conserva unidad, año, cantidad fuente y COP | E-VALUE | catálogo por vigencia + Gold E-VALUE |
+| G-FU-06 | conversión SMMLV: eco, procedencia, años; **montos no comparables (millones frente a SMMLV)** | 3 | `CLARIFY` sin año único o con cotas no comparables (§15.2, fail-closed: más estricto que la mejor lectura `EXECUTE` que los etiquetadores dieron a SF170 marcándola AMBIGUOUS); M2a conserva unidad, año, cantidad fuente y COP | E-VALUE | catálogo por vigencia + Gold E-VALUE |
 | G-FU-07 | territorio contenido/contenedor frente a comprador | 4 | `CLARIFY` | E-GEO / E-BUYER | Gold de composición de autoridades |
-| G-FU-08 | relativo temporal sin referente único | 6 | `CLARIFY` | E-TIME | aritmética de periodo + Gold E-TIME |
+| G-FU-08 | referente temporal relativo (casos ambiguos o en disputa) | 6 | resolver con referente único (§16.3); si no hay referente único o es una ventana relativa, `CLARIFY` | E-TIME | aritmética de periodo + Gold E-TIME |
 | G-FU-09 | negación sobre conjuntos | 1 | `CLARIFY` (fail-closed) | M2b | álgebra de conjuntos por ranura |
 | G-FU-11 | follow-up tras PROFILE/COUNT/RANK | 17 | `HANDOFF_LEGACY` | M3 | misma Conversation IR para todas las capacidades |
 | G-FU-12 | contexto vencido con pendiente | 2 | `CLARIFY CONTEXT_EXPIRED_CONFIRM` (gana F11) | M2b | precedencia F11/F29 |
@@ -728,7 +735,7 @@ tabla (fail-closed, sin legacy y sin fuente salvo donde se dice).
 | G-FU-16 | otra operación sobre ancla SEARCH | 4 | `INFORM` | M3 | manifiestos de capacidad sobre la efectiva |
 | G-FU-17 | fragmento sin ancla o ancla ilegible | 2 | `CLARIFY` (pedir la búsqueda completa) | protocolo M2a | regresión fail-closed |
 | G-FU-18 | formas de superficie VALUE (comparador desordenado/negado, cota sin comparador en rango) | 5 | mejor lectura de la autoridad, marcada | contrato M1 / E-VALUE | enmienda del contrato Gold M1 |
-| G-FU-19 | vista y universo | 4 | conservar el universo vigente y anunciar | ola F | tabla PV adjudicada para follow-ups |
+| G-FU-19 | vista y universo | 4 | recalcular la vista sólo si era derivada (F9) y anunciar; ante un sustantivo coloquial que podría pedir otra vista (SF132), conservar el universo vigente y anunciarlo | ola F | tabla PV adjudicada para follow-ups |
 
 Además, sin casos: G-FU-10 (`observed_executor = LEGACY_SEARCH`, esquema de observación), G-FU-20 (deshacer, sin
 decidir), G-FU-21 (desempate de previos en replay, método del Gold). G-FU-01/01b/02/02b/03 están **cerrados** por A8,
@@ -745,6 +752,7 @@ contrato (un gate de M2a no puede pasar sin resolverlo), se registra `BLOCKER` y
 | 3 (A5: referente temporal único) | entrada separada de TIME con `time.relative_to_previous` | D-TIME (E-TIME) |
 | 5 (SMMLV en follow-ups) | conversión por vigencia de D10 (`unit.smmlv`, `year.*`) | D-MONEY (E-VALUE) |
 | 8 (formas «entre X y Y», «mayores de», «pasen de») | lectura de la autoridad VALUE del primer turno | D-MONEY (E-VALUE) |
+| 0 (igualdad «exactamente X», §15.2) | lectura como par `>=`/`<=` del mismo turno | D-MONEY (E-VALUE) |
 | herencia de unidad/año (F5–F7) | `unit.inherited`, `year.inherited` por la entrada separada | D-MONEY, D-TIME |
 | F30 | `buyer.territory.<código>` / `buyer.national` | D-BUYER |
 | vista derivada | `HostViewDecision`, `decide_view` | ola F |

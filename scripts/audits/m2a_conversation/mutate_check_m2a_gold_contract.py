@@ -118,7 +118,31 @@ def mutants(rows: list[dict]) -> dict:
             if c["dimension"] == "VALUE":
                 c["unit"] = "SMMLV"
 
+    def hybrid_over_pending(L):
+        for o in L["ops"]:
+            if o["op"] == "ANSWER":
+                o["op"] = "SET"
+        L["turn_kind"] = "DELTA"
+        L["expected_disposition"] = "EXECUTE"
+        L["disposition_reason"] = None
+        L["resulting_ir"] = copy.deepcopy(L["prior"]["ir"])
+
+    def inherit_from_two_units(L):
+        for o in L["ops"]:
+            if o["slot"] and o["slot"].startswith("VALUE"):
+                o["inherited"]["unit_source"] = "PREVIOUS_ACCEPTED_VALUE"
+        L["expected_disposition"] = "EXECUTE"
+        L["disposition_reason"] = None
+
+    def smmlv_multiyear_executed(L):
+        L["expected_disposition"] = "EXECUTE"
+        L["disposition_reason"] = None
+        L["resulting_ir"] = copy.deepcopy(L["prior"]["ir"])
+
     return {
+        "V3b_SF051_hybrid_over_pending": ("SF051", hybrid_over_pending),
+        "V8_SF102_unit_from_two_units": ("SF102", inherit_from_two_units),
+        "V9_SF168_smmlv_several_years": ("SF168", smmlv_multiyear_executed),
         "Z6_A8.1_on_mixed_units": ("SF090", mixed_units_replaced),
         "Z1_SF051_to_new_search_empty": ("SF051", to_new_search_empty),
         "Z2_SF056_to_pending_unanswered": ("SF056", to_pending_unanswered),

@@ -89,7 +89,7 @@ comprobados: cambiar un registro sintético, un byte del contrato, una adjudicac
 
 | # | Gate | Resultado | Evidencia |
 |---|---|---|---|
-| 1 | 199 representables (no derivados: §20.1) | **PASS** — 0 violaciones (SYNTHETIC 150 + REAL 49, ambas etiquetas) | `gold/REPRESENTABILITY_REPORT.json`; verificador probado con 17 mutantes, 17 muertos |
+| 1 | 199 representables (no derivados: §20.1) | **PASS** — 0 violaciones (SYNTHETIC 150 + REAL 49, ambas etiquetas) | `gold/REPRESENTABILITY_REPORT.json`; verificador probado con 20 mutantes, 20 muertos |
 | 2 | Ninguno requiere `parsed_params` | **PASS** | G2 del verificador; §3.7 |
 | 3 | Cada comportamiento tiene regla | **PASS** | `M2A_TRACEABILITY_MATRIX.md` (49 filas) |
 | 4 | Ningún FRONTIER absorbido | **PASS** — GOLD ∩ FRONTIER = ∅; ningún ejemplo de hueco diferido en GOLD | G8 |
@@ -111,8 +111,19 @@ suite global no se corrió: entrega documental).
 | P1-2 §15.2 comparaba millones frente a SMMLV, que A8 dejó sin adjudicar (G-FU-06) | FONDO, B | §15.2 comparabilidad: mixtos ⇒ `CLARIFY`, G-FU-06 íntegro; INV-M2A-18 y §6.7 ajustados |
 | P2-1 Enm. 5 daba al contrato autoridad general sobre D7 | FONDO, A | cláusula sustituida: divergencia nueva ⇒ otra enmienda |
 | P2-2 faltaba el lote OQ-5 | FORMA | §3b |
-| P2-3 el gate 1 prometía derivación | FORMA | gate 1 = representabilidad; G9 (coherencia estructural de la disposición) + 6 mutantes nuevos (los 4 que sobrevivían, F25 ejecutado, A8.1 sobre unidades mixtas): 17/17 muertos |
+| P2-3 el gate 1 prometía derivación | FORMA | gate 1 = representabilidad; G9 (coherencia estructural de la disposición) + 6 mutantes nuevos. Precisión de R2: el de SF051→`NEW_SEARCH` muere por el suelo del host (condiciones vacías), no por la guarda de continuación, que no es comprobable con los campos del Gold (gate de M2A-8) |
 | P3 R0094 citado como búsqueda nueva; línea 97/99; numeración de gates; «100 %» frente a rojo declarado; regla de cobertura del eco; cláusula de intervalo vacío del mismo turno | FORMA | corregidos (matriz N02/N03, §1, plan M2A-3, §11 derivación exacta, §15.2) |
+
+## 7c. Revisión ZEUS R1 (`39cbabee`): NO_GO → reparación R2
+
+| Hallazgo | Clase | Reparación |
+|---|---|---|
+| P1-1 «Admisible sola» exigía READY: el primer turno con valor ambiguo caía en `NO_ANCHOR` (contra A9, M1 e INV-M2A-06); la búsqueda nueva que pregunta era inalcanzable | FONDO, A | §7.2: admisible = forma una SEARCH del contrato M1 (READY o `NEEDS_CLARIFICATION`); fila (c) con búsqueda nueva que pregunta; §7.1 fila 1 y primer turno según M1 |
+| P2-1 el verificador no comprobaba la estructura de la pendiente | FORMA | G10 (híbrido sobre pendiente sin `CANCEL_PENDING`; unidad heredada de exactamente una; SMMLV ejecutado sobre un solo año) + 3 mutantes (SF051 híbrido, SF102 dos unidades, SF168 varios años): **20/20 muertos**, cada uno por su regla. Declarado como no comprobable con el Gold: la guarda de continuación (M2A-8) |
+| P2-2 «exactamente X» sin operador EQ en `main` | FORMA | §15.2 y §19: lectura como par `>=`/`<=` del mismo turno es dependencia de D-MONEY (E-VALUE); fail-closed mientras no exista |
+| P3-1 `Nuevo(P,A)` sólo positivos | FORMA | sin filtro de polaridad (A9.1); en el Gold sólo cambia SF001, que sigue en DELTA por la regla (d) |
+| P3-2 respuesta compatible de dos ranuras tratada como búsqueda nueva | FONDO, A | §8.3 fila 3: si todas las condiciones de P caen en `answer_slots`, es respuesta (A7) |
+| P3-3 descripciones de frontera G-FU-06/08/19 frente al índice y al ledger | FORMA | filas de §19 alineadas con el ledger; la provisional de G-FU-06 se declara más estricta que la mejor lectura de SF170 |
 
 ## 8. Deuda no bloqueante registrada
 

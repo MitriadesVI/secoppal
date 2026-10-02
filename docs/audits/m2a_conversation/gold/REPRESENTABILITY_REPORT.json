@@ -3,10 +3,10 @@
   "A5_unique_temporal_referent": 6,
   "A8.1_singleton_interval": 8,
   "A8_empty_interval": 12,
-  "A9.1_delta_conditions_or_modifiers_only": 320,
+  "A9.1_delta_conditions_or_modifiers_only": 318,
   "A9_new_search_with_new_topic_or_actor": 14,
   "A9_structural_continuation_KEEP_or_set_referent": 6,
-  "F22_lone_content_condition_delta": 8,
+  "F22_lone_content_condition_delta": 10,
   "alternative_reading_of_ambiguous_label": 3,
   "candidate_patch_slots:BUYER": 2,
   "candidate_patch_slots:GEOGRAPHY": 6,
@@ -43,6 +43,7 @@
   "scope:IN_PROTOCOL": 18,
   "semantic_ref_after_source_failure": 6,
   "shape:NEW_SEARCH_fresh_acceptance": 32,
+  "smmlv_executed_single_year": 10,
   "surface_form_read_by_VALUE_authority": 8,
   "value_replaced_by_explicit_clear": 4,
   "view_rederived": 4
@@ -115,7 +116,6 @@
    "R0531",
    "R0532",
    "R0556",
-   "SF001",
    "SF003",
    "SF004",
    "SF005",
@@ -246,6 +246,7 @@
   "F22_lone_content_condition_delta": [
    "R0286",
    "R0484",
+   "SF001",
    "SF002",
    "SF133"
   ],
@@ -612,6 +613,13 @@
    "SF184",
    "SF185",
    "SF190"
+  ],
+  "smmlv_executed_single_year": [
+   "R0301",
+   "R0304",
+   "SF165",
+   "SF166",
+   "SF167"
   ],
   "surface_form_read_by_VALUE_authority": [
    "SF087",
