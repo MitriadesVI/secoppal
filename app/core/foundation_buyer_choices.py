@@ -20,6 +20,7 @@ from dataclasses import dataclass
 
 from app.core.buyer_source_names import project_buyer_names
 from app.core.foundation_evidence import material_phrase
+from app.core.foundation_operations import Subject
 from app.core.interpretation_contract import Polarity
 from app.core.semantic_dimensions import SemanticDimension
 from app.core.soql_builder import SoQLBuilder
@@ -54,7 +55,7 @@ def typable(entity_resolver, name: str, datasets: tuple[str, ...] = ()) -> bool:
 
 
 def _datasets(proposal, condition) -> tuple[str, ...]:
-    by_subject = {"processes": SoQLBuilder.PROCESOS_DATASET, "contracts": SoQLBuilder.CONTRATOS_DATASET}
+    by_subject = {Subject.PROCESSES: SoQLBuilder.PROCESOS_DATASET, Subject.CONTRACTS: SoQLBuilder.CONTRATOS_DATASET}
     return tuple(sorted({by_subject[r.subject] for r in proposal.requests
                          if r.request_id in condition.request_ids and r.subject in by_subject}))
 

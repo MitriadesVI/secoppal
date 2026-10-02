@@ -208,7 +208,9 @@ def test_without_a_qualifier_the_year_is_plain_whatever_surrounds_it(words, glue
 # ── scope: only during_year consults it; the message tells the truth ──────────────────────────────
 
 def test_other_time_operators_remain_unresolved_as_before():
-    assert_asked(admit("contratos antes de 2025", operator="before"))
+    # IR v2 closes the operator table (C0 §5.1.3): «before» is no longer a TIME operator the contract admits
+    # (OPERATOR_OUTSIDE_DIMENSION, see test_foundation_ir_v2); the table's other operators stay unresolved here.
+    assert_asked(admit("contratos antes de 2025", operator="between_dates"))
 
 
 def test_the_user_is_told_it_is_a_whole_year_only_and_no_source_call_is_made(tmp_path, monkeypatch):

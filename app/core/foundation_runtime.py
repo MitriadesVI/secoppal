@@ -11,11 +11,12 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from app.core.foundation_admission import admit_proposal
+from app.core.foundation_execution_guard import ExecutionGuard, FoundationGuardError
+from app.core.foundation_guard import execution_guard
 from app.core.foundation_messages import user_message
 from app.core.foundation_presentation import export_fields, group_cards, response_text
 from app.core.foundation_route_owner import FOUNDATION_TURN_MARK
 from app.core.foundation_shadow_hook import record_legacy_shadow
-from app.core.foundation_guard import ExecutionGuard, FoundationGuardError, execution_guard
 from app.core.foundation_projection import ProjectionError, project_accepted
 from app.core.foundation_token_plan import select_members
 from app.core.foundation_universe_policy import apply_universe_policy

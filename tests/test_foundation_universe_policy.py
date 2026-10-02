@@ -12,6 +12,8 @@ from datetime import datetime
 import pytest
 
 from app.core.foundation_admission import state_value
+from app.core.foundation_lift_v1 import lift_level
+from app.core.foundation_operations import Subject
 from app.core.foundation_runtime import host_universe
 from app.core.foundation_universe_policy import (
     CALL_HEADS, OPPORTUNITY_HEADS, PARTICIPATION_VERBS, TENDER_HEADS, apply_universe_policy,
@@ -23,6 +25,7 @@ from app.core.interpretation_contract import (
 )
 from app.core.semantic_dimensions import SemanticDimension
 from app.utils.money import normalize_text
+from tests.foundation_ir import search_jobs
 
 
 def _span(raw, text, after=0):
@@ -36,7 +39,7 @@ def proposal(raw, universe, conditions=(), *, subject="processes", opportunity=F
     for index, (dimension, operator, quote) in enumerate(conditions):
         cid = f"c{index}"
         built.append(ProposedCondition(cid, ("r1",), SemanticDimension(dimension), operator, Polarity.POSITIVE,
-                                       quote, (_span(raw, quote),)))
+                                       quote, (_span(raw, quote),), level=lift_level(SemanticDimension(dimension))))
         atoms.append(cid)
     universe_span = _span(raw, universe)
     if opportunity:
@@ -46,11 +49,12 @@ def proposal(raw, universe, conditions=(), *, subject="processes", opportunity=F
     expression = (None if not atoms else ConditionExpression(LogicOperator.ATOM, atoms[0]) if len(atoms) == 1
                   else ConditionExpression(LogicOperator.AND, None,
                                            tuple(ConditionExpression(LogicOperator.ATOM, a) for a in atoms)))
-    request = ProposedRequest("r1", "s1", "SEARCH", subject, (RawSpan(0, len(raw), raw),),
+    request = ProposedRequest("r1", "s1", Subject(subject), (RawSpan(0, len(raw), raw),),
                               universe_claim=universe, universe_evidence=universe_span,
                               condition_expression=expression)
+    requests = requests or (request,)
     return InterpretationProposal(hashlib.sha256(raw.encode()).hexdigest(), "foundation-B", "4.2",
-                                  requests or (request,), tuple(built))
+                                  requests, tuple(built), jobs=search_jobs(requests))
 
 
 def decision(outcome):
@@ -112,12 +116,12 @@ def test_a_named_modality_or_public_tender_is_not_colloquial():
 def test_o6c_a_dual_scope_is_historical_in_both_requests():
     raw = "licitaciones y contratos de fumigación"
     span_l, span_c, span_t = _span(raw, "licitaciones"), _span(raw, "contratos"), _span(raw, "fumigación")
-    requests = (ProposedRequest("r1", "s1", "SEARCH", "processes", (RawSpan(0, len(raw), raw),),
+    requests = (ProposedRequest("r1", "s1", Subject.PROCESSES, (RawSpan(0, len(raw), raw),),
                                 universe_claim="licitaciones", universe_evidence=span_l,
                                 condition_expression=ConditionExpression(LogicOperator.AND, None, (
                                     ConditionExpression(LogicOperator.ATOM, "u"),
                                     ConditionExpression(LogicOperator.ATOM, "t1")))),
-                ProposedRequest("r2", "s1", "SEARCH", "contracts", (RawSpan(0, len(raw), raw),),
+                ProposedRequest("r2", "s1", Subject.CONTRACTS, (RawSpan(0, len(raw), raw),),
                                 universe_claim="contratos", universe_evidence=span_c,
                                 condition_expression=ConditionExpression(LogicOperator.ATOM, "t2")))
     conditions = (ProposedCondition("u", ("r1",), SemanticDimension.RETRIEVAL_INTENT, "is", Polarity.POSITIVE,
@@ -127,7 +131,8 @@ def test_o6c_a_dual_scope_is_historical_in_both_requests():
                   ProposedCondition("t2", ("r2",), SemanticDimension.TOPIC, "contains", Polarity.POSITIVE,
                                     "fumigación", (span_t,)))
     dual = InterpretationProposal(hashlib.sha256(raw.encode()).hexdigest(), "foundation-B", "4.2", requests,
-                                  conditions, (ProposedRelation(RelationKind.SHARES_SCOPE, ("r1", "r2")),))
+                                  conditions, (ProposedRelation(RelationKind.SHARES_SCOPE, ("r1", "r2")),),
+                                  jobs=search_jobs(requests))
     outcome = apply_universe_policy(dual)
     first, second = outcome.decisions
     assert (first.rules, first.effective_kind) == (("O6C",), "records")

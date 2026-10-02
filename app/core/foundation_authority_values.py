@@ -15,6 +15,8 @@ Every value whose projection is a membership or an interval carries ``excluded``
 encoded ``0``/``1``): the NEGATIVE the authority honoured (INV-C1.1-EXCL).  MONEY absorbs its
 negation in the comparator; ORDER and CARDINALITY admit none.
 
+CARDINALITY records the executed ``n`` and the requested figure; they differ only at the P8 cap.
+
 Free text never travels in a value except where the dimension *is* a name (topic phrase, display).
 """
 
@@ -30,7 +32,8 @@ from urllib.parse import quote, unquote
 from app.core.foundation_geo_level import GeoLevel
 from app.core.interpretation_contract import ContractError
 
-MAX_TOP_N = 100  # P8 (ADR-103): «los 500 más caros» exceeds it and is clarified, never clamped
+MAX_TOP_N = 100  # P8 (ADR-103 enm. 4): the EXECUTED n never exceeds it; a larger figure executes MAX_TOP_N and is announced (n_requested keeps the figure), never clarified
+MAX_REQUESTED_TOP_N = 10**18 - 1  # representation bound only (round-trip); the product policy on absurd figures lives in E-ORDER, not here
 STATE_CLASSES = ("open", "published", "closed", "awarded", "terminated", "in_execution",
                  "cancelled", "draft", "in_evaluation", "signed", "liquidated", "suspended", "ceded")
 
@@ -521,25 +524,38 @@ class CardinalityBasis(str, Enum):
 
 @dataclass(frozen=True, slots=True)
 class CardinalityValue(_Codec):
-    TAG = "cardinality@1"
+    """``n`` is what is executed (1..MAX_TOP_N); ``n_requested`` is the figure the user wrote."""
+
+    TAG = "cardinality@2"
     n: int
     basis: CardinalityBasis
+    n_requested: int
 
     def __post_init__(self) -> None:
+        # The order is part of the contract: each invalid value has exactly one code.
         _int(self.n, "CARDINALITY_N", 1, MAX_TOP_N)
         _enum(self.basis, CardinalityBasis, "CARDINALITY_BASIS")
-        if self.basis is CardinalityBasis.SINGULAR and self.n != 1:
+        _int(self.n_requested, "CARDINALITY_N_REQUESTED", 1, MAX_REQUESTED_TOP_N)
+        if self.basis is CardinalityBasis.SINGULAR and (self.n != 1 or self.n_requested != 1):
             raise ContractError("INVALID_CARDINALITY_SINGULAR")  # a singular is one, never «2»
+        if self.n != min(self.n_requested, MAX_TOP_N):
+            raise ContractError("INVALID_CARDINALITY_CAP")  # n is the figure, or the cap at P8
+
+    @property
+    def capped(self) -> bool:
+        """P8: the figure exceeded the cap, so what runs is smaller than what was asked."""
+        return self.n_requested > self.n
 
     def encode(self) -> tuple[str, ...]:
-        return _line(self.TAG, n=str(self.n), basis=self.basis.value)
+        return _line(self.TAG, n=str(self.n), basis=self.basis.value, n_requested=str(self.n_requested))
 
     @classmethod
     def _decode(cls, items):
-        raw = _fields(items, cls.TAG, ("n", "basis"))
-        if not raw["n"].isascii() or not raw["n"].isdigit():
-            raise ContractError("INVALID_VALUE_FIELDS")
-        return _canonical(cls(int(raw["n"]), CardinalityBasis(raw["basis"])), items)
+        raw = _fields(items, cls.TAG, ("n", "basis", "n_requested"))
+        for figure in (raw["n"], raw["n_requested"]):
+            if not figure.isascii() or not figure.isdigit():
+                raise ContractError("INVALID_VALUE_FIELDS")
+        return _canonical(cls(int(raw["n"]), CardinalityBasis(raw["basis"]), int(raw["n_requested"])), items)
 
 
 ExecutableValue = (TopicValue | BuyerValue | ActorValue | GeoValue | TimeValue | MoneyValue

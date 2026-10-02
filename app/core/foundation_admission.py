@@ -8,6 +8,7 @@ from app.core.contract_type_resolver import resolve_contract_types
 from app.core.contract_universe import POLICY_VERSION
 from app.core.entity_resolver import EntityResolver, department_mention_resolution
 from app.core.foundation_evidence import UNIVERSE_SPAN_OMITTED, material_phrase, topic_spans
+from app.core.foundation_operations import Operation, Subject
 from app.core.foundation_state_composition import composition_reason
 from app.core.foundation_time_coverage import uncited_time_qualifier
 from app.core.foundation_value_direction import operator_reason
@@ -53,20 +54,19 @@ def admit_proposal(proposal: InterpretationProposal, raw: str, *,
     if len(proposal.requests) > 1:
         shared = [r for r in proposal.relations if r.kind is RelationKind.SHARES_SCOPE]
         if (len(proposal.requests) != 2 or len(shared) != 1 or
-                any(r.operation != "SEARCH" for r in proposal.requests)):
+                any(proposal.operation_of(r.request_id) is not Operation.SEARCH for r in proposal.requests)):
             return _stop(proposal, AcceptanceStatus.UNSUPPORTED, "MULTI_REQUEST")
     if any(c.dimension is SemanticDimension.UNSUPPORTED for c in proposal.conditions):
         return _stop(proposal, AcceptanceStatus.UNSUPPORTED, "UNSUPPORTED_CONDITION")
     resolutions, policies = [], []
     datasets = {}
     for request in proposal.requests:
-        if request.operation != "SEARCH":
+        if proposal.operation_of(request.request_id) is not Operation.SEARCH:
             return _stop(proposal, AcceptanceStatus.UNSUPPORTED, "UNSUPPORTED_OPERATION")
-        if request.subject not in {"processes", "contracts"}:
+        if request.subject is Subject.UNSPECIFIED:  # the product-view policy that decides it is not integrated
             return _stop(proposal, AcceptanceStatus.UNSUPPORTED, "UNSUPPORTED_UNIVERSE")
-        if request.universe_evidence is None:
-            return _stop(proposal, AcceptanceStatus.INVALID_PROPOSAL, "UNGROUNDED_REQUEST_UNIVERSE")
-        dataset = (SoQLBuilder.PROCESOS_DATASET if request.subject == "processes"
+        # The contract guarantees a specified subject carries its universe evidence (UNGROUNDED_REQUEST_UNIVERSE).
+        dataset = (SoQLBuilder.PROCESOS_DATASET if request.subject is Subject.PROCESSES
                    else SoQLBuilder.CONTRATOS_DATASET)
         datasets[request.request_id] = dataset
         resolutions.append(HostResolution(request.request_id, ResolutionDecision.RESOLVED,

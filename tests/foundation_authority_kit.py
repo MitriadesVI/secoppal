@@ -56,7 +56,7 @@ from app.core.foundation_authority_contract import (
 from app.core.foundation_evidence_window import build_window
 from app.core.foundation_geo_level import GeoLevel
 from app.core.interpretation_contract import (
-    ContractError, Polarity, RawSpan, ResolutionDecision,
+    ContractError, Effect, Polarity, RawSpan, ResolutionDecision,
 )
 from app.core.semantic_dimensions import SemanticDimension
 
@@ -280,6 +280,17 @@ def _check_shape(authority, verdict, evidence: DimensionEvidence, ctx: Authority
         if (isinstance(verdict.value, _HAS_EXCLUDED)
                 and verdict.value.excluded != (evidence.polarity is Polarity.NEGATIVE)):
             _fail("INV-C1.1-EXCL", f"excluded={verdict.value.excluded} with {evidence.polarity.value}")
+        if type(verdict.value) is CardinalityValue:
+            # INV-C1.2-CAP (P8): the announcement is born of the typed value, never of the text. Computed
+            # here from the two figures, not from ``capped``: a mutated property must not blind the kit.
+            capped = verdict.value.n_requested > verdict.value.n
+            announced = (verdict.effect is Effect.NARROWING, "topn-cap@1" in verdict.policies,
+                         "topn.capped" in verdict.receipt.rules)
+            if (capped and not all(announced)) or (not capped and any(announced)):
+                # capped => NARROWING, the policy AND the rule; not capped => none of the three
+                _fail("INV-C1.2-CAP", f"n={verdict.value.n} n_requested={verdict.value.n_requested} "
+                                      f"effect={verdict.effect.value} policies={verdict.policies!r} "
+                                      f"rules={verdict.receipt.rules!r}")
         if type(verdict.value) is StateValue:
             stray = {name for name, _column, _values in verdict.value.literals} - ctx.datasets
             if stray:

@@ -1,7 +1,12 @@
-"""Foundation V3 interpretation records. Only the host may accept or project a proposal.
+"""Foundation interpretation records (IR v2). Only the host may accept or project a proposal.
 
 The proposal contains linguistic claims and raw evidence, never executable values.
 Each record is immutable and serializes through ``to_dict`` with standard JSON.
+
+IR v2 (spine v5, C0 §5.1): the operation the user asks for is a ``job`` (``jobs[]``, one per operation) and
+no longer a field of the request; a request's subject may be ``unspecified``; a GEOGRAPHY condition names its
+``level``; every operator belongs to a closed per-dimension table. The v4.2 wire is lifted into this shape by
+``foundation_lift_v1`` without losing anything (INV-C0-2).
 """
 
 from __future__ import annotations
@@ -12,10 +17,13 @@ import unicodedata
 from dataclasses import asdict, dataclass
 from enum import Enum
 
+from app.core.foundation_geo_level import GeoLevel
+from app.core.foundation_operations import Aspect, Operation, Subject, job_shape_error
+from app.core.foundation_operator_table import operator_allowed
 from app.core.semantic_dimensions import SemanticDimension
 
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 
 
@@ -160,11 +168,45 @@ class ConditionExpression:
 
 
 @dataclass(frozen=True, slots=True)
+class ProposedJob:
+    """One operation the user asks to receive, with the requests it transports (C0 §5.1.1)."""
+
+    job_id: str
+    operation: Operation
+    request_ids: tuple[str, ...] = ()
+    evidence: tuple[RawSpan, ...] = ()
+    aspect: Aspect | None = None
+    aspect_label: str | None = None
+    referent_evidence: RawSpan | None = None
+
+    def __post_init__(self) -> None:
+        _identifier(self.job_id, "JOB_ID")
+        if type(self.operation) is not Operation:
+            raise ContractError("INVALID_OPERATION")
+        if type(self.request_ids) is not tuple:
+            raise ContractError("INVALID_JOB_REQUEST_IDS")
+        for request_id in self.request_ids:
+            _identifier(request_id, "JOB_REQUEST_IDS")
+        if len(set(self.request_ids)) != len(self.request_ids):
+            raise ContractError("DUPLICATE_JOB_REQUEST_IDS")
+        _records(self.evidence, RawSpan, "JOB_EVIDENCE")
+        if self.aspect is not None and type(self.aspect) is not Aspect:
+            raise ContractError("INVALID_ASPECT")
+        if self.aspect_label is not None:
+            _identifier(self.aspect_label, "ASPECT_LABEL")
+        if self.referent_evidence is not None and type(self.referent_evidence) is not RawSpan:
+            raise ContractError("INVALID_REFERENT_EVIDENCE")
+        shape = job_shape_error(self.operation, self.aspect, self.aspect_label,
+                                request_count=len(self.request_ids), evidence_count=len(self.evidence))
+        if shape is not None:
+            raise ContractError(shape)
+
+
+@dataclass(frozen=True, slots=True)
 class ProposedRequest:
     request_id: str
     scope_id: str
-    operation: str
-    subject: str
+    subject: Subject
     evidence: tuple[RawSpan, ...]
     source_claim: str | None = None
     source_evidence: RawSpan | None = None
@@ -173,8 +215,10 @@ class ProposedRequest:
     condition_expression: ConditionExpression | None = None
 
     def __post_init__(self) -> None:
-        for name in ("request_id", "scope_id", "operation", "subject"):
+        for name in ("request_id", "scope_id"):
             _identifier(getattr(self, name), name.upper())
+        if type(self.subject) is not Subject:
+            raise ContractError("INVALID_SUBJECT")
         _records(self.evidence, RawSpan, "REQUEST_EVIDENCE")
         if not self.evidence:
             raise ContractError("MISSING_REQUEST_EVIDENCE")
@@ -190,6 +234,12 @@ class ProposedRequest:
                     raise ContractError(f"INVALID_{label}_EVIDENCE")
         if self.condition_expression is not None and type(self.condition_expression) is not ConditionExpression:
             raise ContractError("INVALID_CONDITION_EXPRESSION")
+        # The universe claim exists sí y sólo sí the user named a subject (C0 §5.1.2).
+        if self.subject is Subject.UNSPECIFIED:
+            if self.universe_claim is not None:
+                raise ContractError("UNSPECIFIED_WITH_UNIVERSE_EVIDENCE")
+        elif self.universe_claim is None:
+            raise ContractError("UNGROUNDED_REQUEST_UNIVERSE")
 
 
 @dataclass(frozen=True, slots=True)
@@ -203,6 +253,7 @@ class ProposedCondition:
     evidence: tuple[RawSpan, ...]
     unsupported_label: str | None = None
     role: ConditionRole = ConditionRole.FILTER
+    level: GeoLevel | None = None
 
     def __post_init__(self) -> None:
         _identifier(self.condition_id, "CONDITION_ID")
@@ -228,6 +279,15 @@ class ProposedCondition:
             _identifier(self.unsupported_label, "UNSUPPORTED_LABEL")
         elif self.unsupported_label is not None:
             raise ContractError("UNEXPECTED_UNSUPPORTED_LABEL")
+        if not operator_allowed(self.dimension, self.operator):
+            raise ContractError("OPERATOR_OUTSIDE_DIMENSION")
+        if self.dimension is SemanticDimension.GEOGRAPHY:
+            if self.level is None:
+                raise ContractError("GEOGRAPHY_LEVEL_REQUIRED")
+            if type(self.level) is not GeoLevel:
+                raise ContractError("INVALID_GEO_LEVEL")
+        elif self.level is not None:
+            raise ContractError("LEVEL_OUTSIDE_GEOGRAPHY")
 
 
 @dataclass(frozen=True, slots=True)
@@ -265,6 +325,7 @@ class InterpretationProposal:
     conditions: tuple[ProposedCondition, ...] = ()
     relations: tuple[ProposedRelation, ...] = ()
     omissions: tuple[ProposedOmission, ...] = ()
+    jobs: tuple[ProposedJob, ...] = ()
     schema_version: int = SCHEMA_VERSION
 
     def __post_init__(self) -> None:
@@ -277,7 +338,8 @@ class InterpretationProposal:
         for name, record_type in (("requests", ProposedRequest),
                                   ("conditions", ProposedCondition),
                                   ("relations", ProposedRelation),
-                                  ("omissions", ProposedOmission)):
+                                  ("omissions", ProposedOmission),
+                                  ("jobs", ProposedJob)):
             _records(getattr(self, name), record_type, name.upper())
         request_ids = {item.request_id for item in self.requests}
         if len(request_ids) != len(self.requests):
@@ -322,6 +384,59 @@ class InterpretationProposal:
         if any(item.request_id not in request_ids for item in self.omissions):
             raise ContractError("FOREIGN_OMISSION_REQUEST")
         self._validate_relations(request_ids)
+        self._validate_jobs(request_ids)
+        self._validate_order_and_cardinality()
+
+    def job_of(self, request_id: str) -> ProposedJob | None:
+        """The one job that transports this request; None when the proposal has no such request."""
+        return next((job for job in self.jobs if request_id in job.request_ids), None)
+
+    def operation_of(self, request_id: str) -> Operation | None:
+        job = self.job_of(request_id)
+        return job.operation if job is not None else None
+
+    @property
+    def is_multi(self) -> bool:
+        """MULTI is derived, never a wire value: more than one operation was asked."""
+        return len(self.jobs) > 1
+
+    def _validate_jobs(self, request_ids: set[str]) -> None:
+        if not self.jobs:
+            # Only the empty interpretation («no request») has no job; anything with a request needs its operation.
+            if self.requests:
+                raise ContractError("MISSING_JOBS")
+            return
+        if len({job.job_id for job in self.jobs}) != len(self.jobs):
+            raise ContractError("DUPLICATE_JOB_ID")
+        if len({job.operation for job in self.jobs}) != len(self.jobs):
+            raise ContractError("DUPLICATE_JOB_OPERATION")
+        carried: dict[str, int] = {}
+        for job in self.jobs:
+            if not set(job.request_ids) <= request_ids:
+                raise ContractError("FOREIGN_JOB_REQUEST")
+            for request_id in job.request_ids:
+                carried[request_id] = carried.get(request_id, 0) + 1
+        for request in self.requests:
+            if carried.get(request.request_id, 0) == 0:
+                raise ContractError("ORPHAN_REQUEST")
+            if carried[request.request_id] > 1:
+                raise ContractError("REQUEST_IN_TWO_JOBS")
+
+    def _validate_order_and_cardinality(self) -> None:
+        """ORDER and CARDINALITY: at most one per request; ORDER is a top-level AND atom; top_n needs an order."""
+        for request in self.requests:
+            mine = [c for c in self.conditions if request.request_id in c.request_ids]
+            orders = [c for c in mine if c.dimension is SemanticDimension.ORDER]
+            cardinalities = [c for c in mine if c.dimension is SemanticDimension.CARDINALITY]
+            if len(orders) > 1:
+                raise ContractError("MULTIPLE_ORDER")
+            if len(cardinalities) > 1:
+                raise ContractError("MULTIPLE_CARDINALITY")
+            expression = request.condition_expression
+            if orders and expression is not None and expression.has_nonconjunctive_atom(orders[0].condition_id):
+                raise ContractError("NONCONJUNCTIVE_ORDER")
+            if cardinalities and not orders and self.operation_of(request.request_id) is not Operation.RANK_SUPPLIERS:
+                raise ContractError("CARDINALITY_WITHOUT_ORDER")
 
     def _validate_relations(self, request_ids: set[str]) -> None:
         groups: dict[str, set[str]] = {}
@@ -370,6 +485,10 @@ class InterpretationProposal:
                 evidence is not None and not evidence.binds(raw)
                 for evidence in (request.source_evidence, request.universe_evidence)
             ):
+                raise ContractError("UNBOUND_RAW_SPAN")
+        for job in self.jobs:
+            if any(not span.binds(raw) for span in (*job.evidence, *(
+                    (job.referent_evidence,) if job.referent_evidence is not None else ()))):
                 raise ContractError("UNBOUND_RAW_SPAN")
 
     def to_dict(self) -> dict:

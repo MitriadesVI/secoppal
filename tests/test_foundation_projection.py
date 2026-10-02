@@ -7,6 +7,7 @@ import hashlib
 import pytest
 from hypothesis import given, strategies as st
 
+from app.core.foundation_operations import Operation, Subject
 from app.core.foundation_projection import ProjectionError, project_accepted
 from app.core.interpretation_contract import (
     AcceptanceStatus,
@@ -20,12 +21,14 @@ from app.core.interpretation_contract import (
     LogicOperator,
     Polarity,
     ProposedCondition,
+    ProposedJob,
     ProposedRequest,
     RawSpan,
     ResolutionDecision,
 )
 from app.core.semantic_dimensions import SemanticDimension
 from app.core.soql_builder import ClauseOrigin, SoQLBuilder, UnsafeGlobalQueryError
+from tests.foundation_ir import with_requests
 
 
 NOW = datetime.fromisoformat("2026-09-26T12:00:00-05:00")
@@ -40,11 +43,11 @@ def _acceptance(*, dataset="jbjy-vk9h", condition=None, resolved="aseo"):
     proposal = InterpretationProposal(
         hashlib.sha256(RAW.encode()).hexdigest(), "test", "1",
         (ProposedRequest(
-            "q1", "q1", "SEARCH", "contratos", (RawSpan(0, len(RAW), RAW),),
+            "q1", "q1", Subject.CONTRACTS, (RawSpan(0, len(RAW), RAW),),
             universe_claim="contratos", universe_evidence=RawSpan(6, 15, "contratos"),
             condition_expression=ConditionExpression(LogicOperator.ATOM, "q1.c1"),
         ),),
-        (condition,),
+        (condition,), jobs=(ProposedJob("job-search", Operation.SEARCH, ("q1",)),),
     )
     return InterpretationAcceptance(proposal, AcceptanceStatus.READY, (
         HostResolution("q1", ResolutionDecision.RESOLVED, "host-universe", (dataset,)),
@@ -148,7 +151,7 @@ def test_whole_unicode_token_is_a_declared_candidate_superset_plus_local_filter(
     accepted = _acceptance(dataset=dataset, condition=_token_condition(), resolved="obras")
     if dataset == "p6dx-8zbt":
         proposal = replace(accepted.proposal, requests=(replace(
-            accepted.proposal.requests[0], subject="procesos"),))
+            accepted.proposal.requests[0], subject=Subject.PROCESSES),))
         accepted = replace(accepted, proposal=proposal)
     outcome = project_accepted(accepted, reference_instant=NOW)
     assert outcome.status is AcceptanceStatus.READY
@@ -277,7 +280,7 @@ def test_condition_and_request_identifiers_do_not_select_a_special_projection():
         condition_expression=ConditionExpression(LogicOperator.ATOM, cid),
     )
     condition = replace(accepted.proposal.conditions[0], condition_id=cid, request_ids=(rid,))
-    proposal = replace(accepted.proposal, requests=(request,), conditions=(condition,))
+    proposal = with_requests(accepted.proposal, (request,), conditions=(condition,))
     resolutions = tuple(replace(item, target_id=rid if item.target_id == "q1" else cid)
                         for item in accepted.resolutions)
     renamed = project_accepted(InterpretationAcceptance(proposal, accepted.status, resolutions),
@@ -313,13 +316,13 @@ def test_admitted_linguistic_universe_is_not_reclassified_by_its_raw_quote():
     )
     proposal = InterpretationProposal(
         hashlib.sha256(raw.encode()).hexdigest(), "test", "1", (ProposedRequest(
-            "r", "r", "SEARCH", "processes", (RawSpan(0, len(raw), raw),),
+            "r", "r", Subject.PROCESSES, (RawSpan(0, len(raw), raw),),
             universe_claim=quote, universe_evidence=universe,
             condition_expression=ConditionExpression(LogicOperator.AND, children=(
                 ConditionExpression(LogicOperator.ATOM, "u"),
                 ConditionExpression(LogicOperator.ATOM, "t"),
             )),
-        ),), conditions,
+        ),), conditions, jobs=(ProposedJob("job-search", Operation.SEARCH, ("r",)),),
     )
     proposal.validate_raw(raw)
     accepted = InterpretationAcceptance(proposal, AcceptanceStatus.READY, (
