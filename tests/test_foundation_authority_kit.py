@@ -12,8 +12,8 @@ import pytest
 
 from app.config import get_settings
 from app.core.foundation_authority_contract import (
-    AUTHORITY_DIMENSION_NAMES, VALUE_ALIASES, AuthorityContext, AuthorityReceipt, AuthorityVerdict,
-    Comparator, GeoValue, ModalityValue, MoneyValue, StateValue, TimeValue, TopicValue,
+    AUTHORITY_DIMENSION_NAMES, MAX_TOP_N, VALUE_ALIASES, AuthorityContext, AuthorityReceipt, AuthorityVerdict,
+    CardinalityBasis, CardinalityValue, Comparator, GeoValue, ModalityValue, MoneyValue, StateValue, TimeValue, TopicValue,
 )
 from app.core.foundation_geo_level import GeoLevel
 from app.core.interpretation_contract import Effect, Polarity, ResolutionDecision
@@ -187,6 +187,28 @@ class ToyThisYear(Toy):
             return self._v(CLARIFY, reason="NEGATION_UNSUPPORTED:TIME")
         year = ctx.local_date().year
         return self._v(RESOLVED, value=TimeValue(date(year, 1, 1), date(year + 1, 1, 1), "year", False))
+
+
+class ToyTopN(Toy):
+    """CONFORMING (INV-C1.2-CAP, P8): a figure above the cap executes MAX_TOP_N and is ANNOUNCED."""
+
+    authority_id, version = "toy-topn", "1"
+    dimensions, operators = frozenset({SemanticDimension.CARDINALITY}), frozenset({"top_n"})
+
+    def resolve(self, evidence, ctx):
+        if (refused := self._scope(evidence)) is not None:
+            return refused
+        if evidence.polarity is Polarity.NEGATIVE:
+            return self._v(CLARIFY, reason="NEGATION_UNSUPPORTED:CARDINALITY")
+        quote = evidence.window.quote or ""
+        if not (quote.isdigit() and 0 < int(quote) < 10 ** 9):
+            return self._v(CLARIFY, reason="UNRESOLVED_HOST_DIMENSION:CARDINALITY")
+        figure = int(quote)
+        value = CardinalityValue(min(figure, MAX_TOP_N), CardinalityBasis.FIGURE, figure)
+        if figure > MAX_TOP_N:
+            return self._v(RESOLVED, value=value, effect=Effect.NARROWING, policies=("topn-cap@1",),
+                           receipt=AuthorityReceipt(("topn.capped",), 1))
+        return self._v(RESOLVED, value=value, receipt=AuthorityReceipt(("topn.figure",), 1))
 
 
 YEAR = dict(dimension=TIME, operator="during_year")
@@ -506,7 +528,77 @@ MOD_CASE = case("no contratacion directa", "contratacion directa", dimension=Sem
 MOD_POSITIVE_CASE = case("contratacion directa en Cali", "contratacion directa",
                          dimension=SemanticDimension.MODALITY, operator="is")
 
+TOPN = dict(dimension=SemanticDimension.CARDINALITY, operator="top_n")
+TOPN_CAPPED_CASE = case("los 500 contratos mas caros", "500", **TOPN)
+TOPN_UNCAPPED_CASE = case("los 10 contratos mas caros", "10", **TOPN)
+
+
+class CapsAndDeclares(ToyTopN):
+    """CONFORMING: resolves (100, FIGURE, 500) as NARROWING with the policy and the rule."""
+
+
+class CapsSilently(ToyTopN):
+    """Same value as ``CapsAndDeclares`` but announces nothing: the cap would be silent."""
+
+    def resolve(self, evidence, ctx):
+        verdict = super().resolve(evidence, ctx)
+        if verdict.value is None:
+            return verdict
+        return replace(verdict, effect=Effect.EQUIVALENT, policies=(), receipt=AuthorityReceipt())
+
+
+class DeclaresWithoutCap(ToyTopN):
+    """Announces a cap that did not happen: (10, FIGURE, 10) as NARROWING."""
+
+    def resolve(self, evidence, ctx):
+        verdict = super().resolve(evidence, ctx)
+        if verdict.value is None:
+            return verdict
+        return replace(verdict, effect=Effect.NARROWING, policies=("topn-cap@1",),
+                       receipt=AuthorityReceipt(("topn.capped",), 1))
+
+
+class CapsWithoutTheRule(ToyTopN):
+    """Announces the cap with the effect and the policy but without the receipt rule."""
+
+    def resolve(self, evidence, ctx):
+        verdict = super().resolve(evidence, ctx)
+        return verdict if verdict.value is None else replace(verdict, receipt=AuthorityReceipt(("topn.figure",), 1))
+
+
+class CapsWithoutThePolicy(ToyTopN):
+    """Announces the cap with the effect and the rule but without ``topn-cap@1``."""
+
+    def resolve(self, evidence, ctx):
+        verdict = super().resolve(evidence, ctx)
+        return verdict if verdict.value is None else replace(verdict, policies=("other-policy@1",))
+
+
+class RuleWithoutCap(ToyTopN):
+    """An uncapped figure that still carries ``topn.capped`` and nothing else."""
+
+    def resolve(self, evidence, ctx):
+        verdict = super().resolve(evidence, ctx)
+        if verdict.value is None:
+            return verdict
+        return replace(verdict, receipt=AuthorityReceipt(("topn.capped",), 1))
+
+
+class PolicyWithoutCap(ToyTopN):
+    """An uncapped figure that still carries the ``topn-cap@1`` policy (with no effect)."""
+
+    def resolve(self, evidence, ctx):
+        verdict = super().resolve(evidence, ctx)
+        return verdict if verdict.value is None else replace(verdict, policies=("topn-cap@1",))
+
+
 REJECTED = [
+    (CapsSilently, [TOPN_CAPPED_CASE], "INV-C1.2-CAP"),
+    (CapsWithoutTheRule, [TOPN_CAPPED_CASE], "INV-C1.2-CAP"),
+    (CapsWithoutThePolicy, [TOPN_CAPPED_CASE], "INV-C1.2-CAP"),
+    (DeclaresWithoutCap, [TOPN_UNCAPPED_CASE], "INV-C1.2-CAP"),
+    (RuleWithoutCap, [TOPN_UNCAPPED_CASE], "INV-C1.2-CAP"),
+    (PolicyWithoutCap, [TOPN_UNCAPPED_CASE], "INV-C1.2-CAP"),
     (ContextCreatesResolved, YEAR_CASES, "INV-C0-7"),
     (ContextChangesTheValue, YEAR_CASES, "INV-C0-7"),
     (ChainBreaker, YEAR_CASES, "INV-C0-7"),
@@ -563,6 +655,16 @@ def test_conforming_state_money_geo_and_clock_authorities_pass():
     assert assert_conforms(ToyMoney(), MONEY_CASES).resolved == 1
     assert_conforms(ToyGeoAnyLevel(), [GEO_UNKNOWN_CASE, GEO_CASE])
     assert_conforms(ToyThisYear(), [case("contratos de este ano", "este ano", ctx=ctx, **YEAR)])
+
+
+def test_a_conforming_cap_is_announced_and_an_uncapped_figure_is_not():
+    verdict = CapsAndDeclares().resolve(TOPN_CAPPED_CASE.evidence, TOPN_CAPPED_CASE.ctx)
+    assert verdict.value == CardinalityValue(100, CardinalityBasis.FIGURE, 500) and verdict.value.capped
+    assert (verdict.effect, verdict.policies, verdict.receipt.rules) == (
+        Effect.NARROWING, ("topn-cap@1",), ("topn.capped",))
+    assert assert_conforms(CapsAndDeclares(), [TOPN_CAPPED_CASE, TOPN_UNCAPPED_CASE]).resolved == 2
+    plain = CapsAndDeclares().resolve(TOPN_UNCAPPED_CASE.evidence, TOPN_UNCAPPED_CASE.ctx)
+    assert not plain.value.capped and plain.effect is Effect.EQUIVALENT and plain.policies == ()
 
 
 def test_the_s3_funnel_resolves_only_with_the_bare_o_and_the_gap_is_never_the_value():
