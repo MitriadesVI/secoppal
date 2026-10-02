@@ -55,10 +55,11 @@ GEO_LEVEL_IMPORTERS = frozenset({"interpretation_contract", "foundation_lift_v1"
 # level) solely to validate/decode already-accredited ``ExecutableValue``s and ``GeoLevel``. It may not import the
 # registry, the authority contract, the evidence window, ``host_authorities`` or any resolver, nor call ``resolve``.
 # C1.x amendment (wave-1 prep, user decision 2026-10-02): the importers of ``foundation_accepted`` under app/ are no
-# longer «nobody» but «registered M2a modules» (``tests/m2a_steps``: M2a consumes itself only between modules explicitly
-# registered; no other module of app/, scripts/ or streamlit_app does, pinned by tests/test_m2a_boundaries.py). The set
-# of closed-type consumers does NOT grow with the registry: the other M2a modules never import
-# ``foundation_authority_values`` or ``foundation_geo_level`` directly, they decode through ``foundation_accepted``.
+# longer «nobody» but «registered M2a modules» (``tests/m2a_steps``: M2a consumes itself only between modules
+# explicitly registered; no other module of app/, scripts/ or streamlit_app does, pinned by
+# tests/test_m2a_boundaries.py). The set of closed-type consumers does NOT grow with the registry: the other M2a
+# modules never import ``foundation_authority_values`` or ``foundation_geo_level`` directly, they decode through
+# ``foundation_accepted``.
 CLOSED_TYPE_CONSUMERS = {"foundation_accepted": frozenset({"foundation_authority_values"})}
 
 
@@ -426,7 +427,7 @@ def test_only_the_ir_v2_and_the_authority_contract_import_the_geographic_level()
     assert importers <= GEO_LEVEL_IMPORTERS and {"interpretation_contract", "foundation_lift_v1"} <= importers
 
 
-# ---- non-vacuity of the C1.x amendment: virtual modules (no file is created) ------------------------------------------
+# ---- non-vacuity of the C1.x amendment: virtual modules (no file is created) ----------------------------------------
 VIRTUAL_REGISTERED = "app/core/m2a_virtual_decoder.py"
 VIRTUAL_REGISTERED_NAME = "app.core.m2a_virtual_decoder"
 IMPORTS_ACCEPTED = "from app.core.foundation_accepted import AcceptedTurnRecord\n"
@@ -483,6 +484,13 @@ def test_mutant_a_module_that_imports_foundation_authority_values_is_an_offender
     assert c1_1_import_offenders(_runtime_sources({relative: IMPORTS_VALUES})) == [relative]
 
 
+@pytest.mark.parametrize("relative", ["app/core/workflow/foundation_accepted.py", "app/foundation_accepted.py",
+                                      "app/data/foundation_accepted.py", "app/core/host_data/foundation_accepted.py"])
+def test_mutant_the_closed_type_exception_belongs_to_the_one_real_path_only(relative):
+    """A module that merely SHARES the stem of the closed-type consumer (another directory) gets no exception."""
+    assert c1_1_import_offenders(_runtime_sources({relative: IMPORTS_VALUES})) == [relative]
+
+
 @pytest.mark.parametrize("module", ["foundation_authority_contract", "foundation_evidence_window",
                                     "foundation_authority_registry", "host_authorities"])
 def test_mutant_a_registered_module_that_imports_any_other_c1_1_module_is_an_offender(module):
@@ -501,6 +509,30 @@ def test_mutant_a_registered_module_that_imports_the_geographic_level_directly_i
     """Decision 3: the other M2a modules decode through ``foundation_accepted``; the level has no new importer."""
     sources = _runtime_sources({VIRTUAL_REGISTERED: IMPORTS_ACCEPTED + IMPORTS_GEO_LEVEL})
     assert geo_level_importers(sources) - GEO_LEVEL_IMPORTERS == {"m2a_virtual_decoder"}
+
+
+def test_a_registered_package_is_named_by_its_directory_not_by_its_init():
+    """``app/core/pkg/__init__.py`` is the module ``app.core.pkg``: registering the package allows its ``__init__``."""
+    assert _module_name("app/core/pkg/__init__.py") == "app.core.pkg"
+    assert _module_name("app/core/pkg/leaf.py") == "app.core.pkg.leaf"
+    relative = "app/core/m2a_virtual_pkg/__init__.py"
+    sources = _runtime_sources({relative: IMPORTS_ACCEPTED})
+    assert closed_type_importer_offenders(sources, frozenset(registered_modules())) == [relative]
+    registered = frozenset(registered_modules()) | {"app.core.m2a_virtual_pkg"}
+    assert closed_type_importer_offenders(sources, registered) == []
+
+
+def test_the_geographic_level_module_does_not_count_as_its_own_importer():
+    own = {"app/core/foundation_geo_level.py": b"# the level\nfoundation_geo_level = 1\n"}
+    assert geo_level_importers(own) == set()
+    assert geo_level_importers({**own, "app/core/other.py": b"import foundation_geo_level\n"}) == {"other"}
+
+
+def test_the_runtime_scan_covers_the_whole_app_tree_not_only_app_core():
+    scanned = set(_runtime_sources())
+    assert {"app/main.py", "app/core/foundation_accepted.py", "app/core/workflow/store_epoch.py",
+            "app/core/host_authorities/state.py", "app/data/smmlv.py"} <= scanned
+    assert scanned == {path.relative_to(ROOT).as_posix() for path in (ROOT / "app").rglob("*.py")}
 
 
 def test_the_closed_type_consumer_set_does_not_grow_with_the_registry():

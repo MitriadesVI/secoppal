@@ -7,8 +7,8 @@ C1/E/F/G, ACTIVATE y CUTOVER es el de ADR-103 Enm. 4 §4.4, que este plan respet
 Principios: commits pequeños y revertibles; un escritor por archivo; ningún paso hasta M2A-6 cambia el comportamiento
 de runtime; cada paso trae sus mutantes (un test que pasa sin matar su mutante no cuenta).
 
-**Enmendado 2026-10-02** (decisiones del usuario, registradas en `M2A_WAVE1_PREP.md`): §0 punto 6, filas M2A-2 y M2A-6,
-§2 (carril M2A-8a0) y la fila de riesgos de los adyacentes del cierre legacy. Registro de módulos M2a por paso en
+**Enmendado 2026-10-02** (decisiones del usuario, registradas en `M2A_WAVE1_PREP.md`): §0 puntos 6–8, filas M2A-2, M2A-3,
+M2A-6 y M2A-8, §2 (carril M2A-8a0) y la fila de riesgos de los adyacentes del cierre legacy. Registro de módulos M2a por paso en
 `tests/m2a_steps/`; invariante definitiva de consumo; enmienda C1.x.
 
 ## 0. Prohibiciones que todos los pasos heredan
@@ -27,11 +27,18 @@ de runtime; cada paso trae sus mutantes (un test que pasa sin matar su mutante n
    `tests/test_m1_wave1_parity_pins.py`, con motivo en el commit y ZEUS, ADR-103 D1(b)) y se protege con un pin que sólo
    permita el delta declarado (fuente de `main` como fixture + comparación AST; patrón del pin 6 de `foundation_guard`).
    Razón verificable: `test_the_allowed_divergences_are_real_and_inside_the_closure`
-   (`tests/test_m1_wave1_parity_pins.py:956-963`) exige que toda `ALLOWED_DIVERGENCE` difiera del manifiesto; regenerarlo
-   rompe los pines 4–6.
+   (`tests/test_m1_wave1_parity_pins.py:956-963`) exige que toda `ALLOWED_DIVERGENCE` difiera del manifiesto; regenerar el
+   manifiesto **entero** rompe los pines 4–6, y editar **una** entrada lo impide `tests/test_legacy_manifest_frozen.py`
+   (sha256 del archivo). Esta decisión del usuario (2026-10-02) sustituye la frase procedimental «exige regenerar el
+   manifiesto» del contrato (almacén, líneas 202-203), de ADR-103 §4.6 y de versiones previas de este plan; ver
+   `M2A_WAVE1_PREP.md` §7.
 7. Los módulos M2a se registran por paso en `tests/m2a_steps/m2a_<n>.py` (cada carril escribe sólo el suyo). El consumo
    interno de M2a sólo existe entre módulos registrados y a lo largo de `DEPENDS_ON`; ningún módulo externo, el legacy ni
-   el runtime Foundation alcanza M2a (`tests/test_m2a_boundaries.py`).
+   el runtime Foundation alcanza M2a (`tests/test_m2a_boundaries.py`). El grafo de dependencias de la ola es una
+   constante **revisada** (`PLANNED_DEPENDENCIES`: M2A-2 → {M2A-1}, M2A-3 → {M2A-1}); ampliarlo es una decisión
+   explícita, no un efecto de editar el registro propio.
+8. `scripts/` es externo a M2a: ningún script importa un módulo M2a. El oráculo del Gold vive en `scripts/` y trabaja
+   **sólo sobre dicts**; el enlace con los tipos M2a y con `compose` (adaptador) vive en `tests/`, que sí puede importar M2a.
 
 ## 1. Pasos
 
@@ -39,14 +46,14 @@ de runtime; cada paso trae sus mutantes (un test que pasa sin matar su mutante n
 |---|---|---|---|---|---|
 | **M2A-1 tipos/contrato** | `AcceptedInterpretation`, `AcceptedRequest`, `AcceptedCondition`, `ConditionOrigin`, `Provenance`, `SemanticPatch`, `PatchOp`, `PendingClarification`, `CandidatePatch`, `ResultSetRef`, `EchoItem`, `AcceptedTurnRecord`, `TurnScope`, `TurnResolution` con `to_dict`/lector estricto; `from_acceptance`; directivas del wire 5.1 (`CLEAR`, `KEEP`, `CANCEL_PENDING`) y etiquetas `UNSUPPORTED` reservadas (`relative_to_previous`, `no_selection`) | NÚCLEO: `app/core/foundation_accepted.py` (nuevo), `app/core/interpretation_contract.py` (directiva `ProposedSlotDirective`), `tests/test_foundation_accepted_contract.py` (nuevo), pin de imports/AST en `tests/test_m2a_boundaries.py` (nuevo) | C1.2 en `main` (hecho) | No | ida y vuelta de todos los tipos; lector estricto (clave/esquema desconocido ⇒ error); determinismo de `interpretation_hash`; INV-M2A-04, -14, -24 (pines); `test_m1_wave1_parity_pins.py` verde |
 | **M2A-2 store append-only** | `foundation_accepted_store.py`: append bajo `conversation_lock`, lector estricto, registro antes del `Turn`, base sólo si su `trace_id` sigue en el historial; borrado con el historial | NÚCLEO: `app/core/foundation_accepted_store.py` (nuevo), `tests/test_foundation_accepted_store.py` (nuevo); **adyacente declarado**: una línea en `ConversationStore.clear()`, declarada como `ALLOWED_DIVERGENCE` de `tests/test_m1_wave1_parity_pins.py` y protegida con un pin que sólo permite ese delta (fuente de `main` como fixture + comparación AST, patrón del pin 6 de `foundation_guard`); el manifiesto **no** se regenera (§0.6). Caracteriza, sin repararla, la deuda `DEBT_CLEAR_GENERATIONS_RETENTION.md` | M2A-1 | No (nadie escribe aún) | INV-M2A-09; concurrencia (dos escritores, cola truncada, esquema desconocido ⇒ ancla inválida); retención = historial |
-| **M2A-3 reducer puro** | `compose(base, patch)`, ranuras, orden fijo, arrastre por identidad, reglas H1–H12, sustituciones declaradas (A8.1, F16, F3, F9), `DeltaRefusal`; `classify_turn` (§7: A9/A9.1/F22) sobre P ya admitida | NÚCLEO: `app/core/foundation_delta.py`, `app/core/foundation_turn_scope.py` (nuevos) + tests | M2A-1 | No | INV-M2A-01, -02, -03, -05, -11, -16, -18, -19, -20 con IR oráculo del Gold (vía M2A-8a): **100 %** de disposición, código y efectiva en los casos sin dependencia de carril; los dependientes (contrato §19) se miden al existir su regla de recibo y hasta entonces cuentan como rojo declarado, nunca dispensado; mutantes por regla |
+| **M2A-3 reducer puro** | `compose(base, patch)`, ranuras, orden fijo, arrastre por identidad, reglas H1–H12, sustituciones declaradas (A8.1, F16, F3, F9), `DeltaRefusal`; `classify_turn` (§7: A9/A9.1/F22) sobre P ya admitida | NÚCLEO: `app/core/foundation_delta.py`, `app/core/foundation_turn_scope.py` (nuevos) + tests (incluido el adaptador oráculo→tipos/`compose`) | M2A-1 | No | INV-M2A-01, -02, -03, -05, -11, -16, -18, -19, -20 con el oráculo del Gold (M2A-8a0/8a: dicts en `scripts/`; el adaptador que lo une a los tipos M2a y a `compose` vive en `tests/`, §0.8): **100 %** de disposición, código y efectiva en los casos sin dependencia de carril; los dependientes (contrato §19) se miden al existir su regla de recibo y hasta entonces cuentan como rojo declarado, nunca dispensado; mutantes por regla |
 | M2A-3b herencia | `foundation_authority_inheritance.py`: entrada separada de insumos del host (unidad, año, TimeValue previo) | NÚCLEO (nuevo) + bloque del kit | M2A-3 | No | INV-M2A-07, -17 |
 | M2A-3c reglas de recibo | `unit.*`, `unit.sibling`, `unit.inherited`, `unit.smmlv`, `year.*`, `time.relative_to_previous`, `buyer.territory.*`/`buyer.national`, `order.direction_defaulted`, `topn.capped` | carriles: D-MONEY, D-TIME, D-BUYER, NÚCLEO (E-ORDER) — **cada uno en sus propios archivos de autoridad** | M2A-3b; E-* | No | kit por autoridad; casos V05–V09, M01–M05 |
 | **M2A-4 pending clarification** | `foundation_pending.py`: creación con span y `candidate_patches` resueltos al preguntar; protocolo §8.3; `CANCEL_PENDING` §17; caducidad; tope de `asks` | NÚCLEO: `app/core/foundation_pending.py` (nuevo) + tests | M2A-3 | No | INV-M2A-08, -23; P01–P10; mutantes F24/F25/F29 y «lista vacía como cancelación» |
 | **M2A-5 producer/wire de delta** | tarjeta de estado sin valores; sección de estado del prompt v5.1; emisión de directivas y de evidencia de continuación (`FOLLOWUP_DELTA`, `referent_evidence`); **señal estructural extensional/intensional del referente** (G-FU-14 diferido aquí; la ejecución sobre filas sigue en M2b) | NÚCLEO: `app/core/foundation_state_card.py` (nuevo), `app/core/foundation_prompts_v5.py` | M2A-1; C1.3 (wire v5) | No (perfil v5.1 no activo) | **señal extensional/intensional del referente emitida y probada (G-FU-14): gate de M2A-5 y precondición de activar M2A-6. Se mide con un fixture propio de M2A-5 (pares extensional/intensional escritos para la señal, con su propia partición), nunca con casos de `FOLLOWUP_FRONTIER` (contrato §19, §20.2); en `M2A_GOLD` los casos de re-consulta F4 siguen midiéndose por su disposición, que exige la lectura intensional**; INV-M2A-13; hasta 3 iteraciones sobre **DEV** de los dos Gold (ADR-103 §4.4 «M2A-4 = v5.1»); N01–N04 con productor real |
 | **M2A-7 presentation/echo** | `foundation_echo.py` puro: `echo_items(base, efectiva, patch, record)`; regla de cobertura §11 | NÚCLEO: `app/core/foundation_echo.py` (nuevo) + tests | M2A-3 | No | INV-M2A-12, -21; eco mínimo del Gold ⊆ emitido ⊆ justificado |
 | **M2A-6 runtime integration** | `foundation_runtime`: escribir el registro en todo turno Foundation; alcance §7.1; componer/ejecutar; ancla y vigencia §10; `INFORM` de lo que M2a no hace; fila `FOLLOWUP_DELTA` por dueño del ancla; página y eventos (`handle_foundation_page`, eventos de orden/filtro/continuar/reset) antes de `handle_pagination`; barrera Radar-SAVE (`INFORM OPERATION_CHANGE:FOLLOW`); retirar `continues_foundation_turn` **sólo** en el perfil v5.1 | NÚCLEO: `foundation_runtime.py`, `foundation_route_owner.py`, `foundation_operation_host.py`, `foundation_presentation.py`, `foundation_messages.py`, `app/core/handlers/foundation_page.py` (nuevo); **adyacente declarado**: tupla de handlers en `orchestrator.py` (declarada como `ALLOWED_DIVERGENCE` con pin de delta, sin regenerar el manifiesto, §0.6); ARES no-núcleo: `app/core/workflow/handlers/radar.py` | M2A-2, -3, -4, -5 (con la señal extensional en verde), -7; C1.4; E-* por clase; F (vista); G (caída del proveedor) | **Sí**, tras flag del perfil | INV-M2A-04 (espías: 0 turnos con ancla Foundation en `handle_normal_flow`; `parsed_params == {}`), -06 (replay del primer turno), -10, -15, -20, -22; R01–R06 |
-| **M2A-8 Gold/replay/gates** | 8a: harness de replay offline con IR oráculo (`scripts/audits/m2a_conversation/`) que alimenta a M2A-3/-4/-7; 8b: gates de §20.2 del contrato con productor real, peor de ≥2 pasadas, DEV para iterar y TEST para activar | HERA: `scripts/audits/m2a_conversation/*`, `tests/test_m2a_*.py` de gates | 8a: M2A-3; 8b: M2A-6 | No | gates §20.2 = 0; el sello verifica (`m2a_gold_seal.py verify`) |
+| **M2A-8 Gold/replay/gates** | 8a: oráculo de replay offline (`scripts/audits/m2a_conversation/`) que trabaja **sólo sobre dicts** y no importa M2a (`scripts/` es externo, §0.8); lo consumen M2A-3/-4/-7 mediante adaptadores en `tests/`, que sí importan los tipos M2a y `compose`; 8b: gates de §20.2 del contrato con productor real, peor de ≥2 pasadas, DEV para iterar y TEST para activar | HERA: `scripts/audits/m2a_conversation/*` (oráculo, dicts), `tests/test_m2a_*.py` (adaptadores y gates) | 8a: M2A-3; 8b: M2A-6 | No | gates §20.2 = 0; el sello verifica (`m2a_gold_seal.py verify`) |
 | M2A-9 freeze | freeze del SHA, ZEUS fresco ‖ suite global pareada, semgrep delta con `--base` | HERA + ZEUS | todo | — | ADR-103 §4.4 «M2A-9» |
 
 ### 1.1 Correspondencia con los nombres de ADR-103 Enm. 4 §4.4
@@ -73,7 +80,7 @@ M2A-1 ──┬── M2A-2 (store) ──────────────�
         ├── M2A-3 (reducer) ─┬─ M2A-3b ─ M2A-3c (carriles, en sus archivos)
         │                    ├─ M2A-4 (pending) ───────┤
         │                    ├─ M2A-7 (echo) ──────────┤
-        │                    └─ M2A-8a (replay oráculo, HERA)
+        │                    └─ M2A-8a (oráculo en scripts/ sobre dicts, HERA; adaptadores en tests/)
         └── M2A-5 (wire/prompt; espera C1.3) ──────────┴── M2A-6 (runtime) ── M2A-8b ── M2A-9
 ```
 
@@ -84,7 +91,9 @@ Paralelo **sin dos escritores sobre el mismo archivo**:
 - M2A-6 es **un solo escritor** (toca el runtime y los dos adyacentes del cierre legacy).
 - **M2A-8a0 (oráculo del reducer)**: carril propio, con autor distinto del de M2A-3. El oráculo no importa ni llama al
   reducer (`compose`) y queda **congelado antes de implementar `compose`**. M2A-3 itera sólo contra **DEV**; **TEST**
-  se usa al congelar. No escribe ningún archivo de M2A-3 (un escritor por archivo).
+  se usa al congelar. No escribe ningún archivo de M2A-3 (un escritor por archivo). Vive en
+  `scripts/audits/m2a_conversation/` y trabaja sólo sobre dicts (el JSON del Gold): no importa M2a. El enlace con los
+  tipos y con `compose` (el adaptador) vive en `tests/` (§0.8).
 
 **Mejora sobre el orden sugerido:** el eco (M2A-7) y el harness de replay (M2A-8a) van **antes** de la integración
 (M2A-6), no después: el eco es puro y la integración lo necesita; el harness es el oráculo con el que M2A-3 y M2A-4
