@@ -74,6 +74,7 @@ OWNER_CELLS = {
     "`FOUNDATION_O1B_EXPLICIT_TIME_PARITY` (+ M2A-1b)": ("FOUNDATION_O1B_EXPLICIT_TIME_PARITY", "M2A-1b"),
     "E-ORDER": ("E-ORDER",),
     "M2A-1b": ("M2A-1b",),
+    "M2A-5": ("M2A-5",),
 }
 _GAP_ID = re.compile(r"G-FU-\d{2}b?")
 _DEP_ID = re.compile(r"`(DEP-[A-Z0-9-]+)`")

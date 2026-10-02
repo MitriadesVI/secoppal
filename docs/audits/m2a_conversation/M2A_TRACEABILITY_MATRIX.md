@@ -74,6 +74,7 @@ verificará.
 | R05 | Vencido ⇒ CLARIFY `CONTEXT_EXPIRED_CONFIRM` (continuar / reset) (§10) | F11 | R0223, R0286, SF138, SF140 | `PendingClarification` con un candidato + `CANCEL_PENDING` | M2A-4/M2A-6 |
 | R06 | `CLEAR` de ranura vacía ⇒ INFORM, ancla intacta (§6 H12) | F18 | SF113 | regla H12 | M2A-3: INV-M2A-20 |
 | R07 | Ancla vencida: `CONTEXT_EXPIRED_CONFIRM` sólo si «continuar» compone y ejecuta (sin causa y sin H3–H12); si no, `INFORM` con la causa o la regla, sin bucle (§6 H1, §10.1) | usuario 2026-10-02 (R3b, U20; ZEUS P1-1) | SF198 (ancla vencida + `KEEP` de ranura vacía ⇒ `INFORM`, sin bucle) | `PendingClarification` con un candidato | barrido S12; barrido multi-op; verificador G9 (pendiente sobre ancla vencida) |
+| R08 | Vencimiento pegajoso: el turno que encuentra el ancla vencida y no la confirma ni la reemplaza lleva `CONTEXT_EXPIRED` en su registro; el ancla sigue vencida hasta «continuar», «reset»/cancelación o búsqueda nueva (§10.1, §11) | usuario 2026-10-02 (R3c, U26; ZEUS P1-1) | SF198 (eco `CONTEXT_EXPIRED`) | eco del último `AcceptedTurnRecord` (sin campos nuevos) | M2A-6/8b por replay (propiedad de varios turnos) |
 
 ## 5. VALUE
 

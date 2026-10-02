@@ -9,8 +9,8 @@ R3 se verificó sobre `fa0b6de8` (Paso 0 de la ola M2a).
 **Gold que lo interpreta:** `docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json` (`M2A_GOLD` = 49 REAL + 160 SYNTHETIC = 209;
 `FOLLOWUP_FRONTIER` = 16 + 41 = 57; release r3b: copia sellada en `docs/audits/m2a_conversation/gold/`, que difiere del
 candidato asesor por las adjudicaciones U1/U2/D1 del 2026-10-02, `gold/ADJUDICATION_2026-10-02.md`, por las cuatro
-adiciones de U3 y por las seis de U25, `gold/ADJUDICATION_R3.md`; sellado en el paso B4 y re-sellado una sola vez en
-R3b-2 tras el NO_GO de ZEUS, Anexo D.3). El sello lleva el
+adiciones de U3 y por las seis de U25, `gold/ADJUDICATION_R3.md`; sellado en el paso B4, re-sellado en R3b-2 tras el
+NO_GO de ZEUS y por última vez en R3c, Anexo D.3). El sello lleva el
 sha256 de este archivo: cambiar una línea de este contrato rompe el sello y exige re-sellar con motivo.
 **Evidencia de origen (no normativa):** `docs/audits/m2a_advisory_2026-10-01/` (carril asesor B, importado).
 **Trazabilidad:** `docs/audits/m2a_conversation/M2A_TRACEABILITY_MATRIX.md`. **Plan:** `docs/audits/m2a_conversation/M2A_IMPLEMENTATION_PLAN.md`.
@@ -392,7 +392,8 @@ seleccionado o completado (§8). No hay más operaciones; un parche que necesite
      - `answer_slots = {ORDER, CARDINALITY}` (⊇ las ranuras de los candidatos).
 
      Las respuestas siguen §8.3. Un criterio escrito («por fecha») selecciona su candidato por identidad semántica
-     (fila 4, exactamente uno; «Selección», §8.3). «Quita también el límite» selecciona C1. «Déjalo como estaba» es
+     (fila 4, exactamente uno; «Selección», §8.3). «Quítales también el límite» selecciona C1: «también» retoma la
+     retirada del orden, y la respuesta trae el parche completo `CLEAR(ORDER)` + `CLEAR(CARDINALITY)`. «Déjalo como estaba» es
      `CANCEL_PENDING` (§17): base intacta. Una respuesta que no selecciona ninguno es la fila 7
      (`REASK ANSWER_UNRESOLVED`); nunca se compone sobre el ORDER de la base.
 
@@ -549,7 +550,8 @@ ranuras (el Gold tiene alternativas GEOGRAPHY+TIME).
 
 ### 8.2 Creación
 
-Una pendiente nace con **un** span sin resolver y todo lo demás resuelto en `frame`. Las opciones se resuelven **al
+Una pendiente nace con **un** span sin resolver y todo lo demás resuelto en `frame`. Su plazo es de 30 minutos desde
+su creación (`expires_at_utc = created_at_utc` + 30 min), igual que F11 (R3c, U26). Las opciones se resuelven **al
 preguntar**, cada una por la autoridad de su ranura sobre la ventana del span; por eso elegir por evento no necesita
 LLM ni releer texto. Un turno que pregunta no consume el ancla (§10.2).
 
@@ -570,23 +572,24 @@ Tras aplicar una respuesta, si el resultado sigue ambiguo ⇒ `REASK` (nunca un 
 fallar ⇒ la pendiente se cancela (`control = CANCEL_PENDING`) y se dice. Nunca se ejecuta `frame + respuesta + otra
 edición`.
 
-**Selección (R3b, U22).** Cuando la respuesta es lenguaje (filas 4, 5 y 7), «seleccionar» un candidato se decide por
-**identidad semántica** de la operación. La fila 1 es un evento que ya nombra el candidato y no pasa por aquí.
-- Un candidato queda seleccionado si la respuesta trae al menos una operación sobre sus ranuras y cada una de esas
-  operaciones coincide con una operación de su parche en la tupla (op, ranura, valor canónico codificado), o
-  (`REPLACE_UNIVERSE`, destino).
-- Nunca se decide por texto, `display_key`, `candidate_id` ni ids de condición.
-- Exactamente un candidato seleccionado: se compone su parche **completo** sobre `frame` (fila 4). Cero o varios: fila 7.
-
-Si la respuesta trae además una operación sobre una ranura que el candidato seleccionado no contempla, es la fila 5
-(`REASK ANSWER_EDITS_OTHER_SLOT`): la edición no se pierde en silencio, la pendiente sigue y la pregunta la nombra.
+**Selección (R3b, U22; R3c, U26).** Con candidatos, la respuesta en lenguaje se lee así. Primero se normaliza P quitando
+los `KEEP` de ranuras que existen en `frame` (un `KEEP` es la identidad). Si P toca ranuras fuera de `answer_slots`, es
+la fila 5 (o la 8 si no toca ninguna de dentro). Si no, se compara el multiconjunto de sus operaciones, por coincidencia
+**exacta** de (op, ranura, valor canónico codificado) o (`REPLACE_UNIVERSE`, destino), con el parche de cada candidato:
+exactamente uno coincide ⇒ fila 4, y se compone su parche completo sobre `frame`; ninguno o varios ⇒ fila 7. Nunca se
+decide por texto, `display_key`, `candidate_id` ni ids de condición. La fila 1 es un evento que ya nombra el candidato;
+un evento de opción cuya pendiente ya no existe (cancelada, vencida o sustituida) ⇒ `INFORM STALE_OPTION`, 0 llamadas,
+ancla intacta.
 
 ### 8.4 Ley de la pendiente posible (R3b, U20)
 
 Una `PendingClarification` sólo puede existir si se cumplen las dos condiciones:
 1. su `frame` (la base más el parche **sin** las operaciones del span abierto) es `None`, porque no había nada
    resuelto, o una `AcceptedInterpretation` válida;
-2. cada `candidate_patch` compone válidamente sobre ese `frame`, sin causas del paso 3b de §6.
+2. cada `candidate_patch` compone válidamente sobre ese `frame`, sin causas del paso 3b de §6;
+3. existe **al menos una** respuesta que ejecuta: un candidato, o, sin candidatos, una respuesta sobre `answer_slots`
+   que compone sobre `frame` sin causas y sin otra pregunta (R3c, U26). `VALUE_WITHOUT_COMPARATOR` lleva
+   `answer_slots = {VALUE.lower, VALUE.upper}`.
 
 Si no se cumplen: `INFORM` con el código de la regla que habría preguntado, 0 llamadas a la fuente, ancla intacta y
 **sin pendiente**; el usuario reformula. `REASK` mantiene la pendiente que ya existía y no crea otra.
@@ -612,7 +615,8 @@ Las fuentes de pendiente, revisadas contra la ley:
 
 La propiedad universal sobre el `compose` real, con permutaciones de las operaciones y `check_transition` del
 oráculo, es gate de M2A-3 fase 2. En este contrato la comprueba el gate multi-op de INV-M2A-25 sobre un modelo
-simbólico (§18).
+simbólico (§18). Barrer las respuestas a todas las pendientes es gate de M2A-4; las propiedades de varios turnos
+(vencimiento pegajoso, plazo de la pendiente) son gate de M2A-6/8b por replay (R3c, U26).
 
 ---
 
@@ -657,6 +661,12 @@ No se pregunta «¿continuar?» si «continuar» no puede de verdad reanclar y e
 causas de rechazo, o si continuar no ejecutaría (H3–H12), el turno es `INFORM` con esa causa, sin pendiente y sin
 bucle (§6 H1, §8.4).
 
+**Vencimiento pegajoso (R3c, U26).** Un turno que encuentra el ancla vencida y no la confirma ni la reemplaza lleva el
+eco `CONTEXT_EXPIRED`, guardado en su registro. Mientras el último registro lo lleve y el ancla no haya cambiado, el
+ancla sigue **vencida** para los turnos siguientes, sea cual sea el plazo transcurrido. Vuelve a estar vigente sólo con
+«continuar» (`CONTEXT_EXPIRED_CONFIRM`), con «reset» o una cancelación, o con una búsqueda nueva. No hay campos nuevos
+en el tipo: lo decide el eco del último registro.
+
 Si además había una pendiente: provisionalmente gana F11 (`CONTEXT_EXPIRED_CONFIRM`); la precedencia definitiva es
 G-FU-12 (M2b).
 
@@ -690,7 +700,7 @@ G-FU-12 (M2b).
 | `UNIVERSE_CHANGED` | `REPLACE_UNIVERSE` efectivo; si hay TIME arrastrado, a qué campo de fecha aplica ahora |
 | `TOPN_CARRIED` / `TOPN_CAPPED` / `ORDER_DIRECTION_DEFAULTED` | F10 / P8 (`n_requested > n`) / F21 |
 | `CONTEXT_RESET` | búsqueda nueva con ancla vigente; acción «aplicar a la búsqueda anterior» |
-| `CONTEXT_EXPIRED` | `CLARIFY CONTEXT_EXPIRED_CONFIRM` |
+| `CONTEXT_EXPIRED` | todo turno que encuentra el ancla vencida y no la confirma ni la reemplaza: `CLARIFY CONTEXT_EXPIRED_CONFIRM`, o el `INFORM` de H1 o del paso 3b; mantiene vencida el ancla (§10.1, R3c) |
 
 **Derivación exacta.** El conjunto de clases de eco de un turno es exactamente el que deriva el esquema Gold 2.1 §7
 («sí y sólo sí») **más** una única adición de autoridad A: un relativo al referente previo (§16.3, regla de recibo
@@ -939,7 +949,8 @@ SF166, SF168 y R0303 llevan SMMLV y **no** son dependencia: H3 los decide sobre 
 | `DEP-MODALITY-UNIVERSE` | modalidad sobre el universo resultante (H8) | [R0459, SF007, SF008, SF080, SF160] | 5 | COMPOSICION | catálogo de modalidad por dataset (`modality@1` no lleva el dataset) | E-MODALITY |
 | `DEP-O1B-OPPORTUNITIES` | SF075: `REPLACE_UNIVERSE` a oportunidades con TIME arrastrado (R3-3) | [SF075] | 1 | COMPOSICION | re-decidir O1B / `opportunity-explicit-state` sobre la efectiva (su representación es de M2A-1b) y TIME explícito sobre oportunidades (`foundation_projection.py:235-237`). Mientras falte, `compose` rechaza con `OP_NOT_ACCREDITED:UNIVERSE` ⇒ `CLARIFY UNRESOLVED_VALUE:UNIVERSE` y el caso es rojo declarado (§20.2) | `FOUNDATION_O1B_EXPLICIT_TIME_PARITY` (+ M2A-1b) |
 | `DEP-E-ORDER` | follow-ups con ORDER/CARDINALITY: leer el criterio o la cifra (R3, D-5) | [R0079, R0083, R0087, R0089, R0099, R0515, SF015, SF016, SF017, SF018, SF019, SF020, SF021, SF022, SF117, SF118, SF119, SF120, SF122, SF140, SF160, SF161, SF171, SF172, SF195] | 25 | LECTURA | autoridad ORDER/CARDINALITY (`order@1`, `cardinality@2`, `order.direction_defaulted`, `topn.capped`); `main` aún no las admite en el primer turno (`UNRESOLVED_HOST_DIMENSION:ORDER`). Mientras falte, la pendiente de §6.7 (R3-1) es provisional fail-closed: **sólo C1** «quitar orden y límite» y la cancelación, sin candidatos `SET_ORDER` | E-ORDER |
-| `DEP-E-ORDER-CANDIDATES` | candidatos `SET_ORDER` de la pendiente de R3-1 (§6.7) | [SF192] | 1 | COMPOSICION | enumerar al preguntar los criterios de orden alternativos del dataset. Las alternativas selladas de SF192 son **PARCIALES** (sólo C1) y el registro lo declara (`partial_alternatives`); los `SET_ORDER` no se sellan | E-ORDER |
+| `DEP-E-ORDER-CANDIDATES` | candidatos `SET_ORDER` de la pendiente de R3-1 (§6.7) | [SF192, SF199, SF200, SF201] | 4 | COMPOSICION | enumerar al preguntar los criterios de orden alternativos del dataset; SF199–SF201 traen esa opción `SET_ORDER` en su pendiente previa (R3c). Las alternativas selladas de SF192 son **PARCIALES** (sólo C1) y el registro lo declara (`partial_alternatives`); los `SET_ORDER` no se sellan | E-ORDER |
+| `DEP-M2A5-WIRE-CARDINALITY` | «dame 20» con la pendiente de R3-1: IR v2 rechaza un `FOLLOWUP_DELTA` que sólo trae CARDINALITY (`interpretation_contract.py:438-439`), §7.1 fila 4b `INVALID_PROPOSAL` (§6.7; R3c) | [SF199] | 1 | LECTURA | que el wire admita una CARDINALITY sola en un `FOLLOWUP_DELTA`; mientras no lo haga, la etiqueta sellada es la fila 4b | M2A-5 |
 | `DEP-M1-PENDING-FRAME` | primer turno sin ancla cuya pendiente de M1 no tiene `frame` construible (§8.4) | [] | 0 | COMPOSICION | representar la pendiente de M1 en `from_acceptance` | M2A-1b |
 
 **Una autoridad para las dependencias (R3, U19).** §19 es la única fuente de dependencias y huecos diferidos. Su extracción
@@ -963,7 +974,7 @@ verificadores y los carriles; ninguno mantiene una lista ni un override propio. 
 
 | # | Gate | Cómo se verifica |
 |---|---|---|
-| 1 | Los 203 casos de `M2A_GOLD` (release r3) son **representables** por este contrato (vocabulario, forma de turno, arrastre, sustituciones declaradas, coherencia estructural de la disposición) | `scripts/audits/m2a_conversation/check_m2a_gold_contract.py` (con `--real-dir` local): 0 violaciones; probado por mutantes (`mutate_check_m2a_gold_contract.py`). **No** prueba que §7.2/§8.3 **deriven** cada disposición: eso exige la evidencia estructural del productor (continuación, marco) y es gate de M2A-8 |
+| 1 | Los 209 casos de `M2A_GOLD` (release r3b) son **representables** por este contrato (vocabulario, forma de turno, arrastre, sustituciones declaradas, coherencia estructural de la disposición) | `scripts/audits/m2a_conversation/check_m2a_gold_contract.py` (con `--real-dir` local): 0 violaciones; probado por mutantes (`mutate_check_m2a_gold_contract.py`). **No** prueba que §7.2/§8.3 **deriven** cada disposición: eso exige la evidencia estructural del productor (continuación, marco) y es gate de M2A-8 |
 | 2 | Ningún caso requiere `parsed_params` | ídem (G2) |
 | 3 | Cada comportamiento tiene una regla contractual | `M2A_TRACEABILITY_MATRIX.md` |
 | 4 | Ningún caso FRONTIER absorbido | ídem (G8): GOLD ∩ FRONTIER = ∅; ejemplos de huecos diferidos ∉ GOLD |
@@ -1017,7 +1028,7 @@ del lenguaje.
 |---|---|
 | `CLARIFY` | `CONTEXT_EXPIRED_CONFIRM`, `BUYER_OR_PLACE_AFTER_ACTOR`, `REGION_NOT_IN_LIST`, `SMMLV_YEAR_AMBIGUOUS`, `RELATIVE_TO_PREVIOUS_VALUE`, `UNIT_AMBIGUOUS`, `MONTH_YEAR_AMBIGUOUS`, `EMPTY_SEARCH_AFTER_DELTA`, `STATE_NOT_IN_UNIVERSE`, `TERRITORY_VS_CARRIED_BUYER`, `NO_ANCHOR`, `ANCHOR_UNREADABLE`, `TARGET_NOT_ADDRESSABLE`, `VALUE_WITHOUT_COMPARATOR`, `DELTA_SLOT_CONFLICT`, `KEEP_ON_EMPTY_SLOT`, `DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER`, `UNRESOLVED_VALUE:<DIM>` |
 | `REASK` | `OPTION_NOT_CHOSEN`, `ANSWER_EDITS_OTHER_SLOT`, `PENDING_UNANSWERED`, `ANSWER_UNRESOLVED` |
-| `INFORM` | `CLEAR_ON_EMPTY_SLOT`, `OPERATION_CHANGE:<op>`, `REFERENT_EXTENSIONAL`, `UNSUPPORTED_PROPOSAL:<motivo>` (+ el código de G-FU-04 cuando exista) |
+| `INFORM` | `CLEAR_ON_EMPTY_SLOT`, `OPERATION_CHANGE:<op>`, `REFERENT_EXTENSIONAL`, `UNSUPPORTED_PROPOSAL:<motivo>`, `STALE_OPTION` (+ el código de G-FU-04 cuando exista) |
 | `HANDOFF_LEGACY` | `ANCHOR_NOT_SEARCH:<op>` |
 
 Parámetros (R3):
@@ -1087,8 +1098,11 @@ Retirados: `SMMLV_UNSUPPORTED` (A2), `INHERITED_UNIT_IMPLAUSIBLE` (A1), `TOPN_CA
     conservan literales en `docs/audits/m2a_conversation/labeling_r3b/labels_{A,B}.jsonl`.
   - El usuario adjudicó sus diferencias (`gold/ADJUDICATION_R3.md`, sección R3b): SF199 toma la lectura de B, §7.1
     fila 4b; SF202 se etiquetó y se retira; la forma de las ops sigue la de R3.
-  - Cambia un solo registro existente: SF195, cuya polaridad de `SET_ORDER` se adjudica `POSITIVE`.
+  - Cambian dos registros existentes: SF192, que declara sus alternativas parciales (`partial_alternatives`, R3b-1), y
+    SF195, cuya polaridad de `SET_ORDER` se adjudica `POSITIVE`.
   - Ningún id existente cambia de lado DEV/TEST.
+- Release r3c (usuario, 2026-10-02; U26): SF198 lleva el eco `CONTEXT_EXPIRED` (vencimiento pegajoso, §10.1 y §11).
+  SF199–SF201 dependen de E-ORDER y SF199 además de M2A-5 (§19). Ningún id cambia de lado.
 
 ## Anexo C — Cláusulas sustituidas
 
@@ -1192,7 +1206,9 @@ Sigue siendo R3 y aún no está en `main`; queda un único re-sellado final (R3b
 | U21 | gate multi-op | §18 INV-M2A-25 | barrido exhaustivo por parejas + Hypothesis con N operaciones e invariancia a la permutación, sobre un modelo simbólico; sobre el `compose` real, gate de M2A-3 fase 2 |
 | U21 | precisiones que forzó el barrido multi-op: **DECIDIDAS** (usuario, 2026-10-02, U25) | §6 pasos 2 y 3b, H1; §7.1 fila 4b; §8.3 «Selección»; §8.4; §10.1 | (a) `KEEP` + `REPLACE_UNIVERSE` del universo es conflicto; (b) el `CLEAR` de una dimensión entera cubre cada una de sus ranuras; (c) dos operaciones no acreditadas son dos causas ⇒ `INFORM`; (d) la rama de A8.1 con unidades no comparables va en la precedencia 4; (e) H1 exige que «continuar» pase H3–H12 y las dependencias de §19; (f) §7.1 fila 6 con pendiente vigente o ancla vencida ⇒ `INFORM` sin nueva pendiente (`frame` = ancla + resto del turno); (g) la fila 4b aplica también con el ancla vencida; (h) en H11 el `frame` es la base; (i) la selección semántica no aplica a la fila 1 (evento) |
 | U25 | cierre de R3b (usuario, 2026-10-02) | §6 (tabla de rechazos), §7.1 fila 4b, §19, §1.1, Anexo B | `VALUE_WITHOUT_COMPARATOR` pasa tal cual por la tabla rechazo→A.3 (`OP_NOT_ACCREDITED:VALUE` ⇒ `CLARIFY VALUE_WITHOUT_COMPARATOR`); `no_selection` sin pendiente ⇒ 4b `UNSUPPORTED_PROPOSAL:UNSUPPORTED_CONDITION`; la tabla de huecos G-FU queda sin `impacto_m2a3`; SF195 `SET_ORDER` = `POSITIVE`; SF196–SF201 adjudicados y sellados (SF199 = lectura de B; SF202 retirado); `M2A_GOLD` = 209 |
+| U26 | R3c, último arreglo (ZEUS NO_GO sobre `7b30b221`) | §8.2, §8.3 «Selección», §8.4, §10.1, §11, §19, A.3, Anexo B | vencimiento pegajoso por el eco `CONTEXT_EXPIRED` del último registro; selección por coincidencia exacta tras quitar los `KEEP` de ranuras del `frame`; una pendiente exige una respuesta que ejecute (`VALUE_WITHOUT_COMPARATOR`: `answer_slots = {VALUE.lower, VALUE.upper}`); evento de opción de una pendiente que ya no existe ⇒ `INFORM STALE_OPTION`; plazo de la pendiente: 30 min desde su creación; §19: SF199 depende de M2A-5 y SF199–SF201 de E-ORDER. Gates de otro paso: respuestas a todas las pendientes (M2A-4), propiedades de varios turnos (M2A-6/8b por replay) |
 | U24 | controles mínimos del Gold | Anexo B (release r3b) | dos causas a la vez ⇒ `INFORM`; `KEEP` + `SET` ⇒ `DELTA_SLOT_CONFLICT`; ancla vencida con causa ⇒ `INFORM` sin bucle; «dame 20» con pendiente; selección por clave semántica y edición de otra ranura. SF196–SF202 etiquetados a ciegas (A/B) desde `docs/audits/m2a_conversation/labeling_r3b/R3B_LABELER_INPUT.md`; SF196–SF201 sellados y SF202 retirado (U25) |
 
-**Estado del sello.** R3b rompió el sello r3 de `4cf1cad3` a propósito. Se re-selló una sola vez en R3b-2 (U25),
-tras el etiquetado ciego y la adjudicación de los controles; el `seal_sha256` está en el sello.
+**Estado del sello.** R3b rompió el sello r3 de `4cf1cad3` a propósito. Se re-selló en R3b-2 (U25), tras el
+etiquetado ciego y la adjudicación de los controles, y por última vez en R3c (U26); el `seal_sha256` está en el sello.
+Tras R3c, un ZEUS que sólo encuentre P1 de forma se repara sin reabrir el diseño (barandilla del usuario, U26).

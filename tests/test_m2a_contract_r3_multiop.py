@@ -6,7 +6,7 @@ a turn (base occupancy plus patch). An independent checker then says whether tha
 * EXECUTE: the composed state satisfies the type's slot invariants.
 * CLARIFY: an A.3 ``CLARIFY`` code and a pending that satisfies §8.4:
   - the frame has no §6 3b cause and no open operation, and its state is valid;
-  - every candidate composes without causes into a valid state;
+  - every candidate composes without causes into a valid state, and some answer executes (R3c);
   - ``answer_slots`` ⊇ the candidates' slots;
   - on an expired anchor only ``CONTEXT_EXPIRED_CONFIRM``, and its «continuar» executes;
   - there is never a second pending.
@@ -200,7 +200,7 @@ def op_variants() -> tuple[Op, ...]:
 
 
 # A.6 reserved labels: not PatchOps. The slot only places the item in §4.2 order (none of them writes a slot).
-LABEL_ITEMS = (Op("RELATIVE", "VALUE/lower", None, "label"), Op("NO_COMPARATOR", "VALUE/lower", None, "label"),
+LABEL_ITEMS = (Op("RELATIVE", "VALUE/lower", None, "label"), Op("NO_COMPARATOR", "VALUE", None, "label"),
                Op("NO_SELECTION", "VALUE/lower", None, "label"))
 
 
@@ -261,7 +261,8 @@ class Cause(NamedTuple):
 
 
 def _cause(refusal: str, slot: str, ops, authority_code: str = "") -> Cause:
-    return Cause(PRECEDENCE[refusal], RANK[slot], tuple(sorted(ops)), refusal, slot, authority_code)
+    return Cause(PRECEDENCE[refusal], min(RANK[k] for k in COVER[slot]), tuple(sorted(ops)), refusal, slot,
+                 authority_code)
 
 
 def causes(base: State, ops) -> list[Cause]:
@@ -413,7 +414,25 @@ def law_violations(base: State, frame_ops, candidates, answer_slots) -> list[str
             out += [f"candidate composes into an invalid state: {v}" for v in state_violations(apply(frame, candidate))]
     if not covered(op for c in candidates for op in c) <= answer_slots:
         out.append("answer_slots do not cover the candidates")
+    if not out and not has_executing_answer(frame, frozenset(answer_slots), tuple(candidates)):
+        out.append("no answer executes")  # §8.4 condition 3 (R3c, U26)
     return out
+
+
+def executes(frame: State, patch) -> bool:
+    """The patch composes on the frame with no cause, nothing open and no further question (a §19 dependency is a
+    declared red, not a dead end)."""
+    return (not causes(frame, patch) and not open_operations(frame, patch)
+            and all(f.kind == "dependency" for f in findings(frame, patch, apply(frame, patch))))
+
+
+@lru_cache(maxsize=None)
+def has_executing_answer(frame: State, answer_slots: frozenset, candidates: tuple) -> bool:
+    """§8.4 (3): a candidate executes or, without candidates, some one-operation answer on ``answer_slots`` does. The
+    model searches one-operation answers; every answer to every pending is a gate of M2A-4."""
+    if candidates:
+        return any(executes(frame, c) for c in candidates)
+    return any(executes(frame, (op,)) for op in OPS if op not in LABEL_ITEMS and covered((op,)) <= answer_slots)
 
 
 def r31_candidates(frame: State, e_order: bool) -> tuple[tuple[Op, ...], ...]:
@@ -455,9 +474,10 @@ def respond(cfg: Config, ops, *, law: bool = True) -> Response:
     relative = [op for op in ops if op.kind == "RELATIVE"]
     if relative:  # §7.1 row 6 (F15)
         code, rest = HOST["H4"][1], _without(ops, relative)
-        if law and (pending is not None or cfg.expired or law_violations(base, rest, (), frozenset())):
+        made = _pending(base, code, relative, rest, ())
+        if law and (pending is not None or cfg.expired or law_violations(base, rest, (), made.answer_slots)):
             return Response("INFORM", code, pending=pending, clause="§7.1 6 + §8.4")
-        return Response("CLARIFY", code, pending=_pending(base, code, relative, rest, ()), clause="§7.1 6")
+        return Response("CLARIFY", code, pending=made, clause="§7.1 6")
     if pending is not None:
         return answer(cfg, pending, ops)
     found = causes(base, ops)
@@ -496,19 +516,26 @@ def respond(cfg: Config, ops, *, law: bool = True) -> Response:
     return Response("CLARIFY", code, pending=made, clause=first.rule)
 
 
+def normalized(frame: State, ops) -> tuple[Op, ...]:
+    """§8.3 «Selección» (R3c, U26): a KEEP of a slot that exists in the frame is the identity and is dropped."""
+    return tuple(op for op in ops if not (op.kind == "KEEP" and occupied(frame, op.slot)))
+
+
+def identity(ops) -> list[tuple]:
+    """The multiset of (op, slot, canonical value / universe target): never text or ids."""
+    return sorted((op.kind, op.slot, op.value) for op in ops)
+
+
 def selects(candidate: tuple[Op, ...], ops) -> bool:
-    """§8.3 «Selección» (R3b, U22): at least one answer operation on the candidate's slots, and each of those matches
-    one of its operations by (op, slot, canonical value / universe target). Never text or ids."""
-    slots, identities = covered(candidate), {(op.kind, op.slot, op.value) for op in candidate}
-    on = [op for op in ops if covered((op,)) & slots]
-    return bool(on) and all(not open_operations(EMPTY, (op,)) and (op.kind, op.slot, op.value) in identities
-                            for op in on)
+    """§8.3 «Selección» (R3c, U26): EXACT match of the multiset of resolved operations with the candidate's patch."""
+    return not open_operations(EMPTY, ops) and identity(ops) == identity(candidate)
 
 
 def answer(cfg: Config, pending: Pending, ops) -> Response:
-    """§8.3 rows 4, 5, 7 and 8 (row 1 is an event; rows 2, 3 and 6 need control labels the model leaves out)."""
+    """§8.3 rows 4, 5, 6, 7 and 8 (row 1 is an event; rows 2 and 3 need control the model leaves out)."""
     labels = [op for op in ops if op.kind == "NO_SELECTION"]
-    touched_slots = covered(op for op in ops if op not in labels)
+    ops = normalized(pending.frame, [op for op in ops if op not in labels])
+    touched_slots = covered(ops)
     if labels:  # §8.3 row 5 before row 6: an answer plus an edit of another slot is re-asked as such
         if touched_slots & pending.answer_slots and touched_slots - pending.answer_slots:
             return Response("REASK", "ANSWER_EDITS_OTHER_SLOT", pending=pending, clause="§8.3 5")
@@ -522,8 +549,6 @@ def answer(cfg: Config, pending: Pending, ops) -> Response:
         chosen = [c for c in pending.candidates if selects(c, ops)]
         if len(chosen) != 1:
             return Response("REASK", "ANSWER_UNRESOLVED", pending=pending, clause="§8.3 7")
-        if touched_slots - covered(chosen[0]):
-            return Response("REASK", "ANSWER_EDITS_OTHER_SLOT", pending=pending, clause="§8.3 Selección")
         patch = chosen[0]
     frame = pending.frame
     if causes(frame, patch):
@@ -790,14 +815,41 @@ def test_the_r3b_controls_answer_as_the_contract_says():
     r31 = full[(False, False, "current", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER")]
     assert respond(r31, (Op("SET", "CARDINALITY", "n"),)) == Response("INFORM", WIRE_INVALID, pending=r31.pending,
                                                                          clause="§7.1 4b")
-    # selection by semantic identity (U22): «por fecha» picks its SET_ORDER, «quita también el límite» picks C1,
-    # an extra edit of another slot is row 5
+    # selection by EXACT semantic identity (U22, R3c U26): «por fecha» (with or without «mantén el límite») picks its
+    # SET_ORDER; «quítales también el límite» is C1's whole patch; a part of a candidate selects nothing (row 7);
+    # an edit of a slot outside answer_slots is row 5
     by_date = respond(r31, (Op("SET_ORDER", "ORDER", OrderKey.DATE.value),))
     assert by_date.kind == "EXECUTE" and by_date.state.slots[IDX["CARDINALITY"]] == ("n0",)
-    limit = respond(r31, (Op("CLEAR", "CARDINALITY"),))
+    assert respond(r31, (Op("SET_ORDER", "ORDER", OrderKey.DATE.value), Op("KEEP", "CARDINALITY"))) == by_date
+    limit = respond(r31, (Op("CLEAR", "CARDINALITY"), Op("CLEAR", "ORDER")))
     assert limit.kind == "EXECUTE" and not occupied(limit.state, "ORDER") and not occupied(limit.state, "CARDINALITY")
+    assert respond(r31, (Op("CLEAR", "CARDINALITY"),)).code == "ANSWER_UNRESOLVED"
     assert respond(r31, (Op("CLEAR", "CARDINALITY"), Op("SET", "TIME/POSITIVE", "w"))).code == "ANSWER_EDITS_OTHER_SLOT"
     assert respond(r31, (Op("SET_ORDER", "ORDER", OrderKey.VALUE.value),)).code == "ANSWER_UNRESOLVED"
+
+
+def test_r3c_zeus_witnesses():
+    """ZEUS on 7b30b221 (zeus_r3b/h6.py, tna.py, vwc.py): each answer reaches its candidate; no dead pending."""
+    base = _state({"TOPIC/POSITIVE": ("x",), "BUYER/POSITIVE": ("x",), "TIME/POSITIVE": ("x",)})
+    h6 = _pending(base, HOST["H6"][1], (Op("SET", "GEOGRAPHY/POSITIVE", "x", "asks2:H6"),), (), H6_CANDIDATES)
+    cfg = Config("H6", base, False, False, h6, "current")
+    change_buyer = (Op("CLEAR", "BUYER/POSITIVE"), Op("SET", "GEOGRAPHY/POSITIVE", "x"))
+    both = apply(base, (Op("SET", "GEOGRAPHY/POSITIVE", "x"),))
+    assert respond(cfg, change_buyer).state == apply(base, change_buyer)
+    for said in ((Op("SET", "GEOGRAPHY/POSITIVE", "x"),),  # «buscar con ambos»
+                 (Op("KEEP", "BUYER/POSITIVE"), Op("SET", "GEOGRAPHY/POSITIVE", "x"))):  # «mantén la entidad y en …»
+        assert respond(cfg, said) == Response("EXECUTE", state=both, clause="§8.3 4")
+    assert respond(cfg, (Op("KEEP", "BUYER/POSITIVE"),)).code == "PENDING_UNANSWERED"  # only the identity: row 8
+    orc = next(c for c in configs() if c.profile == "OR" and not c.dual and not c.expired and c.wire == "normal"
+               and c.pending is None)
+    assert respond(orc, (Op("SET", "TOPIC/POSITIVE", "w"),)) == Response(
+        "INFORM", "TARGET_NOT_ADDRESSABLE", clause="§6 3b + §8.4")  # no answer could ever execute (§8.4, 3)
+    fresh = next(c for c in configs() if c.profile == "MIN" and not c.dual and not c.expired and c.wire == "current"
+                 and c.pending is None)
+    vwc = respond(fresh, (LABEL_ITEMS[1],)).pending
+    assert vwc.answer_slots == {"VALUE/lower", "VALUE/upper"}
+    assert all(respond(fresh._replace(pending=vwc), (Op("SET", side, "v"),)).kind == "EXECUTE"
+               for side in ("VALUE/lower", "VALUE/upper"))
 
 
 def test_the_u25_closures_answer_as_the_contract_says():
@@ -809,6 +861,7 @@ def test_the_u25_closures_answer_as_the_contract_says():
     asked = respond(fresh, (no_comparator, Op("SET", "TIME/POSITIVE", "w")))
     assert (asked.kind, asked.code, asked.pending.frame_ops) == ("CLARIFY", "VALUE_WITHOUT_COMPARATOR",
                                                                   (Op("SET", "TIME/POSITIVE", "w"),))
+    assert asked.pending.answer_slots == {"VALUE/lower", "VALUE/upper"}  # §8.4 (R3c)
     assert respond(expired, (no_comparator,)) == Response("INFORM", "VALUE_WITHOUT_COMPARATOR", clause="§6 3b")
     assert respond(fresh, (no_comparator, Op("CLEAR", "ORDER"))).kind == "INFORM"  # two causes
     assert respond(fresh, (no_selection,)) == Response("INFORM", NO_SELECTION_CODE, clause="§7.1 4b")

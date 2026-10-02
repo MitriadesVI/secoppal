@@ -27,6 +27,7 @@ from __future__ import annotations
 import ast
 import hashlib
 import importlib.util
+import json
 import re
 from collections import Counter
 from dataclasses import dataclass
@@ -179,16 +180,17 @@ def identity(op: fa.PatchOp) -> tuple:
     return op.op, op.slot, value, target
 
 
-def select(candidates: tuple[fa.CandidatePatch, ...], answer: tuple[fa.PatchOp, ...]) -> list[str]:
-    """§8.3 «Selección»: the candidates (ids, for the assertion only) the answer selects. A candidate is selected when
-    the answer has at least one operation on its slots and each of those is one of its operations by identity."""
-    chosen = []
-    for candidate in candidates:
-        slots, identities = {op.slot for op in candidate.patch.ops}, [identity(op) for op in candidate.patch.ops]
-        on = [op for op in answer if op.slot in slots]
-        if on and all(identity(op) in identities for op in on):
-            chosen.append(candidate.candidate_id)
-    return chosen
+def _key(op: fa.PatchOp) -> str:
+    return json.dumps([repr(part) for part in identity(op)], sort_keys=True)
+
+
+def select(candidates: tuple[fa.CandidatePatch, ...], answer: tuple[fa.PatchOp, ...],
+           frame_slots: frozenset = frozenset()) -> list[str]:
+    """§8.3 «Selección» (R3c, U26): drop the KEEPs of slots the frame has (identity), then the candidates (ids, for the
+    assertion only) whose patch is EXACTLY the answer's multiset of operations."""
+    answer = tuple(op for op in answer if not (op.op is fa.PatchOpKind.KEEP and op.slot in frame_slots))
+    wanted = Counter(_key(op) for op in answer)
+    return [c.candidate_id for c in candidates if Counter(_key(op) for op in c.patch.ops) == wanted]
 
 
 # ---- generated inventory -------------------------------------------------------------------------------------------
@@ -454,6 +456,9 @@ SWEEP = (
         "INFORM UNSUPPORTED_PROPOSAL:UNSUPPORTED_CONDITION", "CUBIERTO",
         "tabla de rechazos de §6 (el código de la autoridad VALUE pasa tal cual); motivo de 4b; barrido multi-op",
         "U25", ("A3-UNSUPPORTED_PROPOSAL:UNSUPPORTED_CONDITION", "A3-INFORM:VALUE_WITHOUT_COMPARATOR")),
+    Row("S15", (), "evento de opción de una pendiente que ya no existe (cancelada, vencida o sustituida) (R3c, U26)",
+        "— (evento)", "SÍ", "INFORM STALE_OPTION, 0 llamadas, ancla intacta", "CUBIERTO", "§8.3 «Selección»; A.3",
+        "U26", ("A3-STALE_OPTION",)),
     Row("R01", (), "rechazo DELTA_SLOT_CONFLICT (dos SET en una ranura; KEEP+CLEAR; dos REPLACE_UNIVERSE)",
         "SET×2, KEEP+CLEAR, REPLACE_UNIVERSE×2", "SÍ", "→ CLARIFY DELTA_SLOT_CONFLICT", "CUBIERTO",
         "tabla de §6; incluye la unión de valores de G-FU-09 (§19)", "R3-2", ("A3-DELTA_SLOT_CONFLICT",)),
@@ -588,6 +593,8 @@ TYPE_GAPS = {
                         for code in ([f"UNRESOLVED_VALUE:{d}" for d in sorted(dim_domain())]
                                      if c == "UNRESOLVED_VALUE:<DIM>" else [c])))
        for c in (*INFORM_REFUSALS, *INFORM_HOST)},
+    "A3-STALE_OPTION": ("reason_code_allowed(INFORM) sin STALE_OPTION (R3c, U26)",
+                        lambda: fa.reason_code_allowed("STALE_OPTION", fa.TurnResolution.INFORM)),
     "A3-CONTRACT-EQUALS-TYPE": ("A.3/A.1 del contrato enmendado ≠ constantes del tipo",
                                 lambda: _contract_equals_type()),
 }
@@ -694,7 +701,9 @@ def test_d1_option1_is_in_the_contract_and_section_8_3_is_untouched():
     s19 = CT.section(text, "## 19. Frontera: M2b, M3 y E-*", "## 20. Gates")
     rows = {row[0]: row for row in CT.table(s19, "| Id | Alcance | Ids | Conteo | impacto_m2a3 | Necesitan | Dueño |")}
     assert "**sólo C1**" in rows["`DEP-E-ORDER`"][5]
-    assert rows["`DEP-E-ORDER-CANDIDATES`"][2:5] == ["[SF192]", "1", "COMPOSICION"]
+    assert rows["`DEP-E-ORDER-CANDIDATES`"][2:5] == ["[SF192, SF199, SF200, SF201]", "4", "COMPOSICION"]  # R3c
+    assert rows["`DEP-M2A5-WIRE-CARDINALITY`"][2:5] == ["[SF199]", "1", "LECTURA"] and rows[
+        "`DEP-M2A5-WIRE-CARDINALITY`"][6] == "M2A-5"
     assert "**PARCIALES**" in rows["`DEP-E-ORDER-CANDIDATES`"][5]
     assert "### D.2 Puntos de revisión del usuario: RESUELTOS (2026-10-02)" in text
 
@@ -727,8 +736,13 @@ def test_d1_option1_answers_go_through_the_wire_and_select_by_semantic_identity(
     directive.validate_raw(limit_raw)
     clear_limit = fa.PatchOp(fa.PatchOpKind.CLEAR, CARDINALITY_SLOT, None, None, _origin(9))
     candidates = r31_candidates()
+    clear_order = fa.PatchOp(fa.PatchOpKind.CLEAR, ORDER_SLOT, None, None, _origin(5))
+    keep_limit = fa.PatchOp(fa.PatchOpKind.KEEP, CARDINALITY_SLOT, None, None, _origin(11))
     assert select(candidates, (set_order(SAMPLE[D.ORDER][1]),)) == ["k2"]  # row 4: its SET_ORDER
-    assert select(candidates, (clear_limit,)) == ["k1"]  # row 4: C1
+    assert select(candidates, (set_order(SAMPLE[D.ORDER][1]), keep_limit),
+                  frozenset({ORDER_SLOT, CARDINALITY_SLOT})) == ["k2"]  # «… y mantén el límite»: KEEP is identity
+    assert select(candidates, (clear_order, clear_limit)) == ["k1"]  # row 4: C1, its whole patch
+    assert select(candidates, (clear_limit,)) == []  # a part of a candidate is no candidate: row 7 (R3c)
     assert select(candidates, (set_order(SAMPLE[D.ORDER][0]),)) == []  # the criterion in force: row 7
     assert select(r31_candidates(provisional=True), (set_order(SAMPLE[D.ORDER][1]),)) == []  # without E-ORDER
     renamed = tuple(fa.CandidatePatch(f"z{n}", f"otro_{n}", c.patch) for n, c in enumerate(candidates))
@@ -773,6 +787,26 @@ def test_r3b_inform_capable_codes_are_a_closed_list_of_clarify_codes():
     assert host | refusals <= set(capable)
 
 
+def test_r3c_is_in_the_contract():
+    text = _contract()
+    expiry = _flat(CT.section(text, "**Vencimiento pegajoso (R3c, U26).**", "Si además había una pendiente"))
+    for clause in ("Un turno que encuentra el ancla vencida y no la confirma ni la reemplaza lleva el eco "
+                   "`CONTEXT_EXPIRED`, guardado en su registro", "sea cual sea el plazo transcurrido",
+                   "Vuelve a estar vigente sólo con «continuar» (`CONTEXT_EXPIRED_CONFIRM`), con «reset» o una "
+                   "cancelación, o con una búsqueda nueva", "No hay campos nuevos en el tipo"):
+        assert clause in expiry, clause
+    echo = next(r for r in CT.table(text, "| Clase | Obligatoria cuando |") if r[0] == "`CONTEXT_EXPIRED`")
+    assert "no la confirma ni la reemplaza" in echo[1]
+    law = _flat(CT.section(text, "### 8.4 Ley de la pendiente posible (R3b, U20)", "## 9."))
+    for clause in ("existe **al menos una** respuesta que ejecuta",
+                   "`VALUE_WITHOUT_COMPARATOR` lleva `answer_slots = {VALUE.lower, VALUE.upper}`",
+                   "Barrer las respuestas a todas las pendientes es gate de M2A-4",
+                   "son gate de M2A-6/8b por replay"):
+        assert clause in law, clause
+    assert "Su plazo es de 30 minutos desde su creación" in _flat(CT.section(text, "### 8.2 Creación", "### 8.3"))
+    assert "STALE_OPTION" in annex_a3()["INFORM"]
+
+
 def test_u25_closures_are_in_the_contract():
     text = _contract()
     closure = _flat(CT.section(text, "**`VALUE_WITHOUT_COMPARATOR` (R3b-2, U25).**", "---"))
@@ -790,10 +824,14 @@ def test_r3b_p2_keep_conflict_and_semantic_selection_are_in_the_contract():
     step = _flat(CT.section(text, "2. **Orden fijo:**", "3. **Arrastre por identidad"))
     assert "`KEEP` + `SET`/`SET_ORDER`/`REPLACE_UNIVERSE` de la misma ranura **aunque los valores coincidan**" in step
     assert "Un `CLEAR` de la dimensión entera cubre cada una de sus ranuras" in step
-    selection = _flat(CT.section(text, "**Selección (R3b, U22).**", "### 8.4"))
-    for clause in ("(op, ranura, valor canónico codificado), o (`REPLACE_UNIVERSE`, destino)",
-                   "Nunca se decide por texto, `display_key`, `candidate_id` ni ids de condición",
-                   "se compone su parche **completo** sobre `frame` (fila 4)", "(`REASK ANSWER_EDITS_OTHER_SLOT`)"):
+    selection = _flat(CT.section(text, "**Selección (R3b, U22; R3c, U26).**", "### 8.4"))
+    for clause in ("se normaliza P quitando los `KEEP` de ranuras que existen en `frame`",
+                   "Si P toca ranuras fuera de `answer_slots`, es la fila 5 (o la 8 si no toca ninguna de dentro)",
+                   "coincidencia **exacta** de (op, ranura, valor canónico codificado) o (`REPLACE_UNIVERSE`, destino)",
+                   "exactamente uno coincide ⇒ fila 4, y se compone su parche completo sobre `frame`; ninguno o varios "
+                   "⇒ fila 7", "Nunca se decide por texto, `display_key`, `candidate_id` ni ids de condición",
+                   "un evento de opción cuya pendiente ya no existe (cancelada, vencida o sustituida) ⇒ "
+                   "`INFORM STALE_OPTION`, 0 llamadas, ancla intacta"):
         assert clause in selection, clause
     dame_20 = _flat(CT.section(text, "**«Dame 20» (R3b, P1-2).**", "**Provisional fail-closed"))
     assert "`INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL` por §7.1 fila 4b, con la pendiente intacta" in dame_20

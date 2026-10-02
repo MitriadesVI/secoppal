@@ -334,6 +334,44 @@ Los marcados «a completar» los completa el orquestador al integrar.
 - **Si cambia, tocar.** Contrato D.3 y Anexo B; `ADJUDICATION_R3.md`; `build_sealed_gold.py`; el sello (re-sellar con
   motivo).
 
+### U26. R3c: último arreglo del contrato, y la barandilla (2026-10-02)
+- **Decisión.**
+  - **Vencimiento pegajoso (P1-1).** Un turno que encuentra el ancla vencida y no la confirma ni la reemplaza lleva el
+    eco `CONTEXT_EXPIRED`, guardado en su registro. Mientras el último registro lo lleve y el ancla no haya cambiado, el
+    ancla sigue vencida, sea cual sea el plazo.
+    - Vuelve a estar vigente sólo con «continuar», con «reset» o una cancelación, o con una búsqueda nueva.
+    - No hay campos nuevos en el tipo.
+    - SF198 se re-etiqueta con ese eco.
+  - **Selección en pendientes (P1-2).**
+    1. Se quitan los `KEEP` de ranuras que existen en el `frame`.
+    2. Con ops fuera de `answer_slots`, fila 5 (u 8 si no toca ninguna de dentro).
+    3. Si no, coincidencia exacta del multiconjunto (op, ranura, valor canónico / destino) con un candidato: uno ⇒
+       fila 4; ninguno o varios ⇒ fila 7.
+  - **Verificador.** G3 deja de atribuir a una respuesta todas las ranuras candidatas. Sólo la respuesta a la pendiente
+    de R3-1 compone C1 o un `SET_ORDER`, y se comprueba así. Mueren Z1, Z2, Z3 y Z5 (y Z4 y Z11).
+  - **§19.** SF199 depende de M2A-5 (wire IR v2: CARDINALITY sola en `FOLLOWUP_DELTA`), con fila, impacto `LECTURA` y
+    dueño. SF199–SF201 dependen de E-ORDER.
+    - G11 lo comprueba: una opción `SET_ORDER` en la pendiente previa ⇒ E-ORDER; 4b `INVALID_PROPOSAL` ⇔ M2A-5.
+    - G8 admite la fila 4b sólo para motivos con caso en el Gold (hoy `INVALID_PROPOSAL`).
+  - **Tres líneas de contrato.**
+    - Una pendiente exige una respuesta que ejecute; `VALUE_WITHOUT_COMPARATOR` lleva `answer_slots = {VALUE.lower,
+      VALUE.upper}`.
+    - Un evento de opción de una pendiente que ya no existe ⇒ `INFORM STALE_OPTION` (código nuevo de A.3).
+    - Plazo de la pendiente: 30 minutos desde su creación.
+  - Conteos de la documentación corregidos: §20.1 pasa a 209, y consta que SF192 también cambió.
+  - **Gates de otro paso** (registrados en el contrato): las respuestas a todas las pendientes son gate de M2A-4; las
+    propiedades de varios turnos, de M2A-6/8b por replay.
+  - **No se hacen:** controles Gold nuevos, etiquetado ciego ni los P3 cosméticos (polaridad de `ANSWER`, `inherited`
+    nulo, sellar los tests del gate, exclusiones del extractor, motivo de 4b en el verificador).
+- **BARANDILLA (usuario).** Ésta es la última ronda de diseño. Tras R3c, un ZEUS que sólo encuentre P1 de forma se
+  repara sin reabrir el diseño.
+- **Quién.** Usuario.
+- **Motivo.** NO_GO de ZEUS sobre `7b30b221`.
+- **Dónde.** Contrato §8.2, §8.3 «Selección», §8.4, §10.1, §11, §19, A.3, Anexo B y Anexo D.3;
+  `check_m2a_gold_contract.py` (G3, G8, G11, H1) y sus mutantes `ZEUS_R3b_*`; el modelo multi-op; `build_sealed_gold.py`
+  (`u25_sf198`); la sección R3c de `gold/ADJUDICATION_R3.md`; el sello.
+- **Si cambia, tocar.** Lo mismo, y re-sellar con motivo.
+
 ## Estado
 
 - **M2A-3 LANGUAGE R3 = FROZEN.** Se activa con el GO de ZEUS sobre el re-sellado de R3b-2 (contrato §20.4). Hasta
@@ -391,4 +429,5 @@ Los marcados «a completar» los completa el orquestador al integrar.
 | `379ca3db` | B4: re-sellado único r3 (sello `3fdd81df…`), U3, P-3 (U18) y §19 sellado (U19) |
 | `4cf1cad3` | B4: U18, U19 y casos adjudicados en la matriz |
 | `4636a73a`, `b8372757` | R3b-1: reparación del NO_GO de ZEUS (U20–U24), sin re-sellar: contrato, herramientas y gates; después, entrada de etiquetado, registro y matriz |
-| commit siguiente a `b8372757` | R3b-2: cierre y re-sellado único (U25), sello `3693d19f…` |
+| `7b30b221` | R3b-2: cierre y re-sellado único (U25), sello `3693d19f…` |
+| commit siguiente a `7b30b221` | R3c: último arreglo (U26) y re-sellado |

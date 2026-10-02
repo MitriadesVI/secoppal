@@ -252,6 +252,16 @@
   ],
   "SF195": [
    "DEP-E-ORDER"
+  ],
+  "SF199": [
+   "DEP-E-ORDER-CANDIDATES",
+   "DEP-M2A5-WIRE-CARDINALITY"
+  ],
+  "SF200": [
+   "DEP-E-ORDER-CANDIDATES"
+  ],
+  "SF201": [
+   "DEP-E-ORDER-CANDIDATES"
   ]
  },
  "case_impacto_m2a3": {
@@ -336,7 +346,10 @@
   "SF185": "COMPOSICION",
   "SF191": "LECTURA",
   "SF192": "COMPOSICION",
-  "SF195": "LECTURA"
+  "SF195": "LECTURA",
+  "SF199": "COMPOSICION",
+  "SF200": "COMPOSICION",
+  "SF201": "COMPOSICION"
  },
  "case_owners": {
   "R0079": [
@@ -621,6 +634,16 @@
   ],
   "SF195": [
    "E-ORDER"
+  ],
+  "SF199": [
+   "E-ORDER",
+   "M2A-5"
+  ],
+  "SF200": [
+   "E-ORDER"
+  ],
+  "SF201": [
+   "E-ORDER"
   ]
  },
  "dependencies": [
@@ -876,16 +899,32 @@
   },
   {
    "cases": [
-    "SF192"
+    "SF192",
+    "SF199",
+    "SF200",
+    "SF201"
    ],
-   "cases_count": 1,
+   "cases_count": 4,
    "dep_id": "DEP-E-ORDER-CANDIDATES",
    "impacto_m2a3": "COMPOSICION",
-   "needs": "enumerar al preguntar los criterios de orden alternativos del dataset. Las alternativas selladas de SF192 son **PARCIALES** (sólo C1) y el registro lo declara (`partial_alternatives`); los `SET_ORDER` no se sellan",
+   "needs": "enumerar al preguntar los criterios de orden alternativos del dataset; SF199–SF201 traen esa opción `SET_ORDER` en su pendiente previa (R3c). Las alternativas selladas de SF192 son **PARCIALES** (sólo C1) y el registro lo declara (`partial_alternatives`); los `SET_ORDER` no se sellan",
    "owners": [
     "E-ORDER"
    ],
    "scope": "candidatos `SET_ORDER` de la pendiente de R3-1 (§6.7)"
+  },
+  {
+   "cases": [
+    "SF199"
+   ],
+   "cases_count": 1,
+   "dep_id": "DEP-M2A5-WIRE-CARDINALITY",
+   "impacto_m2a3": "LECTURA",
+   "needs": "que el wire admita una CARDINALITY sola en un `FOLLOWUP_DELTA`; mientras no lo haga, la etiqueta sellada es la fila 4b",
+   "owners": [
+    "M2A-5"
+   ],
+   "scope": "«dame 20» con la pendiente de R3-1: IR v2 rechaza un `FOLLOWUP_DELTA` que sólo trae CARDINALITY (`interpretation_contract.py:438-439`), §7.1 fila 4b `INVALID_PROPOSAL` (§6.7; R3c)"
   },
   {
    "cases": [],
@@ -1187,7 +1226,7 @@
  "schema": "m2a-contract-s19/2",
  "source": {
   "contract": "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md",
-  "contract_sha256": "ced59fd427c5e7075f76ed2b33decc0f43a477095599994da757729dffd0af9c",
+  "contract_sha256": "4e22a0a06ef6e4b9dd420f078fb9e9ba548358bf253d79beb88c33000adf5477",
   "section": "§19"
  }
 }

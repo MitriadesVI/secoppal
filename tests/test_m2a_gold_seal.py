@@ -87,7 +87,10 @@ def test_sealed_gold_reproduces_from_candidate_and_adjudications():
     assert {o["polarity"] for k in ("label_A", "label_B") for o in r3["SF195"][k]["ops"] if o["op"] == "SET_ORDER"} == {
         "POSITIVE"}  # U25
     r3b = {gid: rows[gid] for gid in ("SF196", "SF197", "SF198", "SF199", "SF200", "SF201")}  # U25: blind labels A/B
-    assert "SF202" not in rows and all(r["adjudicated_by"] == ["U25"] for r in r3b.values())
+    assert "SF202" not in rows and all(r["adjudicated_by"] == (["U25", "U26"] if gid == "SF198" else ["U25"])
+                                       for gid, r in r3b.items())
+    assert {k: r3b["SF198"][k]["expected_echo"] for k in ("label_A", "label_B")} == {
+        "label_A": ["CONTEXT_EXPIRED"], "label_B": ["CONTEXT_EXPIRED"]}  # U26: sticky expiry
     assert {gid for gid, r in r3b.items() if not r["primary_agreement"]} == {"SF199"}
     assert all(r3b["SF199"][k]["disposition_reason"] == "UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL"
                and r3b["SF199"][k]["m2a_scope"] == "OUT_UNSUPPORTED_PROPOSAL" for k in ("label_A", "label_B"))

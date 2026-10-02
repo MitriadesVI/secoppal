@@ -108,4 +108,4 @@ def test_a_sealed_partial_declaration_must_name_a_composicion_row_listing_the_ca
     sf192["partial_alternatives"] = {**sf192["partial_alternatives"], "dependency": "DEP-E-ORDER"}  # a LECTURA row
     fails("not a COMPOSICION row of §19 listing the case", records=records)
     fails("not a COMPOSICION row of §19 listing the case",
-          contract=mutate("| [SF192] | 1 | COMPOSICION |", "| [] | 0 | COMPOSICION |"))
+          contract=mutate("| [SF192, SF199, SF200, SF201] | 4 | COMPOSICION |", "| [SF199, SF200, SF201] | 3 | COMPOSICION |"))

@@ -92,6 +92,7 @@ ADJUDICATIONS = {
     "U3": "R3: SF192–SF195 añadidos; etiquetado ciego A/B y adjudicación del usuario (gold/ADJUDICATION_R3.md)",
     "U25": "R3b: SF196–SF201 añadidos (SF199 = lectura de B; SF202 etiquetado y retirado); SF195 SET_ORDER POSITIVE "
            "(gold/ADJUDICATION_R3.md, sección R3b)",
+    "U26": "R3c: SF198 lleva el eco CONTEXT_EXPIRED (vencimiento pegajoso) (gold/ADJUDICATION_R3.md, sección R3c)",
 }
 
 

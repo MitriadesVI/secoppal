@@ -230,7 +230,35 @@ def mutants(rows: list[dict]) -> dict:
         L["resulting_ir"] = {**L["resulting_ir"], "conditions": [
             c for c in L["resulting_ir"]["conditions"] if c["dimension"] != "TIME"]}
 
+    # ---- R3c (ZEUS NO_GO on 7b30b221, zmut.py): G3 regression, R3-1 answers, expired loop, 4b motives --------------
+    def z1_sf200_keeps_base_order(L):  # only CLEAR(CARDINALITY) over the frame: not C1
+        L["resulting_ir"] = {**L["resulting_ir"], "order": copy.deepcopy(L["prior"]["ir"]["order"])}
+
+    def z2_sf059_drops_carried_geo(L):  # a carried condition lost without a cited op (the G3 regression of R3b-2)
+        L["prior"]["ir"]["conditions"].append({"dimension": "GEOGRAPHY", "id": "cg", "level": "MUNICIPALITY",
+                                               "operator": "is", "polarity": "POSITIVE", "unit": None,
+                                               "value_hint": "Cali"})
+
+    def z3_sf200_invents_order(L):  # an un-cited new ORDER although C1 removes it
+        L["resulting_ir"] = {**L["resulting_ir"], "order": {"direction_source": "DEFAULTED", "operator": "date_desc"}}
+
+    def z4_sf199_reask(L):  # the pre-U25 A reading, against the sealed §19 dependency on M2A-5
+        L.update(expected_disposition="REASK", disposition_reason="ANSWER_UNRESOLVED", m2a_scope="IN")
+
+    def z5_sf198_expired_confirm_loop(L):  # «continuar» with a refusal cause asks forever (H1)
+        L.update(expected_disposition="CLARIFY", disposition_reason="CONTEXT_EXPIRED_CONFIRM", effects=[],
+                 expected_echo=["CONTEXT_EXPIRED"])
+
+    def z11_sf199_other_motive(L):  # 4b only for motives with a sealed case (G8)
+        L["disposition_reason"] = "UNSUPPORTED_PROPOSAL:NO_ACTION"
+
     return {
+        "ZEUS_R3b_Z1_SF200_keeps_base_order": ("SF200", z1_sf200_keeps_base_order),
+        "ZEUS_R3b_Z2_SF059_drops_carried_geo": ("SF059", z2_sf059_drops_carried_geo),
+        "ZEUS_R3b_Z3_SF200_invents_order": ("SF200", z3_sf200_invents_order),
+        "ZEUS_R3b_Z4_SF199_reask": ("SF199", z4_sf199_reask),
+        "ZEUS_R3b_Z5_SF198_expired_confirm_loop": ("SF198", z5_sf198_expired_confirm_loop),
+        "ZEUS_R3b_Z11_SF199_other_motive": ("SF199", z11_sf199_other_motive),
         "U25_SF196_two_causes_clarify": ("SF196", sf196_two_causes_clarify),
         "U25_SF196_two_causes_lower_code": ("SF196", sf196_two_causes_lower_code),
         "U25_SF199_out_scope_reask": ("SF199", sf199_out_scope_reask),

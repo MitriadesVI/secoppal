@@ -1,8 +1,8 @@
 {
  "sealed": true,
  "schema": "m2a-followup-gold/2.1",
- "rules": "contrato M1 v1.4 + F1-F30 + A1-A9 + A8.1 + A9.1 + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b)",
- "note": "Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md, y por las adiciones U3 (SF192–SF195) y U25 (SF196–SF201; SF202 etiquetado y retirado), ver docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md. REAL sin cambios.",
+ "rules": "contrato M1 v1.4 + F1-F30 + A1-A9 + A8.1 + A9.1 + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b) + U26 (R3c)",
+ "note": "Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver docs/audits/m2a_conversation/gold/ADJUDICATION_2026-10-02.md, por las adiciones U3 (SF192–SF195) y U25 (SF196–SF201; SF202 etiquetado y retirado) y por U26 (eco de SF198), ver docs/audits/m2a_conversation/gold/ADJUDICATION_R3.md. REAL sin cambios.",
  "slices": {
   "REAL": {
    "M2A_GOLD": {
@@ -226,7 +226,7 @@
   "SYNTHETIC": {
    "M2A_GOLD": {
     "n": 160,
-    "sha256": "d278619d09ca3a5a519933ecf888d8e3b8f573d350a1825d36c4dae2e46b9dab",
+    "sha256": "eb0defc686e805848f39f58db5d3e475c30e18d8f38ea0d417e15398194c5f57",
     "ids": [
      "SF001",
      "SF002",
@@ -827,7 +827,7 @@
    "sha256": "dc211bc4f7ccc682985afff0ede80c621cd6cdb410a446834ca3451c5943ca71"
   },
   "SF198": {
-   "sha256": "f52448ecf7d0b52a3f3c15b2b7c958d36b44f4270b22ade918743eda832b9fec"
+   "sha256": "89af5854e5b0e233a0dd82086fe520fec0b30f2b358d2ed6ea5c3e216debf9ea"
   },
   "SF199": {
    "sha256": "4618a49d2755b76bbc18201e3279c4ba2fe44768b2d06c5041c33671c8355432"

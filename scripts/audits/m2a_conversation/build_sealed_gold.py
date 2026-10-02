@@ -17,6 +17,7 @@ candidate only by the patches below (``ADJUDICATION_2026-10-02.md``):
       ``docs/audits/m2a_conversation/labeling_r3b/labels_{A,B}.jsonl`` plus only the user's adjudication (section R3b
       of ``gold/ADJUDICATION_R3.md``): SF199 takes B's primary reading, SF202 is retired (labelled, not sealed), and
       SF195's SET_ORDER polarity is POSITIVE. A primary disagreement that is not adjudicated stops the build.
+  U26 release r3c — SF198 carries the echo CONTEXT_EXPIRED (sticky expiry, contract §10.1/§11); no other change.
 
 REAL records are not touched (the REAL Gold never enters git). Usage:
   python scripts/audits/m2a_conversation/build_sealed_gold.py          # write
@@ -241,9 +242,14 @@ def u25_sf198(L: dict) -> None:
     if L["gap_codes"] != ["TTL"]:
         L["gap_codes"] = ["TTL"]
         _u25_note(L, "gap_codes = [\"TTL\"] (convención mayoritaria: refers_to_result_set true sin SET).")
+    if L["expected_echo"] != ["CONTEXT_EXPIRED"]:  # U26 (R3c): sticky expiry, contract §10.1 and §11
+        L["expected_echo"] = ["CONTEXT_EXPIRED"]
+        L["notes"] = L["notes"] + (" | U26 (usuario, 2026-10-02; R3c): expected_echo = [\"CONTEXT_EXPIRED\"]: el turno "
+                                   "encuentra el ancla vencida y no la confirma ni la reemplaza; el ancla sigue vencida.")
 
 
 U25_RULES = {"SF198": u25_sf198}
+U25_ALSO_ADJUDICATED_BY = {"SF198": "U26"}
 
 
 def _adopt_primary(L: dict, source: dict) -> None:
@@ -285,7 +291,7 @@ def u25_additions() -> list[dict]:
             U25_RULES.get(gid, lambda _L: None)(L)
         if any(A[k] != B[k] for k in U3_PRIMARY):
             raise SystemExit(f"U25: {gid} labels still disagree after the adjudication")
-        out.append({"adjudicated_by": ["U25"],
+        out.append({"adjudicated_by": sorted({"U25", *([U25_ALSO_ADJUDICATED_BY[gid]] if gid in U25_ALSO_ADJUDICATED_BY else [])}),
                     "ambiguous_by": sorted(s for s, L in (("A", A), ("B", B)) if L["ambiguity"] != "CLEAR"),
                     "expected_disposition": A["expected_disposition"], "gold_id": gid, "label_A": A, "label_B": B,
                     "m2a_scope": A["m2a_scope"], "primary_agreement": not disagreement, "slice": "SYNTHETIC_FOLLOWUP"})
@@ -314,10 +320,10 @@ def build() -> dict[str, str]:
     idx = json.loads((SRC / "M2A_GOLD_AND_FRONTIER_INDEX.json").read_text(encoding="utf-8"))
     idx["sealed"] = True
     idx["release"] = "M2A_GOLD r3b (2026-10-02)"
-    idx["rules"] = idx["rules"] + " + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b)"
+    idx["rules"] = idx["rules"] + " + U1/U2 (usuario, 2026-10-02) + D1 + U3 (enmienda R3) + U25 (enmienda R3b) + U26 (R3c)"
     idx["note"] = ("Copia sellada. Difiere del candidato asesor por U1 (SF166), U2 (SF063) y D1 (SF168), ver "
-                   + ADJ_DOC + ", y por las adiciones U3 (SF192–SF195) y U25 (SF196–SF201; SF202 etiquetado y "
-                   "retirado), ver " + ADJ_DOC_R3 + ". REAL sin cambios.")
+                   + ADJ_DOC + ", por las adiciones U3 (SF192–SF195) y U25 (SF196–SF201; SF202 etiquetado y "
+                   "retirado) y por U26 (eco de SF198), ver " + ADJ_DOC_R3 + ". REAL sin cambios.")
     syn = idx["slices"]["SYNTHETIC"]["M2A_GOLD"]
     syn["ids"] = sorted(r["gold_id"] for r in out)
     syn["n"] = len(out)

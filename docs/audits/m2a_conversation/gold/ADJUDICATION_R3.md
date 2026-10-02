@@ -75,7 +75,8 @@ sintético: EXECUTE 118, CLARIFY 15, NEW_SEARCH 16, REASK 4, INFORM 1.
 **Autor de la decisión:** el usuario (2026-10-02), transmitida por el orquestador. **Registro:** ARES, paso R3b-2.
 **Mecanismo:** el de U3. `build_sealed_gold.py` (`u25_additions`) construye los registros desde las etiquetas literales
 más esta adjudicación, y el sello comprueba que se reproducen byte a byte. U25 **añade** seis casos (SF196–SF201) y
-cambia un registro existente (SF195).
+cambia un registro existente (SF195). Respecto del sello r3 cambian dos: SF192, que en R3b-1 declaró sus
+alternativas parciales (`partial_alternatives`), y SF195.
 
 ## Procedencia
 
@@ -103,7 +104,7 @@ Las etiquetas cubren SF196–SF202. A y B recibieron la misma entrada; el constr
 | SF200 | `EXECUTE` (selecciona C1: sin ORDER ni CARDINALITY) | `quote` y `value_hint` de la respuesta | forma de R3 | `7a5e705a60b0d0b3…` |
 | SF201 | `REASK ANSWER_EDITS_OTHER_SLOT` | `quote` y `value_hint` | forma de R3 | `3460bbac8bacfe2b…` |
 | SF202 | — (**se retira**) | ninguna primaria; A y B la marcan `AMBIGUOUS` | no se sella (motivo abajo) | — |
-| SF195 (r3) | `EXECUTE`, sin cambios | `polarity` de `SET_ORDER` (A `POSITIVE`, B `null`): el punto abierto de R3 | `POSITIVE`: el tipo prohíbe negar ORDER. Es el único registro existente que cambia | `90123057ae4b3122…` |
+| SF195 (r3) | `EXECUTE`, sin cambios | `polarity` de `SET_ORDER` (A `POSITIVE`, B `null`): el punto abierto de R3 | `POSITIVE`: el tipo prohíbe negar ORDER. Es el único registro existente que cambia U25; SF192 ya había cambiado en R3b-1 (`partial_alternatives`) | `90123057ae4b3122…` |
 
 **Motivo de SF199.** Es una decisión expresa del usuario (U21/P1-2): mientras IR v2 rechace un `FOLLOWUP_DELTA` que
 sólo trae CARDINALITY, «dame 20» termina en `INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL` (§6.7, §7.1 fila 4b). La
@@ -158,3 +159,21 @@ Misma regla fija y pegajosa. **0 movimientos** de ids existentes (el sello lo co
 
 `M2A_GOLD` = 49 REAL + 160 SYNTHETIC = 209. `FOLLOWUP_FRONTIER` = 16 + 41 = 57, sin cambios. Disposiciones del
 sintético: EXECUTE 119, CLARIFY 16, NEW_SEARCH 16, REASK 5, INFORM 4.
+
+---
+
+# Sección R3c: adjudicación U26 (2026-10-02)
+
+**Autor de la decisión:** el usuario (2026-10-02), tras el NO_GO de ZEUS sobre `7b30b221`. **Registro:** ARES, R3c.
+Lo aplica la regla `u25_sf198` de `build_sealed_gold.py`, que deja la marca U26 en las notas. El registro pasa a
+`adjudicated_by = ["U25", "U26"]`.
+
+| Caso | Cambio | Motivo |
+|---|---|---|
+| SF198 | `expected_echo = ["CONTEXT_EXPIRED"]` en A y B; la disposición sigue siendo `INFORM KEEP_ON_EMPTY_SLOT` | vencimiento pegajoso (contrato §10.1 y §11): el turno encuentra el ancla vencida y no la confirma ni la reemplaza, así que lleva el eco y el ancla sigue vencida para los turnos siguientes |
+
+**§19.** SF199 depende de M2A-5 (`DEP-M2A5-WIRE-CARDINALITY`, `LECTURA`). SF199–SF201 dependen de E-ORDER
+(`DEP-E-ORDER-CANDIDATES`, `COMPOSICION`), porque su pendiente previa trae la opción `SET_ORDER`. El verificador lo
+comprueba (G11) desde la extracción sellada.
+
+Ningún id cambia de lado DEV/TEST. `M2A_GOLD` sigue siendo 209.
