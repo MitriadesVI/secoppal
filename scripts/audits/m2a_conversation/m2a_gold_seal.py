@@ -35,6 +35,9 @@ PUBLIC_FILES = (
     f"{GOLD}/M2A_GOLD_synthetic.jsonl",
     f"{GOLD}/FOLLOWUP_FRONTIER_synthetic.jsonl",
     f"{GOLD}/M2A_GOLD_AND_FRONTIER_INDEX.json",
+    f"{CANDIDATE}/M2A_GOLD_synthetic.jsonl",
+    f"{CANDIDATE}/FOLLOWUP_FRONTIER_synthetic.jsonl",
+    f"{CANDIDATE}/M2A_GOLD_AND_FRONTIER_INDEX.json",
     f"{CANDIDATE}/FOLLOWUP_GAPS_LEDGER.jsonl",
     f"{CANDIDATE}/FOLLOWUP_GAPS_LEDGER.md",
 )
@@ -157,6 +160,13 @@ def body(real_dir: Path | None, previous: dict | None) -> dict:
     if gold_real is not None:
         gold_for_partition["REAL"] = gold_real
     part = partition(gold_for_partition)
+    if previous is not None and "partition" in previous:  # sticky: an id keeps its DEV/TEST side across re-seals
+        for slice_name, recs in gold_for_partition.items():
+            ids = {r["gold_id"] for r in recs}
+            prev = {side: set(previous["partition"][side].get(slice_name, [])) for side in ("DEV", "TEST")}
+            new_ids = ids - prev["DEV"] - prev["TEST"]
+            for side in ("DEV", "TEST"):
+                part[side][slice_name] = sorted((prev[side] & ids) | (set(part[side][slice_name]) & new_ids))
     if gold_real is None and previous is not None:
         for side in ("DEV", "TEST"):
             part[side]["REAL"] = previous["partition"][side]["REAL"]
@@ -176,13 +186,23 @@ def body(real_dir: Path | None, previous: dict | None) -> dict:
                           "note": "R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE) sin re-etiquetado. "
                 "Única re-etiqueta: SF166 (U1, usuario 2026-10-02); SF063 sólo normaliza el preestado (U2); "
                 "SF168 se declara (D1)."},
-        "partition": {"rule": "por slice y disposición; orden sha256(salt:id); posiciones pares → TEST, impares → DEV",
+        "partition": {"rule": "por slice y disposición; orden sha256(salt:id); posiciones pares → TEST, impares → DEV; "
+                              "fija desde el sello r2: un id conserva su lado en re-sellados posteriores",
                       "salt": PARTITION_SALT, **part},
         "gates": {"sealed_gold_reproduces_from_candidate": _sealed_reproduces(),
+                  "import_manifest_ok": _import_manifest_ok(),
                   "representability": {"checker": CHECKER, "report": REPORT,
                                        "report_sha256": sha_bytes((ROOT / REPORT).read_bytes()),
                                        "violations": len(json.loads((ROOT / REPORT).read_text(encoding="utf-8"))["violations"])}},
     }
+
+
+def _import_manifest_ok() -> bool:
+    for line in (ROOT / "docs/audits/m2a_conversation/IMPORT_MANIFEST.sha256").read_text(encoding="utf-8").splitlines():
+        digest, path = line.split(maxsplit=1)
+        if sha_bytes((ROOT / path).read_bytes()) != digest:
+            return False
+    return True
 
 
 def _sealed_reproduces() -> bool:
@@ -205,7 +225,8 @@ def main() -> int:
     if a.cmd == "build":
         if a.real_dir is None:
             raise SystemExit("build needs --real-dir")
-        s = seal_of(body(a.real_dir, None))
+        previous = json.loads(SEAL.read_text(encoding="utf-8")) if SEAL.exists() else None
+        s = seal_of(body(a.real_dir, previous))
         SEAL.parent.mkdir(parents=True, exist_ok=True)
         SEAL.write_text(json.dumps(s, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         print("sealed", s["seal_sha256"], json.dumps(s["totals"]))
@@ -215,6 +236,9 @@ def main() -> int:
     if fresh != stored:
         diff = sorted(k for k in set(fresh) | set(stored) if fresh.get(k) != stored.get(k))
         print("SEAL BROKEN:", diff)
+        return 1
+    if not stored["gates"]["import_manifest_ok"]:
+        print("SEAL BROKEN: imported advisory tree differs from IMPORT_MANIFEST.sha256")
         return 1
     if not stored["gates"]["sealed_gold_reproduces_from_candidate"]:
         print("SEAL BROKEN: sealed gold does not reproduce from the candidate + adjudications")

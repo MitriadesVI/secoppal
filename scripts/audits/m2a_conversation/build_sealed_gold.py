@@ -57,7 +57,7 @@ def u1_sf166(rec: dict) -> None:
         for o in L["ops"]:
             if o["slot"] == "TIME":
                 o["unresolved"] = True
-        L["notes"] = (L["notes"] + " | U1 (usuario, 2026-10-02): 2023 no está en el catálogo de D10 (2024–2026) ⇒ "
+        L["notes"] = ("[SUSTITUIDA por U1] " + L["notes"] + " | U1 (usuario, 2026-10-02): 2023 no está en el catálogo de D10 (2024–2026) ⇒ "
                       "CLARIFY SMMLV_YEAR_AMBIGUOUS; control de no extrapolación (adjudicated_by: [\"U1\"]).")
 
 
@@ -72,6 +72,7 @@ def u2_sf063(rec: dict) -> None:
 
 
 def d1_sf168(rec: dict) -> None:
+    rec["adjudicated_by"] = sorted(set(rec["adjudicated_by"]) | {"D1"})
     rec["invalid_persisted_state"] = {
         "declared_by": "D1 (HERA, 2026-10-02)",
         "why": "un ancla ejecutada con SMMLV sobre varios años no es alcanzable bajo §15.5; el caso prueba que la "

@@ -226,7 +226,7 @@
   "SYNTHETIC": {
    "M2A_GOLD": {
     "n": 150,
-    "sha256": "ca337aaae7d3a2819b2bd4d1e357bfc4852c19e4198317c2bf1c2acd1f3fd8d1",
+    "sha256": "46228df320930e0ffd274636a2bbee7eaee00cae93939c71f7ffecb14e260be1",
     "ids": [
      "SF001",
      "SF002",
@@ -790,11 +790,11 @@
   },
   "SF166": {
    "before_sha256": "75c251a4e64a1714aa8f338811e6f5c5ed1456097d4c19d0a774cab66292a3e2",
-   "after_sha256": "eae468f86a3114e7083f8f3fd888c9bbcc2010798d9629b9094cc3b90fba8a5a"
+   "after_sha256": "77aa1c306117cf317de127d95f7b48f43297b305e3c02f07b6c2c2f5ee34a76b"
   },
   "SF168": {
    "before_sha256": "996694e4a1fe152cdd93ac34054d211581ec2c8b97692ab45583152ea0d583d2",
-   "after_sha256": "814e3f7c55724b479312625a0c0a6ed6f63e0c4b1d7b11452df650a734a316e7"
+   "after_sha256": "4bf00817ae1a06977e0498442c36edafda280e0eeb0ef9ad71bd68259daaab13"
   }
  }
 }

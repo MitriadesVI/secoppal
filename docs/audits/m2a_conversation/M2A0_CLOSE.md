@@ -89,7 +89,7 @@ comprobados: cambiar un registro sintético, un byte del contrato, una adjudicac
 
 | # | Gate | Resultado | Evidencia |
 |---|---|---|---|
-| 1 | 199 representables (no derivados: §20.1) | **PASS** — 0 violaciones (SYNTHETIC 150 + REAL 49, ambas etiquetas) | `gold/REPRESENTABILITY_REPORT.json`; verificador probado con 22 mutantes, 22 muertos |
+| 1 | 199 representables (no derivados: §20.1) | **PASS** — 0 violaciones (SYNTHETIC 150 + REAL 49, ambas etiquetas) | `gold/REPRESENTABILITY_REPORT.json`; verificador probado con 23 mutantes, 23 muertos |
 | 2 | Ninguno requiere `parsed_params` | **PASS** | G2 del verificador; §3.7 |
 | 3 | Cada comportamiento tiene regla | **PASS** | `M2A_TRACEABILITY_MATRIX.md` (49 filas) |
 | 4 | Ningún FRONTIER absorbido | **PASS** — GOLD ∩ FRONTIER = ∅; ningún ejemplo de hueco diferido en GOLD | G8 |
@@ -141,6 +141,18 @@ El candidato asesor importado sigue byte-idéntico; la copia sellada (`gold/*.js
 `build_sealed_gold.py` y el sello comprueba que se reproduce. Verificador: G11 (preestados alcanzables) marca SF063,
 SF166 y SF168 sobre el candidato sin parchear y 0 sobre la copia sellada; 22/22 mutantes muertos. Disposiciones del
 Gold sintético: EXECUTE 117, CLARIFY 12, NEW_SEARCH 16, REASK 4, INFORM 1.
+
+## 7e. ZEUS R3 sobre `3ec08b4d` (GO): P2/P3 reparados antes del freeze
+
+| Hallazgo | Reparación |
+|---|---|
+| P2-1 el mutante U1 no aislaba la regla de catálogo de G11 | mutantes por registro: SF166 original sin parchear y SF168 sin declaración D1; mueren **sólo** por G11 (23/23 muertos) |
+| P2-2 «todo referente es intensional hasta M2A-5» era fail-open | regla provisional retirada; la señal extensional es gate de M2A-5 y precondición de activar M2A-6 (contrato §1.2, §7.2, §19; plan) |
+| P2-3 la partición posicional movía 106 asignaciones | partición fija: se conserva la del sello `3aac2a20` (0 movimientos) y un id nunca cambia de lado en re-sellados |
+| P3-1 D1 fuera del registro de adjudicaciones | `adjudicated_by: ["D1"]` en SF168 |
+| P3-2 «cualquier otro año» chocaba con el mantenimiento anual de D10; §1.2 prometía INFORM incondicional | §15.5: sólo un año anterior al catálogo es decisión de producto; el año nuevo de enero es mantenimiento D10. §1.2 alineado |
+| P3-3 el sello no fijaba el candidato importado | el sello liga sus bytes y comprueba `IMPORT_MANIFEST.sha256` (`gates.import_manifest_ok`) |
+| P3-4 nota contradictoria en SF166 | la nota anterior queda marcada `[SUSTITUIDA por U1]` |
 
 ## 8. Deuda no bloqueante registrada
 

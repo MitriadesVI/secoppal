@@ -25,6 +25,7 @@ SPEC = importlib.util.spec_from_file_location("chk", ROOT / "scripts/audits/m2a_
 chk = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(chk)
 SRC = chk.GOLD_DIR
+CANDIDATE = ROOT / "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/gold_candidato/M2A_GOLD_synthetic.jsonl"
 
 
 def both(rec: dict, fn) -> None:
@@ -41,8 +42,6 @@ def pick(rows: list[dict], pred) -> str:
 
 
 def mutants(rows: list[dict]) -> dict:
-    rows_by_id = {r["gold_id"]: r for r in rows}
-
     def carry_lost(L):
         L["resulting_ir"]["conditions"] = [c for c in L["resulting_ir"]["conditions"] if c["dimension"] != "BUYER"]
 
@@ -121,16 +120,6 @@ def mutants(rows: list[dict]) -> dict:
         L["expected_disposition"] = "EXECUTE"
         L["disposition_reason"] = None
 
-    def smmlv_2023_executed(L):
-        src = rows_by_id["SF167"]["label_B"]  # an executed SMMLV result to reuse
-        L["expected_disposition"] = "EXECUTE"
-        L["disposition_reason"] = None
-        res = copy.deepcopy(src["resulting_ir"])
-        for c in res["conditions"]:
-            if c["dimension"] == "TIME":
-                c["value_hint"] = "2023"
-        L["resulting_ir"] = res
-
     def asks_three(L):
         L["prior"]["pending"]["asks"] = 3
 
@@ -161,7 +150,7 @@ def mutants(rows: list[dict]) -> dict:
         L["resulting_ir"] = copy.deepcopy(L["prior"]["ir"])
 
     return {
-        "U1_SF166_smmlv_2023_executed": ("SF166", smmlv_2023_executed),
+
         "U2_SF063_asks_three": ("SF063", asks_three),
         "V3b_SF051_hybrid_over_pending": ("SF051", hybrid_over_pending),
         "V8_SF102_unit_from_two_units": ("SF102", inherit_from_two_units),
@@ -204,6 +193,24 @@ def run_on(scratch: Path, name: str, rows: list[dict]) -> dict:
         chk.GOLD_DIR = SRC
 
 
+def record_mutants(rows: list[dict]) -> dict:
+    """Mutants that replace or alter a whole record (isolated G11 rules)."""
+    original = {r["gold_id"]: r for r in chk.load(CANDIDATE)}
+
+    def unpatched_sf166(rows_):
+        return [copy.deepcopy(original["SF166"]) if r["gold_id"] == "SF166" else r for r in rows_]
+
+    def d1_declaration_removed(rows_):
+        out = copy.deepcopy(rows_)
+        for r in out:
+            if r["gold_id"] == "SF168":
+                r.pop("invalid_persisted_state", None)
+        return out
+
+    return {"U1_SF166_unpatched_2023_executed": ("SF166", unpatched_sf166),
+            "D1_SF168_declaration_removed": ("SF168", d1_declaration_removed)}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Mutation check of check_m2a_gold_contract.py")
     ap.add_argument("--scratch-dir", type=Path, help="where mutated copies are written (outside the repository)")
@@ -221,6 +228,12 @@ def main() -> int:
         killed = any(v.startswith(gid) for v in out["violations"])
         ok &= killed
         print("KILLED" if killed else "SURVIVED", name, gid)
+    for name, (gid, fn) in record_mutants(rows).items():
+        out = run_on(scratch, name, fn(rows))
+        killed = [v for v in out["violations"] if v.startswith(gid)]
+        isolated = bool(killed) and all("SMMLV executed over" in v for v in killed)
+        ok &= isolated
+        print("KILLED" if isolated else "SURVIVED", name, gid, "(G11 only)" if isolated else killed[:2])
     frontier = chk.load(SRC / "FOLLOWUP_FRONTIER_synthetic.jsonl")
     out = run_on(scratch, "M7_frontier_absorbed", rows + [next(x for x in frontier if x["gold_id"] == "SF038")])
     killed = any("SF038" in v for v in out["violations"])

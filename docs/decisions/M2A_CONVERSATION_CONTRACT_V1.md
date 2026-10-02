@@ -53,7 +53,8 @@ IN_NEW_SEARCH, IN_PROTOCOL}`).
 - Follow-ups con ancla de un **dueño legacy** (PROFILE_ACTOR, COUNT, RANK_SUPPLIERS…): `HANDOFF_LEGACY` /
   `LEGACY_FOLLOWUP`, fuera de M2a (G-FU-11, M3).
 - Ejecutar **otra operación** sobre un ancla Foundation (contar, sumar, seguir, exportar «todo»): `INFORM` (G-FU-16, M3).
-- **Referentes extensionales** (filas, «el segundo», subconjuntos de lo mostrado): `INFORM` (G-FU-14, M2b).
+- **Referentes extensionales** (filas, «el segundo», subconjuntos de lo mostrado): `INFORM` en cuanto el wire 5.1
+  los distinga (señal de M2A-5; G-FU-14); su ejecución es M2b. M2A-6 no se activa sin esa señal (§7.2).
 - **Anáforas entre capacidades**, Frame de Entity Profile, listas pendientes generales, **Suppliers**, **MULTI** (M2b).
 - **Relativos no temporales** («bájalo», «el doble»): `CLARIFY` (G-FU-15, M2b).
 - **Relativos temporales complejos** (ventana relativa previa, varios referentes): `CLARIFY` (G-FU-08, E-TIME).
@@ -371,9 +372,10 @@ Definiciones, todas sobre la **forma** de la interpretación, nunca sobre palabr
 - **Continuación(P)** = P trae evidencia estructural de dependencia: job `FOLLOWUP_DELTA`, `referent_evidence`
   (incluye «los que…», «esos»), directiva `KEEP` o `CLEAR`, o condición que depende de un valor previo
   (`depends_on_prior_value`). Es evidencia que el productor emite como span con dueño; **el host no la detecta con
-  léxico**. Hasta que M2A-5 defina en el wire 5.1 la señal que separa un referente **extensional** (una fila, «el
-  segundo», por posición o identidad) de uno **intensional** («los que…», re-consulta F4), todo `referent_evidence` se
-  trata como intensional; distinguirlos es G-FU-14, diferido a M2A-5 (señal) y M2b (ejecución sobre filas).
+  léxico**. La señal que separa un referente **extensional** (una fila, «el segundo», por posición o identidad) de uno
+  **intensional** («los que…», re-consulta F4) es G-FU-14, diferida a M2A-5 (wire 5.1); la ejecución sobre filas es
+  M2b. **No hay regla provisional que trate un referente como intensional por defecto:** la señal es gate de M2A-5 y
+  precondición de la activación de M2A-6 (sin ella, ningún turno con `referent_evidence` se ejecuta en runtime).
 - **Nuevo(P, A)** = P trae una condición TOPIC o ACTOR (de cualquier polaridad) cuyo par (polaridad, valor canónico)
   no está en el ancla A, o un job de operación nueva (que el paso 4 de §7.1 ya envió a `INFORM`). Es la lista de A9.1
   leída sin filtro de polaridad.
@@ -646,8 +648,9 @@ unidad única ⇒ `CLARIFY UNIT_AMBIGUOUS`. La herencia sí puede ir seguida de 
   nueva vigencia a partir de `Provenance.source_amount` (nunca del COP previo).
 - TIME de varios años, o año fuera del catálogo ⇒ `CLARIFY SMMLV_YEAR_AMBIGUOUS`. Nunca se usa el salario de otro año.
 - El catálogo es el de ADR-103 D10: **2024–2026** (`app/data/smmlv.py`, copiado a `app/host_data/value/` por E-VALUE).
-  SF166 («y en 2023?») es el **control de no extrapolación** del Gold (U1): aclara. Añadir 2023 o cualquier otro año
-  es una decisión de producto separada y futura, que re-adjudica SF166 y re-sella.
+  SF166 («y en 2023?») es el **control de no extrapolación** del Gold (U1): aclara. Añadir un año **anterior** al
+  catálogo (2023 o antes) es una decisión de producto separada y futura, que re-adjudica SF166 y re-sella; añadir el
+  año nuevo cada enero (2027…) es el mantenimiento que D10 asigna a D-MONEY/núcleo y no cambia SF166.
 - M2a conserva `unit = SMMLV`, `source_amount`, `year`, `year_source` y el COP convertido (en `money@1`). El catálogo,
   la conversión y su anuncio son de E-VALUE (G-FU-06).
 - Retirados: `SMMLV_UNSUPPORTED`, `INHERITED_UNIT_IMPLAUSIBLE` (A1, A2).
@@ -736,7 +739,7 @@ tabla (fail-closed, sin legacy y sin fuente salvo donde se dice).
 | G-FU-11 | follow-up tras PROFILE/COUNT/RANK | 17 | `HANDOFF_LEGACY` | M3 | misma Conversation IR para todas las capacidades |
 | G-FU-12 | contexto vencido con pendiente | 2 | `CLARIFY CONTEXT_EXPIRED_CONFIRM` (gana F11) | M2b | precedencia F11/F29 |
 | G-FU-13 | qué cuenta como «búsqueda vacía» | 2 | `CLARIFY` | M2b | búsqueda mínima admisible |
-| G-FU-14 | referentes extensionales | 11 | `INFORM` cuando la señal extensional exista; hasta entonces todo referente es intensional (re-consulta, F4) | señal: M2A-5 (wire 5.1); ejecución: M2b | señal estructural extensional/intensional en el wire + `result_set_ref` con identidad de fila |
+| G-FU-14 | referentes extensionales | 11 | `INFORM` (sin llamada) una vez exista la señal extensional del wire 5.1; sin la señal, M2A-6 no se activa | señal: M2A-5 (gate); ejecución: M2b | señal estructural extensional/intensional en el wire + `result_set_ref` con identidad de fila |
 | G-FU-15 | relativos no temporales | 7 | `CLARIFY` | M2b | operadores relativos sobre `ExecutableValue` |
 | G-FU-16 | otra operación sobre ancla SEARCH | 4 | `INFORM` | M3 | manifiestos de capacidad sobre la efectiva |
 | G-FU-17 | fragmento sin ancla o ancla ilegible | 2 | `CLARIFY` (pedir la búsqueda completa) | protocolo M2a | regresión fail-closed |
