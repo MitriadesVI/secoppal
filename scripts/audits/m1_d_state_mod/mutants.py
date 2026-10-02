@@ -12,12 +12,10 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-FOCAL = ["tests/test_host_authority_state.py", "tests/test_host_authority_modality.py",
-         "tests/test_estado_families_a2_fixes.py"]
+FOCAL = ["tests/test_host_authority_state.py", "tests/test_host_authority_modality.py"]
 STATE = "app/core/host_authorities/state.py"
 CATALOG = "app/core/host_authorities/state_catalog.py"
 MODALITY = "app/core/host_authorities/modality.py"
-FAMILIES = "app/core/estado_families.py"
 
 MUTANTS = [
     # ---- STATE
@@ -77,13 +75,15 @@ MUTANTS = [
     ("M12 negative modality without its policy", MODALITY, "policies = (*policies, EXCLUSION_POLICY)", "policies = policies"),
     ("M13 a colloquial negation is ignored", MODALITY, "if excluded:\n                return _reject(\"NEGATION_UNSUPPORTED:MODALITY\"",
      "if False:\n                return _reject(\"NEGATION_UNSUPPORTED:MODALITY\""),
-    # ---- estado_families (A2)
-    ("E01 the input is not accent-folded", FAMILIES, "token_lower = _fold(natural_token).strip()",
-     "token_lower = natural_token.lower().strip()"),
-    ("E02 «adjudicado» is not an exact synonym", FAMILIES, '_EXACT_PROCESS_SYNONYMS = ("adjudicado",)',
-     "_EXACT_PROCESS_SYNONYMS = ()"),
-    ("E03 the literal lookup is not accent-folded", FAMILIES, "for lemma in _inflection_lemmas(_fold(token).strip()):",
-     "for lemma in _inflection_lemmas(token.lower().strip()):"),
+    # ---- the authority owns A2 STATE-015/016/017 (estado_families stays byte-identical to main: legacy freeze)
+    ("E01 the authority does not fold accents/case of the cite", STATE, "tokens = window_tokens(window.quote)\n        phrase, negations",
+     "tokens = tuple(window.quote.split())\n        phrase, negations"),
+    ("E02 «adjudicado» widens to the evaluation family", CATALOG,
+     '("adjudicado",): _reading("awarded", "is", processes=_process("adjudicado")),',
+     '("adjudicado",): _reading("awarded", "is", processes=(("estado_del_procedimiento", tuple(\n'
+     '        ESTADO_FAMILIES["en_evaluacion"][PROCESSES]["estado_del_procedimiento"])),)),'),
+    ("E03 the catalog key of «en evaluación» is not folded", CATALOG, '("en", "evaluacion"): _reading("in_evaluation"',
+     '("en", "evaluación"): _reading("in_evaluation"'),
 ]
 
 

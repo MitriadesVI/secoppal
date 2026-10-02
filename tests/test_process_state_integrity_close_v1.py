@@ -71,6 +71,7 @@ def test_funnel_or_its_literal_is_the_funnel(text):
     'procesos publicados o adjudicados de obra',        # another family
     'procesos abiertos o aprobados de obra',            # "Aprobado" reads as en_evaluacion
     'procesos abiertos o cancelados',                   # another family
+    'procesos adjudicados o seleccionados',             # its own literal, but not the funnel
     'procesos abiertos y publicados de obra',           # conjunction, not "o"
     'procesos abiertos, publicados de obra',            # comma
     'procesos abiertos publicados de obra',             # juxtaposition (PSRI narrowed)
@@ -79,14 +80,6 @@ def test_funnel_or_its_literal_is_the_funnel(text):
 ])
 def test_everything_else_keeps_psri_cardinality(text):
     assert decide(text).clarification, text
-
-
-def test_two_synonyms_of_one_literal_are_one_reading():
-    # M1-D-STATE/MOD (A2 STATE-017): «adjudicados» no longer widens to the evaluation family; both words
-    # name Seleccionado, so there are not two DISTINCT readings (ADR-100 «dos lecturas distintas aclaran»).
-    decision = decide('procesos adjudicados o seleccionados')
-    assert decision.clarification is None, decision
-    assert decision.literal == 'Seleccionado' and not decision.funnel, decision
 
 
 def test_without_the_text_cardinality_alone_decides():

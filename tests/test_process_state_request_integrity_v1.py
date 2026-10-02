@@ -357,10 +357,7 @@ REPRESENTATIVES = _representatives()
 def test_representatives_cover_literals_and_families():
     readings = {mention.reading for _token, mention in REPRESENTATIVES}
     assert {'Cancelado', 'Aprobado', 'Seleccionado', 'Cerrado'} <= readings
-    # M1-D-STATE/MOD (A2 STATE-017): «adjudicado» is the exact literal Seleccionado, so no process
-    # surface reads as familia:en_evaluacion any more (it used to be the widened family).
-    assert {'familia:no_procede', 'familia:oferta_abierta'} <= readings
-    assert 'familia:en_evaluacion' not in readings
+    assert {'familia:en_evaluacion', 'familia:no_procede', 'familia:oferta_abierta'} <= readings
 
 
 def _human_plural(token):
@@ -741,7 +738,7 @@ def test_seeded_funnel_does_not_count_and_admits_its_literal(router, text, liter
 @pytest.mark.parametrize('text, conflict', [
     ('oportunidades canceladas de software', 'también pide'),
     ('convocatorias canceladas de obra', 'también pide'),
-    ('oportunidades adjudicadas de obra', 'también pide'),  # A2 STATE-017: now the literal Seleccionado
+    ('oportunidades adjudicadas de obra', 'más de un estado'),
 ])
 def test_seeded_funnel_incompatible_with_the_reading_clarifies(router, text, conflict):
     params, result = plan(router, text)

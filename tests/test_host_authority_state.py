@@ -16,7 +16,8 @@ from app.core.host_authorities.state import FUNNEL_POLICY, StateAuthority
 from app.core.interpretation_contract import Polarity, ResolutionDecision
 from app.core.semantic_dimensions import SemanticDimension
 from app.data.estados import (
-    ESTADO_CONTRATO_SYNONYMS, VALID_ESTADOS_APERTURA, VALID_ESTADOS_CONTRATO, VALID_ESTADOS_PROCEDIMIENTO,
+    ESTADO_CONTRATO_SYNONYMS, ESTADO_PROCEDIMIENTO_SYNONYMS, VALID_ESTADOS_APERTURA, VALID_ESTADOS_CONTRATO,
+    VALID_ESTADOS_PROCEDIMIENTO,
 )
 from tests.foundation_authority_kit import (
     REFERENCE_INSTANT, ConformanceCase, assert_conforms, case, evidence_from_text,
@@ -149,8 +150,18 @@ def test_every_exact_literal_agrees_with_the_lexicons_that_declare_it():
             assert reading.for_dataset(CONTRACTS) == (("estado_contrato", (literal,)),), lemma
 
 
+# Declared divergence from legacy (A2 STATE-017).  ``estado_families`` is FROZEN byte-identical to main until the
+# CUTOVER: it still widens «adjudicado» on procesos to the evaluation family although the lexicon declares it a
+# synonym of «Seleccionado».  The authority reads the exact literal; the legacy value is pinned so that the
+# day legacy changes (CUTOVER) this entry is removed on purpose.
+LEGACY_DIVERGENCES = {
+    (("adjudicado",), PROCESSES): {"estado_del_procedimiento": ["Evaluación", "Seleccionado", "Aprobado",
+                                                                "En aprobación"]},
+}
+
+
 def test_where_the_authority_resolves_it_never_contradicts_the_legacy_resolver():
-    compared = 0
+    compared, diverged = 0, set()
     for phrase, reading, logical, columns in _every_reading():
         legacy = ef.resolve_estado(" ".join(phrase), logical)
         if legacy is None:
@@ -158,8 +169,14 @@ def test_where_the_authority_resolves_it_never_contradicts_the_legacy_resolver()
         expected = {column: list(values) for column, values in columns}
         if reading.state_class == "open":  # the funnel also carries the opening column (projection adds it)
             expected.pop("estado_de_apertura_del_proceso", None)
+        if (phrase, logical) in LEGACY_DIVERGENCES:
+            assert legacy["filters"] == LEGACY_DIVERGENCES[(phrase, logical)], (phrase, logical, legacy)
+            assert expected != legacy["filters"], (phrase, logical)
+            diverged.add((phrase, logical))
+            continue
         assert expected == legacy["filters"], (phrase, logical, legacy)
         compared += 1
+    assert diverged == set(LEGACY_DIVERGENCES)
     assert compared >= 20
 
 
@@ -195,6 +212,31 @@ def test_inflection_and_case_are_read_by_lemma():
     for surface in ("borrador", "borradores", "en borrador"):
         assert run(f"procesos {surface}", surface, "is", POS, (P,)).value.canonical_class == "draft"
     assert run("procesos en evaluacion", "en evaluacion", "is", POS, (P,)).decision is RESOLVED  # no tilde
+
+
+def test_the_authority_folds_accents_and_case_by_itself_state_015_016():
+    """A2 STATE-015/016, owned by the authority (its own tokenizer + folded catalog), not by ``estado_families``."""
+    for spelled, logical, state_class in (("en ejecución", C, "in_execution"), ("EN EJECUCIÓN", C, "in_execution"),
+                                          ("en evaluación", P, "in_evaluation"), ("En Evaluación", P, "in_evaluation"),
+                                          ("en evaluacion", P, "in_evaluation")):
+        verdict = run(f"procesos {spelled}", spelled, "is", POS, (logical,))
+        assert verdict.decision is RESOLVED, spelled
+        assert verdict.value.canonical_class == state_class, spelled
+        assert verdict.value.literals == run("x en ejecucion" if logical == C else "x en evaluacion",
+                                             "en ejecucion" if logical == C else "en evaluacion",
+                                             "is", POS, (logical,)).value.literals, spelled
+
+
+def test_adjudicado_is_the_exact_literal_on_procesos_never_the_evaluation_family_state_017():
+    """A2 STATE-017: the lexicon declares «adjudicado» a synonym of Seleccionado; the authority follows it."""
+    literal = ESTADO_PROCEDIMIENTO_SYNONYMS["adjudicado"]
+    assert literal == ESTADO_PROCEDIMIENTO_SYNONYMS["seleccionado"]
+    for surface in ("adjudicado", "adjudicada", "adjudicados", "adjudicadas", "ADJUDICADOS"):
+        verdict = run(f"procesos {surface}", surface, "is", POS, (P,))
+        assert verdict.value.canonical_class == "awarded", surface
+        assert literals_of(verdict) == {(P, "estado_del_procedimiento"): (literal,)}, surface
+    negated = run("procesos no adjudicados", "no adjudicados", "is", NEG, (P,))
+    assert literals_of(negated) == {(P, "estado_del_procedimiento"): (literal,)} and negated.value.excluded
 
 
 # ---- 3. C4: exact vs family -----------------------------------------------------------------------
