@@ -160,7 +160,7 @@ Gold sintético: EXECUTE 117, CLARIFY 12, NEW_SEARCH 16, REASK 4, INFORM 1.
 |---|---|
 | P2-A la partición sólo se comparaba consigo misma (sello pegajoso) | `tests/test_m2a_gold_seal.py::test_partition_is_frozen` fija el digest de la partición de `3aac2a20` (`04197bbd…`), independiente del sello |
 | P3-A la matriz conservaba la regla de referentes retirada | fila corregida |
-| P3-B el gate de la señal extensional no tenía casos | plan M2A-5: se mide sólo la señal sobre los 11 casos G-FU-14 de la frontera (extensional) y los de re-consulta de `M2A_GOLD` (intensional); la frontera no se absorbe |
+| P3-B el gate de la señal extensional no tenía casos | plan M2A-5: fixture propio de la señal (nunca casos de `FOLLOWUP_FRONTIER`). La primera redacción usaba los 11 casos G-FU-14 y ZEUS R5 dio NO_GO (P1): 4 de ellos (SF068, SF069, R0081, R0192) son re-consultas y la frontera no puede gatearse; corregido |
 | P3-C `IMPORT_MANIFEST.sha256` no estaba fijado | en `interpreting_rules` del sello |
 | P3-D el filtro de aislamiento no distinguía G10 de G11 | filtra por el mensaje exclusivo de G11 |
 
@@ -168,4 +168,8 @@ Gold sintético: EXECUTE 117, CLARIFY 12, NEW_SEARCH 16, REASK 4, INFORM 1.
 
 - P3 de C1.2: exención `data/conversations/` (`docs/audits/m1_c1/C1_2_FRONTIER_PIN_DEBT.md`; ADR-103 Enm. 5 punto 5).
 - Errata H7b «294» (Enm. 5 punto 4).
+- Contrato §19, fila G-FU-14: el «11» cuenta 7 referentes extensionales (`OUT_REFERENT_EXTENSIONAL`: SF065–SF067,
+  SF070–SF072, SF180) y 4 re-consultas en disputa o ambiguas (SF068, SF069, R0081, R0192). El `INFORM` provisional sólo
+  aplica a lo que la señal clasifique como extensional. Precisarlo en el próximo re-sellado (forma).
+- `m2a_gold_seal.py verify` comprueba el pin de la partición (además del test).
 - ADR-103 no figura en `docs/decisions_log.md`: deuda documental no bloqueante, registrada en ADR-103 Enm. 5 (dueño HERA).

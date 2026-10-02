@@ -29,6 +29,9 @@ SEAL = ROOT / "docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json"
 REPORT = "docs/audits/m2a_conversation/gold/REPRESENTABILITY_REPORT.json"
 CHECKER = "scripts/audits/m2a_conversation/check_m2a_gold_contract.py"
 PARTITION_SALT = "m2a-gold-partition/1"
+# DEV/TEST frozen at seal 3aac2a20 (also pinned in tests/test_m2a_gold_seal.py). The seal is sticky, so without this pin
+# ``verify`` would only compare the partition with itself. Change it only after checking that no existing id moved.
+PARTITION_SHA256 = "04197bbd7f0962e7eef5668ced884df071373f7ee4aea7c66935bfec7c754f8e"
 REAL_LOCATION = "~/Documents/secoppal-asesoria-2026-10-01/privado_no_git/gold_followups_real/GOLD_CANDIDATE/"
 
 PUBLIC_FILES = (
@@ -237,6 +240,10 @@ def main() -> int:
     if fresh != stored:
         diff = sorted(k for k in set(fresh) | set(stored) if fresh.get(k) != stored.get(k))
         print("SEAL BROKEN:", diff)
+        return 1
+    part = {side: stored["partition"][side] for side in ("DEV", "TEST")}
+    if digest(part) != PARTITION_SHA256:
+        print("SEAL BROKEN: DEV/TEST partition differs from the frozen pin")
         return 1
     if not stored["gates"]["import_manifest_ok"]:
         print("SEAL BROKEN: imported advisory tree differs from IMPORT_MANIFEST.sha256")
