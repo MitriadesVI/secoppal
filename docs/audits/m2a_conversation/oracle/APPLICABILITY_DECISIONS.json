@@ -1,0 +1,11 @@
+{
+ "decisions": {
+  "SF075": {
+   "date": "2026-10-02",
+   "decided_by": "user",
+   "note": "capacidad pendiente aguas abajo, no del reducer: rojo declarado hasta que exista",
+   "owner": "FOUNDATION_O1B_EXPLICIT_TIME_PARITY"
+  }
+ },
+ "schema": "m2a-oracle-applicability-decisions/1"
+}

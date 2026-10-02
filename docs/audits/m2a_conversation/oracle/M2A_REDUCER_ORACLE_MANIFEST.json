@@ -1,0 +1,217 @@
+{
+ "applicability_decisions": {
+  "ids": [
+   "SF075"
+  ],
+  "path": "docs/audits/m2a_conversation/oracle/APPLICABILITY_DECISIONS.json",
+  "sha256": "def210dfc6bacf682f6100166796a309e67c6c703d7aecdfca1f08e5ee817963"
+ },
+ "artifact": {
+  "path": "docs/audits/m2a_conversation/oracle/M2A_REDUCER_ORACLE_synthetic.jsonl",
+  "records": 150,
+  "sha256": "8225595815c4645a585f71ac6f579e58df5d69cdab5428d402e623ee18a9b5d0"
+ },
+ "gold_seal_sha256": "bb2e981229ec8263a961994388ee4bae5b84a15ac523d0f0435de7a328cd2216",
+ "policy": "texto REAL fuera de git; aquí sólo ids, conteos y digests",
+ "real": {
+  "case_sha256": {
+   "R0075": "be83da1156ecc06bf446b4b764b46fcf884e7cad7f2b1bc6ea04743b2448bf01",
+   "R0079": "b667b626639281822f7f831589da36730265d2956a31998bbd0e7cb69f164df3",
+   "R0083": "c5c26551f81c591e684e5ef98bf05e51137d88e5ddbe4d3103afc3dc6a7ace6d",
+   "R0087": "dddd118a8ff6db348374b21dd31ccc51fdf437958056aeff7a327ec1b03d96ec",
+   "R0089": "69a14ded2f11f2de6b3a646113317cd9e47045926b22dfffe494970affc99e15",
+   "R0092": "9a95c29a06981d2430f14eb19b0d3f082949fc25599a7d3a0e40d59b1499c04e",
+   "R0093": "b7d38f3026ebc753a98af4a639b8561c55acda5ef350630ac824a7db5237eb45",
+   "R0094": "534b64b29404a5b31272622ec0bb788ed5dc6925c7788d0ab6581f6f1cfdf4ec",
+   "R0099": "2c26e3a287bb0299b39920b34137cdb680a903379ba1d5617efe51dad3913bf9",
+   "R0106": "f8a10c67fed6f5620a62fdafcae219bdbf5326851a06138363240611f677387a",
+   "R0107": "5a9d9a173cd983abdb00275efa103a0b8eea10d5fcb32edb4a4754a6bdc17fd1",
+   "R0180": "15130ddec8b5d68fea3117a4c3f5aa80c020edc422f1cf103cc27fa20d71c218",
+   "R0197": "d7aac69bdbad2e3b1b57ead56f437a1138bd8f24c43925177208b451679ecaf9",
+   "R0201": "65fc3e350aef033131aca4ba843186003606e00f88f9fa814735375d5be3e338",
+   "R0202": "a4f442ba6b9b46576cb85fb079a6359b310053b69c1ae5801761e13f5f2fd668",
+   "R0205": "73a87353a0c51d4bb651b8059d9d8c92b1fb6ca63a61172fb91426ed51e248d9",
+   "R0223": "a9388539176498423833534747737c83839ccf6e21c98d5290a4d41d8a22a279",
+   "R0233": "22ffc54da06eaaa781fe3a8bffa1a61d5fa0f5ae12ab431e3d10ef1de3ea8e2a",
+   "R0274": "6b6ff5ba06f194337f73398f9dc2018f9b2f9c27417e0d66f316bebcebfb9b1b",
+   "R0281": "36ad9ae8168e0b7684f0c4c9f9d85987ead57c1d7b0af19185d28b7ee77cbc26",
+   "R0282": "93eb25d01a2ee763fc15a784c3a30404e42b92092cf0df18162bcf99fad3f3da",
+   "R0286": "811413d4ae8bff8775cf5bc087bf219fe647b84a43431c1dbaf5e957b9247fc0",
+   "R0295": "015ae8e1abe4c8dd44590848d258f223b5a4908f29421d4b17ecdcb7ded4cbbf",
+   "R0301": "f0c07f98752937ebc70d5cd742c9f82c77d02b74928b3ad8e78ae93e10986054",
+   "R0303": "5bf79469cc7a20872af2df519cb69f20999cfd5e6e8c01a6e3cfe858e7aeb41f",
+   "R0304": "1a3900875319945a42f3efd71609a61e6eed77cca795ce5a7c830a34f5cc65d1",
+   "R0308": "df20542a769993177238cc2466b708243eac4b7c4023f5bfd0682e268162b7cb",
+   "R0309": "772ae6a91747998939dc661c78d18cde728c41be75f1b2df49a6378e12b355cf",
+   "R0310": "098fab273f309d1d4b4a0d745161568dd531560f48a17e9eb167f4b96d4a4559",
+   "R0311": "256ecf8fdd212ade988deaa03cf8337b4cf67b4f404557c1b1d672c577e27396",
+   "R0312": "170d487e93e3622860620de6b73e7b615c37142b2afdb5b5f75dd44611439e50",
+   "R0313": "7692b79c80c464a30e411ccdbe135ecd20d6122dc95038b8feefe37579fb0c81",
+   "R0314": "7315a1f63c5beecb241bf60da833e3f2705e412980ff8a6370e6c95a0a4e8b32",
+   "R0336": "3d80a2c5e659c49bcbe2848c0598952bacad2918204f290e9305ca7e1dd1dc33",
+   "R0409": "920833ce5a3dde4ba7e0b4891b2acf27989f40008a6e4336986c9e7486899c6a",
+   "R0431": "e87ba861959d388ecac7a1fc8fc42fa81825a7a5e69c976556e905bb12e2eb5f",
+   "R0432": "5c4f4591277faaa4bb3436f28fa15fac7df4475c6332d0a04120b4296188a8ea",
+   "R0450": "5642d2a7bc33d5e7b1890ad88a824348e3e6e708a006ca42f4ac2c47fb4160e5",
+   "R0459": "a69d591acd3bc95eaae230de8de00690729c3bbe71a9cc22f1bfad7a4b4f3721",
+   "R0464": "16560e2542ead953f07be894cb227bf7457bab0f9e876ddf80f886daf3e2dd10",
+   "R0484": "0334936b1ecf4e1612cf8e8994cfdf069e5013bbb968bcf9e1c0ada57ac79eee",
+   "R0496": "f95224ce70fa6911961d9b7d8d65796a6f41c94bef479c4db0c83b99d565e437",
+   "R0497": "989a70c3484d870a70eaadeb6b17ecc0d8356ab8d6f29ccd6d2be2e762d08402",
+   "R0498": "dad92fe8749357b40493a2ac5da52532b3c3a87fd7f53a9f086273e8d205e62f",
+   "R0515": "2c09559cba2a61a44e764f60a1748f8c8f69b7e39d7881013d7e88c811314515",
+   "R0529": "a0f9a147d42a54315f1512637f987973556e2f951cbf5f0749ba6dc74d9c2313",
+   "R0531": "6571cd95345e0e68ad44d43ec0005b84d2ef1dd68acd4696ac78e2ee63be7549",
+   "R0532": "3fe9d764f3533ecca18260b7ca603552b5b5b6f20da239198387ffe4d7938ea9",
+   "R0556": "d108de50896bb6fd318932f8b5f0a4a6c4d95fb6a5ae3808af3d21e3e76daf95"
+  },
+  "ids_by_applicability": {
+   "APLICABLE_M2A3": [
+    "R0075",
+    "R0079",
+    "R0083",
+    "R0087",
+    "R0089",
+    "R0092",
+    "R0093",
+    "R0099",
+    "R0180",
+    "R0197",
+    "R0201",
+    "R0202",
+    "R0205",
+    "R0223",
+    "R0233",
+    "R0286",
+    "R0295",
+    "R0308",
+    "R0309",
+    "R0310",
+    "R0311",
+    "R0312",
+    "R0313",
+    "R0314",
+    "R0336",
+    "R0409",
+    "R0431",
+    "R0432",
+    "R0450",
+    "R0464",
+    "R0484",
+    "R0515",
+    "R0556"
+   ],
+   "DEPENDIENTE(E-GEO)": [
+    "R0274",
+    "R0281",
+    "R0282"
+   ],
+   "DEPENDIENTE(E-MODALITY)": [
+    "R0459"
+   ],
+   "DEPENDIENTE(E-STATE)": [
+    "R0094"
+   ],
+   "DEPENDIENTE(E-TIME)": [
+    "R0496",
+    "R0497",
+    "R0498"
+   ],
+   "DEPENDIENTE(E-VALUE)": [
+    "R0301",
+    "R0303",
+    "R0304"
+   ],
+   "DEPENDIENTE(F)": [
+    "R0106",
+    "R0107",
+    "R0529",
+    "R0531",
+    "R0532"
+   ]
+  },
+  "summary": {
+   "all_by_partition": {
+    "DEV": 24,
+    "TEST": 25
+   },
+   "applicable_by_disposition": {
+    "CLARIFY": 2,
+    "EXECUTE": 31
+   },
+   "applicable_by_partition": {
+    "DEV": 17,
+    "TEST": 16
+   },
+   "by_applicability": {
+    "APLICABLE_M2A3": 33,
+    "DEPENDIENTE(E-GEO)": 3,
+    "DEPENDIENTE(E-MODALITY)": 1,
+    "DEPENDIENTE(E-STATE)": 1,
+    "DEPENDIENTE(E-TIME)": 3,
+    "DEPENDIENTE(E-VALUE)": 3,
+    "DEPENDIENTE(F)": 5
+   },
+   "cases": 49,
+   "classification_measurable": 31,
+   "dependent_by_any_owner": {
+    "E-GEO": 3,
+    "E-MODALITY": 1,
+    "E-STATE": 1,
+    "E-TIME": 4,
+    "E-VALUE": 5,
+    "F": 5
+   },
+   "effects_not_measurable": 0
+  }
+ },
+ "schema": "m2a-reducer-oracle/1",
+ "seal_verified": true,
+ "synthetic": {
+  "all_by_partition": {
+   "DEV": 74,
+   "TEST": 76
+  },
+  "applicable_by_disposition": {
+   "CLARIFY": 2,
+   "EXECUTE": 71,
+   "INFORM": 1,
+   "NEW_SEARCH": 4
+  },
+  "applicable_by_partition": {
+   "DEV": 37,
+   "TEST": 41
+  },
+  "by_applicability": {
+   "APLICABLE_M2A3": 78,
+   "DEPENDIENTE(D-BUYER)": 2,
+   "DEPENDIENTE(E-BUYER)": 2,
+   "DEPENDIENTE(E-GEO)": 4,
+   "DEPENDIENTE(E-MODALITY)": 4,
+   "DEPENDIENTE(E-STATE)": 4,
+   "DEPENDIENTE(E-TIME)": 16,
+   "DEPENDIENTE(E-VALUE)": 10,
+   "DEPENDIENTE(F)": 4,
+   "DEPENDIENTE(FOUNDATION_O1B_EXPLICIT_TIME_PARITY)": 1,
+   "DEPENDIENTE(M2A-4)": 19,
+   "DEPENDIENTE(M2A-6)": 6
+  },
+  "cases": 150,
+  "classification_measurable": 75,
+  "dependent_by_any_owner": {
+   "D-BUYER": 2,
+   "E-BUYER": 5,
+   "E-CONTRACT_TYPE": 1,
+   "E-GEO": 8,
+   "E-MODALITY": 4,
+   "E-STATE": 5,
+   "E-TIME": 17,
+   "E-VALUE": 11,
+   "F": 5,
+   "FOUNDATION_O1B_EXPLICIT_TIME_PARITY": 1,
+   "M2A-4": 19,
+   "M2A-6": 9
+  },
+  "effects_not_measurable": 0
+ }
+}
