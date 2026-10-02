@@ -1,0 +1,113 @@
+{
+ "n_A": 65,
+ "n_B": 65,
+ "n_common": 65,
+ "records_with_any_disagreement": 28,
+ "by_field": {
+  "prior_text": 4,
+  "needs_referent": 14,
+  "delta_dims": 6,
+  "delta_dim_op": 9,
+  "delta_operators": 7,
+  "polarity": 6,
+  "turn_kind": 2,
+  "resulting_operation": 5,
+  "expected_disposition": 2,
+  "resulting_ir_null": 1
+ },
+ "ids_by_field": {
+  "prior_text": [
+   "R0079",
+   "R0083",
+   "R0306",
+   "R0561"
+  ],
+  "needs_referent": [
+   "R0079",
+   "R0081",
+   "R0083",
+   "R0087",
+   "R0089",
+   "R0192",
+   "R0223",
+   "R0418",
+   "R0459",
+   "R0496",
+   "R0497",
+   "R0498",
+   "R0531",
+   "R0532"
+  ],
+  "delta_dims": [
+   "R0099",
+   "R0189",
+   "R0336",
+   "R0375",
+   "R0441",
+   "R0560"
+  ],
+  "delta_dim_op": [
+   "R0099",
+   "R0180",
+   "R0189",
+   "R0192",
+   "R0311",
+   "R0336",
+   "R0375",
+   "R0441",
+   "R0560"
+  ],
+  "delta_operators": [
+   "R0099",
+   "R0189",
+   "R0202",
+   "R0336",
+   "R0375",
+   "R0441",
+   "R0560"
+  ],
+  "polarity": [
+   "R0099",
+   "R0189",
+   "R0336",
+   "R0375",
+   "R0441",
+   "R0560"
+  ],
+  "turn_kind": [
+   "R0189",
+   "R0560"
+  ],
+  "resulting_operation": [
+   "R0319",
+   "R0320",
+   "R0321",
+   "R0375",
+   "R0560"
+  ],
+  "expected_disposition": [
+   "R0375",
+   "R0560"
+  ],
+  "resulting_ir_null": [
+   "R0560"
+  ]
+ },
+ "core_fields": [
+  "turn_kind",
+  "expected_disposition",
+  "delta_dim_op"
+ ],
+ "core_disagreement_ids": [
+  "R0099",
+  "R0180",
+  "R0189",
+  "R0192",
+  "R0311",
+  "R0336",
+  "R0375",
+  "R0441",
+  "R0560"
+ ],
+ "core_agreement": 0.8615384615384616
+}

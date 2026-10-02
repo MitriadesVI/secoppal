@@ -1,0 +1,44 @@
+{
+ "n_A": 65,
+ "n_B": 65,
+ "n_common": 65,
+ "by_field": {
+  "turn_kind": 1,
+  "resulting_ir_struct": 4,
+  "resulting_ir_values": 6,
+  "prior_ir_struct": 1
+ },
+ "ids_by_field": {
+  "turn_kind": [
+   "R0189"
+  ],
+  "resulting_ir_struct": [
+   "R0189",
+   "R0319",
+   "R0321",
+   "R0375"
+  ],
+  "resulting_ir_values": [
+   "R0281",
+   "R0282",
+   "R0320",
+   "R0321",
+   "R0375",
+   "R0435"
+  ],
+  "prior_ir_struct": [
+   "R0321"
+  ]
+ },
+ "primary": [
+  "expected_disposition",
+  "resulting_ir_struct"
+ ],
+ "primary_disagreement_ids": [
+  "R0189",
+  "R0319",
+  "R0321",
+  "R0375"
+ ],
+ "primary_agreement": 0.9385
+}

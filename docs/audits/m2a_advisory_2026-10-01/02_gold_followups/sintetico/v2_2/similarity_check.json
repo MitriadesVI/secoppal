@@ -1,0 +1,1173 @@
+{
+ "method": "word 3-gram Jaccard (accent/case-folded, <s>/</s> padded), threshold >= 0.6 rejects",
+ "corpus": {
+  "real_texts": 620,
+  "public_texts": 394
+ },
+ "cases": 164,
+ "rejected_count": 0,
+ "rejected": [],
+ "max_over_all_cases_real": 0.3,
+ "max_over_all_cases_public": 0.444,
+ "personal_data_scan": {
+  "patterns": [
+   "long_digit_run",
+   "dotted_nit_like",
+   "id_marker",
+   "email",
+   "phone"
+  ],
+  "hits": [],
+  "clean": true
+ },
+ "per_case": [
+  {
+   "gold_id": "SF001",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P151"
+  },
+  {
+   "gold_id": "SF002",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF003",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF004",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.091,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF005",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "X067"
+  },
+  {
+   "gold_id": "SF006",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.143,
+   "nearest_public_id": "X067"
+  },
+  {
+   "gold_id": "SF007",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "P074"
+  },
+  {
+   "gold_id": "SF008",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "P074"
+  },
+  {
+   "gold_id": "SF009",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.083,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF010",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.111,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF011",
+   "max_jaccard_real": 0.143,
+   "nearest_real_id": "R0167",
+   "max_jaccard_public": 0.333,
+   "nearest_public_id": "P161"
+  },
+  {
+   "gold_id": "SF012",
+   "max_jaccard_real": 0.1,
+   "nearest_real_id": "R0397",
+   "max_jaccard_public": 0.273,
+   "nearest_public_id": "N037"
+  },
+  {
+   "gold_id": "SF013",
+   "max_jaccard_real": 0.214,
+   "nearest_real_id": "R0480",
+   "max_jaccard_public": 0.364,
+   "nearest_public_id": "P052"
+  },
+  {
+   "gold_id": "SF014",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF015",
+   "max_jaccard_real": 0.143,
+   "nearest_real_id": "R0515",
+   "max_jaccard_public": 0.111,
+   "nearest_public_id": "P038"
+  },
+  {
+   "gold_id": "SF016",
+   "max_jaccard_real": 0.167,
+   "nearest_real_id": "R0515",
+   "max_jaccard_public": 0.286,
+   "nearest_public_id": "P038"
+  },
+  {
+   "gold_id": "SF017",
+   "max_jaccard_real": 0.25,
+   "nearest_real_id": "R0087",
+   "max_jaccard_public": 0.167,
+   "nearest_public_id": "P073"
+  },
+  {
+   "gold_id": "SF018",
+   "max_jaccard_real": 0.182,
+   "nearest_real_id": "R0089",
+   "max_jaccard_public": 0.071,
+   "nearest_public_id": "P066"
+  },
+  {
+   "gold_id": "SF019",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.071,
+   "nearest_public_id": "P067"
+  },
+  {
+   "gold_id": "SF020",
+   "max_jaccard_real": 0.125,
+   "nearest_real_id": "R0089",
+   "max_jaccard_public": 0.1,
+   "nearest_public_id": "P066"
+  },
+  {
+   "gold_id": "SF021",
+   "max_jaccard_real": 0.25,
+   "nearest_real_id": "R0087",
+   "max_jaccard_public": 0.167,
+   "nearest_public_id": "P073"
+  },
+  {
+   "gold_id": "SF022",
+   "max_jaccard_real": 0.25,
+   "nearest_real_id": "R0087",
+   "max_jaccard_public": 0.167,
+   "nearest_public_id": "P073"
+  },
+  {
+   "gold_id": "SF023",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF024",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.062,
+   "nearest_public_id": "X069"
+  },
+  {
+   "gold_id": "SF025",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "P051"
+  },
+  {
+   "gold_id": "SF026",
+   "max_jaccard_real": 0.143,
+   "nearest_real_id": "R0087",
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "P049"
+  },
+  {
+   "gold_id": "SF027",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.444,
+   "nearest_public_id": "P050"
+  },
+  {
+   "gold_id": "SF028",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "P161"
+  },
+  {
+   "gold_id": "SF029",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF030",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF031",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF032",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF033",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF034",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF035",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF036",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "P051"
+  },
+  {
+   "gold_id": "SF037",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF038",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF039",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF040",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF041",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF042",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF043",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF044",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF045",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF046",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF047",
+   "max_jaccard_real": 0.158,
+   "nearest_real_id": "R0057",
+   "max_jaccard_public": 0.158,
+   "nearest_public_id": "P098"
+  },
+  {
+   "gold_id": "SF048",
+   "max_jaccard_real": 0.158,
+   "nearest_real_id": "R0059",
+   "max_jaccard_public": 0.158,
+   "nearest_public_id": "N035"
+  },
+  {
+   "gold_id": "SF049",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0057",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P098"
+  },
+  {
+   "gold_id": "SF050",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0057",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P098"
+  },
+  {
+   "gold_id": "SF051",
+   "max_jaccard_real": 0.083,
+   "nearest_real_id": "R0504",
+   "max_jaccard_public": 0.056,
+   "nearest_public_id": "P043"
+  },
+  {
+   "gold_id": "SF052",
+   "max_jaccard_real": 0.158,
+   "nearest_real_id": "R0061",
+   "max_jaccard_public": 0.13,
+   "nearest_public_id": "X030"
+  },
+  {
+   "gold_id": "SF053",
+   "max_jaccard_real": 0.125,
+   "nearest_real_id": "R0057",
+   "max_jaccard_public": 0.15,
+   "nearest_public_id": "N100"
+  },
+  {
+   "gold_id": "SF054",
+   "max_jaccard_real": 0.105,
+   "nearest_real_id": "R0504",
+   "max_jaccard_public": 0.077,
+   "nearest_public_id": "P043"
+  },
+  {
+   "gold_id": "SF055",
+   "max_jaccard_real": 0.138,
+   "nearest_real_id": "R0271",
+   "max_jaccard_public": 0.136,
+   "nearest_public_id": "P098"
+  },
+  {
+   "gold_id": "SF056",
+   "max_jaccard_real": 0.111,
+   "nearest_real_id": "R0504",
+   "max_jaccard_public": 0.083,
+   "nearest_public_id": "P043"
+  },
+  {
+   "gold_id": "SF057",
+   "max_jaccard_real": 0.111,
+   "nearest_real_id": "S030",
+   "max_jaccard_public": 0.12,
+   "nearest_public_id": "N100"
+  },
+  {
+   "gold_id": "SF058",
+   "max_jaccard_real": 0.182,
+   "nearest_real_id": "R0154",
+   "max_jaccard_public": 0.154,
+   "nearest_public_id": "P100"
+  },
+  {
+   "gold_id": "SF059",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF060",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF061",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF062",
+   "max_jaccard_real": 0.077,
+   "nearest_real_id": "R0522",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF063",
+   "max_jaccard_real": 0.188,
+   "nearest_real_id": "S005",
+   "max_jaccard_public": 0.143,
+   "nearest_public_id": "N085"
+  },
+  {
+   "gold_id": "SF064",
+   "max_jaccard_real": 0.111,
+   "nearest_real_id": "R0504",
+   "max_jaccard_public": 0.083,
+   "nearest_public_id": "P043"
+  },
+  {
+   "gold_id": "SF065",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF066",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF067",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF068",
+   "max_jaccard_real": 0.1,
+   "nearest_real_id": "R0167",
+   "max_jaccard_public": 0.111,
+   "nearest_public_id": "P108"
+  },
+  {
+   "gold_id": "SF069",
+   "max_jaccard_real": 0.125,
+   "nearest_real_id": "R0167",
+   "max_jaccard_public": 0.143,
+   "nearest_public_id": "P108"
+  },
+  {
+   "gold_id": "SF070",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF071",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF072",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF073",
+   "max_jaccard_real": 0.143,
+   "nearest_real_id": "R0484",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF074",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF075",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF076",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.111,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF077",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.111,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF078",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF079",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.091,
+   "nearest_public_id": "P064"
+  },
+  {
+   "gold_id": "SF080",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.167,
+   "nearest_public_id": "P149"
+  },
+  {
+   "gold_id": "SF081",
+   "max_jaccard_real": 0.25,
+   "nearest_real_id": "R0304",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF082",
+   "max_jaccard_real": 0.25,
+   "nearest_real_id": "R0304",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF083",
+   "max_jaccard_real": 0.25,
+   "nearest_real_id": "R0304",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF084",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF085",
+   "max_jaccard_real": 0.111,
+   "nearest_real_id": "R0087",
+   "max_jaccard_public": 0.308,
+   "nearest_public_id": "X054"
+  },
+  {
+   "gold_id": "SF086",
+   "max_jaccard_real": 0.071,
+   "nearest_real_id": "R0530",
+   "max_jaccard_public": 0.059,
+   "nearest_public_id": "X006"
+  },
+  {
+   "gold_id": "SF087",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF088",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF089",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF090",
+   "max_jaccard_real": 0.188,
+   "nearest_real_id": "R0333",
+   "max_jaccard_public": 0.3,
+   "nearest_public_id": "X028"
+  },
+  {
+   "gold_id": "SF091",
+   "max_jaccard_real": 0.071,
+   "nearest_real_id": "R0530",
+   "max_jaccard_public": 0.059,
+   "nearest_public_id": "X006"
+  },
+  {
+   "gold_id": "SF092",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF093",
+   "max_jaccard_real": 0.125,
+   "nearest_real_id": "R0282",
+   "max_jaccard_public": 0.043,
+   "nearest_public_id": "X009"
+  },
+  {
+   "gold_id": "SF094",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF095",
+   "max_jaccard_real": 0.1,
+   "nearest_real_id": "R0375",
+   "max_jaccard_public": 0.1,
+   "nearest_public_id": "X028"
+  },
+  {
+   "gold_id": "SF096",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF097",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF098",
+   "max_jaccard_real": 0.071,
+   "nearest_real_id": "R0182",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF099",
+   "max_jaccard_real": 0.222,
+   "nearest_real_id": "R0464",
+   "max_jaccard_public": 0.091,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF100",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF101",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF102",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF103",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF104",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF105",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF106",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF107",
+   "max_jaccard_real": 0.125,
+   "nearest_real_id": "R0107",
+   "max_jaccard_public": 0.444,
+   "nearest_public_id": "P056"
+  },
+  {
+   "gold_id": "SF108",
+   "max_jaccard_real": 0.077,
+   "nearest_real_id": "R0192",
+   "max_jaccard_public": 0.083,
+   "nearest_public_id": "P057"
+  },
+  {
+   "gold_id": "SF109",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF110",
+   "max_jaccard_real": 0.071,
+   "nearest_real_id": "R0202",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF111",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF112",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF113",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF114",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF115",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF116",
+   "max_jaccard_real": 0.067,
+   "nearest_real_id": "R0202",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF117",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF118",
+   "max_jaccard_real": 0.167,
+   "nearest_real_id": "R0081",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF119",
+   "max_jaccard_real": 0.091,
+   "nearest_real_id": "R0089",
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "P072"
+  },
+  {
+   "gold_id": "SF120",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.059,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF121",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.091,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF122",
+   "max_jaccard_real": 0.125,
+   "nearest_real_id": "R0087",
+   "max_jaccard_public": 0.364,
+   "nearest_public_id": "P071"
+  },
+  {
+   "gold_id": "SF123",
+   "max_jaccard_real": 0.286,
+   "nearest_real_id": "R0274",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P087"
+  },
+  {
+   "gold_id": "SF124",
+   "max_jaccard_real": 0.3,
+   "nearest_real_id": "R0274",
+   "max_jaccard_public": 0.333,
+   "nearest_public_id": "P087"
+  },
+  {
+   "gold_id": "SF125",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF126",
+   "max_jaccard_real": 0.077,
+   "nearest_real_id": "R0015",
+   "max_jaccard_public": 0.1,
+   "nearest_public_id": "X068"
+  },
+  {
+   "gold_id": "SF127",
+   "max_jaccard_real": 0.1,
+   "nearest_real_id": "R0154",
+   "max_jaccard_public": 0.182,
+   "nearest_public_id": "P100"
+  },
+  {
+   "gold_id": "SF128",
+   "max_jaccard_real": 0.154,
+   "nearest_real_id": "R0059",
+   "max_jaccard_public": 0.308,
+   "nearest_public_id": "P100"
+  },
+  {
+   "gold_id": "SF129",
+   "max_jaccard_real": 0.1,
+   "nearest_real_id": "R0282",
+   "max_jaccard_public": 0.04,
+   "nearest_public_id": "X009"
+  },
+  {
+   "gold_id": "SF130",
+   "max_jaccard_real": 0.083,
+   "nearest_real_id": "R0086",
+   "max_jaccard_public": 0.286,
+   "nearest_public_id": "P052"
+  },
+  {
+   "gold_id": "SF131",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.167,
+   "nearest_public_id": "P161"
+  },
+  {
+   "gold_id": "SF132",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF133",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF134",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0086",
+   "max_jaccard_public": 0.333,
+   "nearest_public_id": "N009"
+  },
+  {
+   "gold_id": "SF135",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF136",
+   "max_jaccard_real": 0.1,
+   "nearest_real_id": "R0295",
+   "max_jaccard_public": 0.083,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF137",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF138",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF139",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.222,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF140",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF141",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF142",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF143",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.2,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF144",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.1,
+   "nearest_public_id": "P047"
+  },
+  {
+   "gold_id": "SF145",
+   "max_jaccard_real": 0.125,
+   "nearest_real_id": "R0564",
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF146",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF147",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF148",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF149",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0087",
+   "max_jaccard_public": 0.111,
+   "nearest_public_id": "P073"
+  },
+  {
+   "gold_id": "SF150",
+   "max_jaccard_real": 0.167,
+   "nearest_real_id": "R0089",
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "P066"
+  },
+  {
+   "gold_id": "SF151",
+   "max_jaccard_real": 0.222,
+   "nearest_real_id": "S014",
+   "max_jaccard_public": 0.222,
+   "nearest_public_id": "N048"
+  },
+  {
+   "gold_id": "SF152",
+   "max_jaccard_real": 0.083,
+   "nearest_real_id": "R0476",
+   "max_jaccard_public": 0.1,
+   "nearest_public_id": "P043"
+  },
+  {
+   "gold_id": "SF153",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF154",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.167,
+   "nearest_public_id": "N074"
+  },
+  {
+   "gold_id": "SF155",
+   "max_jaccard_real": 0.143,
+   "nearest_real_id": "R0075",
+   "max_jaccard_public": 0.143,
+   "nearest_public_id": "P159"
+  },
+  {
+   "gold_id": "SF156",
+   "max_jaccard_real": 0.071,
+   "nearest_real_id": "R0059",
+   "max_jaccard_public": 0.071,
+   "nearest_public_id": "N035"
+  },
+  {
+   "gold_id": "SF157",
+   "max_jaccard_real": 0.182,
+   "nearest_real_id": "R0295",
+   "max_jaccard_public": 0.154,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF158",
+   "max_jaccard_real": 0.077,
+   "nearest_real_id": "R0165",
+   "max_jaccard_public": 0.125,
+   "nearest_public_id": "X058"
+  },
+  {
+   "gold_id": "SF159",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.083,
+   "nearest_public_id": "P163"
+  },
+  {
+   "gold_id": "SF160",
+   "max_jaccard_real": 0.2,
+   "nearest_real_id": "R0089",
+   "max_jaccard_public": 0.077,
+   "nearest_public_id": "P066"
+  },
+  {
+   "gold_id": "SF161",
+   "max_jaccard_real": 0.091,
+   "nearest_real_id": "R0219",
+   "max_jaccard_public": 0.182,
+   "nearest_public_id": "P051"
+  },
+  {
+   "gold_id": "SF162",
+   "max_jaccard_real": 0.077,
+   "nearest_real_id": "S002",
+   "max_jaccard_public": 0.091,
+   "nearest_public_id": "X070"
+  },
+  {
+   "gold_id": "SF163",
+   "max_jaccard_real": 0.0,
+   "nearest_real_id": null,
+   "max_jaccard_public": 0.0,
+   "nearest_public_id": null
+  },
+  {
+   "gold_id": "SF164",
+   "max_jaccard_real": 0.125,
+   "nearest_real_id": "R0538",
+   "max_jaccard_public": 0.154,
+   "nearest_public_id": "N011"
+  }
+ ]
+}

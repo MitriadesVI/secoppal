@@ -1,0 +1,16 @@
+{
+ "SF047": "Bajo §5.1 el texto nombra universo + contenido propio: es NEW_SEARCH (cancela el pendiente), ya no ejercita F25/respuesta híbrida; redundante con SF052/SF057",
+ "SF048": "Bajo §5.1 el texto nombra universo + contenido propio: es NEW_SEARCH (cancela el pendiente), ya no ejercita F25/respuesta híbrida; redundante con SF052/SF057",
+ "SF049": "Bajo §5.1 el texto nombra universo + contenido propio: es NEW_SEARCH (cancela el pendiente), ya no ejercita F25/respuesta híbrida; redundante con SF052/SF057",
+ "SF055": "Bajo §5.1 el texto nombra universo + contenido propio: es NEW_SEARCH (cancela el pendiente), ya no ejercita F25/respuesta híbrida; redundante con SF052/SF057",
+ "SF050": "Gemelo de SF049 cuyo único rasgo es chain=reask/asks: ninguna regla F16–F30 lo distingue; además NEW_SEARCH (§5.1)",
+ "SF123": "F30: el previo tiene un comprador de otro territorio (Gobernación de Nariño) y el fragmento fija una región: la etiqueta probable es CLARIFY/TERRITORY_VS_CARRIED_BUYER, no un delta limpio",
+ "SF155": "F30: «Cali» con comprador arrastrado de otro territorio (Alcaldía de Bello): domina la etiqueta del caso de dos dimensiones",
+ "SF068": "F30/X12: Cali dentro del Valle del Cauca (comprador Gobernación del Valle): territorio contenido sin regla; el gemelo SF068/SF069 no queda aislado del rasgo «de esos»",
+ "SF069": "F30/X12: Cali dentro del Valle del Cauca (comprador Gobernación del Valle): territorio contenido sin regla; el gemelo SF068/SF069 no queda aislado del rasgo «de esos»",
+ "SF135": "F29/X4: previo NOT_EXECUTED sin pregunta pendiente (la interpretación se aceptó y la fuente falló): sigue vivo PRIOR_NOT_EXECUTED",
+ "SF136": "F29/X4: previo NOT_EXECUTED sin pregunta pendiente (la interpretación se aceptó y la fuente falló): sigue vivo PRIOR_NOT_EXECUTED",
+ "SF041": "X18/D705: «el mismo comprador» es un KEEP citado más que un operador relativo (F15)",
+ "SF038": "X18: «el año anterior»/«un trimestre antes» pueden ser relativos al valor previo o al reloj (RELATIVE_ANCHOR vivo)",
+ "SF045": "X18: «el año anterior»/«un trimestre antes» pueden ser relativos al valor previo o al reloj (RELATIVE_ANCHOR vivo)"
+}

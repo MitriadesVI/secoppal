@@ -1,0 +1,1277 @@
+{
+ "adjudications": {
+  "note": "Ningún registro se re-etiquetó; R0205 entra en M2A_GOLD por A8.1 + money_comparators («en adelante» = GTE).",
+  "orchestrator_classification": {
+   "R0075": {
+    "destination": "M2A_GOLD",
+    "rule": "F1: vocabulario cerrado, SET reemplaza; la unión es G-FU-09 (M2b)"
+   },
+   "R0205": {
+    "destination": "M2A_GOLD",
+    "rule": "A8.1 + contrato vigente de D-MONEY: app/core/money_comparators.py:99 mapea «en adelante» a GTE (>=); la lectura principal de A y B ya es >= 500 M; ENADELANTE cerrado por contrato existente"
+   },
+   "SF017": {
+    "destination": "M2A_GOLD",
+    "rule": "F4: re-consulta; superlativo singular = ORDER + CARDINALITY 1"
+   },
+   "SF063": {
+    "destination": "M2A_GOLD",
+    "rule": "A7 + A9; A9.1 no aplica (TOPIC y BUYER nuevos); ops O12/O13 se fija en el esquema"
+   },
+   "SF132": {
+    "destination": "G-FU-19",
+    "rule": "ambigüedad viva licitaciones = procesos u oportunidades; Product View"
+   }
+  },
+  "records": {
+   "A8": [
+    "R0187",
+    "R0531",
+    "SF090",
+    "SF094",
+    "SF099",
+    "SF103",
+    "SF182",
+    "SF183"
+   ],
+   "A8.1": [
+    "R0205",
+    "SF091",
+    "SF095"
+   ],
+   "A9": [
+    "R0094"
+   ],
+   "A9.1": [
+    "R0459",
+    "SF187"
+   ]
+  },
+  "rules": {
+   "A1": "F26 retirada; VALUE por lado; unidad heredada única",
+   "A2": "SMMLV ejecutable con año único; Gold M1 no se re-sella",
+   "A3": "top-N > 100 = P8 (ejecutar 100 y anunciar)",
+   "A4": "búsqueda nueva = consulta autosuficiente",
+   "A5": "relativo temporal con referente único",
+   "A6": "fallo de fuente: semantic_ref sí, result_set_ref no",
+   "A7": "aclaración pendiente: respuesta, cancelación, búsqueda nueva",
+   "A8": "rango vacío: la cota nueva sustituye la restricción VALUE",
+   "A8.1": "rango degenerado a un punto: igual que A8; igualdad pedida explícita vale",
+   "A9": "prueba estructural de autosuficiencia",
+   "A9.1": "con SEARCH activa, sólo condiciones/modificadores = DELTA",
+   "G-FU-03": "PendingClarification.candidate_patches[]"
+  }
+ },
+ "base_commit": "8c1f8c54",
+ "gates": {
+  "representability": {
+   "checker": "scripts/audits/m2a_conversation/check_m2a_gold_contract.py",
+   "report": "docs/audits/m2a_conversation/gold/REPRESENTABILITY_REPORT.json",
+   "report_sha256": "5b15afdb82e8a843fbd0d4630dd616a421df78e775fadd187b109ebe5559aaa4",
+   "violations": 0
+  }
+ },
+ "gold_schema": "m2a-followup-gold/2.1",
+ "interpreting_rules": {
+  "docs/audits/m2a_advisory_2026-10-01/01_diseno_m2a/ADJUDICATION_T3_2026-10-01.md": "abea0e313cdcd2d927975eafc7da624df515095ecc3242c6b598817caac55f8e",
+  "docs/audits/m2a_advisory_2026-10-01/01_diseno_m2a/PRODUCT_DECISIONS_2026-10-01.md": "b807e90afe0c118a41e0aceef2a0b3dc2e743c3d9def6c7c70ffc330c3c4891b",
+  "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/gold_candidato/CLASSIFICATION_UNCLASSIFIED_4.md": "fb9b998566e0f7b5874bc01b19e2f0567f3c3f4c0d2a4784eab616ee03abe83f",
+  "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/ADJUDICATED_OVERRIDES.md": "a04b14dfee239801ca58c6e12f9cb877e30eaad3cdcb11a9284595fa2b8fc643",
+  "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/CONTRACT_ADDENDUM_FOLLOWUPS_v2.md": "6635a69f40f6d7586c3b7260f88f6bf845272d78bcfdd5b9cc439931ac8b966d",
+  "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/SCHEMA_v2_1.md": "0e96ada47d513a92e0b79d8111623b34bc36a4261a9b7d2262959a0a5086e72e",
+  "docs/audits/m2a_conversation/M2A0_H7B_REVIEW.md": "7f9e9f3e836e83de77ef31265ddbd2e26913f98288d7a2a531637c41de7fd381",
+  "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md": "c9e302550b99f8509f2b6b247c658fcbd232be7b3b99957c80f2212b10c80052",
+  "scripts/audits/m2a_conversation/check_m2a_gold_contract.py": "d413cc5b7455cdd8888c3fa81b27c78385c6e805c440d8d464977e6f4764339d"
+ },
+ "partition": {
+  "DEV": {
+   "REAL": [
+    "R0083",
+    "R0089",
+    "R0092",
+    "R0094",
+    "R0106",
+    "R0107",
+    "R0201",
+    "R0202",
+    "R0205",
+    "R0233",
+    "R0281",
+    "R0282",
+    "R0295",
+    "R0303",
+    "R0308",
+    "R0310",
+    "R0311",
+    "R0312",
+    "R0409",
+    "R0431",
+    "R0432",
+    "R0450",
+    "R0484",
+    "R0529"
+   ],
+   "SYNTHETIC": [
+    "SF001",
+    "SF003",
+    "SF004",
+    "SF006",
+    "SF007",
+    "SF010",
+    "SF012",
+    "SF014",
+    "SF016",
+    "SF018",
+    "SF021",
+    "SF024",
+    "SF025",
+    "SF031",
+    "SF033",
+    "SF034",
+    "SF035",
+    "SF037",
+    "SF042",
+    "SF047",
+    "SF048",
+    "SF050",
+    "SF054",
+    "SF059",
+    "SF061",
+    "SF073",
+    "SF075",
+    "SF082",
+    "SF086",
+    "SF087",
+    "SF088",
+    "SF089",
+    "SF096",
+    "SF098",
+    "SF100",
+    "SF103",
+    "SF104",
+    "SF106",
+    "SF108",
+    "SF109",
+    "SF115",
+    "SF117",
+    "SF119",
+    "SF120",
+    "SF121",
+    "SF122",
+    "SF124",
+    "SF125",
+    "SF126",
+    "SF128",
+    "SF130",
+    "SF133",
+    "SF136",
+    "SF138",
+    "SF141",
+    "SF145",
+    "SF146",
+    "SF150",
+    "SF151",
+    "SF152",
+    "SF157",
+    "SF158",
+    "SF159",
+    "SF160",
+    "SF163",
+    "SF164",
+    "SF166",
+    "SF167",
+    "SF183",
+    "SF184",
+    "SF186",
+    "SF187",
+    "SF189",
+    "SF191"
+   ]
+  },
+  "TEST": {
+   "REAL": [
+    "R0075",
+    "R0079",
+    "R0087",
+    "R0093",
+    "R0099",
+    "R0180",
+    "R0197",
+    "R0223",
+    "R0274",
+    "R0286",
+    "R0301",
+    "R0304",
+    "R0309",
+    "R0313",
+    "R0314",
+    "R0336",
+    "R0459",
+    "R0464",
+    "R0496",
+    "R0497",
+    "R0498",
+    "R0515",
+    "R0531",
+    "R0532",
+    "R0556"
+   ],
+   "SYNTHETIC": [
+    "SF002",
+    "SF005",
+    "SF008",
+    "SF009",
+    "SF011",
+    "SF015",
+    "SF017",
+    "SF019",
+    "SF020",
+    "SF022",
+    "SF023",
+    "SF026",
+    "SF027",
+    "SF028",
+    "SF029",
+    "SF030",
+    "SF032",
+    "SF036",
+    "SF041",
+    "SF049",
+    "SF051",
+    "SF052",
+    "SF053",
+    "SF055",
+    "SF056",
+    "SF057",
+    "SF058",
+    "SF060",
+    "SF063",
+    "SF074",
+    "SF076",
+    "SF077",
+    "SF078",
+    "SF079",
+    "SF080",
+    "SF081",
+    "SF083",
+    "SF085",
+    "SF090",
+    "SF091",
+    "SF092",
+    "SF093",
+    "SF094",
+    "SF095",
+    "SF097",
+    "SF099",
+    "SF101",
+    "SF102",
+    "SF105",
+    "SF107",
+    "SF110",
+    "SF111",
+    "SF112",
+    "SF113",
+    "SF118",
+    "SF123",
+    "SF127",
+    "SF129",
+    "SF131",
+    "SF134",
+    "SF135",
+    "SF140",
+    "SF149",
+    "SF155",
+    "SF156",
+    "SF161",
+    "SF165",
+    "SF168",
+    "SF171",
+    "SF172",
+    "SF174",
+    "SF178",
+    "SF182",
+    "SF185",
+    "SF188",
+    "SF190"
+   ]
+  },
+  "rule": "por slice y disposición; orden sha256(salt:id); posiciones pares → TEST, impares → DEV",
+  "salt": "m2a-gold-partition/1"
+ },
+ "public_files": {
+  "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/gold_candidato/FOLLOWUP_FRONTIER_synthetic.jsonl": {
+   "records": 41,
+   "sha256": "8b4924464380bb974cae5f0e003228f8d5a31b8b3d00c7c110350bdf73a5ea1e"
+  },
+  "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/gold_candidato/FOLLOWUP_GAPS_LEDGER.jsonl": {
+   "records": 24,
+   "sha256": "1e687c8c39c067d7f03a3f99219028bb1e94683e992457172cfc74518e37c1bb"
+  },
+  "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/gold_candidato/FOLLOWUP_GAPS_LEDGER.md": {
+   "sha256": "c2eaab7f0d796c46b9b526549f3dbf8d76900f88f6b7913838f9e4232fd73064"
+  },
+  "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/gold_candidato/M2A_GOLD_AND_FRONTIER_INDEX.json": {
+   "sha256": "25e7d74b1964b52a87ffea3b4c032cb4295fd919c8d32e726169573e148f52ef"
+  },
+  "docs/audits/m2a_advisory_2026-10-01/02_gold_followups/gold_candidato/M2A_GOLD_synthetic.jsonl": {
+   "records": 150,
+   "sha256": "1887f7ff39ce3e23e8c9153f6766b05b07a587d5c116804f161e364a71687351"
+  }
+ },
+ "real_private": {
+  "files": {
+   "FOLLOWUP_FRONTIER_real.jsonl": {
+    "records": 16,
+    "sha256": "b77774bcaac00e70c9537bf389ea10322f0a39fd3dfc5deeef953e917a04f304"
+   },
+   "M2A_GOLD_real.jsonl": {
+    "records": 49,
+    "sha256": "42a05834e92aa5c52f3217ed8315df482fa783ee3a3eace0cbeb87f8b3c17a12"
+   }
+  },
+  "location": "~/Documents/secoppal-asesoria-2026-10-01/privado_no_git/gold_followups_real/GOLD_CANDIDATE/",
+  "policy": "texto REAL fuera de git; sólo ids, conteos y digests"
+ },
+ "record_sha256": {
+  "REAL": {
+   "R0075": "33e07cd423d8e02f6ba9895a28f6be93b9145ad88b814b141047977f5a868c1c",
+   "R0079": "6eb2d0b15f49e048be20a9821b247ef75567e342f3cadcfbe335c9f602c31ed7",
+   "R0081": "6b4a952f895d1275b7de9b831e0c73ed371b571a5d9af71c9606e1d2acd1e9ac",
+   "R0083": "8a4f68834038a75bd02ebaa389d3974e073693cfbfd2011681fa9ef24c82da1e",
+   "R0087": "bd78dc4cc84f989672e2197ebe19b913f939f43ee0417af657148007bd0693cc",
+   "R0089": "2f0366849bff29207d300506ca9eca42b84b1392b5752c3f5ae5eccee85870d2",
+   "R0092": "31ce50733b430ca4a4e0037cf50791937283f76391e8ca054071cbb3ce3dfeac",
+   "R0093": "f97a324ef8f46bec19664ba360140a16b97f3f4b7b5e7d0bb694589fa940fd59",
+   "R0094": "2fe7451ea609a704d07f7cb98f80f9749ed208d0348a09c0774aa83650fb1537",
+   "R0099": "33850a4615341c1898499f02fc50c7d957425de5357a7ad574bc5521bb1d940c",
+   "R0106": "b1d5c095cca7e8f26a1a32caa5c1a869ca0dc5f1aa26b2369889e4d718146f39",
+   "R0107": "4d03b6db1243ad89bc995c14bdc3867169b552bdf3aaf9e8892c52bf95e2fb32",
+   "R0180": "58e343f2af55805c153694455cc353897fe539bf28a0504f241633fc0054973f",
+   "R0187": "033c6476ac5001bc9d042dd3da869f67da84368e2ad30a611821990b9fc785c2",
+   "R0189": "f3e56114b9bef4561e75f2476fba16994de3e54559d2a14450dd8b86ac3296ec",
+   "R0192": "0ba012daba1ddabb4b2b4d4eba7ddf4f77fd82e7b2182db8a1bb8fe678325fc2",
+   "R0197": "cbc37f87d99b29d8555ba3d8f3e2594759ed1f27e4da03cfba7b8e349a52da2a",
+   "R0201": "f48a12f346a0a69f43b55c009fb200b42fb7aa6ae924075c4a7d25b3191f1a0a",
+   "R0202": "15653529467becdb8fdfdd0ba770a48a69b041b0e501d3feaeadc62d28b9a8f9",
+   "R0205": "f7faee40a8404f18f94c94cbbf41e8ef8ad9fbb42a646797b88676d27160fe0a",
+   "R0223": "69a4892b08deb0c1cc703905382dee152484a952340a6bf31ddc139868233756",
+   "R0233": "8cf6b08e077faf90d459c2e6c5eb1ff6037691f00d877eb218d74a26bc8cad47",
+   "R0274": "c4b6b046d873a989f338b2b02442fd3d2b2d43b5cd74c384a6b44c508105ef61",
+   "R0276": "2c14782c75ed171f479ae45f74ae63be4ae5bb370a417c350f39647d43987159",
+   "R0281": "b3908ae8c188e8e770c4e38f2eba8b6670f7b2ad4934a109d24f480617a5ac28",
+   "R0282": "0bd28c65203a19d345b97d4ea2501d1b98ef49f57b0db40b212a672352db92e6",
+   "R0286": "6902464035ceb68a74f96f4415b99ecbc33004d3e6a9c7aabf848bc697b53fc8",
+   "R0295": "cb1f634e34f9a838d84b039bf3b703a804a9ac9cee053ecf1d9364e18d902c73",
+   "R0301": "15dea5d4a99ca84f740f3bf61476d0a73961a0e272269cc0ce9359dce52776bb",
+   "R0303": "e17e26c515c4ad0b005156faf13a2a94a04960d767443a93d6f85fd673b30cf5",
+   "R0304": "44a843db8c8b02d3f7b74d46147e12198e45645280fdf5d0ace5e0055460135a",
+   "R0306": "22a0c87333a67ecd9c3e7607f7c6c4111aa39be1eddd7b4c27a022e1f9df0ca4",
+   "R0308": "6c9ff906859471d17ee367f4cb7556ef62217a5b2ca9fb2bbbbf2ad4122f230d",
+   "R0309": "362e54cf40ec49769befd1da310dad6f28b6f9b8414742537f86d57fe4782c55",
+   "R0310": "0cbef6272f6a44ed647288701f66f900ac765ea9aa5f25563b1f68fa4cb9ade2",
+   "R0311": "aa206dd29a0295255434d874eb094090301611bf079e865135d16294aa295b2b",
+   "R0312": "627e2ad51ab67dd5571179a9f3c4fcc1d17183065eb6cd666a6fa70533ad61e3",
+   "R0313": "fd754f135a64dfdb1c43d89fa5e45b419521624384e0169e7c23c7eb67a9b7e5",
+   "R0314": "e504a7c9e3e5f28545e3fa76e350e566162221b4838061c4c8f439cbf5d083d1",
+   "R0319": "202835a8bb647b1c0a1db5165f5cc62c675973281867318d020feed6aab20fc3",
+   "R0320": "313a0ac764008aa26ac278ad773c0907dc1ca91c3a9a28197ee6239920908682",
+   "R0321": "1c2cfac036dc68ba45fea3497c375bee28180e723d0ef8ba3bc5573435ea1db1",
+   "R0336": "617be619ae0460989023f70f8162befd0d85cc4a113ec0bfc5e5530b4904dad7",
+   "R0375": "e462caef97f6a03d753c5045ac2d0288263f5acf8a1eba5df3f07707c576aefa",
+   "R0409": "3c80a5266d5d2b403d4c2c263c7f3cbe97c33b37bf3aca4066e08cf1f50e66b2",
+   "R0418": "1a7a11928c79de4e6f22c930e1f12ad4240a82e700ca1a13593110ee5c3c500c",
+   "R0431": "6f4dd04a05ebad3848df216ad707833e273c75724f8e9e2463df570c0cb4a95c",
+   "R0432": "4f01b438b852e785036378894375163b97d977b65bbce7058806756d70737ffd",
+   "R0435": "ff72bff1483197acc95e025a1c61fb9c32c3270a8e7ec3e7c3812906190dc973",
+   "R0441": "1699fe7378644940b0ade7e3bf925c8a52901b84ebf29ec972998f9bcdc36747",
+   "R0450": "8c0d3dedec41f46f19d8a1ea831cd53f4133f054702ba80572e64f0ecf36beb1",
+   "R0459": "0c35ab8b375ca4feeff655b4aa11affd0b3b5a8fd710686d8705dcd08d994e9d",
+   "R0464": "ee4768b571efe12efbd6228cee0e3a7dba1551d154444c2310406fb3423a389c",
+   "R0483": "e70e95e2cd6d759eed53a5d8568940310562dd844b4da5425b4f91243063bec9",
+   "R0484": "2bc8f8a9d0ae199542d3dd656b8e3cac7f23521afe93d6b2b05ccf50e4abc86a",
+   "R0496": "affad7a19a41324786fff347d02290861d46907ad324729aa5cb5888af77ea78",
+   "R0497": "3724643c7661f1745074286051776e70489bfe28a708cf1cd997128edf90e8b1",
+   "R0498": "dce797c9b8c6c03ae7db7506a8988b31fe9d0221d002be23b3018b566980534d",
+   "R0515": "46d16e312031cc65bf9cba6c8c3d5218d9fa9f1aeecabae04c043b28944a691e",
+   "R0529": "82e56748fb2104b328f030a13f33f7e9fb9aa86daeff5ac70ce6d9c49c72ae77",
+   "R0531": "da48d1ccfec2e33f4a002707970fd19b267deab050daeb4e3d0b06bde5647d14",
+   "R0532": "ceb8a44c05b1125bae931c62ed9d901d21f7e1978c69dfc185869a6e8f507f28",
+   "R0556": "0da6b78d2eaa17441d0a20dc1ea30a55ef4a1e37e03dfe1f88f8698c6f908978",
+   "R0560": "1f2ad51dbaaad9db6e4232227c1c9170ad5d5458cb40ca34a17b0d4c2ee46468",
+   "R0561": "1b3cd3c179f0c088ad55c493ab08c30d1d4fd9261877220f6e4d2e0db4c474ec"
+  },
+  "SYNTHETIC": {
+   "SF001": "926c6d0440473e8ced3dc6816450e9a25e7e0b26dedcc6203f1081a6add10e23",
+   "SF002": "c2d04a4f155e8701cb7531ee31a2750a2ff41998c38e68d5e7b9597c5c7f5fce",
+   "SF003": "171385ae3cd920276778e228631d9dad3fb037841cab98b26231af0fdfb3232b",
+   "SF004": "f9111944f3f7d8df295a293d53dfc00863d9f8ccabcb54a5f9626794d8acab9b",
+   "SF005": "94d1abfc95d389478c7d98b79bbb8502394dbe53a0cb67d0561350a4ac1beb36",
+   "SF006": "b7405524f758cfc8fc638cd3fa07b0c6ba5ab3212d65525617baadf0fc1c056e",
+   "SF007": "603bc892efa3d94f8dd05c822686e55ed8bc422b0846430b647ddcb3fde2a310",
+   "SF008": "14c56db86eb5c97d2f3469e06ab8685a4fc754ef55e993a9d9989bf7684bfc02",
+   "SF009": "527df06053990a57479299660c0407936d30b37c9bdff6279826279b685eee0f",
+   "SF010": "f310eec8b8ae7aefd3063a247d8c73b64fdec4ef7b7683abc9b618a4ab195dea",
+   "SF011": "dec3452acb2660b8c006aad1a04f1a0cf605dc03f27a6642155bc9aa2891fa80",
+   "SF012": "7b9da83d436f2811adba5650b9fb85995fa21efc7995dd4e3fba81029607bcf3",
+   "SF013": "a99348ae7d830425bc4891888daf9c409ba367df23f7a010e980a08c0a3ebcc5",
+   "SF014": "d4e62ea591cef36199f184542675cfaff7691e40f553b95c0d4b24f2dba29d2b",
+   "SF015": "037bb310195251e49876ab68111d6f336e8024fae8a6ab73ab7ee81d80b800fe",
+   "SF016": "e4926f22aea8fb825acfb5c69d85adb99afc597b564b34d3a0082d4aa57ef92a",
+   "SF017": "c86628496b539d31c35eb24f7af9924ecfffe278c3926784c6c184195829a1e1",
+   "SF018": "4e4aefd346bce79c4ed0d57c46a736b044ac7d1520397ae7b3b9f34c9f1a1bb9",
+   "SF019": "f8ed6a90873636c70ba02e81cca5b9fcd127b0ca817425b489e56c63f4eda56b",
+   "SF020": "6198fc70f639d49d4051656e591635119a34b267102ef5421c2a4fa4d87a0f67",
+   "SF021": "42b02d2f893e1226c00035bce943f0da248796e94e6d1644670bbc2d4a607328",
+   "SF022": "bc6ec26440756a05c8a4620e882427e0f472f1485bd25e23dd468e01cf62e98b",
+   "SF023": "a52d132d0060ab3351bd74a02a84184b1938cf916a45127a3b136f0b75adeea4",
+   "SF024": "6f565cd3601b06eba43a2246aa84fba577452b5f5437b837e96fc5793edc345f",
+   "SF025": "46c24da0aa79fc968f8ac84f357bd757eb03f472c72bf799002ba163d729ed41",
+   "SF026": "396b7a80f924572d06598206ea0d99445e0ae82b2e2b4e40eeabb3cd4beb85e2",
+   "SF027": "2206589d4d54f282040c7bfa46cb95ba3c9619a879387a1d0d1a101bb3b87b0a",
+   "SF028": "d5450812a2f1be7969efab719bafa06a5890833d3460ec2a82be728228b7120f",
+   "SF029": "21993edf32b1be18651092feae9354ac5ee3ff6b3f0647ca3e75831e4e350267",
+   "SF030": "6fb88697eb48f06cf9adba57274556a75db6d4fa39d41cfb6713fa1ecff936d2",
+   "SF031": "b93cd5a03ea6e6b12a764abfd027ce52c708be33f2481945528836ed47e91f33",
+   "SF032": "579613e3fc18a9bb017bb5431ea2983263c030b85a4e90dc7aca618fff274b03",
+   "SF033": "9a944f4996fa1dfa965c8e5b0f1d1d1fa7b8e8f8cd9e32c4d5cf72ea52a6775d",
+   "SF034": "363e59180ca311e82615c09ef2d946efa9b1e77ed241ee3f25a2687743dda939",
+   "SF035": "5e455a497d87cd460b723ea1784406c2133b0192988187a5bac959c876a3d288",
+   "SF036": "a5c70486e60d9d4a0119f2a2531e588f0e11e1ae5c4c220ce7d3c983c1e58a0c",
+   "SF037": "bd4a97842adea9f5f32e42727942d22006b5debf85b203862ebc34791bdca135",
+   "SF038": "99a58adee178028792dc3b77efceb60bdabc441b967d6fa5920c4c68dd6b4f9c",
+   "SF039": "7cb2c2527e968940f2224fef6468dcab51f469f8b1e22ac71e6dbc144e569b7f",
+   "SF040": "fd9c5a4f696340f3c7db9e8b0055db37fd30a1f79cde1156812fdb95775613a8",
+   "SF041": "3e81a0300adc8e5f37a348ca3db2cebae41c3a59f61c9bde17878b30c79ea1ba",
+   "SF042": "6c5c9e92fc9b2aee7a163521882e9f3dd3962b8beba4b64179302168170adfe9",
+   "SF043": "bbe7c22379c4aad7656355f72b953e0924d8f0a94bef08ead6c3b542395a3441",
+   "SF044": "0e3d320f1af76821d1af36d62aeaf3f280e6773fadbbd91dae858dd0a5e9fff2",
+   "SF045": "32e0d01785b838e1503fe9352025d8551dab396c93ff6a182dc74648fec1a762",
+   "SF046": "e60dacf88f82920c5311b6d001bc6d768bd5c4c4161dc38fff7a9c2c6f8b25f9",
+   "SF047": "1edd864e093626726c7bda8ff990a32823f648fee58f0f81899a7450a3bee7c4",
+   "SF048": "0de1e2255bbd32e9f735dd2cbe9594d199330b78cd4e40a04ed516d684671d6e",
+   "SF049": "86f5bb07a3813797d2843fa73264307ae813eb48cdea6d98acc76fd14c82d2c7",
+   "SF050": "61edd730c62c0438b533f972513e2f96b965bb13ff04632a4d646279dfd94e00",
+   "SF051": "0f95dfdffc5f95680f04950b9f68368fd12bb360a4a23053dc36fa745d969934",
+   "SF052": "3eea2d066719cf063cdace5d22984784c520cf309511e61870cd03173fa6bb42",
+   "SF053": "eeccd704fb602bd4afd710f610f8b5f541cd1adf3f716ca104552d82915e1938",
+   "SF054": "ea4fec5bd8cc68b9be101bdc935cec1098d22e7ccc89a98edf9a9ad1533c710d",
+   "SF055": "840b3a62766018873884ae650e88c9fda371b65259f2d7f4dec55180fac6903a",
+   "SF056": "07553d8b9e0dce051996ee1a1412a903cb75fac3a676f8d5b777350f566bf0de",
+   "SF057": "ecf2a7332ce56f31b5a446546e6d8f3b548efdb9ed54837031474ed4e8380d4a",
+   "SF058": "cf8d8355daf24c59825bb91804db62a487fa56e70d2bfac84e530a9eb6293ba1",
+   "SF059": "902760447118b512cdad9532b05b38871ce27f00d10b9d544b17a4ca34889361",
+   "SF060": "7850cf69a23cb7d8de528448aa8176f643d2cd27a004a4690a833da001ab3e91",
+   "SF061": "d628c2b09499795bc491025ba8cfe7181ce9602b78cd7e641196edcb662680b5",
+   "SF062": "001438ab7656cc01239d284c1aa42c63ad9c5abd2e5ab8b84166974fbe75c79d",
+   "SF063": "42c84f7d9b8798f6d10a7b9d18a57ae702c507edad507c4d2ae3824188c5f684",
+   "SF064": "707ca8606fdfcf37b259f255e63da922d4f77c9d1e294b3fecc047d18401c976",
+   "SF065": "a050687420c152ddc7e969e71f19ee31a0b0dfefaba840bbe36424911e7746a9",
+   "SF066": "29b7d62e0894b63ede470571dc80316a84cb6088dde27022e5cf7d92868f498e",
+   "SF067": "6c60004a9da305631ef9b0e387ec7ab05cf818b871c4bd8263e9eb0828faf759",
+   "SF068": "23e1128d0a4ca7532854c219f218526a75c0af645660ee8f2eb19f4f4d4d23c1",
+   "SF069": "aeeaecead56c54c9d8613c54794d66c8e4a1fdec7bbca5d95a79117ba2ee1a7c",
+   "SF070": "65bcdf1436154cc81a65dde8bd3020a8ff225437533b09ebe12a1b763363b092",
+   "SF071": "b1aec7133a24cee39f52d88e90d3c82a4bd6c0dd5c1a3a880d534fda04a79467",
+   "SF072": "a17f0bc528b3d2c9d2d4b49be2b001443300dd25664216ae91d552aa5e4216c3",
+   "SF073": "3841b1286494ba79c0e2ecd2baba139112663a53417d512a2c1a62f2c600c73f",
+   "SF074": "cb3eaae41fa8c441595144b0569bc72f8d674b1db955ca4af84e475ada2f00e9",
+   "SF075": "9714c4f64e1662baad8eba901e123d082193e1358eb410ac3b7362fb61a0755c",
+   "SF076": "23f9f962c7fa1d73a249e1b8e6e5ad92e6869792002dad4730146c0eb17e4fbc",
+   "SF077": "4a0abe229fd82b1b592ab30f4228b4003bad10dcf82bacf1ef77df4b328579b8",
+   "SF078": "fc25b5c4de5246d3ad6eaf3e6ec7b548e9a09765931ef12f4de734d2d42eed0b",
+   "SF079": "ca52bb50fd63668f515d24c4d6a223b64525bea917a96a62a0697f9d4cf92519",
+   "SF080": "e5fe7d9103142b5e76988392a4147e41cbcd2fbaa7e8d3740cac2c7b322e499b",
+   "SF081": "822a362e77cb9eee72626f6e5f84e9553f02792584d60bc49f58e0a3667c63ff",
+   "SF082": "24d4a94f3cdb733ac9c52e2249fc8a3ca22e9aa6681ab8d7a680ec22a5e21364",
+   "SF083": "f97286d48c404608f67bac75a0e4fe6bc1146c24b1945bdc3633d8f5ad0a528a",
+   "SF084": "a02b6f77443a838e239e3787362c6dea6cc0e8143b64cab724374b595496bb6e",
+   "SF085": "580b283fc5c2909539070b6bf42bc875ce2cec6012e0570a5bc9206fbb281e76",
+   "SF086": "2e686526e8fe85531e165391a55927ae78763eaa29831494fc61a8044477803d",
+   "SF087": "2edc1ad6d756873a090759ae053d9a17f34975ebf0fe500416535cd303dc6ec8",
+   "SF088": "b243055a4f3d17bbeaf276c8134ddf3b2c9838500235d26e7b54c5d276ba71d0",
+   "SF089": "e2a1f204966b1929fe3c6cdd59e0a97617a9eb74cb3a3528b50d2411a09e7440",
+   "SF090": "41101bd2aa0a85bd5265c544d5bf7cadda57cba29e4584144e4ed23f122aa54f",
+   "SF091": "335f8a69ccd468dae77de2af6c73ae49c171feb63ff4d132ba3da1cec8b0ffa5",
+   "SF092": "31ada38c10d9b0b132f25b12f6b0e0aa416b471beec8ed0a79de925ca8ba656e",
+   "SF093": "6323de573ee29712e52efa31ee47c470962489e359e792720f77669e323bee14",
+   "SF094": "3d38819534db08a22b9fe99b599958be556c005855896086dc879d9e9dca1173",
+   "SF095": "e7a54ba0810382fec7ab037ccc85aaff74e012fc81b10e5dbcfd095ceb728aa3",
+   "SF096": "f7bea78f5b1ee86cbcf91fe5553aa733b47055f09df311e9a655c822b9552933",
+   "SF097": "9f366d365308ada3ec9f987ea365468e49b03648f56b23734a0a7958fb4e3927",
+   "SF098": "31e42c44b116556e4b3c4612f1174acb78e82010ff91b76c6c23d47ee748ec00",
+   "SF099": "053d271cbee32cad260fe47655141a55afc587f2c2ebb51c75df2616373624dc",
+   "SF100": "621e225df82efe17dc9a65cd480ad28928857790f4b042d04adc3d9e07b71ec9",
+   "SF101": "cea96cb3407e2876d684238493820602a688c2f30fd6ad7c7aa8398727255918",
+   "SF102": "2677615cadc7c3ba87f9fbe19fea21265e9c7c902cebf41a5b6719fb187ff064",
+   "SF103": "8a117e3cff375924b5417b265930bab96b00f733d3bfb0935304cb4d18d6adf7",
+   "SF104": "36c1625e5be121ff039a186420ebfc30eacd2c009a18d9671641482fa8f117e1",
+   "SF105": "6d78b1d8bf0347fbdffc30c0ce8ddcc97569cec0a8809ddd2faea02ab2d3aae9",
+   "SF106": "76cb846df942e4afb1b9cd79eedec62696525e6a338c1f17b2a09f73001b21c7",
+   "SF107": "cf22ab19110ad66f22df541d3536fe596b53f327832f49af9bedfc57b41b4285",
+   "SF108": "eee7ca20ff92569fcf9f8f39208d33fba8bfa91465a608efb624a936309e186a",
+   "SF109": "ed35b44aecfe958424176417dc89d553e6068990d87d29e959c24e8104a31a91",
+   "SF110": "87f290e173ec1178f904f564acc37ee2844e9f4b145cfacbdda9787c4b27839a",
+   "SF111": "610c17074704d9ca708fac9db071eeba2f55b10a3ee4850b64a18fa377f0feab",
+   "SF112": "f0b633feb6456a1cb2043858230bd8004998dda0c524b602423406ee880382b7",
+   "SF113": "cf56a9f5bbc9111e0b5a8b6990ccef9dbca157d9e58c8d49a22d6cdb9b992a70",
+   "SF114": "8731662fb46481e63db4e9c4a4395e8a90e38c7a67fa7faa2f025cb97c1da476",
+   "SF115": "32e4728bcce7e3f5e2b1caf8cd6a34578d624da70f0bf18f72c49722dc77053e",
+   "SF116": "e33159af2d4a7443243206d0d020e27e15edac2e5e9dbcb9903a1623dc699f38",
+   "SF117": "78d2071f67b2fd40add3cbc7a8685049748deef5c817b8f075d06fe872a53869",
+   "SF118": "9c39f1500aff7b5e9ee119e3392cbb08e6cdc740c064108942c4e50af711c654",
+   "SF119": "4314383afb1501ea7bca530457f751859c779dff4ae98914e54534c4b6912f04",
+   "SF120": "5d2cc0c3029635f807169b9c8d8e35d1731c8f8d911a307a58ee454a7c12cf9a",
+   "SF121": "898437448a296c6fe8598633c22db15cbe0479b50b93e4b102b7f8057a35a77e",
+   "SF122": "31763315cb0e4067e0a1ea6aaf617543da1102147cc89f4b97428f4edbd0d0bd",
+   "SF123": "ee4d6d794e1660c46b8d4e542268579ac636df62e2c6ad036bdaad69de96bbd1",
+   "SF124": "3634a2399c12aa5fc6be9a1de88159357189213f78e5392089005d868185e210",
+   "SF125": "91ea656b58de6039f12ddc7ab3f08ddd2c564d00653c66053559f801c47589a9",
+   "SF126": "6aa0798f4b7ae424dcd2228820d28cd8472d3b757d1b2d7d98884ab0a43b97a1",
+   "SF127": "d02670a890756ad783434bdbe44b3380fe8f50a73dd44e85eca8cb2fc627e1a6",
+   "SF128": "3ef128d3a43a5f8338cfa93897c9314a501d4364d42368a3b234326d846a5a9a",
+   "SF129": "30996faaef7533670fde8a6f6c7cedb26b48118ae9e95db0492608ba2cde37bc",
+   "SF130": "b9547cdcf04d6927a23de633cfeebdaa3a117cc4e2544ae12410eed8c91e9db1",
+   "SF131": "3478e9ceda7016b337d9c172002aa6c78eaef832e5cf7573c54d03f2ce6afd29",
+   "SF132": "72313769e0f18174bde07ddc4706a0b63332b4d0a0a63aeddc2c04afd9a2706e",
+   "SF133": "2a4cb60506543e9d3d34679919e6bf023a630dc08703c716ec6c40e9925d933d",
+   "SF134": "926f4459d34845649547630da199b692d6f04b176bfd379dfaa9add30451d103",
+   "SF135": "29fcde7d6b9949211214548233c93aaf41fb9be4e3b780b64f88dfcec110773d",
+   "SF136": "b38328b6e1b5e6e94906dfa25398f38e79ead18c66b68d35b2ca340fa99da0da",
+   "SF137": "005b978356b94119d4720f0ecfd480b9480ee679f1598079c793cfbc67016b96",
+   "SF138": "f59d172cde12917554ee44c0f921a3a215d767b2ae9bcc75203da5cf4b11bc84",
+   "SF139": "0b4e0b18a9a27a67ade5314f2734444df2edb0fd5ab729f414afe482f17d9ea1",
+   "SF140": "d3a9c089b40dab2e6b2ab8a4c8894cbc0c69cb0419ccb68a61fcd50fbd05e545",
+   "SF141": "d975482e16b8bb505959d54c44ce7dcad6044037ab7356f581fc41ad0615b54b",
+   "SF142": "bbdeef4c24dcf60888e59fbb9404c8e58c400c1431d8ef119a935c3d777ea1fd",
+   "SF143": "2e99b7d39b78ef527115932b57d4f98cb52c6cb7febbf7ef4d0f1331d718913a",
+   "SF144": "1eb4be01c81f6bc8c12242828e146564a94e4de3514d60b19e064f98b073a141",
+   "SF145": "ec2f31efc3adef3f7e74db02a769844e12833d9f06f7817e32d43b5f024e7d31",
+   "SF146": "65cabfd392965b1169f212ba5ece4663d76486cdd79f261166d9346999eb8f79",
+   "SF147": "2b62999c0d7e56530f3de26960c6d988554101e1f36d671539e7b57062b232bb",
+   "SF148": "a46ef899495b108440362b7ea7d59b10f0d24797a360eee7749b75d22b25af93",
+   "SF149": "0e6c4545355dfb156cf5fd678417b49452c2ae5159f05e34bb4d980562889f80",
+   "SF150": "a25cca87e5fd58f85073a4ba9c5ab4fe5c6038dbc48183abcf63c84a2030c0e4",
+   "SF151": "51e1a9575b7562c44cd425e50fc143b1c7618d99f74a7420eb718ae3d011102b",
+   "SF152": "52f4272116d5fcf1b1353288de289c1ad8247ff88abe3aac2869ffcc9e75794f",
+   "SF153": "8b4670278c4586509ffe6909090e12c561e52443bc6056a4f3b8ecaed0cde635",
+   "SF154": "a1a194f8d4686a198e056ed503732661c9c0cb80fc13fd3ff2b6d3ce1e751647",
+   "SF155": "b07a62a53ca49c89a002ab73fecbf231b47e597f5f00db413bff8ed19a0450c6",
+   "SF156": "a2ea1313bc2de9de9392e45b3a5e7c8ed1a9464cbb860e4e3f1f86080cbb5fb7",
+   "SF157": "c6487c41c74fc167a0227f91416403b78758aa4403d65ea4bdfdabc8621c1167",
+   "SF158": "0263e29af32f96de94692ae45e9ae2f2e14a071aa150138bed0b8e9b6622d570",
+   "SF159": "5590d9c840760df79212d281a07ec57a620303ed5a11369040532d7236377f15",
+   "SF160": "0c7520561e7f589937e88a103ae5030b05f732ffa1b6e858b17769ffc1790605",
+   "SF161": "4870179daafd9eedc5b79ab423fd77bd35d9875e233ba5dedecc428fc9de99df",
+   "SF162": "5705b13500af218b13a85aa33518a9421d09a43e70e15bf8e3d2452c3b2506ed",
+   "SF163": "90ff3689a266ef8afe4a5ee446263f2159fc63cf1e39a0d2527d44d1299d2e30",
+   "SF164": "57803afd9294c732d69e105269747edc8293c1d404f199da60846d05f898d036",
+   "SF165": "95f0ab62ac2b4490df53d0aee6ae330d9d2eec45f890e9b417258b51753ddc3d",
+   "SF166": "75c251a4e64a1714aa8f338811e6f5c5ed1456097d4c19d0a774cab66292a3e2",
+   "SF167": "6c958dc2bc23f41894705d2b8d6337d9a6714ae6b3f9de7788f86aaa2db4bda1",
+   "SF168": "996694e4a1fe152cdd93ac34054d211581ec2c8b97692ab45583152ea0d583d2",
+   "SF169": "a2507454076a75fcf12995304822a9c3fc8904bf1af9a6fe72fb88186e5c301f",
+   "SF170": "9aad463b64958e8814c93311f8b9ee6f6fa17b0e43a1a95062e61456b5f9081e",
+   "SF171": "4376e49285821caca00baba55cad25d94d8c2fe95a11a1775874d4ab155695f1",
+   "SF172": "314abcf8e4d2a57b8f0c8f4c76332510777763cef76fba43bb352f95de7bfa42",
+   "SF173": "80931ba32a4ef38760440e9b31785c19238fb6a4f50aecfbb295c6ccfbaed7a7",
+   "SF174": "299ca9b6be2b0d5c7b421a944393c97c8f6ddf14dc6f66a8e194a6438736549a",
+   "SF175": "5c7a4f09ce9fe6b5e97e232df93009abe6dee09ad57b2b6b520cf5203bfc3855",
+   "SF176": "142d69a547f8b94541d555f3a737fe8e530bd2ac8d8b9bd4c25f0e2bb9bafdc1",
+   "SF177": "f9afa4f9add80fe6fabac931c864e95c5beb3bf46bbd0ff765e3132a60297769",
+   "SF178": "9145a44a54550eaa9ed4ffe3eb451895cffbf1866e9584968b1b8311441bc3f9",
+   "SF179": "3f166cf3809528114ba33d1f7c11b864f7aa6fca1b00834f5366e3783496107f",
+   "SF180": "8e5debb9fecd7a1b987aa313c08c60e714d4b541cb6dbedcf0261c61205c8bca",
+   "SF181": "aee554f10ce02578200fa02673c1dcb43354d75181779784da299098341302e3",
+   "SF182": "623b1ebe03c34aef1ffa6edcc4343fe671445465231640fc5f4734bd40c0d15c",
+   "SF183": "aee17b33aab037c6429e97ce1f208b25a50170394c8863382f100f8204b42f16",
+   "SF184": "8f75f1ef2ad2760ec03f9eaa9fb621fc093a453448a75bf4392ac126de039fc6",
+   "SF185": "fd75a6d41e47519c7109f5185c4e375b96aac47b3fde5992a33514e484bb2b4c",
+   "SF186": "e4fdcd4d5597b2f3bbeb83b4e048ef81b816eefbe2159c763120e25923ce564a",
+   "SF187": "5fadc282c761837e9db324767fbb417eb4b21b370393edf123e5444b6b4391f5",
+   "SF188": "a188b103cdb89c9732a207e51423dcb8379aded485aab017a24ef434d4086056",
+   "SF189": "1ca0650325e4b44386bbbed9dd43e71c68a266970b45e0720fbc42ecfd5b810d",
+   "SF190": "4e2b0a9c7fefe26c8a62246c4a0656ed5b300ac4235b56db38f9de9d69c17842",
+   "SF191": "c9c9aa163a87ea2244855c10e29d2a34f0d95e8f3d085a25c152d2e8108efb81"
+  }
+ },
+ "seal_schema": "m2a-gold-seal/1",
+ "seal_sha256": "a95516384e785a6360718776b7771aba41fdd4c5e1af10266ec7ec0e8762c69f",
+ "sealed_on": "2026-10-01",
+ "slices": {
+  "FOLLOWUP_FRONTIER": {
+   "REAL": {
+    "by_reason": {
+     "AMBIGUOUS": 12,
+     "DISPUTED_PRIMARY": 4
+    },
+    "index_sha256": "b77774bcaac00e70c9537bf389ea10322f0a39fd3dfc5deeef953e917a04f304",
+    "n": 16,
+    "records": [
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-14",
+       "G-FU-19"
+      ],
+      "gold_id": "R0081"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-18"
+      ],
+      "gold_id": "R0187"
+     },
+     {
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0189"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-14",
+       "G-FU-18"
+      ],
+      "gold_id": "R0192"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-04",
+       "G-FU-19"
+      ],
+      "gold_id": "R0276"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-06"
+      ],
+      "gold_id": "R0306"
+     },
+     {
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0319"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0320"
+     },
+     {
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0321"
+     },
+     {
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-11",
+       "G-FU-18"
+      ],
+      "gold_id": "R0375"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0418"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0435"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0441"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0483"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0560"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "R0561"
+     }
+    ]
+   },
+   "SYNTHETIC": {
+    "by_reason": {
+     "AMBIGUOUS": 20,
+     "DISPUTED_PRIMARY": 2,
+     "OUT_OF_M2A_SCOPE": 19
+    },
+    "index_sha256": "8b4924464380bb974cae5f0e003228f8d5a31b8b3d00c7c110350bdf73a5ea1e",
+    "n": 41,
+    "records": [
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-18"
+      ],
+      "gold_id": "SF013"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-08"
+      ],
+      "gold_id": "SF038"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "gold_id": "SF039"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "gold_id": "SF040"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "gold_id": "SF043"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "gold_id": "SF044"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-08"
+      ],
+      "gold_id": "SF045"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-15"
+      ],
+      "gold_id": "SF046"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-11",
+       "G-FU-16"
+      ],
+      "gold_id": "SF062"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-12"
+      ],
+      "gold_id": "SF064"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "gold_id": "SF065"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "gold_id": "SF066"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "gold_id": "SF067"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-07",
+       "G-FU-14"
+      ],
+      "gold_id": "SF068"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-07",
+       "G-FU-14"
+      ],
+      "gold_id": "SF069"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "gold_id": "SF070"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "gold_id": "SF071"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-14"
+      ],
+      "gold_id": "SF072"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-19"
+      ],
+      "gold_id": "SF084"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-13"
+      ],
+      "gold_id": "SF114"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-13"
+      ],
+      "gold_id": "SF116"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-19"
+      ],
+      "gold_id": "SF132"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-17"
+      ],
+      "gold_id": "SF137"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-07",
+       "G-FU-12"
+      ],
+      "gold_id": "SF139"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-17"
+      ],
+      "gold_id": "SF142"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "SF143"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-11"
+      ],
+      "gold_id": "SF144"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-05"
+      ],
+      "gold_id": "SF147"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-05"
+      ],
+      "gold_id": "SF148"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-11",
+       "G-FU-16"
+      ],
+      "gold_id": "SF153"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-11",
+       "G-FU-16"
+      ],
+      "gold_id": "SF154"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-07",
+       "G-FU-09"
+      ],
+      "gold_id": "SF162"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-06"
+      ],
+      "gold_id": "SF169"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-06",
+       "G-FU-18"
+      ],
+      "gold_id": "SF170"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-08"
+      ],
+      "gold_id": "SF173"
+     },
+     {
+      "frontier_reason": "AMBIGUOUS",
+      "gap_ids": [
+       "G-FU-08",
+       "G-FU-15"
+      ],
+      "gold_id": "SF175"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-08",
+       "G-FU-15"
+      ],
+      "gold_id": "SF176"
+     },
+     {
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-08"
+      ],
+      "gold_id": "SF177"
+     },
+     {
+      "frontier_reason": "DISPUTED_PRIMARY",
+      "gap_ids": [
+       "G-FU-04"
+      ],
+      "gold_id": "SF179"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-04",
+       "G-FU-14"
+      ],
+      "gold_id": "SF180"
+     },
+     {
+      "frontier_reason": "OUT_OF_M2A_SCOPE",
+      "gap_ids": [
+       "G-FU-04",
+       "G-FU-11",
+       "G-FU-16"
+      ],
+      "gold_id": "SF181"
+     }
+    ]
+   }
+  },
+  "M2A_GOLD": {
+   "REAL": {
+    "by_disposition": {
+     "CLARIFY": 3,
+     "EXECUTE": 46
+    },
+    "ids": [
+     "R0075",
+     "R0079",
+     "R0083",
+     "R0087",
+     "R0089",
+     "R0092",
+     "R0093",
+     "R0094",
+     "R0099",
+     "R0106",
+     "R0107",
+     "R0180",
+     "R0197",
+     "R0201",
+     "R0202",
+     "R0205",
+     "R0223",
+     "R0233",
+     "R0274",
+     "R0281",
+     "R0282",
+     "R0286",
+     "R0295",
+     "R0301",
+     "R0303",
+     "R0304",
+     "R0308",
+     "R0309",
+     "R0310",
+     "R0311",
+     "R0312",
+     "R0313",
+     "R0314",
+     "R0336",
+     "R0409",
+     "R0431",
+     "R0432",
+     "R0450",
+     "R0459",
+     "R0464",
+     "R0484",
+     "R0496",
+     "R0497",
+     "R0498",
+     "R0515",
+     "R0529",
+     "R0531",
+     "R0532",
+     "R0556"
+    ],
+    "index_sha256": "42a05834e92aa5c52f3217ed8315df482fa783ee3a3eace0cbeb87f8b3c17a12",
+    "n": 49
+   },
+   "SYNTHETIC": {
+    "by_disposition": {
+     "CLARIFY": 11,
+     "EXECUTE": 118,
+     "INFORM": 1,
+     "NEW_SEARCH": 16,
+     "REASK": 4
+    },
+    "ids": [
+     "SF001",
+     "SF002",
+     "SF003",
+     "SF004",
+     "SF005",
+     "SF006",
+     "SF007",
+     "SF008",
+     "SF009",
+     "SF010",
+     "SF011",
+     "SF012",
+     "SF014",
+     "SF015",
+     "SF016",
+     "SF017",
+     "SF018",
+     "SF019",
+     "SF020",
+     "SF021",
+     "SF022",
+     "SF023",
+     "SF024",
+     "SF025",
+     "SF026",
+     "SF027",
+     "SF028",
+     "SF029",
+     "SF030",
+     "SF031",
+     "SF032",
+     "SF033",
+     "SF034",
+     "SF035",
+     "SF036",
+     "SF037",
+     "SF041",
+     "SF042",
+     "SF047",
+     "SF048",
+     "SF049",
+     "SF050",
+     "SF051",
+     "SF052",
+     "SF053",
+     "SF054",
+     "SF055",
+     "SF056",
+     "SF057",
+     "SF058",
+     "SF059",
+     "SF060",
+     "SF061",
+     "SF063",
+     "SF073",
+     "SF074",
+     "SF075",
+     "SF076",
+     "SF077",
+     "SF078",
+     "SF079",
+     "SF080",
+     "SF081",
+     "SF082",
+     "SF083",
+     "SF085",
+     "SF086",
+     "SF087",
+     "SF088",
+     "SF089",
+     "SF090",
+     "SF091",
+     "SF092",
+     "SF093",
+     "SF094",
+     "SF095",
+     "SF096",
+     "SF097",
+     "SF098",
+     "SF099",
+     "SF100",
+     "SF101",
+     "SF102",
+     "SF103",
+     "SF104",
+     "SF105",
+     "SF106",
+     "SF107",
+     "SF108",
+     "SF109",
+     "SF110",
+     "SF111",
+     "SF112",
+     "SF113",
+     "SF115",
+     "SF117",
+     "SF118",
+     "SF119",
+     "SF120",
+     "SF121",
+     "SF122",
+     "SF123",
+     "SF124",
+     "SF125",
+     "SF126",
+     "SF127",
+     "SF128",
+     "SF129",
+     "SF130",
+     "SF131",
+     "SF133",
+     "SF134",
+     "SF135",
+     "SF136",
+     "SF138",
+     "SF140",
+     "SF141",
+     "SF145",
+     "SF146",
+     "SF149",
+     "SF150",
+     "SF151",
+     "SF152",
+     "SF155",
+     "SF156",
+     "SF157",
+     "SF158",
+     "SF159",
+     "SF160",
+     "SF161",
+     "SF163",
+     "SF164",
+     "SF165",
+     "SF166",
+     "SF167",
+     "SF168",
+     "SF171",
+     "SF172",
+     "SF174",
+     "SF178",
+     "SF182",
+     "SF183",
+     "SF184",
+     "SF185",
+     "SF186",
+     "SF187",
+     "SF188",
+     "SF189",
+     "SF190",
+     "SF191"
+    ],
+    "index_sha256": "1887f7ff39ce3e23e8c9153f6766b05b07a587d5c116804f161e364a71687351",
+    "n": 150
+   }
+  }
+ },
+ "totals": {
+  "FOLLOWUP_FRONTIER": {
+   "REAL": 16,
+   "SYNTHETIC": 41,
+   "TOTAL": 57
+  },
+  "M2A_GOLD": {
+   "REAL": 49,
+   "SYNTHETIC": 150,
+   "TOTAL": 199
+  }
+ }
+}

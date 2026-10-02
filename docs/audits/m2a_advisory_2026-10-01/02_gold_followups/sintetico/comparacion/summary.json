@@ -1,0 +1,122 @@
+{
+ "n_A": 162,
+ "n_B": 162,
+ "n_common": 162,
+ "by_field": {
+  "ops": 18,
+  "expected_disposition": 5,
+  "expected_echo": 9,
+  "resulting_ir_values": 18,
+  "resulting_ir_struct": 9,
+  "turn_kind": 6,
+  "effects": 4,
+  "m2a_scope": 1
+ },
+ "ids_by_field": {
+  "ops": [
+   "SF013",
+   "SF047",
+   "SF048",
+   "SF049",
+   "SF050",
+   "SF051",
+   "SF052",
+   "SF053",
+   "SF055",
+   "SF057",
+   "SF061",
+   "SF063",
+   "SF124",
+   "SF126",
+   "SF128",
+   "SF130",
+   "SF134",
+   "SF154"
+  ],
+  "expected_disposition": [
+   "SF021",
+   "SF061",
+   "SF063",
+   "SF066",
+   "SF126"
+  ],
+  "expected_echo": [
+   "SF021",
+   "SF061",
+   "SF063",
+   "SF087",
+   "SF098",
+   "SF107",
+   "SF114",
+   "SF116",
+   "SF126"
+  ],
+  "resulting_ir_values": [
+   "SF025",
+   "SF026",
+   "SF027",
+   "SF028",
+   "SF029",
+   "SF030",
+   "SF031",
+   "SF033",
+   "SF036",
+   "SF039",
+   "SF043",
+   "SF059",
+   "SF060",
+   "SF061",
+   "SF063",
+   "SF102",
+   "SF126",
+   "SF161"
+  ],
+  "resulting_ir_struct": [
+   "SF031",
+   "SF033",
+   "SF039",
+   "SF043",
+   "SF059",
+   "SF060",
+   "SF063",
+   "SF102",
+   "SF126"
+  ],
+  "turn_kind": [
+   "SF051",
+   "SF053",
+   "SF063",
+   "SF126",
+   "SF137",
+   "SF142"
+  ],
+  "effects": [
+   "SF063",
+   "SF098",
+   "SF126",
+   "SF137"
+  ],
+  "m2a_scope": [
+   "SF142"
+  ]
+ },
+ "primary": [
+  "expected_disposition",
+  "resulting_ir_struct"
+ ],
+ "primary_disagreement_ids": [
+  "SF021",
+  "SF031",
+  "SF033",
+  "SF039",
+  "SF043",
+  "SF059",
+  "SF060",
+  "SF061",
+  "SF063",
+  "SF066",
+  "SF102",
+  "SF126"
+ ],
+ "primary_agreement": 0.9259
+}

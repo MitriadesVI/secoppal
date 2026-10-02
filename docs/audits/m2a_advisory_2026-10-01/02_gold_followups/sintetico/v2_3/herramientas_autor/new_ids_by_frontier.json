@@ -1,0 +1,43 @@
+{
+ "SMMLV (A2)": [
+  "SF165",
+  "SF166",
+  "SF167",
+  "SF168",
+  "SF169",
+  "SF170"
+ ],
+ "Orden por fecha sin dirección (F21)": [
+  "SF171",
+  "SF172"
+ ],
+ "Referente temporal relativo (A5)": [
+  "SF173",
+  "SF174",
+  "SF175",
+  "SF176",
+  "SF177"
+ ],
+ "Fuente fallida (A6)": [
+  "SF178",
+  "SF179",
+  "SF180",
+  "SF181"
+ ],
+ "Cota contradictoria (A1)": [
+  "SF182",
+  "SF183"
+ ],
+ "Autosuficiencia (A4)": [
+  "SF184",
+  "SF185",
+  "SF186",
+  "SF187"
+ ],
+ "Aclaración pendiente (A7)": [
+  "SF188",
+  "SF189",
+  "SF190",
+  "SF191"
+ ]
+}

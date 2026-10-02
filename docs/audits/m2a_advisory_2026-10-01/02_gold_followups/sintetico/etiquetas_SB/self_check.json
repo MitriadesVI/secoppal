@@ -1,0 +1,73 @@
+{
+  "validator": "synth_labeler_SB/self_check.py",
+  "records": 162,
+  "errors": [],
+  "warnings": [
+    "SF142: resulting_ir null"
+  ],
+  "error_count": 0,
+  "warning_count": 1,
+  "new_gaps": {
+    "POLARITY_FLIP_SAME_VALUE": [
+      "SF011",
+      "SF012"
+    ],
+    "TOPN_CAP_ABOVE_MAX": [
+      "SF021"
+    ],
+    "ANTERIOR_PRIOR_VS_CLOCK": [
+      "SF038"
+    ],
+    "SELF_CONTAINED_RESTATEMENT_DURING_PENDING": [
+      "SF055"
+    ],
+    "PENDING_VALUE_NOT_IN_PRIOR": [
+      "SF059",
+      "SF060"
+    ],
+    "ANY_OPTION_ANSWER": [
+      "SF061"
+    ],
+    "PENDING_ABANDONED_BY_DELTA": [
+      "SF063"
+    ],
+    "STATE_NOT_IN_TARGET_UNIVERSE": [
+      "SF079"
+    ],
+    "UNIT_INHERITANCE_IMPLAUSIBLE_SCALE": [
+      "SF104"
+    ],
+    "CLEAR_ABSENT_SLOT": [
+      "SF113"
+    ],
+    "EMPTY_IR_AFTER_CLEAR": [
+      "SF114",
+      "SF116"
+    ],
+    "NO_ANCHOR_FRAGMENT": [
+      "SF137"
+    ],
+    "ORDER_DIRECTION_UNSTATED": [
+      "SF140"
+    ],
+    "ANCHOR_UNREADABLE": [
+      "SF142"
+    ]
+  },
+  "checks": [
+    "162 records, sorted, ids == cases",
+    "input fields (incl. prior) byte-equal to cases.jsonl",
+    "closed enums (turn_kind, m2a_scope, op, slot, disposition, ambiguity, confidence, effects, echo, gap_codes, inherited, unit, level, product_view)",
+    "quote is exact substring of followup_text",
+    "operator within dimension table (C0 §5.1.3)",
+    "§2.3: \"entre/de X a Y\" = exactly VALUE.lower(greater_or_equal)+VALUE.upper(less_or_equal) same quote; CLEAR VALUE single op",
+    "§2.4: year_source on TIME ops, unit_source on VALUE ops (null only with CLARIFY or CLEAR)",
+    "§2.2.7 owner≠FOUNDATION_SEARCH -> OUT_ANCHOR_NOT_SEARCH; LEGACY -> HANDOFF_LEGACY",
+    "F11 gap>1800s -> CLARIFY CONTEXT_EXPIRED_CONFIRM + echo",
+    "F15 scope -> CLARIFY",
+    "disposition_reason iff not EXECUTE",
+    "alternatives iff AMBIGUOUS",
+    "resulting_ir shape: GEOGRAPHY level, unit only on VALUE, CARDINALITY needs ORDER, product_view iff UNSPECIFIED",
+    "effect/echo coherence for VALUE_RANGE_REPLACED, TOPIC_REPLACED, VIEW_REDERIVED"
+  ]
+}

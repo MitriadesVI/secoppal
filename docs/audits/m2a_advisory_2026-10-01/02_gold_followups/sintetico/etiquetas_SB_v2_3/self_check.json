@@ -1,0 +1,20 @@
+{
+  "validator": "etiquetas_SB_v2_3/self_check_v2_3.py",
+  "schema": "m2a-followup-gold/2.1 + A1-A9.1",
+  "records": 191,
+  "error_count": 0,
+  "warning_count": 0,
+  "errors": [],
+  "warnings": [],
+  "checks": [
+    "A8.1: ningún resulting_ir con cota inferior = superior generado por follow-up; casos A8.1 => EXECUTE/CLEAR/VALUE_RANGE_REPLACED; A9.1 => DELTA",
+    "A8: intervalo vacío = inferior > superior, o iguales con algún operador exclusivo; casos adjudicados por A8 => EXECUTE/CLEAR/VALUE_RANGE_REPLACED",
+    "191 registros ordenados; campos de entrada byte-idénticos; orden de campos; labeler SB",
+    "listas cerradas §1, §3, §4, §6, §7, §8 (sin UNIT_IMPLAUSIBLE, con RANGE_NO_INTERIOR), §5.3 (sin SMMLV_UNSUPPORTED / INHERITED_UNIT_IMPLAUSIBLE, con SMMLV_YEAR_AMBIGUOUS)",
+    "precedencia de m2a_scope §5.2 y disposición por alcance; HANDOFF_LEGACY sólo con dueño legacy",
+    "nulidad de resulting_ir §5.2; forma de IR §3 (claves cerradas, unidad, nivel, orden, cardinalidad n<=100)",
+    "ops O2/O4/O5/O6/O7/O11/O13/O15; quote subcadena exacta (null sólo EVENT); unresolved en la operación que bloquea",
+    "F5 (unidad única), F7/A5 (un referente TIME), F11, F18, F19, F20, F21, F25, F29, A1 (sin inferior>=superior; RANGE_NO_INTERIOR => AMBIGUOUS), A2 (SMMLV ejecuta sólo con año único)",
+    "gaps vivos => AMBIGUOUS; coherencia efecto/eco §7; F12/F30 con dos alternativas"
+  ]
+}

@@ -1,0 +1,12 @@
+# Mini-pasada 3 SB (v2.3) — A8.1 y A9.1
+
+Base: `etiquetas_SB_v2_2/labels_v2_2.jsonl`. Sólo se revisan SF091, SF095, SF134 y SF187; las otras 187 líneas son byte-idénticas a v2.2.
+
+| id | regla | cálculo / razonamiento | ¿cambia la disposición? | ¿cambia la IR? | antes (v2.2) | ahora (v2.3) |
+|---|---|---|---|---|---|---|
+| SF091 | A8.1 | cota previa: inferior >= 300 millones (greater_or_equal, inclusiva, MILLONES); follow-up «hasta 300 millones»: superior <= 300 millones (less_or_equal, inclusiva, unidad dicha MILLONES); conservar la opuesta daría [300, 300] | no | sí | DELTA · EXECUTE · CLEAR · effects [] · IR CONTRACTS: TOPIC contains ambulancias; BUYER is Gobernación de Antioquia; VALUE greater_or_equal 300 millones; VALUE less_or_equal 300 millones | DELTA · EXECUTE · CLEAR · effects ['VALUE_RANGE_REPLACED'] · IR CONTRACTS: TOPIC contains ambulancias; BUYER is Gobernación de Antioquia; VALUE less_or_equal 300 millones |
+| SF095 | A8.1 | cota previa: superior <= 200 millones (less_or_equal, inclusiva, MILLONES); follow-up «desde 200 millones»: inferior >= 200 millones (greater_or_equal, inclusiva por D4, unidad dicha MILLONES); conservar la opuesta daría [200, 200] | no | sí | DELTA · EXECUTE · CLEAR · effects [] · IR CONTRACTS: TOPIC contains ambulancias; BUYER is Gobernación de Antioquia; VALUE less_or_equal 200 millones; VALUE greater_or_equal 200 millones | DELTA · EXECUTE · CLEAR · effects ['VALUE_RANGE_REPLACED'] · IR CONTRACTS: TOPIC contains ambulancias; BUYER is Gobernación de Antioquia; VALUE greater_or_equal 200 millones |
+| SF134 | A9.1 no aplica -> A9 | dimensiones sin historial: UNIVERSE + TOPIC; TOPIC nuevo (vigilancia ≠ papelería) => A9 => NEW_SEARCH | no | no | NEW_SEARCH · NEW_SEARCH · CLEAR · effects ['CONTEXT_RESET'] · IR CONTRACTS: TOPIC contains vigilancia | NEW_SEARCH · NEW_SEARCH · CLEAR · effects ['CONTEXT_RESET'] · IR CONTRACTS: TOPIC contains vigilancia |
+| SF187 | A9.1 | dimensiones sin historial: UNIVERSE + TIME; sin TOPIC/ACTOR/operación nuevos => DELTA | sí | sí | NEW_SEARCH · NEW_SEARCH · CLEAR · effects ['CONTEXT_RESET'] · IR CONTRACTS: TIME during_year 2024 | DELTA · EXECUTE · CLEAR · effects ['UNIVERSE_CHANGED'] · IR CONTRACTS: TOPIC contains pavimentación; BUYER is Alcaldía de Montería; TIME during_year 2024 |
+
+Validador: `self_check_v2_3.py` -> `self_check.json` (controles de v2.2 + A8.1: ningún `resulting_ir` con un único punto generado por follow-up; casos A8.1 => EXECUTE/CLEAR/VALUE_RANGE_REPLACED; A9.1 => DELTA).

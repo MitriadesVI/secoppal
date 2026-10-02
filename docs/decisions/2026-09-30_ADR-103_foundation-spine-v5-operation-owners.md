@@ -336,6 +336,8 @@ sólo las falsifica. Si un caso pasa sin una garantía que lo explique, se decla
   - Si algo necesita filas y no hay referente a resultados ⇒ `INFORM` (o CLARIFY si hay algo que elegir).
 - **Búsqueda nueva = consulta autosuficiente (A4).**
   - Decide el productor.
+    > **SUPERSEDED por la Enmienda 5 (A9/A9.1):** decide el host por la forma de la interpretación; ver
+    > `M2A_CONVERSATION_CONTRACT_V1.md` §7.2.
   - Suelo del host: con un ancla o una pendiente vigentes, una propuesta sin condición propia nunca es búsqueda
     nueva. Toda búsqueda nueva con ancla vigente lleva el eco `CONTEXT_RESET` con la acción «aplicar a la búsqueda
     anterior».
@@ -351,6 +353,7 @@ sólo las falsifica. Si un caso pasa sin una garantía que lo explique, se decla
   varios ⇒ CLARIFY. Los relativos no temporales siguen F15: se aclaran.
 - **VALUE por lado (A1; OQ-4 = a).** F26 queda retirada.
   - Rango sin interior ⇒ CLARIFY con dos opciones-evento: «sustituir el rango» y «mantener y ajustar».
+    > **SUPERSEDED por la Enmienda 5 (A8/A8.1):** ver `M2A_CONVERSATION_CONTRACT_V1.md` §15.2.
   - La unidad sólo se hereda si hay una única unidad activa, SMMLV incluida.
   - Con SMMLV, si cambia el año se recalcula sobre la vigencia nueva (A2).
 - **Sin entrega a legacy con ancla Foundation.** Otra operación, un referente de fila o Radar-SAVE ⇒ `INFORM`. En
@@ -570,3 +573,33 @@ F26 y su `INHERITED_UNIT_IMPLAUSIBLE` (A1).
     el usuario decide (no hay umbral automático).
   - El productor no separa autosuficiente de fragmento tras 3 iteraciones ⇒ no hay CUTOVER.
   - Ninguna v5 elegible ⇒ el usuario decide si `foundation_v3` sobrevive un release (contradice el punto 7).
+
+## Enmienda 5 (2026-10-01): autoridad normativa de M2a y cláusulas de D7 sustituidas
+
+> **Numeración.** «5» verificado libre en `main` y en los 262 worktrees y todas las ramas locales (máximo previo: 4).
+> **Autoridad.** Adjudicaciones del usuario del 2026-10-01 A8, A8.1, A9, A9.1 y G-FU-03
+> (`docs/audits/m2a_advisory_2026-10-01/02_gold_followups/kit_v2_2/ADJUDICATED_OVERRIDES.md`, posteriores a la Enm. 4).
+> El resto de la Enmienda 4 queda intacto.
+
+1. **Autoridad de M2a.** `docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md` es la autoridad normativa única de M2a
+   (tipos persistidos, `SemanticPatch`, búsqueda nueva frente a delta, `PendingClarification`, referentes, eco, gates
+   M2a). D7 sigue vigente salvo lo que sustituye el punto 2; donde D7 y el contrato difieran, manda el contrato.
+2. **Cláusulas de D7 sustituidas (SUPERSEDED):**
+   - «Rango sin interior ⇒ CLARIFY con dos opciones-evento» (viñeta «VALUE por lado»; OQ-4 = a) → contrato §15.2
+     (A8/A8.1: un intervalo generado por un follow-up que queda vacío o degenerado a un punto sustituye la restricción
+     VALUE completa y se anuncia; una igualdad pedida explícitamente sigue siendo válida).
+   - «Búsqueda nueva = consulta autosuficiente (A4). Decide el productor.» → contrato §7.2 (A9/A9.1: con SEARCH activa,
+     un turno que sólo aporta condiciones o modificadores, sin TOPIC ni ACTOR nuevos ni operación nueva, es delta; se
+     decide por la forma de la interpretación, sin léxico).
+   - Donde §4.4 (M2A-0), §4.5 (gate M2a) y C0 §5.3.6 punto 5(b) dicen «Gold de follow-ups 2.1 con A1–A7 sellado», léase
+     `M2A_GOLD` sellado con A1–A9.1 (`docs/audits/m2a_conversation/gold/M2A_GOLD_SEAL.json`: 49 REAL + 150 SYNTHETIC = 199).
+3. **Regla de recibo añadida a la lista cerrada de §4.3** (aditiva, sin tipo nuevo): `time.relative_to_previous`, que
+   emite la autoridad TIME por la entrada separada de insumos del host al resolver un relativo temporal respecto del
+   único referente previo (OQ-3 = b, ya adoptado en D7).
+4. **H7b revisado** antes del sello (§4.8): los dos solapes BUYER+GEOGRAPHY son X020 y X059 (homónimos; D4(a) los
+   explica) y son independientes del Gold M2a (`docs/audits/m2a_conversation/M2A0_H7B_REVIEW.md`). Errata: «2 de 294» es «2 de 394».
+5. **Deuda añadida a §4.7:**
+
+| Deuda | Dueño | Vence |
+|---|---|---|
+| La exención `data/conversations/` del pin de frontera C1.2 deja 20 JSONL versionados fuera del congelamiento (P3; detalle en `docs/audits/m1_c1/C1_2_FRONTIER_PIN_DEBT.md`) | Núcleo | CUTOVER (decidir) |

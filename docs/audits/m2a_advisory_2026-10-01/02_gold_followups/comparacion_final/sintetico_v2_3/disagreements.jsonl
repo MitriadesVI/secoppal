@@ -1,0 +1,145 @@
+{"gold_id": "SF001", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF002", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF003", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF004", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF005", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF006", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF007", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF008", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF009", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF010", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF011", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["POLARITY_INVERTED"], "expected_echo": ["CARRIED", "POLARITY_INVERTED"]}}
+{"gold_id": "SF012", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["POLARITY_INVERTED"], "expected_echo": ["CARRIED", "POLARITY_INVERTED"]}}
+{"gold_id": "SF013", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF014", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF015", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF016", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF017", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF018", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["TOPN_CARRIED"], "expected_echo": ["CARRIED", "TOPN_CARRIED"]}}
+{"gold_id": "SF019", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["TOPN_CARRIED"], "expected_echo": ["CARRIED", "TOPN_CARRIED"]}}
+{"gold_id": "SF020", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF021", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["TOPN_CAPPED"], "expected_echo": ["CARRIED", "TOPN_CAPPED"]}}
+{"gold_id": "SF022", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF023", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF024", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF025", "fields": ["resulting_ir_values", "expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "RELATIVE_WINDOW_RESOLVED"]}}
+{"gold_id": "SF026", "fields": ["resulting_ir_values", "expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "RELATIVE_WINDOW_RESOLVED"]}}
+{"gold_id": "SF027", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "RELATIVE_WINDOW_RESOLVED"]}}
+{"gold_id": "SF028", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "RELATIVE_WINDOW_RESOLVED"]}}
+{"gold_id": "SF029", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "RELATIVE_WINDOW_RESOLVED"]}}
+{"gold_id": "SF030", "fields": ["resulting_ir_values", "expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "RELATIVE_WINDOW_RESOLVED"]}}
+{"gold_id": "SF032", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "YEAR_INHERITED"]}}
+{"gold_id": "SF034", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "YEAR_CLOCK_INFERRED"]}}
+{"gold_id": "SF035", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "YEAR_CLOCK_INFERRED"]}}
+{"gold_id": "SF036", "fields": ["resulting_ir_values", "expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "RELATIVE_WINDOW_RESOLVED"]}}
+{"gold_id": "SF037", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "YEAR_INHERITED"]}}
+{"gold_id": "SF038", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "YEAR_INHERITED"]}}
+{"gold_id": "SF041", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["TOPIC_REPLACED"], "expected_echo": ["CARRIED", "TOPIC_REPLACED"]}}
+{"gold_id": "SF042", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "YEAR_INHERITED"]}}
+{"gold_id": "SF045", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "YEAR_INHERITED"]}}
+{"gold_id": "SF047", "fields": ["effects"], "A": {"effects": []}, "B": {"effects": ["PENDING_CANCELLED"]}}
+{"gold_id": "SF048", "fields": ["effects"], "A": {"effects": []}, "B": {"effects": ["PENDING_CANCELLED"]}}
+{"gold_id": "SF049", "fields": ["effects"], "A": {"effects": []}, "B": {"effects": ["PENDING_CANCELLED"]}}
+{"gold_id": "SF050", "fields": ["effects"], "A": {"effects": []}, "B": {"effects": ["PENDING_CANCELLED"]}}
+{"gold_id": "SF052", "fields": ["effects"], "A": {"effects": []}, "B": {"effects": ["PENDING_CANCELLED"]}}
+{"gold_id": "SF054", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF055", "fields": ["effects"], "A": {"effects": []}, "B": {"effects": ["PENDING_CANCELLED"]}}
+{"gold_id": "SF056", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF057", "fields": ["effects"], "A": {"effects": []}, "B": {"effects": ["PENDING_CANCELLED"]}}
+{"gold_id": "SF058", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF059", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF060", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF063", "fields": ["ops", "effects", "expected_echo"], "A": {"ops": [], "effects": [], "expected_echo": []}, "B": {"ops": [["CANCEL_PENDING", null]], "effects": ["PENDING_CANCELLED"], "expected_echo": ["VIEW_DERIVED"]}}
+{"gold_id": "SF064", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CONTEXT_EXPIRED"]}}
+{"gold_id": "SF068", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF069", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF073", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF074", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF075", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF076", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF077", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF078", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF080", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF081", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF082", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VIEW_REDERIVED"], "expected_echo": ["CARRIED", "VIEW_DERIVED", "VIEW_REDERIVED"]}}
+{"gold_id": "SF083", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF084", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF085", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF086", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF087", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "UNIT_SHARED_IN_RANGE"]}}
+{"gold_id": "SF088", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF089", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF090", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VALUE_RANGE_REPLACED"], "expected_echo": ["CARRIED", "VALUE_RANGE_REPLACED"]}}
+{"gold_id": "SF091", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VALUE_RANGE_REPLACED"], "expected_echo": ["CARRIED", "VALUE_RANGE_REPLACED"]}}
+{"gold_id": "SF092", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF093", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF094", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VALUE_RANGE_REPLACED"], "expected_echo": ["CARRIED", "VALUE_RANGE_REPLACED"]}}
+{"gold_id": "SF095", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VALUE_RANGE_REPLACED"], "expected_echo": ["CARRIED", "VALUE_RANGE_REPLACED"]}}
+{"gold_id": "SF096", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF097", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF098", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "UNIT_SHARED_IN_RANGE"]}}
+{"gold_id": "SF099", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VALUE_RANGE_REPLACED"], "expected_echo": ["CARRIED", "VALUE_RANGE_REPLACED"]}}
+{"gold_id": "SF100", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VALUE_RANGE_REPLACED"], "expected_echo": ["CARRIED", "VALUE_RANGE_REPLACED"]}}
+{"gold_id": "SF101", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "UNIT_INHERITED"]}}
+{"gold_id": "SF103", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VALUE_RANGE_REPLACED"], "expected_echo": ["CARRIED", "UNIT_INHERITED", "VALUE_RANGE_REPLACED"]}}
+{"gold_id": "SF104", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "UNIT_INHERITED"]}}
+{"gold_id": "SF105", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF106", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "UNIT_INHERITED"]}}
+{"gold_id": "SF107", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "UNIT_SHARED_IN_RANGE"]}}
+{"gold_id": "SF108", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF109", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF110", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF111", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF112", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF115", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF117", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF118", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF119", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF120", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF121", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF122", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF124", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["CONTEXT_RESET"], "expected_echo": ["CONTEXT_RESET"]}}
+{"gold_id": "SF125", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF126", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["CONTEXT_RESET"], "expected_echo": ["CONTEXT_RESET", "VIEW_DERIVED"]}}
+{"gold_id": "SF127", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF128", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["CONTEXT_RESET"], "expected_echo": ["CONTEXT_RESET"]}}
+{"gold_id": "SF129", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF130", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["CONTEXT_RESET"], "expected_echo": ["CONTEXT_RESET"]}}
+{"gold_id": "SF131", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF132", "fields": ["ops", "expected_echo"], "A": {"ops": [["SET_UNIVERSE", "UNIVERSE"]], "expected_echo": []}, "B": {"ops": [["KEEP", "UNIVERSE"]], "expected_echo": ["CARRIED"]}}
+{"gold_id": "SF133", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["TOPIC_REPLACED"], "expected_echo": ["CARRIED", "TOPIC_REPLACED"]}}
+{"gold_id": "SF134", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["CONTEXT_RESET"], "expected_echo": ["CONTEXT_RESET"]}}
+{"gold_id": "SF135", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF136", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF138", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CONTEXT_EXPIRED"]}}
+{"gold_id": "SF139", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CONTEXT_EXPIRED"]}}
+{"gold_id": "SF140", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["ORDER_DIRECTION_DEFAULTED"], "expected_echo": ["CONTEXT_EXPIRED"]}}
+{"gold_id": "SF141", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF156", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF157", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF158", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF160", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF161", "fields": ["resulting_ir_values", "expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "RELATIVE_WINDOW_RESOLVED"]}}
+{"gold_id": "SF162", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF163", "fields": ["ops"], "A": {"ops": [["SET", "BUYER"]]}, "B": {"ops": [["SET", "GEOGRAPHY"]]}}
+{"gold_id": "SF164", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF165", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF166", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF167", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "UNIT_INHERITED"]}}
+{"gold_id": "SF170", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF171", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["ORDER_DIRECTION_DEFAULTED"], "expected_echo": ["CARRIED", "ORDER_DIRECTION_DEFAULTED"]}}
+{"gold_id": "SF172", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["ORDER_DIRECTION_DEFAULTED", "TOPN_CARRIED"], "expected_echo": ["CARRIED", "ORDER_DIRECTION_DEFAULTED", "TOPN_CARRIED"]}}
+{"gold_id": "SF173", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "YEAR_INHERITED"]}}
+{"gold_id": "SF174", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED", "YEAR_INHERITED"]}}
+{"gold_id": "SF177", "fields": ["m2a_scope", "expected_disposition", "resulting_ir_struct", "resulting_ir_values", "expected_echo"], "A": {"m2a_scope": "OUT_RELATIVE_TO_PREVIOUS", "expected_disposition": "CLARIFY", "resulting_ir_struct": null, "expected_echo": []}, "B": {"m2a_scope": "IN", "expected_disposition": "EXECUTE", "resulting_ir_struct": "{\"card\": false, \"conds\": [[\"BUYER\", \"is\", \"POSITIVE\"], [\"TIME\", \"during_year\", \"POSITIVE\"], [\"TOPIC\", \"contains\", \"POSITIVE\"]], \"op\": \"SEARCH\", \"order\": null, \"universe\": \"CONTRACTS\"}", "expected_echo": ["CARRIED", "YEAR_INHERITED"]}}
+{"gold_id": "SF178", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF179", "fields": ["resulting_ir_struct", "resulting_ir_values"], "A": {"resulting_ir_struct": "{\"card\": false, \"conds\": [[\"BUYER\", \"is\", \"POSITIVE\"], [\"TOPIC\", \"contains\", \"POSITIVE\"]], \"op\": \"SEARCH\", \"order\": null, \"universe\": \"CONTRACTS\"}"}, "B": {"resulting_ir_struct": null}}
+{"gold_id": "SF182", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VALUE_RANGE_REPLACED"], "expected_echo": ["CARRIED", "VALUE_RANGE_REPLACED"]}}
+{"gold_id": "SF183", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["VALUE_RANGE_REPLACED"], "expected_echo": ["CARRIED", "UNIT_INHERITED", "VALUE_RANGE_REPLACED"]}}
+{"gold_id": "SF184", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["CONTEXT_RESET"], "expected_echo": ["CONTEXT_RESET"]}}
+{"gold_id": "SF185", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["CONTEXT_RESET"], "expected_echo": ["CONTEXT_RESET", "VIEW_DERIVED"]}}
+{"gold_id": "SF186", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF187", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["UNIVERSE_CHANGED"], "expected_echo": ["CARRIED", "UNIVERSE_CHANGED"]}}
+{"gold_id": "SF188", "fields": ["expected_echo"], "A": {"expected_echo": []}, "B": {"expected_echo": ["CARRIED"]}}
+{"gold_id": "SF190", "fields": ["effects"], "A": {"effects": []}, "B": {"effects": ["PENDING_CANCELLED"]}}
+{"gold_id": "SF191", "fields": ["effects", "expected_echo"], "A": {"effects": [], "expected_echo": []}, "B": {"effects": ["PENDING_CANCELLED"], "expected_echo": ["CARRIED"]}}

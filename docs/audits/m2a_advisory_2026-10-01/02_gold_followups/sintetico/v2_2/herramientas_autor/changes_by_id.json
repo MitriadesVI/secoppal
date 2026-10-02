@@ -1,0 +1,873 @@
+{
+ "changes": {
+  "SF001": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF002": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF003": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF004": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF005": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF006": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF007": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF008": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF009": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF010": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF011": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF012": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF013": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF014": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF015": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF016": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF017": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF018": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.order {operator,direction_source}",
+   "ir.cardinality {n,n_requested}",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF019": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.order {operator,direction_source}",
+   "ir.cardinality {n,n_requested}",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF020": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF021": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF022": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF023": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.order {operator,direction_source}",
+   "ir.cardinality {n,n_requested}",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF024": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.order {operator,direction_source}",
+   "ir.cardinality {n,n_requested}",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF025": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF026": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF027": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF028": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF029": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.conditions.value_hint TIME completo (fechas absolutas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF030": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF031": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.conditions.value_hint TIME completo (fechas absolutas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF032": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF033": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.conditions.value_hint TIME completo (fechas absolutas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF034": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF035": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF036": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.conditions.value_hint TIME completo (fechas absolutas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF037": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF038": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF039": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF040": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF041": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF042": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.conditions.value_hint TIME completo (fechas absolutas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF043": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF044": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF045": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.conditions.value_hint TIME completo (fechas absolutas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF046": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF047": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF048": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF049": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF050": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF051": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF052": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF053": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF054": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF055": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF056": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF057": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF058": [
+   "prior.ir sin la condición BUYER ambigua (span abierto fuera de la IR)",
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=EVENT",
+   "schema"
+  ],
+  "SF059": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=EVENT",
+   "schema"
+  ],
+  "SF060": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=EVENT",
+   "schema"
+  ],
+  "SF061": [
+   "prior.ir sin la condición BUYER ambigua (span abierto fuera de la IR)",
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF062": [
+   "prior.ir sin la condición BUYER ambigua (span abierto fuera de la IR)",
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF063": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF064": [
+   "prior.state EXPIRED->PENDING",
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.pending (forma 2.1: reason/span/candidate_slots/candidate_value/options/asks)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF065": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF066": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF067": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF068": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF069": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF070": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF071": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF072": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF073": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF074": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF075": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF076": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.universe DUAL->BOTH (y se retira ir.universes)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF077": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.universe DUAL->BOTH (y se retira ir.universes)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF078": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF079": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF080": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF081": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "prior.chain option->view",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF082": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF083": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF084": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF085": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF086": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF087": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF088": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF089": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF090": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF091": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF092": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF093": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF094": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF095": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF096": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF097": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF098": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF099": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF100": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF101": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF102": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF103": [
+   "followup_text + sha (reescrito)",
+   "prior.ir VALUE (SMMLV>=500 -> <=300 millones)",
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF104": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF105": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF106": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF107": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF108": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF109": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF110": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF111": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF112": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF113": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF114": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF115": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF116": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF117": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF118": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF119": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.order {operator,direction_source}",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF120": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF121": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF122": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.order {operator,direction_source}",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF123": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF124": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF125": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF126": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF127": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF128": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF129": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF130": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF131": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF132": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF133": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF134": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF135": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF136": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF137": [
+   "prior.ir [] -> null (state NONE)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF138": [
+   "prior.state EXPIRED->EXECUTED",
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF139": [
+   "prior.state EXPIRED->EXECUTED",
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF140": [
+   "prior.state EXPIRED->EXECUTED",
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.order {operator,direction_source}",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF141": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF142": [
+   "prior.state EXECUTED -> UNREADABLE",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF143": [
+   "ir.aspect",
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF144": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF145": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF146": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF147": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.order {operator,direction_source}",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF148": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "ir.universe DUAL->BOTH (y se retira ir.universes)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF149": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=EVENT",
+   "schema"
+  ],
+  "SF150": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=EVENT",
+   "schema"
+  ],
+  "SF151": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=EVENT",
+   "schema"
+  ],
+  "SF152": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=EVENT",
+   "schema"
+  ],
+  "SF153": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF154": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF155": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF156": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF157": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF158": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF159": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF160": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF161": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF162": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF163": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ],
+  "SF164": [
+   "ir.logic/host_notice/aspect (claves nuevas)",
+   "input_kind=TEXT",
+   "schema"
+  ]
+ }
+}

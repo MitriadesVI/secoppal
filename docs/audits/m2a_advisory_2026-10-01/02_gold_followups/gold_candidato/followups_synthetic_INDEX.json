@@ -1,0 +1,2102 @@
+{
+ "slice": "SYNTHETIC_FOLLOWUP",
+ "n": 191,
+ "status": {
+  "AGREED": 155,
+  "AGREED_AMBIGUOUS": 32,
+  "DISPUTED_PRIMARY": 4
+ },
+ "sha256_candidate": "12b6412bcbf0a1b05285960077e06ee788a4542ad20a08066c16151f4fe1f18b",
+ "sealed": false,
+ "note": "Candidato NO sellado. Conserva las dos etiquetas por registro; ninguna discrepancia fue reconciliada.",
+ "records": [
+  {
+   "gold_id": "SF001",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "POLARITY_OTHER_VALUE"
+   ]
+  },
+  {
+   "gold_id": "SF002",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "TOPIC"
+   ]
+  },
+  {
+   "gold_id": "SF003",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "POLARITY_OTHER_VALUE",
+    "REGION_VOCAB"
+   ]
+  },
+  {
+   "gold_id": "SF004",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "REGION_VOCAB",
+    "SET"
+   ]
+  },
+  {
+   "gold_id": "SF005",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "POLARITY_OTHER_VALUE"
+   ]
+  },
+  {
+   "gold_id": "SF006",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF007",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "POLARITY_OTHER_VALUE"
+   ]
+  },
+  {
+   "gold_id": "SF008",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF009",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "POLARITY_OTHER_VALUE"
+   ]
+  },
+  {
+   "gold_id": "SF010",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF011",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "GEOBUYER",
+    "POLARITY_SAME_VALUE"
+   ]
+  },
+  {
+   "gold_id": "SF012",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "POLARITY_SAME_VALUE"
+   ]
+  },
+  {
+   "gold_id": "SF013",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "NEGATED_COMPARATOR"
+   ]
+  },
+  {
+   "gold_id": "SF014",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "POLARITY_OTHER_VALUE"
+   ]
+  },
+  {
+   "gold_id": "SF015",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF016",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF017",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A"
+   ],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF018",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF019",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF020",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF021",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "TOPN_CAP"
+   ]
+  },
+  {
+   "gold_id": "SF022",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "TOPN_CAP"
+   ]
+  },
+  {
+   "gold_id": "SF023",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF024",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF025",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF026",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF027",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF028",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF029",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF030",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF031",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "MONTHYEAR"
+   ]
+  },
+  {
+   "gold_id": "SF032",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "MONTHYEAR"
+   ]
+  },
+  {
+   "gold_id": "SF033",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "MONTHYEAR"
+   ]
+  },
+  {
+   "gold_id": "SF034",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "MONTHYEAR"
+   ]
+  },
+  {
+   "gold_id": "SF035",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "MONTHYEAR"
+   ]
+  },
+  {
+   "gold_id": "SF036",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF037",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "RELATIVE_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF038",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RELATIVE_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF039",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF040",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF041",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "TOPIC"
+   ]
+  },
+  {
+   "gold_id": "SF042",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "RELATIVE_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF043",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF044",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF045",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A"
+   ],
+   "gap_codes_union": [
+    "RELATIVE_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF046",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [
+    "A"
+   ],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF047",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF048",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF049",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF050",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF051",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "REASK",
+   "disposition_B": "REASK",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "ANSWER_PLUS_EDIT",
+    "RANGE_NO_INTERIOR"
+   ]
+  },
+  {
+   "gold_id": "SF052",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF053",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "REASK",
+   "disposition_B": "REASK",
+   "ambiguous_by": [
+    "A"
+   ],
+   "gap_codes_union": [
+    "ANSWER_PLUS_EDIT",
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF054",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF055",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF056",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF057",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF058",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF059",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "COUNTERPART"
+   ]
+  },
+  {
+   "gold_id": "SF060",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "COUNTERPART"
+   ]
+  },
+  {
+   "gold_id": "SF061",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "REASK",
+   "disposition_B": "REASK",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "ANY_OPTION"
+   ]
+  },
+  {
+   "gold_id": "SF062",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "OUT_OPERATION_CHANGE",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [
+    "A"
+   ],
+   "gap_codes_union": [
+    "OPSWITCH",
+    "PENDING_OPSWITCH",
+    "TOTALES"
+   ]
+  },
+  {
+   "gold_id": "SF063",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "PENDING_REJECTED",
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF064",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [
+    "A"
+   ],
+   "gap_codes_union": [
+    "TTL"
+   ]
+  },
+  {
+   "gold_id": "SF065",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF066",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF067",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF068",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "GEOBUYER",
+    "SET"
+   ]
+  },
+  {
+   "gold_id": "SF069",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "GEOBUYER",
+    "SET"
+   ]
+  },
+  {
+   "gold_id": "SF070",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF071",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF072",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF073",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT",
+    "UNIVTIME"
+   ]
+  },
+  {
+   "gold_id": "SF074",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF075",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT",
+    "UNIVTIME"
+   ]
+  },
+  {
+   "gold_id": "SF076",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF077",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF078",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF079",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "STATE_UNIVERSE",
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF080",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF081",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "PV"
+   ]
+  },
+  {
+   "gold_id": "SF082",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "PV"
+   ]
+  },
+  {
+   "gold_id": "SF083",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "PV"
+   ]
+  },
+  {
+   "gold_id": "SF084",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "OPPORTUNITY_STATE",
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF085",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF086",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF087",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "B5RANGE",
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF088",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF089",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF090",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RANGE_NO_INTERIOR"
+   ]
+  },
+  {
+   "gold_id": "SF091",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RANGE_NO_INTERIOR"
+   ]
+  },
+  {
+   "gold_id": "SF092",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF093",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "COMPARATOR_FORM"
+   ]
+  },
+  {
+   "gold_id": "SF094",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RANGE_NO_INTERIOR"
+   ]
+  },
+  {
+   "gold_id": "SF095",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RANGE_NO_INTERIOR"
+   ]
+  },
+  {
+   "gold_id": "SF096",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF097",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF098",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "B5RANGE",
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF099",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RANGE_NO_INTERIOR"
+   ]
+  },
+  {
+   "gold_id": "SF100",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF101",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF102",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF103",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RANGE_NO_INTERIOR",
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF104",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF105",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF106",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "B5RANGE",
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF107",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "B5RANGE",
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF108",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF109",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF110",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF111",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF112",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF113",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "CLEAR_ABSENT"
+   ]
+  },
+  {
+   "gold_id": "SF114",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "EMPTY_AFTER_DELTA"
+   ]
+  },
+  {
+   "gold_id": "SF115",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF116",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "EMPTY_AFTER_DELTA"
+   ]
+  },
+  {
+   "gold_id": "SF117",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF118",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF119",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF120",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF121",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF122",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF123",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "GEOBUYER",
+    "REGION_VOCAB"
+   ]
+  },
+  {
+   "gold_id": "SF124",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "REGION_VOCAB",
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF125",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF126",
+   "candidate_status": "DISPUTED_PRIMARY",
+   "m2a_scope": "IN_NEW_SEARCH|IN",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "TOPIC",
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF127",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF128",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF129",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "COMPARATOR_FORM"
+   ]
+  },
+  {
+   "gold_id": "SF130",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF131",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF132",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "B"
+   ],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF133",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "TOPIC"
+   ]
+  },
+  {
+   "gold_id": "SF134",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [
+    "B"
+   ],
+   "gap_codes_union": [
+    "TOPIC",
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF135",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "PRIOR_NOT_EXECUTED"
+   ]
+  },
+  {
+   "gold_id": "SF136",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "COMPARATOR_FORM",
+    "PRIOR_NOT_EXECUTED",
+    "SET"
+   ]
+  },
+  {
+   "gold_id": "SF137",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_NO_ANCHOR",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "NO_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF138",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "TTL"
+   ]
+  },
+  {
+   "gold_id": "SF139",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [
+    "A"
+   ],
+   "gap_codes_union": [
+    "GEOBUYER",
+    "TTL"
+   ]
+  },
+  {
+   "gold_id": "SF140",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "ORDER_DIRECTION",
+    "TTL"
+   ]
+  },
+  {
+   "gold_id": "SF141",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "TTL"
+   ]
+  },
+  {
+   "gold_id": "SF142",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_NO_ANCHOR",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF143",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+   "disposition_A": "HANDOFF_LEGACY",
+   "disposition_B": "HANDOFF_LEGACY",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF144",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_ANCHOR_NOT_SEARCH",
+   "disposition_A": "HANDOFF_LEGACY",
+   "disposition_B": "HANDOFF_LEGACY",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF145",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF146",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF147",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "PAGE_VS_TOPN"
+   ]
+  },
+  {
+   "gold_id": "SF148",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [
+    "A"
+   ],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF149",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF150",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF151",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF152",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF153",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_OPERATION_CHANGE",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "OPSWITCH"
+   ]
+  },
+  {
+   "gold_id": "SF154",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_OPERATION_CHANGE",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "OPSWITCH"
+   ]
+  },
+  {
+   "gold_id": "SF155",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "GEOBUYER"
+   ]
+  },
+  {
+   "gold_id": "SF156",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF157",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF158",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF159",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "REGION_VOCAB"
+   ]
+  },
+  {
+   "gold_id": "SF160",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF161",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF162",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "GEOBUYER",
+    "POLARITY_OTHER_VALUE",
+    "POLARITY_SAME_VALUE"
+   ]
+  },
+  {
+   "gold_id": "SF163",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "COUNTERPART"
+   ]
+  },
+  {
+   "gold_id": "SF164",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "COUNTERPART"
+   ]
+  },
+  {
+   "gold_id": "SF165",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "SMMLV"
+   ]
+  },
+  {
+   "gold_id": "SF166",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "SMMLV"
+   ]
+  },
+  {
+   "gold_id": "SF167",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "SMMLV",
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF168",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "SMMLV"
+   ]
+  },
+  {
+   "gold_id": "SF169",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "SMMLV"
+   ]
+  },
+  {
+   "gold_id": "SF170",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "SMMLV",
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF171",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "ORDER_DIRECTION"
+   ]
+  },
+  {
+   "gold_id": "SF172",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "ORDER_DIRECTION"
+   ]
+  },
+  {
+   "gold_id": "SF173",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RELATIVE_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF174",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "RELATIVE_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF175",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [
+    "B"
+   ],
+   "gap_codes_union": [
+    "RELATIVE_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF176",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "CLARIFY",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "RELATIVE_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF177",
+   "candidate_status": "DISPUTED_PRIMARY",
+   "m2a_scope": "OUT_RELATIVE_TO_PREVIOUS|IN",
+   "disposition_A": "CLARIFY",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "B"
+   ],
+   "gap_codes_union": [
+    "RELATIVE_ANCHOR"
+   ]
+  },
+  {
+   "gold_id": "SF178",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "PRIOR_NOT_EXECUTED"
+   ]
+  },
+  {
+   "gold_id": "SF179",
+   "candidate_status": "DISPUTED_PRIMARY",
+   "m2a_scope": "IN_PROTOCOL",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "PRIOR_NOT_EXECUTED"
+   ]
+  },
+  {
+   "gold_id": "SF180",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_REFERENT_EXTENSIONAL",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "PRIOR_NOT_EXECUTED"
+   ]
+  },
+  {
+   "gold_id": "SF181",
+   "candidate_status": "AGREED",
+   "m2a_scope": "OUT_OPERATION_CHANGE",
+   "disposition_A": "INFORM",
+   "disposition_B": "INFORM",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "OPSWITCH",
+    "PRIOR_NOT_EXECUTED"
+   ]
+  },
+  {
+   "gold_id": "SF182",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RANGE_NO_INTERIOR"
+   ]
+  },
+  {
+   "gold_id": "SF183",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "RANGE_NO_INTERIOR",
+    "UNIT"
+   ]
+  },
+  {
+   "gold_id": "SF184",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF185",
+   "candidate_status": "AGREED_AMBIGUOUS",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF186",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF187",
+   "candidate_status": "DISPUTED_PRIMARY",
+   "m2a_scope": "IN_NEW_SEARCH|IN",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [
+    "A",
+    "B"
+   ],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF188",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": []
+  },
+  {
+   "gold_id": "SF189",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "REASK",
+   "disposition_B": "REASK",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "REGION_VOCAB"
+   ]
+  },
+  {
+   "gold_id": "SF190",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN_NEW_SEARCH",
+   "disposition_A": "NEW_SEARCH",
+   "disposition_B": "NEW_SEARCH",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "UNIVERSE_FRAGMENT"
+   ]
+  },
+  {
+   "gold_id": "SF191",
+   "candidate_status": "AGREED",
+   "m2a_scope": "IN",
+   "disposition_A": "EXECUTE",
+   "disposition_B": "EXECUTE",
+   "ambiguous_by": [],
+   "gap_codes_union": [
+    "COMPARATOR_FORM",
+    "PENDING_REJECTED"
+   ]
+  }
+ ]
+}

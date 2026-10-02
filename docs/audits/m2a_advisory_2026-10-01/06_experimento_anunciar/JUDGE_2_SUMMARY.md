@@ -1,0 +1,32 @@
+# Juez 2 — resumen
+
+Casos: 58
+
+## condition_role
+|rol|n|
+|---|---|
+|DECISIVE|47|
+|SECONDARY|9|
+|UNCLEAR|2|
+
+## answer_useful
+|valor|n|
+|---|---|
+|yes|40|
+|no|18|
+
+## Tabla cruzada
+|rol|yes|no|total|
+|---|---|---|---|
+|DECISIVE|31|16|47|
+|SECONDARY|8|1|9|
+|UNCLEAR|1|1|2|
+|total|40|18|58|
+
+## Casos por celda
+- DECISIVE/yes: R0302, R0353, R0327, R0237, R0050, R0163, R0260, R0540, R0259, R0462, R0082, R0151, S013, R0339, R0225, R0258, R0239, R0429, R0153, R0154, R0190, R0102, R0298, R0090, R0217, R0305, R0354, R0244, R0535, R0178, R0152
+- DECISIVE/no: R0174, R0177, R0580, R0084, R0370, R0009, R0219, R0114, R0517, R0495, R0176, R0144, R0228, R0028, R0352, R0110
+- SECONDARY/yes: R0218, R0230, R0368, R0578, R0117, R0067, R0124, R0175
+- SECONDARY/no: R0444
+- UNCLEAR/yes: R0006
+- UNCLEAR/no: R0297
