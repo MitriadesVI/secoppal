@@ -145,6 +145,16 @@ def u3_sf195(L: dict, _other: dict) -> None:
 
 
 U3_RULES = {"SF192": u3_sf192, "SF193": u3_sf193, "SF194": u3_sf194, "SF195": u3_sf195}
+# Record-level declarations (R3b, U22/U23): what is sealed is NOT the whole normative answer. SF192 seals only C1; the
+# SET_ORDER candidates belong to E-ORDER (§19 DEP-E-ORDER-CANDIDATES, COMPOSICION). The §19 extraction checks the pair.
+U3_RECORD_FIELDS = {
+    "SF192": {"partial_alternatives": {
+        "declared_by": "U3 (usuario, 2026-10-02; R3b)",
+        "dependency": "DEP-E-ORDER-CANDIDATES",
+        "sealed": "C1 «quitar orden y límite»",
+        "pending_on": "E-ORDER: un candidato SET_ORDER por criterio de orden alternativo del dataset (§6.7)",
+        "why": "lo provisional no se sella como normativo: las alternativas selladas son parciales"}},
+}
 
 
 def u3_additions() -> list[dict]:
@@ -171,7 +181,8 @@ def u3_additions() -> list[dict]:
         out.append({"adjudicated_by": ["U3"],
                     "ambiguous_by": sorted(s for s, L in (("A", A), ("B", B)) if L["ambiguity"] != "CLEAR"),
                     "expected_disposition": A["expected_disposition"], "gold_id": gid, "label_A": A, "label_B": B,
-                    "m2a_scope": A["m2a_scope"], "primary_agreement": True, "slice": "SYNTHETIC_FOLLOWUP"})
+                    "m2a_scope": A["m2a_scope"], "primary_agreement": True, "slice": "SYNTHETIC_FOLLOWUP",
+                    **copy.deepcopy(U3_RECORD_FIELDS.get(gid, {}))})
     return out
 
 

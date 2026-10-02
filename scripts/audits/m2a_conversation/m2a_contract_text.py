@@ -145,3 +145,38 @@ def dim_parameter(text: str) -> tuple[set[str], set[str]]:
     named = set(re.findall(r"`([A-Z_]+)`", before)) - {"TOPIC", "CARDINALITY"}  # «(`TOPIC` … `CARDINALITY`)» is a span
     excluded = set(re.findall(r"`([A-Z_]+)`", after.split(".", 1)[0]))
     return named, excluded
+
+
+def refusal_precedence(text: str) -> list[str]:
+    """§6 paso 3b (R3b, U20): the closed precedence of refusal causes, highest first."""
+    rows = table(text, "| Precedencia | Causa (`DeltaRefusal`) | Cuándo |")
+    if [row[0] for row in rows] != [str(n) for n in range(1, len(rows) + 1)]:
+        raise ContractTextError("§6 3b: precedence must be 1..n in order")
+    return [codes(row[1])[0] for row in rows]
+
+
+def inform_capable_codes(text: str) -> list[str]:
+    """A.3 (R3b, U20): the CLARIFY codes that are also valid with INFORM (closed list)."""
+    para = section(text, "**`INFORM` con un código de `CLARIFY` (R3b, U20).**", "Nunca lo son")
+    listed = codes(para.split("Sólo estos códigos de `CLARIFY` son también válidos con `INFORM`:", 1)[1])
+    if not listed:
+        raise ContractTextError("A.3: empty INFORM-capable list")
+    return listed
+
+
+_RESOLUTION = re.compile(r"`(CLARIFY|INFORM|REASK) ([A-Z_]+)`")
+
+
+def host_rules(text: str) -> list[tuple[str, str | None, str | None]]:
+    """§6 paso 4: the host rules in precedence order, ``(rule, disposition, code)``. H2 (``REASK`` by §8) names no
+    code; the closing «si no» row (execute) is not a rule."""
+    step = section(text, "4. **Reglas del host tras componer**", "5. **Sustituciones declaradas**")
+    out = []
+    for rule, _, result in table(step, "| # | Regla | Resultado |"):
+        if rule == "—":
+            continue
+        found = _RESOLUTION.search(result)
+        out.append((rule, found.group(1) if found else None, found.group(2) if found else None))
+    if [rule for rule, _, _ in out] != [f"H{n}" for n in range(1, len(out) + 1)]:
+        raise ContractTextError("§6 paso 4: host rules must be H1..Hn in order")
+    return out

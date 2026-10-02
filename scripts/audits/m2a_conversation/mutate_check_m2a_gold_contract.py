@@ -190,8 +190,32 @@ def mutants(rows: list[dict]) -> dict:
     def sf195_drops_cardinality(L):  # CLEAR(ORDER)+SET_ORDER keeps CARDINALITY (F10): G3
         L["resulting_ir"] = {**L["resulting_ir"], "cardinality": None}
 
+    # ---- R3b (ZEUS NO_GO repair): disposition <-> code pairs (A.3), conflict, INFORM and expired anchors ------------
+    def reason_is(code):
+        return lambda L: L.update(disposition_reason=code)
+
+    def sf113_inform_with_alternative(L):  # INFORM never leaves a pending (§8.4)
+        L["alternatives"] = [L["prior"]["ir"]]
+
+    def sf138_other_pending_over_expired(L):  # over an expired anchor only CONTEXT_EXPIRED_CONFIRM (§6 H1)
+        L["disposition_reason"] = "KEEP_ON_EMPTY_SLOT"
+        L["ops"] = L["ops"] + [{"op": "KEEP", "slot": "BUYER", "operator": None, "polarity": "POSITIVE", "level": None,
+                                "quote": "con la misma entidad", "value_hint": None, "unresolved": True,
+                                "refers_to_result_set": False, "depends_on_prior_value": True,
+                                "inherited": {"year_source": None, "unit_source": None}}]
+
     return {
 
+        "R3b_ZEUS_SF193_CLARIFY_with_REASK_code": ("SF193", reason_is("PENDING_UNANSWERED")),
+        "R3b_ZEUS_SF193_CLARIFY_with_INFORM_only_code": ("SF193", reason_is("REFERENT_EXTENSIONAL")),
+        "R3b_ZEUS_SF193_CLARIFY_with_UNSUPPORTED_PROPOSAL": ("SF193", reason_is("UNSUPPORTED_PROPOSAL:NO_ACTION")),
+        "R3b_ZEUS_SF193_CLARIFY_with_OPERATION_CHANGE": ("SF193", reason_is("OPERATION_CHANGE:SEARCH")),
+        "R3b_SF113_INFORM_with_REASK_code": ("SF113", reason_is("ANSWER_UNRESOLVED")),
+        "R3b_SF113_INFORM_with_CONTEXT_EXPIRED_CONFIRM": ("SF113", reason_is("CONTEXT_EXPIRED_CONFIRM")),
+        "R3b_SF001_EXECUTE_with_reason": ("SF001", reason_is("KEEP_ON_EMPTY_SLOT")),
+        "R3b_SF193_conflict_without_conflicting_ops": ("SF193", reason_is("DELTA_SLOT_CONFLICT")),
+        "R3b_SF113_INFORM_with_alternative": ("SF113", sf113_inform_with_alternative),
+        "R3b_SF138_other_pending_over_expired_anchor": ("SF138", sf138_other_pending_over_expired),
         "R3_SF192_executed_keeps_cardinality": ("SF192", sf192_keeps_cardinality),
         "R3_SF192_executed_drops_cardinality": ("SF192", sf192_drops_cardinality),
         "R3_SF192_reason_outside_A3": ("SF192", sf192_reason_outside_a3),
@@ -258,8 +282,16 @@ def record_mutants(rows: list[dict]) -> dict:
                 r.pop("invalid_persisted_state", None)
         return out
 
+    def sf192_partial_declaration_removed(rows_):  # R3b: the sealed C1-only alternatives must be declared partial
+        out = copy.deepcopy(rows_)
+        for r in out:
+            if r["gold_id"] == "SF192":
+                r.pop("partial_alternatives", None)
+        return out
+
     return {"U1_SF166_unpatched_2023_executed": ("SF166", unpatched_sf166),
-            "D1_SF168_declaration_removed": ("SF168", d1_declaration_removed)}
+            "D1_SF168_declaration_removed": ("SF168", d1_declaration_removed),
+            "R3b_SF192_partial_declaration_removed": ("SF192", sf192_partial_declaration_removed)}
 
 
 def main() -> int:
@@ -282,9 +314,10 @@ def main() -> int:
     for name, (gid, fn) in record_mutants(rows).items():
         out = run_on(scratch, name, fn(rows))
         killed = [v for v in out["violations"] if v.startswith(gid)]
-        isolated = bool(killed) and all("D10 catalog" in v for v in killed)  # G11's message only (not G10)
+        expected = "declaring its alternatives partial" if name.startswith("R3b_") else "D10 catalog"
+        isolated = bool(killed) and all(expected in v for v in killed)  # its own rule's message only
         ok &= isolated
-        print("KILLED" if isolated else "SURVIVED", name, gid, "(G11 only)" if isolated else killed[:2])
+        print("KILLED" if isolated else "SURVIVED", name, gid, "(its rule only)" if isolated else killed[:2])
     frontier = chk.load(SRC / "FOLLOWUP_FRONTIER_synthetic.jsonl")
     out = run_on(scratch, "M7_frontier_absorbed", rows + [next(x for x in frontier if x["gold_id"] == "SF038")])
     killed = any("SF038" in v for v in out["violations"])

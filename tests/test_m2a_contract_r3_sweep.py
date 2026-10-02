@@ -171,10 +171,24 @@ def r31_candidates(*, provisional: bool = False) -> tuple[fa.CandidatePatch, ...
     return (r31_candidate(),) if provisional else (r31_candidate(), r31_set_order_candidate(SAMPLE[D.ORDER][1]))
 
 
-def selects(candidates: tuple[fa.CandidatePatch, ...], answer: fa.AcceptedCondition) -> int:
-    """§8.3 row 4 (sealed text): how many candidates the answer selects, comparing by encoded value."""
-    return sum(any(op.condition is not None and op.slot == answer.slot and op.condition.value == answer.value
-                   for op in candidate.patch.ops) for candidate in candidates)
+def identity(op: fa.PatchOp) -> tuple:
+    """§8.3 «Selección» (R3b, U22): an operation is (op, slot, canonical encoded value) or (REPLACE_UNIVERSE, target).
+    Never text, ``display_key``, ``candidate_id``, condition ids or origin."""
+    value = None if op.condition is None else op.condition.value
+    target = None if op.universe is None else (op.universe.subject, op.universe.universe_kind)
+    return op.op, op.slot, value, target
+
+
+def select(candidates: tuple[fa.CandidatePatch, ...], answer: tuple[fa.PatchOp, ...]) -> list[str]:
+    """§8.3 «Selección»: the candidates (ids, for the assertion only) the answer selects. A candidate is selected when
+    the answer has at least one operation on its slots and each of those is one of its operations by identity."""
+    chosen = []
+    for candidate in candidates:
+        slots, identities = {op.slot for op in candidate.patch.ops}, [identity(op) for op in candidate.patch.ops]
+        on = [op for op in answer if op.slot in slots]
+        if on and all(identity(op) in identities for op in on):
+            chosen.append(candidate.candidate_id)
+    return chosen
 
 
 # ---- generated inventory -------------------------------------------------------------------------------------------
@@ -315,6 +329,12 @@ BRANCH_M2A3 = "rama M2A-3 30d073a4..f30e91ff, no en la base fa0b6de8"
 # Codes present on only ONE of the two lines that meet at integration (base fa0b6de8 / M2A-3 branch): a swept code may
 # be absent from the source under test only if it is listed here. Every other swept code must exist in the types.
 BASE_ONLY = frozenset({"UNSORTED_POLICY_CONDITION_IDS"})  # replaced by MULTI_CONDITION_POLICY in 0de2b9a2
+# A.3 (R3b, U20): the CLARIFY codes that are also valid with INFORM, split by where they come from.
+INFORM_REFUSALS = ("DELTA_SLOT_CONFLICT", "TARGET_NOT_ADDRESSABLE", "KEEP_ON_EMPTY_SLOT",
+                   "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER", "UNRESOLVED_VALUE:<DIM>")
+INFORM_HOST = ("SMMLV_YEAR_AMBIGUOUS", "RELATIVE_TO_PREVIOUS_VALUE", "BUYER_OR_PLACE_AFTER_ACTOR",
+               "TERRITORY_VS_CARRIED_BUYER", "REGION_NOT_IN_LIST", "STATE_NOT_IN_UNIVERSE", "UNIT_AMBIGUOUS",
+               "MONTH_YEAR_AMBIGUOUS", "EMPTY_SEARCH_AFTER_DELTA", "VALUE_WITHOUT_COMPARATOR")
 MOTIVES = ("MULTI_REQUEST", "UNSUPPORTED_CONDITION", "UNSUPPORTED_SOURCE", "INVALID_PROPOSAL", "NO_ACTION")
 SWEEP = (
     Row("T01", ("EMPTY_REQUESTS", "DUPLICATE_REQUEST_ID", "TOO_MANY_REQUESTS", "INVALID_DUAL_ANCHOR"),
@@ -399,15 +419,35 @@ SWEEP = (
     Row("S08", (), "pendiente de R3-1 (D-1 opción 1)", "— (pendiente)", "SÍ (consecuencia de T08)",
         "C1 «quitar orden y límite» + un SET_ORDER por criterio alternativo (sin el vigente); answer_slots = "
         "{ORDER, CARDINALITY}; «déjalo como estaba» = CANCEL_PENDING; sin E-ORDER, sólo C1", "CUBIERTO",
-        "§6.7 y §19; §8.3 fila 4 sellada: «por fecha» selecciona uno, «dame 20» ninguno (fila 7); sondas "
+        "§6.7 y §19; §8.3 «Selección» por identidad semántica (R3b, U22): «por fecha» selecciona su SET_ORDER y «quita "
+        "también el límite» C1; «dame 20» no llega a §8.3: el wire lo rechaza (sonda P-b-wire) y es §7.1 fila 4b, "
+        "INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL con la pendiente intacta (R3b, P1-2); sondas "
         "P-d1-option1/P-d1-provisional; {ORDER} literal = CANDIDATE_OUTSIDE_ANSWER_SLOTS (P-d1-literal)", "R3-1",
-        ("PENDING-R3-1",)),
+        ("PENDING-R3-1", "A3-UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL")),
     Row("S09", (), "P-3: un parche que introduce a la vez +X y −X (mismo valor canónico, misma dimensión)",
         "SET/<DIM>/POSITIVE + SET/<DIM>/NEGATIVE en un parche",
         "SÍ (el tipo admite la efectiva con +X y −X nuevos: sonda P-p3)",
         "OP_NOT_ACCREDITED:<DIM> → CLARIFY UNRESOLVED_VALUE:<DIM> (rama fail-closed de R3-4)", "CUBIERTO",
         "§6.5 F16: sólo invierte un positivo ARRASTRADO; un positivo del mismo parche no cuenta (U18). Mutante del "
         "verificador: R3_P3_SF001_same_patch_both_polarities (G10)", "P-3"),
+    Row("S10", (), "dos o más causas de rechazo a la vez (R3b, U20; testigo de ZEUS: CLEAR(ORDER) con la CARDINALITY "
+        "arrastrada + SET BUYER no acreditado)", "cualquier par con causa", "SÍ",
+        "INFORM con el código de mayor precedencia (§6 paso 3b), sin pendiente, 0 llamadas, ancla intacta", "CUBIERTO",
+        "precedencia cerrada TARGET_NOT_ADDRESSABLE > DELTA_SLOT_CONFLICT > KEEP_ON_EMPTY_SLOT > OP_NOT_ACCREDITED > "
+        "DELTA_LEAVES; barrido multi-op (tests/test_m2a_contract_r3_multiop.py)", "U20",
+        tuple(f"A3-INFORM:{c}" for c in INFORM_REFUSALS)),
+    Row("S11", (), "pendiente imposible: frame inválido, operación abierta en el frame o candidato que no compone "
+        "(§8.4, INV-M2A-26)", "una causa o una regla del host junto a otras operaciones", "SÍ",
+        "INFORM con el código de la regla que habría preguntado, sin pendiente", "CUBIERTO",
+        "§8.4; A.3 «INFORM con un código de CLARIFY» (lista cerrada); barrido multi-op", "U20",
+        tuple(f"A3-INFORM:{c}" for c in INFORM_HOST)),
+    Row("S12", (), "ancla vencida cuyo «continuar» no compone o no ejecuta (H1)", "cualquiera, ancla vencida", "SÍ",
+        "INFORM con la causa o la regla (H3–H12); CONTEXT_EXPIRED_CONFIRM sólo si «continuar» ejecuta", "CUBIERTO",
+        "§6 H1, §10.1, §8.4: sobre un ancla vencida no nace otra pendiente; barrido multi-op", "U20"),
+    Row("S13", (), "KEEP + SET/SET_ORDER/REPLACE_UNIVERSE de la misma ranura, también con el mismo valor (R3b, U22)",
+        "KEEP + escritor", "SÍ", "→ DELTA_SLOT_CONFLICT (CLARIFY o, con otra causa, INFORM)", "CUBIERTO",
+        "§6 paso 2; el desenlace no depende del orden de las operaciones (barrido multi-op)", "U22",
+        ("A3-DELTA_SLOT_CONFLICT",)),
     Row("R01", (), "rechazo DELTA_SLOT_CONFLICT (dos SET en una ranura; KEEP+CLEAR; dos REPLACE_UNIVERSE)",
         "SET×2, KEEP+CLEAR, REPLACE_UNIVERSE×2", "SÍ", "→ CLARIFY DELTA_SLOT_CONFLICT", "CUBIERTO",
         "tabla de §6; incluye la unión de valores de G-FU-09 (§19)", "R3-2", ("A3-DELTA_SLOT_CONFLICT",)),
@@ -536,6 +576,12 @@ TYPE_GAPS = {
         f"reason_code_allowed(INFORM) sin UNSUPPORTED_PROPOSAL:{m} (D-6)",
         lambda m=m: fa.reason_code_allowed(f"UNSUPPORTED_PROPOSAL:{m}", fa.TurnResolution.INFORM))
        for m in MOTIVES},
+    **{f"A3-INFORM:{c}": (
+        f"reason_code_allowed(INFORM) sin {c} (R3b, U20: pendiente imposible ⇒ INFORM con el código)",
+        lambda c=c: all(fa.reason_code_allowed(code, fa.TurnResolution.INFORM)
+                        for code in ([f"UNRESOLVED_VALUE:{d}" for d in sorted(dim_domain())]
+                                     if c == "UNRESOLVED_VALUE:<DIM>" else [c])))
+       for c in (*INFORM_REFUSALS, *INFORM_HOST)},
     "A3-CONTRACT-EQUALS-TYPE": ("A.3/A.1 del contrato enmendado ≠ constantes del tipo",
                                 lambda: _contract_equals_type()),
 }
@@ -617,6 +663,10 @@ def test_d6_and_dim_are_closed_lists_in_the_contract():
 
 def test_type_facts_that_hold_before_and_after_m2a3_1c():
     assert {code: representable(code) for code in TYPE_ADMITS} == TYPE_ADMITS
+    # A.3 (R3b): these never travel with INFORM (their pending is always possible) and no REASK code is a CLARIFY one
+    assert not any(fa.reason_code_allowed(c, fa.TurnResolution.INFORM)
+                   for c in ("CONTEXT_EXPIRED_CONFIRM", "NO_ANCHOR", "ANCHOR_UNREADABLE"))
+    assert not any(fa.reason_code_allowed(c, fa.TurnResolution.CLARIFY) for c in fa.REASK_CODES)
     # every <DIM> the contract allows, except UNIVERSE (a TYPE_GAPS item), is already admitted by the type
     assert all(representable(f"UNRESOLVED_VALUE:{dim}") for dim in dim_domain() - {"UNIVERSE"})
 
@@ -636,9 +686,10 @@ def test_d1_option1_is_in_the_contract_and_section_8_3_is_untouched():
                    "**sólo C1**"):
         assert clause in section, clause
     s19 = CT.section(text, "## 19. Frontera: M2b, M3 y E-*", "## 20. Gates")
-    e_order = next(row for row in CT.table(s19, "| Id | Casos `M2A_GOLD` | Necesitan | Dueño |")
-                   if row[0] == "`DEP-E-ORDER`")
-    assert "**sólo C1**" in e_order[2]
+    rows = {row[0]: row for row in CT.table(s19, "| Id | Alcance | Ids | Conteo | impacto_m2a3 | Necesitan | Dueño |")}
+    assert "**sólo C1**" in rows["`DEP-E-ORDER`"][5]
+    assert rows["`DEP-E-ORDER-CANDIDATES`"][2:5] == ["[SF192]", "1", "COMPOSICION"]
+    assert "**PARCIALES**" in rows["`DEP-E-ORDER-CANDIDATES`"][5]
     assert "### D.2 Puntos de revisión del usuario: RESUELTOS (2026-10-02)" in text
 
 
@@ -649,15 +700,85 @@ def test_p3_is_in_the_contract():
     assert "misma rama fail-closed y con el mismo código (R3, P-3)" in f16
 
 
-def test_d1_option1_answers_select_by_encoded_value():
+def set_order(value: OrderValue) -> fa.PatchOp:
+    """The SET_ORDER the ORDER authority resolves for a valid wire proposal (ids and origin differ on purpose)."""
+    condition = cond("answer", D.ORDER, value, start=7)
+    return fa.PatchOp(fa.PatchOpKind.SET_ORDER, ORDER_SLOT, condition, None, condition.origin)
+
+
+def test_d1_option1_answers_go_through_the_wire_and_select_by_semantic_identity():
+    """R3b, P1-2 and U22. Every answer first passes the wire; what reaches §8.3 is selected by identity."""
+    dame_20 = "dame 20"  # IR v2 refuses a FOLLOWUP_DELTA that only brings CARDINALITY: §7.1 row 4b, never §8.3
+    assert refusal(lambda: proposal(dame_20, Operation.FOLLOWUP_DELTA,
+                                    (wire("n", D.CARDINALITY, "top_n", "20", dame_20),))) == "CARDINALITY_WITHOUT_ORDER"
+    assert "INVALID_PROPOSAL" in row_4b_motives()
+    by_date_raw = "por fecha"  # a valid proposal; the ORDER authority resolves date (desc)
+    assert refusal(lambda: proposal(by_date_raw, Operation.FOLLOWUP_DELTA,
+                                    (wire("o", D.ORDER, "date_desc", by_date_raw, by_date_raw),))) is None
+    limit_raw = "quita también el límite"  # a valid wire 5.1 CLEAR directive on CARDINALITY
+    directive = ProposedSlotDirective("d1", DirectiveKind.CLEAR, (RawSpan(0, len(limit_raw), limit_raw),),
+                                      D.CARDINALITY)
+    directive.validate_raw(limit_raw)
+    clear_limit = fa.PatchOp(fa.PatchOpKind.CLEAR, CARDINALITY_SLOT, None, None, _origin(9))
     candidates = r31_candidates()
-    by_date = cond("a1", D.ORDER, SAMPLE[D.ORDER][1])  # «por fecha»: the authority resolves date (desc)
-    twenty = cond("a2", D.CARDINALITY, CardinalityValue(20, CardinalityBasis.FIGURE, 20))  # «dame 20»
-    current = cond("a3", D.ORDER, SAMPLE[D.ORDER][0])  # the criterion in force is never a candidate
-    assert selects(candidates, by_date) == 1  # row 4: exactly one ⇒ PENDING_ANSWER
-    assert selects(candidates, twenty) == 0  # row 7: REASK ANSWER_UNRESOLVED, never «top 20 by the old order»
-    assert selects(candidates, current) == 0
-    assert selects(r31_candidates(provisional=True), by_date) == 0  # without E-ORDER: C1 only
+    assert select(candidates, (set_order(SAMPLE[D.ORDER][1]),)) == ["k2"]  # row 4: its SET_ORDER
+    assert select(candidates, (clear_limit,)) == ["k1"]  # row 4: C1
+    assert select(candidates, (set_order(SAMPLE[D.ORDER][0]),)) == []  # the criterion in force: row 7
+    assert select(r31_candidates(provisional=True), (set_order(SAMPLE[D.ORDER][1]),)) == []  # without E-ORDER
+    renamed = tuple(fa.CandidatePatch(f"z{n}", f"otro_{n}", c.patch) for n, c in enumerate(candidates))
+    assert select(renamed, (set_order(SAMPLE[D.ORDER][1]),)) == ["z1"]  # never by text, display_key or ids
+
+
+def _flat(text: str) -> str:
+    return " ".join(text.split())
+
+
+def test_r3b_p1_1_the_pending_law_and_the_refusal_precedence_are_in_the_contract():
+    text = _contract()
+    assert CT.refusal_precedence(text) == ["TARGET_NOT_ADDRESSABLE", "DELTA_SLOT_CONFLICT", "KEEP_ON_EMPTY_SLOT",
+                                           "OP_NOT_ACCREDITED:<DIM>", "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER"]
+    assert set(CT.refusal_precedence(text)) == set(delta_refusal_codes()) - {"BASE_INVALID"}
+    step = _flat(CT.section(text, "3b. **Causas de rechazo", "4. **Reglas del host tras componer**"))
+    for clause in ("**Dos o más causas:** `INFORM` con el código de mayor precedencia, sin pendiente, 0 llamadas y el "
+                   "ancla intacta", "Dos operaciones no acreditadas son dos causas",
+                   "`BASE_INVALID` no entra en la lista", "sólo si §8.4 la permite y el ancla no está vencida"):
+        assert clause in step, clause
+    law = _flat(CT.section(text, "### 8.4 Ley de la pendiente posible (R3b, U20)", "## 9."))
+    for clause in ("es `None`, porque no había nada resuelto, o una `AcceptedInterpretation` válida",
+                   "cada `candidate_patch` compone válidamente sobre ese `frame`, sin causas del paso 3b de §6",
+                   "Con una pendiente vigente no nace otra", "Sobre un ancla vencida sólo puede nacer "
+                   "`CONTEXT_EXPIRED_CONFIRM` (H1)", "es gate de M2A-3 fase 2"):
+        assert clause in law, clause
+    h1 = next(r for r in CT.table(CT.section(text, "4. **Reglas del host", "5. **Sustituciones"),
+                                  "| # | Regla | Resultado |") if r[0] == "H1")
+    assert "**sólo si**" in h1[2] and "no dispara ninguna de H3–H12" in h1[2]
+    assert "Sobre un ancla vencida no nace ninguna otra pendiente" in h1[2]
+    assert "| INV-M2A-26 |" in text
+
+
+def test_r3b_inform_capable_codes_are_a_closed_list_of_clarify_codes():
+    text, annex = _contract(), annex_a3()
+    capable = CT.inform_capable_codes(text)
+    assert len(capable) == len(set(capable)) and set(capable) == set(INFORM_REFUSALS) | set(INFORM_HOST)
+    assert set(capable) <= set(annex["CLARIFY"])
+    assert not {"CONTEXT_EXPIRED_CONFIRM", "NO_ANCHOR", "ANCHOR_UNREADABLE"} & set(capable)
+    host = {code for _, disposition, code in CT.host_rules(text) if disposition == "CLARIFY"} - {"CONTEXT_EXPIRED_CONFIRM"}
+    refusals = {code for codes in refusal_table().values() for code in codes} - {"NO_ANCHOR", "ANCHOR_UNREADABLE"}
+    assert host | refusals <= set(capable)
+
+
+def test_r3b_p2_keep_conflict_and_semantic_selection_are_in_the_contract():
+    text = _contract()
+    step = _flat(CT.section(text, "2. **Orden fijo:**", "3. **Arrastre por identidad"))
+    assert "`KEEP` + `SET`/`SET_ORDER`/`REPLACE_UNIVERSE` de la misma ranura **aunque los valores coincidan**" in step
+    assert "Un `CLEAR` de la dimensión entera cubre cada una de sus ranuras" in step
+    selection = _flat(CT.section(text, "**Selección (R3b, U22).**", "### 8.4"))
+    for clause in ("(op, ranura, valor canónico codificado), o (`REPLACE_UNIVERSE`, destino)",
+                   "Nunca se decide por texto, `display_key`, `candidate_id` ni ids de condición",
+                   "se compone su parche **completo** sobre `frame` (fila 4)", "(`REASK ANSWER_EDITS_OTHER_SLOT`)"):
+        assert clause in selection, clause
+    dame_20 = _flat(CT.section(text, "**«Dame 20» (R3b, P1-2).**", "**Provisional fail-closed"))
+    assert "`INFORM UNSUPPORTED_PROPOSAL:INVALID_PROPOSAL` por §7.1 fila 4b, con la pendiente intacta" in dame_20
 
 
 # ---- the type side: declared red until M2A-3 phase 1c (strict xfail; never a false green) -------------------------

@@ -75,6 +75,12 @@ _A3 = {d: c for d, c in contract_text.annex_a3(_CONTRACT).items() if d in DISPOS
 REASONS = {code for codes in _A3.values() for code in codes if ":" not in code}
 REASON_PREFIXES = tuple(sorted({code.split(":", 1)[0] + ":" for codes in _A3.values() for code in codes if ":" in code}))
 _DIM_NAMED, _DIM_EXCLUDED = contract_text.dim_parameter(_CONTRACT)
+# R3b (U20/U22, ZEUS P2): a reason is valid only with the dispositions annex A.3 pairs it with. INFORM also admits the
+# closed list of CLARIFY codes the contract allows when the pending cannot exist, several causes meet or the anchor
+# expired (A.3 «INFORM con un código de CLARIFY»).
+_INFORM_CAPABLE = set(contract_text.inform_capable_codes(_CONTRACT))
+PAIRS = {d: set(c) for d, c in _A3.items()}
+PAIRS["INFORM"] = PAIRS["INFORM"] | _INFORM_CAPABLE
 REASON_TAILS = {  # the domain the contract declares for each parameter (A.3 «Parámetros (R3)»)
     "UNRESOLVED_VALUE:": {d.value for d in SemanticDimension} - _DIM_EXCLUDED | _DIM_NAMED,
     "OPERATION_CHANGE:": {op.value for op in Operation},
@@ -234,6 +240,14 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
         head, tail = reason.split(":", 1)
         if tail not in REASON_TAILS.get(head + ":", set()):
             r.bad(gid, lab, f"reason {reason}: tail outside the domain the contract declares")
+    if disp in ("EXECUTE", "NEW_SEARCH") and reason is not None:
+        r.bad(gid, lab, f"{disp} carries a reason ({reason})")
+    if reason is not None and disp in PAIRS:
+        shape = reason if reason in REASONS else reason.split(":", 1)[0] + ":" + {
+            "UNRESOLVED_VALUE": "<DIM>", "OPERATION_CHANGE": "<op>", "UNSUPPORTED_PROPOSAL": "<motivo>"}.get(
+            reason.split(":", 1)[0], "?")
+        if shape not in PAIRS[disp]:
+            r.bad(gid, lab, f"reason {reason} is not valid with {disp} (annex A.3 pairs)")
     if reason in RETIRED_REASONS:
         r.bad(gid, lab, f"retired reason {reason}")
     eff = derive_effects(L)
@@ -473,7 +487,23 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
             r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER: the ops do not leave CARDINALITY without ORDER")
         if res is not None or (L.get("alternatives") or []) != [c1]:
             r.bad(gid, lab, "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER: sealed alternatives must be exactly C1 (§6.7, §19)")
-    if reason == "KEEP_ON_EMPTY_SLOT":  # contract §6.1
+    if reason == "DELTA_LEAVES_CARDINALITY_WITHOUT_ORDER" and disp == "CLARIFY" and not (
+            rec.get("partial_alternatives") or {}).get("dependency"):
+        r.bad(gid, lab, "R3-1 pending sealed without declaring its alternatives partial (§19 DEP-E-ORDER-CANDIDATES)")
+    if reason == "DELTA_SLOT_CONFLICT":  # §6 steps 2 and 3b (R3b: KEEP + SET of one slot conflicts too)
+        def _slots(kinds):
+            return [o["slot"] for o in ops if o["op"] in kinds]
+        sets = _slots(("SET",)) + _slots(("SET_ORDER",)) + _slots(("SET_UNIVERSE",))
+        keeps, clears = set(_slots(("KEEP",))), set(_slots(("CLEAR",)))
+        conflict = (len(sets) != len(set(sets)) or keeps & clears or keeps & set(sets))
+        if not conflict:
+            r.bad(gid, lab, "DELTA_SLOT_CONFLICT without two ops in conflict on one slot")
+    if disp == "INFORM" and (L.get("alternatives") or res is not None):
+        r.bad(gid, lab, "INFORM with alternatives or a resulting IR (INFORM never leaves a pending, §8.4)")
+    if disp == "CLARIFY" and reason != "CONTEXT_EXPIRED_CONFIRM" and prior.get("gap_seconds") is not None \
+            and prior["gap_seconds"] > 1800 and prior["state"] != "PENDING":
+        r.bad(gid, lab, f"pending {reason} born over an expired anchor (§6 H1, R3b: only CONTEXT_EXPIRED_CONFIRM)")
+    if reason == "KEEP_ON_EMPTY_SLOT":  # contract §6.1 (CLARIFY, or INFORM when §6 3b or §8.4 forbid the pending)
         p_ir = pir or {"conditions": []}
         present = ({slot_of(c) for c in p_ir["conditions"]} | {c["dimension"] for c in p_ir["conditions"]}
                    | ({"ORDER"} if p_ir.get("order") else set()) | ({"CARDINALITY"} if p_ir.get("cardinality") else set())

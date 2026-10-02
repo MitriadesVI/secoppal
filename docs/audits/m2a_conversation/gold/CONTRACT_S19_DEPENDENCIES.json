@@ -1,22 +1,377 @@
 {
  "case_dependencies": {
+  "R0079": [
+   "DEP-E-ORDER"
+  ],
+  "R0083": [
+   "DEP-E-ORDER"
+  ],
+  "R0087": [
+   "DEP-E-ORDER"
+  ],
+  "R0089": [
+   "DEP-E-ORDER"
+  ],
+  "R0094": [
+   "DEP-STATE-LITERALS"
+  ],
+  "R0099": [
+   "DEP-E-ORDER"
+  ],
+  "R0106": [
+   "DEP-DERIVED-VIEW"
+  ],
+  "R0107": [
+   "DEP-DERIVED-VIEW"
+  ],
+  "R0274": [
+   "DEP-REGION"
+  ],
+  "R0281": [
+   "DEP-REGION"
+  ],
+  "R0282": [
+   "DEP-REGION"
+  ],
   "R0301": [
-   "DEP-SMMLV"
+   "DEP-SMMLV-READ"
   ],
   "R0304": [
-   "DEP-SMMLV"
+   "DEP-SMMLV-RECALC"
+  ],
+  "R0459": [
+   "DEP-MODALITY-UNIVERSE"
+  ],
+  "R0496": [
+   "DEP-INHERITANCE"
+  ],
+  "R0497": [
+   "DEP-INHERITANCE"
+  ],
+  "R0498": [
+   "DEP-INHERITANCE"
+  ],
+  "R0515": [
+   "DEP-E-ORDER"
+  ],
+  "R0529": [
+   "DEP-DERIVED-VIEW"
+  ],
+  "R0531": [
+   "DEP-INHERITANCE",
+   "DEP-DERIVED-VIEW"
+  ],
+  "R0532": [
+   "DEP-INHERITANCE",
+   "DEP-DERIVED-VIEW"
+  ],
+  "SF003": [
+   "DEP-REGION"
+  ],
+  "SF004": [
+   "DEP-REGION"
+  ],
+  "SF007": [
+   "DEP-MODALITY-UNIVERSE"
+  ],
+  "SF008": [
+   "DEP-MODALITY-UNIVERSE"
+  ],
+  "SF009": [
+   "DEP-STATE-LITERALS"
+  ],
+  "SF010": [
+   "DEP-STATE-LITERALS"
+  ],
+  "SF015": [
+   "DEP-E-ORDER"
+  ],
+  "SF016": [
+   "DEP-E-ORDER"
+  ],
+  "SF017": [
+   "DEP-E-ORDER"
+  ],
+  "SF018": [
+   "DEP-E-ORDER"
+  ],
+  "SF019": [
+   "DEP-E-ORDER"
+  ],
+  "SF020": [
+   "DEP-E-ORDER"
+  ],
+  "SF021": [
+   "DEP-E-ORDER"
+  ],
+  "SF022": [
+   "DEP-E-ORDER"
+  ],
+  "SF031": [
+   "DEP-INHERITANCE"
+  ],
+  "SF032": [
+   "DEP-INHERITANCE"
+  ],
+  "SF033": [
+   "DEP-INHERITANCE"
+  ],
+  "SF034": [
+   "DEP-INHERITANCE"
+  ],
+  "SF035": [
+   "DEP-INHERITANCE"
+  ],
+  "SF037": [
+   "DEP-TIME-RELATIVE"
+  ],
+  "SF042": [
+   "DEP-TIME-RELATIVE"
+  ],
+  "SF063": [
+   "DEP-DERIVED-VIEW"
   ],
   "SF075": [
    "DEP-O1B-OPPORTUNITIES"
   ],
+  "SF078": [
+   "DEP-STATE-LITERALS"
+  ],
+  "SF079": [
+   "DEP-STATE-LITERALS"
+  ],
+  "SF080": [
+   "DEP-MODALITY-UNIVERSE"
+  ],
+  "SF081": [
+   "DEP-DERIVED-VIEW"
+  ],
+  "SF082": [
+   "DEP-DERIVED-VIEW"
+  ],
+  "SF087": [
+   "DEP-VALUE-FORMS"
+  ],
+  "SF093": [
+   "DEP-VALUE-FORMS"
+  ],
+  "SF098": [
+   "DEP-VALUE-FORMS"
+  ],
+  "SF101": [
+   "DEP-INHERITANCE"
+  ],
+  "SF103": [
+   "DEP-INHERITANCE"
+  ],
+  "SF104": [
+   "DEP-INHERITANCE"
+  ],
+  "SF106": [
+   "DEP-INHERITANCE",
+   "DEP-VALUE-FORMS"
+  ],
+  "SF107": [
+   "DEP-VALUE-FORMS"
+  ],
+  "SF117": [
+   "DEP-E-ORDER"
+  ],
+  "SF118": [
+   "DEP-E-ORDER"
+  ],
+  "SF119": [
+   "DEP-E-ORDER"
+  ],
+  "SF120": [
+   "DEP-E-ORDER"
+  ],
+  "SF122": [
+   "DEP-E-ORDER"
+  ],
+  "SF123": [
+   "DEP-BUYER-TERRITORY",
+   "DEP-REGION"
+  ],
+  "SF124": [
+   "DEP-REGION"
+  ],
+  "SF126": [
+   "DEP-DERIVED-VIEW"
+  ],
+  "SF129": [
+   "DEP-VALUE-FORMS"
+  ],
+  "SF136": [
+   "DEP-VALUE-FORMS"
+  ],
+  "SF140": [
+   "DEP-E-ORDER"
+  ],
+  "SF155": [
+   "DEP-BUYER-TERRITORY"
+  ],
+  "SF159": [
+   "DEP-REGION",
+   "DEP-STATE-LITERALS"
+  ],
+  "SF160": [
+   "DEP-MODALITY-UNIVERSE",
+   "DEP-E-ORDER"
+  ],
+  "SF161": [
+   "DEP-E-ORDER"
+  ],
   "SF165": [
-   "DEP-SMMLV"
+   "DEP-SMMLV-READ"
   ],
   "SF167": [
-   "DEP-SMMLV"
+   "DEP-INHERITANCE",
+   "DEP-SMMLV-READ"
+  ],
+  "SF171": [
+   "DEP-E-ORDER"
+  ],
+  "SF172": [
+   "DEP-E-ORDER"
+  ],
+  "SF174": [
+   "DEP-TIME-RELATIVE"
+  ],
+  "SF183": [
+   "DEP-INHERITANCE"
+  ],
+  "SF185": [
+   "DEP-DERIVED-VIEW"
+  ],
+  "SF191": [
+   "DEP-VALUE-FORMS"
+  ],
+  "SF192": [
+   "DEP-E-ORDER-CANDIDATES"
+  ],
+  "SF195": [
+   "DEP-E-ORDER"
   ]
  },
+ "case_impacto_m2a3": {
+  "R0079": "LECTURA",
+  "R0083": "LECTURA",
+  "R0087": "LECTURA",
+  "R0089": "LECTURA",
+  "R0094": "LECTURA",
+  "R0099": "LECTURA",
+  "R0106": "COMPOSICION",
+  "R0107": "COMPOSICION",
+  "R0274": "LECTURA",
+  "R0281": "LECTURA",
+  "R0282": "LECTURA",
+  "R0301": "LECTURA",
+  "R0304": "COMPOSICION",
+  "R0459": "COMPOSICION",
+  "R0496": "LECTURA",
+  "R0497": "LECTURA",
+  "R0498": "LECTURA",
+  "R0515": "LECTURA",
+  "R0529": "COMPOSICION",
+  "R0531": "COMPOSICION",
+  "R0532": "COMPOSICION",
+  "SF003": "LECTURA",
+  "SF004": "LECTURA",
+  "SF007": "COMPOSICION",
+  "SF008": "COMPOSICION",
+  "SF009": "LECTURA",
+  "SF010": "LECTURA",
+  "SF015": "LECTURA",
+  "SF016": "LECTURA",
+  "SF017": "LECTURA",
+  "SF018": "LECTURA",
+  "SF019": "LECTURA",
+  "SF020": "LECTURA",
+  "SF021": "LECTURA",
+  "SF022": "LECTURA",
+  "SF031": "LECTURA",
+  "SF032": "LECTURA",
+  "SF033": "LECTURA",
+  "SF034": "LECTURA",
+  "SF035": "LECTURA",
+  "SF037": "LECTURA",
+  "SF042": "LECTURA",
+  "SF063": "COMPOSICION",
+  "SF075": "COMPOSICION",
+  "SF078": "LECTURA",
+  "SF079": "LECTURA",
+  "SF080": "COMPOSICION",
+  "SF081": "COMPOSICION",
+  "SF082": "COMPOSICION",
+  "SF087": "LECTURA",
+  "SF093": "LECTURA",
+  "SF098": "LECTURA",
+  "SF101": "LECTURA",
+  "SF103": "LECTURA",
+  "SF104": "LECTURA",
+  "SF106": "LECTURA",
+  "SF107": "LECTURA",
+  "SF117": "LECTURA",
+  "SF118": "LECTURA",
+  "SF119": "LECTURA",
+  "SF120": "LECTURA",
+  "SF122": "LECTURA",
+  "SF123": "LECTURA",
+  "SF124": "LECTURA",
+  "SF126": "COMPOSICION",
+  "SF129": "LECTURA",
+  "SF136": "LECTURA",
+  "SF140": "LECTURA",
+  "SF155": "LECTURA",
+  "SF159": "LECTURA",
+  "SF160": "COMPOSICION",
+  "SF161": "LECTURA",
+  "SF165": "LECTURA",
+  "SF167": "LECTURA",
+  "SF171": "LECTURA",
+  "SF172": "LECTURA",
+  "SF174": "LECTURA",
+  "SF183": "LECTURA",
+  "SF185": "COMPOSICION",
+  "SF191": "LECTURA",
+  "SF192": "COMPOSICION",
+  "SF195": "LECTURA"
+ },
  "case_owners": {
+  "R0079": [
+   "E-ORDER"
+  ],
+  "R0083": [
+   "E-ORDER"
+  ],
+  "R0087": [
+   "E-ORDER"
+  ],
+  "R0089": [
+   "E-ORDER"
+  ],
+  "R0094": [
+   "E-STATE"
+  ],
+  "R0099": [
+   "E-ORDER"
+  ],
+  "R0106": [
+   "F"
+  ],
+  "R0107": [
+   "F"
+  ],
+  "R0274": [
+   "E-GEO"
+  ],
+  "R0281": [
+   "E-GEO"
+  ],
+  "R0282": [
+   "E-GEO"
+  ],
   "R0301": [
    "D-MONEY",
    "E-VALUE"
@@ -24,100 +379,449 @@
   "R0304": [
    "D-MONEY",
    "E-VALUE"
+  ],
+  "R0459": [
+   "E-MODALITY"
+  ],
+  "R0496": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "R0497": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "R0498": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "R0515": [
+   "E-ORDER"
+  ],
+  "R0529": [
+   "F"
+  ],
+  "R0531": [
+   "D-MONEY",
+   "D-TIME",
+   "F"
+  ],
+  "R0532": [
+   "D-MONEY",
+   "D-TIME",
+   "F"
+  ],
+  "SF003": [
+   "E-GEO"
+  ],
+  "SF004": [
+   "E-GEO"
+  ],
+  "SF007": [
+   "E-MODALITY"
+  ],
+  "SF008": [
+   "E-MODALITY"
+  ],
+  "SF009": [
+   "E-STATE"
+  ],
+  "SF010": [
+   "E-STATE"
+  ],
+  "SF015": [
+   "E-ORDER"
+  ],
+  "SF016": [
+   "E-ORDER"
+  ],
+  "SF017": [
+   "E-ORDER"
+  ],
+  "SF018": [
+   "E-ORDER"
+  ],
+  "SF019": [
+   "E-ORDER"
+  ],
+  "SF020": [
+   "E-ORDER"
+  ],
+  "SF021": [
+   "E-ORDER"
+  ],
+  "SF022": [
+   "E-ORDER"
+  ],
+  "SF031": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "SF032": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "SF033": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "SF034": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "SF035": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "SF037": [
+   "D-TIME",
+   "E-TIME"
+  ],
+  "SF042": [
+   "D-TIME",
+   "E-TIME"
+  ],
+  "SF063": [
+   "F"
   ],
   "SF075": [
    "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
    "M2A-1b"
   ],
+  "SF078": [
+   "E-STATE"
+  ],
+  "SF079": [
+   "E-STATE"
+  ],
+  "SF080": [
+   "E-MODALITY"
+  ],
+  "SF081": [
+   "F"
+  ],
+  "SF082": [
+   "F"
+  ],
+  "SF087": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "SF093": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "SF098": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "SF101": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "SF103": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "SF104": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "SF106": [
+   "D-MONEY",
+   "D-TIME",
+   "E-VALUE"
+  ],
+  "SF107": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "SF117": [
+   "E-ORDER"
+  ],
+  "SF118": [
+   "E-ORDER"
+  ],
+  "SF119": [
+   "E-ORDER"
+  ],
+  "SF120": [
+   "E-ORDER"
+  ],
+  "SF122": [
+   "E-ORDER"
+  ],
+  "SF123": [
+   "D-BUYER",
+   "E-GEO"
+  ],
+  "SF124": [
+   "E-GEO"
+  ],
+  "SF126": [
+   "F"
+  ],
+  "SF129": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "SF136": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "SF140": [
+   "E-ORDER"
+  ],
+  "SF155": [
+   "D-BUYER"
+  ],
+  "SF159": [
+   "E-GEO",
+   "E-STATE"
+  ],
+  "SF160": [
+   "E-MODALITY",
+   "E-ORDER"
+  ],
+  "SF161": [
+   "E-ORDER"
+  ],
   "SF165": [
    "D-MONEY",
    "E-VALUE"
   ],
   "SF167": [
    "D-MONEY",
+   "D-TIME",
    "E-VALUE"
+  ],
+  "SF171": [
+   "E-ORDER"
+  ],
+  "SF172": [
+   "E-ORDER"
+  ],
+  "SF174": [
+   "D-TIME",
+   "E-TIME"
+  ],
+  "SF183": [
+   "D-MONEY",
+   "D-TIME"
+  ],
+  "SF185": [
+   "F"
+  ],
+  "SF191": [
+   "D-MONEY",
+   "E-VALUE"
+  ],
+  "SF192": [
+   "E-ORDER"
+  ],
+  "SF195": [
+   "E-ORDER"
   ]
  },
  "dependencies": [
   {
-   "cases": [],
+   "cases": [
+    "SF037",
+    "SF042",
+    "SF174"
+   ],
    "cases_count": 3,
    "dep_id": "DEP-TIME-RELATIVE",
+   "impacto_m2a3": "LECTURA",
    "needs": "entrada separada de TIME con `time.relative_to_previous`",
    "owners": [
     "D-TIME",
     "E-TIME"
    ],
-   "scope": "3 (A5: referente temporal único)"
+   "scope": "A5: relativo al referente temporal único (§16.3)"
+  },
+  {
+   "cases": [
+    "R0496",
+    "R0497",
+    "R0498",
+    "R0531",
+    "R0532",
+    "SF031",
+    "SF032",
+    "SF033",
+    "SF034",
+    "SF035",
+    "SF101",
+    "SF103",
+    "SF104",
+    "SF106",
+    "SF167",
+    "SF183"
+   ],
+   "cases_count": 16,
+   "dep_id": "DEP-INHERITANCE",
+   "impacto_m2a3": "LECTURA",
+   "needs": "`unit.inherited`, `year.inherited`, `year.inferred` por la entrada separada; lectura del mes",
+   "owners": [
+    "D-MONEY",
+    "D-TIME"
+   ],
+   "scope": "herencia de unidad o año y mes sin año (F5–F7, §15.4, §16.1)"
   },
   {
    "cases": [
     "R0301",
-    "R0304",
     "SF165",
     "SF167"
    ],
-   "cases_count": 4,
-   "dep_id": "DEP-SMMLV",
-   "needs": "conversión por vigencia de D10 (`unit.smmlv`, `year.*`) dentro del catálogo 2024–2026; SF166 (2023) **no** es dependencia: es control de no extrapolación (CLARIFY)",
+   "cases_count": 3,
+   "dep_id": "DEP-SMMLV-READ",
+   "impacto_m2a3": "LECTURA",
+   "needs": "conversión por vigencia de D10 dentro del catálogo 2024–2026",
    "owners": [
     "D-MONEY",
     "E-VALUE"
    ],
-   "scope": "4 (SMMLV en follow-ups: R0301, R0304, SF165, SF167)"
+   "scope": "SMMLV en follow-ups: leer o tipar una cota SMMLV (§15.5)"
   },
   {
-   "cases": [],
+   "cases": [
+    "R0304"
+   ],
+   "cases_count": 1,
+   "dep_id": "DEP-SMMLV-RECALC",
+   "impacto_m2a3": "COMPOSICION",
+   "needs": "recálculo de la cota arrastrada a partir de `source_amount` sobre la nueva vigencia",
+   "owners": [
+    "D-MONEY",
+    "E-VALUE"
+   ],
+   "scope": "SMMLV arrastrado cuando cambia el año (§15.5)"
+  },
+  {
+   "cases": [
+    "SF087",
+    "SF093",
+    "SF098",
+    "SF106",
+    "SF107",
+    "SF129",
+    "SF136",
+    "SF191"
+   ],
    "cases_count": 8,
    "dep_id": "DEP-VALUE-FORMS",
+   "impacto_m2a3": "LECTURA",
    "needs": "lectura de la autoridad VALUE del primer turno",
    "owners": [
     "D-MONEY",
     "E-VALUE"
    ],
-   "scope": "8 (formas «entre X y Y», «mayores de», «pasen de»)"
+   "scope": "formas «entre X y Y», «mayores de», «pasen de»"
   },
   {
    "cases": [],
    "cases_count": 0,
    "dep_id": "DEP-VALUE-EQUALITY",
+   "impacto_m2a3": "LECTURA",
    "needs": "lectura como par `>=`/`<=` del mismo turno",
    "owners": [
     "D-MONEY",
     "E-VALUE"
    ],
-   "scope": "0 (igualdad «exactamente X», §15.2)"
+   "scope": "igualdad «exactamente X» (§15.2)"
   },
   {
-   "cases": [],
-   "cases_count": null,
-   "dep_id": "DEP-INHERITANCE",
-   "needs": "`unit.inherited`, `year.inherited` por la entrada separada",
-   "owners": [
-    "D-MONEY",
-    "D-TIME"
+   "cases": [
+    "SF123",
+    "SF155"
    ],
-   "scope": "herencia de unidad/año (F5–F7)"
-  },
-  {
-   "cases": [],
-   "cases_count": null,
+   "cases_count": 2,
    "dep_id": "DEP-BUYER-TERRITORY",
+   "impacto_m2a3": "LECTURA",
    "needs": "`buyer.territory.<código>` / `buyer.national`",
    "owners": [
     "D-BUYER"
    ],
-   "scope": "F30"
+   "scope": "F30: territorio nuevo con comprador arrastrado (H6)"
   },
   {
-   "cases": [],
-   "cases_count": null,
+   "cases": [
+    "R0106",
+    "R0107",
+    "R0529",
+    "R0531",
+    "R0532",
+    "SF063",
+    "SF081",
+    "SF082",
+    "SF126",
+    "SF185"
+   ],
+   "cases_count": 10,
    "dep_id": "DEP-DERIVED-VIEW",
+   "impacto_m2a3": "COMPOSICION",
    "needs": "`HostViewDecision`, `decide_view`",
    "owners": [
     "F"
    ],
-   "scope": "vista derivada"
+   "scope": "vista derivada (§14)"
+  },
+  {
+   "cases": [
+    "R0274",
+    "R0281",
+    "R0282",
+    "SF003",
+    "SF004",
+    "SF123",
+    "SF124",
+    "SF159"
+   ],
+   "cases_count": 8,
+   "dep_id": "DEP-REGION",
+   "impacto_m2a3": "LECTURA",
+   "needs": "miembros y lista cerrada de regiones",
+   "owners": [
+    "E-GEO"
+   ],
+   "scope": "región (`GeoValue` REGION; H7)"
+  },
+  {
+   "cases": [
+    "R0094",
+    "SF009",
+    "SF010",
+    "SF078",
+    "SF079",
+    "SF159"
+   ],
+   "cases_count": 6,
+   "dep_id": "DEP-STATE-LITERALS",
+   "impacto_m2a3": "LECTURA",
+   "needs": "`state@1.literals` por dataset",
+   "owners": [
+    "E-STATE"
+   ],
+   "scope": "estado sobre el universo de la petición (H8)"
+  },
+  {
+   "cases": [
+    "R0459",
+    "SF007",
+    "SF008",
+    "SF080",
+    "SF160"
+   ],
+   "cases_count": 5,
+   "dep_id": "DEP-MODALITY-UNIVERSE",
+   "impacto_m2a3": "COMPOSICION",
+   "needs": "catálogo de modalidad por dataset (`modality@1` no lleva el dataset)",
+   "owners": [
+    "E-MODALITY"
+   ],
+   "scope": "modalidad sobre el universo resultante (H8)"
   },
   {
    "cases": [
@@ -125,27 +829,84 @@
    ],
    "cases_count": 1,
    "dep_id": "DEP-O1B-OPPORTUNITIES",
+   "impacto_m2a3": "COMPOSICION",
    "needs": "re-decidir O1B / `opportunity-explicit-state` sobre la efectiva (su representación es de M2A-1b) y TIME explícito sobre oportunidades (`foundation_projection.py:235-237`). Mientras falte, `compose` rechaza con `OP_NOT_ACCREDITED:UNIVERSE` ⇒ `CLARIFY UNRESOLVED_VALUE:UNIVERSE` y el caso es rojo declarado (§20.2)",
    "owners": [
     "FOUNDATION_O1B_EXPLICIT_TIME_PARITY",
     "M2A-1b"
    ],
-   "scope": "1 (SF075: `REPLACE_UNIVERSE` a oportunidades con TIME arrastrado; R3-3)"
+   "scope": "SF075: `REPLACE_UNIVERSE` a oportunidades con TIME arrastrado (R3-3)"
   },
   {
-   "cases": [],
-   "cases_count": null,
+   "cases": [
+    "R0079",
+    "R0083",
+    "R0087",
+    "R0089",
+    "R0099",
+    "R0515",
+    "SF015",
+    "SF016",
+    "SF017",
+    "SF018",
+    "SF019",
+    "SF020",
+    "SF021",
+    "SF022",
+    "SF117",
+    "SF118",
+    "SF119",
+    "SF120",
+    "SF122",
+    "SF140",
+    "SF160",
+    "SF161",
+    "SF171",
+    "SF172",
+    "SF195"
+   ],
+   "cases_count": 25,
    "dep_id": "DEP-E-ORDER",
+   "impacto_m2a3": "LECTURA",
    "needs": "autoridad ORDER/CARDINALITY (`order@1`, `cardinality@2`, `order.direction_defaulted`, `topn.capped`); `main` aún no las admite en el primer turno (`UNRESOLVED_HOST_DIMENSION:ORDER`). Mientras falte, la pendiente de §6.7 (R3-1) es provisional fail-closed: **sólo C1** «quitar orden y límite» y la cancelación, sin candidatos `SET_ORDER`",
    "owners": [
     "E-ORDER"
    ],
-   "scope": "follow-ups con ORDER/CARDINALITY (matriz T07; R3, D-5)"
+   "scope": "follow-ups con ORDER/CARDINALITY: leer el criterio o la cifra (R3, D-5)"
+  },
+  {
+   "cases": [
+    "SF192"
+   ],
+   "cases_count": 1,
+   "dep_id": "DEP-E-ORDER-CANDIDATES",
+   "impacto_m2a3": "COMPOSICION",
+   "needs": "enumerar al preguntar los criterios de orden alternativos del dataset. Las alternativas selladas de SF192 son **PARCIALES** (sólo C1) y el registro lo declara (`partial_alternatives`); los `SET_ORDER` no se sellan",
+   "owners": [
+    "E-ORDER"
+   ],
+   "scope": "candidatos `SET_ORDER` de la pendiente de R3-1 (§6.7)"
+  },
+  {
+   "cases": [],
+   "cases_count": 0,
+   "dep_id": "DEP-M1-PENDING-FRAME",
+   "impacto_m2a3": "COMPOSICION",
+   "needs": "representar la pendiente de M1 en `from_acceptance`",
+   "owners": [
+    "M2A-1b"
+   ],
+   "scope": "primer turno sin ancla cuya pendiente de M1 no tiene `frame` construible (§8.4)"
   }
  ],
  "gaps": [
   {
-   "cases": [],
+   "cases": [
+    "R0276",
+    "SF179",
+    "SF180",
+    "SF181"
+   ],
    "cases_count": 4,
    "exit": "código de razón propio al implementar paginación",
    "gap_id": "G-FU-04",
@@ -156,7 +917,10 @@
    "topic": "filas/página tras fallo de fuente"
   },
   {
-   "cases": [],
+   "cases": [
+    "SF147",
+    "SF148"
+   ],
    "cases_count": 2,
    "exit": "regla y código de razón",
    "gap_id": "G-FU-05",
@@ -168,7 +932,11 @@
    "topic": "paginar ancla dual; página frente a top-N"
   },
   {
-   "cases": [],
+   "cases": [
+    "R0306",
+    "SF169",
+    "SF170"
+   ],
    "cases_count": 3,
    "exit": "catálogo por vigencia + Gold E-VALUE",
    "gap_id": "G-FU-06",
@@ -179,7 +947,12 @@
    "topic": "conversión SMMLV: eco, procedencia, años; **montos no comparables (millones frente a SMMLV)**"
   },
   {
-   "cases": [],
+   "cases": [
+    "SF068",
+    "SF069",
+    "SF139",
+    "SF162"
+   ],
    "cases_count": 4,
    "exit": "Gold de composición de autoridades",
    "gap_id": "G-FU-07",
@@ -191,7 +964,14 @@
    "topic": "territorio contenido/contenedor frente a comprador"
   },
   {
-   "cases": [],
+   "cases": [
+    "SF038",
+    "SF045",
+    "SF173",
+    "SF175",
+    "SF176",
+    "SF177"
+   ],
    "cases_count": 6,
    "exit": "aritmética de periodo + Gold E-TIME",
    "gap_id": "G-FU-08",
@@ -202,7 +982,9 @@
    "topic": "referente temporal relativo (casos ambiguos o en disputa)"
   },
   {
-   "cases": [],
+   "cases": [
+    "SF162"
+   ],
    "cases_count": 1,
    "exit": "álgebra de conjuntos por ranura",
    "gap_id": "G-FU-09",
@@ -213,7 +995,25 @@
    "topic": "negación sobre conjuntos"
   },
   {
-   "cases": [],
+   "cases": [
+    "R0189",
+    "R0319",
+    "R0320",
+    "R0321",
+    "R0375",
+    "R0418",
+    "R0435",
+    "R0441",
+    "R0483",
+    "R0560",
+    "R0561",
+    "SF062",
+    "SF143",
+    "SF144",
+    "SF153",
+    "SF154",
+    "SF181"
+   ],
    "cases_count": 17,
    "exit": "misma Conversation IR para todas las capacidades",
    "gap_id": "G-FU-11",
@@ -224,7 +1024,10 @@
    "topic": "follow-up tras PROFILE/COUNT/RANK"
   },
   {
-   "cases": [],
+   "cases": [
+    "SF064",
+    "SF139"
+   ],
    "cases_count": 2,
    "exit": "precedencia F11/F29",
    "gap_id": "G-FU-12",
@@ -235,7 +1038,10 @@
    "topic": "contexto vencido con pendiente"
   },
   {
-   "cases": [],
+   "cases": [
+    "SF114",
+    "SF116"
+   ],
    "cases_count": 2,
    "exit": "búsqueda mínima admisible",
    "gap_id": "G-FU-13",
@@ -247,17 +1053,17 @@
   },
   {
    "cases": [
+    "R0081",
+    "R0192",
     "SF065",
     "SF066",
     "SF067",
+    "SF068",
+    "SF069",
     "SF070",
     "SF071",
     "SF072",
-    "SF180",
-    "SF068",
-    "SF069",
-    "R0081",
-    "R0192"
+    "SF180"
    ],
    "cases_count": 11,
    "exit": "señal estructural extensional/intensional en el wire + `result_set_ref` con identidad de fila",
@@ -267,10 +1073,18 @@
     "M2b"
    ],
    "provisional": "`INFORM` (sin llamada) sólo para lo que la señal extensional del wire 5.1 clasifique como extensional, una vez exista; sin la señal, M2A-6 no se activa",
-   "topic": "referentes extensionales"
+   "topic": "referentes extensionales (7 extensionales: SF065–SF067, SF070–SF072, SF180; 4 re-consultas en disputa o ambiguas: SF068, SF069, R0081, R0192; R3, P-2)"
   },
   {
-   "cases": [],
+   "cases": [
+    "SF039",
+    "SF040",
+    "SF043",
+    "SF044",
+    "SF046",
+    "SF175",
+    "SF176"
+   ],
    "cases_count": 7,
    "exit": "operadores relativos sobre `ExecutableValue`",
    "gap_id": "G-FU-15",
@@ -281,7 +1095,12 @@
    "topic": "relativos no temporales"
   },
   {
-   "cases": [],
+   "cases": [
+    "SF062",
+    "SF153",
+    "SF154",
+    "SF181"
+   ],
    "cases_count": 4,
    "exit": "manifiestos de capacidad sobre la efectiva",
    "gap_id": "G-FU-16",
@@ -292,7 +1111,10 @@
    "topic": "otra operación sobre ancla SEARCH"
   },
   {
-   "cases": [],
+   "cases": [
+    "SF137",
+    "SF142"
+   ],
    "cases_count": 2,
    "exit": "regresión fail-closed",
    "gap_id": "G-FU-17",
@@ -303,7 +1125,13 @@
    "topic": "fragmento sin ancla o ancla ilegible"
   },
   {
-   "cases": [],
+   "cases": [
+    "R0187",
+    "R0192",
+    "R0375",
+    "SF013",
+    "SF170"
+   ],
    "cases_count": 5,
    "exit": "enmienda del contrato Gold M1",
    "gap_id": "G-FU-18",
@@ -315,7 +1143,12 @@
    "topic": "formas de superficie VALUE (comparador desordenado/negado, cota sin comparador en rango)"
   },
   {
-   "cases": [],
+   "cases": [
+    "R0081",
+    "R0276",
+    "SF084",
+    "SF132"
+   ],
    "cases_count": 4,
    "exit": "tabla PV adjudicada para follow-ups",
    "gap_id": "G-FU-19",
@@ -326,6 +1159,10 @@
    "topic": "vista y universo"
   }
  ],
+ "impacts": [
+  "LECTURA",
+  "COMPOSICION"
+ ],
  "owners": [
   "CONTRATO_M1",
   "D-BUYER",
@@ -333,7 +1170,9 @@
   "D-TIME",
   "E-BUYER",
   "E-GEO",
+  "E-MODALITY",
   "E-ORDER",
+  "E-STATE",
   "E-TIME",
   "E-VALUE",
   "F",
@@ -345,10 +1184,10 @@
   "M3",
   "PROTOCOLO_M2A"
  ],
- "schema": "m2a-contract-s19/1",
+ "schema": "m2a-contract-s19/2",
  "source": {
   "contract": "docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md",
-  "contract_sha256": "e580d67cbe2f39aac3925dc62bffc56a36eaddc6e8e213d85eeb57c52adc0383",
+  "contract_sha256": "fe3ff6d6ffdad3827b78eff81b0ebca4fd910e5840c84d2a6c9153f3687bc800",
   "section": "§19"
  }
 }
