@@ -330,8 +330,9 @@ seleccionado o completado (§8). No hay más operaciones; un parche que necesite
    - **F9**: con vista derivada, la vista se recalcula sobre la efectiva compuesta → `VIEW_REDERIVED` si cambia.
 6. **Políticas de petición** (ACTOR×STATE, ACTOR×TIME, `universe-c5@1`, top-N, dirección de orden por defecto) se
    re-deciden sobre la efectiva compuesta; H7 de ADR-101 no se re-ejecuta sobre lo arrastrado.
-7. **Nunca se ejecuta** un intervalo VALUE vacío, una efectiva con dos cotas en el mismo lado, ni una CARDINALITY sin
-   ORDER.
+7. **Nunca se ejecuta** un intervalo VALUE vacío o degenerado generado por un follow-up con la cota opuesta arrastrada
+   (A8.1 lo sustituye o, con unidades no comparables, aclara), una efectiva con dos cotas en el mismo lado, ni una
+   CARDINALITY sin ORDER.
 
 Códigos de rechazo (`DeltaRefusal`, cerrados): `DELTA_SLOT_CONFLICT`, `TARGET_NOT_ADDRESSABLE`, `KEEP_ON_EMPTY_SLOT`,
 `OP_NOT_ACCREDITED:<DIM>`, `BASE_INVALID`. Un rechazo produce `CLARIFY` con el código de la autoridad (p. ej.
@@ -383,8 +384,9 @@ después si un `DELTA` se confirma):
 | c | Nuevo(P, A) ≠ ∅ **y** Marco(P) **y** Admisible sola(P) | `NEW_SEARCH` + eco `CONTEXT_RESET` | A9 |
 | d | Nuevo(P, A) ≠ ∅ sin Marco(P) (una sola condición de contenido) | `DELTA` (el TOPIC sustituye, F3) | F22, A4 |
 
-Con una **pendiente** vigente rige §8 (A7): A9.1 no se aplica al marco pendiente; una P admisible sola con Marco(P)
-cancela la pendiente y es búsqueda nueva (`control = CANCEL_PENDING`).
+Con una **pendiente** vigente rige §8 (A7): A9.1 no se aplica al marco pendiente; una P **sin Continuación(P)**,
+con Marco(P) y admisible sola, cancela la pendiente y es búsqueda nueva (`control = CANCEL_PENDING`). Con
+Continuación(P) nunca es búsqueda nueva: «gana la marca» (A9) también ante una pendiente.
 
 Sin ancla ni pendiente: P admisible sola ⇒ primer turno (SEARCH de M1); si no ⇒ `CLARIFY NO_ANCHOR`.
 
@@ -437,8 +439,8 @@ LLM ni releer texto. Un turno que pregunta no consume el ancla (§10.2).
 | # | Entrada | Resultado |
 |---|---|---|
 | 1 | Evento de opción (`pending_id`, `candidate_id`) | `PENDING_ANSWER`: `compose(frame, candidate.patch)`; sin LLM |
-| 2 | P trae directiva `CANCEL_PENDING` (rechazo citado, F23) | `control = CANCEL_PENDING`; el resto de P se resuelve como `NEW_SEARCH` si Marco(P) ∧ Admisible sola(P), si no como delta **sobre `frame`** (A7) |
-| 3 | Marco(P) ∧ Admisible sola(P) | `NEW_SEARCH`, `control = CANCEL_PENDING` (A7/A9) |
+| 2 | P trae directiva `CANCEL_PENDING` (rechazo citado, F23) | `control = CANCEL_PENDING`; el resto de P se resuelve como `NEW_SEARCH` si ¬Continuación(P) ∧ Marco(P) ∧ Admisible sola(P), si no como delta **sobre `frame`** (A7) |
+| 3 | ¬Continuación(P) ∧ Marco(P) ∧ Admisible sola(P) | `NEW_SEARCH`, `control = CANCEL_PENDING` (A7/A9; la marca de continuación gana, así que una respuesta con anáfora o conector nunca llega aquí) |
 | 4 | Todas las condiciones de P caen en `answer_slots` y su valor selecciona **exactamente un** candidato (comparado por valor codificado), o no hay candidatos | `PENDING_ANSWER`: `compose(frame, patch)` |
 | 5 | P responde sobre `answer_slots` **y además** edita otra ranura (F25) | `REASK ANSWER_EDITS_OTHER_SLOT`, nombrando la salida; 0 llamadas |
 | 6 | P declara no elegir (condición `UNSUPPORTED` con etiqueta cerrada `no_selection`, F24) | `REASK OPTION_NOT_CHOSEN`; el producto no elige |
@@ -523,10 +525,11 @@ G-FU-12 (M2b).
 | `CONTEXT_RESET` | búsqueda nueva con ancla vigente; acción «aplicar a la búsqueda anterior» |
 | `CONTEXT_EXPIRED` | `CLARIFY CONTEXT_EXPIRED_CONFIRM` |
 
-**Regla de cobertura.** `expected_echo` del Gold es el mínimo exigible: lo emitido debe contenerlo y no puede contener
-nada que la procedencia o el diff base→efectiva no justifique (INV-M2A-12). Un relativo al referente previo (§16.3)
-emite `YEAR_INHERITED` (lo exige el Gold: `year_source = PREVIOUS_ACCEPTED_TIME`) **y** `RELATIVE_WINDOW_RESOLVED` con
-las fechas absolutas (lo exige ADR-103 D7); las dos están justificadas y no se contradicen.
+**Derivación exacta.** El conjunto de clases de eco de un turno es exactamente el que deriva el esquema Gold 2.1 §7
+(«sí y sólo sí») **más** una única adición de autoridad A: un relativo al referente previo (§16.3, regla de recibo
+`time.relative_to_previous`) emite también `RELATIVE_WINDOW_RESOLVED` con las fechas absolutas (ADR-103 D7), además del
+`YEAR_INHERITED` que deriva el Gold (`year_source = PREVIOUS_ACCEPTED_TIME`). INV-M2A-12 («exactamente») se mide contra
+esta derivación.
 
 No son eco de M2a: los `host_notice` del contrato M1, el aviso `SMMLV_CONVERTED` de D10 (lo emite la presentación de
 E-VALUE, en primer turno y en M2a), `PENDING_CANCELLED` (efecto sin anuncio: se ejecuta lo nuevo) y las exclusiones de
@@ -585,7 +588,14 @@ faltaba completa el rango. «Entre X y Y» son dos `SET` (lower `>=`, upper `<=`
 
 ### 15.2 A8.1 — intervalo contradictorio
 
-Definiciones sobre valores tipados (`money@1.amount_cop`, misma moneda por construcción; SMMLV ya convertido, §15.5):
+**Comparabilidad (A8).** A8.1 sólo se aplica cuando las dos cotas están expresadas en unidades comparables: las dos en
+unidades de escala de pesos (`PESOS`, `MILES`, `MILLONES`, `MIL_MILLONES`, `BILLONES`, por `Provenance.unit`), o las dos
+en `SMMLV`. Si una cota está en `SMMLV` y la otra en pesos, el caso **no está adjudicado** (A8: «unidades distintas no
+convertibles, p. ej. millones frente a SMMLV»): no se compara, no se sustituye ni se conserva en silencio ⇒
+`CLARIFY UNRESOLVED_VALUE:VALUE` (provisional fail-closed de G-FU-06, frontera E-VALUE).
+
+Definiciones, con dos cotas comparables (`money@1.amount_cop`; para dos cotas `SMMLV` de la misma vigencia equivale a
+comparar `Provenance.source_amount`):
 
 - Tras aplicar la cota nueva y conservar la opuesta, sean `lo` (comparador `>` o `>=`) y `hi` (`<` o `<=`).
 - El intervalo es **vacío** si `lo.amount > hi.amount`, o si son iguales y algún comparador es exclusivo.
@@ -600,8 +610,8 @@ parche o en la misma aceptación de primer turno), el intervalo es lo que el usu
 ejecuta tal cual («exactamente 500 millones», «entre 500 y 500»). El criterio es el **origen** de las cotas, no una
 lista de palabras.
 
-**Fail-closed.** Un intervalo vacío nunca se ejecuta: si las dos cotas son del mismo turno y el intervalo es vacío ⇒
-`CLARIFY UNRESOLVED_VALUE:VALUE`.
+Un intervalo vacío con las dos cotas del mismo turno («entre 500 y 100») no es un conflicto de follow-up: su lectura es
+de la autoridad VALUE (contrato M1 / E-VALUE, G-FU-18) y M2a no la altera ni la adjudica.
 
 Esta regla **sustituye** la cláusula «Rango sin interior ⇒ CLARIFY con dos opciones-evento» de ADR-103 Enm. 4 D7 (y
 OQ-4 = a), la cláusula «sin interior» de F2 y F26 (ver C.1).
@@ -673,7 +683,7 @@ unidad única ⇒ `CLARIFY UNIT_AMBIGUOUS`. La herencia sí puede ir seguida de 
 | INV-M2A-02 | **Identidad de lo no tocado** (valor, autoridad, políticas, origen, procedencia) | propiedad; mutantes «re-resuelve», «cambia origen» |
 | INV-M2A-03 | **Sólo sobre lo aceptado y vigente**: base = efectiva aceptada del mismo chat, legible, de esquema conocido, en plazo; o el `frame` de una pendiente | un test y un mutante por causa |
 | INV-M2A-04 | **Nada cruza a legacy** con ancla Foundation; `Turn.parsed_params == {}`; ningún símbolo de M2a importa `query_router`, `followup_engine` ni los detectores de dueño | espías; pin de imports; mutantes «puente» y «entrega a legacy» |
-| INV-M2A-05 | **Un fragmento nunca se ejecuta solo**: con ancla o pendiente, sólo §7.2(c) o §8.3(2–3) inician una búsqueda sin heredar | propiedad sobre propuestas; mutantes A9.1 |
+| INV-M2A-05 | **Un fragmento nunca se ejecuta solo**: con ancla o pendiente, sólo §7.2(c) o §8.3(2–3) inician una búsqueda sin heredar, y nunca con Continuación(P) | propiedad sobre propuestas; mutantes A9.1 |
 | INV-M2A-06 | **El primer turno no cambia**: misma SoQL, `plan_hash` y disposiciones que `main` | replay del corpus + capturas |
 | INV-M2A-07 | **`resolve` no depende del ancla**; lo heredado entra sólo por la entrada separada de insumos | propiedad; mutante que pasa el ancla |
 | INV-M2A-08 | **Sin híbridos**: tras una pendiente se ejecuta `frame + candidato`, `frame + delta` con `CANCEL_PENDING`, o sólo lo nuevo | filas de §8.3; mutantes F24/F25/F29 |
@@ -686,7 +696,7 @@ unidad única ⇒ `CLARIFY UNIT_AMBIGUOUS`. La herencia sí puede ir seguida de 
 | INV-M2A-15 | **Barrera**: ningún lector legacy usa como referente un turno Foundation ni uno anterior a él | test por lector |
 | INV-M2A-16 | **Remoción sólo citada**: toda condición de la base ausente de la efectiva tiene un `CLEAR`/`SET` sobre su ranura, o es una sustitución declarada de §6.5 con su eco | propiedad `ranuras(base − efectiva) ⊆ ranuras(patch) ∪ sustituciones` |
 | INV-M2A-17 | **Herencia acotada**: sólo desde `compose`, con recibo, procedencia y eco; nunca de dos unidades ni de varios años | kit por autoridad |
-| INV-M2A-18 | **VALUE por lado + A8.1**: nunca se ejecuta un intervalo vacío; un degenerado sólo si sus dos cotas son del mismo turno | tabla exhaustiva lado previo × lado nuevo × relación de cifras × origen |
+| INV-M2A-18 | **VALUE por lado + A8.1**: nunca se ejecuta un intervalo vacío o degenerado generado por un follow-up con la cota opuesta arrastrada; con unidades no comparables (SMMLV frente a pesos) se aclara; un punto único sólo si sus dos cotas son del mismo turno | tabla exhaustiva lado previo × lado nuevo × relación de cifras × origen |
 | INV-M2A-19 | **Polaridad**: invertir sólo con igualdad de valor canónico y un único positivo | tabla exhaustiva |
 | INV-M2A-20 | **Alcance total y único**: todo turno recibe exactamente un `TurnScope`; `OUT_*`/`INFORM` hacen 0 llamadas | propiedad |
 | INV-M2A-21 | **Topes y defectos anunciados** (top-N, dirección de orden) | tests |
@@ -706,7 +716,7 @@ tabla (fail-closed, sin legacy y sin fuente salvo donde se dice).
 |---|---|---|---|---|---|
 | G-FU-04 | filas/página tras fallo de fuente | 4 | `INFORM`, 0 llamadas; el delta semántico sí se ejecuta | protocolo M2a (M2A-6) | código de razón propio al implementar paginación |
 | G-FU-05 | paginar ancla dual; página frente a top-N | 2 | `CLARIFY` | protocolo / M2b | regla y código de razón |
-| G-FU-06 | conversión SMMLV: eco, procedencia, años | 3 | `CLARIFY` sin año único; M2a conserva unidad, año, cantidad fuente y COP | E-VALUE | catálogo por vigencia + Gold E-VALUE |
+| G-FU-06 | conversión SMMLV: eco, procedencia, años; **montos no comparables (millones frente a SMMLV)** | 3 | `CLARIFY` sin año único o con cotas no comparables (§15.2); M2a conserva unidad, año, cantidad fuente y COP | E-VALUE | catálogo por vigencia + Gold E-VALUE |
 | G-FU-07 | territorio contenido/contenedor frente a comprador | 4 | `CLARIFY` | E-GEO / E-BUYER | Gold de composición de autoridades |
 | G-FU-08 | relativo temporal sin referente único | 6 | `CLARIFY` | E-TIME | aritmética de periodo + Gold E-TIME |
 | G-FU-09 | negación sobre conjuntos | 1 | `CLARIFY` (fail-closed) | M2b | álgebra de conjuntos por ranura |
@@ -747,7 +757,7 @@ contrato (un gate de M2a no puede pasar sin resolverlo), se registra `BLOCKER` y
 
 | # | Gate | Cómo se verifica |
 |---|---|---|
-| 1 | Los 199 casos de `M2A_GOLD` son representables por este contrato | `scripts/audits/m2a_conversation/check_m2a_gold_contract.py` (con `--real-dir` local): 0 violaciones; probado por 11 mutantes |
+| 1 | Los 199 casos de `M2A_GOLD` son **representables** por este contrato (vocabulario, forma de turno, arrastre, sustituciones declaradas, coherencia estructural de la disposición) | `scripts/audits/m2a_conversation/check_m2a_gold_contract.py` (con `--real-dir` local): 0 violaciones; probado por mutantes (`mutate_check_m2a_gold_contract.py`). **No** prueba que §7.2/§8.3 **deriven** cada disposición: eso exige la evidencia estructural del productor (continuación, marco) y es gate de M2A-8 |
 | 2 | Ningún caso requiere `parsed_params` | ídem (G2) |
 | 3 | Cada comportamiento tiene una regla contractual | `M2A_TRACEABILITY_MATRIX.md` |
 | 4 | Ningún caso FRONTIER absorbido | ídem (G8): GOLD ∩ FRONTIER = ∅; ejemplos de huecos diferidos ∉ GOLD |

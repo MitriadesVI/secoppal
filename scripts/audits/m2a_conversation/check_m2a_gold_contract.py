@@ -11,7 +11,10 @@ What it proves, per label (A and B) of every Gold record:
   G5  A8.1 is numeric over typed bounds (no lexicon) and A9.1 is structural over the turn's dimensions;
   G6  every CLARIFY with alternatives is a list of generic candidate patches;
   G7  rows/page need a result set: no protocol turn executes over a prior that never reached the source;
-  G8  partition: GOLD ∩ FRONTIER = ∅, GOLD scopes ⊆ IN*, deferred ledger gaps never reach GOLD.
+  G8  partition: GOLD ∩ FRONTIER = ∅, GOLD scopes ⊆ IN*, deferred ledger gaps never reach GOLD;
+  G9  structural coherence of each disposition (host floor, window, pending answers, F25, two candidates).
+It proves the Gold is REPRESENTABLE by the contract; it does not DERIVE each disposition from §7.2/§8.3, which needs
+the producer's structural evidence (continuation, frame) and is a gate of M2A-8.
 
 Output: counts and ids only (never text). Usage:
   python scripts/audits/m2a_conversation/check_m2a_gold_contract.py [--real-dir <private GOLD_CANDIDATE dir>] [--json out.json]
@@ -387,7 +390,7 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
     if pir is not None and prior["state"] in ("EXECUTED", "EXECUTED_EMPTY", "NOT_EXECUTED") and prior.get("owner") == "FOUNDATION_SEARCH":
         anchor_pos = {(c["dimension"], c["value_hint"]) for c in pir["conditions"] if c["polarity"] == "POSITIVE"}
         if tk == "NEW_SEARCH":
-            brings = {(c["dimension"], c["value_hint"]) for c in res["conditions"]
+            brings = {(c["dimension"], c["value_hint"]) for c in (res or {"conditions": []})["conditions"]
                       if c["dimension"] in ("TOPIC", "ACTOR") and c["polarity"] == "POSITIVE"}
             if not (brings - anchor_pos):
                 r.bad(gid, lab, "NEW_SEARCH over an anchor without a new TOPIC/ACTOR (A9.1 says DELTA)")
@@ -404,6 +407,37 @@ def check_label(r: Report, rec: dict, lab: str, L: dict) -> None:
                 r.note("F22_lone_content_condition_delta", gid)
             else:
                 r.bad(gid, lab, "DELTA with new TOPIC/ACTOR, several conditions and no structural continuation")
+
+    # G9 structural coherence of the disposition (does not derive it: §7.2/§8.3 need the producer's evidence)
+    gap = prior.get("gap_seconds")
+    if tk == "NEW_SEARCH" and (res is None or not res["conditions"]):
+        r.bad(gid, lab, "NEW_SEARCH without own conditions (host floor)")
+    if reason == "CONTEXT_EXPIRED_CONFIRM" and not (gap is not None and gap > 1800):
+        r.bad(gid, lab, "CONTEXT_EXPIRED_CONFIRM within the 30 min window")
+    if tk in ("DELTA", "ANSWER_TO_CLARIFICATION") and disp == "EXECUTE" and gap is not None and gap > 1800:
+        r.bad(gid, lab, "fragment executed over an expired anchor (F11)")
+    if reason in ("NO_ANCHOR", "ANCHOR_UNREADABLE") and prior["state"] not in ("NONE", "UNREADABLE"):
+        r.bad(gid, lab, f"{reason} with a readable anchor")
+    if disp == "REASK":
+        if prior["state"] != "PENDING":
+            r.bad(gid, lab, "REASK without a pending")
+        if reason == "PENDING_UNANSWERED" and (answers or ctrl):
+            r.bad(gid, lab, "PENDING_UNANSWERED although the turn answers or cancels")
+        if reason in ("OPTION_NOT_CHOSEN", "ANSWER_UNRESOLVED", "ANSWER_EDITS_OTHER_SLOT") and not answers:
+            r.bad(gid, lab, f"{reason} without an answer")
+        if reason == "ANSWER_EDITS_OTHER_SLOT" and not patch_ops:
+            r.bad(gid, lab, "ANSWER_EDITS_OTHER_SLOT without another edit")
+    if answers and patch_ops and disp != "REASK":
+        r.bad(gid, lab, "answer plus another edit not re-asked (F25)")
+    if tk == "ANSWER_TO_CLARIFICATION" and disp == "EXECUTE" and (patch_ops or ctrl):
+        r.bad(gid, lab, "executed answer carries more than the answer")
+    if reason == "CLEAR_ON_EMPTY_SLOT":
+        prior_slots = {slot_of(c) for c in (pir or {"conditions": []})["conditions"]} | {
+            c["dimension"] for c in (pir or {"conditions": []})["conditions"]}
+        if len(ops) != 1 or ops[0]["op"] != "CLEAR" or ops[0]["slot"] in prior_slots:
+            r.bad(gid, lab, "CLEAR_ON_EMPTY_SLOT is not a lone CLEAR of an absent slot")
+    if reason in ("BUYER_OR_PLACE_AFTER_ACTOR", "TERRITORY_VS_CARRIED_BUYER") and len(L.get("alternatives") or []) != 2:
+        r.bad(gid, lab, f"{reason} without two candidate patches")
 
     # G7 result-set referent
     if L["m2a_scope"] == "IN_PROTOCOL" and prior["state"] in ("NOT_EXECUTED",) and disp == "EXECUTE" and L["input_kind"] != "EVENT":

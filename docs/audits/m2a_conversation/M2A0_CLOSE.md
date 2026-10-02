@@ -16,7 +16,7 @@
 | Casos sin clasificar | 0 (G-FU-90 vacío; R0075, SF017, SF063, SF132 clasificados por regla) |
 | Huecos bloqueantes para M2a | 0 (los 24 del ledger dicen `NO`) |
 | Huecos diferidos | 15 con casos + 3 sin casos, todos con dueño, provisional y salida (contrato §19) |
-| R0205 | en `M2A_GOLD` por A8.1 + contrato VALUE vigente (`money_comparators._QUANTIFIER_SUFFIXES`: «en adelante» ⇒ `GTE`; la cita «:99» del ledger es hoy la línea 97, mismo símbolo). **Sin re-etiquetado:** las operaciones de las etiquetas A y B son idénticas en v2_2 y v2_3 (`VALUE.lower greater_or_equal`) |
+| R0205 | en `M2A_GOLD` por A8.1 + contrato VALUE vigente (`money_comparators._QUANTIFIER_SUFFIXES`: «en adelante» ⇒ `GTE`, `app/core/money_comparators.py:99` en `8c1f8c54`). **Sin re-etiquetado:** las operaciones de las etiquetas A y B son idénticas en v2_2 y v2_3 (`VALUE.lower greater_or_equal`) |
 
 ## 2. Reconciliación A↔B
 
@@ -31,6 +31,22 @@ a ADR-103 ni ADR-103 a un caso.
 
 Hecha: `M2A0_H7B_REVIEW.md`. Los 2 solapes son X020 y X059 (homónimos; artefacto del instrumento); independientes del
 Gold M2a. Errata «2 de 294» → «2 de 394».
+
+## 3b. Lote OQ-5 (ADR-103 D7: casos CLEAR que tocan una tensión X7–X17 o `UNIVERSE_FRAGMENT`)
+
+Ninguno depende de la parte **viva** de su tensión; todos los cierra una regla ya adjudicada. Ids (unión de las dos
+etiquetas, por código de hueco):
+
+| Tensión | Código | Casos `M2A_GOLD` | Regla adjudicada que lo decide | Parte viva (en frontera) |
+|---|---|---|---|---|
+| UNIVERSE_FRAGMENT | `UNIVERSE_FRAGMENT` | R0094, R0459, SF047, SF048, SF049, SF050, SF052, SF053, SF055, SF063, SF073–SF080, SF124, SF126, SF128, SF130, SF131, SF134, SF184–SF187, SF190 (29) | A4, A7, A9, A9.1 (contrato §7.2, §8.3) | — |
+| X12/X13 | `GEOBUYER` | SF123, SF155 (F30: comprador territorial de otro territorio); R0202 (F1: comprador dentro del territorio); SF011 (F16 sobre GEOGRAPHY; marca de un solo etiquetador) | F30, F1, F16 | comprador nacional, contención (G-FU-07) |
+| X13 | `COUNTERPART` | SF059, SF060, SF163, SF164 (ancla sólo con ACTOR; sin comprador territorial arrastrado, F30 no compite) | F12 | — |
+| X15 | `TTL` | R0223, R0286, SF138, SF140 (vencidos sin pendiente); SF141 (dentro de plazo) | F11 | vencido con pendiente (G-FU-12) |
+| X16 | `UNIT` | R0180, R0282, R0311, R0529, R0531, R0532, SF087, SF098, SF101–SF108, SF167, SF183 (18) | F5, F6, A1 (eco derivado por §7 del esquema) | — |
+| X17 | `STATE_UNIVERSE` | SF079 (sin ACTOR en el ancla) | F27 | ACTOR×STATE |
+| X7 | `POLARITY_*` | SF011, SF012 (un único positivo); SF001, SF003, SF005, SF007, SF009, SF014 (otro valor) | F16, F17 | varios positivos / valor contenido (G-FU-09) |
+| X8 | `CLEAR_ABSENT` | SF113 (`CLEAR` vacío como única operación) | F18 | `CLEAR` vacío junto a otra operación |
 
 ## 4. Importación de la evidencia pública de B
 
@@ -73,7 +89,7 @@ comprobados: cambiar un registro sintético, un byte del contrato, una adjudicac
 
 | # | Gate | Resultado | Evidencia |
 |---|---|---|---|
-| 1 | 199 representables | **PASS** — 0 violaciones (SYNTHETIC 150 + REAL 49, ambas etiquetas) | `gold/REPRESENTABILITY_REPORT.json`; verificador probado con 11 mutantes, 11 muertos |
+| 1 | 199 representables (no derivados: §20.1) | **PASS** — 0 violaciones (SYNTHETIC 150 + REAL 49, ambas etiquetas) | `gold/REPRESENTABILITY_REPORT.json`; verificador probado con 17 mutantes, 17 muertos |
 | 2 | Ninguno requiere `parsed_params` | **PASS** | G2 del verificador; §3.7 |
 | 3 | Cada comportamiento tiene regla | **PASS** | `M2A_TRACEABILITY_MATRIX.md` (49 filas) |
 | 4 | Ningún FRONTIER absorbido | **PASS** — GOLD ∩ FRONTIER = ∅; ningún ejemplo de hueco diferido en GOLD | G8 |
@@ -86,6 +102,17 @@ comprobados: cambiar un registro sintético, un byte del contrato, una adjudicac
 
 Gates de repositorio: ver el informe de la misión (ruff, semgrep, pines de paridad y tests focales ejecutados; la
 suite global no se corrió: entrega documental).
+
+## 7b. Revisión ZEUS R0 (`88da4e22`): NO_GO → reparación R1
+
+| Hallazgo | Clase | Reparación |
+|---|---|---|
+| P1-1 §8.3 enviaba a búsqueda nueva respuestas con anáfora/conector (SF051, SF053: Gold REASK F25) | FONDO, A/B | `¬Continuación(P)` en §7.2 (pendiente), §8.3 filas 2–3 e INV-M2A-05 (A9 «gana la marca») |
+| P1-2 §15.2 comparaba millones frente a SMMLV, que A8 dejó sin adjudicar (G-FU-06) | FONDO, B | §15.2 comparabilidad: mixtos ⇒ `CLARIFY`, G-FU-06 íntegro; INV-M2A-18 y §6.7 ajustados |
+| P2-1 Enm. 5 daba al contrato autoridad general sobre D7 | FONDO, A | cláusula sustituida: divergencia nueva ⇒ otra enmienda |
+| P2-2 faltaba el lote OQ-5 | FORMA | §3b |
+| P2-3 el gate 1 prometía derivación | FORMA | gate 1 = representabilidad; G9 (coherencia estructural de la disposición) + 6 mutantes nuevos (los 4 que sobrevivían, F25 ejecutado, A8.1 sobre unidades mixtas): 17/17 muertos |
+| P3 R0094 citado como búsqueda nueva; línea 97/99; numeración de gates; «100 %» frente a rojo declarado; regla de cobertura del eco; cláusula de intervalo vacío del mismo turno | FORMA | corregidos (matriz N02/N03, §1, plan M2A-3, §11 derivación exacta, §15.2) |
 
 ## 8. Deuda no bloqueante registrada
 

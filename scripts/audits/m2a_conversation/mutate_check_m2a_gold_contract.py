@@ -88,7 +88,43 @@ def mutants(rows: list[dict]) -> dict:
         return not any(c["dimension"] in ("TOPIC", "ACTOR") and c["polarity"] == "POSITIVE"
                        and (c["dimension"], c["value_hint"]) not in anchor for c in L["resulting_ir"]["conditions"])
 
+    def to_new_search_empty(L):
+        L["turn_kind"] = "NEW_SEARCH"
+        L["expected_disposition"] = "NEW_SEARCH"
+        L["disposition_reason"] = None
+        L["ops"] = []
+        L["resulting_ir"] = {**(L["prior"]["ir"] or {}), "conditions": []}
+
+    def to_pending_unanswered(L):
+        L["expected_disposition"] = "REASK"
+        L["disposition_reason"] = "PENDING_UNANSWERED"
+        L["resulting_ir"] = None
+
+    def to_no_anchor(L):
+        L["expected_disposition"] = "CLARIFY"
+        L["disposition_reason"] = "NO_ANCHOR"
+        L["resulting_ir"] = None
+
+    def to_expired(L):
+        L["expected_disposition"] = "CLARIFY"
+        L["disposition_reason"] = "CONTEXT_EXPIRED_CONFIRM"
+
+    def answer_plus_edit_executed(L):
+        L["expected_disposition"] = "EXECUTE"
+        L["disposition_reason"] = None
+
+    def mixed_units_replaced(L):
+        for c in L["prior"]["ir"]["conditions"]:
+            if c["dimension"] == "VALUE":
+                c["unit"] = "SMMLV"
+
     return {
+        "Z6_A8.1_on_mixed_units": ("SF090", mixed_units_replaced),
+        "Z1_SF051_to_new_search_empty": ("SF051", to_new_search_empty),
+        "Z2_SF056_to_pending_unanswered": ("SF056", to_pending_unanswered),
+        "Z3_SF124_to_no_anchor": ("SF124", to_no_anchor),
+        "Z4_SF141_to_expired": ("SF141", to_expired),
+        "Z5_SF053_F25_executed": ("SF053", answer_plus_edit_executed),
         "M1_carry_lost": (pick(rows, lambda r: r["label_A"]["turn_kind"] == "DELTA" and r["expected_disposition"] == "EXECUTE"
                                and not any(o["slot"] == "BUYER" for o in r["label_A"]["ops"])
                                and any(c["dimension"] == "BUYER" for c in prior_conditions(r["label_A"]))), carry_lost),

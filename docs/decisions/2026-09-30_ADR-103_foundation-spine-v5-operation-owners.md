@@ -583,7 +583,8 @@ F26 y su `INHERITED_UNIT_IMPLAUSIBLE` (A1).
 
 1. **Autoridad de M2a.** `docs/decisions/M2A_CONVERSATION_CONTRACT_V1.md` es la autoridad normativa única de M2a
    (tipos persistidos, `SemanticPatch`, búsqueda nueva frente a delta, `PendingClarification`, referentes, eco, gates
-   M2a). D7 sigue vigente salvo lo que sustituye el punto 2; donde D7 y el contrato difieran, manda el contrato.
+   M2a). D7 sigue vigente salvo lo que sustituye el punto 2; fuera de esas cláusulas el contrato precisa D7 sin
+   cambiarlo, y una divergencia nueva con D7 exige otra enmienda.
 2. **Cláusulas de D7 sustituidas (SUPERSEDED):**
    - «Rango sin interior ⇒ CLARIFY con dos opciones-evento» (viñeta «VALUE por lado»; OQ-4 = a) → contrato §15.2
      (A8/A8.1: un intervalo generado por un follow-up que queda vacío o degenerado a un punto sustituye la restricción
