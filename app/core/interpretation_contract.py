@@ -694,3 +694,118 @@ class InterpretationProjection:
 
     def to_dict(self) -> dict:
         return asdict(self)
+
+
+# ---- wire 5.1: conversational control directives (M2A contract §5.3, §17; ADR-103 enm. 4 §4.4 «M2A-1») ----
+# M2A-1 introduces the records; the v5.1 producer/decoder that carries them is M2A-5. They are deliberately NOT a
+# field of ``InterpretationProposal`` yet: its ``to_dict`` feeds the first-turn ``interpretation_hash`` (INV-M2A-06).
+
+# UNSUPPORTED labels reserved for the wire 5.1 (M2A contract A.6). Reserved means named, nothing reads them yet.
+RESERVED_UNSUPPORTED_LABELS = frozenset({"relative_to_previous", "no_selection", "value_without_comparator"})
+
+
+class DirectiveKind(str, Enum):
+    CLEAR = "CLEAR"
+    KEEP = "KEEP"
+    CANCEL_PENDING = "CANCEL_PENDING"
+
+
+class ValueSide(str, Enum):
+    """The VALUE slot a directive names; at acceptance the side is derived from the typed comparator."""
+
+    LOWER = "lower"
+    UPPER = "upper"
+
+
+# Dimensions whose slots are (dimension, polarity) pairs (M2A contract §4.2).
+POLARIZED_SLOT_DIMENSIONS = frozenset({
+    SemanticDimension.TOPIC, SemanticDimension.BUYER, SemanticDimension.ACTOR, SemanticDimension.GEOGRAPHY,
+    SemanticDimension.TIME, SemanticDimension.STATE, SemanticDimension.MODALITY,
+    SemanticDimension.CONTRACT_TYPE_OR_NATURE,
+})
+SLOT_DIMENSIONS = POLARIZED_SLOT_DIMENSIONS | {
+    SemanticDimension.VALUE, SemanticDimension.ORDER, SemanticDimension.CARDINALITY,
+}
+_DIRECTIVE_FIELDS = ("directive_id", "kind", "evidence", "dimension", "polarity", "side")
+
+
+@dataclass(frozen=True, slots=True)
+class ProposedSlotDirective:
+    """A cited control directive of the turn: ``CLEAR``/``KEEP`` name a slot, ``CANCEL_PENDING`` names none.
+
+    ``CANCEL_PENDING`` is the only representation of a rejected pending question (§17.1): it is explicit and
+    cited, never inferred from an empty list. ``CLEAR`` may name a whole dimension (no polarity / no side);
+    ``KEEP`` always names one slot. The record carries no value: values come only from the authorities.
+    """
+
+    directive_id: str
+    kind: DirectiveKind
+    evidence: tuple[RawSpan, ...]
+    dimension: SemanticDimension | None = None
+    polarity: Polarity | None = None
+    side: ValueSide | None = None
+
+    def __post_init__(self) -> None:
+        _identifier(self.directive_id, "DIRECTIVE_ID")
+        if type(self.kind) is not DirectiveKind:
+            raise ContractError("INVALID_DIRECTIVE_KIND")
+        _records(self.evidence, RawSpan, "DIRECTIVE_EVIDENCE")
+        if not self.evidence:
+            raise ContractError("MISSING_DIRECTIVE_EVIDENCE")
+        if self.polarity is not None and type(self.polarity) is not Polarity:
+            raise ContractError("INVALID_DIRECTIVE_POLARITY")
+        if self.side is not None and type(self.side) is not ValueSide:
+            raise ContractError("INVALID_DIRECTIVE_SIDE")
+        if self.kind is DirectiveKind.CANCEL_PENDING:
+            if (self.dimension, self.polarity, self.side) != (None, None, None):
+                raise ContractError("CANCEL_PENDING_HAS_SLOT")
+            return
+        if type(self.dimension) is not SemanticDimension or self.dimension not in SLOT_DIMENSIONS:
+            raise ContractError("DIRECTIVE_DIMENSION_NOT_A_SLOT")
+        if self.dimension in POLARIZED_SLOT_DIMENSIONS:
+            if self.side is not None:
+                raise ContractError("SIDE_OUTSIDE_VALUE")
+            whole = self.polarity is None
+        elif self.dimension is SemanticDimension.VALUE:
+            if self.polarity is not None:
+                raise ContractError("VALUE_DIRECTIVE_HAS_POLARITY")  # negation is absorbed in the comparator
+            whole = self.side is None
+        else:  # ORDER, CARDINALITY: one slot, no polarity, no side
+            if self.polarity is not None or self.side is not None:
+                raise ContractError("UNPOLARIZED_SLOT_HAS_QUALIFIER")
+            whole = False
+        if whole and self.kind is DirectiveKind.KEEP:
+            raise ContractError("KEEP_NEEDS_ONE_SLOT")
+
+    def validate_raw(self, raw: str) -> None:
+        if any(not span.binds(raw) for span in self.evidence):
+            raise ContractError("UNBOUND_RAW_SPAN")
+
+    def to_dict(self) -> dict:
+        return {"directive_id": self.directive_id, "kind": self.kind.value,
+                "evidence": [{"start": s.start, "end": s.end, "quote": s.quote} for s in self.evidence],
+                "dimension": None if self.dimension is None else self.dimension.value,
+                "polarity": None if self.polarity is None else self.polarity.value,
+                "side": None if self.side is None else self.side.value}
+
+    @classmethod
+    def from_dict(cls, data) -> ProposedSlotDirective:
+        """Strict reader: exact keys, exact JSON types, closed enums; anything else is ``ContractError``."""
+        if type(data) is not dict or set(data) != set(_DIRECTIVE_FIELDS):
+            raise ContractError("INVALID_DIRECTIVE_FIELDS")
+        evidence = data["evidence"]
+        if type(evidence) is not list or any(type(item) is not dict or set(item) != {"start", "end", "quote"}
+                                             for item in evidence):
+            raise ContractError("INVALID_DIRECTIVE_EVIDENCE")
+        try:
+            return cls(
+                data["directive_id"], DirectiveKind(data["kind"]),
+                tuple(RawSpan(item["start"], item["end"], item["quote"]) for item in evidence),
+                None if data["dimension"] is None else SemanticDimension(data["dimension"]),
+                None if data["polarity"] is None else Polarity(data["polarity"]),
+                None if data["side"] is None else ValueSide(data["side"]),
+            )
+        except ContractError:
+            raise
+        except (TypeError, ValueError) as error:  # unknown enum member or unhashable value
+            raise ContractError("INVALID_DIRECTIVE_FIELDS") from error
