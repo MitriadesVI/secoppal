@@ -15,6 +15,7 @@ from app.core.buyer_source_names import project_buyer_names
 from app.core.contract_universe import (
     CELEBRATED_STATES, POLICY_VERSION, ContractUniverse, fold_state,
 )
+from app.core.foundation_operations import Operation, Subject
 from app.core.modality_dataset_projection import project_modality_filter
 from app.core.modality_filter import ModalityFilter
 from app.core.interpretation_contract import (
@@ -174,15 +175,12 @@ def _validate_request_universe(request, dataset: str) -> None:
     if request.source_claim is not None:
         raise ProjectionError("EXPLICIT_SOURCE_UNSUPPORTED")
     expected = {
-        "processes": SoQLBuilder.PROCESOS_DATASET,
-        "contracts": SoQLBuilder.CONTRATOS_DATASET,
-        "procesos": SoQLBuilder.PROCESOS_DATASET,
-        "contratos": SoQLBuilder.CONTRATOS_DATASET,
-        "oportunidades": SoQLBuilder.PROCESOS_DATASET,
+        Subject.PROCESSES: SoQLBuilder.PROCESOS_DATASET,
+        Subject.CONTRACTS: SoQLBuilder.CONTRATOS_DATASET,
     }
     # The accepted linguistic subject defines the universe. The quote grounds
     # that claim; it is not a second lexical classifier after host admission.
-    if expected.get(request.subject.casefold()) != dataset:
+    if expected.get(request.subject) != dataset:
         raise ProjectionError("UNIVERSE_DATASET_CONFLICT")
 
 
@@ -405,14 +403,15 @@ def project_accepted(
     if type(reference_instant) is not datetime or reference_instant.utcoffset() is None:
         raise ProjectionError("REFERENCE_INSTANT_REQUIRED")
     requests = accepted.proposal.requests
+    searches = all(accepted.proposal.operation_of(item.request_id) is Operation.SEARCH for item in requests)
     if len(requests) > 1:
         shared = [item for item in accepted.proposal.relations
                   if item.kind is RelationKind.SHARES_SCOPE]
         if (len(requests) != 2 or len(shared) != 1
                 or set(shared[0].members) != {item.request_id for item in requests}
-                or any(item.operation != "SEARCH" for item in requests)):
+                or not searches):
             return ProjectionOutcome(AcceptanceStatus.UNSUPPORTED, reason="MULTI_REQUEST")
-    if any(item.operation != "SEARCH" for item in requests):
+    if not searches:
         return ProjectionOutcome(AcceptanceStatus.UNSUPPORTED, reason="UNSUPPORTED_OPERATION")
     if not requests:
         raise ProjectionError("READY_WITHOUT_REQUEST")

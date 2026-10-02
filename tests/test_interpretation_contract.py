@@ -32,7 +32,9 @@ from app.core.interpretation_contract import (
     RelationKind,
     ResolutionDecision,
 )
+from app.core.foundation_operations import Subject
 from app.core.semantic_dimensions import SemanticDimension
+from tests.foundation_ir import search_jobs
 
 
 RAW = "contratos de aseo y procesos de obra; ambos en 2025"
@@ -49,12 +51,13 @@ def atom(condition_id: str) -> ConditionExpression:
     return ConditionExpression(LogicOperator.ATOM, condition_id)
 
 
-def proposal(*, requests=None, conditions=(), relations=(), omissions=(), raw=RAW):
+def proposal(*, requests=None, conditions=(), relations=(), omissions=(), raw=RAW, jobs=None):
     if requests is None:
-        requests = (ProposedRequest("r1", "s1", "SEARCH", "contratos", (span("contratos"),)),)
+        requests = (ProposedRequest("r1", "s1", Subject.UNSPECIFIED, (span("contratos"),)),)
     return InterpretationProposal(
         hashlib.sha256(raw.encode()).hexdigest(), "test-producer", "1",
         requests, conditions, relations, omissions,
+        search_jobs(requests) if jobs is None else jobs,
     )
 
 
@@ -62,10 +65,11 @@ def test_proposal_is_immutable_and_json_serializable_without_executable_fields()
     item = proposal()
     item.validate_raw(RAW)
     payload = json.loads(json.dumps(item.to_dict(), allow_nan=False))
-    assert payload["requests"][0]["subject"] == "contratos"
+    assert payload["requests"][0]["subject"] == "unspecified"
+    assert payload["jobs"][0]["operation"] == "SEARCH" and payload["schema_version"] == 2
     assert set(payload) == {
         "raw_sha256", "producer", "producer_version", "requests", "conditions",
-        "relations", "omissions", "schema_version",
+        "relations", "omissions", "jobs", "schema_version",
     }
     with pytest.raises(FrozenInstanceError):
         item.producer = "other"
@@ -78,12 +82,12 @@ def test_raw_hash_and_half_open_quote_must_bind_to_same_original_turn():
     with pytest.raises(ContractError, match="RAW_HASH_MISMATCH"):
         item.validate_raw(RAW + "!")
     bad = proposal(requests=(ProposedRequest(
-        "r1", "s1", "SEARCH", "contratos", (RawSpan(0, 8, "procesos"),),
+        "r1", "s1", Subject.UNSPECIFIED, (RawSpan(0, 8, "procesos"),),
     ),))
     with pytest.raises(ContractError, match="UNBOUND_RAW_SPAN"):
         bad.validate_raw(RAW)
     overrun = proposal(requests=(ProposedRequest(
-        "r1", "s1", "SEARCH", "contratos", (RawSpan(0, 100, "contratos"),),
+        "r1", "s1", Subject.UNSPECIFIED, (RawSpan(0, 100, "contratos"),),
     ),))
     with pytest.raises(ContractError, match="UNBOUND_RAW_SPAN"):
         overrun.validate_raw(RAW)
@@ -92,12 +96,12 @@ def test_raw_hash_and_half_open_quote_must_bind_to_same_original_turn():
 def test_repeated_word_uses_distinct_original_offsets():
     raw = "aseo y aseo"
     requests = (
-        ProposedRequest("r1", "s1", "SEARCH", "aseo", (RawSpan(0, 4, "aseo"),)),
-        ProposedRequest("r2", "s2", "SEARCH", "aseo", (RawSpan(7, 11, "aseo"),)),
+        ProposedRequest("r1", "s1", Subject.UNSPECIFIED, (RawSpan(0, 4, "aseo"),)),
+        ProposedRequest("r2", "s2", Subject.UNSPECIFIED, (RawSpan(7, 11, "aseo"),)),
     )
     proposal(requests=requests, raw=raw).validate_raw(raw)
     stale_second = proposal(requests=(requests[0], ProposedRequest(
-        "r2", "s2", "SEARCH", "aseo", (RawSpan(6, 10, "aseo"),),
+        "r2", "s2", Subject.UNSPECIFIED, (RawSpan(6, 10, "aseo"),),
     )), raw=raw)
     with pytest.raises(ContractError, match="UNBOUND_RAW_SPAN"):
         stale_second.validate_raw(raw)
@@ -106,7 +110,7 @@ def test_repeated_word_uses_distinct_original_offsets():
 def test_nfc_quote_is_only_a_view_of_original_span():
     raw = "cafe\u0301"
     request = ProposedRequest(
-        "r1", "s1", "SEARCH", "cafe", (RawSpan(0, len(raw), "caf\u00e9"),),
+        "r1", "s1", Subject.UNSPECIFIED, (RawSpan(0, len(raw), "caf\u00e9"),),
     )
     item = proposal(requests=(request,), raw=raw)
     item.validate_raw(raw)
@@ -115,9 +119,9 @@ def test_nfc_quote_is_only_a_view_of_original_span():
 
 def test_scope_members_are_enumerated_exactly_and_foreign_ids_fail():
     requests = (
-        ProposedRequest("r1", "shared", "SEARCH", "contratos", (span("contratos"),)),
-        ProposedRequest("r2", "shared", "SEARCH", "procesos", (span("procesos"),)),
-        ProposedRequest("r3", "other", "SEARCH", "obra", (span("obra"),)),
+        ProposedRequest("r1", "shared", Subject.UNSPECIFIED, (span("contratos"),)),
+        ProposedRequest("r2", "shared", Subject.UNSPECIFIED, (span("procesos"),)),
+        ProposedRequest("r3", "other", Subject.UNSPECIFIED, (span("obra"),)),
     )
     with pytest.raises(ContractError, match="INCOMPLETE_SHARED_SCOPE"):
         proposal(requests=requests)
@@ -137,8 +141,8 @@ def test_scope_members_are_enumerated_exactly_and_foreign_ids_fail():
 
 def test_result_dependencies_are_acyclic_and_condition_ownership_is_explicit():
     requests = (
-        ProposedRequest("r1", "s1", "SEARCH", "contratos", (span("contratos"),)),
-        ProposedRequest("r2", "s2", "SEARCH", "procesos", (span("procesos"),)),
+        ProposedRequest("r1", "s1", Subject.UNSPECIFIED, (span("contratos"),)),
+        ProposedRequest("r2", "s2", Subject.UNSPECIFIED, (span("procesos"),)),
     )
     edge = ProposedRelation(RelationKind.USES_RESULT_OF, ("r2", "r1"))
     proposal(requests=requests, relations=(edge,)).validate_raw(RAW)
@@ -147,18 +151,18 @@ def test_result_dependencies_are_acyclic_and_condition_ownership_is_explicit():
             edge, ProposedRelation(RelationKind.USES_RESULT_OF, ("r1", "r2")),
         ))
     negative = ProposedCondition(
-        "c1", ("r2",), SemanticDimension.TIME, "EQ", Polarity.NEGATIVE,
+        "c1", ("r2",), SemanticDimension.TIME, "during_year", Polarity.NEGATIVE,
         "2025", (span("2025"),),
     )
     scoped_requests = (requests[0], ProposedRequest(
-        "r2", "s2", "SEARCH", "procesos", (span("procesos"),),
+        "r2", "s2", Subject.UNSPECIFIED, (span("procesos"),),
         condition_expression=atom("c1"),
     ))
     item = proposal(requests=scoped_requests, conditions=(negative,))
     assert item.conditions[0].request_ids == ("r2",)
     with pytest.raises(ContractError, match="FOREIGN_CONDITION_REQUEST"):
         proposal(requests=scoped_requests, conditions=(ProposedCondition(
-            "c2", ("foreign",), SemanticDimension.TIME, "EQ", Polarity.NEGATIVE,
+            "c2", ("foreign",), SemanticDimension.TIME, "during_year", Polarity.NEGATIVE,
             "2025", (span("2025"),),
         ),))
 
@@ -166,7 +170,7 @@ def test_result_dependencies_are_acyclic_and_condition_ownership_is_explicit():
 @given(st.integers(min_value=2, max_value=8))
 def test_result_dependency_chains_reject_any_closing_cycle(length: int):
     requests = tuple(
-        ProposedRequest(f"r{index}", f"s{index}", "SEARCH", "contratos", (span("contratos"),))
+        ProposedRequest(f"r{index}", f"s{index}", Subject.UNSPECIFIED, (span("contratos"),))
         for index in range(length)
     )
     chain = tuple(
@@ -191,12 +195,12 @@ def test_omission_does_not_admit_implicit_delete():
 
 def test_acceptance_and_projection_keep_host_decisions_separate_from_claims():
     condition = ProposedCondition(
-        "c1", ("r1",), SemanticDimension.TIME, "EQ", Polarity.NEGATIVE,
+        "c1", ("r1",), SemanticDimension.TIME, "during_year", Polarity.NEGATIVE,
         "2025", (span("2025"),),
     )
     accepted = InterpretationAcceptance(
         proposal(requests=(ProposedRequest(
-            "r1", "s1", "SEARCH", "contratos", (span("contratos"),),
+            "r1", "s1", Subject.UNSPECIFIED, (span("contratos"),),
             condition_expression=atom("c1"),
         ),), conditions=(condition,)), AcceptanceStatus.READY,
         (HostResolution("c1", ResolutionDecision.RESOLVED, "temporal-resolver", ("2025",)),),
@@ -205,7 +209,7 @@ def test_acceptance_and_projection_keep_host_decisions_separate_from_claims():
         accepted, ("r1",), "processes", "SELECT * WHERE year != 2025",
         (ConditionDisposition(
             "c1", ("r1",), Disposition.CONSUMED, Effect.EQUIVALENT,
-            "EQ", Polarity.NEGATIVE, "BLOCK_UNKNOWN", "year != 2025",
+            "during_year", Polarity.NEGATIVE, "BLOCK_UNKNOWN", "year != 2025",
         ),),
     )
     assert json.loads(json.dumps(projected.to_dict()))["acceptance"]["status"] == "READY"
@@ -213,7 +217,7 @@ def test_acceptance_and_projection_keep_host_decisions_separate_from_claims():
         InterpretationProjection(accepted, ("r1",), "processes", "SELECT *", (
             ConditionDisposition(
                 "c1", ("r1",), Disposition.CONSUMED, Effect.EQUIVALENT,
-                "EQ", Polarity.POSITIVE, "BLOCK_UNKNOWN", "year = 2025",
+                "during_year", Polarity.POSITIVE, "BLOCK_UNKNOWN", "year = 2025",
             ),
         ))
     with pytest.raises(ContractError, match="INCOMPLETE_PROJECTION_DISPOSITIONS"):
@@ -233,12 +237,12 @@ def test_nonready_acceptance_cannot_project_or_smuggle_foreign_resolution():
 
 def test_projection_covers_only_conditions_owned_by_its_requests():
     requests = (
-        ProposedRequest("r1", "s1", "SEARCH", "contratos", (span("contratos"),)),
-        ProposedRequest("r2", "s2", "SEARCH", "procesos", (span("procesos"),),
+        ProposedRequest("r1", "s1", Subject.UNSPECIFIED, (span("contratos"),)),
+        ProposedRequest("r2", "s2", Subject.UNSPECIFIED, (span("procesos"),),
                         condition_expression=atom("c2")),
     )
     condition = ProposedCondition(
-        "c2", ("r2",), SemanticDimension.TIME, "EQ", Polarity.POSITIVE,
+        "c2", ("r2",), SemanticDimension.TIME, "during_year", Polarity.POSITIVE,
         "2025", (span("2025"),),
     )
     accepted = InterpretationAcceptance(
@@ -266,16 +270,16 @@ def test_blocked_projection_has_explicit_error_and_no_query():
 def test_request_proposes_source_and_universe_with_original_evidence():
     raw = "contratos adjudicados en SECOP II"
     request = ProposedRequest(
-        "r1", "s1", "SEARCH", "contratos", (RawSpan(0, 9, "contratos"),),
+        "r1", "s1", Subject.CONTRACTS, (RawSpan(0, 9, "contratos"),),
         source_claim="SECOP II", source_evidence=RawSpan(25, 33, "SECOP II"),
         universe_claim="adjudicados", universe_evidence=RawSpan(10, 21, "adjudicados"),
     )
     proposal(requests=(request,), raw=raw).validate_raw(raw)
     with pytest.raises(ContractError, match="UNGROUNDED_SOURCE_CLAIM"):
-        ProposedRequest("r1", "s1", "SEARCH", "contratos", (RawSpan(0, 9, "contratos"),),
+        ProposedRequest("r1", "s1", Subject.UNSPECIFIED, (RawSpan(0, 9, "contratos"),),
                         source_claim="SECOP II")
     bad = ProposedRequest(
-        "r1", "s1", "SEARCH", "contratos", (RawSpan(0, 9, "contratos"),),
+        "r1", "s1", Subject.UNSPECIFIED, (RawSpan(0, 9, "contratos"),),
         source_claim="SECOP II", source_evidence=RawSpan(10, 18, "SECOP II"),
     )
     with pytest.raises(ContractError, match="UNBOUND_RAW_SPAN"):
@@ -284,18 +288,18 @@ def test_request_proposes_source_and_universe_with_original_evidence():
 
 def test_boolean_composition_is_explicit_and_request_scoped():
     conditions = (
-        ProposedCondition("c1", ("r1",), SemanticDimension.TOPIC, "EQ",
+        ProposedCondition("c1", ("r1",), SemanticDimension.TOPIC, "contains",
                           Polarity.POSITIVE, "aseo", (span("aseo"),)),
-        ProposedCondition("c2", ("r1",), SemanticDimension.TOPIC, "EQ",
+        ProposedCondition("c2", ("r1",), SemanticDimension.TOPIC, "contains",
                           Polarity.POSITIVE, "obra", (span("obra"),)),
-        ProposedCondition("c3", ("r1",), SemanticDimension.TIME, "EQ",
+        ProposedCondition("c3", ("r1",), SemanticDimension.TIME, "during_year",
                           Polarity.POSITIVE, "2025", (span("2025"),)),
     )
     expression = ConditionExpression(LogicOperator.AND, children=(
         ConditionExpression(LogicOperator.OR, children=(atom("c1"), atom("c2"))),
         ConditionExpression(LogicOperator.NOT, children=(atom("c3"),)),
     ))
-    request = ProposedRequest("r1", "s1", "SEARCH", "contratos", (span("contratos"),),
+    request = ProposedRequest("r1", "s1", Subject.UNSPECIFIED, (span("contratos"),),
                               condition_expression=expression)
     item = proposal(requests=(request,), conditions=conditions)
     item.validate_raw(RAW)
@@ -305,7 +309,7 @@ def test_boolean_composition_is_explicit_and_request_scoped():
         proposal(conditions=conditions)
     with pytest.raises(ContractError, match="DUPLICATE_CONDITION_ATOM"):
         proposal(requests=(ProposedRequest(
-            "r1", "s1", "SEARCH", "contratos", (span("contratos"),),
+            "r1", "s1", Subject.UNSPECIFIED, (span("contratos"),),
             condition_expression=ConditionExpression(
                 LogicOperator.OR, children=(atom("c1"), atom("c1"))),
         ),), conditions=conditions)
@@ -313,12 +317,12 @@ def test_boolean_composition_is_explicit_and_request_scoped():
 
 def test_boolean_expression_rejects_foreign_and_cross_request_atoms():
     requests = (
-        ProposedRequest("r1", "s1", "SEARCH", "contratos", (span("contratos"),),
+        ProposedRequest("r1", "s1", Subject.UNSPECIFIED, (span("contratos"),),
                         condition_expression=atom("c2")),
-        ProposedRequest("r2", "s2", "SEARCH", "procesos", (span("procesos"),),
+        ProposedRequest("r2", "s2", Subject.UNSPECIFIED, (span("procesos"),),
                         condition_expression=atom("c2")),
     )
-    condition = ProposedCondition("c2", ("r2",), SemanticDimension.TIME, "EQ",
+    condition = ProposedCondition("c2", ("r2",), SemanticDimension.TIME, "during_year",
                                   Polarity.POSITIVE, "2025", (span("2025"),))
     with pytest.raises(ContractError, match="FOREIGN_CONDITION_ATOM"):
         proposal(requests=requests, conditions=(condition,))
@@ -331,7 +335,7 @@ def test_boolean_expression_rejects_foreign_and_cross_request_atoms():
 def test_unprojectable_material_is_representable_but_never_ready():
     raw = "contratos con huella de carbono verificada"
     request = ProposedRequest(
-        "r1", "s1", "SEARCH", "contratos", (RawSpan(0, 9, "contratos"),),
+        "r1", "s1", Subject.UNSPECIFIED, (RawSpan(0, 9, "contratos"),),
         condition_expression=atom("c1"),
     )
     condition = ProposedCondition(
@@ -360,12 +364,12 @@ def _opportunity_records():
     raw = "Busca oportunidades de aseo"
     quote = RawSpan(6, 19, "oportunidades")
     request = ProposedRequest(
-        "r1", "s1", "SEARCH", "oportunidades", (quote,),
+        "r1", "s1", Subject.PROCESSES, (quote,),
         universe_claim="oportunidades", universe_evidence=quote,
         condition_expression=atom("c1"),
     )
     condition = ProposedCondition(
-        "c1", ("r1",), SemanticDimension.RETRIEVAL_INTENT, "IS",
+        "c1", ("r1",), SemanticDimension.RETRIEVAL_INTENT, "is",
         Polarity.POSITIVE, "oportunidades", (quote,),
         role=ConditionRole.REQUESTED_UNIVERSE,
     )
@@ -376,7 +380,7 @@ def _opportunity_records():
     policy = HostPolicy("O1B", "1", ("c1",), Effect.NARROWING)
     disposition = ConditionDisposition(
         "c1", ("r1",), Disposition.TRANSFORMED, Effect.NARROWING,
-        "IS", Polarity.POSITIVE, "BLOCK_UNKNOWN", "O1B@1",
+        "is", Polarity.POSITIVE, "BLOCK_UNKNOWN", "O1B@1",
         role=ConditionRole.REQUESTED_UNIVERSE,
     )
     return raw, item, resolution, policy, disposition
@@ -403,7 +407,7 @@ def test_opportunity_claim_is_request_owned_and_policy_bound_for_each_operation(
         InterpretationProjection(accepted, ("r1",), "p6dx-8zbt", "SELECT *", (
             ConditionDisposition(
                 "c1", ("r1",), Disposition.TRANSFORMED, Effect.NARROWING,
-                "IS", Polarity.POSITIVE, "BLOCK_UNKNOWN", "UNDECLARED@1",
+                "is", Polarity.POSITIVE, "BLOCK_UNKNOWN", "UNDECLARED@1",
                 role=ConditionRole.REQUESTED_UNIVERSE,
             ),
         ))
@@ -414,23 +418,23 @@ def test_request_universe_claim_cannot_be_ungrounded_or_disjoined():
     request = item.requests[0]
     with pytest.raises(ContractError, match="REQUEST_UNIVERSE_EVIDENCE_MISMATCH"):
         proposal(requests=(ProposedRequest(
-            "r1", "s1", "SEARCH", "oportunidades", request.evidence,
+            "r1", "s1", Subject.PROCESSES, request.evidence,
             universe_claim="procesos", universe_evidence=request.universe_evidence,
             condition_expression=atom("c1"),
         ),), conditions=item.conditions, raw=raw)
     with pytest.raises(ContractError, match="NONCONJUNCTIVE_REQUEST_UNIVERSE"):
         proposal(requests=(ProposedRequest(
-            "r1", "s1", "SEARCH", "oportunidades", request.evidence,
+            "r1", "s1", Subject.PROCESSES, request.evidence,
             universe_claim="oportunidades", universe_evidence=request.universe_evidence,
             condition_expression=ConditionExpression(LogicOperator.NOT, children=(atom("c1"),)),
         ),), conditions=item.conditions, raw=raw)
     topic = ProposedCondition(
-        "c2", ("r1",), SemanticDimension.TOPIC, "CONTAINS", Polarity.POSITIVE,
+        "c2", ("r1",), SemanticDimension.TOPIC, "contains", Polarity.POSITIVE,
         "aseo", (RawSpan(23, 27, "aseo"),),
     )
     with pytest.raises(ContractError, match="NONCONJUNCTIVE_REQUEST_UNIVERSE"):
         proposal(requests=(ProposedRequest(
-            "r1", "s1", "SEARCH", "oportunidades", request.evidence,
+            "r1", "s1", Subject.PROCESSES, request.evidence,
             universe_claim="oportunidades", universe_evidence=request.universe_evidence,
             condition_expression=ConditionExpression(
                 LogicOperator.OR, children=(atom("c1"), atom("c2")),
@@ -445,7 +449,7 @@ def test_request_universe_claim_cannot_be_ungrounded_or_disjoined():
         InterpretationProjection(accepted, ("r1",), "p6dx-8zbt", "SELECT *", (
             ConditionDisposition(
                 "c1", ("r1",), Disposition.TRANSFORMED, Effect.NARROWING,
-                "IS", Polarity.POSITIVE, "BLOCK_UNKNOWN", "O1B@1",
+                "is", Polarity.POSITIVE, "BLOCK_UNKNOWN", "O1B@1",
                 role=ConditionRole.FILTER,
             ),
         ))

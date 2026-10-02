@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import dataclasses
 import re
+import tokenize
 import unicodedata
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -20,6 +21,7 @@ from app.core.foundation_authority_contract import (
     EvidenceWindow, GeoValue, ModalityValue, MoneyValue, OrderDirection, OrderKey, OrderValue,
     StateValue, TimeValue, TopicValue, decode_value,
 )
+from app.core.foundation_authority_values import MAX_REQUESTED_TOP_N
 from app.core.foundation_authority_registry import (
     REGISTRY, AuthorityDeps, AuthorityEntry, Maturity,
 )
@@ -39,7 +41,18 @@ FAST = settings(max_examples=150, deadline=None,
                 suppress_health_check=[HealthCheck.function_scoped_fixture])
 NEW_RUNTIME_MODULES = ("foundation_authority_contract", "foundation_authority_values",
                        "foundation_evidence_window", "foundation_authority_registry",
-                       "foundation_geo_level", "host_authorities")
+                       "host_authorities")
+# C1.2 integrates the geographic level into the IR v2 (it was created for that: C1.1 §3.2).
+# Nothing else may import it, so the authority contract still has no runtime caller.
+GEO_LEVEL_IMPORTERS = frozenset({"interpretation_contract", "foundation_lift_v1", "foundation_acceptance_loader",
+                                 "foundation_authority_contract", "foundation_authority_values"})
+
+
+def _code(path: Path) -> str:
+    """The module's text without its comments: a comment that names a module is not an import."""
+    with path.open("rb") as handle:
+        tokens = tokenize.tokenize(handle.readline)
+        return " ".join(token.string for token in tokens if token.type != tokenize.COMMENT)
 
 
 # ---- the window: segments, gaps shown whole, at most K tokens outside, never the raw turn ------
@@ -327,10 +340,16 @@ def test_c1_1_modules_are_not_imported_by_any_runtime_module():
         rel = path.relative_to(ROOT).as_posix()
         if path.stem in NEW_RUNTIME_MODULES or "/host_authorities/" in rel:
             continue
-        if pattern.search(path.read_text()):
+        if pattern.search(_code(path)):
             offenders.append(rel)
     assert offenders == []
     assert (ROOT / "app/core/host_authorities/__init__.py").read_text() == ""
+
+
+def test_only_the_ir_v2_and_the_authority_contract_import_the_geographic_level():
+    importers = {path.stem for path in (ROOT / "app").rglob("*.py")
+                 if path.stem != "foundation_geo_level" and re.search(r"\bfoundation_geo_level\b", _code(path))}
+    assert importers <= GEO_LEVEL_IMPORTERS and {"interpretation_contract", "foundation_lift_v1"} <= importers
 
 
 # ---- ExecutableValue: closed union, tagged and versioned, with round trip (INV-C0-9) ---------
@@ -380,8 +399,9 @@ def buyer_values(draw):
 @st.composite
 def cardinality_values(draw):
     if draw(st.booleans()):
-        return CardinalityValue(1, CardinalityBasis.SINGULAR)
-    return CardinalityValue(draw(st.integers(1, MAX_TOP_N)), CardinalityBasis.FIGURE)
+        return CardinalityValue(1, CardinalityBasis.SINGULAR, 1)
+    figure = draw(st.one_of(st.integers(1, 300), st.integers(1, MAX_REQUESTED_TOP_N)))
+    return CardinalityValue(min(figure, MAX_TOP_N), CardinalityBasis.FIGURE, figure)
 
 
 @st.composite
@@ -450,7 +470,11 @@ def test_decode_is_strict_on_every_single_edit_of_a_valid_encoding(kind, data):
 @given(data=st.data())
 def test_a_right_shaped_payload_under_another_tag_or_version_is_refused_as_such(kind, data):
     items = data.draw(VALUE_STRATEGIES[kind]).encode()
-    for tag in ("other@1", kind.TAG.replace("@1", "@2"), kind.TAG.replace("@1", "@0")):
+    name, version = kind.TAG.split("@")
+    # Derived from the real TAG: a ``replace("@1", "@2")`` is the identity on a tag that already is ``@2``.
+    # ``@0`` (when the version is 1) is invalid as a tag and refused all the same.
+    for tag in ("other@1", f"{name}@{int(version) + 1}", f"{name}@{int(version) - 1}"):
+        assert tag != kind.TAG
         with pytest.raises(ContractError, match="UNSUPPORTED_VALUE_TAG"):
             kind.decode((tag, *items[1:]))
         with pytest.raises(ContractError, match="UNSUPPORTED_VALUE_TAG"):
@@ -542,13 +566,40 @@ def buyer_group(**overrides):
     lambda: ModalityValue((), None, False), lambda: ModalityValue(("a",), "no version", False),
     lambda: ModalityValue(("a",), None, 1), lambda: ContractTypeValue((), False),
     lambda: ContractTypeValue(("a", "a"), False), lambda: ContractTypeValue(("a",), None),
-    lambda: OrderValue("value", OrderDirection.ASC), lambda: CardinalityValue(0, CardinalityBasis.FIGURE),
-    lambda: CardinalityValue(MAX_TOP_N + 1, CardinalityBasis.FIGURE), lambda: CardinalityValue(True, CardinalityBasis.FIGURE),
-    lambda: CardinalityValue(2, CardinalityBasis.SINGULAR),  # a singular is one
-    lambda: CardinalityValue(MAX_TOP_N, CardinalityBasis.SINGULAR), lambda: CardinalityValue(5, "figure"),
+    lambda: OrderValue("value", OrderDirection.ASC),
 ])
 def test_values_refuse_to_exist_when_invalid(build):
     with pytest.raises(ContractError):
+        build()
+
+
+_F, _S = CardinalityBasis.FIGURE, CardinalityBasis.SINGULAR
+_BIG = MAX_REQUESTED_TOP_N
+
+
+@pytest.mark.parametrize(("build", "code"), [
+    # step 1: the executed n is 1..MAX_TOP_N
+    (lambda: CardinalityValue(0, _F, 0), "INVALID_CARDINALITY_N"),
+    (lambda: CardinalityValue(MAX_TOP_N + 1, _F, MAX_TOP_N + 1), "INVALID_CARDINALITY_N"),
+    (lambda: CardinalityValue(True, _F, 1), "INVALID_CARDINALITY_N"),
+    # step 2: the basis is a CardinalityBasis
+    (lambda: CardinalityValue(5, "figure", 5), "INVALID_CARDINALITY_BASIS"),
+    # step 3: the requested figure is an int in 1..MAX_REQUESTED_TOP_N
+    (lambda: CardinalityValue(100, _F, _BIG + 1), "INVALID_CARDINALITY_N_REQUESTED"),
+    (lambda: CardinalityValue(100, _F, True), "INVALID_CARDINALITY_N_REQUESTED"),
+    (lambda: CardinalityValue(100, _F, None), "INVALID_CARDINALITY_N_REQUESTED"),
+    (lambda: CardinalityValue(1, _F, 0), "INVALID_CARDINALITY_N_REQUESTED"),
+    # step 4: a singular is one, executed and requested
+    (lambda: CardinalityValue(2, _S, 2), "INVALID_CARDINALITY_SINGULAR"),
+    (lambda: CardinalityValue(MAX_TOP_N, _S, MAX_TOP_N), "INVALID_CARDINALITY_SINGULAR"),
+    (lambda: CardinalityValue(1, _S, 2), "INVALID_CARDINALITY_SINGULAR"),  # not CAP: step 4 runs before step 5
+    # step 5: n == min(n_requested, MAX_TOP_N)
+    (lambda: CardinalityValue(100, _F, 99), "INVALID_CARDINALITY_CAP"),
+    (lambda: CardinalityValue(50, _F, 500), "INVALID_CARDINALITY_CAP"),
+    (lambda: CardinalityValue(10, _F, 11), "INVALID_CARDINALITY_CAP"),
+])
+def test_an_invalid_cardinality_fails_with_its_own_code(build, code):
+    with pytest.raises(ContractError, match=rf"^{code}$"):  # anchored: ..._N is a prefix of ..._N_REQUESTED
         build()
 
 
@@ -610,15 +661,31 @@ def test_state_value_literals_are_dataset_column_values_triples_and_the_classes_
 
 
 def test_cardinality_value_records_its_basis_and_a_singular_is_one():
-    assert CardinalityValue(1, CardinalityBasis.SINGULAR).encode() == ("cardinality@1", "n=1", "basis=singular")
-    assert CardinalityValue(5, CardinalityBasis.FIGURE).encode()[-1] == "basis=figure"
-    for kind in (CardinalityBasis.SINGULAR, CardinalityBasis.FIGURE):
-        assert decode_value(CardinalityValue(1, kind).encode()) == CardinalityValue(1, kind)
-    with pytest.raises(ContractError):
-        CardinalityValue.decode(("cardinality@1", "n=2", "basis=singular"))
-    with pytest.raises(ContractError):
-        CardinalityValue.decode(("cardinality@1", "n=2", "basis=other"))
+    singular = CardinalityValue(1, _S, 1)
+    assert singular.encode() == ("cardinality@2", "n=1", "basis=singular", "n_requested=1")
+    assert CardinalityValue(5, _F, 5).encode()[-2:] == ("basis=figure", "n_requested=5")
+    capped = CardinalityValue(100, _F, 500)
+    assert capped.encode() == ("cardinality@2", "n=100", "basis=figure", "n_requested=500")
+    assert capped.capped is True and singular.capped is False
+    assert CardinalityValue(10, _F, 10).capped is False and CardinalityValue(100, _F, 100).capped is False
+    for value in (singular, capped, CardinalityValue(1, _F, 1), CardinalityValue(100, _F, _BIG)):
+        assert decode_value(value.encode()) == value and CardinalityValue.decode(value.encode()) == value
+    with pytest.raises(ContractError, match=r"^UNSUPPORTED_VALUE_TAG$"):
+        decode_value(("cardinality@1", "n=1", "basis=singular"))
+    with pytest.raises(ContractError, match=r"^UNSUPPORTED_VALUE_TAG$"):
+        CardinalityValue.decode(("cardinality@1", "n=1", "basis=singular", "n_requested=1"))
+    with pytest.raises(ContractError, match=r"^INVALID_CARDINALITY_N$"):
+        CardinalityValue.decode(("cardinality@2", "n=500", "basis=figure", "n_requested=500"))
+    with pytest.raises(ContractError, match=r"^INVALID_CARDINALITY_SINGULAR$"):
+        CardinalityValue.decode(("cardinality@2", "n=2", "basis=singular", "n_requested=2"))
+    with pytest.raises(ContractError, match=r"^INVALID_VALUE_FIELDS$"):
+        CardinalityValue.decode(("cardinality@2", "n=1", "basis=singular"))  # n_requested is mandatory
+    with pytest.raises(ContractError, match=r"^INVALID_VALUE_FIELDS$"):
+        CardinalityValue.decode(("cardinality@2", "n=100", "basis=figure", "n_requested=\u0665\u0660\u0660"))
+    with pytest.raises(ContractError, match=r"^NONCANONICAL_VALUE_ENCODING$"):
+        CardinalityValue.decode(("cardinality@2", "n=100", "basis=figure", "n_requested=0500"))
     assert MAX_TOP_N == 100
+    assert MAX_REQUESTED_TOP_N == 10 ** 18 - 1
 
 
 # ---- verdict, receipt, context, evidence -------------------------------------------------------

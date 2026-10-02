@@ -11,7 +11,8 @@ from hypothesis import given, strategies as st
 
 from app.core.entity_resolver import EntityResolver
 from app.core.foundation_admission import admit_proposal
-from app.core.foundation_guard import ExecutionGuard, FoundationGuardError, execution_guard
+from app.core.foundation_execution_guard import ExecutionGuard, FoundationGuardError
+from app.core.foundation_guard import execution_guard
 from app.core.foundation_producers import LinguisticProducer, configured_producer, decode_proposal, host_candidates
 from app.core.foundation_projection import project_accepted
 from app.core.interpretation_contract import AcceptanceStatus

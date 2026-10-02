@@ -23,3 +23,6 @@ class SemanticDimension(str, Enum):
     VALUE = "VALUE"
     STATE = "STATE"
     CONTROL_LANGUAGE = "CONTROL_LANGUAGE"
+    # Spine v5 (C0 §5.1.2): how the user wants the result ordered, and how many of them.
+    ORDER = "ORDER"
+    CARDINALITY = "CARDINALITY"

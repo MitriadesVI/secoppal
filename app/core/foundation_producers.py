@@ -3,6 +3,9 @@
 The producer proposes linguistic meaning only; the host admits it. Only arm B is a
 product producer. The decoder also reads the raw-span wire shape ("C") because
 tests and replay fixtures state proposals that way; no setting can select it.
+
+The v4.2 wire is IR v1 (operation on each request); the decoder lifts it into the IR v2 with
+``foundation_lift_v1`` and adds nothing of its own (INV-C0-2).
 """
 
 from __future__ import annotations
@@ -13,12 +16,13 @@ import re
 import time
 from dataclasses import dataclass, field
 
+from app.core.foundation_lift_v1 import lift_level, lift_operation, lift_subject, v1_job_specs
 from app.core.foundation_prompts import PRODUCER_ARM, PROMPT_SHA256, PROMPT_VERSION, system_prompt
 from app.core.foundation_universe_kind import expand_universe_kind
 from app.core.interpretation_contract import (
     AcceptanceStatus, ConditionExpression, ConditionRole, ContractError, InterpretationAcceptance,
-    InterpretationProposal, LogicOperator, Omission, Polarity, ProposedCondition, ProposedOmission,
-    ProposedRelation, ProposedRequest, RawSpan, RelationKind,
+    InterpretationProposal, LogicOperator, Omission, Polarity, ProposedCondition, ProposedJob,
+    ProposedOmission, ProposedRelation, ProposedRequest, RawSpan, RelationKind,
 )
 from app.core.semantic_dimensions import SemanticDimension
 
@@ -78,7 +82,7 @@ def decode_proposal(payload: dict, raw: str, *, arm: str, candidates=()) -> Inte
         return ConditionExpression(LogicOperator(value["operator"]), value.get("condition_id"),
                                    tuple(expression(child) for child in value.get("children", [])))
 
-    requests = []
+    requests, operations = [], []
     evidence_keys = ({"candidate_ids", "universe_evidence_candidate_ids", "source_evidence_candidate_ids"}
                      if arm == "B" else {"evidence", "universe_evidence", "source_evidence"})
     for request in payload["requests"]:
@@ -87,9 +91,11 @@ def decode_proposal(payload: dict, raw: str, *, arm: str, candidates=()) -> Inte
         universe = spans(request, "universe_evidence")[0]
         source_key = "source_evidence_candidate_ids" if arm == "B" else "source_evidence"
         source = spans(request, "source_evidence")[0] if request.get(source_key) is not None else None
+        evidence = spans(request)
+        operations.append((request["request_id"], lift_operation(request["operation"]), evidence))
         requests.append(ProposedRequest(
-            request["request_id"], request["scope_id"], request["operation"], request["subject"],
-            spans(request), source.quote if source else None, source,
+            request["request_id"], request["scope_id"], lift_subject(request["subject"]),
+            evidence, source.quote if source else None, source,
             universe.quote, universe, expression(request.get("condition_expression")),
         ))
     conditions = []
@@ -98,10 +104,12 @@ def decode_proposal(payload: dict, raw: str, *, arm: str, candidates=()) -> Inte
                           "unsupported_label", "candidate_ids" if arm == "B" else "evidence"},
               {"condition_id", "request_ids", "dimension", "operator", "polarity"})
         evidence = spans(condition)
+        dimension = SemanticDimension(condition["dimension"])
         conditions.append(ProposedCondition(
-            condition["condition_id"], tuple(condition["request_ids"]), SemanticDimension(condition["dimension"]),
+            condition["condition_id"], tuple(condition["request_ids"]), dimension,
             condition["operator"], Polarity(condition["polarity"]), evidence[0].quote, evidence,
             condition.get("unsupported_label"), ConditionRole(condition.get("role", "FILTER")),
+            lift_level(dimension),
         ))
     relations, omissions = [], []
     for relation in payload.get("relations", []):
@@ -113,7 +121,8 @@ def decode_proposal(payload: dict, raw: str, *, arm: str, candidates=()) -> Inte
                                          Omission(omission["state"])))
     proposal = InterpretationProposal(hashlib.sha256(raw.encode("utf-8", errors="surrogatepass")).hexdigest(),
                                       f"foundation-{arm}", PRODUCER_VERSION, tuple(requests),
-                                      tuple(conditions), tuple(relations), tuple(omissions))
+                                      tuple(conditions), tuple(relations), tuple(omissions),
+                                      tuple(ProposedJob(**spec) for spec in v1_job_specs(operations)))
     proposal.validate_raw(raw)
     return proposal
 

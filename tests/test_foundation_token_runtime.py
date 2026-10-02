@@ -8,7 +8,7 @@ import pytest
 
 from app.core.entity_resolver import EntityResolver
 from app.core.foundation_admission import admit_proposal
-from app.core.foundation_guard import ExecutionGuard, FoundationGuardError
+from app.core.foundation_execution_guard import ExecutionGuard, FoundationGuardError
 from app.core.foundation_producers import decode_proposal
 from app.core.foundation_projection import project_accepted
 from app.core.foundation_token_plan import TokenFilter, select_members, superset_term
